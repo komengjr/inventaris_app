@@ -36,25 +36,25 @@
             border-collapse: collapse;
             margin: 0px 0;
             font-size: 0.9em;
-            
+
             width: 100%;
             /* min-width: 400px; */
             box-shadow: 0 0 20px rgba(217, 211, 211, 0.15);
-            
+
         }
         .styled-table thead tr {
             background-color: #ff7300;
             color: #ffffff;
             text-align: left;
         }
-        
+
         @media only screen and  (min-width: 760px) {
             .styled-table th,
             .styled-table td {
                 padding: 12px 15px;
             }
         }
-        
+
         .styled-table tbody tr {
             border-bottom: 1px solid #dddddd;
         }
@@ -73,7 +73,7 @@
     </style>
 
     <div class="row pl-3 pt-2 pb-2">
-       
+
         <div class="col-sm-9">
             <h4 class="page-title">Data Master</h4>
             <ol class="breadcrumb">
@@ -121,12 +121,12 @@
     </div>
     <div class="body" id="showdatamaster">
         <div class="row pl-3 pt-2 pb-2" >
-        
-                
+
+
                     @foreach ($data as $data)
 
                     <div class="col-12 col-lg-3 col-xl-3">
-                
+
                         <div class="card rounded-0 gradient-smile">
                             <div class="card-body">
                                 <div class="media align-items-center">
@@ -146,7 +146,7 @@
                                     </div>
                                 </div>
                                 <div class="btn-toolbar mt-2" role="toolbar">
-                               
+
                                     <div class="btn-group mr-1">
                                         <button type="button" class="btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-folder"></i>
@@ -176,7 +176,7 @@
                                           <a href="javaScript:void();" class="dropdown-item">Separated link</a>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="btn-group">
                                         <button type="button" class="btn-danger waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                           More
@@ -197,7 +197,7 @@
                                         @php
                                             $jumlahbarang = DB::table('sub_tbl_inventory')
                                             ->where('kd_cabang',$data->kd_cabang)
-                                            ->count();   
+                                            ->count();
                                         @endphp
                                         <h5 class="mb-0 text-white">{{$jumlahbarang}}</h5>
                                     </div>
@@ -214,7 +214,7 @@
                     </div>
                     @endforeach
                 {{-- </div> --}}
-        
+
         </div>
     </div>
 
@@ -227,19 +227,19 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-           
+
                 <form action="{{ url('master/datainventaris/simpandetailbarang', []) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                 <input type="file" name="file" id="file" class="form-control" required>
-                <input type="text" name="kdcabang" id="kdcabang"  hidden>           
-                
-           
+                <input type="text" name="kdcabang" id="kdcabang"  hidden>
+
+
             <div class="modal-footer">
                 <button type="button" class="btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
                 <button type="submit" class="btn-success"><i class="fa fa-check-square-o"></i> Upload Excel1</button>
             </div>
         </form>
-            
+
           </div>
         </div>
     </div>
@@ -256,7 +256,7 @@
             <form action="" method="POST" id="formuserbaru">
                 @csrf
             <div class="modal-body">
-                
+
                     <div class="row">
                         <div class="col-12">
                             <label for="">Nama</label>
@@ -288,7 +288,7 @@
                             <input type="password" class="form-control" name="confrimpassword">
                         </div> --}}
                     </div>
-                
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
@@ -311,7 +311,7 @@
             <form action="" method="POST" id="formueditserbaru">
                 @csrf
             <div class="modal-body">
-                
+
                     <div class="row">
                         <div class="col-12">
                             <label for="">Nama</label>
@@ -336,7 +336,7 @@
                             </select>
                         </div>
                     </div>
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
@@ -359,7 +359,7 @@
             <form action="" method="POST" id="formresetuserbaru">
                 @csrf
             <div class="modal-body">
-                
+
                     <div class="row">
                         <div class="col-12">
 
@@ -370,9 +370,9 @@
                             <label for="">Keterangan</label>
                             <textarea name="keterangan" id="" cols="30" rows="10" class="form-control" autocomplete="username" autofocus></textarea>
                         </div>
-                       
+
                     </div>
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
@@ -395,7 +395,7 @@
             <form action="" method="POST" id="formhapususer">
                 @csrf
             <div class="modal-body">
-                
+
                     <div class="row">
                         <div class="col-12">
                             <input type="text" id="kd_cabang2" name="kd_cabang2" class="form-control" autocomplete="kd_cabang2" autofocus hidden>
@@ -404,9 +404,9 @@
                         <div class="col-12">
                             <label for="">Yakin Untuk Menghapus Data User</label>
                         </div>
-                       
+
                     </div>
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
@@ -429,7 +429,7 @@
             <form action="{{ url('master/datacabang/deletedatacabang', []) }}" method="POST" >
                 @csrf
             <div class="modal-body">
-                
+
                     <div class="row">
                         <div class="col-12">
                             <input type="text" id="kd_cabang3" name="kd_cabang3" class="form-control" autocomplete="kd_cabang3" autofocus hidden>
@@ -437,9 +437,9 @@
                         <div class="col-12">
                             <label for="">Yakin Untuk Menghapus Data User</label>
                         </div>
-                       
+
                     </div>
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
@@ -453,9 +453,9 @@
     <div class="modal fade" id="formdatamaster">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content border-danger" id="bodyformdatamaster">
-            
-            
-      
+
+
+
           </div>
         </div>
     </div>
