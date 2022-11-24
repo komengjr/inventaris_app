@@ -4,7 +4,7 @@ namespace App\Imports;
 use Illuminate\Http\Request;
 use App\sub_tbl_inventory;
 use Maatwebsite\Excel\Concerns\ToModel;
-// use Maatwebsite\Excel\Concerns\WithHeadingRow;
+// use Maatwebsite\Excel\Concerns\WithHeadingRow;/
 class ImportSubBrg implements ToModel
 {
     /**
