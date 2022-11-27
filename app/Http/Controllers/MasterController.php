@@ -26,7 +26,7 @@ class MasterController extends Controller
      */
     public function __construct()
     {
-       
+
         $this->middleware('auth');
     }
 
@@ -45,8 +45,8 @@ class MasterController extends Controller
         } else {
             # code...
         }
-        
-       
+
+
     }
     public function datacabang()
     {
@@ -54,7 +54,7 @@ class MasterController extends Controller
     }
     public function simpandatacabang(Request $request)
     {
-        
+
         DB::table('tbl_cabang')->insert(
             [
                 'kd_cabang' => $request->input('kd_cabang'),
@@ -70,7 +70,7 @@ class MasterController extends Controller
     }
     public function deletedatacabang(Request $request)
     {
-        
+
         DB::table('tbl_cabang')->where('kd_cabang', $request->input('kd_cabang3'))->delete();
         return redirect()->back();
     }
@@ -114,7 +114,7 @@ class MasterController extends Controller
         DB::table('tbl_lokasi')
             ->where('kd_lokasi',$request->input('kd_lokasi'))
             ->update([
-                        'nama_lokasi' => $request->input('nama_lokasi'),    
+                        'nama_lokasi' => $request->input('nama_lokasi'),
                     ]);
         $data =  DB::table('tbl_lokasi')
         ->select('tbl_lokasi.*')
@@ -156,7 +156,7 @@ class MasterController extends Controller
     }
     public function tambahdatauser(Request $request)
     {
-        
+
         DB::table('users')->insert(
             [
                 'name' => $request->input('name'),
@@ -184,9 +184,9 @@ class MasterController extends Controller
                         'email' => $request->input('username'),
                         'email_' => $request->input('email'),
                         'akses' => $request->input('akses'),
-                        
+
                     ]);
-       
+
         $data =  DB::table('users')
         ->select('users.*')
         ->where('cabang',$request->input('kd_cabang'))
@@ -196,7 +196,7 @@ class MasterController extends Controller
     }
     public function hapusdatauser(Request $request)
     {
-       
+
         DB::table('users')->where('id', $request->input('id_user2'))->delete();
         $data =  DB::table('users')
         ->select('users.*')
@@ -213,9 +213,9 @@ class MasterController extends Controller
         //                 'name' => $request->input('name'),
         //                 'email' => $request->input('username'),
         //                 'akses' => $request->input('akses'),
-                        
+
         //             ]);
-       
+
         $data =  DB::table('users')
         ->select('users.*')
         ->where('cabang',$request->input('kd_cabang1'))
@@ -300,13 +300,15 @@ class MasterController extends Controller
     {
         $data = DB::table('tbl_mutasi')
         ->select('tbl_mutasi.*')
-        ->where('id_mutasi',$id)
+        ->where('kd_mutasi',$id)
         ->get();
+
         $databrg = DB::table('tbl_sub_mutasi')
         ->select('tbl_sub_mutasi.*','sub_tbl_inventory.kd_inventaris','sub_tbl_inventory.nama_barang','sub_tbl_inventory.merk','sub_tbl_inventory.type','sub_tbl_inventory.no_seri','sub_tbl_inventory.th_pembuatan','sub_tbl_inventory.harga_perolehan','sub_tbl_inventory.th_perolehan','sub_tbl_inventory.gambar')
         ->join('sub_tbl_inventory','sub_tbl_inventory.id','=','tbl_sub_mutasi.id_inventaris')
-        ->where('tbl_sub_mutasi.id_mutasi',$data[0]->id_mutasi)
+        ->where('tbl_sub_mutasi.kd_mutasi',$data[0]->kd_mutasi)
         ->get();
+        // dd($databrg);
         return view('masteradmin.form.mutasi.formmutasi',['data'=>$data,'databrg'=>$databrg]);
     }
     // Data Pemusnahan Controller

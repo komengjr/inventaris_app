@@ -20,7 +20,7 @@
                     <i class="fa fa-print mr-1"></i> Print
                     </button>
                 </div>
-             
+
                 <div class="table-responsive" id="showdatamutasi">
                     <table id="default-datatable" class="table table-bordered">
                         <thead>
@@ -63,7 +63,7 @@
                                     @endif
                                     <td class="text-center"><button class="btn btn-warning btn-sm" data-toggle="modal"
                                             data-target="#showmodalmutasi" id="tambahbarangbarux"
-                                            data-url="{{ url('master/datamutasi/tampilformmuitasi', ['id' => $data->id_mutasi]) }}"><i
+                                            data-url="{{ url('master/datamutasi/tampilformmuitasi', ['id' => $data->kd_mutasi]) }}"><i
                                                 class="fa fa-pencil"> </i> Lengkapi Data</button></td>
                                 </tr>
                             @endforeach

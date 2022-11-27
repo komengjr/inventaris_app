@@ -19,4 +19,25 @@ class DivisiController extends Controller
     {
         return view('divisi.menu');
     }
+    public function tambahdatapeminjaman()
+    {
+        $randomString = Str::random(4);
+        $tgl = date('d/m/Y');
+        $jadi = 'PB-'.$tgl.'-'.$randomString;
+        return view('divisi.formpeminjaman',['tiket' => $jadi]);
+    }
+    public function tambahdatamutasi()
+    {
+        $randomString = Str::random(4);
+        $tgl = date('d/m/Y');
+        $jadi = 'MT-'.$tgl.'-'.$randomString;
+        return view('divisi.formmutasi',['tiket' => $jadi]);
+    }
+    public function tambahdatapemusnahan()
+    {
+        $randomString = Str::random(4);
+        $tgl = date('d/m/Y');
+        $jadi = 'PM-'.$tgl.'-'.$randomString;
+        return view('divisi.formpemusnahan',['tiket' => $jadi]);
+    }
 }

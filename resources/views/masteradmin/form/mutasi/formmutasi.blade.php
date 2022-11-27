@@ -71,14 +71,20 @@
         <tr>
             <td>Asal Lokasi Cabang </td>
             <td>:</td>
-            <td><?php $asallokasi = DB::select('select * from tbl_cabang where kd_cabang = ' . $data[0]->asal_mutasi, [0]); ?>
+            <td><?php $asallokasi =  DB::table('tbl_cabang')
+            ->where('kd_cabang',$data[0]->asal_mutasi)
+            ->get();
+             ?>
                 {{ $asallokasi[0]->nama_cabang }}
             </td>
         </tr>
         <tr>
             <td>Lokasi Penempatan Cabang </td>
             <td>:</td>
-            <td><?php $asallokasi1 = DB::select('select * from tbl_cabang where kd_cabang = ' . $data[0]->target_mutasi, [0]); ?>
+            <td><?php $asallokasi1 =  DB::table('tbl_cabang')
+                ->where('kd_cabang', $data[0]->target_mutasi)
+                ->get();
+                ?>
                 {{ $asallokasi1[0]->nama_cabang }}
             </td>
         </tr>
