@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{-- @notifyCss --}}
     <div class="row pl-3 pt-2 pb-2">
         <div class="col-sm-9">
             <h4 class="page-title">Form SDM & Umum</h4>
@@ -9,6 +10,18 @@
                 <li class="breadcrumb-item"><a href="javaScript:void();">Inventaris & aset</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Form</li>
             </ol>
+        </div>
+    </div>
+    <div class="pl-3 pt-2 pb-2">
+        <div class="alert alert-icon-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div class="alert-icon icon-part-success">
+                <i class="fa fa-check"></i>
+            </div>
+            <div class="alert-message">
+                <span><strong>Success!</strong> Lorem Ipsum is <a href="javascript:void();" class="alert-link">simply dummy
+                        text.</a></span>
+            </div>
         </div>
     </div>
     <div class="row pl-3 pt-2 pb-2">
@@ -21,7 +34,8 @@
                     </div>
                     <div class="float-sm-right m-3 m-3">
                         <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                            data-target="#tambahdatabaru" id="tombolbarupeminjaman" data-url="{{ url('divisi/tambahdatapeminjaman', []) }}">
+                            data-target="#tambahdatabaru" id="tombolbarupeminjaman"
+                            data-url="{{ url('divisi/tambahdatapeminjaman', []) }}">
                             <i class="fa fa-plus mr-1"></i> Tambah Data
                         </button>
                         <button type="button" class="btn-primary waves-effect waves-light">
@@ -36,17 +50,26 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No Ururt Barang</th>
-                                    <th>kode Inventaris</th>
-                                    <th>Kategori Barang</th>
-                                    <th>Nama Kelompok Barang</th>
-                                    <th>Jumlah Barang</th>
+                                    <th>Tiket Peminjaman</th>
+                                    <th>Nama Kegiatan</th>
+                                    <th>Tanggal Peminjaman</th>
+                                    <th>Penanggung Jawab</th>
+                                    <th>Status Peminjaman</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-
+                                @foreach ($datapinjam as $datapinjam)
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{ $datapinjam->tiket_peminjaman }}</td>
+                                        <td>{{ $datapinjam->nama_kegiatan }}</td>
+                                        <td>{{ $datapinjam->tgl_pinjam }}</td>
+                                        <td>{{ $datapinjam->pj_pinjam }}</td>
+                                        <td>{{ $datapinjam->status_pinjam }}</td>
+                                        <td><button class="btn-warning">Lengkapi data</button></td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
 
@@ -67,7 +90,8 @@
                     </div>
                     <div class="float-sm-right m-3 m-3">
                         <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                            data-target="#tambahdatabaru" id="tombolbarumutasi" data-url="{{ url('divisi/tambahdatamutasi', []) }}">
+                            data-target="#tambahdatabaru" id="tombolbarumutasi"
+                            data-url="{{ url('divisi/tambahdatamutasi', []) }}">
                             <i class="fa fa-plus mr-1"></i> Tambah Data
                         </button>
                         <button type="button" class="btn-primary waves-effect waves-light">
@@ -113,7 +137,8 @@
                     </div>
                     <div class="float-sm-right m-3 m-3">
                         <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                            data-target="#tambahdatabaru" id="tombolbarupemusnahan" data-url="{{ url('divisi/tambahdatapemusnahan', []) }}">
+                            data-target="#tambahdatabaru" id="tombolbarupemusnahan"
+                            data-url="{{ url('divisi/tambahdatapemusnahan', []) }}">
                             <i class="fa fa-plus mr-1"></i> Tambah Data
                         </button>
                         <button type="button" class="btn-primary waves-effect waves-light">

@@ -17,14 +17,17 @@ class DivisiController extends Controller
 
     public function menu()
     {
-        return view('divisi.menu');
+        $datapinjam = DB::table('tbl_peminjaman')->get();
+        return view('divisi.menu',[ 'datapinjam' => $datapinjam]);
     }
     public function tambahdatapeminjaman()
     {
         $randomString = Str::random(4);
         $tgl = date('d/m/Y');
         $jadi = 'PB-'.$tgl.'-'.$randomString;
-        return view('divisi.formpeminjaman',['tiket' => $jadi]);
+
+
+        return view('divisi.formpeminjaman',['tiket' => $jadi ]);
     }
     public function tambahdatamutasi()
     {
@@ -39,5 +42,20 @@ class DivisiController extends Controller
         $tgl = date('d/m/Y');
         $jadi = 'PM-'.$tgl.'-'.$randomString;
         return view('divisi.formpemusnahan',['tiket' => $jadi]);
+    }
+    public function posttambah(Request $request)
+    {
+        DB::table('tbl_peminjaman')->insert(
+            [
+                'tiket_peminjaman' => $request->input('tiket_peminjaman'),
+                'nama_kegiatan' => $request->input('nama_kegiatan'),
+                'tgl_pinjam' => $request->input('tgl_pinjam'),
+                'pj_pinjam' => $request->input('pj_pinjam'),
+                'status_pinjam' => 0,
+                'deskripsi' => $request->input('deskripsi'),
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        notify()->success('Laravel Notify is awesome!');
+        return redirect()->back();
     }
 }

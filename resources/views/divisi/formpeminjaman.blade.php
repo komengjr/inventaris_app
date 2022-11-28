@@ -18,24 +18,26 @@
          </button>
      </div>
 {{-- <form  method="POST" action="" enctype="multipart/form-data" id="form-update"> --}}
-<form  method="POST" action="#" enctype="multipart/form-data" id="form-update">
+<form  method="POST" action="{{ url('divisi/peminjaman/tambah', []) }}" enctype="multipart/form-data" >
+    @csrf
     <div class="modal-body">
         <div class="row">
             <div class="col-12">
-                <label for="">Judul Peminjaman</label>
-                <input type="text" class="form-control">
+                <label for="">Kegiatan</label>
+                <input type="text" class="form-control" name="nama_kegiatan">
+                <input type="text" class="form-control" name="tiket_peminjaman" value="{{$tiket}}">
             </div>
             <div class="col-6">
                 <label for="">Penanggung Jawab Peminjam</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="pj_pinjam">
             </div>
             <div class="col-6">
                 <label for="">Tanggal Peminjam</label>
-                <input type="date" class="form-control">
+                <input type="date" class="form-control" name="tgl_pinjam">
             </div>
             <div class="col-12">
                 <label for="">Deskripsi Peminjaman</label>
-                <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                <textarea class="form-control" id="" cols="30" rows="10" name="deskripsi"></textarea>
             </div>
         </div>
     </div>
