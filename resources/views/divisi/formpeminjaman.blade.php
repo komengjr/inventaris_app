@@ -24,16 +24,16 @@
         <div class="row">
             <div class="col-12">
                 <label for="">Kegiatan</label>
-                <input type="text" class="form-control" name="nama_kegiatan">
-                <input type="text" class="form-control" name="tiket_peminjaman" value="{{$tiket}}">
+                <input type="text" class="form-control" name="nama_kegiatan" required>
+                <input type="text" class="form-control" name="tiket_peminjaman" value="{{$tiket}}" hidden>
             </div>
             <div class="col-6">
                 <label for="">Penanggung Jawab Peminjam</label>
-                <input type="text" class="form-control" name="pj_pinjam">
+                <input type="text" class="form-control" name="pj_pinjam" required>
             </div>
             <div class="col-6">
                 <label for="">Tanggal Peminjam</label>
-                <input type="date" class="form-control" name="tgl_pinjam">
+                <input type="date" class="form-control" name="tgl_pinjam" required>
             </div>
             <div class="col-12">
                 <label for="">Deskripsi Peminjaman</label>

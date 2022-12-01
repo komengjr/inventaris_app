@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class DivisiController extends Controller
 {
@@ -55,7 +56,18 @@ class DivisiController extends Controller
                 'deskripsi' => $request->input('deskripsi'),
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-        notify()->success('Laravel Notify is awesome!');
-        return redirect()->back();
+            Session::flash('sukses','Berhasil Membuat Tiket Tugas User'.$request->input('tiket_peminjaman'));
+            return redirect()->back();
+    }
+
+
+
+
+
+
+
+    public function faq()
+    {
+        return view('faq');
     }
 }

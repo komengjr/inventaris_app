@@ -86,6 +86,10 @@ Route::get('hapussubtablemusnah/{id}/{no}',['as'=>'hapussubtablemusnah','uses'=>
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('faq','DivisiController@faq');
+
+
+
 
 
 Route::get('formulir', function () {

@@ -12,6 +12,7 @@
             </ol>
         </div>
     </div>
+    @if ($message = Session::get('sukses'))
     <div class="pl-3 pt-2 pb-2">
         <div class="alert alert-icon-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -19,11 +20,11 @@
                 <i class="fa fa-check"></i>
             </div>
             <div class="alert-message">
-                <span><strong>Success!</strong> Lorem Ipsum is <a href="javascript:void();" class="alert-link">simply dummy
-                        text.</a></span>
+                <span><strong>Success!</strong> ---- <a href="javascript:void();" class="alert-link">{{ $message }}</a></span>
             </div>
         </div>
     </div>
+    @endif
     <div class="row pl-3 pt-2 pb-2">
         <div class="col-lg-12">
             <div class="card">
