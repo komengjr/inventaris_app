@@ -30,6 +30,20 @@ class DivisiController extends Controller
 
         return view('divisi.formpeminjaman',['tiket' => $jadi ]);
     }
+    public function lengkapipeminjaman($id)
+    {
+        $cekdata = DB::table('tbl_peminjaman')
+        ->where('id_pinjam',$id)
+        ->get();
+        return view('divisi.menulengkapi.lengkapi_peminjaman',['cekdata'=>$cekdata]);
+    }
+    public function inputdatabarangpinjam()
+    {
+        $databrg = DB::table('sub_tbl_inventory')
+        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
+        ->where('kd_cabang',auth::user()->cabang)->get();
+        return view('divisi.menulengkapi.inputdatabarangpinjam',['databrg'=>$databrg]);
+    }
     public function tambahdatamutasi()
     {
         $randomString = Str::random(4);

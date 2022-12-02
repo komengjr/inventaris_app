@@ -68,7 +68,10 @@
                                         <td>{{ $datapinjam->tgl_pinjam }}</td>
                                         <td>{{ $datapinjam->pj_pinjam }}</td>
                                         <td>{{ $datapinjam->status_pinjam }}</td>
-                                        <td><button class="btn-warning">Lengkapi data</button></td>
+                                        <td class="text-center">
+                                            <button class="btn-warning" data-toggle="modal" data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman" data-url="{{ url('divisi/peminjaman/lengkapi', ['id'=>$datapinjam->id_pinjam]) }}">Lengkapi data</button>
+                                            <button class="btn-danger"><i class="fa fa-trash"></i></button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -182,6 +185,16 @@
         <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
             <div class="modal-content">
                 <div id="showdatasdm">
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="lengkapipeminjaman">
+        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+            <div class="modal-content">
+                <div id="showdatalengkapi">
                     <div class="modal-body">
                     </div>
                 </div>

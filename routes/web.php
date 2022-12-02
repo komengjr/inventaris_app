@@ -49,6 +49,11 @@ Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 
 Route::get('menu/form','DivisiController@menu');
 Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
 Route::get('divisi/tambahdatapeminjaman',['as'=>'master/tambahdatapeminjaman','uses'=> 'DivisiController@tambahdatapeminjaman']);
+Route::get('divisi/peminjaman/lengkapi/{id}',['as'=>'master/peminjaman/lengkapi','uses'=> 'DivisiController@lengkapipeminjaman']);
+Route::get('divisi/peminjaman/inputdatabarang',['as'=>'divisi/peminjaman/inputdatabarang','uses'=> 'DivisiController@inputdatabarangpinjam']);
+
+
+
 Route::get('divisi/tambahdatamutasi',['as'=>'master/tambahdatamutasi','uses'=> 'DivisiController@tambahdatamutasi']);
 Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','uses'=> 'DivisiController@tambahdatapemusnahan']);
 
