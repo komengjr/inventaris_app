@@ -44,6 +44,15 @@ class DivisiController extends Controller
         ->where('kd_cabang',auth::user()->cabang)->get();
         return view('divisi.menulengkapi.inputdatabarangpinjam',['databrg'=>$databrg]);
     }
+    public function tablepeminjaman($id)
+    {
+        return view('divisi.menulengkapi.tablepeminjaman');
+    }
+
+
+
+
+
     public function tambahdatamutasi()
     {
         $randomString = Str::random(4);

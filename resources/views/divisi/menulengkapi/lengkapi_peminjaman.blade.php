@@ -47,7 +47,7 @@
     </div>
 
     <div class="modal-body">
-        <table class="styled-table">
+        <table class="styled-table" id="tablepeminjaman">
             <thead>
                 <tr>
                     <th>no</th>

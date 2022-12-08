@@ -17,7 +17,8 @@
         <input type="date" class="form-control" name="tgl_pinjam" required>
     </div>
     <div class="col-12 pt-3 text-right">
-      <button class="btn-info"><i class="fa fa-plus"></i> Tambah</button>
+      <button class="btn-danger" id="buttontablepcloseeminjaman" data-url="{{ url('divisi/peminjaman/tableclosepeminjaman', ['id'=>123]) }}"><i class="fa fa-close" ></i> tutup</button>
+      <button class="btn-info" id="buttontablepeminjaman" data-url="{{ url('divisi/peminjaman/tablepeminjaman', ['id'=>123]) }}"><i class="fa fa-plus" ></i> Tambah</button>
     </div>
 </div>
 <script>
