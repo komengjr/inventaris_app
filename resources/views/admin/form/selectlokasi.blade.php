@@ -1,4 +1,5 @@
 <form action="" id="formbarangmutasi" method="post">
+    @csrf
 <div class="row">
     
         <div class="col-md-7" id="selectlokasixx">

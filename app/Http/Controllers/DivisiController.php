@@ -37,12 +37,12 @@ class DivisiController extends Controller
         ->get();
         return view('divisi.menulengkapi.lengkapi_peminjaman',['cekdata'=>$cekdata]);
     }
-    public function inputdatabarangpinjam()
+    public function inputdatabarangpinjam($id)
     {
         $databrg = DB::table('sub_tbl_inventory')
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
         ->where('kd_cabang',auth::user()->cabang)->get();
-        return view('divisi.menulengkapi.inputdatabarangpinjam',['databrg'=>$databrg]);
+        return view('divisi.menulengkapi.inputdatabarangpinjam',['databrg'=>$databrg,'id'=>$id]);
     }
     public function tablepeminjaman($id)
     {

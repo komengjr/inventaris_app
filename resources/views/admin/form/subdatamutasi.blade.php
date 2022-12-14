@@ -71,15 +71,17 @@
         <tr>
             <td>Asal Lokasi Cabang </td>
             <td>:</td>
-            <td><?php $asallokasi = DB::select('select * from tbl_cabang where kd_cabang = ' . $data[0]->asal_mutasi, [0]); ?>
-                {{ $asallokasi[0]->nama_cabang }}
+            <td>
+                {{-- <?php $asallokasi = DB::select('select * from tbl_cabang where kd_cabang = ' . $data[0]->asal_mutasi, [0]); ?>
+                {{ $asallokasi[0]->nama_cabang }} --}}
             </td>
         </tr>
         <tr>
             <td>Lokasi Penempatan Cabang </td>
             <td>:</td>
-            <td><?php $asallokasi1 = DB::select('select * from tbl_cabang where kd_cabang = ' . $data[0]->target_mutasi, [0]); ?>
-                {{ $asallokasi1[0]->nama_cabang }}
+            <td>
+                {{-- <?php $asallokasi1 = DB::select('select * from tbl_cabang where kd_cabang = ' . $data[0]->target_mutasi, [0]); ?>
+                {{ $asallokasi1[0]->nama_cabang }} --}}
             </td>
         </tr>
         <tr>
@@ -128,7 +130,7 @@
     </div>
     <input id="link" type="text" name="link" class="form-control" value="" hidden>
     <button class="btn btn-success btn-sm" style="float: right;" id="tambahsubdatamutasibarangx"
-        data-url="{{ route('tambahsubdatamutasibarangx', ['id' => $data[0]->id_mutasi]) }}"><i
+        data-url="{{ route('tambahsubdatamutasibarangx', ['id' => $data[0]->kd_mutasi]) }}"><i
             class="fa fa-plus"></i></button><br>
     {{-- <button class="btn btn-success btn-sm" style="float: right;" id="tambahsubdatamutasibarangx" data-url="{{ url('tambahsubdatamutasibarangx/'.$data[0]->id_mutasi) }}"><i class="fa fa-plus"></i></button><br> --}}
 </div>

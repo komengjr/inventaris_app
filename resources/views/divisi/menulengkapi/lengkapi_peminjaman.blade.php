@@ -41,9 +41,8 @@
     </div>
 
 
-    <div class="modal-body" id="buttoninputbarangpeminjaman">
-        
-        <button type="button" class="btn-success" id="buttontambahbarangpeminjaman" data-url="{{ url('divisi/peminjaman/inputdatabarang', []) }}"><i class="fa fa-keyboard-o" ></i> Input Barang</button>
+    <div class="modal-body" id="buttoninputbarangpeminjaman"> 
+        <button type="button" class="btn-success" id="buttontambahbarangpeminjaman" data-url="{{ url('divisi/peminjaman/inputdatabarang', ['id'=>123]) }}"><i class="fa fa-keyboard-o" ></i> Input Barang</button>
     </div>
 
     <div class="modal-body">

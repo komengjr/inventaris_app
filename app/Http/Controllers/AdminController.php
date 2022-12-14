@@ -128,7 +128,7 @@ class AdminController extends Controller
         $databrg = DB::table('tbl_sub_mutasi')
         ->select('tbl_sub_mutasi.*','sub_tbl_inventory.kd_inventaris','sub_tbl_inventory.nama_barang','sub_tbl_inventory.merk','sub_tbl_inventory.type','sub_tbl_inventory.no_seri','sub_tbl_inventory.th_pembuatan','sub_tbl_inventory.harga_perolehan','sub_tbl_inventory.th_perolehan','sub_tbl_inventory.gambar')
         ->join('sub_tbl_inventory','sub_tbl_inventory.id','=','tbl_sub_mutasi.id_inventaris')
-        ->where('tbl_sub_mutasi.id_mutasi',$data[0]->id_mutasi)
+        ->where('tbl_sub_mutasi.kd_mutasi',$data[0]->id_mutasi)
         ->get();
         return view('admin.form.subdatamutasi',['data'=>$data,'databrg'=>$databrg]);
     }
@@ -163,7 +163,7 @@ class AdminController extends Controller
        
         DB::table('tbl_sub_mutasi')->insert(
             [
-                'id_mutasi' => $id,
+                'kd_mutasi' => $id,
                 'id_inventaris' => $request->input('kd_inventaris'),
                 'kd_lokasi_awal' => $cekbrg[0]->kd_lokasi,
                 'kd_lokasi_tujuan' => $request->input('kd_lokasi'),

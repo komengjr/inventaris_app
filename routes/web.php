@@ -50,7 +50,7 @@ Route::get('menu/form','DivisiController@menu');
 Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
 Route::get('divisi/tambahdatapeminjaman',['as'=>'master/tambahdatapeminjaman','uses'=> 'DivisiController@tambahdatapeminjaman']);
 Route::get('divisi/peminjaman/lengkapi/{id}',['as'=>'master/peminjaman/lengkapi','uses'=> 'DivisiController@lengkapipeminjaman']);
-Route::get('divisi/peminjaman/inputdatabarang',['as'=>'divisi/peminjaman/inputdatabarang','uses'=> 'DivisiController@inputdatabarangpinjam']);
+Route::get('divisi/peminjaman/inputdatabarang/{id}',['as'=>'divisi/peminjaman/inputdatabarang','uses'=> 'DivisiController@inputdatabarangpinjam']);
 Route::get('divisi/peminjaman/tablepeminjaman/{id}',['as'=>'divisi/peminjaman/tablepeminjaman','uses'=> 'DivisiController@tablepeminjaman']);
 
 

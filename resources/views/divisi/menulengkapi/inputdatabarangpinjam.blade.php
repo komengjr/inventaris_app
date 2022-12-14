@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12">
         <label for="">Kode Peminjaman Barang</label>
-        <input type="text" class="form-control" name="nama_kegiatan" value="" disabled>
+        <input type="text" class="form-control" name="nama_kegiatan" value="{{$id}}" disabled>
     </div>
     <div class="col-6">
         <label for="">Kode / Nama Barang</label>
