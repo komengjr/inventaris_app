@@ -1,7 +1,7 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/script.js/2.1.1/script.min.js" integrity="sha512-oM6Bv767uUJZcy+SqCTP2rkHtKlivWNQ5+PPhhDwkY8FtNj4bq1xvNCB9NB3WkBa1KiY7P5a7/yfSONl5TYSPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+<script src="{{ url('assets/plugins/select2/js/select2.min.js', []) }}"></script>
 <style>
     input[type="file"] {
     display: none;
@@ -17,7 +17,7 @@
          </button>
      </div>
 {{-- <form  method="POST" action="" enctype="multipart/form-data" id="form-update"> --}}
-<form  method="POST" action="#" enctype="multipart/form-data" id="form-tambah">
+<form  method="POST" action="#" enctype="multipart/form-data" id="form-tambah-barang">
     @csrf
      <div class="body" id="showdatabarang">
         <div class="card-body">
@@ -44,34 +44,33 @@
       
            
                 <div class="col-md-4">
-                    <label for="inputEmail4" class="form-label">Kode Barang</label>
-                    <input type="text" name="kd_inventaris" class="form-control" value="{{$id}}" disabled>
-                    <input type="text" name="kd_inventaris" class="form-control" value="{{$id}}" hidden>
+                    <label for="inputEmail4" class="form-label">Kode Lokasi</label>
+                    <input type="text" name="kd_lokasi" class="form-control" value="{{$id}}" disabled>
+                    <input type="text" name="kd_lokasi" class="form-control" value="{{$id}}" hidden>
 
-                    <label for="inputEmail4" class="form-label">Lokasi</label>
-                     <select class="form-control single-selectxx" name="kd_lokasi">
-                          <option>Pilih Lokasi</option>
-                          @foreach ($datalokasi as $datalokasi)
+                    <label for="inputEmail4" class="form-label">Jenis Inventaris</label>
+                     <select class="form-control single-selectxx" name="kd_inventaris">
+                          <option>Pilih Jenis Inventaris</option>
+                          @foreach ($kode as $kode)
                            
-                          <option value="{{$datalokasi->kd_lokasi}}">{{$datalokasi->nama_lokasi}}</option>
+                          <option value="{{$kode->kd_inventaris}}">{{$kode->nama_barang}}</option>
                               
                           @endforeach
                       </select>
 
                       <label for="inputEmail4" class="form-label">Tahun Pembelian</label>
-                      <input type="text" name="th_pembuatan" class="form-control" value="">
-                      <input id="link" type="text" name="link" class="form-control" value="" hidden>
+                      <input type="text" name="th_pembuatan" class="form-control" >
+                      <input id="link" type="text" name="link" class="form-control"  hidden>
 
                 </div>
                 <div class="col-md-4">
                     <label for="inputPassword4" class="form-label">Nama Barang</label>
-                    <input type="text" name="kode_kode" class="form-control"  value="" hidden>
-                    <input type="text" name="nama_barang" class="form-control" id="inputPassword4" value="">
+                    <input type="text" name="nama_barang" class="form-control" id="inputPassword4" >
                     <label for="inputPassword4" class="form-label">Kode Cabang</label>
-                    <input type="text" name="kd_cabang" class="form-control" id="inputPassword4" value="{{auth::user()->akses}}" hidden>
-                    <input type="text" name="kd_cabang" class="form-control" id="inputPassword4" value="{{auth::user()->akses}}" disabled>
+                    <input type="text" name="kd_cabang" class="form-control" id="inputPassword4" value="{{auth::user()->cabang}}" hidden>
+                    <input type="text" name="kd_cabang" class="form-control" id="inputPassword4" value="{{auth::user()->cabang}}" disabled>
                     <label for="inputEmail4" class="form-label">Otlet</label>
-                    <input type="text" name="outlet" class="form-control" value="">
+                    <input type="text" name="outlet" class="form-control" >
                 </div>
 
             </div>
@@ -140,7 +139,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
         {{-- <button type="submit" class="btn btn-primary" ><i class="fa fa-save" ></i> Update Data</button> --}}
-        <button type="submit" class="btn btn-primary" id="tambahsubdatabarang" data-url="{{ route('simpandatasubbarang',['id' => $id])}}"><i class="fa fa-save" ></i> Simpan Data</button>
+        <button type="submit" class="btn btn-primary" id="tambahsubdatabarang" data-url="{{ route('simpandatasubbarang1',['id' => $id])}}"><i class="fa fa-save" ></i> Simpan Data</button>
     </div>
 </form>
 

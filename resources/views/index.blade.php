@@ -34,7 +34,7 @@ body { margin: 0px; }
     @else
       <div class="row" style="border: dotted;width: 85px; height: 95px;">
                 
-        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('svg')->size(85)->errorCorrection('H')->generate(url('view', []).'/'.substr($data->kd_inventaris,0,2).'/'.$data->kd_cabang.'/'.$data->kd_inventaris.'/'.$data->id)) !!}">
+        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('svg')->size(85)->errorCorrection('H')->generate($data->id_inventaris)) !!}">
         <strong><p>{{$data->nama_barang}}</p></strong> 
       </div>
     @endif

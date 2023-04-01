@@ -128,7 +128,7 @@
                         </div>
                     @endif
                     <div class="table-responsive" style="letter-spacing: .0px;">
-                        <table id="default-datatable1" class="styled-table">
+                        <table id="default-datatablesubbarang" class="styled-table">
                             <thead>
                                 <tr>
                                     <th>Gambar</th>
@@ -196,14 +196,7 @@
                                             @if ($data->kd_lokasi == '-')
                                                 <td>Kosong</td>
                                             @else
-                                                <td class="text-center">{!! QrCode::size(90)->generate(
-                                                    url('view', [
-                                                        'no' => substr($data->kd_inventaris, 0, 2),
-                                                        'cb' => $data->kd_cabang,
-                                                        'kd' => $data->kd_inventaris,
-                                                        'id' => $data->id,
-                                                    ]),
-                                                ) !!}</td>
+                                                <td class="text-center">{!! QrCode::size(90)->generate( $data->id_inventaris) !!}</td>
                                             @endif
 
                                             <td class="text-center">
@@ -290,14 +283,7 @@
                                             @if ($data->kd_lokasi == '-')
                                                 <td>Kosong</td>
                                             @else
-                                                <td class="text-center">{!! QrCode::size(90)->generate(
-                                                    url('view', [
-                                                        'no' => substr($data->kd_inventaris, 0, 2),
-                                                        'cb' => $data->kd_cabang,
-                                                        'kd' => $data->kd_inventaris,
-                                                        'id' => $data->id,
-                                                    ]),
-                                                ) !!}</td>
+                                                <td class="text-center">{!! QrCode::size(90)->generate( $data->id_inventaris) !!}</td>
                                             @endif
 
                                             <td class="text-center">
@@ -405,11 +391,13 @@
         });
     });
 </script>
-
+<script src="{{ url('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
+<script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
 <script>
     $(document).ready(function() {
         //Default data table
-        $('#default-datatable1').DataTable();
+        $('#default-datatablesubbarang').DataTable();
 
 
         var table = $('#example').DataTable({

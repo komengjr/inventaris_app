@@ -448,6 +448,7 @@
             $('#default-datatable').DataTable();
             $('#default-asd').DataTable();
             $('#default-table1').DataTable();
+            $('#default-datatablesubbarang').DataTable();
 
 
             var table = $('#example').DataTable({
@@ -545,7 +546,7 @@
         $(document).ready(function() {
             $(document).on('click', '#tambahsubdatabarang', function(e) {
 
-                var data = $('#form-tambah').serialize();
+                var data = $('#form-tambah-barang').serialize();
 
                 e.preventDefault();
                 var url = $(this).data('url');
@@ -553,7 +554,7 @@
                     "<br><br><br><img src='icon.png'  style='display: block; margin: auto;'>");
                 $.ajax({
                         url: url,
-                        // headers: {'X-CSRF-TOKEN': $('meta[name="csrf"]').attr('content')},
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf"]').attr('content')},
                         type: 'POST',
                         data: data,
                         dataType: 'html'
