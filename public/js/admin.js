@@ -72,7 +72,7 @@ $(document).ready(function() {
                             );
                     });
     });
-    $(document).on('click', '#buttontablepeminjaman', function(e) {
+    $(document).on('click', '#buttonpengembalianbarangpeminjaman', function(e) {
                 e.preventDefault();
                 var url = $(this).data('url');
 
@@ -82,14 +82,16 @@ $(document).ready(function() {
                         dataType: 'html'
                     })
                     .done(function(data) {
-                        $('#tablepeminjaman').html(data);
+                        $('#buttoninputbarangpeminjaman').html(data);
                     })
                     .fail(function() {
-                        $('#tablepeminjaman').html(
+                        $('#buttoninputbarangpeminjaman').html(
                             '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                             );
                     });
     });
+
+
 
 
 
@@ -130,4 +132,31 @@ $(document).ready(function() {
                     });
     });
 
+    $(document).ready(function() {
+        $(document).on('click', '#updatedatainventori', function(e) {
+            var data = $('#form-update').serialize();
+            e.preventDefault();
+            $('#showdatabarang').html(
+                "<br><br><br><img src='icon.png'  style='display: block; margin: auto;'>");
+            $.ajax({
+                    url: "divisi/inventori/updatedatainventori",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf"]').attr('content')
+                    },
+
+                    type: 'POST',
+                    data: data,
+                    dataType: 'html'
+                })
+                .done(function(data) {
+                    // console.log(data);
+                    $('#showdatabarang').html(data);
+                })
+                .fail(function() {
+                    $('#showdatabarang').html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                        );
+                });
+        });
+    });
 });

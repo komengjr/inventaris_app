@@ -60,9 +60,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no =1;
+                                @endphp
                                 @foreach ($datapinjam as $datapinjam)
                                     <tr>
-                                        <td>1</td>
+                                        <td>{{$no++}}</td>
                                         <td>{{ $datapinjam->tiket_peminjaman }}</td>
                                         <td>{{ $datapinjam->nama_kegiatan }}</td>
                                         <td>{{ $datapinjam->tgl_pinjam }}</td>

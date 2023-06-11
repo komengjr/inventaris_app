@@ -1,4 +1,4 @@
-    
+
 <style>
     input[type="file"] {
     display: none;
@@ -43,7 +43,7 @@
         border-collapse: collapse;
         margin: 0px 0;
         font-size: 0.9em;
-        
+
         color: black;
         min-width: 100%;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -91,14 +91,14 @@
                 @if (auth::user()->akses == 'it')
                 <label class="custom-file-upload form-control" id="upload-container" id="browseFile{{$id}}">
                     <input type="file" id="browseFile{{$id}}" class="form-control"/>
-                    <i class="fa fa-upload "> Upload Gambar</i> 
-                </label>  
+                    <i class="fa fa-upload "> Upload Gambar</i>
+                </label>
                 @else
-                    
+
                 @endif
-                
-                
-                
+
+
+
                 @if ($data[0]->gambar == "")
                 <a href="https://via.placeholder.com/1920x1080"  data-fancybox="images" data-caption="{{$data[0]->nama_barang}}" >
                     <img src="https://via.placeholder.com/800x500" alt="lightbox" class="lightbox-thumb img-thumbnail" id="videoPreview"  width="50" height="50">
@@ -106,9 +106,9 @@
                 @else
                 <a href="{{ url($data[0]->gambar, []) }}"  data-fancybox="images" data-caption="{{$data[0]->nama_barang}}">
                     <img src="{{ url($data[0]->gambar, []) }}" alt="lightbox" class="lightbox-thumb img-thumbnail" id="videoPreview" width="50" height="50">
-                </a>   
+                </a>
                 @endif
-                
+
                 {{-- <div id="upload-container" class="text-center">
                     <button id="browseFile" class="btn btn-primary">Pilih Video</button>
                 </div> --}}
@@ -119,40 +119,47 @@
                 {{-- <input type="text" name="kd_inventaris" class="form-control" value="{{$data[0]->kd_inventaris}}"> --}}
             </div>
             {{-- <img id="output"/> --}}
-           
+
                 <div class="col-md-4">
                     <label for="inputEmail4" class="form-label">Kode Barang</label>
                     <input type="text" class="form-control" value="{{$data[0]->kd_inventaris}}" disabled>
-                    
+
                     <label for="inputEmail4" class="form-label">Lokasi</label>
-                    <?php   
-                    $nama_lokasi = DB::table('tbl_lokasi') 
+                    <?php
+                    $nama_lokasi = DB::table('tbl_lokasi')
                     ->select('tbl_lokasi.nama_lokasi')
                     ->where('kd_lokasi',$data[0]->kd_lokasi)
-                    ->get()
+                    ->get();
+                    $lokasi_all = DB::table('tbl_lokasi')->get();
                     ?>
-                    <input type="text" class="form-control" value="{{$nama_lokasi[0]->nama_lokasi}}" disabled>
+                    <select class="form-control single-select" name="kd_lokasi">
+                        <option value="{{$data[0]->kd_lokasi}}">{{$nama_lokasi[0]->nama_lokasi}}</option>
+                        @foreach ($lokasi_all as $lokasi_all)
+                        <option value="{{$lokasi_all->kd_lokasi}}">{{$lokasi_all->nama_lokasi}}</option>
+                        @endforeach
 
-                      <label for="inputEmail4" class="form-label">Tahun Pembelian</label>
-                      <input type="text" name="th_pembuatan" class="form-control" value="{{$data[0]->th_pembuatan}}">
-                      <input id="link" type="text" name="link" class="form-control" value="" hidden>
+                    </select>
+                    {{-- <input type="text" class="form-control" value="{{$nama_lokasi[0]->nama_lokasi}}" disabled> --}}
+
+                    <label for="inputEmail4" class="form-label">Tahun Pembelian</label>
+                    <input type="text" name="th_pembuatan" class="form-control" value="{{$data[0]->th_pembuatan}}">
+                    <input id="link" type="text" name="link" class="form-control" value="" hidden>
                     {{-- <input type="text" name="kd_inventaris" class="form-control" value="{{$data[0]->kd_inventaris}}"> --}}
-                    
+
                     <label for="inputPassword4" class="form-label">Nomor Serial</label>
                     <input type="text" name="no_seri" class="form-control" value="{{$data[0]->no_seri}}">
                     <label for="inputPassword4" class="form-label">Supplier</label>
                     <input type="text" name="suplier" class="form-control" value="{{$data[0]->suplier}}">
-                    <label for="inputPassword4" class="form-label">Harga Perolehan</label>
-                    <input type="text" name="harga_perolehan" class="form-control" value="{{$data[0]->harga_perolehan}}">
+
                 </div>
                 <div class="col-md-4">
                     <label for="inputPassword4" class="form-label">Nama Barang</label>
-                    <input type="text" name="kode_kode" class="form-control"  value="{{$data[0]->id}}" hidden>
+                    <input type="text" name="kode_kode" class="form-control"  value="{{$data[0]->id_inventaris}}" hidden>
                     <input type="text" name="nama_barang" class="form-control" id="inputPassword4" value="{{$data[0]->nama_barang}}">
-                    <label for="inputPassword4" class="form-label">Kode Cabang</label>
-                    <input type="text" name="kd_cabang" class="form-control" id="inputPassword4" value="{{$data[0]->kd_cabang}}" disabled>
-                    <label for="inputEmail4" class="form-label">Otlet</label>
-                    <input type="text" name="outlet" class="form-control" value="{{$data[0]->outlet}}">
+                    {{-- <label for="inputPassword4" class="form-label">Kode Cabang</label> --}}
+                    <input type="text" name="kd_cabang" class="form-control" id="inputPassword4" value="{{$data[0]->kd_cabang}}" hidden>
+                    {{-- <label for="inputEmail4" class="form-label">Otlet</label>
+                    <input type="text" name="outlet" class="form-control" value="{{$data[0]->outlet}}"> --}}
 
                     <label for="inputPassword4" class="form-label">Tahun Perolehan</label>
                     <input type="text" name="th_perolehan" class="form-control" value="{{$data[0]->th_perolehan}}">
@@ -160,6 +167,8 @@
                     <input type="text" name="merk" class="form-control" value="{{$data[0]->merk}}">
                     <label for="inputPassword4" class="form-label">Type Barang</label>
                     <input type="text" name="type" class="form-control" value="{{$data[0]->type}}">
+                    <label for="inputPassword4" class="form-label">Harga Perolehan</label>
+                    <input type="text" name="harga_perolehan" class="form-control" value="{{$data[0]->harga_perolehan}}">
                 </div>
 
             </div>
@@ -175,11 +184,11 @@
                 </div> --}}
                 <hr>
                 <div class="col-md-12">
-                    
+
                     <table class="styled-table">
                         <thead>
                             <tr>
-                                
+
                                     <td>Nomor Surat</td>
                                     <td>Asal Mutasi</td>
                                     <td>Target Mutasi</td>
@@ -192,7 +201,7 @@
                         </thead>
                         <tbody>
                             <?php
-                            $datamutasi = DB::table('tbl_sub_mutasi') 
+                            $datamutasi = DB::table('tbl_sub_mutasi')
                             ->select('tbl_sub_mutasi.*','tbl_mutasi.*')
                             ->join('tbl_mutasi','tbl_mutasi.kd_mutasi','=','tbl_sub_mutasi.kd_mutasi')
                             ->where('tbl_sub_mutasi.id_inventaris',$data[0]->id)
@@ -210,7 +219,7 @@
                                 <td><button class="btn btn-info btn-sm" disabled>Proses</button></td>
                             </tr>
                             @endforeach
-                           
+
                         </tbody>
                     </table>
                 </div>
@@ -220,14 +229,14 @@
                 <div class="col-md-9">
                     <label for="inputPassword4" class="form-label">Riwayat Pemusnahan</label>
                 </div>
-                
+
                 <hr>
                 <div class="col-md-12">
-                    
+
                     <table class="styled-table">
                         <thead>
                             <tr>
-                                
+
                                     <td>Nomor Surat</td>
                                     <td>Dasar Pengajuan</td>
                                     <td>Tanggal Buat</td>
@@ -240,7 +249,7 @@
                         </thead>
                         <tbody>
                             <?php
-                            $datamusnah= DB::table('tbl_sub_musnah') 
+                            $datamusnah= DB::table('tbl_sub_musnah')
                             ->select('tbl_sub_musnah.*','tbl_musnah.*')
                             ->join('tbl_musnah','tbl_musnah.no_surat','=','tbl_sub_musnah.no_surat')
                             ->where('tbl_sub_musnah.id_inventaris',$data[0]->id)
@@ -255,11 +264,11 @@
                                 <td>{{$datamusnah->user_verifikasi}}</td>
                                 <td>{{$datamusnah->user_persetujuan}}</td>
                                 <td>{{$datamusnah->user_eksekusi}}</td>
-                                
+
                                 <td><button class="btn btn-info btn-sm" disabled>Proses</button></td>
                             </tr>
                             @endforeach
-                           
+
                         </tbody>
                     </table>
                 </div>
@@ -268,10 +277,10 @@
         </div>
     </div>
 
-    
+
     <div class="modal-footer">
         <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-        {{-- <button type="submit" class="btn btn-primary" ><i class="fa fa-save" ></i> Update Data</button> --}}
+        <button type="submit" class="btn-primary" id="updatedatainventori"><i class="fa fa-save" ></i> Update Data</button>
         {{-- <button type="submit" class="btn btn-primary" id="updatedatabarang" data-url="{{ route('updatedatabarang1',['id' => $data[0]->id])}}"><i class="fa fa-save" ></i> Update Data</button> --}}
     </div>
 </form>
@@ -282,7 +291,7 @@
         $(document).ready(function() {
             $('.single-select<?php echo $id ?>').select2();
             $('.single-select').select2();
-      
+
             $('.multiple-select').select2();
 
         //multiselect start

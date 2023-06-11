@@ -30,7 +30,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
- 
+
     public function index()
     {
         if (auth::user()->cabang == 'as') {
@@ -43,7 +43,7 @@ class HomeController extends Controller
             ->select('sub_tbl_inventory.*')
             ->where('kd_cabang', auth::user()->cabang)
             ->get();
-            foreach ($totalharga as $totalharga) { 
+            foreach ($totalharga as $totalharga) {
                 $totaljumlah = $totalharga->harga_perolehan + $totaljumlah;
             }
 
@@ -52,39 +52,39 @@ class HomeController extends Controller
             ->select('no_urut_barang.*')
             ->get();
             foreach ($datakategori as $data) {
-               
-            
+
+
             $dataklasifikasi1 = DB::table('tbl_inventory')
             ->select('tbl_inventory.*')
             ->where('no_urut_barang',$data->no_urut_barang)
             ->get();
-            
+
                         foreach ($dataklasifikasi1 as $item1){
-                          
+
                           $total = DB::table('sub_tbl_inventory')
                           ->select('sub_tbl_inventory.*')
                           ->where('kd_inventaris',$item1->kd_inventaris)
                           ->where('kd_cabang', auth::user()->cabang)
                           ->count();
-                            
+
                                 $jumlah = $jumlah + $total ;
-                            
-                            
+
+
                         }
-                        
-            
+
+
             }
             if ($jumlah == 0) {
                 $jumlah = 1 ;
             }
-            
+
             $datalokasi = DB::table('tbl_lokasi')
             ->select('tbl_lokasi.*')
             ->get();
-            
+
             return view('home',['datakategori'=>$datakategori,'datalokasi'=>$datalokasi,'totalinventaris'=>$jumlah,'totaljumlah'=>$totaljumlah]);
         }
-        
+
 
     }
     public function lihatdatabarang($id)
@@ -164,7 +164,7 @@ class HomeController extends Controller
     public function updatedatabarang(Request $request , $id)
     {
         // dd($request->all());
-       
+
         if ($request->input('link') != "") {
             DB::table('sub_tbl_inventory')
             ->where('id',$request->input('kode_kode'))
@@ -214,8 +214,8 @@ class HomeController extends Controller
                         'kondisi_barang' => $request->input('kondisi_barang'),
                         'jam_input' => $request->input('jam_input'),
                         'ket_musnah' => $request->input('ket_musnah'),
-                        
-                        
+
+
                     ]);
         }
         $data = DB::table('sub_tbl_inventory')
@@ -232,7 +232,7 @@ class HomeController extends Controller
     public function updatedatabarang1(Request $request , $id)
     {
         // dd($request->all());
-       
+
         // if ($request->input('link') != "") {
         //     DB::table('sub_tbl_inventory')
         //     ->where('id',$request->input('kode_kode'))
@@ -284,6 +284,30 @@ class HomeController extends Controller
 
         //             ]);
         // }
+        DB::table('sub_tbl_inventory')
+            ->where('id_inventaris',$request->input('kode_kode'))
+            ->update([
+                        'nama_barang' => $request->input('nama_barang'),
+                        // 'kd_inventaris' => $request->input('kd_inventaris'),
+                        'kd_lokasi' => $request->input('kd_lokasi'),
+                        // 'kd_cabang' => $request->input('kd_cabang'),
+                        // 'th_pembuatan' => $request->input('th_pembuatan'),
+                        // 'outlet' => $request->input('outlet'),
+                        'th_perolehan' => $request->input('th_perolehan'),
+                        'merk' => $request->input('merk'),
+                        'no_seri' => $request->input('no_seri'),
+                        'suplier' => $request->input('suplier'),
+                        'type' => $request->input('type'),
+                        'harga_perolehan' => $request->input('harga_perolehan'),
+                        // 'tgl_mutasi' => $request->input('tgl_mutasi'),
+                        // 'tujuan_mutasi' => $request->input('tujuan_mutasi'),
+                        // 'nilai_buku' => $request->input('nilai_buku'),
+                        // 'tgl_musnah' => $request->input('tgl_musnah'),
+                        // 'kondisi_barang' => $request->input('kondisi_barang'),
+                        // 'jam_input' => $request->input('jam_input'),
+                        // 'ket_musnah' => $request->input('ket_musnah'),
+
+                    ]);
         $data = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*')
         ->where('kd_lokasi',$request->input('kd_lokasi'))
@@ -298,7 +322,7 @@ class HomeController extends Controller
 
     public function simpandatasubbarang(Request $request , $id)
     {
-        
+
         DB::table('sub_tbl_inventory')->insert(
             [
                         'nama_barang' => $request->input('nama_barang'),
@@ -374,7 +398,7 @@ class HomeController extends Controller
 
     public function mutasidatabarang($id)
     {
-       
+
         $data = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*')
         ->where('id',$id)
@@ -387,5 +411,5 @@ class HomeController extends Controller
     {
         return view('admin.formdataaset');
     }
-   
+
 }

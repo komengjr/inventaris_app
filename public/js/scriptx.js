@@ -11,7 +11,7 @@ $(document).ready(function() {
         var ym = $('#ym').val();
         var asal_lokasi = $('#asal_lokasi').val();
         var target_lokasi = $('#target_lokasi').val();
-        
+
         e.preventDefault();
         var url = $(this).data('url');
         $(".error").remove();
@@ -98,7 +98,7 @@ $(document).ready(function() {
     $(document).on('click', '#tambahsubdatamutasibarangx', function(e) {
                 e.preventDefault();
                 var url = $(this).data('url');
-                
+
                 $.ajax({
                         url: url,
                         type: 'GET',
@@ -160,7 +160,7 @@ $(document).ready(function() {
         var data = $('#formbarangmutasi').serialize();
         e.preventDefault();
         var url = $(this).data('url');
-   
+
         $.ajax({
                 url: url,
                 headers: {
@@ -226,7 +226,7 @@ $(document).ready(function() {
     $(document).on('click', '#addpemusnahanbarang', function(e) {
                 e.preventDefault();
                 var url = $(this).data('url');
-                
+
                 $.ajax({
                         url: url,
                         type: 'GET',
@@ -267,7 +267,7 @@ $(document).ready(function() {
         var data = $('#formbarangmusnah').serialize();
         e.preventDefault();
         var url = $(this).data('url');
-   
+
         $.ajax({
                 url: url,
                 headers: {
@@ -291,7 +291,7 @@ $(document).ready(function() {
 
         e.preventDefault();
         var url = $(this).data('url');
-   
+
         $.ajax({
             url: url,
             type: 'GET',
@@ -311,7 +311,7 @@ $(document).ready(function() {
 
         e.preventDefault();
         var url = $(this).data('url');
-   
+
         $.ajax({
             url: url,
             type: 'GET',
@@ -352,7 +352,7 @@ $(document).ready(function() {
         e.preventDefault();
         var url = $(this).data('url');
         console.log(url);
-       
+
         $.ajax({
             url: url,
             type: 'GET',
@@ -389,8 +389,8 @@ $(document).ready(function() {
                     '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                     );
             });
-        }, 1000);
-        
+        }, 100);
+
     });
 });
 $(document).ready(function() {

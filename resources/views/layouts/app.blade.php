@@ -512,34 +512,7 @@
     </script>
 
     <script>
-        $(document).ready(function() {
-            $(document).on('click', '#updatedatabarang', function(e) {
-                var data = $('#form-update').serialize();
-                e.preventDefault();
-                var url = $(this).data('url');
-                $('#showdatabarang').html(
-                    "<br><br><br><img src='icon.png'  style='display: block; margin: auto;'>");
-                $.ajax({
-                        url: url,
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf"]').attr('content')
-                        },
 
-                        type: 'POST',
-                        data: data,
-                        dataType: 'html'
-                    })
-                    .done(function(data) {
-                        // console.log(data);
-                        $('#showdatabarang').html(data);
-                    })
-                    .fail(function() {
-                        $('#showdatabarang').html(
-                            '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-                            );
-                    });
-            });
-        });
     </script>
 
     <script>
