@@ -29,7 +29,7 @@ class PdfController extends Controller
         ->get();
         // dd($data);
         $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('string'));
-        $pdf = PDF::loadview('index',['data'=>$data],compact('qrcode'))->setPaper('A8','potrait');
+        $pdf = PDF::loadview('index',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
         return $pdf->stream();
     }
     public function printpeserta()

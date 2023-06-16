@@ -47,6 +47,7 @@ Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 
 
 // Divisi Controller
 Route::get('menu/form','DivisiController@menu');
+Route::get('menu/verifdatainventaris','DivisiController@verifdatainventaris');
 Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
 Route::get('divisi/tambahdatapeminjaman',['as'=>'master/tambahdatapeminjaman','uses'=> 'DivisiController@tambahdatapeminjaman']);
 Route::get('divisi/peminjaman/lengkapi/{id}',['as'=>'master/peminjaman/lengkapi','uses'=> 'DivisiController@lengkapipeminjaman']);
@@ -62,8 +63,11 @@ Route::post('divisi/inventori/updatedatainventori',['as'=>'divisi/inventori/upda
 
 Route::get('divisi/tambahdatamutasi',['as'=>'master/tambahdatamutasi','uses'=> 'DivisiController@tambahdatamutasi']);
 Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','uses'=> 'DivisiController@tambahdatapemusnahan']);
-
-
+Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
+Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
+Route::get('divisi/verifikasi/lengkapi/{id}',['as'=>'master/verifikasi/lengkapi','uses'=> 'DivisiController@verifikasilengkapi']);
+Route::get('divisi/verifikasi/lokasi/{tiket}/{id}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);
+Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}',['as'=>'master/verifikasi/update','uses'=> 'DivisiController@verifikasilengkapiupdatebaranglokasi']);
 // Admin Controller
 //Mutasi
 Route::get('/datamutasi', 'AdminController@formmutasi');
@@ -111,6 +115,9 @@ Route::get('formulir1', function () {
 });
 Route::get('formulir2', function () {
     return view('form.formformulir2');
+});
+Route::get('template', function () {
+    return view('index');
 });
 
 // Route::get('/pdf', 'PdfController@print')->name('print');

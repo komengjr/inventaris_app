@@ -223,6 +223,7 @@
                     <ul>
                         @if (auth::user()->akses == "sdm")
                         <li><a href="{{ url('menu/form', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form SDM</a></li>
+                        <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Verif Data</a></li>
                         @elseif(auth::user()->akses == "keu")
                         <li><a href="{{ url('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form Keuangan</a></li>
                         @elseif(auth::user()->akses == "admin")

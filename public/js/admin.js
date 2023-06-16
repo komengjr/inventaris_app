@@ -90,6 +90,24 @@ $(document).ready(function() {
                             );
                     });
     });
+    $(document).on('click', '#verifdatainventaris', function(e) {
+                e.preventDefault();
+                var url = $(this).data('url');
+
+                $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'html'
+                    })
+                    .done(function(data) {
+                        $('#menuverifikasi').html(data);
+                    })
+                    .fail(function() {
+                        $('#menuverifikasi').html(
+                            '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                            );
+                    });
+    });
 
 
 

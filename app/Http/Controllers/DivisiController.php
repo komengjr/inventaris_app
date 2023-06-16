@@ -54,17 +54,31 @@ class DivisiController extends Controller
 
     public function menu()
     {
-        $datapinjam = DB::table('tbl_peminjaman')->get();
+        $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->get();
         return view('divisi.menu',[ 'datapinjam' => $datapinjam]);
+    }
+    public function verifdatainventaris()
+    {
+        $dataverif = DB::table('tbl_verifdatainventaris')->where('kd_cabang',auth::user()->cabang)->get();
+        return view('divisi.verifdatainventaris',[ 'dataverif' => $dataverif]);
     }
     public function tambahdatapeminjaman()
     {
         $randomString = Str::random(4);
-        $tgl = date('d/m/Y');
+        $tgl = date('d:m:Y');
         $jadi = 'PB-'.$tgl.'-'.$randomString;
 
 
         return view('divisi.formpeminjaman',['tiket' => $jadi ]);
+    }
+    public function tambahdataverifikasiinventaris()
+    {
+        $randomString = Str::random(4);
+        $tgl = date('d:m:Y');
+        $jadi = 'VI-'.$tgl.'-'.$randomString;
+
+
+        return view('divisi.formverivikasi',['tiket' => $jadi ]);
     }
     public function lengkapipeminjaman($id)
     {
@@ -105,21 +119,39 @@ class DivisiController extends Controller
         } else {
             $cekiddata = DB::table('tbl_sub_peminjaman')
             ->join('tbl_peminjaman','tbl_sub_peminjaman.id_pinjam','=','tbl_peminjaman.id_pinjam')
-            ->where('id_inventaris',$id)
-            ->where('status_pinjam',0)->get();
+            ->where('tbl_sub_peminjaman.id_inventaris',$id)
+            ->where('tbl_peminjaman.id_pinjam',$ids)
+            ->where('tbl_peminjaman.status_pinjam',0)
+            ->get();
 
             if ($cekiddata->isEmpty()) {
-                DB::table('tbl_sub_peminjaman')->insert(
-                    [
-                        'id_pinjam' => $ids,
-                        'id_inventaris' => $id,
-                        'tgl_pinjam_barang' => date('Y-m-d H:i:s'),
-                        'status_sub_peminjaman' => 0,
-                        'created_at' => date('Y-m-d H:i:s'),
-                    ]);
-                $notif = 1;
-                $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$ids)->get();
-                return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
+
+                $cekdatasub = DB::table('tbl_sub_peminjaman')
+                ->where('tbl_sub_peminjaman.id_inventaris',$id)
+                ->where('tbl_sub_peminjaman.status_sub_peminjaman',0)
+                ->get();
+
+                if ($cekdatasub->isEmpty()) {
+                    DB::table('tbl_sub_peminjaman')->insert(
+                        [
+                            'id_pinjam' => $ids,
+                            'id_inventaris' => $id,
+                            'tgl_pinjam_barang' => date('Y-m-d H:i:s'),
+                            'status_sub_peminjaman' => 0,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    $notif = 1;
+                    $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$ids)->get();
+                    return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
+                } else {
+                    $notif = 2;
+                    $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$ids)->get();
+                    return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
+                }
+                
+                    
+
+
             } else {
                 $notif = 2;
                 $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$ids)->get();
@@ -207,7 +239,57 @@ class DivisiController extends Controller
             Session::flash('sukses','Berhasil Membuat Tiket Tugas User'.$request->input('tiket_peminjaman'));
             return redirect()->back();
     }
+    public function posttambahverifikasi(Request $request)
+    {
+        DB::table('tbl_verifdatainventaris')->insert(
+            [
+                'kode_verif' => $request->input('tiket_verif'),
+                'tgl_verif' => $request->input('waktu'),
+                'tahun' => 2022,
+                'status_verif' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            Session::flash('sukses','Berhasil Membuat Tiket Tugas User'.$request->input('tiket_verif'));
+            return redirect()->back();
+    }
+    public function verifikasilengkapi($id)
+    {
+        $cekdata = DB::table('tbl_verifdatainventaris')
+        ->where('kode_verif',$id)
+        ->get();
+        $tbl_cabang = DB::table('tbl_cabang')->where('kd_cabang',auth::user()->cabang)->get();
+        $lokasi = DB::table('tbl_lokasi')->get();
+        // $databarang = DB::table('sub_tbl_inventory')->where('kode_verif',$id)->get();
+        // $databarang = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->get();
+        return view('divisi.menulengkapi.lengkapi_verifikasi',['cekdata'=> $cekdata,'cabang'=>$tbl_cabang, 'lokasi'=>$lokasi]);
+    }
+    public function verifikasilengkapilokasi($tiket,$id)
+    {
+        $databarang = DB::table('sub_tbl_inventory')
+        ->where('kd_lokasi',$id)->get();
+        return view('divisi.menulengkapi.lengkapilokasi',['databarang'=>$databarang,'tiket'=>$tiket]);
+    }
+    public function verifikasilengkapiupdatebaranglokasi($id,$tiket,$id_inventaris)
+    {
+        $cekdata = DB::table('tbl_sub_verifdatainventaris')
+        ->where('kode_verif',$tiket)
+        ->where('id_inventaris',$id_inventaris)->count();
 
+        if ($cekdata == 0) {
+            DB::table('tbl_sub_verifdatainventaris')->insert(
+                [
+                    'kode_verif' => $tiket,
+                    'id_inventaris' => $id_inventaris,
+                    'status_data_inventaris' => $id,
+                    'keterangan_data_inventaris' => "",
+                    'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        } else {
+           
+        }
+        
+        
+    }
 
 
 
