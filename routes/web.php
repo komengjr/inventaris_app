@@ -67,7 +67,7 @@ Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataveri
 Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
 Route::get('divisi/verifikasi/lengkapi/{id}',['as'=>'master/verifikasi/lengkapi','uses'=> 'DivisiController@verifikasilengkapi']);
 Route::get('divisi/verifikasi/lokasi/{tiket}/{id}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);
-Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}',['as'=>'master/verifikasi/update','uses'=> 'DivisiController@verifikasilengkapiupdatebaranglokasi']);
+Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}/{ket}',['as'=>'master/verifikasi/update','uses'=> 'DivisiController@verifikasilengkapiupdatebaranglokasi']);
 // Admin Controller
 //Mutasi
 Route::get('/datamutasi', 'AdminController@formmutasi');

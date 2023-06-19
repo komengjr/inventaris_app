@@ -22,13 +22,13 @@
     @csrf
     <div class="modal-body">
         <div class="row">
-           
+
             <div class="col-12">
                 <label for="">Waktu Verifikasi</label>
                 <input type="date" class="form-control" name="waktu" required>
-                <input type="text" name="tiket_verif" id="" value="{{$tiket}}">
+                <input type="text" name="tiket_verif" id="" value="{{$tiket}}" hidden>
             </div>
-           
+
         </div>
     </div>
 

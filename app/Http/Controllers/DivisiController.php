@@ -54,7 +54,7 @@ class DivisiController extends Controller
 
     public function menu()
     {
-        $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->get();
+        $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
         return view('divisi.menu',[ 'datapinjam' => $datapinjam]);
     }
     public function verifdatainventaris()
@@ -148,8 +148,8 @@ class DivisiController extends Controller
                     $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$ids)->get();
                     return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
                 }
-                
-                    
+
+
 
 
             } else {
@@ -233,6 +233,7 @@ class DivisiController extends Controller
                 'tgl_pinjam' => $request->input('tgl_pinjam'),
                 'pj_pinjam' => $request->input('pj_pinjam'),
                 'status_pinjam' => 0,
+                'kd_cabang' => auth::user()->cabang,
                 'deskripsi' => $request->input('deskripsi'),
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
@@ -246,6 +247,7 @@ class DivisiController extends Controller
                 'kode_verif' => $request->input('tiket_verif'),
                 'tgl_verif' => $request->input('waktu'),
                 'tahun' => 2022,
+                'kd_cabang' => auth::user()->cabang,
                 'status_verif' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
@@ -266,10 +268,12 @@ class DivisiController extends Controller
     public function verifikasilengkapilokasi($tiket,$id)
     {
         $databarang = DB::table('sub_tbl_inventory')
-        ->where('kd_lokasi',$id)->get();
+        ->where('kd_lokasi',$id)
+        ->where('kd_cabang',auth::user()->cabang)
+        ->get();
         return view('divisi.menulengkapi.lengkapilokasi',['databarang'=>$databarang,'tiket'=>$tiket]);
     }
-    public function verifikasilengkapiupdatebaranglokasi($id,$tiket,$id_inventaris)
+    public function verifikasilengkapiupdatebaranglokasi($id,$tiket,$id_inventaris,$ket)
     {
         $cekdata = DB::table('tbl_sub_verifdatainventaris')
         ->where('kode_verif',$tiket)
@@ -281,14 +285,20 @@ class DivisiController extends Controller
                     'kode_verif' => $tiket,
                     'id_inventaris' => $id_inventaris,
                     'status_data_inventaris' => $id,
-                    'keterangan_data_inventaris' => "",
+                    'keterangan_data_inventaris' => $ket,
                     'created_at' => date('Y-m-d H:i:s'),
             ]);
         } else {
-           
+            DB::table('tbl_sub_verifdatainventaris')
+            ->where('id_inventaris',$id_inventaris)
+            ->where('kode_verif',$tiket)
+            ->update([
+                    'status_data_inventaris' => $id,
+                    'keterangan_data_inventaris' => $ket,
+                    ]);
         }
-        
-        
+
+
     }
 
 
