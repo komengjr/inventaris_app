@@ -26,6 +26,9 @@
     <link href="{{ url('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
     <link href="{{ url('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
     <link rel="{{ url('stylesheet" type="text/css" href="assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/script.js/2.1.1/script.min.js"integrity="sha512-oM6Bv767uUJZcy+SqCTP2rkHtKlivWNQ5+PPhhDwkY8FtNj4bq1xvNCB9NB3WkBa1KiY7P5a7/yfSONl5TYSPQ=="crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .footerx {
             padding: 5px;
@@ -222,8 +225,10 @@
                     <!-- Level Two-->
                     <ul>
                         @if (auth::user()->akses == "sdm")
-                        <li><a href="{{ url('menu/form', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form SDM</a></li>
-                        <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Verif Data</a></li>
+                        <li><a href="{{ url('menu/formpinjam', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Peminjaman</a></li>
+                        <li><a href="{{ url('menu/formmaintenance', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Maintenance</a></li>
+                        <li><a href="{{ url('menu/formpemusnahan', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Pemusnahan</a></li>
+                        <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Verif Data</a></li>
                         @elseif(auth::user()->akses == "keu")
                         <li><a href="{{ url('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form Keuangan</a></li>
                         @elseif(auth::user()->akses == "admin")
@@ -333,9 +338,9 @@
 
     <!-- Bootstrap core JavaScript-->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/script.js/2.1.1/script.min.js"integrity="sha512-oM6Bv767uUJZcy+SqCTP2rkHtKlivWNQ5+PPhhDwkY8FtNj4bq1xvNCB9NB3WkBa1KiY7P5a7/yfSONl5TYSPQ=="crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
     <script src="{{ url('assets/js/popper.min.js', []) }}"></script>
     <script src="{{ url('assets/js/bootstrap.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/simplebar/js/simplebar.js', []) }}"></script>
@@ -442,7 +447,6 @@
 
         });
     </script>
-
     <script>
         $(document).ready(function() {
             //Default data table
@@ -463,111 +467,6 @@
         });
     </script>
 
-
-    <script>
-        $(document).ready(function() {
-            $(document).on('click', '#editdatabarang', function(e) {
-                e.preventDefault();
-                var url = $(this).data('url');
-                $('#showdatabarang').html("<img src='loading.gif'  style='display: block; margin: auto;'>");
-                setTimeout(() => {
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'html'
-                    })
-                    .done(function(data) {
-                        $('#showdatabarang').html(data);
-                    })
-                    .fail(function() {
-                        $('#showdatabarang').html(
-                            '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-                            );
-                    });
-                }, 1500);
-
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $(document).on('click', '#hapusdatabarang', function(e) {
-                e.preventDefault();
-                var url = $(this).data('url');
-                $('#showdatabarang').html("<img src='icon.png'  style='display: block; margin: auto;'>");
-                $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'html'
-                    })
-                    .done(function(data) {
-                        $('#showdatabarang').html(data);
-                    })
-                    .fail(function() {
-                        $('#showdatabarang').html(
-                            '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-                            );
-                    });
-            });
-        });
-    </script>
-
-    <script>
-
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $(document).on('click', '#tambahsubdatabarang', function(e) {
-
-                var data = $('#form-tambah-barang').serialize();
-
-                e.preventDefault();
-                var url = $(this).data('url');
-                $('#showdatabarang').html(
-                    "<br><br><br><img src='icon.png'  style='display: block; margin: auto;'>");
-                $.ajax({
-                        url: url,
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf"]').attr('content')},
-                        type: 'POST',
-                        data: data,
-                        dataType: 'html'
-                    })
-                    .done(function(data) {
-                        // console.log(data);
-                        $('#showdatabarang').html(data);
-                    })
-                    .fail(function() {
-                        console.log(data);
-                        $('#showdatabarang').html('<i class="fa fa-info-sign"></i> Gagal Baca');
-                    });
-            });
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function() {
-            $(document).on('click', '#mutasidatabarang', function(e) {
-                e.preventDefault();
-                var url = $(this).data('url');
-                $('#showdatabarang').html("<img src='icon.png'  style='display: block; margin: auto;'>");
-                $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'html'
-                    })
-                    .done(function(data) {
-                        $('#showdatabarang').html(data);
-                    })
-                    .fail(function() {
-                        $('#showdatabarang').html(
-                            '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-                            );
-                    });
-            });
-        });
-    </script>
 
 
 </body>

@@ -6,7 +6,7 @@ function success_notiupdate(){
     icon: 'fa fa-check-circle',
     msg: 'Data Berhasil di Update.'
     });
-  }	
+  }
 function success_notihapus(){
     Lobibox.notify('success', {
     pauseDelayOnHover: true,
@@ -15,7 +15,7 @@ function success_notihapus(){
     icon: 'fa fa-check-circle',
     msg: 'Data Berhasil di Hapus.'
     });
-  }	
+  }
 
 $(document).ready(function () {
     $(document).on('click', '#master-data-cabang', function(e) {
@@ -246,7 +246,26 @@ $(document).ready(function() {
                     );
             });
     });
-   
+    $(document).ready(function() {
+        $(document).on('click', '#hapusdatabarang', function(e) {
+            e.preventDefault();
+            var url = $(this).data('url');
+            $('#showdatabarang').html("<img src='icon.png'  style='display: block; margin: auto;'>");
+            $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'html'
+                })
+                .done(function(data) {
+                    $('#showdatabarang').html(data);
+                })
+                .fail(function() {
+                    $('#showdatabarang').html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                        );
+                });
+        });
+    });
 });
 // User Jquery
 $(document).ready(function() {
@@ -254,7 +273,7 @@ $(document).ready(function() {
     $(document).on('click', '#userbarucabang', function(e) {
                 e.preventDefault();
                 var url = $(this).data('url');
-                
+
                 $.ajax({
                         url: url,
                         type: 'GET',
@@ -306,7 +325,7 @@ $(document).ready(function() {
                 data: data,
                 dataType: 'html'
             })
-            .done(function(data) { 
+            .done(function(data) {
                 $('#showdatamaster').html(data);
                 success_notiupdate();
             })
@@ -329,7 +348,7 @@ $(document).ready(function() {
                 data: data,
                 dataType: 'html'
             })
-            .done(function(data) {  
+            .done(function(data) {
                 $('#showdatamaster').html(data);
             })
             .fail(function() {
@@ -351,7 +370,7 @@ $(document).ready(function() {
                 data: data,
                 dataType: 'html'
             })
-            .done(function(data) {  
+            .done(function(data) {
                 $('#showdatamaster').html(data);
                 success_notihapus();
             })
@@ -367,7 +386,7 @@ $(document).ready(function() {
     $(document).on('click', '#lokasibarucabang', function(e) {
                 e.preventDefault();
                 var url = $(this).data('url');
-                
+
                 $.ajax({
                         url: url,
                         type: 'GET',
@@ -427,7 +446,7 @@ $(document).ready(function() {
                     );
             });
         }, 1000);
-        
+
     });
 
     $(document).on('click', '#mastertambahdatabarang', function(e) {
@@ -469,7 +488,7 @@ $(document).ready(function() {
                     });
     });
 
-   
+
 });
 // Mutasi Query
 $(document).ready(function() {
@@ -491,7 +510,7 @@ $(document).ready(function() {
                     });
     });
 
-   
+
 });
 // Pemusnahan Query
 $(document).ready(function() {
@@ -513,5 +532,5 @@ $(document).ready(function() {
                     });
     });
 
-   
+
 });

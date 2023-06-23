@@ -287,7 +287,7 @@
                                             @endif
 
                                             <td class="text-center">
-                                                <button class="btn btn-dark btn-sm" id="editdatabarang"
+                                                <button class="btn-dark btn-sm" id="editdatabarang"
                                                     data-url="{{ route('editdatabarang1', ['id' => $data->id]) }}"><i
                                                         class="fa fa-eye"> </i> Lihat Data</button><br><br>
                                                 {{-- <button type="button" class="btn btn-danger btn-sm" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> Hapus</i></button> --}}
@@ -330,7 +330,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+        <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
         {{-- <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print Barcode</button> --}}
     </div>
 </div>

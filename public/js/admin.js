@@ -177,4 +177,73 @@ $(document).ready(function() {
                 });
         });
     });
+    $(document).ready(function() {
+        $(document).on('click', '#mutasidatabarang', function(e) {
+            e.preventDefault();
+            var url = $(this).data('url');
+            $('#showdatabarang').html("<img src='icon.png'  style='display: block; margin: auto;'>");
+            $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'html'
+                })
+                .done(function(data) {
+                    $('#showdatabarang').html(data);
+                })
+                .fail(function() {
+                    $('#showdatabarang').html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                        );
+                });
+        });
+    });
+    $(document).ready(function() {
+        $(document).on('click', '#tambahsubdatabarang', function(e) {
+
+            var data = $('#form-tambah-barang').serialize();
+
+            e.preventDefault();
+            var url = $(this).data('url');
+            $('#showdatabarang').html(
+                "<br><br><br><img src='icon.png'  style='display: block; margin: auto;'>");
+            $.ajax({
+                    url: url,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf"]').attr('content')},
+                    type: 'POST',
+                    data: data,
+                    dataType: 'html'
+                })
+                .done(function(data) {
+                    // console.log(data);
+                    $('#showdatabarang').html(data);
+                })
+                .fail(function() {
+                    console.log(data);
+                    $('#showdatabarang').html('<i class="fa fa-info-sign"></i> Gagal Baca');
+                });
+        });
+    });
+    $(document).ready(function() {
+        $(document).on('click', '#editdatabarang', function(e) {
+            e.preventDefault();
+            var url = $(this).data('url');
+            $('#showdatabarang').html("<img src='loading.gif'  style='display: block; margin: auto;'>");
+            setTimeout(() => {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'html'
+                })
+                .done(function(data) {
+                    $('#showdatabarang').html(data);
+                })
+                .fail(function() {
+                    $('#showdatabarang').html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                        );
+                });
+            }, 1500);
+
+        });
+    });
 });

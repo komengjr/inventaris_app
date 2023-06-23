@@ -81,8 +81,8 @@ class HomeController extends Controller
             $datalokasi = DB::table('tbl_lokasi')
             ->select('tbl_lokasi.*')
             ->get();
-
-            return view('home',['datakategori'=>$datakategori,'datalokasi'=>$datalokasi,'totalinventaris'=>$jumlah,'totaljumlah'=>$totaljumlah]);
+            $datainventariscabang = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->count();
+            return view('home',['datakategori'=>$datakategori,'datalokasi'=>$datalokasi,'totalinventaris'=>$datainventariscabang,'totaljumlah'=>$totaljumlah]);
         }
 
 

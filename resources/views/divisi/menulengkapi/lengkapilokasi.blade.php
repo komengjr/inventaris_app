@@ -1,11 +1,11 @@
-<div class="card">
+
     <div class="card-body">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h3>
-                Tiket :
-                <small> </small>
-            </h3>
+            <h4>
+
+                <small>  Nomor : {{$tiket}}</small>
+            </h4>
         </section>
             <table id="default-table1" class="styled-table table-bordered">
                 <thead>
@@ -13,7 +13,7 @@
                         <th>No</th>
                         <th>Nama Ruangan</th>
                         <th>Status Cek Barang</th>
-                        <th>Action</th>
+                        <th>Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,14 +92,18 @@
 
                             <td>
                                 <div id="div{{$databarang->id}}">
-                                    <textarea id="ket{{$databarang->id}}" class="form-control"></textarea>
-                                    <button class="btn-info"><i class="fa fa-save"></i></button>
+                                    <div style="display: none;">
+                                        <textarea id="ket{{$databarang->id}}" class="form-control"></textarea>
+                                        <button class="btn-info"><i class="fa fa-save"></i></button>
+                                    </div>
+
                                 </div>
                             </td>
                         </tr>
                         <script>
                             function displayResult(buah){
                                 var ket = document.getElementById("ket<?php echo $databarang->id ?>").value;
+
                                 console.log(buah);
                                 console.log(ket);
                                 $.ajax({
@@ -121,6 +125,7 @@
                     @endforeach
                 </tbody>
             </table>
+
         </section>
     </div>
-</div>
+

@@ -57,6 +57,16 @@ class DivisiController extends Controller
         $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
         return view('divisi.menu',[ 'datapinjam' => $datapinjam]);
     }
+    public function menumaintenance()
+    {
+        $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
+        return view('divisi.menumaintenance',[ 'datapinjam' => $datapinjam]);
+    }
+    public function menupemusnahan()
+    {
+        $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
+        return view('divisi.menupemusnahan',[ 'datapinjam' => $datapinjam]);
+    }
     public function verifdatainventaris()
     {
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kd_cabang',auth::user()->cabang)->get();
