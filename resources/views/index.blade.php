@@ -50,9 +50,15 @@
         @if ($data->kd_lokasi == '-')
         @else
             <div class="relative">
-                <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode(
-                    QrCode::format('svg')->size(107)->errorCorrection('H')->generate($data->id_inventaris),
-                ) !!}">
+                {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate($data->id_inventaris), ) !!}"> --}}
+                <img style="padding-top: 11.5px; width: 107px; height: 107px;" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
+                                                ->backgroundColor(255, 255, 255)
+                                                ->size(507)
+                                                ->style('round')
+                                                ->eye('circle')
+                                                ->eyeColor(0, 255, 0, 0, 255, 0, 0)
+                                                ->mergeString(Storage::get('qr.png'), .3)
+                                                ->generate($data->id_inventaris)) !!} ">
                 <div class="absolute">
                     <table style="font-size: 8px; margin: 0px; padding: 0px; width: 106px;" border="1" cla>
                         <tr>
@@ -123,23 +129,23 @@
 
     {{-- <div class="container text-center">
     @foreach ($data as $data)
-     
+
     @if ($data->kd_lokasi == '-')
-        
+
     @else
 
-      <div class="row" style="border: dotted;width: 105px; height: 50px;">  
+      <div class="row" style="border: dotted;width: 105px; height: 50px;">
         <div class="col">
           <img src="data:image/png;base64, {!! base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate($data->id_inventaris)) !!}">
         </div>
         <div class="col">
-          <strong>{{$data->nama_barang}}</strong> 
-        </div> 
+          <strong>{{$data->nama_barang}}</strong>
+        </div>
       </div>
     @endif
-       
-    @endforeach     
-       
+
+    @endforeach
+
   </div> --}}
     {{-- </body> --}}
 

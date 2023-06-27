@@ -283,7 +283,7 @@
                                             @if ($data->kd_lokasi == '-')
                                                 <td>Kosong</td>
                                             @else
-                                                <td class="text-center">{!! QrCode::size(90)->generate( $data->id_inventaris) !!}</td>
+                                                <td class="text-center">{!! QrCode::style('round')->eyeColor(0, 255, 13, 255, 100, 0, 0)->size(90)->generate( $data->id_inventaris) !!}</td>
                                             @endif
 
                                             <td class="text-center">

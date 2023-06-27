@@ -16,7 +16,7 @@
     </script>
 <div class="modal-content" id="showdatabarang">
    <div class="modal-header">
-        
+
         <button class="btn btn-success btn-sm" id="tambahdatabarang" data-url="{{ route('tambahdatabarang',['id'=>$id])}}"><i class="fa fa-plus"> </i>  Tambah Data Barangx</button>
         <span>
             <button  type="button" class="btn-outline-primary" data-toggle="modal" data-target="#printdata"><i class="fa fa-print"> Print Barcode</i></button>
@@ -26,11 +26,11 @@
         </span>
     </div>
     <div class="body" id="showdatabarang">
-        
-    
+
+
         <div class="row" >
             <div class="col-lg-12">
-               
+
                 <div class="card-body">
                     @if(session()->has('status'))
                     <div class="alert alert-success alert-dismissible alert-sm" role="alert">
@@ -75,7 +75,7 @@
                                 @else
                                 <a href="{{ url($data->gambar, []) }}"  data-fancybox="images" data-caption="{{$data->nama_barang}}">
                                     <img src="{{ url($data->gambar, []) }}" alt="lightbox" class="lightbox-thumb img-thumbnail" id="videoPreview" width="50" height="50">
-                                </a>   
+                                </a>
                                 @endif
                             </td>
                             <td>{{$data->kd_inventaris}}</td>
@@ -84,23 +84,23 @@
                             @else
                             <td>{{$data->kd_lokasi}} ( {{$nama_lokasi[0]->nama_lokasi}} )</td>
                             @endif
-                           
+
                             {{-- <td>{{$data->kd_cabang}}</td> --}}
                             <td>{{$data->th_pembuatan}}</td>
                             <td>{{$data->nama_barang}}</td>
                             @if ($data->kd_lokasi == "-")
-                            <td>Kosong</td> 
+                            <td>Kosong</td>
                             @else
-                            <td class="text-center">{!! QrCode::size(90)->generate(url("view",['no'=>substr($data->kd_inventaris,0,2),'cb'=>$data->kd_cabang,'kd'=>$data->kd_inventaris,'id'=>$data->id])); !!}</td>
+                            <td class="text-center">{!! QrCode::style('dot')->size(90)->generate(url("view",['no'=>substr($data->kd_inventaris,0,2),'cb'=>$data->kd_cabang,'kd'=>$data->kd_inventaris,'id'=>$data->id])); !!}</td>
                             @endif
-                            
+
                             <td>
                                 <button class="btn btn-warning btn-sm" id="editdatabarang" data-url="{{ route('editdatabarang',['id' => $data->id])}}"><i class="fa fa-pencil"> Edit</i></button><br><br>
                                 {{-- <button type="button" class="btn btn-danger btn-sm" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> Hapus</i></button> --}}
                                 <a class="tombolhapus{{$data->id}} btn btn-danger" style="display: none;" id="hapusdatabarang" data-url="{{ route('hapusdatabarang',['kode' => $data->kd_inventaris,'id' => $data->id])}}"></a>
                             </td>
                         </tr>
-                            
+
                         <script>
                             $("#confirm-btn-hapus<?php echo $data->id ?>").click(function(){
                             swal({
@@ -125,7 +125,7 @@
                         </script>
                         @endforeach
                     </tbody>
-                   
+
                     </table>
                 </div>
                 </div>
@@ -150,7 +150,7 @@
         <form name="form1" action="{{ url('pdf',['id'=>$id]) }}" method="post">
             @csrf
         <div class="modal-body">
-            
+
                     <div class="row">
                         <div class="col-6">
                             <label for="input-1">Ukuran</label>
@@ -166,13 +166,13 @@
                        <div class="col-6">
                         <label for="input-1">Layout</label>
                             <select name="layout" id="" class="form-control" required>
-                               
+
                                 <option value="Portrait">Portrait</option>
                                 <option value="landscape">Landscape</option>
                             </select>
                        </div>
                     </div>
-                
+
         </div>
         <div class="modal-footer bg-primary">
           {{-- <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"> Close</i></button> --}}
@@ -207,7 +207,7 @@
 
     table.buttons().container()
     .appendTo( '#example_wrapper .col-md-6:eq(0)' );
-    
+
     } );
 
 </script>
