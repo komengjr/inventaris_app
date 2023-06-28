@@ -60,7 +60,8 @@ class DivisiController extends Controller
     public function menumaintenance()
     {
         $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
-        return view('divisi.menumaintenance',[ 'datapinjam' => $datapinjam]);
+        $datamaintenance = DB::table('tbl_maintenance')->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_maintenance.id_inventaris')->get();
+        return view('divisi.menumaintenance',[ 'datapinjam' => $datapinjam, 'datamaintenance'=>$datamaintenance]);
     }
     public function menupemusnahan()
     {

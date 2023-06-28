@@ -71,36 +71,6 @@
     <!--End Row-->
 
 
-
-
-    <div class="row">
-        <div class="col-12 col-lg-6 col-xl-6">
-            <div class="card">
-                <div class="card-header">Delivery Status</div>
-                <div class="card-body">
-                    <div class="chart-container-5">
-                        <canvas id="deliverychart"></canvas>
-                    </div>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Within Time Limit : <span class="badge badge-warning float-right">325</span>
-                    </li>
-                    <li class="list-group-item">Out of Time Limit : <span class="badge badge-info float-right">45</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-12 col-lg-6 col-xl-6">
-            <div class="card">
-                <div class="card-header">Deliveries by Country</div>
-                <div class="card-body">
-                    <div class="chart-container-6">
-                        <canvas id="regionchart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!--End Row-->
     <!--start overlay-->
     <div class="overlay toggle-menu"></div>
@@ -126,139 +96,51 @@
                         </div>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
+                <div class="table-responsive pb-5">
+                    <table class="table align-items-center table-flush" id="default-table1">
                         <thead>
                             <tr>
                                 <th>Photo</th>
-                                <th>Product</th>
-                                <th>Amount</th>
+                                <th>Nama Barang</th>
+                                <th>Pelapor</th>
+                                <th>Tanggal Masuk</th>
                                 <th>Status</th>
-                                <th>Completion</th>
-                                <th>Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($datamaintenance as $item)
+
                             <tr>
                                 <td>
                                     <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
                                         class="product-img" />
                                 </td>
-                                <td>Headphone GL</td>
-                                <td>$1,840 USD</td>
+                                <td>{{$item->nama_barang}}</td>
+                                <td>{{$item->pelapor}}</td>
+                                <td>{{$item->created_at}}</td>
                                 <td>
                                     <span class="badge-dot">
                                         <i class="bg-danger"></i> pending
                                     </span>
                                 </td>
+
                                 <td>
-                                    <div class="progress shadow" style="height: 4px">
-                                        <div class="progress-bar gradient-ibiza" role="progressbar" style="width: 60%">
+                                    <div class="dropdown">
+                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
+                                            data-toggle="dropdown">
+                                            <i class="icon-options"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="javascript:void();">Action</a>
+                                            <a class="dropdown-item" href="javascript:void();">Another action</a>
+
                                         </div>
                                     </div>
                                 </td>
-                                <td>10 July 2018</td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
-                                        class="product-img" />
-                                </td>
-                                <td>Clasic Shoes</td>
-                                <td>$1,520 USD</td>
-                                <td>
-                                    <span class="badge-dot">
-                                        <i class="bg-success"></i> completed
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="progress shadow" style="height: 4px">
-                                        <div class="progress-bar gradient-ohhappiness" role="progressbar"
-                                            style="width: 100%"></div>
-                                    </div>
-                                </td>
-                                <td>12 July 2018</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
-                                        class="product-img" />
-                                </td>
-                                <td>Hand Watch</td>
-                                <td>$1,620 USD</td>
-                                <td>
-                                    <span class="badge-dot">
-                                        <i class="bg-warning"></i> delayed
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="progress shadow" style="height: 4px">
-                                        <div class="progress-bar gradient-orange" role="progressbar" style="width: 70%">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>14 July 2018</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
-                                        class="product-img" />
-                                </td>
-                                <td>Hand Camera</td>
-                                <td>$2,220 USD</td>
-                                <td>
-                                    <span class="badge-dot">
-                                        <i class="bg-info"></i> on schedule
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="progress shadow" style="height: 4px">
-                                        <div class="progress-bar gradient-scooter" role="progressbar" style="width: 85%">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>16 July 2018</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
-                                        class="product-img" />
-                                </td>
-                                <td>Iphone-X Pro</td>
-                                <td>$9,890 USD</td>
-                                <td>
-                                    <span class="badge-dot">
-                                        <i class="bg-success"></i> completed
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="progress shadow" style="height: 4px">
-                                        <div class="progress-bar gradient-ohhappiness" role="progressbar"
-                                            style="width: 100%"></div>
-                                    </div>
-                                </td>
-                                <td>17 July 2018</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
-                                        class="product-img" />
-                                </td>
-                                <td>Ladies Purse</td>
-                                <td>$3,420 USD</td>
-                                <td>
-                                    <span class="badge-dot">
-                                        <i class="bg-danger"></i> pending
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="progress shadow" style="height: 4px">
-                                        <div class="progress-bar gradient-ibiza" role="progressbar" style="width: 80%">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>18 July 2018</td>
-                            </tr>
+
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -292,69 +174,7 @@
 
 
 
-            // chart 2
 
-            var ctx = document.getElementById("deliverychart").getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ["Within Time Limit", "Out of Time Limit"],
-                    datasets: [{
-                        backgroundColor: [
-                            "#fba540",
-                            "#03d0ea"
-                        ],
-                        data: [325, 145],
-                        borderWidth: [0, 0]
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    legend: {
-                        position: "bottom",
-                        display: false,
-                        labels: {
-                            fontColor: '#585757',
-                            boxWidth: 15
-                        }
-                    },
-                    tooltips: {
-                        displayColors: false
-                    }
-                }
-            });
-
-
-            // chart 3
-
-            var ctx = document.getElementById("regionchart").getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ["Germany", "France", "Switzerland", "Australia"],
-                    datasets: [{
-                        backgroundColor: [
-                            "#14abef",
-                            "#02ba5a",
-                            "#d13adf",
-                            "#fba540"
-                        ],
-                        data: [55, 220, 40, 40],
-                        borderWidth: [0, 0, 0, 0]
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    legend: {
-                        position: "bottom",
-                        display: true,
-                        labels: {
-                            fontColor: '#585757',
-                            boxWidth: 10
-                        }
-                    }
-                }
-            });
 
 
 
@@ -385,17 +205,17 @@
                         "Dec"
                     ],
                     datasets: [{
-                        label: 'Baik',
-                        data: [1005, 800, 1200, 500, 1200, 800, 1160, 1125, 1115, 1110, 1120, 1510],
+                        label: 'Banyak Laporan',
+                        data: [22, 13, 25, 11, 41, 22, 11, 22, 33, 11, 22, 11],
                         backgroundColor: gradientStroke3,
                         hoverBackgroundColor: gradientStroke3
                     }, {
-                        label: 'Maintenance',
+                        label: 'Selesai',
                         data: [25, 18, 22, 15, 22, 18, 26, 35, 25, 20, 30, 20],
                         backgroundColor: gradientStroke4,
                         hoverBackgroundColor: gradientStroke4,
                     }, {
-                        label: 'Rusak',
+                        label: 'Belum Selesai',
                         data: [25, 18, 22, 15, 22, 18, 26, 35, 25, 20, 30, 20],
                         backgroundColor: gradientStroke5,
                         hoverBackgroundColor: gradientStroke5,

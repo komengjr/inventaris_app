@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+// use Sentinel;
 use DB;
 class DataController extends Controller
 {
+    public function scandata()
+    {
+        return view('scan');
+    }
     public function showdata($no,$cb,$kd,$id)
     {
-        
-        
+
+
         $data = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*','no_urut_barang.*','tbl_lokasi.kd_lokasi','tbl_lokasi.nama_lokasi')
         ->join('tbl_inventory','tbl_inventory.kd_inventaris','=','sub_tbl_inventory.kd_inventaris')
@@ -28,15 +33,15 @@ class DataController extends Controller
         } else {
             return view('showdata',['data'=>$data]);
         }
-        
+
         // dd($data);
         // return view('admin.print',['data'=>$data]);
-        
+
     }
     public function simpandataregsiter(Request $request)
     {
 
-        
+
 
         $randomString = Str::random(30);
         $nomorregistrasi = 'REG-'.$randomString;
@@ -52,8 +57,8 @@ class DataController extends Controller
                 'lokasi' => $request->input('lokasi'),
                 'tgl_pemeriksaan' => $request->input('tgl'),
                 'dokter_pemeriksa' => $request->input('dokter_pemeriksaan'),
-               
-                
+
+
                 'ket_kel_1' => $request->input('ket_kel_1'),
                 'ket_kel_2' => $request->input('ket_kel_2'),
                 'ket_kel_3' => $request->input('ket_kel_3'),
@@ -82,7 +87,7 @@ class DataController extends Controller
                 'ket_kel_26' => $request->input('ket_kel_26'),
                 'ket_kel_27' => $request->input('ket_kel_27'),
                 'ket_kel_28' => $request->input('ket_kel_28'),
-                
+
             ]);
 
         DB::table('riwayat_penyakit')->insert(
@@ -169,7 +174,7 @@ class DataController extends Controller
                 'pk_lupus' => $request->input('pk_lupus'),
                 'pk_asma' => $request->input('pk_asma'),
             ]);
-        
+
         DB::table('riwayat_kebiasaan_hidup')->insert(
             [
                 'no_registerasi' => $nomorregistrasi,
@@ -180,7 +185,7 @@ class DataController extends Controller
                 'merokok' => $request->input('merokok') ,
                 'ket_merokok' => $request->input('merokok-1'),
             ]);
-        
+
         DB::table('riwayat_konsumsi_obat')->insert(
             [
                 'no_registerasi' => $nomorregistrasi,
