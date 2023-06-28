@@ -7,12 +7,9 @@
     <link href=" {{ URL::asset('/qr_login/option2/css/style.css') }}" rel="stylesheet">
 @stop
 @section('content')
-    <div class="container" id="QR-Code">
+    <div class="containera p-0" id="QR-Code">
 
-
-
-        <br><br>
-        <div class="col-md-6" id="kamera">
+        <div class="col-md-4" id="kamera">
             <div class="well" style="position: relative;display: inline-block;">
                 <canvas width="320" height="320" id="webcodecam-canvas"></canvas>
                 <div class="scanner-laser laser-rightBottom" style="opacity: 0.5;"></div>
@@ -45,9 +42,8 @@
             </div>
         </div>
         <div class="col-md-6">
-            <select class="form-control" id="camera-select"></select>
-            <div class="form-group">
-
+            <select class="form-control " id="camera-select"></select>
+            <div class="form-group" style="padding-top: 20px;">
                 <button title="Decode Image" class="btn btn-default btn-sm" id="decode-img" type="button"
                     data-toggle="tooltip"><span class="glyphicon glyphicon-upload"></span></button>
                 <button title="Image shoot" class="btn btn-info btn-sm disabled" id="grab-img" type="button"
@@ -81,6 +77,21 @@
             @endif
         </div>
     </div>
+    <div class="modal fade" id="lihatdatabarang">
+        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 95%;">
+            <div class="modal-content animated zoomInUp">
+                <div class="modal-header border-light-2">
+                    <h5 class="modal-title text-white">Your modal title here</h5>
+                    <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close" style="float: right">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="showdatabarang">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -90,25 +101,27 @@
 
     <script>
         function CallAjaxLoginQr(code) {
-            console.log(code);
-            $.ajax({
-                type: "POST",
-                cache: false,
-                url: "data/"+code,
-                data: {
-                    data: code
-                },
 
-                success: function(data) {
-                    console.log(code);
-                    if (data == 1) {
-                        $(location).attr('href', 'PostDataxml/' + code + '/' + datacabang);
-                    } else {
-                        return confirm('Data Tidak ditemukanasas');
-                    }
-                    //
-                }
-            });
+            $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "data/" + code,
+                    data: {
+                        data: code
+                    },
+                    dataType: 'html',
+
+                })
+
+                .done(function(data) {
+                    $('#lihatdatabarang').modal('show');
+                    $('#showdatabarang').html(data);
+                })
+                .fail(function() {
+                    $('#showdatabarang').html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
+                });
 
         }
 

@@ -3,7 +3,7 @@ use App\Http\Controllers\FileUploadController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('scan', 'DataController@scandata');
-Route::get('data/{id}', 'DataController@cekdataineventaris');
+Route::post('data/{id}', 'DataController@cekdataineventaris');
 Route::get('barcode_qr_reader', 'ImageUploadController@page');
 Route::post('/barcode_qr_reader/upload', 'ImageUploadController@upload')->name('image.upload');
 

@@ -12,6 +12,12 @@ class DataController extends Controller
     {
         return view('scan');
     }
+    public function cekdataineventaris(Request $request)
+    {
+
+        $data = DB::table('sub_tbl_inventory')->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')->where('sub_tbl_inventory.id_inventaris',$request->data)->get();
+        return view('tampil',['data'=>$data]);
+    }
     public function showdata($no,$cb,$kd,$id)
     {
 
