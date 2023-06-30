@@ -81,7 +81,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 95%;">
             <div class="modal-content animated zoomInUp">
                 <div class="modal-header border-light-2">
-                    <h5 class="modal-title text-white">Your modal title here</h5>
+                    <h5 class="modal-title text-white">Detail Barang</h5>
                     <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close" style="float: right">
                         <span aria-hidden="true">&times;</span>
                     </button>

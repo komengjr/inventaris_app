@@ -3,65 +3,7 @@
     <div class="content-wrapper">
         <div class="container-fluid">
 
-            <!--End Row-->
 
-            <div class="row">
-                <div class="col-12 col-lg-12 col-xl-12">
-                    <div class="card">
-                        <div class="card-header">Avg Delivery Time (hours) & Route (km)
-                            <div class="card-action">
-                                <div class="dropdown">
-                                    <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
-                                        data-toggle="dropdown">
-                                        <i class="icon-options"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="javascript:void();">Action</a>
-                                        <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                        <a class="dropdown-item" href="javascript:void();">Something else here</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="javascript:void();">Separated link</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-container-11">
-                                <canvas id="timeChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--End Row-->
-
-            <div class="row">
-                <div class="col-12 col-lg-12 col-xl-12">
-                    <div class="card gradient-ohhappiness">
-                        <div class="card-body">
-                            <div class="row row-group align-items-center">
-                                <div class="col-12 col-lg-3 text-center p-3 border-white-2">
-                                    <div class="fleet-status fleet-chart" data-percent="65">
-                                        <span class="fleet-status-percent"></span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-4 text-center p-3  border-white-2">
-                                    <h4 class="mb-0 text-white">65%</h4>
-                                    <p class="mb-0 small-font text-white">Fleet Efficiency</p>
-                                </div>
-                                <div class="col-12 col-lg-5 p-3">
-                                    <ul>
-                                        <li class="text-white">Total fleet : 63</li>
-                                        <li class="text-white">On the move : 60</li>
-                                        <li class="text-white">In Maintenence : 3</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--End Row-->
 
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-6">
@@ -117,7 +59,7 @@
                 </div>
                 <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card">
-                        <div class="card-header">Deliveries by Country</div>
+                        <div class="card-header">Kategori</div>
                         <div class="card-body">
                             <div class="chart-container-6">
                                 <canvas id="regionchart"></canvas>
@@ -357,15 +299,21 @@
             var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ["Germany", "France", "Switzerland", "Australia"],
+                    labels: [
+                        @foreach ($datakategori as $datakategori)
+                        "{{$datakategori->kategori_barang}}",
+                        @endforeach
+                    ],
                     datasets: [{
                         backgroundColor: [
                             "#14abef",
                             "#02ba5a",
                             "#d13adf",
+                            "#F13adf",
+                            "#Z13adf",
                             "#fba540"
                         ],
-                        data: [55, 220, 40, 40],
+                        data: [0,0, 10, 40, 40,200],
                         borderWidth: [0, 0, 0, 0]
                     }]
                 },
@@ -389,83 +337,7 @@
 
             // chart 6
 
-            var ctx = document.getElementById("timeChart").getContext('2d');
 
-
-            var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
-            gradientStroke3.addColorStop(0, '#42e695');
-            gradientStroke3.addColorStop(1, '#3bb2b8');
-
-            var gradientStroke4 = ctx.createLinearGradient(0, 0, 0, 300);
-            gradientStroke4.addColorStop(0, ' #8E2DE2');
-            gradientStroke4.addColorStop(0.5, '#4A00E0');
-
-            var gradientStroke5 = ctx.createLinearGradient(0, 0, 0, 300);
-            gradientStroke5.addColorStop(0, ' #F5AF19');
-            gradientStroke5.addColorStop(0.5, '#F12711');
-
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
-                        "Dec"
-                    ],
-                    datasets: [{
-                        label: 'Baik',
-                        data: [15, 8, 12, 5, 12, 8, 16, 25, 15, 10, 20, 10],
-                        backgroundColor: gradientStroke3,
-                        hoverBackgroundColor: gradientStroke3
-                    }, {
-                        label: 'Maintenance',
-                        data: [25, 18, 22, 15, 22, 18, 26, 35, 25, 20, 30, 20],
-                        backgroundColor: gradientStroke4,
-                        hoverBackgroundColor: gradientStroke4,
-                    }, {
-                        label: 'Rusak',
-                        data: [25, 18, 22, 15, 22, 18, 26, 35, 25, 20, 30, 20],
-                        backgroundColor: gradientStroke5,
-                        hoverBackgroundColor: gradientStroke5,
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    legend: {
-                        display: true,
-                        labels: {
-                            fontColor: '#585757',
-                            boxWidth: 40
-                        }
-                    },
-                    tooltips: {
-                        enabled: true,
-                        displayColors: false
-                    },
-                    scales: {
-                        xAxes: [{
-                            categoryPercentage: 0.3,
-                            ticks: {
-                                beginAtZero: true,
-                                fontColor: '#585757'
-                            },
-                            gridLines: {
-                                display: true,
-                                color: "rgba(0, 0, 0, 0.05)"
-                            },
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                fontColor: '#585757'
-                            },
-                            gridLines: {
-                                display: true,
-                                color: "rgba(0, 0, 0, 0.05)"
-                            },
-                        }]
-                    }
-
-                }
-            });
 
 
         });

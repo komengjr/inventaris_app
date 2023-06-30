@@ -54,13 +54,13 @@
                         </div>
                         <div class="col-12 col-lg-4 text-center p-3  border-white-2">
                             <h4 class="mb-0 text-white">65%</h4>
-                            <p class="mb-0 small-font text-white">Fleet Efficiency</p>
+                            <p class="mb-0 small-font text-white">Persentase</p>
                         </div>
                         <div class="col-12 col-lg-5 p-3">
                             <ul>
-                                <li class="text-white">Total fleet : 63</li>
-                                <li class="text-white">On the move : 60</li>
-                                <li class="text-white">In Maintenence : 3</li>
+                                <li class="text-white">Total Laporan : 0</li>
+                                <li class="text-white">Dapat Di Perbaiki : 0</li>
+                                <li class="text-white">Tidak Dapat di Perbaiki : 0</li>
                             </ul>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="table-responsive pb-5">
-                    <table class="table align-items-center table-flush" id="default-table1">
+                    <table class="table styled-table align-items-center table-flush" id="default-table1">
                         <thead>
                             <tr>
                                 <th>Photo</th>
@@ -132,8 +132,10 @@
                                             <i class="icon-options"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="javascript:void();">Action</a>
-                                            <a class="dropdown-item" href="javascript:void();">Another action</a>
+                                            <a class="dropdown-item" href="javascript:void();" data-toggle="modal"
+                                            data-target="#modalmaintenance" id="tomboltindakanmaintenance"
+                                            data-url="{{ url('divisi/maintenance/tindakan', ['id'=>$item->kd_maintenance]) }}"><i class="fa fa-cog"></i> Lakukan Tindakan</a>
+                                            {{-- <a class="dropdown-item" href="javascript:void();">Another action</a> --}}
 
                                         </div>
                                     </div>
@@ -147,7 +149,16 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="modalmaintenance">
+        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+            <div class="modal-content">
+                <div id="showdatasdm">
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     {{-- <script src="{{ url('assets/js/app-script.js', []) }}"></script> --}}
@@ -201,22 +212,25 @@
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
-                        "Dec"
+                    labels: [
+                        @foreach ($dataperiode as $dataperiode1)
+                        "{{$dataperiode1->bulan}}",
+                        @endforeach
+
                     ],
                     datasets: [{
                         label: 'Banyak Laporan',
-                        data: [22, 13, 25, 11, 41, 22, 11, 22, 33, 11, 22, 11],
+                        data: [22, 13, 25, 11, 41, 22, 11,],
                         backgroundColor: gradientStroke3,
                         hoverBackgroundColor: gradientStroke3
                     }, {
-                        label: 'Selesai',
-                        data: [25, 18, 22, 15, 22, 18, 26, 35, 25, 20, 30, 20],
+                        label: 'Dapat diperbaiki',
+                        data: [25, 18, 22, 15, 22, 18, 26,],
                         backgroundColor: gradientStroke4,
                         hoverBackgroundColor: gradientStroke4,
                     }, {
-                        label: 'Belum Selesai',
-                        data: [25, 18, 22, 15, 22, 18, 26, 35, 25, 20, 30, 20],
+                        label: 'Tidak dapat diperbaiki',
+                        data: [25, 18, 22, 15, 22, 18, 26, ],
                         backgroundColor: gradientStroke5,
                         hoverBackgroundColor: gradientStroke5,
                     }]

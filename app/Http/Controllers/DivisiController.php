@@ -59,14 +59,18 @@ class DivisiController extends Controller
     }
     public function menumaintenance()
     {
-        $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
+        $dataperiode = DB::table('tbl_periode')->where('status_periode',1)->get();
         $datamaintenance = DB::table('tbl_maintenance')->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_maintenance.id_inventaris')->get();
-        return view('divisi.menumaintenance',[ 'datapinjam' => $datapinjam, 'datamaintenance'=>$datamaintenance]);
+        return view('divisi.menumaintenance',[ 'dataperiode' => $dataperiode, 'datamaintenance'=>$datamaintenance]);
+    }
+    public function tindakanmaintenance($id)
+    {
+        return view('divisi.modal.tindakanmaintenance',['id'=>$id]);
     }
     public function menupemusnahan()
     {
-        $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
-        return view('divisi.menupemusnahan',[ 'datapinjam' => $datapinjam]);
+        $datakategori = DB::table('no_urut_barang')->get();
+        return view('divisi.menupemusnahan',[ 'datakategori' => $datakategori]);
     }
     public function verifdatainventaris()
     {

@@ -46,7 +46,7 @@
                     </button> --}}
                     </div>
                     <div class="table-responsive" id="showdatamutasi">
-                        <table id="default-datatable" class="styled-table table-bordered">
+                        <table id="default-datatable" class="table styled-table table-bordered align-items-center" >
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -131,7 +131,7 @@
             </div>
         </div>
     </div> --}}
-    <div class="row pl-3 pt-2 pb-2">
+    {{-- <div class="row pl-3 pt-2 pb-2">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -221,7 +221,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="modal fade" id="tambahdatabaru">
         <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">

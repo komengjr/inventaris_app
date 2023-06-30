@@ -54,6 +54,7 @@ Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 
 // Divisi Controller
 Route::get('menu/formpinjam','DivisiController@menu');
 Route::get('menu/formmaintenance','DivisiController@menumaintenance');
+Route::get('divisi/maintenance/tindakan/{id}',['as'=>'divisi/maintenance/tindakan','uses'=> 'DivisiController@tindakanmaintenance']);
 Route::get('menu/formpemusnahan','DivisiController@menupemusnahan');
 Route::get('menu/verifdatainventaris','DivisiController@verifdatainventaris');
 Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
