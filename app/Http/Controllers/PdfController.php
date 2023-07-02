@@ -64,8 +64,9 @@ class PdfController extends Controller
     public function printverifikasi($id)
     {
         $databrg = DB::table('tbl_sub_peminjaman')
+        ->join('tbl_peminjaman','tbl_peminjaman.id_pinjam','=','tbl_sub_peminjaman.id_pinjam')
         ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')
-        ->where('id_pinjam',10)
+        ->where('tbl_peminjaman.tiket_peminjaman',$id)
         ->get();
         $datapinjam = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$id)->get();
         $pdf = PDF::loadview('divisi.print.verif',['databrg'=>$databrg, 'datapinjam'=>$datapinjam])->setPaper('A4','potrait');
