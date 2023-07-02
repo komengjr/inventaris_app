@@ -17,6 +17,7 @@ class CreateTblPeminjamanTable extends Migration
             $table->id('id_pinjam');
             $table->string('tiket_peminjaman')->unique();
             $table->string('nama_kegiatan');
+            $table->string('tujuan_cabang');
             $table->string('tgl_pinjam');
             $table->string('pj_pinjam');
             $table->string('status_pinjam');

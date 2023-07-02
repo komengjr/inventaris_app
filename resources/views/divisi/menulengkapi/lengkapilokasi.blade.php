@@ -22,10 +22,10 @@
                     @endphp
                     @foreach ($databarang as $databarang)
                         <tr>
-                            <td>{{$no++}}</td>
-                            <td>{{$databarang->nama_barang}}</td>
+                            <td data-label="No">{{$no++}}</td>
+                            <td data-label="Nama Barang">{{$databarang->nama_barang}}</td>
 
-                            <td>
+                            <td data-label="Pilih Kondisi" class="text-left">
                                 @php
                                     $cekdata = DB::table('tbl_sub_verifdatainventaris')
                                     ->where('kode_verif',$tiket)

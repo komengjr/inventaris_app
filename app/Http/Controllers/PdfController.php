@@ -10,6 +10,10 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use SimpleSoftwareIO\QrCode\Generator;
 class PdfController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function print(Request $request ,$id)
     {
         $data = DB::table('sub_tbl_inventory')
@@ -54,6 +58,25 @@ class PdfController extends Controller
         ->get();
         // $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('string'));
         $pdf = PDF::loadview('pdf.dokumen_mutasi',['datamutasi'=>$datamutasi,'databrg'=>$databrg])->setPaper('A4','potrait');
+        return $pdf->stream();
+    }
+
+    public function printverifikasi($id)
+    {
+        $databrg = DB::table('tbl_sub_peminjaman')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')
+        ->where('id_pinjam',10)
+        ->get();
+        $datapinjam = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$id)->get();
+        $pdf = PDF::loadview('divisi.print.verif',['databrg'=>$databrg, 'datapinjam'=>$datapinjam])->setPaper('A4','potrait');
+        return $pdf->stream();
+    }
+    public function printpemusnahan($id)
+    {
+        $databrg = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang','PA')
+        ->get();
+        $pdf = PDF::loadview('divisi.print.pemusnahan',['databrg'=>$databrg])->setPaper('A4','potrait');
         return $pdf->stream();
     }
 }

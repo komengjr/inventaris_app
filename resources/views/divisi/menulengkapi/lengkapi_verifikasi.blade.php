@@ -65,7 +65,7 @@
                                 @else
 
                                 <tr>
-                                    <td>{{$no++}}</td>
+                                    <td data-label="No">{{$no++}}</td>
                                     <td>{{$lokasi->nama_lokasi}}</td>
                                     @php
                                         $totalbarang = DB::table('sub_tbl_inventory')

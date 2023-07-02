@@ -22,10 +22,19 @@
     @csrf
     <div class="modal-body">
         <div class="row">
-            <div class="col-12">
-                <label for="">Kegiatan</label>
+            <div class="col-6">
+                <label for="">Tujuan Pemeinjamn</label>
                 <input type="text" class="form-control" name="nama_kegiatan" required>
                 <input type="text" class="form-control" name="tiket_peminjaman" value="{{$tiket}}" hidden>
+            </div>
+            <div class="col-6">
+                <label for="">Tujuan Cabang</label>
+                <select name="cabang" id="" class="form-control single-select">
+                    <option value="">Pilih Cabang</option>
+                    @foreach ($cabang as $item)
+                        <option value="{{$item->kd_cabang}}">{{$item->nama_cabang}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-6">
                 <label for="">Penanggung Jawab Peminjam</label>
@@ -52,4 +61,9 @@
 
 </div>
 
+<script>
+     $(document).ready(function() {
+        $('.single-select').select2();
 
+      });
+</script>

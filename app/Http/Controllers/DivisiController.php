@@ -54,8 +54,12 @@ class DivisiController extends Controller
 
     public function menu()
     {
+        if (auth::user()->akses == 'sdm') {
+
         $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
         return view('divisi.menu',[ 'datapinjam' => $datapinjam]);
+
+        }
     }
     public function menumaintenance()
     {
@@ -83,8 +87,8 @@ class DivisiController extends Controller
         $tgl = date('d:m:Y');
         $jadi = 'PB-'.$tgl.'-'.$randomString;
 
-
-        return view('divisi.formpeminjaman',['tiket' => $jadi ]);
+        $cabang = DB::table('tbl_cabang')->get();
+        return view('divisi.formpeminjaman',['tiket' => $jadi ,'cabang'=>$cabang]);
     }
     public function tambahdataverifikasiinventaris()
     {
@@ -152,6 +156,7 @@ class DivisiController extends Controller
                             'id_pinjam' => $ids,
                             'id_inventaris' => $id,
                             'tgl_pinjam_barang' => date('Y-m-d H:i:s'),
+                            'kd_cabang' => auth::user()->cabang,
                             'status_sub_peminjaman' => 0,
                             'created_at' => date('Y-m-d H:i:s'),
                         ]);
@@ -245,6 +250,7 @@ class DivisiController extends Controller
             [
                 'tiket_peminjaman' => $request->input('tiket_peminjaman'),
                 'nama_kegiatan' => $request->input('nama_kegiatan'),
+                'tujuan_cabang' => $request->input('cabang'),
                 'tgl_pinjam' => $request->input('tgl_pinjam'),
                 'pj_pinjam' => $request->input('pj_pinjam'),
                 'status_pinjam' => 0,

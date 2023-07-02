@@ -60,21 +60,21 @@
                     $data = DB::table('sub_tbl_inventory')->where('id_inventaris',$item->id_inventaris)->get();
                 @endphp
                     <tr>
-                        <td>{{$no++}}</td>
-                        <td>{{$data[0]->nama_barang}}</td>
-                        <td>{{$data[0]->merk}}</td>
-                        <td>{{$data[0]->type}}</td>
-                        <td>{{$data[0]->no_seri}}</td>
-                        <td>{{$item->tgl_pinjam_barang}}</td>
-                        <td>{{$item->tgl_kembali_barang}}</td>
-                        <td>
+                        <td data-label="No">{{$no++}}</td>
+                        <td data-label="Nama Barang">{{$data[0]->nama_barang}}</td>
+                        <td data-label="Merek">{{$data[0]->merk}}</td>
+                        <td data-label="Type">{{$data[0]->type}}</td>
+                        <td data-label="No Seri">{{$data[0]->no_seri}}</td>
+                        <td data-label="Tanggal Pinjam">{{$item->tgl_pinjam_barang}}</td>
+                        <td data-label="Tanggal Kembali">{{$item->tgl_kembali_barang}}</td>
+                        <td data-label="Status Barang">
                             @if ($item->status_sub_peminjaman == 0)
                                 <button class="btn-warning" disabled>Belum Balik</button>
                             @else
                                 <button class="btn-success" disabled>Sudah Balik</button>
                             @endif
                         </td>
-                        <td><button class="btn-danger"><i class="fa fa-trash"></i></button></td>
+                        <td data-label="Nama Barang"><button class="btn-danger"><i class="fa fa-trash"></i></button></td>
                     </tr>
                 @endforeach
     </tbody>
