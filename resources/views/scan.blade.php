@@ -105,7 +105,7 @@
             $.ajax({
                     type: "POST",
                     cache: false,
-                    url: "data/" + code,
+                    url: "data/inventaris",
                     data: {
                         data: code
                     },
