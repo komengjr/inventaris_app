@@ -172,7 +172,7 @@
                 </div>
                 <div class="col-lg-9">
                     <div class="float-sm-right">
-                        <button class="btn btn-success m-1"><i class="fa fa-print"></i> Submit Penyelesaian & Generate PDF</button>
+                        <button class="btn-success m-1" onclick="window.open('{{ url('divisi/verifikasi/print/verif', ['id'=>$cekdata[0]->kode_verif]) }}', '', 'width=1200, height=700');"><i class="fa fa-print"></i> Submit Penyelesaian & Generate PDF</button>
                         {{-- <button class="btn btn-primary m-1"><i class="fa fa-download"></i> Generate PDF</button> --}}
                     </div>
                 </div>

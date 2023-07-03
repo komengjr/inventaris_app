@@ -58,9 +58,9 @@
                                                 ->eye('circle')
                                                 ->eyeColor(0, 255, 0, 0, 255, 0, 0)
                                                 ->mergeString(Storage::get('qr.png'), .3)
-                                                ->generate($data->id_inventaris)) !!} ">
+                                                ->generate($data->no_inventaris)) !!} ">
                 <div class="absolute">
-                    <table style="font-size: 8px; margin: 0px; padding: 0px; width: 106px;" border="1" cla>
+                    <table style="font-size: 8px; margin: 0px; padding: 0px; width: 107px;" border="1" cla>
                         <tr>
 
                             <td colspan="3"><strong>{{ $data->nama_barang }}</strong></td>
@@ -84,28 +84,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <p>Tanggal Cetak</p>
-                            </td>
-                            <td class="text-center">
-                                <p>:</p>
-                            </td>
-                            <td>
-                                <p>{{ $data->created_at }}</p>
+                            <td colspan="3" class="text-center">
+                                <strong>{{ $data->no_inventaris }}</strong>
                             </td>
                         </tr>
 
-                        <tr>
-                            <td>
-                                <p>ID</p>
-                            </td>
-                            <td class="text-center">
-                                <p>:</p>
-                            </td>
-                            <td>
-                                <p>{{ $data->id_inventaris }}</p>
-                            </td>
-                        </tr>
+
                         <tr>
 
                             <td colspan="3">

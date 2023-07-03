@@ -105,7 +105,7 @@
     <img src="{{ url('url', []) }}" alt="">
     <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
     <button
-        onclick="window.open('{{ url('divisi/verifikasi/print/verif', ['id'=>$cekdata[0]->tiket_peminjaman]) }}', '', 'width=1200, height=700');"class="btn-info"
+        onclick="window.open('{{ url('divisi/verifikasi/print/peminjaman', ['id'=>$cekdata[0]->tiket_peminjaman]) }}', '', 'width=1200, height=700');"class="btn-info"
         id="" data-url="asdasd"><i class="fa fa-print"></i> Cetak / Print</button>
     <button type="submit" class="btn-success" style="float: left;"><i class="fa fa-save"></i> Penyelesaian</button>
 </div>

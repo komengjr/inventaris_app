@@ -83,10 +83,9 @@ class DivisiController extends Controller
     }
     public function tambahdatapeminjaman()
     {
-        $randomString = Str::random(4);
-        $tgl = date('d:m:Y');
-        $jadi = 'PB-'.$tgl.'-'.$randomString;
-
+        $randomString = mt_rand(1, 10);
+        $tgl = date('d-m-Y');
+        $jadi = 'PJ-SDM-'.auth::user()->cabang.'-'.$tgl.'-'.$randomString;
         $cabang = DB::table('tbl_cabang')->get();
         return view('divisi.formpeminjaman',['tiket' => $jadi ,'cabang'=>$cabang]);
     }
@@ -327,6 +326,28 @@ class DivisiController extends Controller
 
 
 
+    public function masterbarang()
+    {
+        $datakategori = DB::table('no_urut_barang')->get();
+        $data = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->get();
+        return view('divisi.masterbarang',[ 'datakategori' => $datakategori, 'data'=>$data]);
+    }
+    public function tokenmasterbarang()
+    {
+        $datakategori = DB::table('sub_tbl_inventory')->get();
+        $data = DB::table('sub_tbl_inventory')
+        ->join('tbl_setting_cabang','tbl_setting_cabang.kd_cabang','=','sub_tbl_inventory.kd_cabang')
+        ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->get();
+        foreach ($data as $item) {
+            DB::table('sub_tbl_inventory')
+                ->where('id_inventaris',$item->id_inventaris)
+                ->where('kd_cabang',auth::user()->cabang)
+                ->update([
+                            'no_inventaris' => $item->id.'/'.$item->kd_inventaris.'/'.$item->kd_lokasi.'/P.'.$item->no_cabang.'/'.$item->th_perolehan,
+                        ]);
+        }
+        return redirect()->back();
+    }
     public function faq()
     {
         return view('faq');

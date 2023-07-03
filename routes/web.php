@@ -65,6 +65,8 @@ Route::get('divisi/peminjaman/pengembaliandatabarang/{id}',['as'=>'divisi/peminj
 Route::get('divisi/peminjaman/tablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/tablepeminjaman','uses'=> 'DivisiController@tablepeminjaman']);
 Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
 
+Route::get('menu/masterbarang','DivisiController@masterbarang');
+Route::get('divisi/masterbarang/token','DivisiController@tokenmasterbarang');
 
 Route::post('divisi/inventori/updatedatainventori',['as'=>'divisi/inventori/updatedatainventori','uses'=> 'DivisiController@updatedatainventori']);
 
@@ -78,6 +80,7 @@ Route::get('divisi/verifikasi/lengkapi/{id}',['as'=>'master/verifikasi/lengkapi'
 Route::get('divisi/verifikasi/lokasi/{tiket}/{id}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);
 Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}/{ket}',['as'=>'master/verifikasi/update','uses'=> 'DivisiController@verifikasilengkapiupdatebaranglokasi']);
 Route::get('divisi/verifikasi/print/verif/{id}','PdfController@printverifikasi');
+Route::get('divisi/verifikasi/print/peminjaman/{id}','PdfController@printpeminjaman');
 Route::get('divisi/verifikasi/print/pemusnahan/{id}','PdfController@printpemusnahan');
 // Admin Controller
 //Mutasi

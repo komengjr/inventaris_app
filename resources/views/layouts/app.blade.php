@@ -229,6 +229,7 @@
                         <li><a href="{{ url('menu/formmaintenance', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Maintenance</a></li>
                         <li><a href="{{ url('menu/formpemusnahan', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Pemusnahan</a></li>
                         <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Verif Data</a></li>
+                        <li><a href="{{ url('menu/masterbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Data</a></li>
                         @elseif(auth::user()->akses == "keu")
                         <li><a href="{{ url('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form Keuangan</a></li>
                         @elseif(auth::user()->akses == "admin")

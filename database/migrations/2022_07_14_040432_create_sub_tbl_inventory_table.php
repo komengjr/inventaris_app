@@ -16,6 +16,7 @@ class CreateSubTblInventoryTable extends Migration
         Schema::create('sub_tbl_inventory', function (Blueprint $table) {
             $table->id();
             $table->string('id_inventaris')->unique();
+            $table->string('no_inventaris')->nullable();
             $table->string('kd_inventaris')->index();
             $table->string('kd_lokasi')->index();
             $table->string('kd_jenis')->nullable();

@@ -363,7 +363,7 @@ class HomeController extends Controller
         }
         DB::table('sub_tbl_inventory')->insert(
             [
-                        'id_inventaris' => auth::user()->cabang.'-'. Str::random(5),
+                        'id_inventaris' => auth::user()->cabang.'-'. mt_rand(100, 9999),
                         'nama_barang' => $request->input('nama_barang'),
                         'gambar' => $datagambar,
                         'kd_jenis' => 0,

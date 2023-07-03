@@ -2,7 +2,7 @@
 <div class="container-fluid">
 <style>
     .content, .modal {
-    
+
     top:0;
     left:0;
     height:100%;
@@ -54,11 +54,11 @@
                     <div class="media align-items-center bg-white p-4">
                         <div class="media-body">
                             @if ($totalinventaris == 1)
-                            <h5 class="mb-0 text-dark">Kosong</h5>  
+                            <h5 class="mb-0 text-dark">Kosong</h5>
                             @else
-                            <h5 class="mb-0 text-dark">{{ $totalinventaris }}</h5>  
+                            <h5 class="mb-0 text-dark">{{ $totalinventaris }}</h5>
                             @endif
-                            
+
                             <p class="mb-0 text-dark">Total Inventaris</p>
                         </div>
                         <div class="w-icon">
@@ -120,7 +120,7 @@
                                 <h6 class="mb-0 text-white">{{ $item->kategori_barang }}</h6>
                                 <?php $jumlah = 0; ?>
                                 <?php
-                                
+
                                 $dataklasifikasi1x = DB::table('tbl_inventory')
                                     ->select('tbl_inventory.*')
                                     ->where('no_urut_barang', $item->no_urut_barang)
@@ -135,7 +135,7 @@
                                         ->where('kd_inventaris', $item1x->kd_inventaris)
                                         ->where('kd_cabang', auth::user()->cabang)
                                         ->count();
-                                    
+
                                     $jumlah = $jumlah + $totalx;
                                     ?>
                                 @endforeach
@@ -166,9 +166,9 @@
                             <p class="mt-2 mb-0 extra-small-font text-white">
                                 {{ $jumlah }}
                             </p>
-                            <button class="btn-info">Asset</button>
-                            <button class="btn-info">Bukan Asset</button>
-                            
+                            {{-- <button class="btn-info">Asset</button>
+                            <button class="btn-info">Bukan Asset</button> --}}
+
                         </div>
                     </div>
                 </div>

@@ -63,13 +63,26 @@ class PdfController extends Controller
 
     public function printverifikasi($id)
     {
+        $databrg = DB::table('tbl_sub_verifdatainventaris')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
+
+        ->where('tbl_sub_verifdatainventaris.kode_verif',$id)
+        ->get();
+        $ttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
+        $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif',$id)->get();
+        $pdf = PDF::loadview('divisi.print.verif',['databrg'=>$databrg, 'dataverif'=>$dataverif, 'ttd'=>$ttd])->setPaper('A4','potrait');
+        return $pdf->stream();
+    }
+    public function printpeminjaman($id)
+    {
         $databrg = DB::table('tbl_sub_peminjaman')
         ->join('tbl_peminjaman','tbl_peminjaman.id_pinjam','=','tbl_sub_peminjaman.id_pinjam')
         ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')
         ->where('tbl_peminjaman.tiket_peminjaman',$id)
         ->get();
+        $ttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
         $datapinjam = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$id)->get();
-        $pdf = PDF::loadview('divisi.print.verif',['databrg'=>$databrg, 'datapinjam'=>$datapinjam])->setPaper('A4','potrait');
+        $pdf = PDF::loadview('divisi.print.peminjaman',['databrg'=>$databrg, 'datapinjam'=>$datapinjam, 'ttd'=>$ttd])->setPaper('A4','potrait');
         return $pdf->stream();
     }
     public function printpemusnahan($id)
