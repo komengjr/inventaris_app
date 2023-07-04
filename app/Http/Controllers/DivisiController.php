@@ -348,6 +348,27 @@ class DivisiController extends Controller
         }
         return redirect()->back();
     }
+    public function settingsystem(Request $request)
+    {
+        $ceksetting = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->get();
+        if ($ceksetting->isEmpty()) {
+            DB::table('tbl_setting_cabang')->insert(
+                [
+                    'kd_cabang' => auth::user()->cabang,
+                    'no_cabang' => $request->no_cabang,
+            ]);
+            DB::table('tbl_ttd')->insert(
+                [
+                    'kd_cabang' => auth::user()->cabang,
+                    'ttd_1' => $request->nama_1,
+                    'ttd_2' => $request->nama_2,
+                    'ttd_3' => $request->nama_3,
+            ]);
+        } else {
+
+        }
+        return redirect()->back();
+    }
     public function faq()
     {
         return view('faq');

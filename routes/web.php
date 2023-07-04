@@ -67,6 +67,7 @@ Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'di
 
 Route::get('menu/masterbarang','DivisiController@masterbarang');
 Route::get('divisi/masterbarang/token','DivisiController@tokenmasterbarang');
+Route::post('divisi/setting/system','DivisiController@settingsystem');
 
 Route::post('divisi/inventori/updatedatainventori',['as'=>'divisi/inventori/updatedatainventori','uses'=> 'DivisiController@updatedatainventori']);
 

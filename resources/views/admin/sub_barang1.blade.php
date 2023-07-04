@@ -106,7 +106,7 @@
         <span>
             <button type="button" class="btn-outline-primary" data-toggle="modal" data-target="#printdata"><i
                     class="fa fa-print"> </i> Print Barcode</button>
-            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
                 <i class="fa fa-close"></i>
             </button>
         </span>
@@ -132,11 +132,12 @@
                             <thead>
                                 <tr>
                                     <th>Gambar</th>
-                                    <th>Kode Inventaris</th>
-                                    <th>Lokasi</th>
+                                    <th>Nomor Inventaris</th>
                                     <th>Nama Barang</th>
-                                    <th>Status</th>
-                                    <th>Qr Code</th>
+                                    <th>Lokasi</th>
+
+                                    <th>Merek / Type</th>
+
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -176,31 +177,20 @@
                                                     </a>
                                                 @endif
                                             </td>
-                                            <td>{{ $data->kd_inventaris }}</td>
+                                            <td>{{ $data->no_inventaris }}</td>
+                                            <td>{{ $data->nama_barang }}</td>
                                             @if ($nama_lokasi->isEmpty())
                                                 <td>{{ $data->kd_lokasi }}</td>
                                             @else
                                                 <td>{{ $data->kd_lokasi }} ( {{ $nama_lokasi[0]->nama_lokasi }} )</td>
                                             @endif
 
-                                            {{-- <td>{{$data->kd_cabang}}</td> --}}
-
-                                            <td>{{ $data->nama_barang }}</td>
                                             <td>
-                                                @if ($data->kd_jenis == 1)
-                                                    <strong>Aset Perusahaan</strong>
-                                                @else
-                                                    <strong>-</strong>
-                                                @endif
+                                                {{ $data->merk }} / {{ $data->type }}
                                             </td>
-                                            @if ($data->kd_lokasi == '-')
-                                                <td>Kosong</td>
-                                            @else
-                                                <td class="text-center">{!! QrCode::size(90)->generate( $data->id_inventaris) !!}</td>
-                                            @endif
 
                                             <td class="text-center">
-                                                <button class="btn btn-dark btn-sm" id="editdatabarang"
+                                                <button class="btn-dark" id="editdatabarang"
                                                     data-url="{{ route('editdatabarang1', ['id' => $data->id]) }}"><i
                                                         class="fa fa-eye"> </i> Lihat Data</button><br><br>
                                                 {{-- <button type="button" class="btn btn-danger btn-sm" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> Hapus</i></button> --}}
@@ -265,29 +255,22 @@
                                                     </a>
                                                 @endif
                                             </td>
-                                            <td>{{ $data->kd_inventaris }}</td>
+                                            <td>{{ $data->no_inventaris }}</td>
+                                            <td>{{ $data->nama_barang }}</td>
                                             @if ($nama_lokasi->isEmpty())
                                                 <td>{{ $data->kd_lokasi }}</td>
                                             @else
                                                 <td>{{ $data->kd_lokasi }} ( {{ $nama_lokasi[0]->nama_lokasi }} )</td>
                                             @endif
 
-                                            <td>{{ $data->nama_barang }}</td>
+
                                             <td>
-                                                @if ($data->kd_jenis == 1)
-                                                    <strong>Aset Perusahaan</strong>
-                                                @else
-                                                    <strong>-</strong>
-                                                @endif
+                                                {{ $data->merk }} / {{ $data->type }}
                                             </td>
-                                            @if ($data->kd_lokasi == '-')
-                                                <td>Kosong</td>
-                                            @else
-                                                <td class="text-center">{!! QrCode::style('round')->eyeColor(0, 255, 13, 255, 100, 0, 0)->size(90)->generate( $data->id_inventaris) !!}</td>
-                                            @endif
+
 
                                             <td class="text-center">
-                                                <button class="btn-dark btn-sm" id="editdatabarang"
+                                                <button class="btn-dark" id="editdatabarang"
                                                     data-url="{{ route('editdatabarang1', ['id' => $data->id]) }}"><i
                                                         class="fa fa-eye"> </i> Lihat Data</button><br><br>
                                                 {{-- <button type="button" class="btn btn-danger btn-sm" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> Hapus</i></button> --}}

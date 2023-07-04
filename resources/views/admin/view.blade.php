@@ -113,7 +113,7 @@
     <div class="row">
         @foreach ($datakategori as $item)
             <div class="col-12 col-lg-4 col-xl-4">
-                <div class="card texture-wave-a rounded-0">
+                <div class="card texture-wave-c rounded-0">
                     <div class="card-body">
                         <div class="media">
                             <div class="media-body">

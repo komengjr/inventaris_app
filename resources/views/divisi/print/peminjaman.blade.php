@@ -175,13 +175,13 @@
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="1">
             <tr>
-                <td colspan="2" style="border-right: 1px solid #ffffff;">Mengetahui :</td>
-                <td colspan="1" class="text-right"><strong>{{$cabang[0]->city}} , {{date('d - m - Y ')}}</strong></td>
+
+                <td colspan="3" class="text-right"><strong>{{$cabang[0]->city}} , {{date('d - m - Y ')}}</strong></td>
             </tr>
             <tr>
-                <td>Penanggung Jawab,</td>
-                <td>Yang Menyerahkan,</td>
-                <td>Yang Menerima,</td>
+                <td>Penanggung Jawab ,</td>
+                <td>Yang Menyerahkan ,</td>
+                <td>Yang Mengetahui ,</td>
             </tr>
             <tr >
                 <td class="text-center" style="padding-top: 15px; padding-bottom: 15px; width: 33%;">

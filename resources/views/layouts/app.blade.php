@@ -13,22 +13,30 @@
     <link href="{{ url('assets/plugins/select2/css/select2.min.css', []) }}" rel="stylesheet" />
     <link href="{{ url('assets/plugins/inputtags/css/bootstrap-tagsinput.css', []) }}" rel="stylesheet" />
     <link href="{{ url('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet" type="text/css">
-    <link href="{{ url('assets/plugins/fancybox/css/jquery.fancybox.min.css', []) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/plugins/fancybox/css/jquery.fancybox.min.css', []) }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ url('assets/plugins/simplebar/css/simplebar.css', []) }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url('assets/plugins/notifications/css/lobibox.min.css', []) }}"/>
+    <link rel="stylesheet" href="{{ url('assets/plugins/notifications/css/lobibox.min.css', []) }}" />
     <link href="{{ url('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/css/horizontal-menu.css', []) }}" rel="stylesheet" />
     <link href="{{ url('assets/css/app-style.css', []) }}" rel="stylesheet" />
-    <link href="{{ url('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
-    <link href="{{ url('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
+    <link href="{{ url('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet"
+        type="text/css">
+    <link href="{{ url('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet"
+        type="text/css">
     <link rel="{{ url('stylesheet" type="text/css" href="assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/script.js/2.1.1/script.min.js"integrity="sha512-oM6Bv767uUJZcy+SqCTP2rkHtKlivWNQ5+PPhhDwkY8FtNj4bq1xvNCB9NB3WkBa1KiY7P5a7/yfSONl5TYSPQ=="crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/script.js/2.1.1/script.min.js"
+        integrity="sha512-oM6Bv767uUJZcy+SqCTP2rkHtKlivWNQ5+PPhhDwkY8FtNj4bq1xvNCB9NB3WkBa1KiY7P5a7/yfSONl5TYSPQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .footerx {
             padding: 5px;
@@ -43,18 +51,30 @@
         }
     </style>
     <style>
-        @media only screen and  (max-width: 800px) {
-            td, tr { display: block; }
+        @media only screen and (max-width: 800px) {
+
+            td,
+            tr {
+                display: block;
+            }
+
             /* Hide table headers (but not display: none;, for accessibility) */
             thead tr {
                 position: absolute;
                 top: -9999px;
                 left: -9999px;
             }
-            tr { border: 1px solid #000000; }
-            tr + tr { margin-top: 1.5em; }
+
+            tr {
+                border: 1px solid #000000;
+            }
+
+            tr+tr {
+                margin-top: 1.5em;
+            }
+
             td {
-            /* make like a "row" */
+                /* make like a "row" */
                 border: 5px;
                 border-bottom: 1px solid #eee;
                 position: relative;
@@ -62,6 +82,7 @@
                 background-color: #bcc6c1;
                 text-align: left;
             }
+
             td:before {
                 content: attr(data-label);
                 display: inline-block;
@@ -73,6 +94,7 @@
                 white-space: nowrap;
             }
         }
+
         .styled-table {
             /* position: static; */
             border-collapse: collapse;
@@ -84,13 +106,15 @@
             box-shadow: 0 0 20px rgba(217, 211, 211, 0.15);
 
         }
+
         .styled-table thead tr {
-            background-color: #ff7300;
+            background-color: #924405;
             color: #ffffff;
             text-align: left;
         }
 
-        @media only screen and  (min-width: 760px) {
+        @media only screen and (min-width: 760px) {
+
             .styled-table th,
             .styled-table td {
                 padding: 12px 15px;
@@ -108,6 +132,7 @@
         .styled-table tbody tr:last-of-type {
             border-bottom: 2px solid #030303;
         }
+
         .styled-table tbody tr.active-row {
             font-weight: bold;
             color: #020202;
@@ -167,7 +192,8 @@
                             <li class="dropdown-divider"></li>
                             {{-- <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li> --}}
                             <li class="dropdown-divider"></li>
-                            <li class="dropdown-item"><i class="icon-settings mr-2"></i> Setting</li>
+                            <li class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-target="#settingmodal"><i class="icon-settings mr-2"></i>
+                                Setting</li>
                             <li class="dropdown-divider"></li>
                             <li class="dropdown-item"><i class="icon-power mr-2"></i><a href="http://"
                                     onclick="event.preventDefault();
@@ -224,21 +250,28 @@
                     </a>
                     <!-- Level Two-->
                     <ul>
-                        @if (auth::user()->akses == "sdm")
-                        <li><a href="{{ url('menu/formpinjam', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Peminjaman</a></li>
-                        <li><a href="{{ url('menu/formmaintenance', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Maintenance</a></li>
-                        <li><a href="{{ url('menu/formpemusnahan', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Pemusnahan</a></li>
-                        <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Menu Verif Data</a></li>
-                        <li><a href="{{ url('menu/masterbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Data</a></li>
-                        @elseif(auth::user()->akses == "keu")
-                        <li><a href="{{ url('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form Keuangan</a></li>
-                        @elseif(auth::user()->akses == "admin")
-                        <li><a href="{{ url('formbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Data
-                            Inventaris</a></li>
-                        <li><a href="{{ url('datamutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
-                                Mutasi</a></li>
-                        <li><a href="{{ url('datapemusnahan', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
-                            Pemusnahan</a></li>
+                        @if (auth::user()->akses == 'sdm')
+                            <li><a href="{{ url('menu/formpinjam', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                                    Menu Peminjaman</a></li>
+                            <li><a href="{{ url('menu/formmaintenance', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Maintenance</a></li>
+                            <li><a href="{{ url('menu/formpemusnahan', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Pemusnahan</a></li>
+                            <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Verif Data</a></li>
+                            <li><a href="{{ url('menu/masterbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                                    Master Data</a></li>
+                        @elseif(auth::user()->akses == 'keu')
+                            <li><a href="{{ url('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
+                                    Keuangan</a></li>
+                        @elseif(auth::user()->akses == 'admin')
+                            <li><a href="{{ url('formbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Data
+                                    Inventaris</a></li>
+                            <li><a href="{{ url('datamutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
+                                    Mutasi</a></li>
+                            <li><a href="{{ url('datapemusnahan', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                                    Form
+                                    Pemusnahan</a></li>
                         @endif
 
 
@@ -336,7 +369,82 @@
     </div>
     <!--End wrapper-->
 
+    @if (auth::user()->akses == 'sdm')
+    @php
+        $settingno = DB::table('tbl_setting_cabang')->join('tbl_cabang','tbl_cabang.kd_cabang','=','tbl_setting_cabang.kd_cabang')->where('tbl_cabang.kd_cabang',auth::user()->cabang)->get();
+        $settingttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
+    @endphp
+        <div class="modal fade" id="settingmodal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Setup System</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url('divisi/setting/system', []) }}" enctype="multipart/form-data">
+                            @csrf
 
+                            @if ($settingno->isEmpty())
+
+                                <div class="form-group">
+                                    <label for="input-3">Nomor Cabang</label>
+                                    <input type="text" class="form-control" name="no_cabang"  required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">Nama 1</label>
+                                    <input type="text" class="form-control" name="nama_1"  required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">Nama 2</label>
+                                    <input type="text" class="form-control" name="nama_2"  required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">Nama 3</label>
+                                    <input type="text" class="form-control" name="nama_3"  required>
+                                </div>
+                            @else
+
+                                <div class="form-group">
+                                    <label for="input-2">Kode Cabang</label>
+                                    <input type="text" class="form-control" id="input-2" value="{{$settingno[0]->kd_cabang}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">Nomor Cabang</label>
+                                    <input type="text" class="form-control" name="no_cabang" value="{{$settingno[0]->no_cabang}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">Nama 1</label>
+                                    <input type="text" class="form-control" name="nama_1" value="{{$settingttd[0]->ttd_1}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">Nama 2</label>
+                                    <input type="text" class="form-control" name="nama_2" value="{{$settingttd[0]->ttd_2}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-3">Nama 3</label>
+                                    <input type="text" class="form-control" name="nama_3" value="{{$settingttd[0]->ttd_3}}" required>
+                                </div>
+                            @endif
+
+                            <div class="form-group">
+                                <div class="icheck-material-danger">
+                                    <input type="checkbox" id="user-checkbox1" >
+                                    <label for="user-checkbox1">Remember me</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary px-5"><i class="icon-lock"></i>
+                                    Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <!-- Bootstrap core JavaScript-->
 
 
