@@ -84,8 +84,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3" class="text-center">
+                            <td colspan="3" class="text-center" style="font-size: 7px">
                                 <strong>{{ $data->no_inventaris }}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-center">
+                                <strong>{{ $data->merk }} / {{ $data->type }}</strong>
                             </td>
                         </tr>
 
