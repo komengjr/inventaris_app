@@ -373,4 +373,20 @@ class DivisiController extends Controller
     {
         return view('faq');
     }
+    public function masterbarangshowedit($id)
+    {
+        $data = DB::table('sub_tbl_inventory')->where('id_inventaris',$id)->first();
+        return view('divisi.modal.editbarang',['data'=>$data]);
+    }
+    public function posteditbarang(Request $request)
+    {
+        DB::table('sub_tbl_inventory')
+        ->where('id_inventaris',$request->id_inventaris)
+        ->update([
+                    'nama_barang' => $request->nama_barang,
+                    'merk' => $request->merk,
+                    'type' => $request->type,
+                ]);
+        return redirect()->back();
+    }
 }

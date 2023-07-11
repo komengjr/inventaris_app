@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body" id="divmodalklasifikasi">
     <div class="card-body" id="diveditklasifikasi">
-        
+
     </div>
     <div class="modal-body pt-2">
         <table class="styled-table" id="default-datatable">

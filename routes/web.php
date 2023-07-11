@@ -64,10 +64,12 @@ Route::get('divisi/peminjaman/inputdatabarang/{id}',['as'=>'divisi/peminjaman/in
 Route::get('divisi/peminjaman/pengembaliandatabarang/{id}',['as'=>'divisi/peminjaman/pengembaliandatabarang','uses'=> 'DivisiController@pengembaliandatabarang']);
 Route::get('divisi/peminjaman/tablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/tablepeminjaman','uses'=> 'DivisiController@tablepeminjaman']);
 Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
+Route::get('divisi/masterbarang/showedit/{id}',['as'=>'divisi/masterbarang/showedit','uses'=> 'DivisiController@masterbarangshowedit']);
 
 Route::get('menu/masterbarang','DivisiController@masterbarang');
 Route::get('divisi/masterbarang/token','DivisiController@tokenmasterbarang');
 Route::post('divisi/setting/system','DivisiController@settingsystem');
+Route::post('divisi/masterbarang/editbarang','DivisiController@posteditbarang');
 
 Route::post('divisi/inventori/updatedatainventori',['as'=>'divisi/inventori/updatedatainventori','uses'=> 'DivisiController@updatedatainventori']);
 

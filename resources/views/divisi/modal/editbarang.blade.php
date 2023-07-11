@@ -1,0 +1,50 @@
+<div class="modal-header bg-success">
+    <h5 class="modal-title text-white">Data edit barang</h5>
+    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form action="{{ url('divisi/masterbarang/editbarang', []) }}" method="post">
+    @csrf
+    <div class="modal-body" id="divmodalklasifikasi">
+        <div class="row">
+            <div class="col-12">
+                <label for="">nama barang</label>
+                <input type="text" class="form-control" name="nama_barang" value="{{$data->nama_barang}}">
+            </div>
+            <div class="col-12">
+                <label for="">ID</label>
+                <input type="text" class="form-control" name="id_inventaris" value="{{$data->id_inventaris}}">
+            </div>
+            <div class="col-12">
+                <label for="">type</label>
+                <input type="text" class="form-control" name="type" value="{{$data->type}}">
+            </div>
+            <div class="col-12">
+                <label for="">Merek</label>
+                <input type="text" class="form-control" name="merk" value="{{$data->merk}}">
+            </div>
+            <div class="col-12">
+                <label for="">Harga</label>
+                <input type="text" class="form-control" name="harga" value="{{$data->harga_perolehan}}">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn-dark" ><i class="fa fa-close"></i> Simpan</button>
+
+    </div>
+</form>
+<script>
+    $(document).ready(function() {
+        //Default data table
+        $('#default-datatable').DataTable();
+        var table = $('#example').DataTable({
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
+        });
+        table.buttons().container()
+            .appendTo('#example_wrapper .col-md-6:eq(0)');
+
+    });
+</script>

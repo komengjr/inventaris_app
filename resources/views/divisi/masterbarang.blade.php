@@ -112,6 +112,7 @@
                                         <th>Merek / Type</th>
                                         <th>Tahun Perolehan</th>
                                         <th>Harga</th>
+                                        <th>action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -129,6 +130,7 @@
                                         <td>{{ $item->merk }} / {{ $item->type }}</td>
                                         <td>{{ $item->th_perolehan }}</td>
                                         <td>{{ $item->harga_perolehan }}</td>
+                                        <td><button class="btn-dark" data-toggle="modal" data-target="#editmasterbarang" id="editbarangmaster" data-url="{{ url('divisi/masterbarang/showedit',['id'=>$item->id_inventaris]) }}"><i class="fa fa-pencil"></i> edit</button></td>
                                     </tr>
 
                                     @endforeach
@@ -248,4 +250,14 @@
 
         });
     </script>
+    <div class="modal fade" id="editmasterbarang">
+        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+            <div class="modal-content">
+                <div id="showdatasdm">
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
