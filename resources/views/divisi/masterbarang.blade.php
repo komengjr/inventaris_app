@@ -103,12 +103,13 @@
                             </div>
                         </div>
                         <div class="table-responsive pb-5">
-                            <table class="table styled-table align-items-center table-flush pb-2" id="default-table1">
+                            <table class="table styled-table align-items-center table-flush pb-2" id="example">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Barang</th>
                                         <th>No Inventaris</th>
+                                        <th>Ruangan</th>
                                         <th>Merek / Type</th>
                                         <th>Tahun Perolehan</th>
                                         <th>Harga</th>
@@ -127,6 +128,7 @@
                                         </td>
                                         <td>{{ $item->nama_barang }}</td>
                                         <td>{{ $item->no_inventaris }}</td>
+                                        <td>{{ $item->nama_lokasi }}</td>
                                         <td>{{ $item->merk }} / {{ $item->type }}</td>
                                         <td>{{ $item->th_perolehan }}</td>
                                         <td>{{ $item->harga_perolehan }}</td>
@@ -260,4 +262,31 @@
             </div>
         </div>
     </div>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.bootstrap4.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/jszip.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/pdfmake.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/vfs_fonts.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.html5.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.print.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.colVis.min.js', []) }}"></script>
+    <script>
+        $(document).ready(function() {
+         //Default data table
+          $('#default-datatablexx').DataTable();
+
+
+          var table = $('#examplexx').DataTable( {
+           lengthChange: false,
+           buttons: [ 'copy', 'excel', 'pdf', 'print', 'colvis' ]
+         } );
+
+        table.buttons().container()
+           .appendTo( '#example_wrapper .col-md-6:eq(0)' );
+
+         } );
+
+       </script>
 @endsection
