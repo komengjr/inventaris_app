@@ -331,22 +331,37 @@ class DivisiController extends Controller
         $datakategori = DB::table('no_urut_barang')->get();
         $data = DB::table('sub_tbl_inventory')
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
+        ->orderBy('sub_tbl_inventory.th_perolehan', 'asc')
         ->where('kd_cabang',auth::user()->cabang)->get();
+        // dd($data);
         return view('divisi.masterbarang',[ 'datakategori' => $datakategori, 'data'=>$data]);
     }
     public function tokenmasterbarang()
     {
+        $no = 1 ;
         $datakategori = DB::table('sub_tbl_inventory')->get();
-        $data = DB::table('sub_tbl_inventory')
+        $data = DB::table('sub_tbl_inventory')->distinct()->select('sub_tbl_inventory.th_perolehan')
+        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
+        ->orderBy('sub_tbl_inventory.th_perolehan', 'asc')
+        ->where('kd_cabang',auth::user()->cabang)->get();
+        foreach ($data as $data) {
+
+        $cekjumlah = DB::table('sub_tbl_inventory')
         ->join('tbl_setting_cabang','tbl_setting_cabang.kd_cabang','=','sub_tbl_inventory.kd_cabang')
+        ->where('sub_tbl_inventory.th_perolehan',$data->th_perolehan)
         ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->get();
-        foreach ($data as $item) {
-            DB::table('sub_tbl_inventory')
-                ->where('id_inventaris',$item->id_inventaris)
+
+            foreach ($cekjumlah as $value) {
+                DB::table('sub_tbl_inventory')
+                ->where('id_inventaris',$value->id_inventaris)
                 ->where('kd_cabang',auth::user()->cabang)
                 ->update([
-                            'no_inventaris' => $item->id.'/'.$item->kd_inventaris.'/'.$item->kd_lokasi.'/P.'.$item->no_cabang.'/'.$item->th_perolehan,
+                            'no_inventaris' => $no++.'/'.$value->kd_inventaris.'/'.$value->kd_lokasi.'/P.'.$value->no_cabang.'/'.$value->th_perolehan,
+                            // 'no_inventaris' => $item->id.'/'.$item->kd_inventaris.'/'.$item->kd_lokasi.'/P.'.$item->no_cabang.'/'.$item->th_perolehan,
                         ]);
+            }
+
+
         }
         return redirect()->back();
     }
