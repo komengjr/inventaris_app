@@ -331,7 +331,7 @@ class DivisiController extends Controller
         $datakategori = DB::table('no_urut_barang')->get();
         $data = DB::table('sub_tbl_inventory')
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
-        ->orderBy('sub_tbl_inventory.th_perolehan', 'asc')
+        ->orderBy('sub_tbl_inventory.no', 'asc')
         ->where('kd_cabang',auth::user()->cabang)->get();
         // dd($data);
         return view('divisi.masterbarang',[ 'datakategori' => $datakategori, 'data'=>$data]);
@@ -348,6 +348,7 @@ class DivisiController extends Controller
 
         $cekjumlah = DB::table('sub_tbl_inventory')
         ->join('tbl_setting_cabang','tbl_setting_cabang.kd_cabang','=','sub_tbl_inventory.kd_cabang')
+        ->orderBy('sub_tbl_inventory.th_perolehan', 'asc')
         ->where('sub_tbl_inventory.th_perolehan',$data->th_perolehan)
         ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->get();
 
@@ -357,6 +358,7 @@ class DivisiController extends Controller
                 ->where('kd_cabang',auth::user()->cabang)
                 ->update([
                             'no_inventaris' => $no++.'/'.$value->kd_inventaris.'/'.$value->kd_lokasi.'/P.'.$value->no_cabang.'/'.$value->th_perolehan,
+                            'no' =>  $no
                             // 'no_inventaris' => $item->id.'/'.$item->kd_inventaris.'/'.$item->kd_lokasi.'/P.'.$item->no_cabang.'/'.$item->th_perolehan,
                         ]);
             }
