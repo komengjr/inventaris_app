@@ -370,20 +370,14 @@ class HomeController extends Controller
                         'kd_inventaris' => $request->input('kd_inventaris'),
                         'kd_lokasi' => $request->input('kd_lokasi'),
                         'kd_cabang' => auth::user()->cabang,
-                        'th_pembuatan' => $request->input('th_pembuatan'),
-                        'outlet' => $request->input('outlet'),
                         'th_perolehan' => $request->input('th_perolehan'),
                         'merk' => $request->input('merk'),
                         'no_seri' => $request->input('no_seri'),
                         'suplier' => $request->input('suplier'),
                         'harga_perolehan' => $request->input('harga_perolehan'),
-                        'tgl_mutasi' => $request->input('tgl_mutasi'),
-                        'tujuan_mutasi' => $request->input('tujuan_mutasi'),
-                        'nilai_buku' => $request->input('nilai_buku'),
-                        'tgl_musnah' => $request->input('tgl_musnah'),
                         'kondisi_barang' => $request->input('kondisi_barang'),
                         'jam_input' => $request->input('jam_input'),
-                        'ket_musnah' => $request->input('ket_musnah'),
+
             ]
         );
         $data = DB::table('sub_tbl_inventory')

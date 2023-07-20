@@ -338,7 +338,7 @@ class DivisiController extends Controller
     }
     public function tokenmasterbarang()
     {
-        $no = 1 ;
+        $no = 0 ;
         $datakategori = DB::table('sub_tbl_inventory')->get();
         $data = DB::table('sub_tbl_inventory')->distinct()->select('sub_tbl_inventory.th_perolehan')
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
@@ -353,11 +353,12 @@ class DivisiController extends Controller
         ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->get();
 
             foreach ($cekjumlah as $value) {
+                $no = $no + 1;
                 DB::table('sub_tbl_inventory')
                 ->where('id_inventaris',$value->id_inventaris)
                 ->where('kd_cabang',auth::user()->cabang)
                 ->update([
-                            'no_inventaris' => $no++.'/'.$value->kd_inventaris.'/'.$value->kd_lokasi.'/P.'.$value->no_cabang.'/'.$value->th_perolehan,
+                            'no_inventaris' => $no.'/'.$value->kd_inventaris.'/'.$value->kd_lokasi.'/P.'.$value->no_cabang.'/'.$value->th_perolehan,
                             'no' =>  $no
                             // 'no_inventaris' => $item->id.'/'.$item->kd_inventaris.'/'.$item->kd_lokasi.'/P.'.$item->no_cabang.'/'.$item->th_perolehan,
                         ]);

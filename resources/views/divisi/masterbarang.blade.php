@@ -108,6 +108,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Barang</th>
+                                        {{-- <th>no</th> --}}
                                         <th>No Inventaris</th>
                                         <th>Ruangan</th>
                                         <th>Merek / Type</th>
@@ -127,6 +128,7 @@
                                             {{$no++}}
                                         </td>
                                         <td>{{ $item->nama_barang }}</td>
+                                        {{-- <td>{{ $item->no }}</td> --}}
                                         <td>{{ $item->no_inventaris }}</td>
                                         <td>{{ $item->nama_lokasi }}</td>
                                         <td>{{ $item->merk }} / {{ $item->type }}</td>

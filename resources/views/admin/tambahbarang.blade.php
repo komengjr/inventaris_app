@@ -26,35 +26,35 @@
                 {{-- <input type="file" accept="image/*" onchange="loadFile(event)"> --}}
                 <label class="custom-file-upload form-control" id="upload-container" >
                     <input type="file" id="browseFile" class="form-control"/>
-                    <i class="fa fa-upload "> Upload Gambar</i> 
+                    <i class="fa fa-upload "> Upload Gambar</i>
                 </label>
-                
-                
-               
+
+
+
                 <a href="https://via.placeholder.com/1920x1080"  data-fancybox="images" data-caption="" >
                     <img src="https://via.placeholder.com/800x500" alt="lightbox" class="lightbox-thumb img-thumbnail" id="videoPreview"  width="50" height="50">
                 </a>
-               
-                
+
+
                 <div class="progress  mt-3" style="height: 20px">
                     <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%; height: 100%">0%</div>
                 </div>
-                
+
             </div>
-      
-           
+
+
                 <div class="col-md-4">
-                    <label for="inputEmail4" class="form-label">Kode Lokasi</label>
-                    <input type="text" name="kd_lokasi" class="form-control" value="{{$id}}" disabled>
-                    <input type="text" name="kd_lokasi" class="form-control" value="{{$id}}" hidden>
+                    <label for="inputPassword4" class="form-label">Nama Barang</label>
+                    <input type="text" name="nama_barang" class="form-control" id="inputPassword4" >
+
 
                     <label for="inputEmail4" class="form-label">Jenis Inventaris</label>
                      <select class="form-control single-selectxx" name="kd_inventaris">
-                          <option>Pilih Jenis Inventaris</option>
+                          <option value="">Pilih Jenis Inventaris</option>
                           @foreach ($kode as $kode)
-                           
+
                           <option value="{{$kode->kd_inventaris}}">{{$kode->nama_barang}}</option>
-                              
+
                           @endforeach
                       </select>
 
@@ -64,23 +64,21 @@
 
                 </div>
                 <div class="col-md-4">
-                    <label for="inputPassword4" class="form-label">Nama Barang</label>
-                    <input type="text" name="nama_barang" class="form-control" id="inputPassword4" >
+                    <label for="inputEmail4" class="form-label">Kode Lokasi</label>
+                    <input type="text" name="kd_lokasi" class="form-control" value="{{$id}}" disabled>
+                    <input type="text" name="kd_lokasi" class="form-control" value="{{$id}}" hidden>
                     <label for="inputPassword4" class="form-label">Kode Cabang</label>
                     <input type="text" name="kd_cabang" class="form-control" id="inputPassword4" value="{{auth::user()->cabang}}" hidden>
                     <input type="text" name="kd_cabang" class="form-control" id="inputPassword4" value="{{auth::user()->cabang}}" disabled>
-                    <label for="inputEmail4" class="form-label">Otlet</label>
-                    <input type="text" name="outlet" class="form-control" >
+                    <label for="inputPassword4" class="form-label">Tahun Perolehan</label>
+                    <input type="text" name="th_perolehan" class="form-control" value="">
                 </div>
 
             </div>
         </div>
         <div class="card-body">
             <div class="row g-3">
-                <div class="col-md-4">
-                    <label for="inputPassword4" class="form-label">Tahun Perolehan</label>
-                    <input type="text" name="th_perolehan" class="form-control" value="">
-                </div>
+
                 <div class="col-md-4">
                     <label for="inputPassword4" class="form-label">Merek</label>
                     <input type="text" name="merk" class="form-control" value="">
@@ -101,41 +99,23 @@
                     <label for="inputPassword4" class="form-label">Harga Perolehan</label>
                     <input type="text" name="harga_perolehan" class="form-control" value="">
                 </div>
-                <div class="col-md-4">
-                    <label for="inputPassword4" class="form-label">Tanggal Mutasi</label>
-                    <input type="date" name="tgl_mutasi" class="form-control" value="">
-                </div>
-                <div class="col-md-4">
-                    <label for="inputPassword4" class="form-label">Tujuan Mutasi</label>
-                    <input type="text" name="tujuan_mutasi" class="form-control" value="">
-                </div>
-                <div class="col-md-4">
-                    <label for="inputPassword4" class="form-label">Nilai Buku</label>
-                    <input type="text" name="nilai_buku" class="form-control" value="">
-                </div>
-                <div class="col-md-4">
-                    <label for="inputPassword4" class="form-label">Tanggal Musnah</label>
-                    <input type="date" name="tgl_musnah" class="form-control" value="">
-                </div>
-            
-                <div class="col-md-4">
-                    <label for="inputPassword4" class="form-label">Kondisi Barang</label>
-                    <input type="text" name="kondisi_barang" class="form-control" value="">
-                </div>
+
+
                 <div class="col-md-4">
                     <label for="inputPassword4" class="form-label">Jam Input</label>
                     <input type="time" name="jam_input" class="form-control" value="">
+                    <input type="text" name="kondisi_barang" class="form-control" value="BAIK" hidden>
                 </div>
-                <div class="col-md-12">
+                {{-- <div class="col-md-12">
                     <label for="inputPassword4" class="form-label">Keterangan Musnah</label>
                     <textarea name="ket_musnah" class="form-control" id="" cols="10" rows="2"></textarea>
-                </div>
+                </div> --}}
 
             </div>
         </div>
     </div>
 
-    
+
     <div class="modal-footer">
         <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
         {{-- <button type="submit" class="btn btn-primary" ><i class="fa fa-save" ></i> Update Data</button> --}}
@@ -148,7 +128,7 @@
     <script>
         $(document).ready(function() {
             $('.single-selectxx').select2();
-      
+
             $('.multiple-select').select2();
 
         //multiselect start
@@ -207,10 +187,10 @@
     </script>
 
 <script>
-    
+
     $(document).ready(function() {
         $('.single-select').select2();
-  
+
         $('.multiple-select').select2();
 
     //multiselect start
@@ -323,5 +303,5 @@
     function hideProgress() {
         progress.hide();
     }
-  
+
 </script>
