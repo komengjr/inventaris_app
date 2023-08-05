@@ -1,24 +1,21 @@
 <?php
 
 namespace App\Imports;
+
 use Illuminate\Http\Request;
 use App\sub_tbl_inventory;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use DB;
-class ImportSubBrg implements ToModel , WithHeadingRow
+class updatebarang implements ToCollection
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
+    * @param Collection $collection
     */
     public function model(array $row)
     {
 
         $request = request()->all();
-        $data = DB::table('sub_tbl_inventory')->where('no_inventaris',$row['no_inventaris'])->first();
         return new sub_tbl_inventory([
             'id_inventaris'     => $request['kdcabang']."".mt_rand(1000, 9999),
             'kd_inventaris'     => $row['kd_inventaris'],

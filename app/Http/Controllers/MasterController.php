@@ -326,4 +326,30 @@ class MasterController extends Controller
         ->get();
         return view('masteradmin.form.datamusnah',['data'=>$data,'lokasi'=>$lokasi]);
     }
+    public function updatedatainevntaris($id)
+    {
+        $data = DB::table('sub_tbl_inventory_temp')->where('kd_cabang',$id)->get();
+        return view('masteradmin.form.updatedatainventaris',['id'=>$id, 'data'=>$data]);
+    }
+    public function masterinjekupdate($id)
+    {
+        if (auth::user()->akses == 'admin') {
+        $data = DB::table('sub_tbl_inventory_temp')->where('kd_cabang',$id)->get();
+        return view('masteradmin.form.updatedatainventaris',['id'=>$id, 'data'=>$data]);
+        }
+    }
+    public function getupdatedatainevntaris($id)
+    {
+
+        return redirect()->back();
+    }
+    public function simpanupdateinventaris(Request $request)
+    {
+        DB::table('sub_tbl_inventory')
+        ->where('no_inventaris',$request->input('id'))
+        ->update([
+                    'harga_perolehan' => $request->input('harga'),
+                ]);
+        return redirect()->back();
+    }
 }

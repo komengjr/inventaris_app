@@ -2,7 +2,7 @@
 @section('content')
 
 
-    <div class="row pl-3 pt-2 pb-2">
+    <div class="row pl-3 pt-2 pb-2" id="menumasteradminplus">
 
         <div class="col-sm-9">
             <h4 class="page-title">Data Master</h4>
@@ -100,7 +100,7 @@
                                         </button>
                                         <div class="dropdown-menu">
                                           <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" id="buttonuploaddatainventaris" data-target="#upload-data-inventaris" data-id="{{$data->kd_cabang}}"><i class="fa fa-upload"></i> Upload Data Inventaris</a>
-                                          <a href="javaScript:void();" class="dropdown-item">Another action</a>
+                                          <a href="{{ url('masterinjekupdate', ['id'=>$data->kd_cabang]) }}" class="dropdown-item" >Update Data Inventaris</a>
                                           <a href="javaScript:void();" class="dropdown-item">Something else here</a>
                                           <div class="dropdown-divider"></div>
                                           <a href="javaScript:void();" class="dropdown-item">Separated link</a>

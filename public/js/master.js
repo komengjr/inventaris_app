@@ -467,6 +467,25 @@ $(document).ready(function() {
                     );
             });
     });
+    $(document).on('click', '#buttonupdatedatainventarisx', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        // console.log(url);
+        $('#showdatabarang').html("<img src='icon.png'  style='display: block; margin: auto;'>");
+        $.ajax({
+                url: 'master/data-inventaris/update/'+id,
+                type: 'GET',
+                dataType: 'html'
+            })
+            .done(function(data) {
+                $('#showdatamaster').html(data);
+            })
+            .fail(function() {
+                $('#showdatamaster').html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
+            });
+    });
 });
 // Peminjaman Query
 $(document).ready(function() {
