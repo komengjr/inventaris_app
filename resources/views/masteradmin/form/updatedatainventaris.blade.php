@@ -101,7 +101,7 @@
                                                     ->first();
                                             @endphp
                                             @if ($cekdata)
-                                                <button data-toggle="modal" data-target="#modelverif" id="postnomor" data-id="{{$item->no_inventaris}}" data-harga="{{$item->harga}}" class="btn-warning">Update</button>
+                                                <button data-toggle="modal" data-target="#modelverif" id="postnomor" data-id="{{$item->no_inventaris}}" data-harga="{{$item->harga}}" data-ket="{{$item->ket}}" class="btn-warning">Update</button>
                                             @endif
                                         </td>
                                     </tr>
@@ -123,6 +123,7 @@
                             @csrf
                             <input type="text" name="id" id="id">
                             <input type="text" name="harga" id="harga">
+                            <input type="text" name="ket" id="ket">
                             <button type="submit" class="btn-warning">update</button>
                         </form>
                     </div>
@@ -150,7 +151,9 @@
         var dataId = $(this).attr("data-id");
         document.getElementById("id").value = dataId;
         var harga = $(this).attr("data-harga");
-        document.getElementById("harga").value = harga;
+        document.getElementById("id").value = dataId;
+        var ket = $(this).attr("data-ket");
+        document.getElementById("ket").value = ket;
     });
     </script>
 

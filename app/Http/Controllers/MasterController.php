@@ -349,7 +349,9 @@ class MasterController extends Controller
         ->where('no_inventaris',$request->input('id'))
         ->update([
                     'harga_perolehan' => $request->input('harga'),
+                    'ket_musnah' => $request->input('ket'),
                 ]);
+        DB::table('sub_tbl_inventory_temp')->where('no_inventaris', $request->input('id'))->delete();
         return redirect()->back();
     }
 }
