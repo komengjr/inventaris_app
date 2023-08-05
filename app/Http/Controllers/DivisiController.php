@@ -407,7 +407,93 @@ class DivisiController extends Controller
                     'nama_barang' => $request->nama_barang,
                     'merk' => $request->merk,
                     'type' => $request->type,
+                    'harga_perolehan' => $request->harga,
                 ]);
         return redirect()->back();
+    }
+
+    public function tabledataaset()
+    {
+        $dataaset = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->get();
+        $datadepresiasi = DB::table('tbl_depresiasi')->get();
+        return view('divisi.modal.tableaset',[
+            'dataaset'=>$dataaset,
+            'datadepresiasi'=> $datadepresiasi,
+        ]);
+    }
+    public function tambahdataaset()
+    {
+        $kode = DB::table('tbl_inventory')->get();
+        $datadepresiasi = DB::table('tbl_depresiasi')->get();
+        return view('divisi.modal.tambahaset',[
+            'kode'=>$kode,
+            'datadepresiasi'=> $datadepresiasi,
+        ]);
+    }
+    public function pilihdata()
+    {
+        $dataaset = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->get();
+        $datadepresiasi = DB::table('tbl_depresiasi')->get();
+        return view('divisi.modal.pilihaset',[
+            'dataaset'=>$dataaset,
+            'datadepresiasi'=> $datadepresiasi,
+        ]);
+    }
+    public function getdatadepresiasiaset($id,$tgl,$harga)
+    {
+
+        $fixharga = $harga;
+
+        $datadepresiasi = DB::table('tbl_depresiasi')
+
+        ->where('kd_depresiasi',$id)->first();
+        $pengurangan = $harga / ($datadepresiasi->masa*12);
+        for ($i=0; $i < $datadepresiasi->masa*12; $i++) {
+            $data[$i] = date('d - M - Y', strtotime('+'.$i.' month', strtotime($tgl)));
+        }
+        for ($i=0; $i < $datadepresiasi->masa*12; $i++) {
+            $hargaperolehan[$i] = $fixharga;
+            $fixharga = $fixharga - $pengurangan;
+        }
+        $persen = ($pengurangan/$harga)*100;
+        // dd($hargaperolehan);
+        return view('divisi.modal.hitungdepresiasi',[
+            'data'=>$data ,
+            'hargaperolehan'=>$hargaperolehan ,
+            'harga'=>$harga,
+            'persen'=>$persen,
+            'pengurangan'=>$pengurangan,
+            'datadepresiasi'=>$datadepresiasi
+        ]);
+    }
+    public function datadepresiasi()
+    {
+        $data = DB::table('tbl_depresiasi')->get();
+        return view('divisi.modal.datadepresiasi',['data'=>$data]);
+    }
+    public function detaildataaset($id)
+    {
+        $kode = DB::table('tbl_inventory')
+        ->where('kd_cabang', auth::user()->cabang)
+        ->get();
+        $data = DB::table('tbl_depresiasi')->get();
+        $datainventaris = DB::table('sub_tbl_inventory')->where('id_inventaris',$id)->first();
+        return view('divisi.modal.detaildataaset',[
+            'datadepresiasi'=>$data,
+            'kode'=>$kode,
+            'datainventaris'=>$datainventaris
+        ]);
+    }
+    public function editdetaildataaset($id)
+    {
+        $kode = DB::table('tbl_inventory')->get();
+        $data = DB::table('tbl_depresiasi')->get();
+        $datainventaris = DB::table('sub_tbl_inventory')->where('id_inventaris',$id)->first();
+        // dd($datainventaris);
+        return view('divisi.modal.updatedetailaset',[
+            'datadepresiasi'=>$data,
+            'kode'=>$kode,
+            'datainventaris'=>$datainventaris
+        ]);
     }
 }

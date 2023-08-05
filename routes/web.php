@@ -65,6 +65,13 @@ Route::get('divisi/peminjaman/pengembaliandatabarang/{id}',['as'=>'divisi/peminj
 Route::get('divisi/peminjaman/tablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/tablepeminjaman','uses'=> 'DivisiController@tablepeminjaman']);
 Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
 Route::get('divisi/masterbarang/showedit/{id}',['as'=>'divisi/masterbarang/showedit','uses'=> 'DivisiController@masterbarangshowedit']);
+Route::get('divisi/dataaset/tabledataaset',['as'=>'divisi/dataaset/tabledataaset','uses'=> 'DivisiController@tabledataaset']);
+Route::get('divisi/dataaset/tambah',['as'=>'divisi/dataaset/tambah','uses'=> 'DivisiController@tambahdataaset']);
+Route::get('divisi/dataaset/pilihdata',['as'=>'divisi/dataaset/pilihdata','uses'=> 'DivisiController@pilihdata']);
+Route::get('divisi/dataaset/datadepresiasi',['as'=>'divisi/dataaset/datadepresiasi','uses'=> 'DivisiController@datadepresiasi']);
+Route::get('divisi/dataaset/detaildataaset/{id}',['as'=>'divisi/dataaset/detaildataaset','uses'=> 'DivisiController@detaildataaset']);
+Route::get('divisi/dataaset/editdetaildataaset/{id}',['as'=>'divisi/dataaset/editdetaildataaset','uses'=> 'DivisiController@editdetaildataaset']);
+Route::get('divisi/dataaset/getdataoption/{id}/{tgl}/{harga}',['as'=>'divisi/dataaset/getdataoption/','uses'=> 'DivisiController@getdatadepresiasiaset']);
 
 Route::get('menu/masterbarang','DivisiController@masterbarang');
 Route::get('divisi/masterbarang/token','DivisiController@tokenmasterbarang');

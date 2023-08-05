@@ -1,7 +1,7 @@
 <div class="row pl-3 pt-2 pb-2">
     <div class="col-lg-12">
         <div class="card">
-            
+
             <div class="card-body">
                 <div class="float-sm-left m-3 m-3">
                     <h4 class="page-title">Data Inventaris <strong style="color: rgb(223, 8, 8)">Cabang : {{$lokasi[0]->nama_cabang}}</strong></h4>
@@ -22,47 +22,40 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>No Ururt Barang</th>
+                            <th>Nama Barang</th>
                             <th>kode Inventaris</th>
                             <th>Kategori Barang</th>
                             <th>Nama Kelompok Barang</th>
-                            <th>Jumlah Barang</th>
+                            {{-- <th>Jumlah Barang</th> --}}
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                    
+
                         <?php $no=1;?>
-                        @foreach ($data as $item)  
+                        @foreach ($data as $item)
                         <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$item->no_urut_barang}}</td>
-                            <td>{{$item->kd_inventaris}}</td>
-                            <td>{{$item->kategori_barang}}</td>
                             <td>{{$item->nama_barang}}</td>
-                            <?php
+                            <td>{{$item->no_inventaris}}</td>
+                            <td>{{$item->merk}}</td>
+                            <td>{{$item->type}}</td>
+                            {{-- <?php
+
                                 $jumlah = DB::table('sub_tbl_inventory')
                                 ->where('kd_inventaris',$item->kd_inventaris)
                                 ->where('kd_cabang',$id)
-                                ->count(); 
+                                ->count();
                             ?>
-                            <td>{{$jumlah}}</td>
-                        
-                            <td class="text-center"><a href="" data-toggle="modal" data-target="#master-lihat-detail-barang" class="btn-info btn-sm" id="masterlihatdatabarang" data-url="{{ route('master/datainventaris/lihatdatabarang',['id'=>$id,'kd' => $item->kd_inventaris])}}"><i class="fa fa-eye"> </i> Lihat data</a></td>
-                        
+                            <td>{{$jumlah}}</td> --}}
+
+                            <td class="text-center"><button data-toggle="modal" data-target="#master-lihat-detail-barang" class="btn-info" id="masterlihatdatabarang" data-url="{{ route('master/datainventaris/lihatdatabarang',['id'=>$id,'kd' => $item->id_inventaris])}}"><i class="fa fa-eye"> </i> Lihat data</button></td>
+
                         </tr>
-                       
+
                         @endforeach
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="4"></th>
-                            
-                            <th>Total Baranng</th>
-                            <th>{{$totalinventaris}}</th>
-                            <th class="text-center"></th>
-                        </tr>
-                    </tfoot>
+
                 </table>
                 </div>
             </div>
@@ -88,19 +81,19 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-       
+
             <form action="{{ url('master/datainventaris/simpandetailbarang', []) }}" method="POST" enctype="multipart/form-data">
                 @csrf
             <input type="file" name="file" id="file" class="form-control" required>
-            <input type="text" name="kd_cabang" id="kd_cabang" value="{{$id}}" hidden>           
-            
-       
+            <input type="text" name="kd_cabang" id="kd_cabang" value="{{$id}}" hidden>
+
+
         <div class="modal-footer">
             <button type="button" class="btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
             <button type="submit" class="btn-success"><i class="fa fa-check-square-o"></i> Upload Excel1</button>
         </div>
     </form>
-        
+
       </div>
     </div>
 </div>

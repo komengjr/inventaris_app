@@ -234,10 +234,14 @@ class MasterController extends Controller
     // Inventaris Controller
     public function datainventaris($id)
     {
-        $data = DB::table('tbl_inventory')
-        ->select('tbl_inventory.*','no_urut_barang.*')
-        ->join('no_urut_barang','no_urut_barang.no_urut_barang','=', 'tbl_inventory.no_urut_barang')
-        ->orderBy('tbl_inventory.id', 'asc')
+        // $data = DB::table('tbl_inventory')
+        // ->select('tbl_inventory.*','no_urut_barang.*')
+        // ->join('no_urut_barang','no_urut_barang.no_urut_barang','=', 'tbl_inventory.no_urut_barang')
+        // ->orderBy('tbl_inventory.id', 'asc')
+        // ->get();
+        $data = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang',$id)
+        ->orderBy('id', 'asc')
         ->get();
         $totalinventarsi = DB::table('sub_tbl_inventory')
         ->where('kd_cabang',$id)
@@ -252,9 +256,9 @@ class MasterController extends Controller
     {
         $data = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*')
-        ->where('kd_inventaris',$kd)
+        ->where('id_inventaris',$kd)
         ->where('kd_cabang',$id)
-        ->get();
+        ->first();
         // dd($id);
         return view('masteradmin.form.datainventaris-sub',['data'=>$data,'id'=>$id,'kd'=>$kd ]);
     }
@@ -278,11 +282,10 @@ class MasterController extends Controller
     // Data Peminjaman Controller
     public function datapeminjaman($id)
     {
-        $lokasi = DB::table('tbl_cabang')
-        ->select('tbl_cabang.*')
+        $data = DB::table('tbl_peminjaman')
         ->where('kd_cabang',$id)
         ->get();
-        return view('masteradmin.form.datapeminjaman',['lokasi'=>$lokasi]);
+        return view('masteradmin.form.datapeminjaman',['data'=>$data]);
     }
     // Data Mutasi Controller
     public function datamutasi($id)

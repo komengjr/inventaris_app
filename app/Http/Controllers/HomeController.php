@@ -104,6 +104,7 @@ class HomeController extends Controller
         ->select('sub_tbl_inventory.*')
         ->where('kd_lokasi',$id)
         ->where('kd_cabang',auth::user()->cabang)
+        ->orderBy('id', 'DESC')
         ->get();
         // dd($id);
         return view('admin.sub_barang1',['data'=>$data,'id'=>$id ]);
@@ -403,7 +404,14 @@ class HomeController extends Controller
 
     public function formdataaset()
     {
-        return view('admin.formdataaset');
+        $dataaset = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang',auth::user()->cabang)
+        ->where('kd_jenis',1)->get();
+
+        return view('admin.formdataaset',[
+            'dataaset'=> $dataaset,
+
+        ]);
     }
 
 }

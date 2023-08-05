@@ -41,21 +41,21 @@
         width: 100%;
         /* min-width: 400px; */
         box-shadow: 0 0 20px rgba(217, 211, 211, 0.15);
-        
+
     }
     .styled-table thead tr {
         background-color: #f58506;
         color: #ffffff;
         text-align: left;
     }
-    
+
     @media only screen and  (min-width: 760px) {
         .styled-table th,
         .styled-table td {
             padding: 12px 15px;
         }
     }
-    
+
     .styled-table tbody tr {
         border-bottom: 1px solid #dddddd;
     }
@@ -84,46 +84,80 @@
     </script>
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
-        
-        <button class="btn-success"  data-url=""><i class="fa fa-plus"> </i>  Cerate Nomor Asset</button>
+        <span>
+            <button type="button" class="btn-primary" id="showtableaset">
+                <i class="fa fa-chevron-circle-left"></i>
+            </button>
+            @if (auth::user()->akses == 'keu')
+                <button class="btn-success"  id="buttontambahdataaset"><i class="fa fa-plus"> </i> Data Asset</button>
+                <button class="btn-warning"  id="buttonpilihdataaset"><i class="fa fa-dot-circle-o"> </i> Pilih Asset</button>
+            @endif
+        </span>
         <span >
-            {{-- <button  type="button" class="btn-outline-primary" data-toggle="modal" data-target="#printdata"><i class="fa fa-print"> </i> Print Barcode</button> --}}
+            <button type="button" class="btn-outline-primary"  id="buttondatadepresiasi"><i class="fa fa-cog"> </i> Data Depresiasi</button>
             <button type="button" class="btn-danger " data-dismiss="modal" aria-label="Close" >
                 <i class="fa fa-close"></i>
             </button>
         </span>
     </div>
-    <div class="body" id="showdatabarang">
+    <div class="body" id="showdataaset">
         <div class="row" >
-            <div class="col-lg-12">     
+            <div class="col-lg-12">
                 <div class="card-body">
                     <div class="table-responsive" style="letter-spacing: .0px;">
-                        <table id="default-datatable1" class="styled-table" >
+                        <table id="default-datatable1" class="styled-table" style="font-size: 9px;">
                         <thead>
                             <tr>
-                                <th>Gambar</th>
-                                <th>Kode Inventaris</th>
-                                <th>Lokasi</th> 
+                                <th>No</th>
+                                <th>No Inventaris</th>
                                 <th>Nama Barang</th>
-                                <th>Status</th>
-                                <th>Qr Code</th>
+                                <th>Merek / Type</th>
+                                <th>Th Perolehan</th>
+                                <th>Masa Depresiasi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                        
+                            @php
+                                $no = 1;
+                            @endphp
+                            @foreach ($dataaset as $item)
+                                <tr>
+                                    <td>{{$no++}}</td>
+                                    <td>{{$item->no_inventaris}}</td>
+                                    <td>{{$item->nama_barang}}</td>
+                                    <td>{{$item->merk}} / {{$item->type}}</td>
+                                    <td>{{$item->th_perolehan}} </td>
+                                    <td>
+                                        @php
+                                            $cekdepresiasi = DB::table('tbl_depresiasi_aset')
+                                            ->join('tbl_depresiasi','tbl_depresiasi.kd_depresiasi','=','tbl_depresiasi_aset.kd_depresiasi')
+                                            ->where('tbl_depresiasi_aset.id_inventaris',$item->id_inventaris)->first();
+                                        @endphp
+                                        @if ($cekdepresiasi)
+                                            {{$cekdepresiasi->klasifikasi_aset}} ( {{$cekdepresiasi->harga_perolhean}} )
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn-dark" id="buttondetaildataaset" data-id="{{$item->id_inventaris}}"> <i class="fa fa-eye"></i></button>
+                                        @if (auth::user()->akses == 'keu')
+                                            <button class="btn-warning"><i class="fa fa-pencil" id="buttoneditdetailaset" data-id="{{$item->id_inventaris}}"></i></button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
-                    
+
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-dark btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-        {{-- <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print Barcode</button> --}}
-    </div>
+    {{-- <div class="modal-footer">
+        <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+
+    </div> --}}
 </div>
 
 <script>
@@ -139,7 +173,7 @@
 
     table.buttons().container()
     .appendTo( '#example_wrapper .col-md-6:eq(0)' );
-    
+
     } );
 
 </script>

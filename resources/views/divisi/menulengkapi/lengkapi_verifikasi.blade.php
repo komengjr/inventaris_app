@@ -3,8 +3,8 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h3>
-                Tiket :
-                <small> {{$cekdata[0]->kode_verif}}</small>
+                STOCK OPNAME BARANG INVENTARIS
+                {{-- <small> {{$cekdata[0]->kode_verif}}</small> --}}
             </h3>
         </section>
 

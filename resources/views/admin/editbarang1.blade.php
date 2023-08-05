@@ -91,10 +91,10 @@
 </style>
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
-        <button class="btn btn-warning btn-sm" id="lihatdatabarang"
+        <button class="btn-warning" id="lihatdatabarang"
             data-url="{{ route('lihatdatabarang1', ['id' => $data[0]->kd_lokasi]) }}"><i
                 class="fa fa-arrow-circle-o-left"></i></button>
-        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-close"></i>
         </button>
     </div>
@@ -200,7 +200,7 @@
                         <input type="text" name="type" class="form-control" value="{{ $data[0]->type }}">
                         <label for="inputPassword4" class="form-label">Harga Perolehan</label>
                         <input type="text" name="harga_perolehan" class="form-control"
-                            value="{{ $data[0]->harga_perolehan }}">
+                            value="@currency($data[0]->harga_perolehan)">
                     </div>
 
                 </div>
@@ -306,7 +306,7 @@
 
 
         <div class="modal-footer">
-            <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+            {{-- <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button> --}}
             <button type="submit" class="btn-primary" id="updatedatainventori"><i class="fa fa-save"></i> Update
                 Data</button>
             {{-- <button type="submit" class="btn btn-primary" id="updatedatabarang" data-url="{{ route('updatedatabarang1',['id' => $data[0]->id])}}"><i class="fa fa-save" ></i> Update Data</button> --}}

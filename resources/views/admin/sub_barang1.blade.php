@@ -128,16 +128,16 @@
                         </div>
                     @endif
                     <div class="table-responsive" style="letter-spacing: .0px;">
-                        <table id="default-datatablesubbarang" class="styled-table">
+                        <table id="default-datatablesubbarang" class="styled-table" style="font-size: 10px">
                             <thead>
                                 <tr>
                                     <th>Gambar</th>
+                                    <th>ID Inventaris</th>
                                     <th>Nomor Inventaris</th>
                                     <th>Nama Barang</th>
                                     <th>Lokasi</th>
-
                                     <th>Merek / Type</th>
-
+                                    <th>Harga</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -177,6 +177,7 @@
                                                     </a>
                                                 @endif
                                             </td>
+                                            <td>{{ $data->id_inventaris }}</td>
                                             <td>{{ $data->no_inventaris }}</td>
                                             <td>{{ $data->nama_barang }}</td>
                                             @if ($nama_lokasi->isEmpty())
@@ -188,11 +189,12 @@
                                             <td>
                                                 {{ $data->merk }} / {{ $data->type }}
                                             </td>
-
+                                            <td>@currency($data->harga_perolehan)</td>
                                             <td class="text-center">
                                                 <button class="btn-dark" id="editdatabarang"
                                                     data-url="{{ route('editdatabarang1', ['id' => $data->id]) }}"><i
-                                                        class="fa fa-eye"> </i> Lihat Data</button><br><br>
+                                                        class="fa fa-eye"> </i> Detail</button><br><br>
+                                                        <button class="btn-info"><i class="fa fa-print"></i> Print</button>
                                                 {{-- <button type="button" class="btn btn-danger btn-sm" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> Hapus</i></button> --}}
                                                 <a class="tombolhapus{{ $data->id }} btn btn-danger"
                                                     style="display: none;" id="hapusdatabarang"
@@ -255,6 +257,7 @@
                                                     </a>
                                                 @endif
                                             </td>
+                                            <td>{{ $data->id_inventaris }}</td>
                                             <td>{{ $data->no_inventaris }}</td>
                                             <td>{{ $data->nama_barang }}</td>
                                             @if ($nama_lokasi->isEmpty())
@@ -268,11 +271,12 @@
                                                 {{ $data->merk }} / {{ $data->type }}
                                             </td>
 
-
+                                            <td>@currency($data->harga_perolehan)</td>
                                             <td class="text-center">
                                                 <button class="btn-dark" id="editdatabarang"
                                                     data-url="{{ route('editdatabarang1', ['id' => $data->id]) }}"><i
-                                                        class="fa fa-eye"> </i> Lihat Data</button><br><br>
+                                                        class="fa fa-eye"> </i> Detail</button><br><br>
+                                                        <button class="btn-info"><i class="fa fa-print"></i> Print</button>
                                                 {{-- <button type="button" class="btn btn-danger btn-sm" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> Hapus</i></button> --}}
                                                 <a class="tombolhapus{{ $data->id }} btn btn-danger"
                                                     style="display: none;" id="hapusdatabarang"

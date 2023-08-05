@@ -283,11 +283,11 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="lihat-detail-data">
-    <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
-        <div class="modal-content">
+<div class="modal fade" id="lihat-detail-data" >
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="margin-top: 2%;">
+        <div class="modal-content" >
             <div id="showdatabarang">
-                <div class="modal-body">
+                <div class="modal-body" style="font-size: 9px;">
                 </div>
             </div>
         </div>

@@ -1,212 +1,314 @@
-
-<script src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
-<script src="assets/plugins/alerts-boxes/js/sweet-alert-script.js"></script>
-<script type="text/javascript">
-    function submitForm() {
-        document.form1.target = "myActionWin";
-        window.open("", "myActionWin", "width=1000,height=700,toolbar=0");
-        document.form1.submit();
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/script.js/2.1.1/script.min.js" integrity="sha512-oM6Bv767uUJZcy+SqCTP2rkHtKlivWNQ5+PPhhDwkY8FtNj4bq1xvNCB9NB3WkBa1KiY7P5a7/yfSONl5TYSPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+<script src="{{ url('assets/plugins/select2/js/select2.min.js', []) }}"></script>
+<style>
+    input[type="file"] {
+        display: none;
     }
-</script>
+</style>
+
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
-
-        <button class="btn-success" id="mastertambahdatabarang" data-url="{{ route('master/datainventaris/tambahdatabarang', ['id' => $id,'kd'=>$kd]) }}"><i class="fa fa-plus"></i> Tambah Data Barang</button>
-        <span>
-            <button type="button" class="btn-outline-primary" data-toggle="modal" data-target="#printdata"><i
-                    class="fa fa-print"> </i> Print Barcode</button>
-            <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
-                <i class="fa fa-close"></i>
-            </button>
-        </span>
+        {{-- <button class="btn btn-warning btn-sm" id="lihatdatabarang" data-url="{{ route('lihatdatabarang',['id' => $data[0]->kd_inventaris])}}"><i class="fa fa-arrow-circle-o-left"></i></button> --}}
+        <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-close"></i>
+        </button>
     </div>
-    <div class="body" id="showdatabarang">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card-body">
-                   
-                    <div class="table-responsive" style="letter-spacing: .0px;">
-                        <table id="default-datatable1" class="styled-table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Gambar</th>
-                                    <th>Kode Inventaris</th>
-                                    <th>Lokasi</th>
-                                    <th>Tahun Pembelian</th>
-                                    <th>Nama Barang</th>
-                                    <th>Qr Code</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $no = 1; ?>
-                                @foreach ($data as $data)
-                                    <?php
-                                    $nama_lokasi = DB::table('tbl_lokasi')
-                                        ->select('tbl_lokasi.nama_lokasi')
-                                        ->where('kd_lokasi', $data->kd_lokasi)
-                                        ->get();
-                                    ?>
-                                    <tr>
-                                        {{-- <td>{{$no++}}</td> --}}
-                                        <td>
-                                            @if ($data->gambar == '')
-                                                <a href="https://via.placeholder.com/1920x1080" data-fancybox="images"
-                                                    data-caption="{{ $data->nama_barang }}">
-                                                    <img src="https://via.placeholder.com/800x500" alt="lightbox"
-                                                        class="lightbox-thumb img-thumbnail" id="videoPreview"
-                                                        width="50" height="50">
-                                                </a>
-                                            @else
-                                                <a href="{{ url($data->gambar, []) }}" data-fancybox="images"
-                                                    data-caption="{{ $data->nama_barang }}">
-                                                    <img src="{{ url($data->gambar, []) }}" alt="lightbox"
-                                                        class="lightbox-thumb img-thumbnail" id="videoPreview"
-                                                        width="50" height="50">
-                                                </a>
-                                            @endif
-                                        </td>
-                                        <td>{{ $data->kd_inventaris }}</td>
-                                        @if ($nama_lokasi->isEmpty())
-                                            <td>{{ $data->kd_lokasi }}</td>
-                                        @else
-                                            <td>{{ $data->kd_lokasi }} ( {{ $nama_lokasi[0]->nama_lokasi }} )</td>
-                                        @endif
+    {{-- <form  method="POST" action="" enctype="multipart/form-data" id="form-update"> --}}
+    <form method="POST" action="#" enctype="multipart/form-data" id="form-tambah-barang">
+        @csrf
+        <div class="body" id="showdatabarang">
+            <div class="card-body">
+                <div class="row g-2">
+                    <div class="col-md-4 text-center">
+                        {{-- <input type="file" accept="image/*" onchange="loadFile(event)"> --}}
+                        <label class="custom-file-upload form-control" id="upload-container">
+                            <input type="file" id="browseFile" class="form-control" />
+                            <i class="fa fa-upload "> Upload Gambar</i>
+                        </label>
 
-                                        {{-- <td>{{$data->kd_cabang}}</td> --}}
-                                        <td>{{ $data->th_pembuatan }}</td>
-                                        <td>{{ $data->nama_barang }}</td>
-                                        @if ($data->kd_lokasi == '-')
-                                            <td>Kosong</td>
-                                        @else
-                                            <td class="text-center">{!! QrCode::size(90)->generate(
-                                                url('view', [
-                                                    'no' => substr($data->kd_inventaris, 0, 2),
-                                                    'cb' => $data->kd_cabang,
-                                                    'kd' => $data->kd_inventaris,
-                                                    'id' => $data->id,
-                                                ]),
-                                            ) !!}</td>
-                                        @endif
 
-                                        <td>
-                                            <button class="btn-warning" id="editdatabarang"
-                                                data-url="{{ route('editdatabarang', ['id' => $data->id]) }}"><i
-                                                    class="fa fa-pencil"> </i> Edit</button><br><br>
-                                            <button type="button" class="btn-danger" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> </i> Hapus</button>
-                                            <a class="tombolhapus{{ $data->id }} btn btn-danger"
-                                                style="display: none;" id="hapusdatabarang"
-                                                data-url="{{ route('hapusdatabarang', ['kode' => $data->kd_inventaris, 'id' => $data->id]) }}"></a>
-                                        </td>
-                                    </tr>
 
-                                    <script>
-                                        $("#confirm-btn-hapus<?php echo $data->id; ?>").click(function() {
-                                            swal({
-                                                    title: "Yakin Untuk Di Hapus ?",
-                                                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                    icon: "warning",
-                                                    buttons: true,
-                                                    dangerMode: true,
-                                                })
-                                                .then((willDelete) => {
-                                                    if (willDelete) {
-                                                        swal("Poof! Your imaginary file has been deleted!", {
-                                                            icon: "success",
-                                                        });
-                                                        document.getElementsByClassName('tombolhapus<?php echo $data->id; ?>')[0].click();
-                                                    } else {
-                                                        swal("Your imaginary file is safe!");
-                                                    }
-                                                });
+                        <a href="https://via.placeholder.com/1920x1080" data-fancybox="images" data-caption="">
+                            <img src="https://via.placeholder.com/800x500" alt="lightbox"
+                                class="lightbox-thumb img-thumbnail" id="videoPreview" width="50" height="50">
+                        </a>
 
-                                        });
-                                    </script>
-                                @endforeach
-                            </tbody>
 
-                        </table>
+                        <div class="progress  mt-3" style="height: 20px">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar"
+                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%; height: 100%">
+                                0%</div>
+                        </div>
+
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-        {{-- <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print Barcode</button> --}}
-    </div>
-</div>
 
-<div class="modal fade" id="printdata">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-primary ">
-            <div class="modal-header bg-primary ">
-                <h5 class="modal-title text-white">From Print Data</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form name="form1" action="{{ url('pdf', ['id' => $id]) }}" method="post">
-                @csrf
-                <div class="modal-body">
 
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="input-1">Ukuran</label>
-                            <select name="ukuran" id="" class="form-control" required>
-                                <option value="">Pilih Ukuran</option>
-                                <option value="A4">A4</option>
-                                <option value="A5">A5</option>
-                                <option value="A6">A6</option>
-                                <option value="A7">A7</option>
-                                <option value="A8">A8</option>
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label for="input-1">Layout</label>
-                            <select name="layout" id="" class="form-control" required>
+                    <div class="col-md-4">
+                        <label for="inputPassword4" class="form-label">Nama Barang</label>
+                        <input type="text" name="nama_barang" class="form-control" id="inputPassword4" value="{{$data->nama_barang}}">
 
-                                <option value="Portrait">Portrait</option>
-                                <option value="landscape">Landscape</option>
-                            </select>
-                        </div>
+
+                        <label for="inputEmail4" class="form-label">Jenis Inventaris</label>
+                        <select class="form-control single-selectxx" name="kd_inventaris">
+                            <option value="">Pilih Jenis Inventaris</option>
+                            {{-- @foreach ($kode as $kode)
+                                <option value="{{ $kode->kd_inventaris }}">{{ $kode->nama_barang }}</option>
+                            @endforeach --}}
+                        </select>
+
+                        <label for="inputEmail4" class="form-label">Tahun Pembelian</label>
+                        <input type="text" name="th_pembuatan" class="form-control">
+                        <input id="link" type="text" name="link" class="form-control" hidden>
+
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputEmail4" class="form-label">Kode Lokasi</label>
+                        <input type="text" name="kd_lokasi" class="form-control" value="{{ $id }}"
+                            disabled>
+                        <input type="text" name="kd_lokasi" class="form-control" value="{{ $id }}" hidden>
+                        <label for="inputPassword4" class="form-label">Kode Cabang</label>
+                        <input type="text" name="kd_cabang" class="form-control" id="inputPassword4"
+                            value="{{ auth::user()->cabang }}" hidden>
+                        <input type="text" name="kd_cabang" class="form-control" id="inputPassword4"
+                            value="{{ auth::user()->cabang }}" disabled>
+                        <label for="inputPassword4" class="form-label">Tahun Perolehan</label>
+                        <input type="text" name="th_perolehan" class="form-control" value="">
                     </div>
 
                 </div>
-                <div class="modal-footer bg-primary">
-                    {{-- <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"> Close</i></button> --}}
-                    {{-- <input type="button" name="btnSubmit" value="Submit" onclick="submitForm()" /> --}}
-                    <a type="submit" class="btn btn-success" onclick="submitForm()"> Cetak</i></a>
-                    {{-- <INPUT TYPE="button" NAME="preview" VALUE="preview" ONCLICK="javascript:window.open('previewpage.html');"> --}}
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label for="inputPassword4" class="form-label">Merek</label>
+                        <input type="text" name="merk" class="form-control" value="">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputPassword4" class="form-label">Type Barang</label>
+                        <input type="text" name="type" class="form-control" value="">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputPassword4" class="form-label">Nomor Serial</label>
+                        <input type="text" name="no_seri" class="form-control" value="">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputPassword4" class="form-label">Supplier</label>
+                        <input type="text" name="suplier" class="form-control" value="">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputPassword4" class="form-label">Harga Perolehan</label>
+                        <input type="text" name="harga_perolehan" class="form-control" value="">
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <label for="inputPassword4" class="form-label">Jam Input</label>
+                        <input type="time" name="jam_input" class="form-control" value="">
+                        <input type="text" name="kondisi_barang" class="form-control" value="BAIK" hidden>
+                    </div>
+                    {{-- <div class="col-md-12">
+                    <label for="inputPassword4" class="form-label">Keterangan Musnah</label>
+                    <textarea name="ket_musnah" class="form-control" id="" cols="10" rows="2"></textarea>
+                </div> --}}
+
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i>
+                Close</button>
+            {{-- <button type="submit" class="btn btn-primary" ><i class="fa fa-save" ></i> Update Data</button> --}}
+            <button type="submit" class="btn-primary" id="tambahsubdatabarang"
+                data-url="{{ route('simpandatasubbarang1', ['id' => $id]) }}"><i class="fa fa-save"></i> Simpan
+                Data</button>
+        </div>
+    </form>
+
 </div>
-<!--End Modal -->
 
 <script>
     $(document).ready(function() {
-        $('#myform').submit(function() {
-            window.open('', 'formpopup', 'width=400,height=400,resizeable,scrollbars');
-            this.target = 'formpopup';
+        $('.single-selectxx').select2();
+
+        $('.multiple-select').select2();
+
+        //multiselect start
+
+        $('#my_multi_select1').multiSelect();
+        $('#my_multi_select2').multiSelect({
+            selectableOptgroup: true
         });
+
+        $('#my_multi_select3').multiSelect({
+            selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+            selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+            afterInit: function(ms) {
+                var that = this,
+                    $selectableSearch = that.$selectableUl.prev(),
+                    $selectionSearch = that.$selectionUl.prev(),
+                    selectableSearchString = '#' + that.$container.attr('id') +
+                    ' .ms-elem-selectable:not(.ms-selected)',
+                    selectionSearchString = '#' + that.$container.attr('id') +
+                    ' .ms-elem-selection.ms-selected';
+
+                that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                    .on('keydown', function(e) {
+                        if (e.which === 40) {
+                            that.$selectableUl.focus();
+                            return false;
+                        }
+                    });
+
+                that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                    .on('keydown', function(e) {
+                        if (e.which == 40) {
+                            that.$selectionUl.focus();
+                            return false;
+                        }
+                    });
+            },
+            afterSelect: function() {
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function() {
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        $('.custom-header').multiSelect({
+            selectableHeader: "<div class='custom-header'>Selectable items</div>",
+            selectionHeader: "<div class='custom-header'>Selection items</div>",
+            selectableFooter: "<div class='custom-header'>Selectable footer</div>",
+            selectionFooter: "<div class='custom-header'>Selection footer</div>"
+        });
+
+
     });
 </script>
 
 <script>
     $(document).ready(function() {
-        //Default data table
-        $('#default-datatable1').DataTable();
+        $('.single-select').select2();
 
+        $('.multiple-select').select2();
 
-        var table = $('#example').DataTable({
-            lengthChange: false,
-            buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
+        //multiselect start
+
+        $('#my_multi_select1').multiSelect();
+        $('#my_multi_select2').multiSelect({
+            selectableOptgroup: true
         });
 
-        table.buttons().container()
-            .appendTo('#example_wrapper .col-md-6:eq(0)');
+        $('#my_multi_select3').multiSelect({
+            selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+            selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='search...'>",
+            afterInit: function(ms) {
+                var that = this,
+                    $selectableSearch = that.$selectableUl.prev(),
+                    $selectionSearch = that.$selectionUl.prev(),
+                    selectableSearchString = '#' + that.$container.attr('id') +
+                    ' .ms-elem-selectable:not(.ms-selected)',
+                    selectionSearchString = '#' + that.$container.attr('id') +
+                    ' .ms-elem-selection.ms-selected';
+
+                that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                    .on('keydown', function(e) {
+                        if (e.which === 40) {
+                            that.$selectableUl.focus();
+                            return false;
+                        }
+                    });
+
+                that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                    .on('keydown', function(e) {
+                        if (e.which == 40) {
+                            that.$selectionUl.focus();
+                            return false;
+                        }
+                    });
+            },
+            afterSelect: function() {
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function() {
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        $('.custom-header').multiSelect({
+            selectableHeader: "<div class='custom-header'>Selectable items</div>",
+            selectionHeader: "<div class='custom-header'>Selection items</div>",
+            selectableFooter: "<div class='custom-header'>Selectable footer</div>",
+            selectionFooter: "<div class='custom-header'>Selection footer</div>"
+        });
+
 
     });
+</script>
+
+<script type="text/javascript">
+    var browseFile = $('#browseFile');
+    var resumable = new Resumable({
+        target: '{{ route('files.upload.large1') }}',
+        query: {
+            _token: '{{ csrf_token() }}'
+        }, // CSRF token
+        fileType: ['jpg', 'jpeg', 'png'],
+        headers: {
+            'Accept': 'application/json'
+        },
+        testChunks: false,
+        throttleProgressCallbacks: 1,
+    });
+
+    resumable.assignBrowse(browseFile[0]);
+
+    resumable.on('fileAdded', function(file) { // trigger when file picked
+        showProgress();
+        resumable.upload() // to actually start uploading.
+    });
+
+    resumable.on('fileProgress', function(file) { // trigger when file progress update
+        updateProgress(Math.floor(file.progress() * 100));
+    });
+
+    resumable.on('fileSuccess', function(file, response) { // trigger when file upload complete
+        response = JSON.parse(response)
+        $('#videoPreview').attr('src', response.path);
+        $('#link').attr('value', response.filename);
+        $('.card-footer').show();
+        $('#browseFile').hide();
+    });
+
+    resumable.on('fileError', function(file, response) { // trigger when there is any error
+        alert('file uploading error.')
+    });
+
+
+    var progress = $('.progress');
+
+    function showProgress() {
+        progress.find('.progress-bar').css('width', '0%');
+        progress.find('.progress-bar').html('0%');
+        progress.find('.progress-bar').removeClass('bg-info');
+        progress.show();
+    }
+
+    function updateProgress(value) {
+        progress.find('.progress-bar').css('width', ` ${value}%`)
+        progress.find('.progress-bar').html(`${value}%`)
+    }
+
+    function hideProgress() {
+        progress.hide();
+    }
 </script>

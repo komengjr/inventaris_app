@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $(document).on("click", "#ubahtombolaset", function (e) {
         e.preventDefault();
         var url = $(this).data("url");
@@ -289,4 +290,120 @@ $(document).ready(function () {
                 );
             });
     });
+    $(document).on("click", "#buttontambahdataaset", function (e) {
+        e.preventDefault();
+        // var url = $(this).data("url");
+        var url = 'divisi/dataaset/tambah';
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdataaset").html(data);
+            })
+            .fail(function () {
+                $("#showdataaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#showtableaset", function (e) {
+        e.preventDefault();
+        // var url = $(this).data("url");
+        var url = 'divisi/dataaset/tabledataaset';
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdataaset").html(data);
+            })
+            .fail(function () {
+                $("#showdataaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#buttonpilihdataaset", function (e) {
+        e.preventDefault();
+        // var url = $(this).data("url");
+        var url = 'divisi/dataaset/pilihdata';
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdataaset").html(data);
+            })
+            .fail(function () {
+                $("#showdataaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#buttondatadepresiasi", function (e) {
+        e.preventDefault();
+        // var url = $(this).data("url");
+        var url = 'divisi/dataaset/datadepresiasi';
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdataaset").html(data);
+            })
+            .fail(function () {
+                $("#showdataaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#buttondetaildataaset", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var url = 'divisi/dataaset/detaildataaset/'+id;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdataaset").html(data);
+            })
+            .fail(function () {
+                $("#showdataaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#buttoneditdetailaset", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var url = 'divisi/dataaset/editdetaildataaset/'+id;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdataaset").html(data);
+            })
+            .fail(function () {
+                $("#showdataaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+
+
 });
