@@ -43,6 +43,7 @@ Route::get('masteradmin/data-inventaris/updatedata/{id}',['as'=>'masteradmin/dat
 // Master Admin Post Inventaris
 Route::post('master/datainventaris/simpandetailbarang', 'MasterController@simpandetailbarang');
 Route::post('master/datainventaris/simpanupdateinventaris', 'MasterController@simpanupdateinventaris');
+Route::get('master/datainventaris/simpanupdateinventaris/{id}', 'MasterController@simpanupdateinventariscabang');
 // Master Admin Get Lokasi
 Route::get('master/datalokasi/{id}',['as'=>'master/datalokasi','uses'=> 'MasterController@datalokasi']);
 // Master Admin Get Data Peminjaman

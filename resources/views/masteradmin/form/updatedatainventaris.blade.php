@@ -64,9 +64,9 @@
                             data-target="#tambahdatabaru">
                             <i class="fa fa-plus mr-1"></i> Tambah Data
                         </button>
-                        <button type="button" class="btn-primary waves-effect waves-light">
-                            <i class="fa fa-print mr-1"></i> Print
-                        </button>
+                        <a href="{{ url('master/datainventaris/simpanupdateinventaris', ['id'=>$id]) }}" type="button" class="btn-primary waves-effect waves-light">
+                            <i class="fa fa-mouse mr-1"></i> Update All
+                        </a>
                         {{-- <button type="button" data-toggle="modal" data-target="#upload-detail-barang" class="btn-dark waves-effect waves-light" >
                     <i class="fa fa-upload mr-1"></i> Upload Data
                     </button> --}}

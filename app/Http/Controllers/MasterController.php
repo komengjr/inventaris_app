@@ -354,4 +354,28 @@ class MasterController extends Controller
         DB::table('sub_tbl_inventory_temp')->where('no_inventaris', $request->input('id'))->delete();
         return redirect()->back();
     }
+    public function simpanupdateinventariscabang($id)
+    {
+        $data = DB::table('sub_tbl_inventory_temp')->where('kd_cabang',$id)->get();
+        foreach ($data as  $value) {
+            $cekdata = DB::table('sub_tbl_inventory')->where('no_inventaris',$value->no_inventaris)->first();
+            if ($cekdata) {
+                DB::table('sub_tbl_inventory')
+                ->where('no_inventaris',$value->no_inventaris)
+                ->update([
+                                'harga_perolehan' => $value->harga,
+                                'ket_musnah' => $value->ket,
+                            ]);
+                DB::table('sub_tbl_inventory_temp')->where('no_inventaris', $value->no_inventaris)->delete();
+            }
+        }
+        // DB::table('sub_tbl_inventory')
+        // ->where('no_inventaris',$request->input('id'))
+        // ->update([
+        //             'harga_perolehan' => $request->input('harga'),
+        //             'ket_musnah' => $request->input('ket'),
+        //         ]);
+        // DB::table('sub_tbl_inventory_temp')->where('no_inventaris', $request->input('id'))->delete();
+        return redirect()->back();
+    }
 }
