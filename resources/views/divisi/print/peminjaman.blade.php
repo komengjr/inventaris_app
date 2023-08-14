@@ -132,16 +132,24 @@
             </tr>
         </table>
         <br>
-        <table style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);" border="1">
+        <table style="font-size: 8px; margin: 0px; padding: 2px; width: 710px; font-size: 11px; font-family: Calibri (Body);" border="1">
            <thead style="font-weight: bold;">
                 <tr>
-                    <td class="text-center">No</td>
-                    <td>Tgl Pinjam</td>
-                    <td>Tgl Kembali</td>
-                    <td>Nama Barang</td>
-                    <td>Merek / Type</td>
-                    <td>Kondisi Barang</td>
-                    <td class="text-center">Keterangan</td>
+                    <td class="text-center" rowspan="2">No</td>
+                    <td class="text-center" colspan="2">Tanggal</td>
+
+                    <td class="text-center" rowspan="2">Nama Barang</td>
+                    <td class="text-center" rowspan="2">Detail</td>
+                    <td class="text-center" colspan="2">Kondisi Barang</td>
+
+                    <td class="text-center" rowspan="2">Keterangan</td>
+                </tr>
+                <tr>
+                    <td class="text-center">Peminjaman</td>
+                    <td class="text-center">Pengembalian</td>
+                    <td class="text-center">Keluar</td>
+                    <td class="text-center">Kembali</td>
+
                 </tr>
            </thead>
            <tbody>
@@ -156,7 +164,8 @@
                     <td>{{$item->tgl_kembali_barang}}</td>
                     <td>{{$item->nama_barang}}</td>
                     <td>{{$item->merk}} {{$item->type}}</td>
-                    <td>{{$item->kondisi_barang}}</td>
+                    <td>{{ $item->kondisi_pinjam }}</td>
+                    <td>{{ $item->kondisi_kembali }}</td>
                     <td class="text-center">
                         @if ($item->status_sub_peminjaman == 0)
                             {{-- <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="silang.png" width="15"> --}}
