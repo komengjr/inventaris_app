@@ -163,7 +163,26 @@
                     <td>{{$item->tgl_pinjam_barang}}</td>
                     <td>{{$item->tgl_kembali_barang}}</td>
                     <td>{{$item->nama_barang}}</td>
-                    <td>{{$item->merk}} {{$item->type}}</td>
+                    <td>
+                        <table border="0">
+                            <tr>
+                                <td>Merek</td>
+                                <td>:</td>
+                                <td>{{$item->merk}}</td>
+                            </tr>
+                            <tr>
+                                <td>Type</td>
+                                <td>:</td>
+                                <td>{{$item->type}}</td>
+                            </tr>
+                            <tr>
+                                <td>Seri</td>
+                                <td>:</td>
+                                <td>{{$item->no_seri}}</td>
+                            </tr>
+                        </table>
+
+                    </td>
                     <td>{{ $item->kondisi_pinjam }}</td>
                     <td>{{ $item->kondisi_kembali }}</td>
                     <td class="text-center">
