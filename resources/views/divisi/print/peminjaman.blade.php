@@ -164,7 +164,7 @@
                     <td>{{$item->tgl_kembali_barang}}</td>
                     <td>{{$item->nama_barang}}</td>
                     <td>
-                        <table border="0">
+                        <table border="0" style="font-size: 9px;">
                             <tr>
                                 <td>Merek</td>
                                 <td>:</td>
