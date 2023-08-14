@@ -64,7 +64,7 @@
     div.footer {
         position: fixed;
         left: 0;
-        bottom: 20px;
+        bottom: 15px;
         border: 0px solid #302a2a;
         font-size: 15px;
     }
@@ -214,7 +214,7 @@
                 <td>Yang Mengetahui ,</td>
             </tr>
             <tr >
-                <td class="text-center" style="padding-top: 15px; padding-bottom: 15px; width: 33%;">
+                <td class="text-center" style="padding-top: 10px; padding-bottom: 10px; width: 33%;">
                     {{-- <img style="padding-left: 2px; left: 20px;" src=""> --}}
                     <br><br><br><br><br>
                     {{$datapinjam[0]->pj_pinjam}}
