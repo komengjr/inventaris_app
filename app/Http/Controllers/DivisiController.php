@@ -57,7 +57,7 @@ class DivisiController extends Controller
         if (auth::user()->akses == 'sdm') {
 
         $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
-        return view('divisi.menu',[ 'datapinjam' => $datapinjam]);
+        return view('divisi.menupeminjaman',[ 'datapinjam' => $datapinjam]);
 
         }
     }
@@ -156,6 +156,7 @@ class DivisiController extends Controller
                             'id_inventaris' => $id,
                             'tgl_pinjam_barang' => date('Y-m-d H:i:s'),
                             'kd_cabang' => auth::user()->cabang,
+                            'kondisi_pinjam' => $cekdata[0]->kondisi_barang,
                             'status_sub_peminjaman' => 0,
                             'created_at' => date('Y-m-d H:i:s'),
                         ]);
@@ -495,5 +496,55 @@ class DivisiController extends Controller
             'kode'=>$kode,
             'datainventaris'=>$datainventaris
         ]);
+    }
+
+    public function depresiasisemuaaset()
+    {
+        $data = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->get();
+        $datakategori = DB::table('no_urut_barang')->get();
+        return view('divisi.formdepresiasi',['datakategori' => $datakategori,'data'=>$data]);
+    }
+
+    public function datadetailasetcabang($id)
+    {
+        return view('divisi.form.detailaset');
+    }
+    public function mutasidatainventaris()
+    {
+        $data = DB::table('tbl_mutasi')->where('kd_cabang',auth::user()->cabang)->get();
+        $datakategori = DB::table('no_urut_barang')->get();
+        return view('divisi.menumutasi',['datakategori' => $datakategori, 'data'=>$data]);
+    }
+    public function ordertiketmutasi()
+    {
+        $cabang = DB::table('tbl_cabang')->get();
+        return view('divisi.modal.ordertiketmutasi',['cabang'=>$cabang]);
+    }
+    public function posttambahdatamutasi(Request $request)
+    {
+        DB::table('tbl_mutasi')->insert(
+            [
+                'kd_mutasi' => 'mutasi-'.mt_rand(1000000, 99999999),
+                'jenis_mutasi' => $request->jenis_mutasi,
+                'kd_cabang' => auth::user()->cabang,
+                'asal_mutasi' => $request->asal_cabang,
+                'target_mutasi' => $request->tujuan_cabang,
+                'departemen' => 0,
+                'divisi' => 0,
+                'penanggung_jawab' => $request->pj,
+                'tanggal_buat' => $request->tgl_buat,
+                'penerima' => $request->penerima,
+                'menyetujui' => $request->menyetujui,
+                'yang_menyerahkan' => $request->menyerahkan,
+                'ket' => $request->deskripsi,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        return redirect()->back();
+    }
+    public function detaildatamutasi($id)
+    {
+        $data = DB::table('tbl_mutasi')->where('id_mutasi',$id)->first();
+        // dd($data);
+        return view('divisi.modal.detaildatamutasi',['data'=>$data]);
     }
 }

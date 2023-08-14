@@ -140,6 +140,7 @@
                     <td>Tgl Kembali</td>
                     <td>Nama Barang</td>
                     <td>Merek / Type</td>
+                    <td>Kondisi Barang</td>
                     <td class="text-center">Keterangan</td>
                 </tr>
            </thead>
@@ -155,6 +156,7 @@
                     <td>{{$item->tgl_kembali_barang}}</td>
                     <td>{{$item->nama_barang}}</td>
                     <td>{{$item->merk}} {{$item->type}}</td>
+                    <td>{{$item->kondisi_barang}}</td>
                     <td class="text-center">
                         @if ($item->status_sub_peminjaman == 0)
                             {{-- <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="silang.png" width="15"> --}}

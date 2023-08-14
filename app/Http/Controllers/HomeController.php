@@ -38,15 +38,24 @@ class HomeController extends Controller
         } else {
 
             $jumlah = 0;
-            $totaljumlah = 0;
+            $totaljumlahaset = 0;
+            $totaljumlahinventaris = 0;
             $totalharga = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('kd_cabang', auth::user()->cabang)
+            ->where('kd_jenis',1)
             ->get();
             foreach ($totalharga as $totalharga) {
-                $totaljumlah = $totalharga->harga_perolehan + $totaljumlah;
+                $totaljumlahaset = $totalharga->harga_perolehan + $totaljumlahaset;
             }
-
+            $totalhargainventaris = DB::table('sub_tbl_inventory')
+            ->select('sub_tbl_inventory.*')
+            ->where('kd_cabang', auth::user()->cabang)
+            ->where('kd_jenis',0)
+            ->get();
+            foreach ($totalhargainventaris as $totalhargainventaris) {
+                $totaljumlahinventaris = $totalhargainventaris->harga_perolehan + $totaljumlahinventaris;
+            }
 
             $datakategori = DB::table('no_urut_barang')
             ->select('no_urut_barang.*')
@@ -81,8 +90,13 @@ class HomeController extends Controller
             $datalokasi = DB::table('tbl_lokasi')
             ->select('tbl_lokasi.*')
             ->get();
-            $datainventariscabang = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->count();
-            return view('home',['datakategori'=>$datakategori,'datalokasi'=>$datalokasi,'totalinventaris'=>$datainventariscabang,'totaljumlah'=>$totaljumlah]);
+            $datainventariscabang = DB::table('sub_tbl_inventory')->where('kd_jenis',0)->where('kd_cabang',auth::user()->cabang)->count();
+            $dataasetcabang = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->count();
+            return view('home',[
+                'datakategori'=>$datakategori,'datalokasi'=>$datalokasi,
+                'totalinventaris'=>$datainventariscabang,'totaljumlahaset'=>$totaljumlahaset,
+                'dataasetcabang'=>$dataasetcabang, 'totaljumlahinventaris'=>$totaljumlahinventaris
+            ]);
         }
 
 

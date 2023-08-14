@@ -404,6 +404,61 @@ $(document).ready(function () {
                 );
             });
     });
+    $(document).on("click", "#buttondetaildepresiasiaset", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#menudetaildataaset").html(data);
+            })
+            .fail(function () {
+                $("#menudetaildataaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#ordertiketmutasi", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdatalengkapi").html(data);
+            })
+            .fail(function () {
+                $("#showdatalengkapi").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#buttondetailmutasibarang", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdatalengkapi").html(data);
+            })
+            .fail(function () {
+                $("#showdatalengkapi").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
 
 
 });

@@ -41,12 +41,12 @@
         <tr>
             <th>no</th>
             <th>Nama Barang</th>
-            <th>Merek</th>
-            <th>Type</th>
-            <th>No Seri</th>
-            <th>Tanggal Pinjam</th>
-            <th>Tanggal Kembali</th>
-            <th>Status barang</th>
+            <th>Merek / Type / No Seri</th>
+            <th>Tanggal Barang Keluar</th>
+            <th>Kondisi Barang Keluar</th>
+            <th>Tanggal Barang Kembali</th>
+            <th>Kondisi Barang Kembali</th>
+            <th>Status Peminjaman</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -59,22 +59,37 @@
 
                     $data = DB::table('sub_tbl_inventory')->where('id_inventaris',$item->id_inventaris)->get();
                 @endphp
-                    <tr>
-                        <td data-label="No">{{$no++}}</td>
-                        <td data-label="Nama Barang">{{$data[0]->nama_barang}}</td>
-                        <td data-label="Merek">{{$data[0]->merk}}</td>
-                        <td data-label="Type">{{$data[0]->type}}</td>
-                        <td data-label="No Seri">{{$data[0]->no_seri}}</td>
-                        <td data-label="Tanggal Pinjam">{{$item->tgl_pinjam_barang}}</td>
-                        <td data-label="Tanggal Kembali">{{$item->tgl_kembali_barang}}</td>
-                        <td data-label="Status Barang">
+                     <tr>
+                        <td data-label="No">{{ $no++ }}</td>
+                        <td data-label="Nama Barang">{{ $data[0]->nama_barang }}</td>
+                        <td data-label="Merek">
+                            Merek : {{ $data[0]->merk }} <br>
+                            Type : {{ $data[0]->type }} <br>
+                            Seri :  {{ $data[0]->no_seri }}</td>
+                        <td data-label="Tanggal Barang Keluar">{{ $item->tgl_pinjam_barang }}</td>
+                        <td data-label="Kondisi Barang Keluar" class="text-center">
+                            <span class="badge badge-info p-2">
+                                {{ $item->kondisi_pinjam }}
+                            </span></td>
+                        <td data-label="Tanggal Barang Kembali">{{ $item->tgl_kembali_barang }}</td>
+                        <td data-label="Kondisi Barang Kembali" class="text-center">
+                            <span class="badge badge-info p-2">
+                                {{ $item->kondisi_pinjam }}
+                            </span></td>
+                        </td>
+
+                        <td data-label="Status Barang" class="text-center">
                             @if ($item->status_sub_peminjaman == 0)
-                                <button class="btn-warning" disabled>Belum Balik</button>
+
+                            <span class="badge badge-danger p-2">Belum Balik</span>
                             @else
-                                <button class="btn-success" disabled>Sudah Balik</button>
+                                <span class="badge badge-success p-2">Sudah Balik</span>
+
                             @endif
                         </td>
-                        <td data-label="Nama Barang"><button class="btn-danger"><i class="fa fa-trash"></i></button></td>
+
+                        <td data-label="Action" class="text-center"><button class="btn-warning"><i class="fa fa-pencil"></i></button></td>
+
                     </tr>
                 @endforeach
     </tbody>

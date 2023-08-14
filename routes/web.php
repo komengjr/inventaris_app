@@ -59,6 +59,8 @@ Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 
 // Divisi Controller
 Route::get('menu/formpinjam','DivisiController@menu');
 Route::get('menu/formmaintenance','DivisiController@menumaintenance');
+Route::get('menu/formdepresiasi','DivisiController@depresiasisemuaaset');
+Route::get('menu/formmutasi','DivisiController@mutasidatainventaris');
 Route::get('divisi/maintenance/tindakan/{id}',['as'=>'divisi/maintenance/tindakan','uses'=> 'DivisiController@tindakanmaintenance']);
 Route::get('menu/formpemusnahan','DivisiController@menupemusnahan');
 Route::get('menu/verifdatainventaris','DivisiController@verifdatainventaris');
@@ -74,6 +76,7 @@ Route::get('divisi/dataaset/tabledataaset',['as'=>'divisi/dataaset/tabledataaset
 Route::get('divisi/dataaset/tambah',['as'=>'divisi/dataaset/tambah','uses'=> 'DivisiController@tambahdataaset']);
 Route::get('divisi/dataaset/pilihdata',['as'=>'divisi/dataaset/pilihdata','uses'=> 'DivisiController@pilihdata']);
 Route::get('divisi/dataaset/datadepresiasi',['as'=>'divisi/dataaset/datadepresiasi','uses'=> 'DivisiController@datadepresiasi']);
+Route::get('divisi/data-aset/detaildataaset/{id}',['as'=>'divisi/data-aset/detaildataaset','uses'=> 'DivisiController@datadetailasetcabang']);
 Route::get('divisi/dataaset/detaildataaset/{id}',['as'=>'divisi/dataaset/detaildataaset','uses'=> 'DivisiController@detaildataaset']);
 Route::get('divisi/dataaset/editdetaildataaset/{id}',['as'=>'divisi/dataaset/editdetaildataaset','uses'=> 'DivisiController@editdetaildataaset']);
 Route::get('divisi/dataaset/getdataoption/{id}/{tgl}/{harga}',['as'=>'divisi/dataaset/getdataoption/','uses'=> 'DivisiController@getdatadepresiasiaset']);
@@ -87,7 +90,9 @@ Route::post('divisi/inventori/updatedatainventori',['as'=>'divisi/inventori/upda
 
 
 
+Route::get('divisi/datamutasi/tambahdata',['as'=>'divisi/datamutasi/tambahdata','uses'=> 'DivisiController@ordertiketmutasi']);
 Route::get('divisi/tambahdatamutasi',['as'=>'master/tambahdatamutasi','uses'=> 'DivisiController@tambahdatamutasi']);
+Route::get('divisi/datamutasi/detaildatamutasi/{id}',['as'=>'divisi/datamutasi/detaildatamutasi','uses'=> 'DivisiController@detaildatamutasi']);
 Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','uses'=> 'DivisiController@tambahdatapemusnahan']);
 Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
 Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
@@ -97,8 +102,10 @@ Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}/
 Route::get('divisi/verifikasi/print/verif/{id}','PdfController@printverifikasi');
 Route::get('divisi/verifikasi/print/peminjaman/{id}','PdfController@printpeminjaman');
 Route::get('divisi/verifikasi/print/pemusnahan/{id}','PdfController@printpemusnahan');
+Route::get('divisi/datamutasi/print/datamutasi/{id}','PdfController@printdatamutasi');
 // Admin Controller
 //Mutasi
+Route::post('divisi/datamutasi/posttambahdata', 'DivisiController@posttambahdatamutasi');
 Route::get('/datamutasi', 'AdminController@formmutasi');
 Route::get('tampilformmuitasi/{id}',['as'=>'tampilformmuitasi','uses'=> 'AdminController@tampilformmuitasi']);
 Route::get('tambahsubdatamutasibarangx/{id}',['as'=>'tambahsubdatamutasibarangx','uses'=> 'AdminController@tambahsubdatamutasibarangx']);

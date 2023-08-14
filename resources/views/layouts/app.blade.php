@@ -255,6 +255,10 @@
                                     Menu Peminjaman</a></li>
                             <li><a href="{{ url('menu/formmaintenance', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Maintenance</a></li>
+                            <li><a href="{{ url('menu/formmutasi', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Mutasi</a></li>
+                            <li><a href="{{ url('menu/formdepresiasi', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Depresiasi</a></li>
                             <li><a href="{{ url('menu/formpemusnahan', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Pemusnahan</a></li>
                             <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i

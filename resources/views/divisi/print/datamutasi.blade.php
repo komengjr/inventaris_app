@@ -73,7 +73,7 @@
 
 <body style="padding-top: 25px; padding-left: 0px;">
     @php
-        $cabang = DB::table('tbl_cabang')->select('nama_cabang','alamat')->where('kd_cabang',$dataverif[0]->kd_cabang)->get();
+        $cabang = DB::table('tbl_cabang')->select('nama_cabang','alamat','city')->where('kd_cabang',$datamutasi->kd_cabang)->get();
     @endphp
     <div class="header">
         <div class="absolute-kiri">
@@ -81,12 +81,12 @@
             <hr style="padding: 0%; margin: 0%;">
             <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">{{$cabang[0]->alamat}}</p>
         </div>
-        <h5 style="padding-top: 20px; margin: 20px; left: 100px; padding-left: 155px;text-decoration: underline;" >STOCK OPNAME INVENTARIS DAN ASET</h5>
+        <h5 style="padding-top: 20px; margin: 20px; left: 100px; padding-left: 155px;text-decoration: underline;" >FORM MUTASI BARANG INVENTARIS</h5>
         {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate(123123),) !!}"> --}}
 
         <div class="absolute">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::eyeColor(0, 0, 111, 115, 255, 114, 232)->style('dot')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate(123123),
+                QrCode::eyeColor(0, 0, 111, 115, 255, 114, 232)->style('dot')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($datamutasi->kd_mutasi),
             ) !!}">
         </div>
     </div>
@@ -94,18 +94,59 @@
         <br>
         <table style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);" border="0">
             <tr>
-                <td colspan="3" class="text-right"><strong>SDM/323/P-33/123 </strong></td>
+                <td colspan="3" class="text-right"><strong>SDM.33-FRM-PP-07.2/02 </strong></td>
             </tr>
             <tr>
                 <td colspan="3">
-                    <p style="text-decoration: underline;">FORM STOCK OPNAME INVENTARIS DAN ASET</p>
+                    <p style="text-decoration: underline;">FORM MUTASI BARANG INVENTARIS</p>
                 </td>
 
             </tr>
             <tr>
-                <td style="width: 150px;">Kode </td>
+                <td style="width: 150px;">Jenis Mutasi</td>
                 <td style="width: 5px;">:</td>
-                <td>{{$dataverif[0]->kode_verif}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Asal Lokasi Barang</td>
+                <td style="width: 5px;">:</td>
+                <td>
+
+                    {{$cabang[0]->nama_cabang}}
+                </td>
+            </tr>
+            <tr>
+                <td>Lokasi Penempatan</td>
+                <td>:</td>
+                <td>
+
+                </td>
+            </tr>
+            <tr>
+                <td>Departemen</td>
+                <td>:</td>
+                <td>
+
+                </td>
+            </tr>
+            <tr>
+                <td>Divisi</td>
+                <td>:</td>
+                <td>
+
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 150px;">Penanggung Jawab</td>
+                <td style="width: 5px;">:</td>
+                <td>{{$datamutasi->penanggung_jawab}}</td>
+            </tr>
+            <tr>
+                <td>Tanggal Order</td>
+                <td>:</td>
+                <td>
+
+                </td>
             </tr>
 
         </table>
@@ -114,70 +155,51 @@
            <thead style="font-weight: bold;">
                 <tr>
                     <td class="text-center">No</td>
-                    <td>No Inventaris</td>
                     <td>Nama Barang</td>
-                    <td>Merek</td>
-                    <td>Type</td>
-                    <td>No Seri</td>
-                    <td>Keterangan</td>
+                    <td>No Inventaris</td>
+                    <td>Mrek / Type / No Seri</td>
+                    <td>Harga</td>
+                    <td>Tahun</td>
+                    <td class="text-center">Nilai Buku</td>
                 </tr>
            </thead>
            <tbody>
             @php
                 $no = 1;
             @endphp
-            @foreach ($databrg as $item)
 
-                <tr>
-                    <td class="text-center">{{$no++}}</td>
-                    <td>{{$item->id}}/{{$item->kd_inventaris}}/{{$item->kd_cabang}}/{{$item->th_perolehan}}</td>
-                    <td>{{$item->nama_barang}}</td>
-                    <td>{{$item->merk}} </td>
-                    <td>{{$item->type}}</td>
-                    <td>{{$item->no_seri}}</td>
-                    <td class="text-center">
-                        @if ($item->status_data_inventaris == 0)
-                            Baik
-                        @elseif($item->status_data_inventaris == 1)
-                            Maintenance
-                        @elseif($item->status_data_inventaris == 2)
-                            Rusak
-                        @endif
-                    </td>
-                </tr>
-
-            @endforeach
            </tbody>
         </table>
-        <hr>
+        <br><br><br>
 
     <div class="footer">
         <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="1">
             <tr>
-                <td colspan="2" style="border-right: 1px solid #ffffff;">Mengetahui :</td>
-                <td colspan="1" class="text-right"><strong>Pontianak , {{date('Y-m-d H:i:s')}}</strong></td>
+
+                <td colspan="3" class="text-right"><strong>{{$cabang[0]->city}} , {{date('d - m - Y ')}}</strong></td>
+            </tr>
+            <tr>
+                <td>Penerima ,</td>
+                <td>Yang Menyerahkan ,</td>
+                <td>Menyetujui ,</td>
             </tr>
             <tr >
                 <td class="text-center" style="padding-top: 15px; padding-bottom: 15px; width: 33%;">
                     {{-- <img style="padding-left: 2px; left: 20px;" src=""> --}}
                     <br><br><br><br><br>
-                    -
-                    <br>
-                    (..........................)
+                    {{$datamutasi->penerima}}
+
                 </td>
                 <td class="text-center" style="width: 33%;">
                     <br><br><br><br><br>
-                     Manager SDM & UMUM
-                     <br>
-                     (..........................)
+                     {{$datamutasi->menyetujui}}
+
                 </td>
                 <td class="text-center" style="width: 33%;">
                     <br><br><br><br><br>
-                     Kepala Cabang ( Yang Bersangkutan )
-                     <br>
-                     (..........................)
+                    {{$datamutasi->yang_menyerahkan}}
                 </td>
             </tr>
 

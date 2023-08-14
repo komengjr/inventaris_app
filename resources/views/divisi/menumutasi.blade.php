@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('content')
     <div class="content-wrapper">
-        <div class="container-fluid">
+        <div class="container-fluid" id="menudetaildataaset">
             <div class="row pl-2 pt-2 pb-2">
                 <div class="col-sm-9">
                     {{-- <h4 class="page-title">Form SDM & Umum</h4> --}}
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
                         <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Menu Pemusnahan</li>
+                        <li class="breadcrumb-item active" aria-current="page">Menu Depresiasi</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                                     <h4 class="text-primary mb-0">0 Item</h4>
                                     <span class="small-font">Avg Loading Time</span>
                                 </div>
-                                <div class="w-circle-icon rounded bg-primary">
+                                <div class="w-circle-icon rounded bg-primary" style="cursor: pointer;">
                                     <i class="fa fa-clock-o text-white"></i>
                                 </div>
                             </div>
@@ -81,11 +81,11 @@
             <!--start overlay-->
             <div class="overlay toggle-menu"></div>
             <!--end overlay-->
-            <div class="row">
+            <div class="row" >
                 <div class="col-12 col-lg-12">
                     <div class="card">
                         <div class="card-header border-0">
-                            Recent History
+                            Data Aset
                             <div class="card-action">
                                 <div class="dropdown">
                                     <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
@@ -93,49 +93,53 @@
                                         <i class="icon-options"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="javascript:void();">Action</a>
+                                        {{-- <a class="dropdown-item" href="javascript:void();">Action</a>
                                         <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                        <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                                        <a class="dropdown-item" href="javascript:void();">Something else here</a> --}}
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ url('divisi/masterbarang/token', []) }}">Create Nomor</a>
+                                        <a class="dropdown-item" href="javascript:void();" data-toggle="modal" data-target="#modalmutasi" id="ordertiketmutasi" data-url={{ url('divisi/datamutasi/tambahdata', []) }}><i class="fa fa-ticket"></i> Order Tiket Mutasi</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="table-responsive pb-5">
-                            <table class="table styled-table align-items-center table-flush pb-2" id="example">
+                            <table class="table styled-table align-items-center table-flush pb-2" id="default-table1">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Barang</th>
-                                        {{-- <th>no</th> --}}
-                                        <th>No Inventaris</th>
-                                        <th>Ruangan</th>
-                                        <th>Merek / Type</th>
-                                        <th>Tahun Perolehan</th>
-                                        <th>Harga</th>
-                                        <th>action</th>
+                                        <th>Order Tiket</th>
+                                        <th>Jenis Mutasi</th>
+                                        <th>Penanggung Jawab</th>
+                                        <th>Tanggal Terbit</th>
+                                        <th>Tanggal Pembelian</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php
-                                        $no =1;
+                                        $no = 1;
                                     @endphp
                                     @foreach ($data as $item)
-
                                     <tr>
                                         <td>
                                             {{$no++}}
                                         </td>
-                                        <td>{{ $item->nama_barang }}</td>
-                                        <td>{{ $item->no_inventaris }}</td>
-                                        <td>{{ $item->nama_lokasi }}</td>
-                                        <td>{{ $item->merk }} / {{ $item->type }}</td>
-                                        <td>{{ $item->th_perolehan }}</td>
-                                        <td>{{ $item->harga_perolehan }}</td>
-                                        <td><button class="btn-dark" data-toggle="modal" data-target="#editmasterbarang" id="editbarangmaster" data-url="{{ url('divisi/masterbarang/showedit',['id'=>$item->id_inventaris]) }}"><i class="fa fa-pencil"></i> edit</button></td>
+                                        <td>{{$item->kd_mutasi}}</td>
+                                        <td></td>
+                                        <td>
+                                            <span class="badge-dot">
+                                                <i class="bg-danger"></i> pending
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="progress shadow" style="height: 4px">
+                                                <div class="progress-bar gradient-ibiza" role="progressbar"
+                                                    style="width: 60%"></div>
+                                            </div>
+                                        </td>
+                                        <td>{{$item->tanggal_buat}}</td>
+                                        <td><button class="btn-warning" data-toggle="modal" data-target="#modalmutasi" id="buttondetailmutasibarang" data-url="{{ url('divisi/datamutasi/detaildatamutasi',['id'=>$item->id_mutasi]) }}" ><i class="fa fa-pencil"></i> Update</button></td>
                                     </tr>
-
                                     @endforeach
                                 </tbody>
                             </table>
@@ -146,6 +150,16 @@
         </div>
         <!-- End container-fluid-->
 
+    </div>
+    <div class="modal fade" id="modalmutasi">
+        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+            <div class="modal-content">
+                <div id="showdatalengkapi">
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="{{ url('assets/js/app-script.js', []) }}"></script>
     <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>
@@ -253,41 +267,4 @@
 
         });
     </script>
-    <div class="modal fade" id="editmasterbarang">
-        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
-            <div class="modal-content">
-                <div id="showdatasdm">
-                    <div class="modal-body">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.bootstrap4.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/jszip.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/pdfmake.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/vfs_fonts.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.html5.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.print.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.colVis.min.js', []) }}"></script>
-    <script>
-        $(document).ready(function() {
-         //Default data table
-          $('#default-datatablexx').DataTable();
-
-
-          var table = $('#examplexx').DataTable( {
-           lengthChange: false,
-           buttons: [ 'copy', 'excel', 'pdf', 'print', 'colvis' ]
-         } );
-
-        table.buttons().container()
-           .appendTo( '#example_wrapper .col-md-6:eq(0)' );
-
-         } );
-
-       </script>
 @endsection

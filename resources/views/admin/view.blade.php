@@ -1,36 +1,62 @@
-
 <div class="container-fluid">
-<style>
-    .content, .modal {
+    <style>
+        .modal {
+            padding: 10px;
+            !important; //
+        }
 
-    top:0;
-    left:0;
-    height:100%;
-    width: 100%;
-    }
-    #lihatdatabarang:hover {
-        color: #fff;
-        background-color: #ff1900;
-        border-color: #eb7d07
-    }
-    #ubahwarnass:hover {
-        color: #fff;
-        background-color-line: #ff1900;
-        border-color: #eb7d07
-    }
-    #ubahtombolaset:hover {
-        color: rgb(255, 14, 14);
-        padding: 1px;
-        /* background-color: #dd57e0; */
-        border-radius: 10%;
-        border: 5px solid #dd57e0;
-    }
-    @media only screen and  (max-width: 800px) {
-    #iconruangan {
-        display: none;
-    }
-    }
-</style>
+        .modal .modal-dialog {
+            width: 100%;
+            max-width: none;
+            /* height: 100%; */
+            margin: 0;
+        }
+
+        .modal .modal-content {
+            /* height: 100%; */
+            border: 0;
+            border-radius: 0;
+        }
+
+        .modal .modal-body {
+            overflow-y: auto;
+        }
+
+        #lihatdatabarang:hover {
+            color: #fff;
+            background-color: #00e5ff;
+            border-color: #07aaeb
+        }
+
+        #ubahwarnass:hover {
+            color: #fff;
+            background-color-line: #00bfff;
+            border-color: #07a7eb
+        }
+
+        #ubahtombolaset:hover {
+            display: flex;
+            color: rgb(14, 243, 255);
+            padding: 2px;
+            /* background-color: #dd57e0; */
+            border-radius: 10%;
+            border: 3px solid #14bbd1;
+        }
+        #datainevntaris:hover {
+            display: flex;
+            color: rgb(14, 243, 255);
+            padding: 2px;
+            /* background-color: #dd57e0; */
+            border-radius: 10%;
+            border: 3px solid #14bbd1;
+        }
+
+        @media only screen and (max-width: 800px) {
+            #iconruangan {
+                display: none;
+            }
+        }
+    </style>
     <div class="row">
         <div class="col-12 col-lg-4 col-xl-4">
             <div class="card gradient-warning rounded-0">
@@ -54,14 +80,14 @@
                     <div class="media align-items-center bg-white p-4">
                         <div class="media-body">
                             @if ($totalinventaris == 1)
-                            <h5 class="mb-0 text-dark">Kosong</h5>
+                                <h5 class="mb-0 text-dark">Kosong</h5>
                             @else
-                            <h5 class="mb-0 text-dark">{{ $totalinventaris }}</h5>
+                                <h5 class="mb-0 text-dark">@currency($totaljumlahinventaris)</h5>
                             @endif
 
-                            <p class="mb-0 text-dark">Total Inventaris</p>
+                            <p class="mb-0 text-dark">Total Inventaris Cabang : {{ $totalinventaris }}</p>
                         </div>
-                        <div class="w-icon">
+                        <div class="w-icon" style="cursor: pointer" id="datainevntaris">
                             <i class="fa fa-th-large text-gradient-danger"></i>
                         </div>
                     </div>
@@ -73,11 +99,12 @@
                 <div class="card-body p-1">
                     <div class="media align-items-center bg-white p-4">
                         <div class="media-body">
-                            <h5 class="mb-0 text-dark">@currency($totaljumlah)</h5>
-                            <p class="mb-0 text-dark">Data Aset Perusahaan</p>
+                            <h5 class="mb-0 text-dark">@currency($totaljumlahaset)</h5>
+                            <p class="mb-0 text-dark">Total Aset Cabang : {{ $dataasetcabang }}</p>
                         </div>
-                        <div class="w-icon" style="cursor: pointer" id="ubahtombolaset" data-toggle="modal" data-target="#lihat-detail-data" data-url="{{ url('admin/formdataaset', []) }}">
-                            <i class="fa fa-server text-gradient-secondary"></i>
+                        <div class="w-icon" style="cursor: pointer" id="ubahtombolaset" data-toggle="modal"
+                            data-target="#lihat-detail-data" data-url="{{ url('admin/formdataaset', []) }}">
+                            <i class="fa fa-th-large text-gradient-danger"></i>
                         </div>
                     </div>
                 </div>
@@ -99,13 +126,17 @@
             </div>
         </div> --}}
     </div>
-
+@php
+    $hari_ini = date("2023-10-01");
+$tgl_pertama = date('Y-m-01', strtotime($hari_ini));
+$tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
+@endphp
     <div class="row pt-2 pb-2">
         <div class="col-sm-9">
             <h4 class="page-title">Klasifikasi</h4>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                <li class="breadcrumb-item"><a href="javaScript:void();">Inventaris & aset</a></li>
+                <li class="breadcrumb-item"><a href="javaScript:void();">{{$tgl_pertama}}</a></li>
+                <li class="breadcrumb-item"><a href="javaScript:void();">{{$tgl_terakhir}}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Data</li>
             </ol>
         </div>
@@ -141,7 +172,7 @@
                                 @endforeach
                                 <p class="mb-0 text-white">Total Inventaris</p>
                             </div>
-                            <div class="w-icon" >
+                            <div class="w-icon">
                                 @if ($item->no_urut_barang == '01')
                                     <i class="fa fa-road text-white"></i>
                                 @elseif($item->no_urut_barang == '02')
@@ -199,7 +230,9 @@
             @else
                 <div class="col-6 col-lg-2 col-xl-2">
                     <div class="card gradient-success rounded-0">
-                        <div class="card-body p-1" style="cursor: pointer" data-toggle="modal" data-target="#lihat-detail-data" id="lihatdatabarang" data-url="{{ route('lihatdatabarang1', ['id' => $itemx->kd_lokasi]) }}">
+                        <div class="card-body p-1" style="cursor: pointer" data-toggle="modal"
+                            data-target="#lihat-detail-data" id="lihatdatabarang"
+                            data-url="{{ route('lihatdatabarang1', ['id' => $itemx->kd_lokasi]) }}">
                             <div class="media align-items-center bg-white p-3">
                                 <div class="media-body">
                                     <p class="text-dark text-uppercase extra-small-font font-weight-bold">
@@ -283,9 +316,9 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="lihat-detail-data" >
+<div class="modal fade" id="lihat-detail-data">
     <div class="modal-dialog modal-dialog-centered modal-xl" style="margin-top: 2%;">
-        <div class="modal-content" >
+        <div class="modal-content">
             <div id="showdatabarang">
                 <div class="modal-body" style="font-size: 9px;">
                 </div>

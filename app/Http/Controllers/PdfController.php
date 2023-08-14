@@ -85,6 +85,18 @@ class PdfController extends Controller
         $pdf = PDF::loadview('divisi.print.peminjaman',['databrg'=>$databrg, 'datapinjam'=>$datapinjam, 'ttd'=>$ttd])->setPaper('A4','potrait');
         return $pdf->stream();
     }
+    public function printdatamutasi($id)
+    {
+        $databrg = DB::table('tbl_sub_peminjaman')
+        ->join('tbl_peminjaman','tbl_peminjaman.id_pinjam','=','tbl_sub_peminjaman.id_pinjam')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')
+        ->where('tbl_peminjaman.tiket_peminjaman',$id)
+        ->get();
+        $ttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
+        $datamutasi = DB::table('tbl_mutasi')->where('kd_mutasi','mutasi-12549858')->first();
+        $pdf = PDF::loadview('divisi.print.datamutasi',['databrg'=>$databrg, 'datamutasi'=>$datamutasi, 'ttd'=>$ttd])->setPaper('A4','potrait');
+        return $pdf->stream();
+    }
     public function printpemusnahan($id)
     {
         $databrg = DB::table('sub_tbl_inventory')

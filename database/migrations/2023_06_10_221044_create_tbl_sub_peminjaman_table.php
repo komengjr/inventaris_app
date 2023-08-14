@@ -17,8 +17,11 @@ class CreateTblSubPeminjamanTable extends Migration
             $table->id('id_sub_peminjaman');
             $table->string('id_pinjam')->index();
             $table->string('id_inventaris')->index();
+            $table->string('kd_cabang')->nullable();
             $table->string('tgl_pinjam_barang')->nullable();
             $table->string('tgl_kembali_barang')->nullable();
+            $table->string('kondisi_pinjam')->nullable();
+            $table->string('kondisi_kembali')->nullable();
             $table->string('status_sub_peminjaman');
             $table->timestamps();
         });

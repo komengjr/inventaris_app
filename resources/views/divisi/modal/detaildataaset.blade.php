@@ -117,8 +117,8 @@
                                     <th>No</th>
                                     <th>Bulan</th>
                                     <th>Persentase Penyusutan</th>
-                                    <th>Pengurangan</th>
-                                    <th>Penyusutan</th>
+                                    <th>Depresiasi</th>
+                                    <th>Nilai Buku</th>
 
                                 </tr>
                             </thead>
@@ -143,7 +143,7 @@
                                         echo date('d - M - Y', strtotime('+1 month', strtotime($data[$datadepresiasi->masa * 12 - 1])));
                                     @endphp</td>
                                     <td>{{ substr($persen, 0, 4) }} %</td>
-                                    <td>@currency($pengurangan)</td>
+                                    <td>@currency($pengurangan - 1)</td>
                                     <td>@currency(1)</td>
 
                                 </tr>

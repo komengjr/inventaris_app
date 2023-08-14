@@ -1,6 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+.modal {
+  padding: 10px; !important; //
+}
+.modal .modal-dialog {
+  width: 100%;
+  max-width: none;
+  /* height: 100%; */
+  margin: 0;
+}
+.modal .modal-content {
+  /* height: 100%; */
+  border: 0;
+  border-radius: 0;
+}
+.modal .modal-body {
+  overflow-y: auto;
+}
+</style>
     <div class="content-wrapper">
         <div class="container-fluid">
             <div class="row pl-2 pt-2 pb-2">
@@ -130,7 +149,7 @@
         </div>
     </div>
     <div class="modal fade" id="lengkapipeminjaman">
-        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div id="showdatalengkapi">
                     <div class="modal-body">
