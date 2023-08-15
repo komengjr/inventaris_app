@@ -74,7 +74,7 @@
                         <td data-label="Tanggal Barang Kembali">{{ $item->tgl_kembali_barang }}</td>
                         <td data-label="Kondisi Barang Kembali" class="text-center">
                             <span class="badge badge-info p-2">
-                                {{ $item->kondisi_pinjam }}
+                                {{ $item->kondisi_kembali }}
                             </span></td>
                         </td>
 
@@ -88,7 +88,18 @@
                             @endif
                         </td>
 
-                        <td data-label="Action" class="text-center"><button class="btn-warning"><i class="fa fa-pencil"></i></button></td>
+                        <td data-label="Action" class="text-center">
+                            <button type="button" class="btn btn-dark btn-sm waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                            </button>
+                            <div class="dropdown-menu">
+                              <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                              <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-trash-o"></i> Hapus</a>
+                              <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-cogs"></i> Keterangan Kembali</a>
+                              <div class="dropdown-divider"></div>
+                              <a href="javaScript:void();" class="dropdown-item">Separated link</a>
+                            </div>
+                        </td>
 
                     </tr>
                 @endforeach

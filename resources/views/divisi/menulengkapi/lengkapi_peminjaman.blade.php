@@ -43,13 +43,19 @@
     </div>
 
 
-    <div class="modal-body" id="buttoninputbarangpeminjaman">
+    <div class="modal-body" >
         <button type="button" class="btn-success" id="buttontambahbarangpeminjaman"
             data-url="{{ url('divisi/peminjaman/inputdatabarang', ['id' => $cekdata[0]->id_pinjam]) }}"><i
-                class="fa fa-keyboard-o"></i> Input Barang</button>
-        <button type="button" class="btn-warning" id="buttonpengembalianbarangpeminjaman"
+                class="fa fa-qrcode"></i> Scan Peminjaman Barang</button>
+                <button class="btn-success" id="buttoncarinamabarang" data-url="{{ url('divisi/peminjaman/caridatabarang', ['id' => $cekdata[0]->id_pinjam]) }}"><i class="fa fa-search"></i> Cari Nama Barang</button>
+
+                <button class="btn-info" style="float: right; margin-left: 5px;" id="refreshtablepeminjaman" data-url="{{ url('divisi/peminjaman/refreshtablepeminjaman', ['id' => $cekdata[0]->id_pinjam]) }}"><i class="fa fa-refresh"></i></button>
+        <button type="button" class="btn-dark" id="buttonpengembalianbarangpeminjaman"
             data-url="{{ url('divisi/peminjaman/pengembaliandatabarang', ['id' => $cekdata[0]->id_pinjam]) }}"
-            style="float: right;"><i class="fa fa-keyboard-o"></i> Pengembalian Barang</button>
+            style="float: right;"><i class="fa fa-keyboard-o"></i> Scan Pengembalian Barang</button>
+    </div>
+    <div class="modal-body" id="buttoninputbarangpeminjaman">
+
     </div>
 
     <div class="body pb-3" id="tablepeminjaman">
@@ -80,7 +86,7 @@
                     @endphp
                     <tr>
                         <td data-label="No">{{ $no++ }}</td>
-                        <td data-label="Nama Barang">{{ $data[0]->nama_barang }}</td>
+                        <td data-label="Nama Barang">{{ $data[0]->nama_barang }} - {{ $data[0]->id_inventaris }}</td>
                         <td data-label="Merek">
                             Merek : {{ $data[0]->merk }} <br>
                             Type : {{ $data[0]->type }} <br>
@@ -93,7 +99,7 @@
                         <td data-label="Tanggal Barang Kembali">{{ $item->tgl_kembali_barang }}</td>
                         <td data-label="Kondisi Barang Kembali" class="text-center">
                             <span class="badge badge-info p-2">
-                                {{ $item->kondisi_pinjam }}
+                                {{ $item->kondisi_kembali }}
                             </span></td>
                         </td>
 
@@ -107,7 +113,18 @@
                             @endif
                         </td>
 
-                        <td data-label="Action" class="text-center"><button class="btn-warning"><i class="fa fa-pencil"></i></button></td>
+                        <td data-label="Action" class="text-center">
+                            <button type="button" class="btn btn-dark btn-sm waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                              </button>
+                              <div class="dropdown-menu">
+                                <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                                {{-- <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-cogs"></i> Keterangan Keluar</a>
+                                <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-cogs"></i> Keterangan Kembali</a> --}}
+                                <div class="dropdown-divider"></div>
+                                <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-trash-o"></i> Hapus</a>
+                              </div>
+                        </td>
 
                     </tr>
                 @endforeach

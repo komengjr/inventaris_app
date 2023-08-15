@@ -183,6 +183,41 @@ class DivisiController extends Controller
 
 
     }
+    public function refreshtablepeminjaman($id)
+    {
+        $notif = 4;
+        $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$id)->get();
+        return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
+    }
+    public function tablecaripeminjaman($id,$datax)
+    {
+        $data = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang',auth::user()->cabang)
+        ->where('nama_barang', 'like', '%' . $datax . '%')->get();
+        return view('divisi.menulengkapi.tablecaridata',['id'=>$id,'data'=>$data , 'datax'=>$datax]);
+    }
+    public function inserttablepeminjaman($id,$ids,$datax)
+    {
+        DB::table('tbl_sub_peminjaman')->insert(
+            [
+                'id_pinjam' => $id,
+                'id_inventaris' => $ids,
+                'tgl_pinjam_barang' => date('Y-m-d H:i:s'),
+                'kd_cabang' => auth::user()->cabang,
+                'kondisi_pinjam' => 'BAIK',
+                'status_sub_peminjaman' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        $notif = 1;
+        $data = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang',auth::user()->cabang)
+        ->where('nama_barang', 'like', '%' . $datax . '%')->get();
+        return view('divisi.menulengkapi.tablecaridata',['id'=>$id,'data'=>$data, 'datax'=>$datax]);
+    }
+    public function caridatabarang($id)
+    {
+        return view('divisi.menulengkapi.caridatabarang',['id'=>$id]);
+    }
     public function pengembaliantablepeminjaman($id,$ids)
     {
 

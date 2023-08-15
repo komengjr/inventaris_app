@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $(document).on("click", "#ubahtombolaset", function (e) {
         e.preventDefault();
         var url = $(this).data("url");
@@ -71,6 +70,63 @@ $(document).ready(function () {
                     '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                 );
             });
+    });
+    $(document).on("click", "#buttoncarinamabarang", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#buttoninputbarangpeminjaman").html(data);
+            })
+            .fail(function () {
+                $("#buttoninputbarangpeminjaman").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#buttoninsertdatapeminjaman", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#buttoninputbarangpeminjaman").html(data);
+                document.getElementById("refreshtablepeminjaman").click();
+            })
+            .fail(function () {
+                $("#buttoninputbarangpeminjaman").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#refreshtablepeminjaman", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#tablepeminjaman").html(data);
+            })
+            .fail(function () {
+                $("#tablepeminjaman").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
     });
     $(document).on(
         "click",
@@ -293,7 +349,7 @@ $(document).ready(function () {
     $(document).on("click", "#buttontambahdataaset", function (e) {
         e.preventDefault();
         // var url = $(this).data("url");
-        var url = 'divisi/dataaset/tambah';
+        var url = "divisi/dataaset/tambah";
 
         $.ajax({
             url: url,
@@ -312,7 +368,7 @@ $(document).ready(function () {
     $(document).on("click", "#showtableaset", function (e) {
         e.preventDefault();
         // var url = $(this).data("url");
-        var url = 'divisi/dataaset/tabledataaset';
+        var url = "divisi/dataaset/tabledataaset";
 
         $.ajax({
             url: url,
@@ -331,7 +387,7 @@ $(document).ready(function () {
     $(document).on("click", "#buttonpilihdataaset", function (e) {
         e.preventDefault();
         // var url = $(this).data("url");
-        var url = 'divisi/dataaset/pilihdata';
+        var url = "divisi/dataaset/pilihdata";
 
         $.ajax({
             url: url,
@@ -350,7 +406,7 @@ $(document).ready(function () {
     $(document).on("click", "#buttondatadepresiasi", function (e) {
         e.preventDefault();
         // var url = $(this).data("url");
-        var url = 'divisi/dataaset/datadepresiasi';
+        var url = "divisi/dataaset/datadepresiasi";
 
         $.ajax({
             url: url,
@@ -369,7 +425,7 @@ $(document).ready(function () {
     $(document).on("click", "#buttondetaildataaset", function (e) {
         e.preventDefault();
         var id = $(this).data("id");
-        var url = 'divisi/dataaset/detaildataaset/'+id;
+        var url = "divisi/dataaset/detaildataaset/" + id;
 
         $.ajax({
             url: url,
@@ -388,7 +444,7 @@ $(document).ready(function () {
     $(document).on("click", "#buttoneditdetailaset", function (e) {
         e.preventDefault();
         var id = $(this).data("id");
-        var url = 'divisi/dataaset/editdetaildataaset/'+id;
+        var url = "divisi/dataaset/editdetaildataaset/" + id;
 
         $.ajax({
             url: url,
@@ -459,6 +515,4 @@ $(document).ready(function () {
                 );
             });
     });
-
-
 });
