@@ -99,11 +99,11 @@ $(document).ready(function () {
             dataType: "html",
         })
             .done(function (data) {
-                $("#buttoninputbarangpeminjaman").html(data);
+                $("#tablepencariandata").html(data);
                 document.getElementById("refreshtablepeminjaman").click();
             })
             .fail(function () {
-                $("#buttoninputbarangpeminjaman").html(
+                $("#tablepencariandata").html(
                     '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                 );
             });
@@ -147,9 +147,56 @@ $(document).ready(function () {
             });
 
     });
-    $(document).on(
-        "click",
-        "#buttonpengembalianbarangpeminjaman",
+    $(document).on("click", "#buttonsimpandataupdatedetailpeminjaman", function (e) {
+        var data = $("#updatedatadetailpeminjaman").serialize();
+
+        e.preventDefault();
+        var url = $(this).data("url");
+        $.ajax({
+            url: url,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+            },
+            type: "POST",
+            data: data,
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#tablepeminjaman").html(data);
+            })
+            .fail(function () {
+                console.log(data);
+                $("#tablepeminjaman").html(
+                    '<i class="fa fa-info-sign"></i> Gagal Baca'
+                );
+            });
+    });
+    $(document).on("click", "#hapusdatadetailpeminjaman", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var ids = $(this).data("ids");
+        let text = "Apakah Yakin Untuk di Hapus ?\n Tekan OK atau Cancel.";
+        if (confirm(text) == true) {
+            $.ajax({
+                url: '../divisi/peminjaman/hapusdetaildatapeminjaman/'+id+'/'+ids,
+                type: "GET",
+                dataType: "html",
+            })
+                .done(function (data) {
+                    $("#tablepeminjaman").html(data);
+                })
+                .fail(function () {
+                    $("#tablepeminjaman").html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
+                });
+        } else {
+            // console.log('no');
+        }
+
+    });
+
+    $(document).on( "click", "#buttonpengembalianbarangpeminjaman",
         function (e) {
             e.preventDefault();
             var url = $(this).data("url");

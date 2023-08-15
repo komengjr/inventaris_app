@@ -91,11 +91,9 @@
 
                             </button>
                             <div class="dropdown-menu">
-                              <a href="javaScript:void();" class="dropdown-item" id="buttoneditbarangpeminjaman" data-url="{{ url('divisi/peminjaman/editdatapeminjaman', ['id'=>$item->id_sub_peminjaman]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
-                              <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-trash-o"></i> Hapus</a>
-                              <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-cogs"></i> Keterangan Kembali</a>
-                              <div class="dropdown-divider"></div>
-                              <a href="javaScript:void();" class="dropdown-item">Separated link</a>
+                                <a href="javaScript:void();" class="dropdown-item" id="buttoneditbarangpeminjaman" data-url="{{ url('divisi/peminjaman/editdatapeminjaman', ['id'=>$item->id_sub_peminjaman]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="javaScript:void();" class="dropdown-item" id="hapusdatadetailpeminjaman" data-id="{{$item->id_sub_peminjaman}}" data-ids="{{$item->id_pinjam}}"><i class="fa fa-trash-o"></i> Hapus</a>
                             </div>
                         </td>
 

@@ -44,6 +44,7 @@
 
 
     <div class="modal-body" >
+    <div class="modal-body" style="border: 2px solid rgba(0, 0, 0, 0.5)">
         <button type="button" class="btn-success" id="buttontambahbarangpeminjaman"
             data-url="{{ url('divisi/peminjaman/inputdatabarang', ['id' => $cekdata[0]->id_pinjam]) }}"><i
                 class="fa fa-qrcode"></i> Scan Peminjaman Barang</button>
@@ -53,6 +54,7 @@
         <button type="button" class="btn-dark" id="buttonpengembalianbarangpeminjaman"
             data-url="{{ url('divisi/peminjaman/pengembaliandatabarang', ['id' => $cekdata[0]->id_pinjam]) }}"
             style="float: right;"><i class="fa fa-keyboard-o"></i> Scan Pengembalian Barang</button>
+    </div>
     </div>
     <div class="modal-body" id="buttoninputbarangpeminjaman">
 
@@ -119,10 +121,8 @@
                               </button>
                               <div class="dropdown-menu">
                                 <a href="javaScript:void();" class="dropdown-item" id="buttoneditbarangpeminjaman" data-url="{{ url('divisi/peminjaman/editdatapeminjaman', ['id'=>$item->id_sub_peminjaman]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
-                                {{-- <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-cogs"></i> Keterangan Keluar</a>
-                                <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-cogs"></i> Keterangan Kembali</a> --}}
                                 <div class="dropdown-divider"></div>
-                                <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-trash-o"></i> Hapus</a>
+                                <a href="javaScript:void();" class="dropdown-item" id="hapusdatadetailpeminjaman" data-id="{{$item->id_sub_peminjaman}}" data-ids="{{$item->id_pinjam}}"><i class="fa fa-trash-o"></i> Hapus</a>
                               </div>
                         </td>
 
@@ -143,11 +143,5 @@
 </div>
 <script>
     $('#data-table99').DataTable();
-
-    function myFunction() {
-        var link = document.createElement("a")
-        link.href = "https://example.com"
-        link.target = "_blank"
-        link.click()
-    }
 </script>
+

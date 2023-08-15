@@ -189,10 +189,49 @@ class DivisiController extends Controller
         $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$id)->get();
         return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
     }
-    public function editdatapeminjaman()
+    public function editdatapeminjaman($id)
     {
-        return view('divisi.menulengkapi.editdatabarang');
+        $data = DB::table('tbl_sub_peminjaman')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')
+        ->where('id_sub_peminjaman',$id)->first();
+        return view('divisi.menulengkapi.editdatabarang',['data'=>$data]);
     }
+    public function posteditdatapeminjaman(Request $request)
+    {
+        if ($request->tgl_kembali_barang == "") {
+            DB::table('tbl_sub_peminjaman')
+            ->where('id_sub_peminjaman',$request->id_sub_peminjaman)
+            ->update([
+                        'tgl_pinjam_barang' => $request->tgl_pinjam_barang,
+                        'tgl_kembali_barang' => $request->tgl_kembali_barang,
+                        'kondisi_pinjam' => $request->kondisi_pinjam,
+                        'kondisi_kembali' => $request->kondisi_kembali,
+                    ]);
+        } else {
+            DB::table('tbl_sub_peminjaman')
+            ->where('id_sub_peminjaman',$request->id_sub_peminjaman)
+            ->update([
+                        'tgl_pinjam_barang' => $request->tgl_pinjam_barang,
+                        'tgl_kembali_barang' => $request->tgl_kembali_barang,
+                        'kondisi_pinjam' => $request->kondisi_pinjam,
+                        'kondisi_kembali' => $request->kondisi_kembali,
+                        'status_sub_peminjaman' => 1,
+                    ]);
+        }
+
+
+        $notif = 4;
+        $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$request->id_pinjam)->get();
+        return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
+    }
+    public function hapusdetaildatapeminjaman($id,$ids)
+    {
+        DB::table('tbl_sub_peminjaman')->where('id_sub_peminjaman', $id)->delete();
+        $notif = 4;
+        $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$ids)->get();
+        return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
+    }
+
     public function tablecaripeminjaman($id,$datax)
     {
         $data = DB::table('sub_tbl_inventory')
