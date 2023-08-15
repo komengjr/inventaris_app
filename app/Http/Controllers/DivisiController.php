@@ -189,6 +189,10 @@ class DivisiController extends Controller
         $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$id)->get();
         return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
     }
+    public function editdatapeminjaman()
+    {
+        return view('divisi.menulengkapi.editdatabarang');
+    }
     public function tablecaripeminjaman($id,$datax)
     {
         $data = DB::table('sub_tbl_inventory')

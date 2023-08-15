@@ -128,6 +128,25 @@ $(document).ready(function () {
             });
 
     });
+    $(document).on("click", "#buttoneditbarangpeminjaman", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#tablepeminjaman").html(data);
+            })
+            .fail(function () {
+                $("#tablepeminjaman").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
     $(document).on(
         "click",
         "#buttonpengembalianbarangpeminjaman",

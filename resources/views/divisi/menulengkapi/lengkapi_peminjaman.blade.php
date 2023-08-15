@@ -118,7 +118,7 @@
 
                               </button>
                               <div class="dropdown-menu">
-                                <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                                <a href="javaScript:void();" class="dropdown-item" id="buttoneditbarangpeminjaman" data-url="{{ url('divisi/peminjaman/editdatapeminjaman', ['id'=>$item->id_sub_peminjaman]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
                                 {{-- <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-cogs"></i> Keterangan Keluar</a>
                                 <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-cogs"></i> Keterangan Kembali</a> --}}
                                 <div class="dropdown-divider"></div>

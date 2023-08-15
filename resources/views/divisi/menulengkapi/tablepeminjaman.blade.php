@@ -61,7 +61,7 @@
                 @endphp
                      <tr>
                         <td data-label="No">{{ $no++ }}</td>
-                        <td data-label="Nama Barang">{{ $data[0]->nama_barang }}</td>
+                        <td data-label="Nama Barang">{{ $data[0]->nama_barang }} - {{ $data[0]->id_inventaris }}</td>
                         <td data-label="Merek">
                             Merek : {{ $data[0]->merk }} <br>
                             Type : {{ $data[0]->type }} <br>
@@ -80,11 +80,9 @@
 
                         <td data-label="Status Barang" class="text-center">
                             @if ($item->status_sub_peminjaman == 0)
-
                             <span class="badge badge-danger p-2">Belum Balik</span>
                             @else
                                 <span class="badge badge-success p-2">Sudah Balik</span>
-
                             @endif
                         </td>
 
@@ -93,7 +91,7 @@
 
                             </button>
                             <div class="dropdown-menu">
-                              <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                              <a href="javaScript:void();" class="dropdown-item" id="buttoneditbarangpeminjaman" data-url="{{ url('divisi/peminjaman/editdatapeminjaman', ['id'=>$item->id_sub_peminjaman]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
                               <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-trash-o"></i> Hapus</a>
                               <a href="javaScript:void();" class="dropdown-item"><i class="fa fa-cogs"></i> Keterangan Kembali</a>
                               <div class="dropdown-divider"></div>
