@@ -191,7 +191,7 @@ $(document).ready(function () {
                     );
                 });
         } else {
-            // console.log('no');
+
         }
 
     });
@@ -580,5 +580,104 @@ $(document).ready(function () {
                     '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                 );
             });
+    });
+    $(document).on("click", "#buttoninsertdatamutasi", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+
+                $("#showmenumutasi").html(data);
+                document.getElementById("buttonrefreshtablemutasi").click();
+            })
+            .fail(function () {
+                $("#showmenumutasi").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#buttonrefreshtablemutasi", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#tablemenudatamutasi").html(data);
+            })
+            .fail(function () {
+                $("#tablemenudatamutasi").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#buttoneditbarangmutasi", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#tablemenudatamutasi").html(data);
+            })
+            .fail(function () {
+                $("#tablemenudatamutasi").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+
+    $(document).on("click", "#buttonhapusdatabarangmutasi", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var kode = $(this).data("kode");
+        let text = "Apakah Yakin Untuk di Hapus ?\n Tekan OK atau Cancel.";
+        if (confirm(text) == true) {
+            $.ajax({
+                url: '../divisi/datamutasi/hapusdetaildatamutasi/'+id+'/'+kode,
+                type: "GET",
+                dataType: "html",
+            })
+                .done(function (data) {
+                    $("#tablemenudatamutasi").html(data);
+                })
+                .fail(function () {
+                    $("#tablemenudatamutasi").html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
+                });
+        } else {
+
+        }
+    });
+
+    $(document).on("click", "#buttontambahmaintenance", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: '../divisi/dataaset/depresiasi/tambahmaintenance/'+id,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenuaset").html(data);
+            })
+            .fail(function () {
+                $("#showmenuaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
     });
 });

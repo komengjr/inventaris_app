@@ -138,7 +138,7 @@
                                             </div>
                                         </td>
                                         <td>{{$item->tanggal_buat}}</td>
-                                        <td><button class="btn-warning" data-toggle="modal" data-target="#modalmutasi" id="buttondetailmutasibarang" data-url="{{ url('divisi/datamutasi/detaildatamutasi',['id'=>$item->id_mutasi]) }}" ><i class="fa fa-pencil"></i> Update</button></td>
+                                        <td><button class="btn-warning" data-toggle="modal" data-target="#modalmutasi" id="buttondetailmutasibarang" data-url="{{ url('divisi/datamutasi/detaildatamutasi',['id'=>$item->kd_mutasi]) }}" ><i class="fa fa-pencil"></i> Update</button></td>
                                     </tr>
                                     @endforeach
                                 </tbody>

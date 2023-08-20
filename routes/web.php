@@ -87,6 +87,8 @@ Route::get('divisi/data-aset/detaildataaset/{id}',['as'=>'divisi/data-aset/detai
 Route::get('divisi/dataaset/detaildataaset/{id}',['as'=>'divisi/dataaset/detaildataaset','uses'=> 'DivisiController@detaildataaset']);
 Route::get('divisi/dataaset/editdetaildataaset/{id}',['as'=>'divisi/dataaset/editdetaildataaset','uses'=> 'DivisiController@editdetaildataaset']);
 Route::get('divisi/dataaset/getdataoption/{id}/{tgl}/{harga}',['as'=>'divisi/dataaset/getdataoption/','uses'=> 'DivisiController@getdatadepresiasiaset']);
+Route::post('divisi/dataaset/posttambahdatamaintenance','DivisiController@tambahdatamaintance');
+Route::post('divisi/dataaset/tambahdatamaintenance', [FileUploadController::class, 'uploaddatamaintenance'])->name('uploaddatamaintenance');
 
 Route::get('menu/masterbarang','DivisiController@masterbarang');
 Route::get('divisi/masterbarang/token','DivisiController@tokenmasterbarang');
@@ -97,9 +99,20 @@ Route::post('divisi/inventori/updatedatainventori',['as'=>'divisi/inventori/upda
 
 
 
+Route::get('divisi/datamutasi/datatable/{id}',['as'=>'divisi/datamutasi/datatable','uses'=> 'DivisiController@datatablemutasi']);
 Route::get('divisi/datamutasi/tambahdata',['as'=>'divisi/datamutasi/tambahdata','uses'=> 'DivisiController@ordertiketmutasi']);
+Route::get('divisi/datamutasi/caridata/{id}/{ids}',['as'=>'divisi/datamutasi/tambahdata','uses'=> 'DivisiController@caridatabarangmutasi']);
 Route::get('divisi/tambahdatamutasi',['as'=>'master/tambahdatamutasi','uses'=> 'DivisiController@tambahdatamutasi']);
 Route::get('divisi/datamutasi/detaildatamutasi/{id}',['as'=>'divisi/datamutasi/detaildatamutasi','uses'=> 'DivisiController@detaildatamutasi']);
+Route::get('divisi/datamutasi/editdatamutasi/{id}',['as'=>'divisi/datamutasi/editdatamutasi','uses'=> 'DivisiController@editdetailbarangmutasi']);
+Route::get('divisi/datamutasi/inserttable/{ids}/{id}/{data}',['as'=>'divisi/datamutasi/inserttable','uses'=> 'DivisiController@inserttablepencarian']);
+Route::get('divisi/datamutasi/hapusdetaildatamutasi/{id}/{kode}',['as'=>'divisi/datamutasi/hapusdetaildatamutasi','uses'=> 'DivisiController@hapusdetaildatamutasi']);
+
+
+Route::get('divisi/dataaset/depresiasi/tambahmaintenance/{id}',['as'=>'divisi/dataaset/depresiasi/tambahmaintenance','uses'=> 'DivisiController@formtambahdatamaintenance']);
+
+
+
 Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','uses'=> 'DivisiController@tambahdatapemusnahan']);
 Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
 Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
@@ -206,6 +219,7 @@ Route::get('mutasidatabarang/{id}',['as'=>'mutasidatabarang','uses'=> 'HomeContr
 Route::get('file-upload', [FileUploadController::class, 'index'])->name('files.index');
 Route::post('file-upload/upload-large-files/{id}', [FileUploadController::class, 'uploadLargeFiles'])->name('files.upload.large');
 Route::post('file-upload/upload-large-files', [FileUploadController::class, 'uploadLargeFiles1'])->name('files.upload.large1');
+
 
 
 Route::get('view/{no}/{cb}/{kd}/{id}', 'DataController@showdata');

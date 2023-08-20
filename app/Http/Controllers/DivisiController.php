@@ -580,12 +580,18 @@ class DivisiController extends Controller
     {
         $data = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->get();
         $datakategori = DB::table('no_urut_barang')->get();
-        return view('divisi.formdepresiasi',['datakategori' => $datakategori,'data'=>$data]);
+        return view('divisi.menudepresiasi',['datakategori' => $datakategori,'data'=>$data]);
     }
 
     public function datadetailasetcabang($id)
     {
-        return view('divisi.form.detailaset');
+
+        $data = DB::table('tbl_depresiasi')->get();
+        $datainventaris = DB::table('sub_tbl_inventory')->where('id_inventaris',$id)->first();
+        return view('divisi.form.detailaset',[
+            'datadepresiasi'=>$data,
+            'datainventaris'=>$datainventaris
+        ]);
     }
     public function mutasidatainventaris()
     {
@@ -597,6 +603,13 @@ class DivisiController extends Controller
     {
         $cabang = DB::table('tbl_cabang')->get();
         return view('divisi.modal.ordertiketmutasi',['cabang'=>$cabang]);
+    }
+    public function caridatabarangmutasi($id,$ids)
+    {
+        $data = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang',auth::user()->cabang)
+        ->where('nama_barang', 'like', '%' . $id . '%')->get();
+        return view('divisi.mutasi.tablecarimutasi',['data'=>$data,'ids'=>$ids,'datax'=>$id ]);
     }
     public function posttambahdatamutasi(Request $request)
     {
@@ -621,8 +634,74 @@ class DivisiController extends Controller
     }
     public function detaildatamutasi($id)
     {
-        $data = DB::table('tbl_mutasi')->where('id_mutasi',$id)->first();
-        // dd($data);
-        return view('divisi.modal.detaildatamutasi',['data'=>$data]);
+        $data = DB::table('tbl_mutasi')->where('kd_mutasi',$id)->first();
+        $datamutasi = DB::table('tbl_sub_mutasi')->where('kd_mutasi',$id)->get();
+        return view('divisi.modal.detaildatamutasi',['data'=>$data,'datamutasi'=>$datamutasi]);
+    }
+    public function inserttablepencarian($ids,$id,$datax)
+    {
+        DB::table('tbl_sub_mutasi')->insert(
+            [
+                'kd_mutasi' => $ids,
+                'id_inventaris' => $id,
+                'kd_lokasi_awal' => '',
+                'kd_lokasi_awal' => '',
+                'kd_cabang_awal' => '',
+                'kd_cabang_tujuan' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        $data = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang',auth::user()->cabang)
+        ->where('nama_barang', 'like', '%' . $datax . '%')->get();
+        return view('divisi.mutasi.tablecarimutasi',['data'=>$data,'ids'=>$ids,'datax'=>$datax ]);
+    }
+    public function datatablemutasi($id)
+    {
+        $data = DB::table('tbl_mutasi')->where('kd_mutasi',$id)->first();
+        $datamutasi = DB::table('tbl_sub_mutasi')->where('kd_mutasi',$id)->get();
+        return view('divisi.mutasi.tabledatamutasi',['data'=>$data,'datamutasi'=>$datamutasi]);
+    }
+    public function hapusdetaildatamutasi($id,$kode)
+    {
+        DB::table('tbl_sub_mutasi')->where('id_sub_mutasi', $id)->delete();
+        $datamutasi = DB::table('tbl_sub_mutasi')->where('kd_mutasi',$kode)->get();
+        return view('divisi.mutasi.tabledatamutasi',['datamutasi'=>$datamutasi]);
+    }
+    public function editdetailbarangmutasi($id)
+    {
+        $datamutasi = DB::table('tbl_sub_mutasi')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_mutasi.id_inventaris')
+        ->where('id_sub_mutasi', $id)->first();
+        return view('divisi.mutasi.formeditmutasi',['datamutasi'=>$datamutasi]);
+    }
+    // ASET
+
+    public function formtambahdatamaintenance($id)
+    {
+        return view('divisi.aset.formmaintenance',['id'=>$id]);
+    }
+    public function tambahdatamaintance(Request $request)
+    {
+        // if ($request->input('link') == "") {
+        //     $datagambar = "";
+        // }else{
+        //     $datagambar = 'public/databrg/new/'.$request->input('link');
+        // }
+        $nilai = $string = preg_replace("/[^0-9]/","",$request->hargamaintenance);
+        DB::table('tbl_maintenance_aset')->insert(
+            [
+                        'kd_maintenance_aset' => 'M'. mt_rand(1000000000, 9999999999999),
+                        'id_inventaris' => $request->id_inventaris,
+                        'tgl_maintenance' => date('d-m-Y', strtotime($request->input('tgl_maintenance'))),
+                        'suplier_maintenance' => $request->input('suplier'),
+                        'harga_maintenance' => $nilai,
+                        'file' => 'public/aset/maintenance/'.$request->input('link'),
+                        'ket_maintenance' => $request->input('deskripsi'),
+
+
+            ]
+        );
+        Session::flash('sukses','Berhasil Menambah data Maintenance');
+        return redirect()->back();
     }
 }

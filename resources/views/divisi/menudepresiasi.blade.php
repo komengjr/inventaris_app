@@ -12,7 +12,45 @@
                     </ol>
                 </div>
             </div>
-
+            @if ($message = Session::get('sukses'))
+                <button class="btn btn-warning" onclick="sukses_notifikasi()" id="buttonnotif" hidden>SHOW ME</button>
+                <script>
+                    function sukses_notifikasi() {
+                        Lobibox.notify('success', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'center top',
+                            showClass: 'zoomIn',
+                            hideClass: 'zoomOut',
+                            icon: 'fa fa-check-circle',
+                            width: 400,
+                            msg: '{{ $message }}'
+                        });
+                    }
+                    $(document).ready(function() {
+                        $('#buttonnotif').click();
+                    });
+                </script>
+            @elseif ($message = Session::get('gagal'))
+                <button class="btn btn-warning" onclick="gagal_notifikasi()" id="buttongagal" hidden>SHOW ME</button>
+                <script>
+                    function gagal_notifikasi() {
+                        Lobibox.notify('warning', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'center top',
+                            showClass: 'zoomIn',
+                            hideClass: 'zoomOut',
+                            icon: 'fa fa-exclamation-triangle',
+                            width: 400,
+                            msg: '{{ $message }}'
+                        });
+                    }
+                    $(document).ready(function() {
+                        $('#buttongagal').click();
+                    });
+                </script>
+            @endif
 
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-6">
@@ -81,7 +119,7 @@
             <!--start overlay-->
             <div class="overlay toggle-menu"></div>
             <!--end overlay-->
-            <div class="row" >
+            <div class="row">
                 <div class="col-12 col-lg-12">
                     <div class="card">
                         <div class="card-header border-0">
@@ -108,8 +146,8 @@
                                     <tr>
                                         <th>Photo</th>
                                         <th>Nama Barang Aset</th>
-                                        <th>Amount</th>
-                                        <th>Status</th>
+                                        <th>Harga Perolehan</th>
+                                        <th>Document Maintainance</th>
                                         <th>Status Depresiasi</th>
                                         <th>Tanggal Pembelian</th>
                                         <th>Action</th>
@@ -117,27 +155,70 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($data as $item)
-                                    <tr>
-                                        <td>
-                                            <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
-                                                class="product-img" />
-                                        </td>
-                                        <td>{{$item->nama_barang}}</td>
-                                        <td>@currency($item->harga_perolehan)</td>
-                                        <td>
-                                            <span class="badge-dot">
-                                                <i class="bg-danger"></i> pending
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div class="progress shadow" style="height: 4px">
-                                                <div class="progress-bar gradient-ibiza" role="progressbar"
-                                                    style="width: 60%"></div>
-                                            </div>
-                                        </td>
-                                        <td>{{$item->tgl_beli}}</td>
-                                        <td><button class="btn-warning" id="buttondetaildepresiasiaset" data-url="{{ url('divisi/data-aset/detaildataaset',['id'=>$item->id_inventaris]) }}" data-id="{{$item->id_inventaris}}"><i class="fa fa-pencil"></i> Update</button></td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
+                                                    class="product-img" />
+                                            </td>
+                                            <td>{{ $item->nama_barang }}</td>
+                                            <td>@currency($item->harga_perolehan)</td>
+                                            <td>
+                                                @php
+                                                    $maintenance = DB::table('tbl_maintenance_aset')
+                                                        ->where('id_inventaris', $item->id_inventaris)
+                                                        ->get();
+                                                @endphp
+                                                @foreach ($maintenance as $datamaintenance)
+                                                    <li><a href="http://" target="_blank"
+                                                            rel="noopener noreferrer">{{ $datamaintenance->kd_maintenance_aset }}</a>
+                                                    </li>
+                                                @endforeach
+
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $depresiasi = DB::table('tbl_depresiasi_aset')
+                                                        ->join('tbl_depresiasi', 'tbl_depresiasi.kd_depresiasi', '=', 'tbl_depresiasi_aset.kd_depresiasi')
+                                                        ->where('tbl_depresiasi_aset.id_inventaris', $item->id_inventaris)
+                                                        ->first();
+                                                @endphp
+                                                @if ($depresiasi)
+                                                    <span
+                                                        class="badge badge-pill badge-success m-1">{{ $depresiasi->masa_depresiasi }}</span>
+                                                @else
+                                                    <span class="badge badge-pill badge-danger m-1">Belum Dipilih</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $item->tgl_beli }}</td>
+                                            <td class="text-center">
+                                                <button type="button"
+                                                    class="btn-outline-warning  waves-effect waves-light dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a href="javaScript:void();" class="dropdown-item"
+                                                        id="buttondetaildepresiasiaset"
+                                                        data-url="{{ url('divisi/data-aset/detaildataaset', ['id' => $item->id_inventaris]) }}"data-id="{{ $item->id_inventaris }}"><i
+                                                            class="fa fa-eye"></i> Detail</a>
+                                                    <a href="javaScript:void();" class="dropdown-item"
+                                                        data-toggle="modal" data-target="#modaldepresiasi"
+                                                        id="buttontambahmaintenance"
+                                                        data-id="{{ $item->id_inventaris }}"><i
+                                                            class="fa fa-file-text-o"></i> Upload Document Maintenance</a>
+                                                    <a href="javaScript:void();" class="dropdown-item"
+                                                        data-toggle="modal" data-target="#modaldepresiasi"
+                                                        id="buttontambahinvoice"><i class="fa fa-file-text-o"></i> Upload
+                                                        Document Invoice</a>
+                                                    <a href="javaScript:void();" class="dropdown-item"><i
+                                                            class="fa fa-calendar-o"></i> Masukan Tanggal Aktif</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="javaScript:void();" class="dropdown-item"><i
+                                                            class="fa fa-pencil-square"></i> Perubahan Detail Aset</a>
+                                                </div>
+
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -148,6 +229,16 @@
         </div>
         <!-- End container-fluid-->
 
+    </div>
+    <div class="modal fade" id="modaldepresiasi">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div id="showmenuaset">
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="{{ url('assets/js/app-script.js', []) }}"></script>
     <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>
@@ -214,7 +305,7 @@
                 data: {
                     labels: [
                         @foreach ($datakategori as $datakategori)
-                        "{{$datakategori->kategori_barang}}",
+                            "{{ $datakategori->kategori_barang }}",
                         @endforeach
                     ],
                     datasets: [{
@@ -226,7 +317,7 @@
                             "#Z13adf",
                             "#fba540"
                         ],
-                        data: [0,0, 10, 40, 40,200],
+                        data: [0, 0, 10, 40, 40, 200],
                         borderWidth: [0, 0, 0, 0]
                     }]
                 },
