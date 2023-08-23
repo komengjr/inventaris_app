@@ -16,15 +16,14 @@
         </button>
     </div>
     {{-- <form  method="POST" action="" enctype="multipart/form-data" id="form-update"> --}}
-    <form method="POST" action="{{ url('divisi/dataaset/posttambahdatamaintenance', []) }}"
-        enctype="multipart/form-data">
+    <form method="POST" action="{{ url('divisi/dataaset/posttambahdatamaintenance', []) }}" enctype="multipart/form-data">
         @csrf
         <div class="modal-body">
             <div class="row">
                 <div class="col-6">
                     <label for="">Tanggal Maintenance</label>
                     <input type="date" class="form-control" name="tgl_maintenance" required>
-                    <input type="text" class="form-control" name="id_inventaris" value="{{ $id }}" hidden>
+                    <input type="text" class="form-control" name="id_inventaris" id="id_inventaris" value="{{ $id }}" hidden>
                 </div>
                 <div class="col-6">
                     <label for="">Harga Maintenance</label>
@@ -37,12 +36,12 @@
                 <div class="col-6">
                     <label for="">Upload File</label>
                     <label class="custom-file-upload form-control" id="upload-container">
-                        <input type="file" id="browseFile" class="form-control" />
+                        <input type="file" id="browseFile" class="form-control" data-id="{{$id}}"/>
                         <i class="fa fa-upload "></i> Upload File
                     </label>
                 </div>
                 <div class="col-12">
-                    <label for="">Deskripsi Peminjaman</label>
+                    <label for="">Deskripsi Maintenance</label>
                     <textarea class="form-control" id="" cols="30" rows="10" name="deskripsi"></textarea>
                 </div>
                 <div class="col-12 pt-2">
@@ -65,8 +64,6 @@
 
 
         <div class="modal-footer">
-            <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Clowwse</button>
-            {{-- <button type="submit" class="btn btn-primary" ><i class="fa fa-save" ></i> Update Data</button> --}}
             <button type="submit" class="btn-success" id="" data-url=""><i class="fa fa-save"></i> Simpan
                 Data</button>
         </div>
@@ -84,9 +81,10 @@
 
 </script>
 <script type="text/javascript">
+    var id_inventaris = '{{$id}}';
     var browseFile = $('#browseFile');
     var resumable = new Resumable({
-        target: '{{ route('uploaddatamaintenance') }}',
+        target: '../divisi/dataaset/tambahdatamaintenance/'+id_inventaris,
         query: {
             _token: '{{ csrf_token() }}'
         }, // CSRF token

@@ -88,7 +88,17 @@ Route::get('divisi/dataaset/detaildataaset/{id}',['as'=>'divisi/dataaset/detaild
 Route::get('divisi/dataaset/editdetaildataaset/{id}',['as'=>'divisi/dataaset/editdetaildataaset','uses'=> 'DivisiController@editdetaildataaset']);
 Route::get('divisi/dataaset/getdataoption/{id}/{tgl}/{harga}',['as'=>'divisi/dataaset/getdataoption/','uses'=> 'DivisiController@getdatadepresiasiaset']);
 Route::post('divisi/dataaset/posttambahdatamaintenance','DivisiController@tambahdatamaintance');
-Route::post('divisi/dataaset/tambahdatamaintenance', [FileUploadController::class, 'uploaddatamaintenance'])->name('uploaddatamaintenance');
+Route::post('divisi/dataaset/postupdatedatamaintenance','DivisiController@updatedatamaintance');
+Route::post('divisi/dataaset/posttambahdatainvoiceaset','DivisiController@tambahdatainvoice');
+Route::post('divisi/dataaset/posttambahdatadepresiasi','DivisiController@tambahdatadepresiasiaset');
+Route::post('divisi/dataaset/tambahdatamaintenance/{id}', [FileUploadController::class, 'uploaddatamaintenance'])->name('uploaddatamaintenance');
+Route::post('divisi/dataaset/tambahdatainvoice/{id}', [FileUploadController::class, 'uploaddatainvoice'])->name('uploaddatainvoice');
+Route::get('divisi/dataaset/depresiasi/detaildatamaintenance/{id}',['as'=>'divisi/dataaset/depresiasi/detaildatamaintenance','uses'=> 'DivisiController@detaildatamaintenance']);
+Route::get('divisi/dataaset/depresiasi/tambahmaintenance/{id}',['as'=>'divisi/dataaset/depresiasi/tambahmaintenance','uses'=> 'DivisiController@formtambahdatamaintenance']);
+Route::get('divisi/dataaset/depresiasi/tambahinvoiceaset/{id}',['as'=>'divisi/dataaset/depresiasi/tambahinvoiceaset','uses'=> 'DivisiController@formtambahdatainvoiceaset']);
+Route::get('divisi/dataaset/depresiasi/pilihdatadepresiasi/{id}',['as'=>'divisi/dataaset/depresiasi/pilihdatadepresiasi','uses'=> 'DivisiController@pilihdatadepresiasi']);
+
+
 
 Route::get('menu/masterbarang','DivisiController@masterbarang');
 Route::get('divisi/masterbarang/token','DivisiController@tokenmasterbarang');
@@ -109,7 +119,7 @@ Route::get('divisi/datamutasi/inserttable/{ids}/{id}/{data}',['as'=>'divisi/data
 Route::get('divisi/datamutasi/hapusdetaildatamutasi/{id}/{kode}',['as'=>'divisi/datamutasi/hapusdetaildatamutasi','uses'=> 'DivisiController@hapusdetaildatamutasi']);
 
 
-Route::get('divisi/dataaset/depresiasi/tambahmaintenance/{id}',['as'=>'divisi/dataaset/depresiasi/tambahmaintenance','uses'=> 'DivisiController@formtambahdatamaintenance']);
+
 
 
 

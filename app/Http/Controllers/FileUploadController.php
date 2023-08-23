@@ -182,7 +182,7 @@ class FileUploadController extends Controller {
         return view('upload-file.showdata',['video'=>$video]);
     }
 
-    public function uploaddatamaintenance(Request $request )
+    public function uploaddatamaintenance(Request $request ,$id)
     {
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
@@ -198,13 +198,47 @@ class FileUploadController extends Controller {
             $fileName .= '_' . md5(time()) . '.' . $extension; // a unique file name
 
             $disk = Storage::disk(config('filesystems.default'));
-            $path = $disk->putFileAs('public/aset/maintenance/', $file, $fileName);
+            $path = $disk->putFileAs('public/aset/maintenance/'.auth::user()->cabang.'/'.$id.'/', $file, $fileName);
             // $path1 = $disk('videos', $file, $fileName);
 
             // delete chunked file
             unlink($file->getPathname());
             return [
-                'path' => asset('public/aset/maintenance/' . $fileName),
+                'path' => asset('public/aset/maintenance/'.auth::user()->cabang.'/'.$id.'/'. $fileName),
+                'filename' => $fileName
+            ];
+        }
+
+        // otherwise return percentage informatoin
+        $handler = $fileReceived->handler();
+        return [
+            'done' => $handler->getPercentageDone(),
+            'status' => true
+        ];
+    }
+    public function uploaddatainvoice(Request $request ,$id)
+    {
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+
+        if (!$receiver->isUploaded()) {
+            // file not uploaded
+        }
+
+        $fileReceived = $receiver->receive(); // receive file
+        if ($fileReceived->isFinished()) { // file uploading is complete / all chunks are uploaded
+            $file = $fileReceived->getFile(); // get file
+            $extension = $file->getClientOriginalExtension();
+            $fileName = str_replace('.'.$extension, '', $file->getClientOriginalName()); //file name without extenstion
+            $fileName .= '_' . md5(time()) . '.' . $extension; // a unique file name
+
+            $disk = Storage::disk(config('filesystems.default'));
+            $path = $disk->putFileAs('public/invoice/'.auth::user()->cabang.'/'.$id.'/', $file, $fileName);
+            // $path1 = $disk('videos', $file, $fileName);
+
+            // delete chunked file
+            unlink($file->getPathname());
+            return [
+                'path' => asset('public/invoice/'.auth::user()->cabang.'/'.$id.'/'. $fileName),
                 'filename' => $fileName
             ];
         }

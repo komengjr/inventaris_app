@@ -680,4 +680,58 @@ $(document).ready(function () {
             });
 
     });
+    $(document).on("click", "#buttondetaildatamaintenance", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: '../divisi/dataaset/depresiasi/detaildatamaintenance/'+id,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenuaset").html(data);
+            })
+            .fail(function () {
+                $("#showmenuaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#buttontambahinvoice", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: '../divisi/dataaset/depresiasi/tambahinvoiceaset/'+id,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenuaset").html(data);
+            })
+            .fail(function () {
+                $("#showmenuaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#buttonpilihoptiondepresiasi", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: '../divisi/dataaset/depresiasi/pilihdatadepresiasi/'+id,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenuaset").html(data);
+            })
+            .fail(function () {
+                $("#showmenuaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
 });

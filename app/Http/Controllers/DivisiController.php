@@ -695,13 +695,80 @@ class DivisiController extends Controller
                         'tgl_maintenance' => date('d-m-Y', strtotime($request->input('tgl_maintenance'))),
                         'suplier_maintenance' => $request->input('suplier'),
                         'harga_maintenance' => $nilai,
-                        'file' => 'public/aset/maintenance/'.$request->input('link'),
+                        'file' => 'public/aset/maintenance/'.auth::user()->cabang.'/'.$request->input('id_inventaris').'/'.$request->input('link'),
                         'ket_maintenance' => $request->input('deskripsi'),
 
 
             ]
         );
         Session::flash('sukses','Berhasil Menambah data Maintenance');
+        return redirect()->back();
+    }
+    public function updatedatamaintance(Request $request)
+    {
+        $nilai = $string = preg_replace("/[^0-9]/","",$request->hargamaintenance);
+        if ($request->input('link') == "") {
+            DB::table('tbl_maintenance_aset')
+            ->where('kd_maintenance_aset',$request->input('kode'))
+            ->update([
+                    'tgl_maintenance' => date('d-m-Y', strtotime($request->input('tgl_maintenance'))),
+                    'suplier_maintenance' => $request->input('suplier'),
+                    'harga_maintenance' => $nilai,
+                    'ket_maintenance' => $request->input('deskripsi'),
+                    ]);
+        } else {
+            DB::table('tbl_maintenance_aset')
+            ->where('kd_maintenance_aset',$request->input('kode'))
+            ->update([
+                    'tgl_maintenance' => date('d-m-Y', strtotime($request->input('tgl_maintenance'))),
+                    'suplier_maintenance' => $request->input('suplier'),
+                    'harga_maintenance' => $nilai,
+                    'file' => 'public/aset/maintenance/'.auth::user()->cabang.'/'.$request->input('id_inventaris').'/'.$request->input('link'),
+                    'ket_maintenance' => $request->input('deskripsi'),
+                    ]);
+
+        }
+        Session::flash('sukses','Berhasil update data Maintenance');
+        return redirect()->back();
+    }
+    public function detaildatamaintenance($id)
+    {
+        $data = DB::table('tbl_maintenance_aset')->where('kd_maintenance_aset',$id)->first();
+        return view('divisi.aset.detaildatamaintenance',['data'=>$data,'id'=>$id]);
+    }
+    public function formtambahdatainvoiceaset($id)
+    {
+        return view('divisi.aset.forminvoiceaset',['id'=>$id]);
+    }
+    public function tambahdatainvoice(Request $request)
+    {
+        DB::table('tbl_invoice')->insert(
+            [
+                'kd_invoice' => 'INVOICE'. mt_rand(1000000000, 9999999999999),
+                'id_inventaris' => $request->id_inventaris,
+                'tgl_invoice' => date('d-m-Y', strtotime($request->input('tgl_maintenance'))),
+                'status_invoice' => 1,
+                'file_invoice' => 'public/aset/maintenance/'.auth::user()->cabang.'/'.$request->input('id_inventaris').'/'.$request->input('link'),
+            ]
+        );
+        Session::flash('sukses','Berhasil update data Maintenance');
+        return redirect()->back();
+    }
+
+    public function pilihdatadepresiasi($id)
+    {
+        $data = DB::table('tbl_depresiasi')->get();
+        return view('divisi.aset.pilihoptiondepresiasi',['data'=>$data,'id'=>$id]);
+    }
+    public function tambahdatadepresiasiaset(Request $request)
+    {
+        DB::table('tbl_depresiasi_aset')->insert(
+            [
+                'kd_depresiasi' => $request->kd_depresiasi,
+                'id_inventaris' => $request->id_inventaris,
+            ]
+        );
+        Session::flash('sukses','Berhasil update data Maintenance');
         return redirect()->back();
     }
 }

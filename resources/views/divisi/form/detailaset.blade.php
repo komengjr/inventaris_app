@@ -139,13 +139,13 @@
                                     $persen = ($pengurangan / $harga) * 100;
                                 @endphp
                                 <div class="card">
-                                    <div class="card-header text-uppercase">Grafik</div>
+                                    {{-- <div class="card-header text-uppercase">Grafik</div>
                                     <div class="card-body">
 
                                         <p class="sr-only">List Subscribers</p>
                                         <div id="list-subscribers"></div>
 
-                                    </div>
+                                    </div> --}}
                                     <div class="table-responsive pb-3" style="letter-spacing: .0px;">
                                         <table id="table-depresiasi" class="styled-table " border="1">
                                             <thead>
@@ -230,10 +230,10 @@
                         <!-- accepted payments column -->
                         <div class="col-lg-6 payment-icons">
                             <p class="lead">Payment Methods:</p>
-                            <img src="assets/images/payment-icons/visa-dark.png" alt="Visa" />
-                            <img src="assets/images/payment-icons/mastro-dark.png" alt="Mastercard" />
-                            <img src="assets/images/payment-icons/american-dark.png" alt="American Express" />
-                            <img src="assets/images/payment-icons/paypal-dark.png" alt="Paypal" />
+                            <img src="{{ asset('assets/images/payment-icons/visa-dark.png') }}" alt="Visa" />
+                            <img src="{{ asset('assets/images/payment-icons/mastro-dark.png') }}" alt="Mastercard" />
+                            <img src="{{ asset('assets/images/payment-icons/american-dark.png') }}" alt="American Express" />
+                            <img src="{{ asset('assets/images/payment-icons/paypal-dark.png') }}" alt="Paypal" />
                             <p class="bg-light p-2 mt-3 rounded">
                                 Etsy doostang zoodles disqus groupon greplin oooj voxy
                                 zoodles, weebly ning heekya handango imeem plugg dopplr

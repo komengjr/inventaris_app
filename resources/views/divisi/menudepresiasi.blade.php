@@ -144,24 +144,37 @@
                             <table class="table styled-table align-items-center table-flush pb-2" id="default-table1">
                                 <thead>
                                     <tr>
-                                        <th>Photo</th>
+                                        <th>No</th>
                                         <th>Nama Barang Aset</th>
                                         <th>Harga Perolehan</th>
-                                        <th>Document Maintainance</th>
+                                        <th>Invoice</th>
+                                        <th>Maintainance</th>
                                         <th>Status Depresiasi</th>
                                         <th>Tanggal Pembelian</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
                                     @foreach ($data as $item)
                                         <tr>
                                             <td>
-                                                <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
-                                                    class="product-img" />
+                                               {{$no++}}
                                             </td>
                                             <td>{{ $item->nama_barang }}</td>
                                             <td>@currency($item->harga_perolehan)</td>
+                                            @php
+                                                $cekinvoice = DB::table('tbl_invoice')->where('id_inventaris',$item->id_inventaris)->first();
+                                            @endphp
+                                            <td>
+                                                @if ($cekinvoice)
+                                                    {{$cekinvoice->kd_invoice}}
+                                                @else
+
+                                                @endif
+                                            </td>
                                             <td>
                                                 @php
                                                     $maintenance = DB::table('tbl_maintenance_aset')
@@ -169,7 +182,9 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($maintenance as $datamaintenance)
-                                                    <li><a href="http://" target="_blank"
+                                                    <li><a href="#" data-toggle="modal" data-target="#modaldepresiasi"
+                                                            id="buttondetaildatamaintenance"
+                                                            data-id="{{ $datamaintenance->kd_maintenance_aset }}"
                                                             rel="noopener noreferrer">{{ $datamaintenance->kd_maintenance_aset }}</a>
                                                     </li>
                                                 @endforeach
@@ -186,7 +201,7 @@
                                                     <span
                                                         class="badge badge-pill badge-success m-1">{{ $depresiasi->masa_depresiasi }}</span>
                                                 @else
-                                                    <span class="badge badge-pill badge-danger m-1">Belum Dipilih</span>
+                                                    <a href="#" data-toggle="modal" data-target="#modaldepresiasi" id="buttonpilihoptiondepresiasi" data-id="{{$item->id_inventaris}}"><span class="badge badge-pill badge-danger m-1">Belum Dipilih</span></a>
                                                 @endif
                                             </td>
                                             <td>{{ $item->tgl_beli }}</td>
@@ -206,13 +221,14 @@
                                                         id="buttontambahmaintenance"
                                                         data-id="{{ $item->id_inventaris }}"><i
                                                             class="fa fa-file-text-o"></i> Upload Document Maintenance</a>
+                                                    @if (!$cekinvoice)
                                                     <a href="javaScript:void();" class="dropdown-item"
-                                                        data-toggle="modal" data-target="#modaldepresiasi"
-                                                        id="buttontambahinvoice"><i class="fa fa-file-text-o"></i> Upload
-                                                        Document Invoice</a>
-                                                    <a href="javaScript:void();" class="dropdown-item"><i
-                                                            class="fa fa-calendar-o"></i> Masukan Tanggal Aktif</a>
-                                                    <div class="dropdown-divider"></div>
+                                                    data-toggle="modal" data-target="#modaldepresiasi"
+                                                    id="buttontambahinvoice" data-id="{{$item->id_inventaris}}"><i class="fa fa-file-text-o"></i> Upload
+                                                    Document Invoice</a>
+                                                    @endif
+
+
                                                     <a href="javaScript:void();" class="dropdown-item"><i
                                                             class="fa fa-pencil-square"></i> Perubahan Detail Aset</a>
                                                 </div>
