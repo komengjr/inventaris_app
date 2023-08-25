@@ -105,4 +105,13 @@ class PdfController extends Controller
         $pdf = PDF::loadview('divisi.print.pemusnahan',['databrg'=>$databrg])->setPaper('A4','potrait');
         return $pdf->stream();
     }
+    public function penyelesaianpeminjaman($id)
+    {
+        DB::table('tbl_peminjaman')->where('tiket_peminjaman',$id)->update(
+            [
+                'status_pinjam' => 1,
+            ]
+        );
+        return redirect()->back();
+    }
 }

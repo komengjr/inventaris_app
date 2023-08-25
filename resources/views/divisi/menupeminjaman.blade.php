@@ -116,7 +116,14 @@
                                                 <td>{{ $datapinjam->nama_kegiatan }}</td>
                                                 <td>{{ $datapinjam->tgl_pinjam }}</td>
                                                 <td>{{ $datapinjam->pj_pinjam }}</td>
-                                                <td>{{ $datapinjam->status_pinjam }}</td>
+                                                <td>
+                                                    @if ($datapinjam->status_pinjam == 0)
+                                                    <span class="badge badge-danger p-2">Pending</span>
+                                                    @else
+                                                    <span class="badge badge-success p-2">Done</span>
+                                                    @endif
+
+                                                </td>
                                                 <td class="text-center">
                                                     <button class="btn-warning" data-toggle="modal"
                                                         data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"

@@ -139,7 +139,7 @@
     <button
         onclick="window.open('{{ url('divisi/verifikasi/print/peminjaman', ['id'=>$cekdata[0]->tiket_peminjaman]) }}', '', 'width=1200, height=700');"class="btn-info"
         id="" data-url="asdasd"><i class="fa fa-print"></i> Cetak / Print</button>
-    <button type="submit" class="btn-success" style="float: left;"><i class="fa fa-save"></i> Penyelesaian</button>
+    <a href="{{ url('divisi/verifikasi/peminjaman/pemyelesaian', ['id'=>$cekdata[0]->tiket_peminjaman]) }}"><button type="submit" class="btn-success" style="float: left;"><i class="fa fa-save"></i> Penyelesaian</button></a>
 </div>
 <script>
     $('#data-table99').DataTable();
