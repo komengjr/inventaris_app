@@ -38,19 +38,19 @@
                         <div class="card-body">
                             <div class="row row-group align-items-center">
                                 <div class="col-12 col-lg-3 text-center p-3 border-white-2">
-                                    <div class="fleet-status fleet-chart" data-percent="65">
+                                    <div class="fleet-status fleet-chart" data-percent="{{(($jumlahdataselesai)*100)/$jumlahdata}}">
                                         <span class="fleet-status-percent"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-4 text-center p-3  border-white-2">
-                                    <h4 class="mb-0 text-white">65%</h4>
+                                    <h4 class="mb-0 text-white">{{(($jumlahdataselesai)*100)/$jumlahdata}}%</h4>
                                     <p class="mb-0 small-font text-white">Persentase</p>
                                 </div>
                                 <div class="col-12 col-lg-5 p-3">
                                     <ul>
-                                        <li class="text-white">Total Laporan : 0</li>
-                                        <li class="text-white">Dapat Di Perbaiki : 0</li>
-                                        <li class="text-white">Tidak Dapat di Perbaiki : 0</li>
+                                        <li class="text-white">Total Peminjaman : {{$jumlahdata}}</li>
+                                        <li class="text-white">Selesai : {{$jumlahdataselesai}}</li>
+                                        <li class="text-white">Belum Selesai : {{$jumlahdata - $jumlahdataselesai}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                                                 <td>{{ $datapinjam->nama_kegiatan }}</td>
                                                 <td>{{ $datapinjam->tgl_pinjam }}</td>
                                                 <td>{{ $datapinjam->pj_pinjam }}</td>
-                                                <td>
+                                                <td class="text-center">
                                                     @if ($datapinjam->status_pinjam == 0)
                                                     <span class="badge badge-danger p-2">Pending</span>
                                                     @else

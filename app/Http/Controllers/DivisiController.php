@@ -55,9 +55,10 @@ class DivisiController extends Controller
     public function menu()
     {
         if (auth::user()->akses == 'sdm') {
-
+        $jumlahdata = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->count();
+        $jumlahdataselesai = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->where('status_pinjam',1)->count();
         $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
-        return view('divisi.menupeminjaman',[ 'datapinjam' => $datapinjam]);
+        return view('divisi.menupeminjaman',[ 'datapinjam' => $datapinjam, 'jumlahdata'=>$jumlahdata,'jumlahdataselesai'=>$jumlahdataselesai]);
 
         }
     }
