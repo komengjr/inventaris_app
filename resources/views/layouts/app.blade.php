@@ -262,9 +262,11 @@
                             <li><a href="{{ url('menu/formpemusnahan', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Pemusnahan</a></li>
                             <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i
-                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Verif Data</a></li>
+                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Stock Opname</a></li>
                             <li><a href="{{ url('menu/masterbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
                                     Master Data</a></li>
+                            <li><a href="{{ url('menu/masterstaff', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                                    Master Staff</a></li>
                         @elseif(auth::user()->akses == 'keu')
                             <li><a href="{{ url('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
                                     Keuangan</a></li>

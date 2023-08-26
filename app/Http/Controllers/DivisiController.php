@@ -57,7 +57,9 @@ class DivisiController extends Controller
         if (auth::user()->akses == 'sdm') {
         $jumlahdata = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->count();
         $jumlahdataselesai = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->where('status_pinjam',1)->count();
-        $datapinjam = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
+        $datapinjam = DB::table('tbl_peminjaman')
+        ->join('tbl_staff','tbl_staff.nip','=','tbl_peminjaman.pj_pinjam')
+        ->where('tbl_peminjaman.kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
         return view('divisi.menupeminjaman',[ 'datapinjam' => $datapinjam, 'jumlahdata'=>$jumlahdata,'jumlahdataselesai'=>$jumlahdataselesai]);
 
         }
@@ -88,7 +90,8 @@ class DivisiController extends Controller
         $tgl = date('d-m-Y');
         $jadi = 'PJ-SDM-'.auth::user()->cabang.'-'.$tgl.'-'.$randomString;
         $cabang = DB::table('tbl_cabang')->get();
-        return view('divisi.formpeminjaman',['tiket' => $jadi ,'cabang'=>$cabang]);
+        $staff = DB::table('tbl_staff')->where('kd_cabang',auth::user()->cabang)->get();
+        return view('divisi.formpeminjaman',['tiket' => $jadi ,'cabang'=>$cabang,'staff'=>$staff]);
     }
     public function tambahdataverifikasiinventaris()
     {
@@ -189,6 +192,12 @@ class DivisiController extends Controller
         $notif = 4;
         $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$id)->get();
         return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
+    }
+    public function editdatatablepeminjaman($id)
+    {
+        $cekdata = DB::table('tbl_peminjaman')
+        ->where('id_pinjam',$id)->get();
+        return view('divisi.menulengkapi.editdatapeminjaman',['cekdata'=>$cekdata]);
     }
     public function editdatapeminjaman($id)
     {
@@ -337,7 +346,7 @@ class DivisiController extends Controller
                 'deskripsi' => $request->input('deskripsi'),
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-            Session::flash('sukses','Berhasil Membuat Tiket Tugas User'.$request->input('tiket_peminjaman'));
+            Session::flash('sukses','Berhasil Membuat Tiket Peminjaman : '.$request->input('tiket_peminjaman'));
             return redirect()->back();
     }
     public function posttambahverifikasi(Request $request)
@@ -771,5 +780,30 @@ class DivisiController extends Controller
         );
         Session::flash('sukses','Berhasil update data Maintenance');
         return redirect()->back();
+    }
+
+
+
+    public function masterstaff()
+    {
+        $data = DB::table('tbl_staff')->where('kd_cabang',auth::user()->cabang)->get();
+        return view('divisi.menustaff',['data'=>$data]);
+    }
+    public function tambahdatastaffkaryawan()
+    {
+        return view('divisi.menustaff.tambahstaff');
+    }
+    public function posttambahdatastaff(Request $request)
+    {
+        DB::table('tbl_staff')->insert(
+            [
+                'nip' => $request->nip,
+                'nama_staff' => $request->nama,
+                'kd_cabang' => auth::user()->cabang,
+                'status_staff' => 1,
+            ]
+        );
+    Session::flash('sukses','Berhasil Membuat Staff : '.$request->nama);
+    return redirect()->back();
     }
 }

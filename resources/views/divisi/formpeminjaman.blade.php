@@ -23,7 +23,7 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-6">
-                <label for="">Tujuan Pemeinjamn</label>
+                <label for="">Tujuan Peminjaman</label>
                 <input type="text" class="form-control" name="nama_kegiatan" required>
                 <input type="text" class="form-control" name="tiket_peminjaman" value="{{$tiket}}" hidden>
             </div>
@@ -38,7 +38,12 @@
             </div>
             <div class="col-6">
                 <label for="">Penanggung Jawab Peminjam</label>
-                <input type="text" class="form-control" name="pj_pinjam" required>
+                <select name="pj_pinjam" id="" class="form-control single-select">
+                    <option value="">Pilih Staff</option>
+                    @foreach ($staff as $staff)
+                        <option value="{{$staff->nip}}">{{$staff->nama_staff}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-6">
                 <label for="">Tanggal Peminjam</label>

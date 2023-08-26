@@ -5,7 +5,7 @@
 .modal {
   padding: 10px; !important; //
 }
-.modal .modal-dialog {
+.modal .modal-xl {
   width: 100%;
   max-width: none;
   /* height: 100%; */
@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-4 text-center p-3  border-white-2">
-                                    <h4 class="mb-0 text-white">{{(($jumlahdataselesai)*100)/$jumlahdata}}%</h4>
+                                    <h4 class="mb-0 text-white">{{round((($jumlahdataselesai)*100)/$jumlahdata)}}%</h4>
                                     <p class="mb-0 small-font text-white">Persentase</p>
                                 </div>
                                 <div class="col-12 col-lg-5 p-3">
@@ -115,7 +115,7 @@
                                                 <td>{{ $datapinjam->tiket_peminjaman }}</td>
                                                 <td>{{ $datapinjam->nama_kegiatan }}</td>
                                                 <td>{{ $datapinjam->tgl_pinjam }}</td>
-                                                <td>{{ $datapinjam->pj_pinjam }}</td>
+                                                <td>{{ $datapinjam->nama_staff }}</td>
                                                 <td class="text-center">
                                                     @if ($datapinjam->status_pinjam == 0)
                                                     <span class="badge badge-danger p-2">Pending</span>
@@ -125,11 +125,19 @@
 
                                                 </td>
                                                 <td class="text-center">
-                                                    <button class="btn-warning" data-toggle="modal"
-                                                        data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                        data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}">Lengkapi
-                                                        data</button>
-                                                    <button class="btn-danger"><i class="fa fa-trash"></i></button>
+                                                    <button type="button" class="btn-info waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                      <a href="javaScript:void();" class="dropdown-item" class="btn-warning" data-toggle="modal"
+                                                      data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
+                                                      data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-file-text"></i> Lengkapi Data</a>
+                                                      <div class="dropdown-divider"></div>
+                                                      <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#tambahdatabaru" id="editdatapeminjamaninventaris" data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                                                      <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a>
+                                                    </div>
+
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -146,7 +154,7 @@
         </div>
     </div>
     <div class="modal fade" id="tambahdatabaru">
-        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="width: 100%;">
             <div class="modal-content">
                 <div id="showdatasdm">
                     <div class="modal-body">

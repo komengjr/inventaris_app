@@ -53,6 +53,24 @@ $(document).ready(function () {
                 );
             });
     });
+    $(document).on("click", "#editdatapeminjamaninventaris", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdatasdm").html(data);
+            })
+            .fail(function () {
+                $("#showdatasdm").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
     $(document).on("click", "#buttontambahbarangpeminjaman", function (e) {
         e.preventDefault();
         var url = $(this).data("url");
@@ -729,6 +747,26 @@ $(document).ready(function () {
             })
             .fail(function () {
                 $("#showmenuaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+
+    // Menu Staff
+    $(document).on("click", "#buttontambahstaff", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: '../divisi/masterstaff/tambah',
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdatastaff").html(data);
+            })
+            .fail(function () {
+                $("#showdatastaff").html(
                     '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                 );
             });
