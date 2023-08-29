@@ -17,28 +17,18 @@ class DivisiController extends Controller
     }
     public function updatedatainventori(Request $request)
     {
+        $nilai = $string = preg_replace("/[^0-9]/","",$request->harga_perolehan);
         DB::table('sub_tbl_inventory')
         ->where('id_inventaris',$request->input('kode_kode'))
         ->update([
                     'nama_barang' => $request->input('nama_barang'),
-                    // 'kd_inventaris' => $request->input('kd_inventaris'),
                     'kd_lokasi' => $request->input('kd_lokasi'),
-                    // 'kd_cabang' => $request->input('kd_cabang'),
-                    // 'th_pembuatan' => $request->input('th_pembuatan'),
-                    // 'outlet' => $request->input('outlet'),
                     'th_perolehan' => $request->input('th_perolehan'),
                     'merk' => $request->input('merk'),
                     'no_seri' => $request->input('no_seri'),
                     'suplier' => $request->input('suplier'),
                     'type' => $request->input('type'),
-                    'harga_perolehan' => $request->input('harga_perolehan'),
-                    // 'tgl_mutasi' => $request->input('tgl_mutasi'),
-                    // 'tujuan_mutasi' => $request->input('tujuan_mutasi'),
-                    // 'nilai_buku' => $request->input('nilai_buku'),
-                    // 'tgl_musnah' => $request->input('tgl_musnah'),
-                    // 'kondisi_barang' => $request->input('kondisi_barang'),
-                    // 'jam_input' => $request->input('jam_input'),
-                    // 'ket_musnah' => $request->input('ket_musnah'),
+                    'harga_perolehan' => $nilai,
 
                 ]);
         $data = DB::table('sub_tbl_inventory')
@@ -57,6 +47,10 @@ class DivisiController extends Controller
         if (auth::user()->akses == 'sdm') {
         $jumlahdata = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->count();
         $jumlahdataselesai = DB::table('tbl_peminjaman')->where('kd_cabang',auth::user()->cabang)->where('status_pinjam',1)->count();
+        if ($jumlahdata == 0 && $jumlahdataselesai == 0) {
+            $jumlahdata = 1;
+            $jumlahdataselesai = 1;
+        }
         $datapinjam = DB::table('tbl_peminjaman')
         ->join('tbl_staff','tbl_staff.nip','=','tbl_peminjaman.pj_pinjam')
         ->where('tbl_peminjaman.kd_cabang',auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
@@ -197,7 +191,8 @@ class DivisiController extends Controller
     {
         $cekdata = DB::table('tbl_peminjaman')
         ->where('id_pinjam',$id)->get();
-        return view('divisi.menulengkapi.editdatapeminjaman',['cekdata'=>$cekdata]);
+        $cabang =  DB::table('tbl_cabang')->get();
+        return view('divisi.menulengkapi.editdatapeminjaman',['cekdata'=>$cekdata,'cabang'=>$cabang]);
     }
     public function editdatapeminjaman($id)
     {
@@ -337,6 +332,22 @@ class DivisiController extends Controller
         DB::table('tbl_peminjaman')->insert(
             [
                 'tiket_peminjaman' => $request->input('tiket_peminjaman'),
+                'nama_kegiatan' => $request->input('nama_kegiatan'),
+                'tujuan_cabang' => $request->input('cabang'),
+                'tgl_pinjam' => $request->input('tgl_pinjam'),
+                'pj_pinjam' => $request->input('pj_pinjam'),
+                'status_pinjam' => 0,
+                'kd_cabang' => auth::user()->cabang,
+                'deskripsi' => $request->input('deskripsi'),
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            Session::flash('sukses','Berhasil Membuat Tiket Peminjaman : '.$request->input('tiket_peminjaman'));
+            return redirect()->back();
+    }
+    public function editdatapeminjamanpost(Request $request)
+    {
+        DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->input('tiket_peminjaman'))->update(
+            [
                 'nama_kegiatan' => $request->input('nama_kegiatan'),
                 'tujuan_cabang' => $request->input('cabang'),
                 'tgl_pinjam' => $request->input('tgl_pinjam'),

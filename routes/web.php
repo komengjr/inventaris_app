@@ -65,6 +65,7 @@ Route::get('divisi/maintenance/tindakan/{id}',['as'=>'divisi/maintenance/tindaka
 Route::get('menu/formpemusnahan','DivisiController@menupemusnahan');
 Route::get('menu/verifdatainventaris','DivisiController@verifdatainventaris');
 Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
+Route::post('divisi/peminjaman/editdata','DivisiController@editdatapeminjamanpost');
 Route::get('divisi/tambahdatapeminjaman',['as'=>'master/tambahdatapeminjaman','uses'=> 'DivisiController@tambahdatapeminjaman']);
 Route::get('divisi/peminjaman/lengkapi/{id}',['as'=>'master/peminjaman/lengkapi','uses'=> 'DivisiController@lengkapipeminjaman']);
 Route::get('divisi/peminjaman/inputdatabarang/{id}',['as'=>'divisi/peminjaman/inputdatabarang','uses'=> 'DivisiController@inputdatabarangpinjam']);
@@ -224,6 +225,8 @@ Route::get('editdatabarang1/{id}',['as'=>'editdatabarang1','uses'=> 'HomeControl
 Route::get('hapusdatabarang/{kode}/{id}',['as'=>'hapusdatabarang','uses'=> 'HomeController@hapusdatabarang']);
 Route::get('tambahdatabarang/{id}',['as'=>'tambahdatabarang','uses'=> 'HomeController@tambahdatabarang']);
 Route::get('admin/formdataaset/',['as'=>'admin/formdataaset','uses'=> 'HomeController@formdataaset']);
+Route::get('admin/formdatainventaris/tambadata',['as'=>'admin/formdatainventaris/tambadata','uses'=> 'HomeController@tambahdatainventaris']);
+Route::post('admin/datainventaris/simpandata', 'HomeController@simpandatainventaris');
 
 
 Route::get('mutasidatabarang/{id}',['as'=>'mutasidatabarang','uses'=> 'HomeController@mutasidatabarang']);
@@ -234,6 +237,7 @@ Route::get('mutasidatabarang/{id}',['as'=>'mutasidatabarang','uses'=> 'HomeContr
 Route::get('file-upload', [FileUploadController::class, 'index'])->name('files.index');
 Route::post('file-upload/upload-large-files/{id}', [FileUploadController::class, 'uploadLargeFiles'])->name('files.upload.large');
 Route::post('file-upload/upload-large-files', [FileUploadController::class, 'uploadLargeFiles1'])->name('files.upload.large1');
+Route::post('file-upload/uploadgambarbarang', [FileUploadController::class, 'uploadgambarbarang'])->name('file-upload.uploadgambarbarang');
 
 
 

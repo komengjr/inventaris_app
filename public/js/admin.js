@@ -752,6 +752,24 @@ $(document).ready(function () {
             });
 
     });
+    $(document).on("click", "#tambahdatainevntaris", function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showtambahdatabarang").html(data);
+            })
+            .fail(function () {
+                $("#showtambahdatabarang").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
 
     // Menu Staff
     $(document).on("click", "#buttontambahstaff", function (e) {

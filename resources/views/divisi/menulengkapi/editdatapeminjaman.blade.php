@@ -16,13 +16,24 @@
             <i class="fa fa-close"></i>
         </button>
     </div>
-    {{-- <form  method="POST" action="" enctype="multipart/form-data" id="form-update"> --}}
-
+    <form  method="POST" action="{{ url('divisi/peminjaman/editdata', []) }}" enctype="multipart/form-data" id="form-update">
+    @csrf
     <div class="modal-body">
         <div class="row">
-            <div class="col-12">
-                <label for="">Kegiatan</label>
+            <div class="col-6">
+                <label for="">Tujuan Peminjaman</label>
                 <input type="text" class="form-control" name="nama_kegiatan" value="{{ $cekdata[0]->nama_kegiatan }}">
+                <input type="text" class="form-control" name="tiket_peminjaman" value="{{ $cekdata[0]->tiket_peminjaman }}" hidden>
+            </div>
+            <div class="col-6">
+                <label for="">Tujuan Cabang</label>
+                <select name="cabang" id="" class="form-control single-select">
+                    <option value="{{ $cekdata[0]->tujuan_cabang }}">Pilih Cabang</option>
+                    <option value=""></option>
+                    @foreach ($cabang as $item)
+                        <option value="{{$item->kd_cabang}}">{{$item->nama_cabang}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-6">
                 <label for="">Penanggung Jawab Peminjam</label>
@@ -40,13 +51,20 @@
             </div>
         </div>
     </div>
+    <div class="modal-footer">
+        <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+        <button type="submit" class="btn-success"><i class="fa fa-floppy-o"></i> Update</button>
+    </div>
+    </form>
 </div>
-<div class="modal-footer">
 
-    <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-
-</div>
 <script>
     $('#data-table99').DataTable();
 </script>
 
+<script>
+    $(document).ready(function() {
+       $('.single-select').select2();
+
+     });
+</script>

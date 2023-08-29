@@ -5,7 +5,7 @@
             !important; //
         }
 
-        .modal .modal-dialog {
+        .modal .modal-full {
             width: 100%;
             max-width: none;
             /* height: 100%; */
@@ -87,7 +87,8 @@
 
                             <p class="mb-0 text-dark">Total Inventaris Cabang : {{ $totalinventaris }}</p>
                         </div>
-                        <div class="w-icon" style="cursor: pointer" id="datainevntaris">
+                        <div class="w-icon" style="cursor: pointer" id="tambahdatainevntaris" data-toggle="modal"
+                        data-target="#modaladdbarang" data-url="{{ url('admin/formdatainventaris/tambadata', []) }}">
                             <i class="fa fa-th-large text-gradient-danger"></i>
                         </div>
                     </div>
@@ -317,9 +318,19 @@ $tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
     </div>
 </div>
 <div class="modal fade" id="lihat-detail-data">
-    <div class="modal-dialog modal-dialog-centered modal-xl" style="margin-top: 2%;">
+    <div class="modal-dialog modal-dialog-centered modal-full" style="margin-top: 2%;">
         <div class="modal-content">
             <div id="showdatabarang">
+                <div class="modal-body" style="font-size: 9px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modaladdbarang">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div id="showtambahdatabarang">
                 <div class="modal-body" style="font-size: 9px;">
                 </div>
             </div>

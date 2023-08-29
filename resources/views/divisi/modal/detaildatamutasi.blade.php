@@ -57,7 +57,7 @@
             <hr>
             <div class="col-12 pt-5">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Masukan ID Inventaris" id="idinventarismutasi" onkeydown="caribarangmutasi(this)">
+                    <input type="text" class="form-control" placeholder="Ketikan Nama Barang" id="idinventarismutasi" onkeydown="caribarangmutasi(this)">
 
                 </div>
             </div>
@@ -67,10 +67,10 @@
     </div>
     <div class="pb-3" id="showmenumutasi"></div>
     <div id="tablemenudatamutasi" class="pb-3">
-        <table class="table styled-table align-items-center table-flush pb-2 " id="data-table97">
+        <table class="styled-table align-items-center table-flush pb-2 " id="data-table97">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th style="widows: 2px;">No</th>
                     <th>Nama Barang</th>
                     <th>No Inventaris</th>
                     <th>Merk</th>

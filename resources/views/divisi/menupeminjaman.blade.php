@@ -101,6 +101,7 @@
                                             <th>Nama Kegiatan</th>
                                             <th>Tanggal Peminjaman</th>
                                             <th>Penanggung Jawab</th>
+                                            {{-- <th>Tujuan Cabang</th> --}}
                                             <th>Status Peminjaman</th>
                                             <th class="text-center">Action</th>
                                         </tr>
@@ -116,6 +117,7 @@
                                                 <td>{{ $datapinjam->nama_kegiatan }}</td>
                                                 <td>{{ $datapinjam->tgl_pinjam }}</td>
                                                 <td>{{ $datapinjam->nama_staff }}</td>
+                                                {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
                                                 <td class="text-center">
                                                     @if ($datapinjam->status_pinjam == 0)
                                                     <span class="badge badge-danger p-2">Pending</span>
@@ -129,12 +131,18 @@
 
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                      <a href="javaScript:void();" class="dropdown-item" class="btn-warning" data-toggle="modal"
-                                                      data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                      data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-file-text"></i> Lengkapi Data</a>
-                                                      <div class="dropdown-divider"></div>
-                                                      <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#tambahdatabaru" id="editdatapeminjamaninventaris" data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
-                                                      <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a>
+                                                        @if ($datapinjam->status_pinjam == 0)
+                                                        <a href="javaScript:void();" class="dropdown-item" class="btn-warning" data-toggle="modal"
+                                                        data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
+                                                        data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-file-text"></i> Lengkapi Data</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#tambahdatabaru" id="editdatapeminjamaninventaris" data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                                                        @else
+                                                        <a href="javaScript:void();" class="dropdown-item" onclick="window.open('{{ url('divisi/verifikasi/print/peminjaman', ['id'=>$datapinjam->tiket_peminjaman]) }}', '', 'width=1200, height=700');"
+                                                        id=""><i class="fa fa-print"></i> Cetak / Print</a>
+                                                        @endif
+
+                                                      {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
                                                     </div>
 
 

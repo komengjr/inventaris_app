@@ -125,17 +125,20 @@
                                             {{$no++}}
                                         </td>
                                         <td>{{$item->kd_mutasi}}</td>
-                                        <td></td>
                                         <td>
-                                            <span class="badge-dot">
-                                                <i class="bg-danger"></i> pending
-                                            </span>
+                                            @if ($item->jenis_mutasi == 1)
+                                            Penempatan
+                                            @elseif ($item->jenis_mutasi == 2)
+                                            Penarikan
+                                            @else
+                                            Mutasi Antar Cabang
+                                            @endif
                                         </td>
                                         <td>
-                                            <div class="progress shadow" style="height: 4px">
-                                                <div class="progress-bar gradient-ibiza" role="progressbar"
-                                                    style="width: 60%"></div>
-                                            </div>
+                                           {{$item->penanggung_jawab}}
+                                        </td>
+                                        <td>
+                                            {{$item->tanggal_buat}}
                                         </td>
                                         <td>{{$item->tanggal_buat}}</td>
                                         <td><button class="btn-warning" data-toggle="modal" data-target="#modalmutasi" id="buttondetailmutasibarang" data-url="{{ url('divisi/datamutasi/detaildatamutasi',['id'=>$item->kd_mutasi]) }}" ><i class="fa fa-pencil"></i> Update</button></td>

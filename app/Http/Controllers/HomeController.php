@@ -13,6 +13,7 @@ use DB;
 use File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 class HomeController extends Controller
 {
     /**
@@ -91,6 +92,9 @@ class HomeController extends Controller
             ->select('tbl_lokasi.*')
             ->get();
             $datainventariscabang = DB::table('sub_tbl_inventory')->where('kd_jenis',0)->where('kd_cabang',auth::user()->cabang)->count();
+            if ($datainventariscabang == 0) {
+                $datainventariscabang = 1;
+            }
             $dataasetcabang = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->count();
             return view('home',[
                 'datakategori'=>$datakategori,'datalokasi'=>$datalokasi,
@@ -426,6 +430,48 @@ class HomeController extends Controller
             'dataaset'=> $dataaset,
 
         ]);
+    }
+
+
+    public function tambahdatainventaris()
+    {
+        $kode = DB::table('tbl_inventory')->get();
+        $lokasi = DB::table('tbl_lokasi')->get();
+        return view('divisi.tambahbaranginventaris',['kode'=>$kode,'lokasi'=>$lokasi]);
+    }
+    public function simpandatainventaris(Request $request)
+    {
+        if ($request->input('link') == "") {
+            $gambar = '';
+        } else {
+            $gambar = 'public/databrg/new/'.auth::user()->cabang.'/'.$request->input('link');
+        }
+        $jumlahbarang = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->count();
+        $nomor = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->first();
+        $tahun = date('Y', strtotime($request->input('tgl_beli')));
+        $nilai = $string = preg_replace("/[^0-9]/","",$request->harga_perolehan);
+        DB::table('sub_tbl_inventory')->insert(
+            [
+                        'id_inventaris' => auth::user()->cabang.''.mt_rand(100000, 9999999),
+                        'no_inventaris' => ($jumlahbarang+1).'/'.$request->input('kd_inventaris').'/'.$request->input('kd_lokasi').'/P.'.$nomor->no_cabang.'/'.$tahun,
+                        'nama_barang' => $request->input('nama_barang'),
+                        'gambar' => $gambar,
+                        'kd_inventaris' => $request->input('kd_inventaris'),
+                        'kd_lokasi' => $request->input('kd_lokasi'),
+                        'kd_cabang' => auth::user()->cabang,
+                        'th_perolehan' => $tahun,
+                        'tgl_beli' => $request->input('tgl_beli'),
+                        'merk' => $request->input('merk'),
+                        'no_seri' => $request->input('no_seri'),
+                        'suplier' => $request->input('suplier'),
+                        'kd_jenis' => $request->input('kategori'),
+                        'harga_perolehan' => $nilai,
+                        'kondisi_barang' => 'BAIK',
+                        'jam_input' => date("h:i:sa"),
+            ]
+        );
+        Session::flash('sukses','Berhasil Membuat Tiket Peminjaman : ');
+        return redirect()->back();
     }
 
 }

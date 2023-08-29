@@ -192,7 +192,8 @@
                             <li class="dropdown-divider"></li>
                             {{-- <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li> --}}
                             <li class="dropdown-divider"></li>
-                            <li class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-target="#settingmodal"><i class="icon-settings mr-2"></i>
+                            <li class="dropdown-item" style="cursor: pointer;" data-toggle="modal"
+                                data-target="#settingmodal"><i class="icon-settings mr-2"></i>
                                 Setting</li>
                             <li class="dropdown-divider"></li>
                             <li class="dropdown-item"><i class="icon-power mr-2"></i><a href="http://"
@@ -255,14 +256,14 @@
                                     Menu Peminjaman</a></li>
                             <li><a href="{{ url('menu/formmaintenance', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Maintenance</a></li>
-                            <li><a href="{{ url('menu/formmutasi', []) }}"><i
-                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Mutasi</a></li>
-                            <li><a href="{{ url('menu/formdepresiasi', []) }}"><i
-                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Depresiasi</a></li>
+                            <li><a href="{{ url('menu/formmutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                                    Menu Mutasi</a></li>
                             <li><a href="{{ url('menu/formpemusnahan', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Pemusnahan</a></li>
                             <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Stock Opname</a></li>
+                            <li><a href="{{ url('menu/formdepresiasi', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Aset</a></li>
                             <li><a href="{{ url('menu/masterbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
                                     Master Data</a></li>
                             <li><a href="{{ url('menu/masterstaff', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
@@ -309,7 +310,46 @@
         <div class="clearfix"></div>
 
         <div class="content-wrapper">
-
+            @if ($message = Session::get('sukses'))
+                <button class="btn btn-warning" onclick="sukses_notifikasi()" id="buttonnotif" hidden>SHOW
+                    ME</button>
+                <script>
+                    function sukses_notifikasi() {
+                        Lobibox.notify('success', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'center top',
+                            showClass: 'zoomIn',
+                            hideClass: 'zoomOut',
+                            icon: 'fa fa-check-circle',
+                            width: 400,
+                            msg: '{{ $message }}'
+                        });
+                    }
+                    $(document).ready(function() {
+                        $('#buttonnotif').click();
+                    });
+                </script>
+            @elseif ($message = Session::get('gagal'))
+                <button class="btn btn-warning" onclick="gagal_notifikasi()" id="buttongagal" hidden>SHOW ME</button>
+                <script>
+                    function gagal_notifikasi() {
+                        Lobibox.notify('warning', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'center top',
+                            showClass: 'zoomIn',
+                            hideClass: 'zoomOut',
+                            icon: 'fa fa-exclamation-triangle',
+                            width: 400,
+                            msg: '{{ $message }}'
+                        });
+                    }
+                    $(document).ready(function() {
+                        $('#buttongagal').click();
+                    });
+                </script>
+            @endif
             @yield('content')
 
 
@@ -376,10 +416,15 @@
     <!--End wrapper-->
 
     @if (auth::user()->akses == 'sdm')
-    @php
-        $settingno = DB::table('tbl_setting_cabang')->join('tbl_cabang','tbl_cabang.kd_cabang','=','tbl_setting_cabang.kd_cabang')->where('tbl_cabang.kd_cabang',auth::user()->cabang)->get();
-        $settingttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
-    @endphp
+        @php
+            $settingno = DB::table('tbl_setting_cabang')
+                ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_setting_cabang.kd_cabang')
+                ->where('tbl_cabang.kd_cabang', auth::user()->cabang)
+                ->get();
+            $settingttd = DB::table('tbl_ttd')
+                ->where('kd_cabang', auth::user()->cabang)
+                ->get();
+        @endphp
         <div class="modal fade" id="settingmodal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -390,54 +435,58 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url('divisi/setting/system', []) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('divisi/setting/system', []) }}"
+                            enctype="multipart/form-data">
                             @csrf
 
                             @if ($settingno->isEmpty())
-
                                 <div class="form-group">
                                     <label for="input-3">Nomor Cabang</label>
-                                    <input type="text" class="form-control" name="no_cabang"  required>
+                                    <input type="text" class="form-control" name="no_cabang" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-3">Nama 1</label>
-                                    <input type="text" class="form-control" name="nama_1"  required>
+                                    <input type="text" class="form-control" name="nama_1" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-3">Nama 2</label>
-                                    <input type="text" class="form-control" name="nama_2"  required>
+                                    <input type="text" class="form-control" name="nama_2" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-3">Nama 3</label>
-                                    <input type="text" class="form-control" name="nama_3"  required>
+                                    <input type="text" class="form-control" name="nama_3" required>
                                 </div>
                             @else
-
                                 <div class="form-group">
                                     <label for="input-2">Kode Cabang</label>
-                                    <input type="text" class="form-control" id="input-2" value="{{$settingno[0]->kd_cabang}}" required>
+                                    <input type="text" class="form-control" id="input-2"
+                                        value="{{ $settingno[0]->kd_cabang }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-3">Nomor Cabang</label>
-                                    <input type="text" class="form-control" name="no_cabang" value="{{$settingno[0]->no_cabang}}" required>
+                                    <input type="text" class="form-control" name="no_cabang"
+                                        value="{{ $settingno[0]->no_cabang }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-3">Nama 1</label>
-                                    <input type="text" class="form-control" name="nama_1" value="{{$settingttd[0]->ttd_1}}" required>
+                                    <input type="text" class="form-control" name="nama_1"
+                                        value="{{ $settingttd[0]->ttd_1 }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-3">Nama 2</label>
-                                    <input type="text" class="form-control" name="nama_2" value="{{$settingttd[0]->ttd_2}}" required>
+                                    <input type="text" class="form-control" name="nama_2"
+                                        value="{{ $settingttd[0]->ttd_2 }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-3">Nama 3</label>
-                                    <input type="text" class="form-control" name="nama_3" value="{{$settingttd[0]->ttd_3}}" required>
+                                    <input type="text" class="form-control" name="nama_3"
+                                        value="{{ $settingttd[0]->ttd_3 }}" required>
                                 </div>
                             @endif
 
                             <div class="form-group">
                                 <div class="icheck-material-danger">
-                                    <input type="checkbox" id="user-checkbox1" >
+                                    <input type="checkbox" id="user-checkbox1">
                                     <label for="user-checkbox1">Remember me</label>
                                 </div>
                             </div>

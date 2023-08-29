@@ -1,4 +1,4 @@
-<table class="table styled-table align-items-center table-flush pb-2 pt-5" id="data-table96">
+<table class=" styled-table align-items-center table-flush pb-2 pt-5" id="data-table96">
     <thead>
         <tr>
             <th>No</th>
@@ -11,12 +11,15 @@
         </tr>
     </thead>
     <tbody>
+        @php
+            $no = 1;
+        @endphp
 @foreach ($datamutasi as $datamutasi)
 @php
     $dataintentaris = DB::table('sub_tbl_inventory')->where('id_inventaris',$datamutasi->id_inventaris)->first();
 @endphp
     <tr>
-            <td>1</td>
+            <td>{{$no++}}</td>
             <td>{{$dataintentaris->nama_barang}}</td>
             <td>{{$dataintentaris->no_inventaris}}</td>
             <td>{{$dataintentaris->merk}}</td>
