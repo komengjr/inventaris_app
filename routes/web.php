@@ -85,6 +85,9 @@ Route::get('divisi/dataaset/tabledataaset',['as'=>'divisi/dataaset/tabledataaset
 Route::get('divisi/dataaset/tambah',['as'=>'divisi/dataaset/tambah','uses'=> 'DivisiController@tambahdataaset']);
 Route::get('divisi/dataaset/pilihdata',['as'=>'divisi/dataaset/pilihdata','uses'=> 'DivisiController@pilihdata']);
 Route::get('divisi/dataaset/datadepresiasi',['as'=>'divisi/dataaset/datadepresiasi','uses'=> 'DivisiController@datadepresiasi']);
+Route::get('divisi/dataaset/datadepresiasi/table',['as'=>'divisi/dataaset/datadepresiasi/table','uses'=> 'DivisiController@datadtableepresiasi']);
+Route::get('divisi/dataaset/datadepresiasi/penambahandata',['as'=>'divisi/dataaset/datadepresiasi/penambahandata','uses'=> 'DivisiController@penambahandatadepresiasi']);
+Route::post('divisi/dataaset/datadepresiasi/postpenambahandata',['as'=>'divisi/dataaset/datadepresiasi/postpenambahandata','uses'=> 'DivisiController@postpenambahandatadepresiasi']);
 Route::get('divisi/data-aset/detaildataaset/{id}',['as'=>'divisi/data-aset/detaildataaset','uses'=> 'DivisiController@datadetailasetcabang']);
 Route::get('divisi/dataaset/detaildataaset/{id}',['as'=>'divisi/dataaset/detaildataaset','uses'=> 'DivisiController@detaildataaset']);
 Route::get('divisi/dataaset/editdetaildataaset/{id}',['as'=>'divisi/dataaset/editdetaildataaset','uses'=> 'DivisiController@editdetaildataaset']);
@@ -95,6 +98,7 @@ Route::post('divisi/dataaset/posttambahdatainvoiceaset','DivisiController@tambah
 Route::post('divisi/dataaset/posttambahdatadepresiasi','DivisiController@tambahdatadepresiasiaset');
 Route::post('divisi/dataaset/tambahdatamaintenance/{id}', [FileUploadController::class, 'uploaddatamaintenance'])->name('uploaddatamaintenance');
 Route::post('divisi/dataaset/tambahdatainvoice/{id}', [FileUploadController::class, 'uploaddatainvoice'])->name('uploaddatainvoice');
+Route::get('divisi/dataaset/depresiasi/detaildatainvoice/{id}',['as'=>'divisi/dataaset/depresiasi/detaildatainvoice','uses'=> 'DivisiController@detaildatainvoice']);
 Route::get('divisi/dataaset/depresiasi/detaildatamaintenance/{id}',['as'=>'divisi/dataaset/depresiasi/detaildatamaintenance','uses'=> 'DivisiController@detaildatamaintenance']);
 Route::get('divisi/dataaset/depresiasi/tambahmaintenance/{id}',['as'=>'divisi/dataaset/depresiasi/tambahmaintenance','uses'=> 'DivisiController@formtambahdatamaintenance']);
 Route::get('divisi/dataaset/depresiasi/tambahinvoiceaset/{id}',['as'=>'divisi/dataaset/depresiasi/tambahinvoiceaset','uses'=> 'DivisiController@formtambahdatainvoiceaset']);

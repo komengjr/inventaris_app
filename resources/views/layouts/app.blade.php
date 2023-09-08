@@ -9,27 +9,27 @@
     <meta name="author" content="" />
     <title>Pramita - {{ auth::user()->name }}</title>
 
-    <link rel="icon" href="{{ url('icon.png', []) }}" type="image/x-icon">
-    <link href="{{ url('assets/plugins/select2/css/select2.min.css', []) }}" rel="stylesheet" />
-    <link href="{{ url('assets/plugins/inputtags/css/bootstrap-tagsinput.css', []) }}" rel="stylesheet" />
-    <link href="{{ url('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet" type="text/css">
-    <link href="{{ url('assets/plugins/fancybox/css/jquery.fancybox.min.css', []) }}" rel="stylesheet"
+    <link rel="icon" href="{{ asset('icon.png', []) }}" type="image/x-icon">
+    <link href="{{ asset('assets/plugins/select2/css/select2.min.css', []) }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/inputtags/css/bootstrap-tagsinput.css', []) }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/plugins/fancybox/css/jquery.fancybox.min.css', []) }}" rel="stylesheet"
         type="text/css" />
-    <link href="{{ url('assets/plugins/simplebar/css/simplebar.css', []) }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css', []) }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url('assets/plugins/notifications/css/lobibox.min.css', []) }}" />
-    <link href="{{ url('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/css/horizontal-menu.css', []) }}" rel="stylesheet" />
-    <link href="{{ url('assets/css/app-style.css', []) }}" rel="stylesheet" />
-    <link href="{{ url('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet"
+    <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" />
+    <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/horizontal-menu.css', []) }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/app-style.css', []) }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet"
         type="text/css">
-    <link href="{{ url('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet"
+    <link href="{{ asset('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet"
         type="text/css">
-    <link rel="{{ url('stylesheet" type="text/css" href="assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
+    <link rel="{{ asset('stylesheet" type="text/css" href="assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/script.js/2.1.1/script.min.js"
         integrity="sha512-oM6Bv767uUJZcy+SqCTP2rkHtKlivWNQ5+PPhhDwkY8FtNj4bq1xvNCB9NB3WkBa1KiY7P5a7/yfSONl5TYSPQ=="
@@ -151,7 +151,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:void();">
                             <div class="media align-items-center">
-                                <img src="{{ url('logo.png', []) }}" class="logo" alt="logo icon" width="200">
+                                <img src="{{ asset('logo.png', []) }}" class="logo" alt="logo icon" width="200">
                                 <div class="media-body">
                                     {{-- <h5 class="logo-text">APP-Serve</h5> --}}
                                 </div>
@@ -171,7 +171,7 @@
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown"
                             href="#">
-                            <span class="user-profile"><img src="{{ url('icon.png', []) }}" class="img-circle"
+                            <span class="user-profile"><img src="{{ asset('icon.png', []) }}" class="img-circle"
                                     alt="user avatar"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -179,7 +179,7 @@
                                 <a href="javaScript:void();">
                                     <div class="media">
                                         <div class="avatar"><img class="align-self-start mr-3"
-                                                src="{{ url('icon.png', []) }}" alt="user avatar"></div>
+                                                src="{{ asset('icon.png', []) }}" alt="user avatar"></div>
                                         <div class="media-body">
                                             <h6 class="mt-2 user-title">{{ auth::user()->name }}</h6>
                                             <p class="user-subtitle">{{ auth::user()->email }}</p>
@@ -232,7 +232,7 @@
                     </a>
                     <!-- Level Two-->
                     <ul>
-                        <li><a href="{{ url('/', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Home</a></li>
+                        <li><a href="{{ asset('/', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Home</a></li>
                         {{-- <li><a href="index.html"><i class="zmdi zmdi-dot-circle-alt"></i> eCommerce</a></li>
                     <li><a href="dashboard-human-resources.html"><i class="zmdi zmdi-dot-circle-alt"></i> Human Resources</a></li>
                     <li><a href="dashboard-digital-marketing.html"><i class="zmdi zmdi-dot-circle-alt"></i> Digital Marketing</a></li>
@@ -252,31 +252,31 @@
                     <!-- Level Two-->
                     <ul>
                         @if (auth::user()->akses == 'sdm')
-                            <li><a href="{{ url('menu/formpinjam', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                            <li><a href="{{ asset('menu/formpinjam', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
                                     Menu Peminjaman</a></li>
-                            <li><a href="{{ url('menu/formmaintenance', []) }}"><i
+                            <li><a href="{{ asset('menu/formmaintenance', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Maintenance</a></li>
-                            <li><a href="{{ url('menu/formmutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                            <li><a href="{{ asset('menu/formmutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
                                     Menu Mutasi</a></li>
-                            <li><a href="{{ url('menu/formpemusnahan', []) }}"><i
+                            <li><a href="{{ asset('menu/formpemusnahan', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Pemusnahan</a></li>
-                            <li><a href="{{ url('menu/verifdatainventaris', []) }}"><i
+                            <li><a href="{{ asset('menu/verifdatainventaris', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Stock Opname</a></li>
-                            <li><a href="{{ url('menu/formdepresiasi', []) }}"><i
+                            <li><a href="{{ asset('menu/formdepresiasi', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Aset</a></li>
-                            <li><a href="{{ url('menu/masterbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                            <li><a href="{{ asset('menu/masterbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
                                     Master Data</a></li>
-                            <li><a href="{{ url('menu/masterstaff', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                            <li><a href="{{ asset('menu/masterstaff', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
                                     Master Staff</a></li>
                         @elseif(auth::user()->akses == 'keu')
-                            <li><a href="{{ url('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
+                            <li><a href="{{ asset('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
                                     Keuangan</a></li>
                         @elseif(auth::user()->akses == 'admin')
-                            <li><a href="{{ url('formbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Data
+                            <li><a href="{{ asset('formbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Data
                                     Inventaris</a></li>
-                            <li><a href="{{ url('datamutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
+                            <li><a href="{{ asset('datamutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
                                     Mutasi</a></li>
-                            <li><a href="{{ url('datapemusnahan', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                            <li><a href="{{ asset('datapemusnahan', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
                                     Form
                                     Pemusnahan</a></li>
                         @endif
@@ -292,13 +292,13 @@
                         <span class="arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="{{ url('faq', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> FAQ</a>
+                        <li><a href="{{ asset('faq', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> FAQ</a>
                         </li>
-                        {{-- <li><a href="{{ url('formulir', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form</a>
+                        {{-- <li><a href="{{ asset('formulir', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form</a>
                         </li>
-                        <li><a href="{{ url('formulir1', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form 1</a>
+                        <li><a href="{{ asset('formulir1', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form 1</a>
                         </li>
-                        <li><a href="{{ url('formulir2', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form 2</a>
+                        <li><a href="{{ asset('formulir2', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form 2</a>
                         </li> --}}
 
                     </ul>
@@ -435,7 +435,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url('divisi/setting/system', []) }}"
+                        <form method="POST" action="{{ asset('divisi/setting/system', []) }}"
                             enctype="multipart/form-data">
                             @csrf
 
@@ -505,24 +505,24 @@
 
 
 
-    <script src="{{ url('assets/js/popper.min.js', []) }}"></script>
-    <script src="{{ url('assets/js/bootstrap.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/simplebar/js/simplebar.js', []) }}"></script>
-    <script src="{{ url('assets/js/horizontal-menu.js', []) }}"></script>
-    <script src="{{ url('assets/js/app-script.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/jquery.steps/js/jquery.steps.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/jquery-validation/js/jquery.validate.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/jquery.steps/js/jquery.wizard-init.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/fancybox/js/jquery.fancybox.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-touchspin/js/bootstrap-touchspin-script.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/select2/js/select2.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/inputtags/js/bootstrap-tagsinput.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js', []) }}"></script>
+    <script src="{{ asset('assets/js/popper.min.js', []) }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/simplebar/js/simplebar.js', []) }}"></script>
+    <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script>
+    <script src="{{ asset('assets/js/app-script.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/jquery.steps/js/jquery.steps.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-validation/js/jquery.validate.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/jquery.steps/js/jquery.wizard-init.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/fancybox/js/jquery.fancybox.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-touchspin/js/bootstrap-touchspin-script.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/inputtags/js/bootstrap-tagsinput.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js', []) }}"></script>
     <script>
         $('#default-datepicker').datepicker({
             todayHighlight: true
@@ -538,16 +538,16 @@
 
         $('#dateragne-picker .input-daterange').datepicker({});
     </script>
-    <script src="{{ url('assets/plugins/jquery-multi-select/jquery.multi-select.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/jquery-multi-select/jquery.quicksearch.js', []) }}"></script>
-    <script src="{{ url('https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/notifications/js/notifications.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/notifications/js/notification-custom-script.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.multi-select.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.quicksearch.js', []) }}"></script>
+    <script src="{{ asset('https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js', []) }}"></script>
 
-    <script src="{{ url('js/scriptx.js', []) }}"></script>
-    <script src="{{ url('js/admin.js', []) }}"></script>
-    <script src="{{ url('js/master.js', []) }}"></script>
+    <script src="{{ asset('js/scriptx.js', []) }}"></script>
+    <script src="{{ asset('js/admin.js', []) }}"></script>
+    <script src="{{ asset('js/master.js', []) }}"></script>
     <script>
         $(document).ready(function() {
             $('.single-select').select2();

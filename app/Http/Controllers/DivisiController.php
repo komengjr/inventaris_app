@@ -571,6 +571,21 @@ class DivisiController extends Controller
         $data = DB::table('tbl_depresiasi')->get();
         return view('divisi.modal.datadepresiasi',['data'=>$data]);
     }
+    public function datadtableepresiasi()
+    {
+        $data = DB::table('tbl_depresiasi')->get();
+        return view('divisi.aset.tabledatadepresiasi',['data'=>$data]);
+    }
+    public function penambahandatadepresiasi()
+    {
+        $data = DB::table('tbl_depresiasi')->get();
+        return view('divisi.aset.penambahandatadepresiasi',['data'=>$data]);
+    }
+    public function postpenambahandatadepresiasi(Request $request)
+    {
+        Session::flash('sukses','Berhasil Membuat Masa Depresiasi');
+        return redirect()->back();
+    }
     public function detaildataaset($id)
     {
         $kode = DB::table('tbl_inventory')
@@ -600,8 +615,12 @@ class DivisiController extends Controller
     public function depresiasisemuaaset()
     {
         $data = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->get();
+        $jumlahdata = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->count();
         $datakategori = DB::table('no_urut_barang')->get();
-        return view('divisi.menudepresiasi',['datakategori' => $datakategori,'data'=>$data]);
+        $jumlahmasadepresiasi = DB::table('tbl_depresiasi')->count();
+        return view('divisi.menudepresiasi',['datakategori' => $datakategori,'data'=>$data ,'jumlahdatadepresiasi'=>$jumlahmasadepresiasi,
+                                            'jumlahdata'=>$jumlahdata
+                                            ]);
     }
 
     public function datadetailasetcabang($id)
@@ -756,6 +775,11 @@ class DivisiController extends Controller
     {
         $data = DB::table('tbl_maintenance_aset')->where('kd_maintenance_aset',$id)->first();
         return view('divisi.aset.detaildatamaintenance',['data'=>$data,'id'=>$id]);
+    }
+    public function detaildatainvoice($id)
+    {
+        $data = DB::table('tbl_maintenance_aset')->where('kd_maintenance_aset',$id)->first();
+        return view('divisi.aset.detaildatainvoice',['data'=>$data,'id'=>$id]);
     }
     public function formtambahdatainvoiceaset($id)
     {

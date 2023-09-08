@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     {{-- <meta name="description" content="" />
     <meta name="author" content="" /> --}}
-    <title> Pramita - Panel Login</title>
+    <title> Pramita - Panel Logins</title>
     <!--favicon-->
-    <link rel="icon" href="{{ url('icon.png', []) }}" type="image/x-icon">
-    <link href="{{ url('assets/css/bootstrap.min.css', []) }}" rel="stylesheet" />
-    <link href="{{ url('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/css/app-style.css', []) }}" rel="stylesheet" />
+    <link rel="icon" href="{{ asset('icon.png', []) }}" type="image/x-icon">
+    <link href="{{ asset('assets/css/bootstrap.min.css', []) }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/app-style.css', []) }}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
     <style>
         body{
@@ -29,23 +29,23 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            
+
         }
-        
-        
+
+
     </style>
 </head>
 
 <body>
 
     <!-- start loader -->
-    
+
     <!-- end loader -->
 
     <!-- Start wrapper-->
     <div id="wrapper" style="font-family: 'Russo One', sans-serif;" class="p-3">
 
-        
+
         {{-- <div class="pb-5"></div>
         <div class="pb-5"></div> --}}
         <div class="card card-authentication1 mx-auto my-5 pt-2">
@@ -115,11 +115,11 @@
     <!--wrapper-->
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ url('assets/js/jquery.min.js', []) }}"></script>
-    <script src="{{ url('assets/js/popper.min.js', []) }}"></script>
-    <script src="{{ url('assets/js/bootstrap.min.js', []) }}"></script>
-    <script src="{{ url('assets/js/horizontal-menu.js', []) }}"></script>
-    <script src="{{ url('assets/js/app-script.js', []) }}"></script>
+    <script src="{{ asset('assets/js/jquery.min.js', []) }}"></script>
+    <script src="{{ asset('assets/js/popper.min.js', []) }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js', []) }}"></script>
+    <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script>
+    <script src="{{ asset('assets/js/app-script.js', []) }}"></script>
 
 </body>
 

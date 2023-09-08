@@ -67,7 +67,7 @@
                     <label for="inputEmail4" class="form-label">Lokasi</label>
 
                      <select class="form-control single-selectxx" name="kd_lokasi" required>
-                          <option value="">Pilih Jenis Inventaris</option>
+                          <option value="">Pilih Lokasi</option>
                           @foreach ($lokasi as $lokasi)
 
                           <option value="{{$lokasi->kd_lokasi}}">{{$lokasi->nama_lokasi}}</option>

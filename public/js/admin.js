@@ -506,6 +506,43 @@ $(document).ready(function () {
                 );
             });
     });
+    $(document).on("click", "#buttondatatabledepresiasi", function (e) {
+        e.preventDefault();
+        // var url = $(this).data("url");
+        var url = "../divisi/dataaset/datadepresiasi/table";
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenuaset1").html(data);
+            })
+            .fail(function () {
+                $("#showmenuaset1").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#buttonpenambahandatadepresiasi", function (e) {
+        e.preventDefault();
+        // var url = $(this).data("url");
+        var url = "../divisi/dataaset/datadepresiasi/penambahandata";
+        console.log('test');
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenuddatadepresiasi").html(data);
+            })
+            .fail(function () {
+                $("#showmenuddatadepresiasi").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
     $(document).on("click", "#buttondetaildataaset", function (e) {
         e.preventDefault();
         var id = $(this).data("id");
@@ -703,6 +740,24 @@ $(document).ready(function () {
         var id = $(this).data("id");
         $.ajax({
             url: '../divisi/dataaset/depresiasi/detaildatamaintenance/'+id,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenuaset").html(data);
+            })
+            .fail(function () {
+                $("#showmenuaset").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#buttondetaildatainvoice", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: '../divisi/dataaset/depresiasi/detaildatainvoice/'+id,
             type: "GET",
             dataType: "html",
         })

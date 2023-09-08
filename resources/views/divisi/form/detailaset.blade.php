@@ -35,25 +35,18 @@
                     <hr />
                     <div class="row invoice-info">
                         <div class="col-sm-4 invoice-col">
-                            From
+                            Detail :
                             <address>
-                                <strong>Kudiland Inc</strong><br />
-                                543 suthpark drive<br />
-                                Boston, MA 94107<br />
-                                Phone: (555) 539-1444<br />
-                                Email: info@example.com
+                                <strong>- Inc</strong><br />
+                                -<br />
+                                -<br />
+                                -<br />
+                                -
                             </address>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4 invoice-col">
-                            To
-                            <address>
-                                <strong>Sandra Mekoya</strong><br />
-                                543 suthpark drive<br />
-                                Boston, MA 94107<br />
-                                Phone: (555) 539-1444<br />
-                                Email: support@example.com
-                            </address>
+
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4 invoice-col">
@@ -61,7 +54,7 @@
 
                             </b><br />
                             <br />
-                            <b>Order ID:</b> 4F3S8J<br />
+                            <b>Nama Barang:</b> NULL<br />
                             <b>Payment Due:</b> 2/22/2014<br />
                             <b>Account:</b> 968-34567
                         </div>
@@ -186,7 +179,7 @@
                                                         <td>@currency($depresiasi[$l][$i])</td>
                                                         @endfor
 
-                                                        <td>@currency($hargaperolehan[$i])</td>
+                                                        <td class="bg-info">@currency($hargaperolehan[$i])</td>
 
                                                         @for ($l = 0; $l < $jumlahmaintenance; $l++)
                                                         <td>@currency($hargamaintenance[$l][$i])</td>
@@ -274,17 +267,15 @@
                     <hr />
                     <div class="row no-print">
                         <div class="col-lg-3">
-                            <a href="javascript:window.print();" target="_blank" class="btn btn-dark m-1"><i
-                                    class="fa fa-print"></i>
+                            <a href="javascript:window.print();" target="_blank" ><button class="btn-dark m-1"><i
+                                class="fa fa-print"></i></button>
 
                                 </a>
                         </div>
                         <div class="col-lg-9">
                             <div class="float-sm-right">
-                                <button class="btn btn-success m-1">
-                                    <i class="fa fa-credit-card"></i> Submit Payment
-                                </button>
-                                <button class="btn btn-primary m-1">
+
+                                <button class="btn-primary m-1">
                                     <i class="fa fa-download"></i> Generate PDF
                                 </button>
                             </div>

@@ -1,5 +1,18 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        .modal {
+            padding: 10px;
+            !important; //
+        }
+
+        .modal .modal-full {
+            width: 100%;
+            max-width: none;
+            /* height: 100%; */
+            margin: 0;
+        }
+    </style>
     <div class="content-wrapper">
         <div class="container-fluid" id="menudetaildataaset">
             <div class="row pl-2 pt-2 pb-2">
@@ -12,45 +25,7 @@
                     </ol>
                 </div>
             </div>
-            @if ($message = Session::get('sukses'))
-                <button class="btn btn-warning" onclick="sukses_notifikasi()" id="buttonnotif" hidden>SHOW ME</button>
-                <script>
-                    function sukses_notifikasi() {
-                        Lobibox.notify('success', {
-                            pauseDelayOnHover: true,
-                            continueDelayOnInactiveTab: false,
-                            position: 'center top',
-                            showClass: 'zoomIn',
-                            hideClass: 'zoomOut',
-                            icon: 'fa fa-check-circle',
-                            width: 400,
-                            msg: '{{ $message }}'
-                        });
-                    }
-                    $(document).ready(function() {
-                        $('#buttonnotif').click();
-                    });
-                </script>
-            @elseif ($message = Session::get('gagal'))
-                <button class="btn btn-warning" onclick="gagal_notifikasi()" id="buttongagal" hidden>SHOW ME</button>
-                <script>
-                    function gagal_notifikasi() {
-                        Lobibox.notify('warning', {
-                            pauseDelayOnHover: true,
-                            continueDelayOnInactiveTab: false,
-                            position: 'center top',
-                            showClass: 'zoomIn',
-                            hideClass: 'zoomOut',
-                            icon: 'fa fa-exclamation-triangle',
-                            width: 400,
-                            msg: '{{ $message }}'
-                        });
-                    }
-                    $(document).ready(function() {
-                        $('#buttongagal').click();
-                    });
-                </script>
-            @endif
+
 
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-6">
@@ -58,8 +33,8 @@
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body text-left">
-                                    <h4 class="text-primary mb-0">0 Item</h4>
-                                    <span class="small-font">Avg Loading Time</span>
+                                    <h4 class="text-primary mb-0">{{$jumlahdata}} Item</h4>
+                                    <span class="small-font">Total Aset</span>
                                 </div>
                                 <div class="w-circle-icon rounded bg-primary">
                                     <i class="fa fa-clock-o text-white"></i>
@@ -73,10 +48,11 @@
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body text-left">
-                                    <h4 class="text-secondary mb-0">15 Item</h4>
-                                    <span class="small-font">Avg Loading Weight</span>
+                                    <h4 class="text-secondary mb-0">{{$jumlahdatadepresiasi}} Klasifikasi</h4>
+                                    <span class="small-font">TABEL DEPRESIASI ASET</span>
                                 </div>
-                                <div class="w-circle-icon rounded bg-secondary">
+                                <div class="w-circle-icon rounded bg-secondary" style="cursor: pointer;" id="buttondatatabledepresiasi" data-toggle="modal"
+                                    data-target="#datatabledepresiasiaset">
                                     <i class="fa fa-tasks text-white"></i>
                                 </div>
                             </div>
@@ -161,18 +137,19 @@
                                     @foreach ($data as $item)
                                         <tr>
                                             <td>
-                                               {{$no++}}
+                                                {{ $no++ }}
                                             </td>
                                             <td>{{ $item->nama_barang }}</td>
                                             <td>@currency($item->harga_perolehan)</td>
                                             @php
-                                                $cekinvoice = DB::table('tbl_invoice')->where('id_inventaris',$item->id_inventaris)->first();
+                                                $cekinvoice = DB::table('tbl_invoice')
+                                                    ->where('id_inventaris', $item->id_inventaris)
+                                                    ->first();
                                             @endphp
                                             <td>
                                                 @if ($cekinvoice)
-                                                    {{$cekinvoice->kd_invoice}}
+                                                    <a href="#" data-toggle="modal" data-target="#modaldepresiasi" id="buttondetaildatainvoice" data-id="{{ $item->id_inventaris }}">{{ $cekinvoice->kd_invoice }}</a>
                                                 @else
-
                                                 @endif
                                             </td>
                                             <td>
@@ -201,7 +178,11 @@
                                                     <span
                                                         class="badge badge-pill badge-success m-1">{{ $depresiasi->masa_depresiasi }}</span>
                                                 @else
-                                                    <a href="#" data-toggle="modal" data-target="#modaldepresiasi" id="buttonpilihoptiondepresiasi" data-id="{{$item->id_inventaris}}"><span class="badge badge-pill badge-danger m-1">Belum Dipilih</span></a>
+                                                    <a href="#" data-toggle="modal" data-target="#modaldepresiasi"
+                                                        id="buttonpilihoptiondepresiasi"
+                                                        data-id="{{ $item->id_inventaris }}"><span
+                                                            class="badge badge-pill badge-danger m-1">Belum
+                                                            Dipilih</span></a>
                                                 @endif
                                             </td>
                                             <td>{{ $item->tgl_beli }}</td>
@@ -222,10 +203,12 @@
                                                         data-id="{{ $item->id_inventaris }}"><i
                                                             class="fa fa-file-text-o"></i> Upload Document Maintenance</a>
                                                     @if (!$cekinvoice)
-                                                    <a href="javaScript:void();" class="dropdown-item"
-                                                    data-toggle="modal" data-target="#modaldepresiasi"
-                                                    id="buttontambahinvoice" data-id="{{$item->id_inventaris}}"><i class="fa fa-file-text-o"></i> Upload
-                                                    Document Invoice</a>
+                                                        <a href="javaScript:void();" class="dropdown-item"
+                                                            data-toggle="modal" data-target="#modaldepresiasi"
+                                                            id="buttontambahinvoice"
+                                                            data-id="{{ $item->id_inventaris }}"><i
+                                                                class="fa fa-file-text-o"></i> Upload
+                                                            Document Invoice</a>
                                                     @endif
 
 
@@ -250,6 +233,16 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div id="showmenuaset">
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="datatabledepresiasiaset">
+        <div class="modal-dialog modal-dialog-centered modal-full">
+            <div class="modal-content">
+                <div id="showmenuaset1">
                     <div class="modal-body">
                     </div>
                 </div>
