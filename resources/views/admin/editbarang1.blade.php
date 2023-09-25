@@ -230,18 +230,27 @@
                             </thead>
                             <tbody>
                                 <?php
-                                $datapinjam = DB::table('tbl_sub_peminjaman')
-                                    ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
-                                    ->where('tbl_sub_peminjaman.id_inventaris', $data[0]->id)
+                                $datapinjam = DB::table('tbl_peminjaman')
+                                    ->join('tbl_sub_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+                                    ->where('tbl_sub_peminjaman.id_inventaris', $data[0]->id_inventaris)
                                     ->get();
                                 ?>
                                 @foreach ($datapinjam as $datapinjam)
                                     <tr>
                                         <td>{{ $datapinjam->tiket_peminjaman }}</td>
                                         <td>{{ $datapinjam->nama_kegiatan }}</td>
-                                        <td>{{ $datapinjam->kd_cabang }}</td>
-                                        <td>{{ $datapinjam->tujuan_cabang }}</td>
-                                        <td>{{ $datapinjam->pj_pinjam }}</td>
+                                            @php
+                                                $cabang = DB::table('tbl_cabang')->where('kd_cabang',$datapinjam->kd_cabang)->first();
+                                            @endphp
+                                        <td>{{ $cabang->nama_cabang }}</td>
+                                            @php
+                                                $cabang1 = DB::table('tbl_cabang')->where('kd_cabang',$datapinjam->tujuan_cabang)->first();
+                                            @endphp
+                                        <td>{{ $cabang1->nama_cabang }}</td>
+                                            @php
+                                                $pj = DB::table('tbl_staff')->where('nip',$datapinjam->pj_pinjam)->first();
+                                            @endphp
+                                        <td>{{ $pj->nama_staff }}</td>
 
                                         <td><button class="btn btn-info btn-sm" disabled>Proses</button></td>
                                     </tr>
@@ -252,55 +261,7 @@
                     </div>
 
                 </div>
-                <div class="row g-3 pt-4">
-                    <div class="col-md-9">
-                        <label for="inputPassword4" class="form-label">Riwayat Pemusnahan</label>
-                    </div>
 
-                    <hr>
-                    <div class="col-md-12">
-
-                        <table class="styled-table">
-                            <thead>
-                                <tr>
-
-                                    <td>Nomor Surat</td>
-                                    <td>Dasar Pengajuan</td>
-                                    <td>Tanggal Buat</td>
-                                    <td>Penggagas</td>
-                                    <td>Verifikator</td>
-                                    <td>Persetujuan</td>
-                                    <td>Eksekutor</td>
-                                    <td>Status</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $datamusnah = DB::table('tbl_sub_musnah')
-                                    ->select('tbl_sub_musnah.*', 'tbl_musnah.*')
-                                    ->join('tbl_musnah', 'tbl_musnah.no_surat', '=', 'tbl_sub_musnah.no_surat')
-                                    ->where('tbl_sub_musnah.id_inventaris', $data[0]->id)
-                                    ->get();
-                                ?>
-                                @foreach ($datamusnah as $datamusnah)
-                                    <tr>
-                                        <td>{{ $datamusnah->no_surat }}</td>
-                                        <td>{{ $datamusnah->dasar_pengajuan }}</td>
-                                        <td>{{ $datamusnah->tgl_buat }}</td>
-                                        <td>{{ $datamusnah->penggagas }}</td>
-                                        <td>{{ $datamusnah->user_verifikasi }}</td>
-                                        <td>{{ $datamusnah->user_persetujuan }}</td>
-                                        <td>{{ $datamusnah->user_eksekusi }}</td>
-
-                                        <td><button class="btn btn-info btn-sm" disabled>Proses</button></td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
             </div>
         </div>
 
@@ -325,9 +286,7 @@
     });
 </script>
 
-<script type="text/javascript">
-    // delete window.browseFile;
-    // delete window.resumable;
+{{-- <script type="text/javascript">
 
     var browseFile<?php echo $id; ?> = $('#browseFile<?php echo $id; ?>');
     var resumable<?php echo $id; ?> = new Resumable({
@@ -384,7 +343,5 @@
     function hideProgress() {
         // progress<?php echo $id; ?>.hide();
     }
-    // let browseFile<?php echo $id; ?> = "";
-    // let resumable<?php echo $id; ?> = "";
-    // let progress<?php echo $id; ?> = "";
-</script>
+
+</script> --}}

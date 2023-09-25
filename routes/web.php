@@ -42,6 +42,7 @@ Route::get('master/data-inventaris/update/{id}',['as'=>'master/data-inventaris/u
 Route::get('masteradmin/data-inventaris/updatedata/{id}',['as'=>'masteradmin/data-inventaris/updatedata','uses'=> 'MasterController@getupdatedatainevntaris']);
 // Master Admin Post Inventaris
 Route::post('master/datainventaris/simpandetailbarang', 'MasterController@simpandetailbarang');
+
 Route::post('master/datainventaris/simpanupdateinventaris', 'MasterController@simpanupdateinventaris');
 Route::get('master/datainventaris/simpanupdateinventaris/{id}', 'MasterController@simpanupdateinventariscabang');
 // Master Admin Get Lokasi
@@ -80,7 +81,13 @@ Route::get('divisi/peminjaman/editdatapeminjaman/{id}',['as'=>'divisi/peminjaman
 Route::get('divisi/peminjaman/hapusdetaildatapeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/hapusdetaildatapeminjaman','uses'=> 'DivisiController@hapusdetaildatapeminjaman']);
 Route::post('divisi/peminjaman/posteditdatapeminjaman',['as'=>'divisi/peminjaman/editdatapeminjaman','uses'=> 'DivisiController@posteditdatapeminjaman']);
 Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
+
+Route::get('divisi/masterbarang/dataloginventaris',['as'=>'divisi/masterbarang/dataloginventaris','uses'=> 'DivisiController@masterbarangloginventaris']);
+Route::get('divisi/masterbarang/dataloginventaris/editdata/{id}',['as'=>'divisi/masterbarang/dataloginventaris/editdata','uses'=> 'DivisiController@masterbarangeditloginventaris']);
 Route::get('divisi/masterbarang/showedit/{id}',['as'=>'divisi/masterbarang/showedit','uses'=> 'DivisiController@masterbarangshowedit']);
+Route::post('divisi/masterbarang/postedit/{id}',['as'=>'divisi/masterbarang/postedit','uses'=> 'DivisiController@posteditdataloginventory']);
+Route::get('divisi/masterbarang/dataloginventaris/downloaddataloginventory',['as'=>'divisi/masterbarang/dataloginventaris/downloaddataloginventory','uses'=> 'DivisiController@downloaddataloginventory']);
+
 Route::get('divisi/dataaset/tabledataaset',['as'=>'divisi/dataaset/tabledataaset','uses'=> 'DivisiController@tabledataaset']);
 Route::get('divisi/dataaset/tambah',['as'=>'divisi/dataaset/tambah','uses'=> 'DivisiController@tambahdataaset']);
 Route::get('divisi/dataaset/pilihdata',['as'=>'divisi/dataaset/pilihdata','uses'=> 'DivisiController@pilihdata']);
@@ -115,7 +122,7 @@ Route::post('divisi/setting/system','DivisiController@settingsystem');
 Route::post('divisi/masterbarang/editbarang','DivisiController@posteditbarang');
 
 Route::post('divisi/inventori/updatedatainventori',['as'=>'divisi/inventori/updatedatainventori','uses'=> 'DivisiController@updatedatainventori']);
-
+Route::post('admin/datainventaris/uploaddatabaranginventaris', 'DivisiController@simpandetailbarang');
 
 
 Route::get('divisi/datamutasi/datatable/{id}',['as'=>'divisi/datamutasi/datatable','uses'=> 'DivisiController@datatablemutasi']);

@@ -104,7 +104,7 @@
         <button class="btn-success" id="tambahdatabarang" data-url="{{ route('tambahdatabarang', ['id' => $id]) }}"><i
                 class="fa fa-plus"> </i> Tambah Data Barang</button>
         <span>
-            <button type="button" class="btn-outline-primary" data-toggle="modal" data-target="#printdata"><i
+            <button type="button" class="btn-outline-primary"  onclick="submitForm()"><i
                     class="fa fa-print"> </i> Print Barcode</button>
             <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
                 <i class="fa fa-close"></i>
@@ -331,7 +331,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form name="form1" action="{{ url('printbarcodelokasi', ['id' => $id]) }}" method="post">
+            <form name="form1" action="{{ url('printbarcodelokasi', ['id' => $id]) }}" method="post" id="print-barcode-form">
                 @csrf
                 <div class="modal-body">
                     <input type="text" name="kd_lokasi" value="{{ $id }}" id="" hidden>

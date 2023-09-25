@@ -93,7 +93,7 @@ class HomeController extends Controller
             ->get();
             $datainventariscabang = DB::table('sub_tbl_inventory')->where('kd_jenis',0)->where('kd_cabang',auth::user()->cabang)->count();
             if ($datainventariscabang == 0) {
-                $datainventariscabang = 1;
+                $datainventariscabang = 0;
             }
             $dataasetcabang = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->count();
             return view('home',[

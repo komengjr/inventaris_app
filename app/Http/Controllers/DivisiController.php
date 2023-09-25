@@ -8,7 +8,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-
+use App\Imports\LogInventarisImport;
+use Maatwebsite\Excel\Facades\Excel;
 class DivisiController extends Controller
 {
     public function __construct()
@@ -429,13 +430,87 @@ class DivisiController extends Controller
     public function masterbarang()
     {
         $datakategori = DB::table('no_urut_barang')->get();
+        $inventory_log = DB::table('sub_tbl_inventory_log')->where('kd_cabang',auth::user()->cabang)->count();
+        $inventory = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->count();
         $data = DB::table('sub_tbl_inventory')
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
         ->orderBy('sub_tbl_inventory.no', 'asc')
         ->where('kd_cabang',auth::user()->cabang)->get();
-        // dd($data);
-        return view('divisi.masterbarang',[ 'datakategori' => $datakategori, 'data'=>$data]);
+        return view('divisi.masterbarang',[ 'datakategori' => $datakategori, 'data'=>$data, 'inventory_log'=>$inventory_log, 'inventory'=>$inventory]);
     }
+    public function masterbarangloginventaris()
+    {
+        $data = DB::table('sub_tbl_inventory_log')->where('kd_cabang',auth::user()->cabang)->get();
+        return view('divisi.modal.masterbarangloginventaris',['data'=>$data]);
+    }
+    public function simpandetailbarang()
+    {
+        $ceknomor = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->first();
+        if ($ceknomor) {
+            Excel::import(new LogInventarisImport, request()->file('file'));
+            Session::flash('sukses','Upload Data Sukses');
+            return redirect()->back();
+        } else {
+            Session::flash('gagal','Nomor Cabang Belum di Isi');
+            return redirect()->back();
+        }
+    }
+    public function masterbarangeditloginventaris($id)
+    {
+        $data = DB::table('sub_tbl_inventory_log')->where('id_sub_tbl_inventory_log',$id)->first();
+        $klasifikasi = DB::table('tbl_inventory')->get();
+        $lokasi = DB::table('tbl_lokasi')->get();
+        return view('divisi.modal.editdataloginventaris',['data'=>$data,'klasifikasi'=>$klasifikasi,'lokasi'=>$lokasi]);
+    }
+    public function posteditdataloginventory(Request $request , $id)
+    {
+        DB::table('sub_tbl_inventory_log')
+        ->where('id_sub_tbl_inventory_log',$id)
+        ->update([
+                    'nama_barang' => $request->nama_barang,
+                    'kd_inventaris' => $request->kd_inventaris,
+                    'kd_lokasi' => $request->kd_lokasi,
+                    'th_perolehan' => $request->th_perolehan,
+                    'merk' => $request->merk,
+                    'type' => $request->type,
+                    'no_seri' => $request->seri,
+                    'suplier' => $request->suplier,
+                    'harga_perolehan' => $request->harga,
+
+                ]);
+        $data = DB::table('sub_tbl_inventory_log')->where('kd_cabang',auth::user()->cabang)->get();
+        Session::flash('sukses','Upload Data Sukses');
+        return view('divisi.modal.tabledataloginventory',['data'=>$data]);
+    }
+    public function downloaddataloginventory()
+    {
+        $no = 0;
+        $nomorcabang = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->first();
+        $total = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->count();
+        $datalog = DB::table('sub_tbl_inventory_log')->where('kd_cabang',auth::user()->cabang)->get();
+        foreach ($datalog as $value) {
+            DB::table('sub_tbl_inventory')->insert(
+                [
+                    'id_inventaris' => auth::user()->cabang."".auth::user()->cabang."".(100000+($total + $no++)),
+                    'no_inventaris' => ($total + $no)."/".$value->kd_inventaris."/".$value->kd_lokasi."/P.".$nomorcabang->no_cabang."/".$value->th_perolehan,
+                    'nama_barang' => $value->nama_barang,
+                    'kd_inventaris' => $value->kd_inventaris,
+                    'kd_lokasi' => $value->kd_lokasi,
+                    'kd_jenis' => $value->kd_jenis,
+                    'kd_cabang' => auth::user()->cabang,
+                    'th_perolehan' => $value->th_perolehan,
+                    'merk' => $value->merk,
+                    'type' => $value->type,
+                    'no_seri' => $value->no_seri,
+                    'suplier' => $value->suplier,
+                    'harga_perolehan' => $value->harga_perolehan,
+            ]);
+            DB::table('sub_tbl_inventory_log')->where('id_sub_tbl_inventory_log', $value->id_sub_tbl_inventory_log)->delete();
+        }
+        Session::flash('sukses','Upload Data Sukses');
+        return redirect()->back();
+    }
+
     public function tokenmasterbarang()
     {
         $no = 0 ;

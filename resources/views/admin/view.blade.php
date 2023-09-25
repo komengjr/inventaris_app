@@ -42,6 +42,14 @@
             border-radius: 10%;
             border: 3px solid #14bbd1;
         }
+        #tambahdatainevntaris:hover {
+            display: flex;
+            color: rgb(14, 243, 255);
+            padding: 2px;
+            /* background-color: #dd57e0; */
+            border-radius: 10%;
+            border: 3px solid #14bbd1;
+        }
         #datainevntaris:hover {
             display: flex;
             color: rgb(14, 243, 255);
@@ -89,7 +97,7 @@
                         </div>
                         <div class="w-icon" style="cursor: pointer" id="tambahdatainevntaris" data-toggle="modal"
                         data-target="#modaladdbarang" data-url="{{ url('admin/formdatainventaris/tambadata', []) }}">
-                            <i class="fa fa-th-large text-gradient-danger"></i>
+                            <i class="fa fa-plus-square text-gradient-danger"></i>
                         </div>
                     </div>
                 </div>
@@ -105,7 +113,7 @@
                         </div>
                         <div class="w-icon" style="cursor: pointer" id="ubahtombolaset" data-toggle="modal"
                             data-target="#lihat-detail-data" data-url="{{ url('admin/formdataaset', []) }}">
-                            <i class="fa fa-th-large text-gradient-danger"></i>
+                            <i class="fa fa-eye text-gradient-danger"></i>
                         </div>
                     </div>
                 </div>
@@ -136,8 +144,8 @@ $tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
         <div class="col-sm-9">
             <h4 class="page-title">Klasifikasi</h4>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javaScript:void();">{{$tgl_pertama}}</a></li>
-                <li class="breadcrumb-item"><a href="javaScript:void();">{{$tgl_terakhir}}</a></li>
+                <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+                <li class="breadcrumb-item"><a href="javaScript:void();">Klasifikasi</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Data</li>
             </ol>
         </div>
@@ -192,8 +200,14 @@ $tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
                         </div>
                         <div class="progress-wrapper mt-3">
                             <div class="progress mb-0" style="height: 5px">
+                                @if ($totalinventaris == 0)
                                 <div class="progress-bar bg-white" role="progressbar"
-                                    style="width: {{ ($jumlah * 100) / $totalinventaris }}%"></div>
+                                style="width: 0%"></div>
+                                @else
+                                <div class="progress-bar bg-white" role="progressbar"
+                                style="width: {{ ($jumlah * 100) / $totalinventaris }}%"></div>
+                                @endif
+
                             </div>
                             <p class="mt-2 mb-0 extra-small-font text-white">
                                 {{ $jumlah }}
@@ -213,8 +227,8 @@ $tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
             <h4 class="page-title">Ruangan</h4>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                <li class="breadcrumb-item"><a href="javaScript:void();">-</a></li>
-                <li class="breadcrumb-item active" aria-current="page">-</li>
+                <li class="breadcrumb-item"><a href="javaScript:void();">Ruangan</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Data</li>
             </ol>
         </div>
     </div>

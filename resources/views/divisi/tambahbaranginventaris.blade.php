@@ -54,7 +54,7 @@
                       </select>
 
                       <label for="inputEmail4" class="form-label">Tanggal Pembelian</label>
-                      <input type="date" name="tgl_beli" class="form-control" >
+                      <input type="date" name="tgl_beli" class="form-control" required>
                       <label for="inputPassword4" class="form-label">Supplier</label>
                       <input type="text" name="suplier" class="form-control" required>
                       <label for="inputPassword4" class="form-label">Harga Perolehan</label>

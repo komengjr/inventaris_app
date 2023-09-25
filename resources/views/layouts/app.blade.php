@@ -151,7 +151,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:void();">
                             <div class="media align-items-center">
-                                <img src="{{ asset('logo.png', []) }}" class="logo" alt="logo icon" width="200">
+                                <img src="{{ asset('anim.gif', []) }}" class="logo" alt="logo icon" width="200">
                                 <div class="media-body">
                                     {{-- <h5 class="logo-text">APP-Serve</h5> --}}
                                 </div>

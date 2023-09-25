@@ -51,8 +51,8 @@
         <div class="card card-authentication1 mx-auto my-5 pt-2">
             <div class="card-body">
                 <div class="card-content p-0">
-                    <div class="text-center m-0">
-                        <img src="{{ url('logo.gif', []) }}"  width="300">
+                    <div class="text-center m-0 p-0">
+                        <img src="{{ url('anim.gif', []) }}"  width="350">
                     </div>
                     <div class="card-title text-uppercase text-center py-3"
                         style="font-family: "Copperplate", "Courier New" , Monospace;">Login Aplikasi</div>

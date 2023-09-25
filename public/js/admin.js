@@ -430,6 +430,73 @@ $(document).ready(function () {
                 );
             });
     });
+    $(document).on("click", "#showbarangmasterloginventory", function (e) {
+        e.preventDefault();
+        var url = "../divisi/masterbarang/dataloginventaris";
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdatmasterbarang").html(data);
+            })
+            .fail(function () {
+                $("#showdatmasterbarang").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+    $(document).on("click", "#buttoneditloginventaris", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var url = "../divisi/masterbarang/dataloginventaris/editdata/"+id;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenudataloginventaris").html(data);
+            })
+            .fail(function () {
+                $("#showmenudataloginventaris").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+    });
+
+    $(document).on("click", "#buttoneditdataloginventory", function (e) {
+        var data = $("#form-updateloginventory").serialize();
+
+        e.preventDefault();
+        var url = $(this).data("url");
+        $("#showmenudataloginventaris").html(
+            "<br><br><br><img src='../icon.png'  style='display: block; margin: auto;'>"
+        );
+        $.ajax({
+            url: url,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+            },
+            type: "POST",
+            data: data,
+            dataType: "html",
+        })
+            .done(function (data) {
+                // console.log(data);
+                $("#showmenudataloginventaris").html(data);
+            })
+            .fail(function () {
+                console.log(data);
+                $("#showmenudataloginventaris").html(
+                    '<i class="fa fa-info-sign"></i> Gagal Baca'
+                );
+            });
+    });
+
     $(document).on("click", "#buttontambahdataaset", function (e) {
         e.preventDefault();
         // var url = $(this).data("url");
