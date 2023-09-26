@@ -37,6 +37,8 @@ class CreateSubTblInventoryTable extends Migration
             $table->string('ket_musnah')->nullable();
             $table->string('kondisi_barang')->nullable();
             $table->string('jam_input')->nullable();
+            $table->string('no')->nullable();
+            $table->string('id_nomor_ruangan_cbaang')->nullable();
             $table->text('gambar')->nullable();
             $table->timestamps();
         });

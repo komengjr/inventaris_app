@@ -110,7 +110,10 @@
             <tr>
                 <td style="width: 150px;">Penanggung Jawab</td>
                 <td style="width: 5px;">:</td>
-                <td>{{$datapinjam[0]->pj_pinjam}}</td>
+                @php
+                    $namapj = DB::table('tbl_staff')->where('nip',$datapinjam[0]->pj_pinjam)->first();
+                @endphp
+                <td>{{$namapj->nama_staff}}</td>
             </tr>
             <tr>
                 <td>Asal Cabang</td>
@@ -217,7 +220,7 @@
                 <td class="text-center" style="padding-top: 10px; padding-bottom: 10px; width: 33%;">
                     {{-- <img style="padding-left: 2px; left: 20px;" src=""> --}}
                     <br><br><br><br><br>
-                    {{$datapinjam[0]->pj_pinjam}}
+                    {{$namapj->nama_staff}}
 
                 </td>
                 <td class="text-center" style="width: 33%;">

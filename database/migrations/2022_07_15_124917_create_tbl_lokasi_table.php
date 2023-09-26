@@ -16,6 +16,7 @@ class CreateTblLokasiTable extends Migration
         Schema::create('tbl_lokasi', function (Blueprint $table) {
             $table->string('kd_lokasi')->unique();
             $table->string('nama_lokasi');
+            $table->string('kd_cabang');
             $table->text('gambar')->nullable();
             $table->timestamps();
         });

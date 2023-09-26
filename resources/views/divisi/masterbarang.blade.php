@@ -83,7 +83,7 @@
                 <div class="col-12 col-lg-12">
                     <div class="card">
                         <div class="card-header border-0">
-                            Recent History
+                            Master Barang
                             <div class="card-action">
                                 <div class="dropdown">
                                     <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
@@ -108,7 +108,8 @@
                                         <td>Nama Barang</td>
                                         <td>No Inventaris</td>
                                         <td>Kode Klasifikasi</td>
-                                        <td>Ruangan</td>
+                                        <td>Nomor Ruangan</td>
+                                        <td>Lokasi</td>
                                         <td>Merek / Type</td>
                                         <td>Tanggal Pembelian</td>
                                         <td>Tahun Perolehan</th>
@@ -128,6 +129,16 @@
                                             <td>{{ $item->nama_barang }}</td>
                                             <td>{{ $item->no_inventaris }}</td>
                                             <td>{{ $item->kd_inventaris }}</td>
+                                            @php
+                                                $ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$item->id_nomor_ruangan_cbaang)->first();
+                                            @endphp
+                                            @if ($ruangan)
+                                            <td>{{ $ruangan->nomor_ruangan  }}</td>
+                                            @else
+                                            <td><button class="btn-danger" disabled>undefinded</button></td>
+                                            @endif
+
+
                                             <td>{{ $item->kd_lokasi }} : {{ $item->nama_lokasi }}</td>
                                             <td>{{ $item->merk }} / {{ $item->type }}</td>
                                             <td>{{ $item->tgl_beli }}</td>

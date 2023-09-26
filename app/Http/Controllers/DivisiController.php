@@ -109,7 +109,7 @@ class DivisiController extends Controller
     {
         $databrg = DB::table('sub_tbl_inventory')
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
-        ->where('kd_cabang',auth::user()->cabang)->get();
+        ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->get();
         $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$id)->get();
         return view('divisi.menulengkapi.inputdatabarangpinjam',['databrg'=>$databrg,'id'=>$id]);
     }
@@ -117,7 +117,7 @@ class DivisiController extends Controller
     {
         $databrg = DB::table('sub_tbl_inventory')
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
-        ->where('kd_cabang',auth::user()->cabang)->get();
+        ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->get();
         $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$id)->get();
         return view('divisi.menulengkapi.pengembaliandatabarangpinjam',['databrg'=>$databrg,'id'=>$id]);
     }
@@ -435,7 +435,8 @@ class DivisiController extends Controller
         $data = DB::table('sub_tbl_inventory')
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
         ->orderBy('sub_tbl_inventory.no', 'asc')
-        ->where('kd_cabang',auth::user()->cabang)->get();
+        ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->get();
+        // dd($data);
         return view('divisi.masterbarang',[ 'datakategori' => $datakategori, 'data'=>$data, 'inventory_log'=>$inventory_log, 'inventory'=>$inventory]);
     }
     public function masterbarangloginventaris()
@@ -562,6 +563,7 @@ class DivisiController extends Controller
         } else {
 
         }
+        Session::flash('sukses','Berhasil Setup System');
         return redirect()->back();
     }
     public function faq()
@@ -718,6 +720,11 @@ class DivisiController extends Controller
     {
         $cabang = DB::table('tbl_cabang')->get();
         return view('divisi.modal.ordertiketmutasi',['cabang'=>$cabang]);
+    }
+    public function showdataordermutasi()
+    {
+        $cabang = DB::table('tbl_cabang')->get();
+        return view('divisi.mutasi.ordermutasi',['cabang'=>$cabang]);
     }
     public function caridatabarangmutasi($id,$ids)
     {
@@ -915,5 +922,101 @@ class DivisiController extends Controller
         );
     Session::flash('sukses','Berhasil Membuat Staff : '.$request->nama);
     return redirect()->back();
+    }
+
+    // Master Lokasi
+    public function masterlokasi()
+    {
+        $ruangan = DB::table('tbl_nomor_ruangan_cabang')
+        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+        ->where('tbl_nomor_ruangan_cabang.kd_cabang',auth::user()->cabang)->get();
+        return view('divisi.menulokasi',['ruangan'=>$ruangan]);
+    }
+    public function formtambahnomoruangan()
+    {
+        $lokasi = DB::table('tbl_lokasi')->get();
+        return view('divisi.lokasi.formtambah',['lokasi'=>$lokasi]);
+    }
+    public function masterlihatdatalokasi()
+    {
+        $lokasi = DB::table('tbl_lokasi')->get();
+        return view('divisi.lokasi.mastertablelokasi',['lokasi'=>$lokasi]);
+    }
+    public function datasetuplokasiruangan($id)
+    {
+        $cekruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$id)->first();
+        $datainventaris = DB::table('sub_tbl_inventory')
+        ->where('kd_lokasi',$cekruangan->kd_lokasi)
+        ->where('kd_cabang',auth::user()->cabang)
+        ->where('id_nomor_ruangan_cbaang','=',NULL)
+        ->get();
+        $lokasi = DB::table('tbl_lokasi')->get();
+        return view('divisi.lokasi.setupdataruangan',['lokasi'=>$lokasi,'datainventaris'=>$datainventaris,'id'=>$id,'no'=>$cekruangan]);
+    }
+    public function posttambahdatanomorruangan(Request $request)
+    {
+        $cekdata = DB::table('tbl_nomor_ruangan_cabang')
+        ->where('nomor_ruangan',$request->nomor_ruangan)
+        ->where('kd_cabang',auth::user()->cabang)->first();
+        if ($cekdata) {
+            Session::flash('gagal','Nomor Ruangan Sudah ada');
+            return redirect()->back();
+        } else {
+            DB::table('tbl_nomor_ruangan_cabang')->insert(
+                [
+                    'nomor_ruangan' => $request->nomor_ruangan,
+                    'kd_lokasi' => $request->kd_lokasi,
+                    'kd_cabang' => auth::user()->cabang,
+                    'status_nomor_ruangan' => 1,
+                ]
+            );
+            Session::flash('sukses','Berhasil Membuat Nomor Ruangan');
+            return redirect()->back();
+        }
+
+
+    }
+    public function inputdatamasterlokasibarang($no,$id)
+    {
+        DB::table('sub_tbl_inventory')
+        ->where('id_inventaris',$id)
+        ->update([
+                    'id_nomor_ruangan_cbaang' => $no,
+
+                ]);
+        $cekruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$no)->first();
+        $datainventaris = DB::table('sub_tbl_inventory')
+        ->where('kd_lokasi',$cekruangan->kd_lokasi)
+        ->where('kd_cabang',auth::user()->cabang)
+        ->where('id_nomor_ruangan_cbaang','=',NULL)
+        ->get();
+        $lokasi = DB::table('tbl_lokasi')->get();
+        return view('divisi.lokasi.tablelokasibarang',['lokasi'=>$lokasi,'datainventaris'=>$datainventaris,'id'=>$id,'no'=>$cekruangan]);
+    }
+    public function resetdatamasterlokasibarang($no,$id)
+    {
+        DB::table('sub_tbl_inventory')
+        ->where('id_inventaris',$id)
+        ->update([
+                    'id_nomor_ruangan_cbaang' => NULL,
+
+                ]);
+        $cekruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$no)->first();
+        $datainventaris = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang',auth::user()->cabang)
+        ->where('id_nomor_ruangan_cbaang',$no)
+        ->get();
+        $lokasi = DB::table('tbl_lokasi')->get();
+        return view('divisi.lokasi.tablemastersublokasibarang',['lokasi'=>$lokasi,'datainventaris'=>$datainventaris,'id'=>$id,'no'=>$cekruangan]);
+    }
+    public function tabledatamasterlokasibarang($id)
+    {
+
+        $cekruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$id)->first();
+        $datainventaris = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang',auth::user()->cabang)
+        ->where('id_nomor_ruangan_cbaang',$id)
+        ->get();
+        return view('divisi.lokasi.tablemasterlokasibarang',['datainventaris'=>$datainventaris,'no'=>$cekruangan]);
     }
 }

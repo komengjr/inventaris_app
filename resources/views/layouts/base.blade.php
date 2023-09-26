@@ -201,9 +201,6 @@
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
 
-                    {{-- <li><a href="{{ url('cekdata') }}">Cek QR</a></li> --}}
-                    {{-- <li><a href="{{ url('list') }}">List Faktur</a></li> --}}
-
                 </ul>
             </div>
 

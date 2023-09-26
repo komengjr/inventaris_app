@@ -437,10 +437,15 @@ class HomeController extends Controller
     {
         $kode = DB::table('tbl_inventory')->get();
         $lokasi = DB::table('tbl_lokasi')->get();
-        return view('divisi.tambahbaranginventaris',['kode'=>$kode,'lokasi'=>$lokasi]);
+        $ruangan = DB::table('tbl_nomor_ruangan_cabang')
+        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+        ->where('tbl_nomor_ruangan_cabang.kd_cabang',auth::user()->cabang)
+        ->get();
+        return view('divisi.tambahbaranginventaris',['kode'=>$kode,'lokasi'=>$lokasi,'ruangan'=>$ruangan]);
     }
     public function simpandatainventaris(Request $request)
     {
+        $cekruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$request->input('no_ruangan'))->first();
         if ($request->input('link') == "") {
             $gambar = '';
         } else {
@@ -457,11 +462,13 @@ class HomeController extends Controller
                         'nama_barang' => $request->input('nama_barang'),
                         'gambar' => $gambar,
                         'kd_inventaris' => $request->input('kd_inventaris'),
-                        'kd_lokasi' => $request->input('kd_lokasi'),
+                        'kd_lokasi' => $cekruangan->kd_lokasi,
+                        'id_nomor_ruangan_cbaang' => $request->input('no_ruangan'),
                         'kd_cabang' => auth::user()->cabang,
                         'th_perolehan' => $tahun,
                         'tgl_beli' => $request->input('tgl_beli'),
                         'merk' => $request->input('merk'),
+                        'type' => $request->input('type'),
                         'no_seri' => $request->input('no_seri'),
                         'suplier' => $request->input('suplier'),
                         'kd_jenis' => $request->input('kategori'),

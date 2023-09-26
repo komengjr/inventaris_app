@@ -1,274 +1,615 @@
 @extends('layouts.app')
 @section('content')
-    <link href="{{ url('assets/plugins/vertical-timeline/css/vertical-timeline.css', []) }}" rel="stylesheet" />
     <div class="content-wrapper">
         <div class="container-fluid">
-            <div class="row pl-2 pt-2 pb-2">
+            <!-- Breadcrumb-->
+            <div class="row pt-2 pb-2">
                 <div class="col-sm-9">
-                    {{-- <h4 class="page-title">Form SDM & Umum</h4> --}}
+                    <h4 class="page-title">Case Inbox</h4>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Faq</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Frequently Asked Questions</li>
+                        <li class="breadcrumb-item">
+                            <a href="javaScript:void();">Dashtreme</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="javaScript:void();">Case</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Report
+                        </li>
                     </ol>
                 </div>
-            </div>
-            <div class="row">
 
-                <div class="col-lg-12 p-3">
+            </div>
+            <!-- End Breadcrumb-->
+            <div class="row">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <ul class="nav nav-tabs nav-tabs-success nav-justified top-icon">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#tabe-17"><i
-                                            class="zmdi zmdi-view-dashboard"></i> <span
-                                            class="hidden-xs">Dashboard</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#tabe-18"><i class="zmdi zmdi-layers"></i>
-                                        <span class="hidden-xs">Master Data</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#tabe-19"><i
-                                            class="zmdi zmdi-view-dashboard"></i> <span class="hidden-xs">Comming
-                                            Soon</span></a>
-                                </li>
+                            <div class="row">
+                                <!-- Left sidebar -->
+                                <div class="col-lg-3 col-md-4">
+                                    <a href="mail-compose.html" class="btn btn-danger btn-block">New Case</a>
+                                    <div class="card mt-3 shadow-none">
+                                        <div class="list-group shadow-none">
+                                            <a href="javascript:void();" class="list-group-item active"><i
+                                                    class="fa fa-inbox mr-2"></i>Case Baru
+                                                <b>(12)</b></a>
+                                            <a href="javascript:void();" class="list-group-item"><i
+                                                    class="fa fa-star-o mr-2"></i>Case Proses</a>
+                                            <a href="javascript:void();" class="list-group-item"><i
+                                                    class="fa fa-file-text-o mr-2"></i>Case Selesai
+                                                <b>(10)</b></a>
 
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void();"><i
-                                            class="icon-settings"></i> <span class="hidden-xs">Setting</span></a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" data-toggle="tab" href="#tabe-20">Link 1</a>
-                                        <a class="dropdown-item" href="javascript:void();">Link 2</a>
-                                        <a class="dropdown-item" href="javascript:void();">Link 3</a>
-                                    </div>
-                                </li>
-                            </ul>
-
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div id="tabe-17" class="container tab-pane active p-1" style="text-align: justify;">
-                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                                        suffered alteration in some form, by injected humour, or randomised words which
-                                        don't look
-                                        even slightly believable.
-                                        If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                                        anything
-                                        embarrassing hidden in the middle of text.All the Lorem Ipsum generators on the
-                                        Internet
-                                        tend to repeat predefined chunks as necessary, making this the first true generator
-                                        on the
-                                        Internet
-                                        There are many variations of passages of Lorem Ipsum available, but the majority
-                                        have
-                                        suffered alteration in some form, by injected humour, or randomised words which
-                                        don't look
-                                        even slightly believable.
-                                    <p>If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                                        anything
-                                        embarrassing hidden in the middle of text.All the Lorem Ipsum generators on the
-                                        Internet
-                                        tend to repeat predefined chunks as necessary, making this the first true generator
-                                        on the
-                                        Internet</p>
-                                </div>
-                                <div id="tabe-18" class="container tab-pane fade">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <section class="cd-timeline js-cd-timeline">
-                                                <div class="cd-timeline__container">
-                                                    <div class="cd-timeline__block js-cd-block">
-                                                        <div class="cd-timeline__img cd-timeline__img--picture js-cd-img">
-                                                            <img src="assets/images/timeline/cd-icon-picture.svg"
-                                                                alt="Picture" />
-                                                        </div>
-                                                        <!-- cd-timeline__img -->
-
-                                                        <div class="cd-timeline__content js-cd-content">
-                                                            <h4>Title of section 1</h4>
-                                                            <p>
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                                elit. Iusto, optio, dolorum provident rerum aut hic
-                                                                quasi placeat iure tempora laudantium ipsa ad debitis
-                                                                unde? Iste voluptatibus minus veritatis qui ut.
-                                                            </p>
-                                                            <a href="javascript:void();" class="cd-timeline__read-more">Read
-                                                                more</a>
-                                                            <span class="cd-timeline__date">Jan 14</span>
-                                                        </div>
-                                                        <!-- cd-timeline__content -->
-                                                    </div>
-                                                    <!-- cd-timeline__block -->
-
-                                                    <div class="cd-timeline__block js-cd-block">
-                                                        <div class="cd-timeline__img cd-timeline__img--movie js-cd-img">
-                                                            <img src="assets/images/timeline/cd-icon-movie.svg"
-                                                                alt="Movie" />
-                                                        </div>
-                                                        <!-- cd-timeline__img -->
-
-                                                        <div class="cd-timeline__content js-cd-content">
-                                                            <h4>Title of section 2</h4>
-                                                            <p>
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                                elit. Iusto, optio, dolorum provident rerum aut hic
-                                                                quasi placeat iure tempora laudantium ipsa ad debitis
-                                                                unde?
-                                                            </p>
-                                                            <a href="javascript:void();" class="cd-timeline__read-more">Read
-                                                                more</a>
-                                                            <span class="cd-timeline__date">Jan 18</span>
-                                                        </div>
-                                                        <!-- cd-timeline__content -->
-                                                    </div>
-                                                    <!-- cd-timeline__block -->
-
-                                                    <div class="cd-timeline__block js-cd-block">
-                                                        <div class="cd-timeline__img cd-timeline__img--picture js-cd-img">
-                                                            <img src="assets/images/timeline/cd-icon-picture.svg"
-                                                                alt="Picture" />
-                                                        </div>
-                                                        <!-- cd-timeline__img -->
-
-                                                        <div class="cd-timeline__content js-cd-content">
-                                                            <h4>Title of section 3</h4>
-                                                            <p>
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                                elit. Excepturi, obcaecati, quisquam id molestias eaque
-                                                                asperiores voluptatibus cupiditate error assumenda
-                                                                delectus odit similique earum voluptatem doloremque
-                                                                dolorem ipsam quae rerum quis. Odit, itaque, deserunt
-                                                                corporis vero ipsum nisi eius odio natus ullam provident
-                                                                pariatur temporibus quia eos repellat consequuntur
-                                                                perferendis enim amet quae quasi repudiandae sed quod
-                                                                veniam dolore possimus rem voluptatum eveniet eligendi
-                                                                quis fugiat aliquam sunt similique aut adipisci.
-                                                            </p>
-                                                            <a href="javascript:void();" class="cd-timeline__read-more">Read
-                                                                more</a>
-                                                            <span class="cd-timeline__date">Jan 24</span>
-                                                        </div>
-                                                        <!-- cd-timeline__content -->
-                                                    </div>
-                                                    <!-- cd-timeline__block -->
-
-                                                    <div class="cd-timeline__block js-cd-block">
-                                                        <div class="cd-timeline__img cd-timeline__img--location js-cd-img">
-                                                            <img src="assets/images/timeline/cd-icon-location.svg"
-                                                                alt="Location" />
-                                                        </div>
-                                                        <!-- cd-timeline__img -->
-
-                                                        <div class="cd-timeline__content js-cd-content">
-                                                            <h4>Title of section 4</h4>
-                                                            <p>
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                                elit. Iusto, optio, dolorum provident rerum aut hic
-                                                                quasi placeat iure tempora laudantium ipsa ad debitis
-                                                                unde? Iste voluptatibus minus veritatis qui ut.
-                                                            </p>
-                                                            <a href="javascript:void();" class="cd-timeline__read-more">Read
-                                                                more</a>
-                                                            <span class="cd-timeline__date">Feb 14</span>
-                                                        </div>
-                                                        <!-- cd-timeline__content -->
-                                                    </div>
-                                                    <!-- cd-timeline__block -->
-
-                                                    <div class="cd-timeline__block js-cd-block">
-                                                        <div class="cd-timeline__img cd-timeline__img--location js-cd-img">
-                                                            <img src="assets/images/timeline/cd-icon-location.svg"
-                                                                alt="Location" />
-                                                        </div>
-                                                        <!-- cd-timeline__img -->
-
-                                                        <div class="cd-timeline__content js-cd-content">
-                                                            <h4>Title of section 5</h4>
-                                                            <p>
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                                elit. Iusto, optio, dolorum provident rerum.
-                                                            </p>
-                                                            <a href="javascript:void();" class="cd-timeline__read-more">Read
-                                                                more</a>
-                                                            <span class="cd-timeline__date">Feb 18</span>
-                                                        </div>
-                                                        <!-- cd-timeline__content -->
-                                                    </div>
-                                                    <!-- cd-timeline__block -->
-
-                                                    <div class="cd-timeline__block js-cd-block">
-                                                        <div class="cd-timeline__img cd-timeline__img--movie js-cd-img">
-                                                            <img src="assets/images/timeline/cd-icon-movie.svg"
-                                                                alt="Movie" />
-                                                        </div>
-                                                        <!-- cd-timeline__img -->
-
-                                                        <div class="cd-timeline__content js-cd-content">
-                                                            <h4>Final Section</h4>
-                                                            <p>This is the content of the last section</p>
-                                                            <span class="cd-timeline__date">Feb 26</span>
-                                                        </div>
-                                                        <!-- cd-timeline__content -->
-                                                    </div>
-                                                    <!-- cd-timeline__block -->
-                                                </div>
-                                            </section>
-                                            <!-- cd-timeline -->
                                         </div>
                                     </div>
                                 </div>
-                                <div id="tabe-19" class="container tab-pane fade">
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                        laudantium, totam rem aperiam.</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut
-                                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                        ullamco
-                                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                        reprehenderit in
-                                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                        laudantium, totam rem aperiam.</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut
-                                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                        ullamco
-                                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                        reprehenderit in
-                                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                <!-- End Left sidebar -->
+
+                                <!-- Right Sidebar -->
+                                <div class="col-lg-9 col-md-8">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            {{-- <div class="btn-toolbar" role="toolbar">
+                                                <div class="btn-group mr-1">
+                                                    <button type="button"
+                                                        class="btn btn-outline-primary waves-effect waves-light">
+                                                        <i class="fa fa-inbox"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn btn-outline-primary waves-effect waves-light">
+                                                        <i class="fa fa-refresh"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn btn-outline-primary waves-effect waves-light">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="btn-group mr-1">
+                                                    <button type="button" class="btn btn-outline-primary dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-folder"></i>
+                                                        <b class="caret"></b>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="javaScript:void();" class="dropdown-item">Action</a>
+                                                        <a href="javaScript:void();" class="dropdown-item">Another
+                                                            action</a>
+                                                        <a href="javaScript:void();" class="dropdown-item">Something else
+                                                            here</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="javaScript:void();" class="dropdown-item">Separated
+                                                            link</a>
+                                                    </div>
+                                                </div>
+                                                <div class="btn-group mr-1">
+                                                    <button type="button"
+                                                        class="btn btn-outline-primary waves-effect waves-light dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-tag"></i>
+                                                        <b class="caret"></b>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="javaScript:void();" class="dropdown-item">Action</a>
+                                                        <a href="javaScript:void();" class="dropdown-item">Another
+                                                            action</a>
+                                                        <a href="javaScript:void();" class="dropdown-item">Something else
+                                                            here</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="javaScript:void();" class="dropdown-item">Separated
+                                                            link</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="btn-group">
+                                                    <button type="button"
+                                                        class="btn btn-outline-primary waves-effect waves-light dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        More
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="javaScript:void();" class="dropdown-item">Action</a>
+                                                        <a href="javaScript:void();" class="dropdown-item">Another
+                                                            action</a>
+                                                        <a href="javaScript:void();" class="dropdown-item">Something else
+                                                            here</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="javaScript:void();" class="dropdown-item">Separated
+                                                            link</a>
+                                                    </div>
+                                                </div>
+                                            </div> --}}
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="position-relative has-icon-right">
+                                                <input type="text" class="form-control" placeholder="search mail" />
+                                                <div class="form-control-position">
+                                                    <i class="fa fa-search"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End row -->
+
+                                    <div class="card mt-3 shadow-none">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox1" type="checkbox"
+                                                                        checked="checked" />
+                                                                    <label for="checkbox1"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Google Inc</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-info mr-2"></i>Lorem ipsum
+                                                                    dolor sit amet, consectetuer
+                                                                    adipiscing</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">08:23 AM</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox2" type="checkbox"
+                                                                        checked="checked" />
+                                                                    <label for="checkbox2"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">John Deo</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-success mr-2"></i>Hi Bro,
+                                                                    How are you?</a>
+                                                            </td>
+                                                            <td></td>
+                                                            <td class="text-right">07:03 AM</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox3" type="checkbox" />
+                                                                    <label for="checkbox3"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Director</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-blue mr-2"></i>Dolor sit
+                                                                    amet, consectetuer
+                                                                    adipiscing</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">03:00 AM</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox4" type="checkbox"
+                                                                        checked="checked" />
+                                                                    <label for="checkbox4"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Manager</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-warning mr-2"></i>Lorem
+                                                                    ipsum dolor sit amet, consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">20 Jan</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox5" type="checkbox" />
+                                                                    <label for="checkbox5"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Facebook</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
+                                                                    consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td></td>
+                                                            <td class="text-right">20 Jan</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox6" type="checkbox"
+                                                                        checked="checked" />
+                                                                    <label for="checkbox6"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Facebook</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
+                                                                    consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td></td>
+                                                            <td class="text-right">20 Jan</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox7" type="checkbox" />
+                                                                    <label for="checkbox7"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Twitter Inc</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-info mr-2"></i>Lorem ipsum
+                                                                    dolor sit amet, consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">20 Jan</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox-7" type="checkbox" />
+                                                                    <label for="checkbox-7"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">LinkedIn</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-rose mr-2"></i>Lorem ipsum
+                                                                    dolor sit amet, consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">20 Jan</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox8" type="checkbox" />
+                                                                    <label for="checkbox8"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Yahoo</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
+                                                                    consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">20 Jan</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox9" type="checkbox"
+                                                                        checked="checked" />
+                                                                    <label for="checkbox9"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Google</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-info mr-2"></i>Lorem ipsum
+                                                                    dolor sit amet, consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">20 Jan</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox10" type="checkbox" />
+                                                                    <label for="checkbox10"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">John Deo</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-success mr-2"></i>Hi
+                                                                    brother, How are you?</a>
+                                                            </td>
+                                                            <td></td>
+                                                            <td class="text-right">18 Jan</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox11" type="checkbox"
+                                                                        checked="checked" />
+                                                                    <label for="checkbox11"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Manager</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-primary mr-2"></i>Dolor
+                                                                    sit amet, consectetuer
+                                                                    adipiscing</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">18 Jan</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox12" type="checkbox" />
+                                                                    <label for="checkbox12"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Manager</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-warning mr-2"></i>Lorem
+                                                                    ipsum dolor sit amet, consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">10 Jan</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox13" type="checkbox"
+                                                                        checked="checked" />
+                                                                    <label for="checkbox13"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Facebook</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
+                                                                    consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td></td>
+                                                            <td class="text-right">15 Jan</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox14" type="checkbox" />
+                                                                    <label for="checkbox14"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Google Inc</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
+                                                                    consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td></td>
+                                                            <td class="text-right">04 March</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox15" type="checkbox"
+                                                                        checked="checked" />
+                                                                    <label for="checkbox15"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Twitter Inc</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-info mr-2"></i>Lorem ipsum
+                                                                    dolor sit amet, consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">12 March</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox16" type="checkbox" />
+                                                                    <label for="checkbox16"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Jhon Smith</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html"><i
+                                                                        class="fa fa-circle text-rose mr-2"></i>Lorem ipsum
+                                                                    dolor sit amet, consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">15 March</td>
+                                                        </tr>
+
+                                                        <tr class="table-active">
+                                                            <td>
+                                                                <div class="icheck-material-primary my-0">
+                                                                    <input id="checkbox17" type="checkbox" />
+                                                                    <label for="checkbox17"> </label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="mail-rateing">
+                                                                <i class="fa fa-star"></i>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Google Inc</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
+                                                                    consectetuer
+                                                                    adipiscing elit</a>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </td>
+                                                            <td class="text-right">10 March</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <hr />
+
+                                            <div class="row">
+                                                <div class="col-7">Showing 1 - 25 of 300</div>
+                                                <div class="col-5">
+                                                    <div class="btn-group float-right">
+                                                        <button type="button" class="btn btn-light waves-effect">
+                                                            <i class="fa fa-chevron-left"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-light waves-effect">
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- card body -->
+                                    </div>
+                                    <!-- card -->
                                 </div>
-                                <div id="tabe-20" class="container tab-pane fade">
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                                        consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-                                        quisquam
-                                        est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia
-                                        non
-                                        numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                                        voluptatem.
-                                    </p>
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                                        consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-                                        quisquam
-                                        est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia
-                                        non
-                                        numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                                        voluptatem.
-                                    </p>
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                                        consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-                                        quisquam
-                                        est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia
-                                        non
-                                        numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                                        voluptatem.
-                                    </p>
-                                </div>
+                                <!-- end Col-9 -->
                             </div>
+                            <!-- End row -->
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- End row -->
+            <!--start overlay-->
+            <div class="overlay toggle-menu"></div>
+            <!--end overlay-->
         </div>
+        <!-- End container-fluid-->
     </div>
-    <script src="{{ url('assets/plugins/vertical-timeline/js/vertical-timeline.js', []) }}"></script>
 @endsection

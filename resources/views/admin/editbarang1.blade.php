@@ -167,8 +167,8 @@
                         </select>
                         {{-- <input type="text" class="form-control" value="{{$nama_lokasi[0]->nama_lokasi}}" disabled> --}}
 
-                        <label for="inputEmail4" class="form-label">Tahun Pembelian</label>
-                        <input type="text" name="th_pembuatan" class="form-control"
+                        <label for="inputEmail4" class="form-label">Tanggal Pembelian</label>
+                        <input type="text" name="tgl_beli" class="form-control"
                             value="{{ $data[0]->th_pembuatan }}">
                         <input id="link" type="text" name="link" class="form-control" value="" hidden>
                         {{-- <input type="text" name="kd_inventaris" class="form-control" value="{{$data[0]->kd_inventaris}}"> --}}
@@ -252,7 +252,14 @@
                                             @endphp
                                         <td>{{ $pj->nama_staff }}</td>
 
-                                        <td><button class="btn btn-info btn-sm" disabled>Proses</button></td>
+                                        <td>
+                                            @if ($datapinjam->status_sub_peminjaman == 0)
+                                            <button class="btn-warning" disabled>Proses</button>
+                                            @else
+                                            <button class="btn-succes" disabled>Done</button>
+                                            @endif
+
+                                        </td>
                                     </tr>
                                 @endforeach
 

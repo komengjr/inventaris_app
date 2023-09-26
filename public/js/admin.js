@@ -783,6 +783,25 @@ $(document).ready(function () {
 
         }
     });
+    $(document).on("click", "#buttonshownotiforder", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var kode = $(this).data("kode");
+        $.ajax({
+            url: '../divisi/datamutasi/showdataorder/',
+            type: "GET",
+            dataType: "html",
+        })
+        .done(function (data) {
+            $("#bodymodalmutasirecord").html(data);
+        })
+        .fail(function () {
+            $("#bodymodalmutasirecord").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+    });
 
     $(document).on("click", "#buttontambahmaintenance", function (e) {
         e.preventDefault();
@@ -907,6 +926,118 @@ $(document).ready(function () {
             })
             .fail(function () {
                 $("#showdatastaff").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    // Menu Lokasi
+    $(document).on("click", "#buttontambahnomorruangan", function (e) {
+        e.preventDefault();
+        var url = $(this).data("id");
+        $.ajax({
+            url: '../divisi/masterlokasi/tambah',
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdatalokasi").html(data);
+            })
+            .fail(function () {
+                $("#showdatalokasi").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#buttonlihatmasterlokasi", function (e) {
+        e.preventDefault();
+        var url = $(this).data("id");
+        $.ajax({
+            url: '../divisi/masterlokasi/lihatdata',
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdatalokasi").html(data);
+            })
+            .fail(function () {
+                $("#showdatalokasi").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#buttonsetupdataruangan", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: '../divisi/masterlokasi/datasetup/'+id,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdatalengkapi").html(data);
+            })
+            .fail(function () {
+                $("#showdatalengkapi").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#buttoninputdatalokasi", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var no = $(this).data("no");
+        $.ajax({
+            url: '../divisi/masterlokasi/datasetup/inputdatamaster/'+no+'/'+id,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenudatalokasibarang").html(data);
+            })
+            .fail(function () {
+                $("#showmenudatalokasibarang").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#buttonresetmasterbarangdatalokasi", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var no = $(this).data("no");
+        $.ajax({
+            url: '../divisi/masterlokasi/datasetup/resetdatamaster/'+no+'/'+id,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showmenudatalokasibarang").html(data);
+            })
+            .fail(function () {
+                $("#showmenudatalokasibarang").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
+
+    });
+    $(document).on("click", "#buttontablemasterlokasibarang", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var no = $(this).data("no");
+        $.ajax({
+            url: '../divisi/masterlokasi/datasetup/tablemasterlokasibarang/'+id,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#showdatalengkapi").html(data);
+            })
+            .fail(function () {
+                $("#showdatalengkapi").html(
                     '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                 );
             });

@@ -12,7 +12,8 @@
     <link rel="icon" href="{{ asset('icon.png', []) }}" type="image/x-icon">
     <link href="{{ asset('assets/plugins/select2/css/select2.min.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/inputtags/css/bootstrap-tagsinput.css', []) }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet"
+        type="text/css">
     <link href="{{ asset('assets/plugins/fancybox/css/jquery.fancybox.min.css', []) }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css', []) }}" rel="stylesheet" />
@@ -25,11 +26,12 @@
     <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/horizontal-menu.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/app-style.css', []) }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet"
-        type="text/css">
+    <link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}"
+        rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet"
         type="text/css">
-    <link rel="{{ asset('stylesheet" type="text/css" href="assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
+    <link
+        rel="{{ asset('stylesheet" type="text/css" href="assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/script.js/2.1.1/script.min.js"
         integrity="sha512-oM6Bv767uUJZcy+SqCTP2rkHtKlivWNQ5+PPhhDwkY8FtNj4bq1xvNCB9NB3WkBa1KiY7P5a7/yfSONl5TYSPQ=="
@@ -233,21 +235,14 @@
                     <!-- Level Two-->
                     <ul>
                         <li><a href="{{ asset('/', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Home</a></li>
-                        {{-- <li><a href="index.html"><i class="zmdi zmdi-dot-circle-alt"></i> eCommerce</a></li>
-                    <li><a href="dashboard-human-resources.html"><i class="zmdi zmdi-dot-circle-alt"></i> Human Resources</a></li>
-                    <li><a href="dashboard-digital-marketing.html"><i class="zmdi zmdi-dot-circle-alt"></i> Digital Marketing</a></li>
-                    <li><a href="dashboard-property-listing.html"><i class="zmdi zmdi-dot-circle-alt"></i> Property Listings</a></li>
-                    <li><a href="dashboard-service-support.html"><i class="zmdi zmdi-dot-circle-alt"></i> Services & Support</a></li>
-                    <li><a href="dashboard-logistics.html"><i class="zmdi zmdi-dot-circle-alt"></i> Logistics</a></li> --}}
+
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript:;">
-                        <i class="zmdi zmdi-layers"></i>
-                        <span class="title">Master Data</span>
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                        <span class="title">Menu</span>
                         <span class="arrow"></span>
-
                     </a>
                     <!-- Level Two-->
                     <ul>
@@ -264,9 +259,30 @@
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Stock Opname</a></li>
                             <li><a href="{{ asset('menu/formdepresiasi', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Aset</a></li>
-                            <li><a href="{{ asset('menu/masterbarang', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
-                                    Master Data</a></li>
-                            <li><a href="{{ asset('menu/masterstaff', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                        @elseif(auth::user()->akses == 'admin')
+
+                        @endif
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:;">
+                        <i class="zmdi zmdi-layers"></i>
+                        <span class="title">Master Data</span>
+                        <span class="arrow"></span>
+
+                    </a>
+                    <!-- Level Two-->
+                    <ul>
+                        @if (auth::user()->akses == 'sdm')
+                            <li><a href="{{ asset('menu/masterlokasi', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i>
+                                    Master Lokasi</a></li>
+                            <li><a href="{{ asset('menu/masterbarang', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i>
+                                    Master Barang</a></li>
+                            <li><a href="{{ asset('menu/masterstaff', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i>
                                     Master Staff</a></li>
                         @elseif(auth::user()->akses == 'keu')
                             <li><a href="{{ asset('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form

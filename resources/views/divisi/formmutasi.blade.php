@@ -8,7 +8,7 @@
 
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
-         <h6>Form Mutasi <span style="color: royalblue;"> Nomor tiket : {{$tiket}}</span> </h6>
+         <h6>Form Mutasi 22<span style="color: royalblue;"> Nomor tiket : {{$tiket}}</span> </h6>
          <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
          <i class="fa fa-close"></i>
          </button>

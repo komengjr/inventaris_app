@@ -48,7 +48,7 @@
                           <option value="">Pilih Jenis Inventaris</option>
                           @foreach ($kode as $kode)
 
-                          <option value="{{$kode->kd_inventaris}}">{{$kode->nama_barang}}</option>
+                          <option value="{{$kode->kd_inventaris}}">{{$kode->nama_barang}} ( {{$kode->kd_inventaris}} )</option>
 
                           @endforeach
                       </select>
@@ -66,11 +66,11 @@
                 <div class="col-md-4">
                     <label for="inputEmail4" class="form-label">Lokasi</label>
 
-                     <select class="form-control single-selectxx" name="kd_lokasi" required>
-                          <option value="">Pilih Lokasi</option>
-                          @foreach ($lokasi as $lokasi)
+                     <select class="form-control single-selectxx" name="no_ruangan" required>
+                          <option value="">Pilih Ruangan</option>
+                          @foreach ($ruangan as $ruangan)
 
-                          <option value="{{$lokasi->kd_lokasi}}">{{$lokasi->nama_lokasi}}</option>
+                          <option value="{{$ruangan->id_nomor_ruangan_cbaang}}">{{$ruangan->nomor_ruangan}} - {{$ruangan->nama_lokasi}}</option>
 
                           @endforeach
                       </select>

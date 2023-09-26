@@ -38,19 +38,19 @@
                         <div class="card-body">
                             <div class="row row-group align-items-center">
                                 <div class="col-12 col-lg-3 text-center p-3 border-white-2">
-                                    <div class="fleet-status fleet-chart" data-percent="{{(($jumlahdataselesai)*100)/$jumlahdata}}">
+                                    <div class="fleet-status fleet-chart" data-percent="">
                                         <span class="fleet-status-percent"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-4 text-center p-3  border-white-2">
-                                    <h4 class="mb-0 text-white">{{round((($jumlahdataselesai)*100)/$jumlahdata)}}%</h4>
+                                    <h4 class="mb-0 text-white"></h4>
                                     <p class="mb-0 small-font text-white">Persentase</p>
                                 </div>
                                 <div class="col-12 col-lg-5 p-3">
                                     <ul>
-                                        <li class="text-white">Total Peminjaman : {{$jumlahdata}}</li>
+                                        {{-- <li class="text-white">Total Peminjaman : {{$jumlahdata}}</li>
                                         <li class="text-white">Selesai : {{$jumlahdataselesai}}</li>
-                                        <li class="text-white">Belum Selesai : {{$jumlahdata - $jumlahdataselesai}}</li>
+                                        <li class="text-white">Belum Selesai : {{$jumlahdata - $jumlahdataselesai}}</li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -81,13 +81,14 @@
                             </div>
                             <div class="float-sm-right m-3 m-3">
                                 <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                    data-target="#tambahdatabaru" id="tombolbarupeminjaman"
-                                    data-url="{{ url('divisi/tambahdatapeminjaman', []) }}">
-                                    <i class="fa fa-plus mr-1"></i> Tambah Data
+                                    data-target="#tambahdatabaru" id="buttontambahnomorruangan" >
+                                    <i class="fa fa-plus mr-1"></i> Tambah Nomor Ruangan
                                 </button>
-                                <button type="button" class="btn-primary waves-effect waves-light">
-                                    <i class="fa fa-print mr-1"></i> Print
+                                <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
+                                    data-target="#tambahdatabaru" id="buttonlihatmasterlokasi" >
+                                    <i class="fa fa-plus mr-1"></i> Master Lokasi
                                 </button>
+
 
                             </div>
                             <div class="table-responsive" id="showdatamutasi">
@@ -95,12 +96,9 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Tiket Peminjaman</th>
-                                            <th>Nama Kegiatan</th>
-                                            <th>Tanggal Peminjaman</th>
-                                            <th>Penanggung Jawab</th>
-                                            {{-- <th>Tujuan Cabang</th> --}}
-                                            <th>Status Peminjaman</th>
+                                            <th>Nomor Ruangan</th>
+                                            <th>Nama Ruangan</th>
+
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -108,42 +106,16 @@
                                         @php
                                             $no = 1;
                                         @endphp
-                                        @foreach ($datapinjam as $datapinjam)
+                                        @foreach ($ruangan as $item)
                                             <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $datapinjam->tiket_peminjaman }}</td>
-                                                <td>{{ $datapinjam->nama_kegiatan }}</td>
-                                                <td>{{ $datapinjam->tgl_pinjam }}</td>
-                                                <td>{{ $datapinjam->nama_staff }}</td>
-                                                {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
+                                                <td>{{$no++}}</td>
+                                                <td>{{$item->nomor_ruangan}}</td>
+                                                <td>{{$item->nama_lokasi}}</td>
+
                                                 <td class="text-center">
-                                                    @if ($datapinjam->status_pinjam == 0)
-                                                    <span class="badge badge-danger p-2">Pending</span>
-                                                    @else
-                                                    <span class="badge badge-success p-2">Done</span>
-                                                    @endif
-
-                                                </td>
-                                                <td class="text-center">
-                                                    <button type="button" class="btn-info waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        @if ($datapinjam->status_pinjam == 0)
-                                                        <a href="javaScript:void();" class="dropdown-item" class="btn-warning" data-toggle="modal"
-                                                        data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                        data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-file-text"></i> Lengkapi Data</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#tambahdatabaru" id="editdatapeminjamaninventaris" data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
-                                                        @else
-                                                        <a href="javaScript:void();" class="dropdown-item" onclick="window.open('{{ url('divisi/verifikasi/print/peminjaman', ['id'=>$datapinjam->tiket_peminjaman]) }}', '', 'width=1200, height=700');"
-                                                        id=""><i class="fa fa-print"></i> Cetak / Print</a>
-                                                        @endif
-
-                                                      {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
-                                                    </div>
-
-
+                                                    <button class="btn-primary" data-toggle="modal" data-target="#buttontableruangan" id="buttonsetupdataruangan" data-id="{{$item->id_nomor_ruangan_cbaang}}"><i class="fa fa-cog"></i> setup</button>
+                                                    <button class="btn-info" data-toggle="modal" data-target="#buttontableruangan" id="buttontablemasterlokasibarang" data-id="{{$item->id_nomor_ruangan_cbaang}}"><i class="fa fa-eye"></i> master</button>
+                                                    {{-- <button class="btn-warning"><i class="fa fa-pencil"></i></button> --}}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -162,14 +134,14 @@
     <div class="modal fade" id="tambahdatabaru">
         <div class="modal-dialog modal-dialog-centered modal-lg" style="width: 100%;">
             <div class="modal-content">
-                <div id="showdatasdm">
+                <div id="showdatalokasi">
                     <div class="modal-body">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="lengkapipeminjaman">
+    <div class="modal fade" id="buttontableruangan">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div id="showdatalengkapi">

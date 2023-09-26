@@ -1,18 +1,19 @@
 <div class="modal-content" id="showdatabarang">
-    <div class="modal-header">
-        <h6>Form Peminjaman <span style="color: royalblue;"> Nomor tiket : </span>
-        </h6>
-        <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
-            <i class="fa fa-close"></i>
+    <div class="modal-header bg-success">
+        <p class="modal-title text-white">
+            Form Mutasi
+        </p>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <form id="signupForm" method="POST" action="{{ url('divisi/datamutasi/posttambahdata', []) }}">
+    <form id="signupForm" method="POST" action="{{ url('divisi/datamutasi/posttambahdata', []) }}" >
         @csrf
-        <div class="modal-body">
+        <div class="modal-body" >
             <div class="form-group row">
                 <label for="input-10" class="col-sm-2 col-form-label">Pilih Jenis Mutasi</label>
                 <div class="col-sm-10">
-                    <select name="jenis_mutasi" id="" class="form-control" required>
+                    <select name="jenis_mutasi" id="" class="form-control single-select" required>
                         <option value="">Pilih Jenis</option>
                         <option value="1">Penempatan</option>
                         <option value="2">Penarikan</option>
@@ -22,7 +23,7 @@
 
             </div>
             <div class="form-group row">
-                <label for="input-12" class="col-sm-2 col-form-label">Asal Lokasi Cabang</label>
+                <label for="input-12" class="col-sm-2 col-form-label">Asal Lokasi</label>
                 <div class="col-sm-4">
                     <select name="asal_cabang" id="" class="form-control single-select" required>
                         <option value="">Pilih Cabang</option>
@@ -31,7 +32,7 @@
                         @endforeach
                     </select>
                 </div>
-                <label for="input-13" class="col-sm-2 col-form-label">Tujuan Lokasi Cabang</label>
+                <label for="input-13" class="col-sm-2 col-form-label">Tujuan Lokasi</label>
                 <div class="col-sm-4">
                     <select name="tujuan_cabang" id="" class="form-control single-select" required>
                         <option value="">Pilih Cabang</option>
@@ -41,10 +42,7 @@
                     </select>
                 </div>
             </div>
-            <h4 class="form-header text-uppercase">
-                <i class="fa fa-cog"></i>
-                Setup
-            </h4>
+
             <div class="form-group row">
                 <label for="input-10" class="col-sm-2 col-form-label">Penanggung Jawab</label>
                 <div class="col-sm-10">
@@ -81,7 +79,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                <button type="submit" class="btn-success"><i class="fa fa-floppy-o"></i> Update</button>
+                <button type="submit" class="btn-success"><i class="fa fa-floppy-o"></i> Simpan</button>
             </div>
         </div>
         </form>
