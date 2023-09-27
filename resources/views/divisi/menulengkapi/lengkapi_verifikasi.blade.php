@@ -3,7 +3,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h3>
-                STOCK OPNAME BARANG INVENTARIS
+
                 {{-- <small> {{$cekdata[0]->kode_verif}}</small> --}}
             </h3>
         </section>
@@ -13,17 +13,18 @@
             <!-- title row -->
             <div class="row mt-3">
                 <div class="col-lg-6">
-                    <h4><i class="fa fa-globe"></i> Laboratorium Pramita</h4>
+                    <h4><img src="{{ asset('icon.png') }}" alt="" width="200"></h4>
+                    <p>nama cabang</p>
                 </div>
                 <div class="col-lg-6">
-                    <h5 class="float-sm-right">Date: 2/10/2014</h5>
+                    <h5 class="float-sm-right">Date:</h5>
                 </div>
             </div>
 
             <hr>
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
-                    From
+                    From Stock Opname Barang Inventaris
                     <address>
                         <strong>{{$cabang[0]->nama_cabang}}</strong><br>
                         {{$cabang[0]->alamat}}<br>
@@ -115,7 +116,14 @@
                                         </table>
 
                                     </td>
-                                    <td><button class="btn-warning" id="verifdatainventaris" data-url="{{ url('divisi/verifikasi/lokasi', ['tiket'=>$cekdata[0]->kode_verif,'id' => $lokasi->kd_lokasi ]) }}">Verif</button></td>
+                                    <td>
+                                        @if ($totalbarang == ($statusbarang+$statusbarang1+$statusbarang2))
+                                        <button class="btn-success" disabled>Verified</button>
+                                        @else
+                                        <button class="btn-warning" id="verifdatainventaris" data-url="{{ url('divisi/verifikasi/lokasi', ['tiket'=>$cekdata[0]->kode_verif,'id' => $lokasi->kd_lokasi ]) }}">Verif</button>
+                                        @endif
+
+                                    </td>
                                 </tr>
                                 @endif
                             @endforeach

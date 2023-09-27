@@ -1,4 +1,11 @@
-
+<div class="modal-header">
+    <span><button class="btn-info"><i class="fa fa-arrow-circle-o-left"></i></button>
+    </span>
+    <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+        <i class="fa fa-close"></i>
+    </button>
+</div>
+<div class="modal-body">
     <div class="card-body">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -129,3 +136,4 @@
         </section>
     </div>
 
+</div>
