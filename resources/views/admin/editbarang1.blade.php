@@ -106,11 +106,11 @@
                 <div class="row g-2">
                     <div class="col-md-4 text-center">
                         {{-- <input type="file" accept="image/*" onchange="loadFile(event)"> --}}
-                        @if (auth::user()->akses == 'it')
+                        @if (auth::user()->akses == 'sdm')
                             <label class="custom-file-upload form-control" id="upload-container"
                                 id="browseFile{{ $id }}">
                                 <input type="file" id="browseFile{{ $id }}" class="form-control" />
-                                <i class="fa fa-upload "> Upload Gambar</i>
+                                <i class="fa fa-upload "> Upload Gambar2</i>
                             </label>
                         @else
                         @endif
@@ -171,6 +171,7 @@
                         <input type="text" name="tgl_beli" class="form-control"
                             value="{{ $data[0]->th_pembuatan }}">
                         <input id="link" type="text" name="link" class="form-control" value="" hidden>
+                        <input id="urut" type="text" name="urut" class="form-control" value="{{ $id }}" hidden>
                         {{-- <input type="text" name="kd_inventaris" class="form-control" value="{{$data[0]->kd_inventaris}}"> --}}
 
                         <label for="inputPassword4" class="form-label">Nomor Serial</label>
@@ -293,7 +294,7 @@
     });
 </script>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
 
     var browseFile<?php echo $id; ?> = $('#browseFile<?php echo $id; ?>');
     var resumable<?php echo $id; ?> = new Resumable({
@@ -351,4 +352,4 @@
         // progress<?php echo $id; ?>.hide();
     }
 
-</script> --}}
+</script>

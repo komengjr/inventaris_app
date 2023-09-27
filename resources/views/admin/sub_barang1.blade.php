@@ -101,8 +101,8 @@
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
 
-        <button class="btn-success" id="tambahdatabarang" data-url="{{ route('tambahdatabarang', ['id' => $id]) }}"><i
-                class="fa fa-plus"> </i> Tambah Data Barang</button>
+        {{-- <button class="btn-success" id="tambahdatabarang" data-url="{{ route('tambahdatabarang', ['id' => $id]) }}"><i
+                class="fa fa-plus"> </i> Tambah Data Barang</button> --}}
         <span>
             <button type="button" class="btn-outline-primary"  onclick="submitForm()"><i
                     class="fa fa-print"> </i> Print Barcode</button>

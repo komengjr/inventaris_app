@@ -18,6 +18,12 @@ class DivisiController extends Controller
     }
     public function updatedatainventori(Request $request)
     {
+        if ($request->link != "") {
+            $gambar = 'public/databrg/sdm/'.$request->input('urut').'/'.$request->input('link');
+        } else {
+            $gambar = "";
+        }
+
         $nilai = $string = preg_replace("/[^0-9]/","",$request->harga_perolehan);
         DB::table('sub_tbl_inventory')
         ->where('id_inventaris',$request->input('kode_kode'))
@@ -30,7 +36,7 @@ class DivisiController extends Controller
                     'suplier' => $request->input('suplier'),
                     'type' => $request->input('type'),
                     'harga_perolehan' => $nilai,
-
+                    'gambar' => $gambar
                 ]);
         $data = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*')
@@ -500,6 +506,7 @@ class DivisiController extends Controller
                     'kd_jenis' => $value->kd_jenis,
                     'kd_cabang' => auth::user()->cabang,
                     'th_perolehan' => $value->th_perolehan,
+                    'tgl_beli' => $value->tgl_beli,
                     'merk' => $value->merk,
                     'type' => $value->type,
                     'no_seri' => $value->no_seri,

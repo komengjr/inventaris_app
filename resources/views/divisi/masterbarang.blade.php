@@ -91,9 +91,9 @@
                                         <i class="icon-options"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="javascript:void();">Action</a>
-                                        <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                        <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                                        {{-- <a class="dropdown-item" href="javascript:void();">Action</a>
+                                        <a class="dropdown-item" href="javascript:void();">Another action</a> --}}
+                                        <a class="dropdown-item" href="{{ url('download/inv_nama_cabang.xls', []) }}">Download Template</a>
                                         <div class="dropdown-divider"></div>
                                         {{-- <a class="dropdown-item" href="{{ url('divisi/masterbarang/token', []) }}">Create Nomor</a> --}}
                                     </div>

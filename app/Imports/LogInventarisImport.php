@@ -35,7 +35,7 @@ class LogInventarisImport implements ToModel, WithHeadingRow
             'tgl_mutasi'    => '',
             'tujuan_mutasi'     => '',
             'nilai_buku'    => '',
-            'tgl_beli'     => '',
+            'tgl_beli'     => $row['tgl_beli'],
             'ket_musnah'    => '',
             'kondisi_barang'     => $row['kondisi_barang'],
             'jam_input'    => '',
