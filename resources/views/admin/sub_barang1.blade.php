@@ -194,7 +194,7 @@
                                                 <button class="btn-dark" id="editdatabarang"
                                                     data-url="{{ route('editdatabarang1', ['id' => $data->id]) }}"><i
                                                         class="fa fa-eye"> </i> Detail</button><br><br>
-                                                        <button class="btn-info"><i class="fa fa-print"></i> Print</button>
+                                                        <button class="btn-info" onclick="window.open('printbarcodebyid/{{ $data->id}}', 'formpopup', 'width=600,height=800,resizeable,scrollbars'); this.target = 'formpopup';"><i class="fa fa-print"></i> Print</button>
                                                 {{-- <button type="button" class="btn btn-danger btn-sm" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> Hapus</i></button> --}}
                                                 <a class="tombolhapus{{ $data->id }} btn btn-danger"
                                                     style="display: none;" id="hapusdatabarang"
@@ -276,7 +276,7 @@
                                                 <button class="btn-dark" id="editdatabarang"
                                                     data-url="{{ route('editdatabarang1', ['id' => $data->id]) }}"><i
                                                         class="fa fa-eye"> </i> Detail</button><br><br>
-                                                        <button class="btn-info"><i class="fa fa-print"></i> Print</button>
+                                                        <button class="btn-info" onclick="window.open('printbarcodebyid/{{ $data->id}}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i class="fa fa-print"></i> Print</button>
                                                 {{-- <button type="button" class="btn btn-danger btn-sm" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> Hapus</i></button> --}}
                                                 <a class="tombolhapus{{ $data->id }} btn btn-danger"
                                                     style="display: none;" id="hapusdatabarang"

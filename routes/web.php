@@ -217,6 +217,7 @@ Route::get('template', function () {
 // Route::get('/pdf', 'PdfController@print')->name('print');
 Route::post('/pdf/{id}', 'PdfController@print');
 Route::post('/printbarcodelokasi/{id}', 'PdfController@printbarcodelokasi');
+Route::get('/printbarcodebyid/{id}', 'PdfController@printbarcodebyid');
 Route::get('/printpeserta', 'PdfController@printpeserta');
 
 Route::get('print/{id}', 'DataTableController@print');
