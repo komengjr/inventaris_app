@@ -208,6 +208,20 @@ class DivisiController extends Controller
         ->where('id_sub_peminjaman',$id)->first();
         return view('divisi.menulengkapi.editdatabarang',['data'=>$data]);
     }
+    public function balikdatapeminjaman($id)
+    {
+        $cekidpinjam = DB::table('tbl_sub_peminjaman')->where('id_sub_peminjaman',$id)->first();
+        DB::table('tbl_sub_peminjaman')
+        ->where('id_sub_peminjaman',$id)
+        ->update([
+                    'tgl_kembali_barang' => date('Y-m-d H:i:s'),
+                    'kondisi_kembali' => 'BAIK',
+                    'status_sub_peminjaman' => 1,
+                ]);
+        $notif = 4;
+        $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam',$cekidpinjam->id_pinjam)->get();
+        return view('divisi.menulengkapi.tablepeminjaman',['notif'=>$notif, 'databarang'=>$databarang]);
+    }
     public function posteditdatapeminjaman(Request $request)
     {
         if ($request->tgl_kembali_barang == "") {

@@ -44,11 +44,15 @@
 
 
                     <label for="inputEmail4" class="form-label">Jenis Inventaris</label>
-                     <select class="form-control single-selectxx" name="kd_inventaris" required>
+                     <select class="form-control single-selectxx" style="color: red;" name="kd_inventaris" required>
                           <option value="">Pilih Jenis Inventaris</option>
                           @foreach ($kode as $kode)
+                            @if (strlen($kode->kd_inventaris) <= 5)
+                            <option class="bg-info" value="{{$kode->kd_inventaris}}" disabled>{{$kode->nama_barang}} ( {{$kode->kd_inventaris}} )</option>
+                            @else
+                            <option value="{{$kode->kd_inventaris}}" >{{$kode->nama_barang}} ( {{$kode->kd_inventaris}} )</option>
+                            @endif
 
-                          <option value="{{$kode->kd_inventaris}}">{{$kode->nama_barang}} ( {{$kode->kd_inventaris}} )</option>
 
                           @endforeach
                       </select>
@@ -80,7 +84,7 @@
                     <select class="form-control single-selectxx" name="kategori" required>
                         <option value="">Pilih Kategori</option>
                         <option value="0">Inventaris</option>
-                        <option value="1">Aset</option>
+
 
                     </select>
                     <label for="inputPassword4" class="form-label">Merek</label>

@@ -78,6 +78,7 @@ Route::get('divisi/peminjaman/tablepeminjaman/{id}/{ids}',['as'=>'divisi/peminja
 Route::get('divisi/peminjaman/refreshtablepeminjaman/{id}',['as'=>'divisi/peminjaman/refreshtablepeminjaman','uses'=> 'DivisiController@refreshtablepeminjaman']);
 Route::get('divisi/peminjaman/editdatatablepeminjaman/{id}',['as'=>'divisi/peminjaman/editdatatablepeminjaman','uses'=> 'DivisiController@editdatatablepeminjaman']);
 Route::get('divisi/peminjaman/editdatapeminjaman/{id}',['as'=>'divisi/peminjaman/editdatapeminjaman','uses'=> 'DivisiController@editdatapeminjaman']);
+Route::get('divisi/peminjaman/balikdatapeminjaman/{id}',['as'=>'divisi/peminjaman/balikdatapeminjaman','uses'=> 'DivisiController@balikdatapeminjaman']);
 Route::get('divisi/peminjaman/hapusdetaildatapeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/hapusdetaildatapeminjaman','uses'=> 'DivisiController@hapusdetaildatapeminjaman']);
 Route::post('divisi/peminjaman/posteditdatapeminjaman',['as'=>'divisi/peminjaman/editdatapeminjaman','uses'=> 'DivisiController@posteditdatapeminjaman']);
 Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
