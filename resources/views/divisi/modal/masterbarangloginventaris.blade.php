@@ -58,7 +58,14 @@
                         <td data-label="Merek & Type">{{ $item->merk }} / {{ $item->type }}</td>
                         <td data-label="Tanggal Pembelian">{{ $item->tgl_beli }}</td>
                         <td data-label="Tahun Perolehan">{{ $item->th_perolehan }}</td>
-                        <td data-label="Harga Perolehan">{{ $item->harga_perolehan }}</td>
+                        <td data-label="Harga Perolehan">
+                            @if ($item->harga_perolehan == "")
+                            @currency('1')
+                            @else
+                            @currency($item->harga_perolehan)
+                            @endif
+                            {{-- {{$item->harga_perolehan}} --}}
+                        </td>
                         <td class="text-center">
                             <button class="btn-warning" id="buttoneditloginventaris"
                                 data-id="{{ $item->id_sub_tbl_inventory_log }}"><i class="fa fa-pencil"></i></button>
