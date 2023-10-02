@@ -452,7 +452,9 @@ $(document).ready(function () {
     $(document).on("click", "#showbarangmasterloginventory", function (e) {
         e.preventDefault();
         var url = "../divisi/masterbarang/dataloginventaris";
-
+        $("#showdatmasterbarang").html(
+            "<img src='../loading.gif'  style='display: block; margin: auto;'>"
+        );
         $.ajax({
             url: url,
             type: "GET",

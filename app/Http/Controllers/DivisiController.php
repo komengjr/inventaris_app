@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Imports\LogInventarisImport;
 use Maatwebsite\Excel\Facades\Excel;
+// use Exception;
 class DivisiController extends Controller
 {
     public function __construct()
@@ -467,14 +468,17 @@ class DivisiController extends Controller
     public function simpandetailbarang()
     {
         $ceknomor = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->first();
-        if ($ceknomor) {
-            Excel::import(new LogInventarisImport, request()->file('file'));
-            Session::flash('sukses','Upload Data Sukses');
-            return redirect()->back();
-        } else {
-            Session::flash('gagal','Nomor Cabang Belum di Isi');
-            return redirect()->back();
-        }
+
+            if ($ceknomor) {
+                Excel::import(new LogInventarisImport, request()->file('file'));
+                Session::flash('sukses','Upload Data Sukses');
+                return redirect()->back();
+            } else {
+                Session::flash('gagal','Nomor Cabang Belum di Isi');
+                return redirect()->back();
+            }
+
+
     }
     public function masterbarangeditloginventaris($id)
     {
@@ -532,7 +536,12 @@ class DivisiController extends Controller
         Session::flash('sukses','Upload Data Sukses');
         return redirect()->back();
     }
-
+    public function resetdataloginventory()
+    {
+        DB::table('sub_tbl_inventory_log')->where('kd_cabang', auth::user()->cabang)->delete();
+        Session::flash('sukses','Berhasil Reset Data');
+        return redirect()->back();
+    }
     public function tokenmasterbarang()
     {
         $no = 0 ;
