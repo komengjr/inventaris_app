@@ -22,6 +22,7 @@ class CreateTblMaintenanceTable extends Migration
             $table->string('tgl_akhir');
             $table->string('status_maintenance');
             $table->string('ket_maintenance');
+            $table->text('file_maintenance');
             $table->timestamps();
         });
     }

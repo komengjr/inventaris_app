@@ -333,6 +333,11 @@ class DivisiController extends Controller
 
 
     }
+    // Maintenance
+    public function tambahdatamaintenance()
+    {
+        return view('divisi.maintenance.tambahdata');
+    }
 
 
     public function tambahdatamutasi()
@@ -442,11 +447,6 @@ class DivisiController extends Controller
 
 
     }
-
-
-
-
-
 
     public function masterbarang()
     {

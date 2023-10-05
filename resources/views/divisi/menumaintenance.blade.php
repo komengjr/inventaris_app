@@ -86,8 +86,8 @@
                             </div>
                             <div class="float-sm-right m-3 m-3">
                                 <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                    data-target="#tambahdatabaru" id="tombolbarupeminjaman"
-                                    data-url="{{ url('divisi/tambahdatapeminjaman', []) }}">
+                                    data-target="#modalmaintenance" id="tombolbarumaintenance"
+                                    data-url="{{ url('divisi/tambahdatamaintenance', []) }}">
                                     <i class="fa fa-plus mr-1"></i> Tambah Data
                                 </button>
                                 <button type="button" class="btn-primary waves-effect waves-light">
@@ -103,6 +103,7 @@
                                             <th>Nama Barang</th>
                                             <th>Pelapor</th>
                                             <th>Tanggal Masuk</th>
+                                            <th>Document Upload</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -116,27 +117,28 @@
                                                 </td>
                                                 <td>{{ $item->nama_barang }}</td>
                                                 <td>{{ $item->pelapor }}</td>
-                                                <td>{{ $item->created_at }}</td>
+                                                <td>{{ $item->tgl_mulai }}</td>
+                                                <td>{{$item->file_maintenance}}</td>
                                                 <td>
                                                     <span class="badge-dot">
                                                         <i class="bg-danger"></i> pending
                                                     </span>
                                                 </td>
 
-                                                <td>
+                                                <td class="text-center">
                                                     <div class="dropdown">
-                                                        <a href="javascript:void();"
-                                                            class="dropdown-toggle dropdown-toggle-nocaret"
+                                                        <button
+                                                            class="dropdown-toggle dropdown-toggle-nocaret btn-info"
                                                             data-toggle="dropdown">
-                                                            <i class="icon-options"></i>
-                                                        </a>
+                                                            <i class="fa fa-eye"></i>
+                                                    </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a class="dropdown-item" href="javascript:void();"
                                                                 data-toggle="modal" data-target="#modalmaintenance"
                                                                 id="tomboltindakanmaintenance"
                                                                 data-url="{{ url('divisi/maintenance/tindakan', ['id' => $item->kd_maintenance]) }}"><i
                                                                     class="fa fa-cog"></i> Lakukan Tindakan</a>
-                                                            {{-- <a class="dropdown-item" href="javascript:void();">Another action</a> --}}
+                                                            <a class="dropdown-item" href="javascript:void();" data-toggle="modal" data-target="#modalmaintenance"><i class="fa fa-upload"></i> Upload Document</a>
 
                                                         </div>
                                                     </div>

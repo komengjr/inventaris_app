@@ -65,6 +65,7 @@ Route::get('menu/formmutasi','DivisiController@mutasidatainventaris');
 Route::get('divisi/maintenance/tindakan/{id}',['as'=>'divisi/maintenance/tindakan','uses'=> 'DivisiController@tindakanmaintenance']);
 Route::get('menu/formpemusnahan','DivisiController@menupemusnahan');
 Route::get('menu/verifdatainventaris','DivisiController@verifdatainventaris');
+//PEMINJAMAN
 Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
 Route::post('divisi/peminjaman/editdata','DivisiController@editdatapeminjamanpost');
 Route::get('divisi/tambahdatapeminjaman',['as'=>'master/tambahdatapeminjaman','uses'=> 'DivisiController@tambahdatapeminjaman']);
@@ -82,6 +83,8 @@ Route::get('divisi/peminjaman/balikdatapeminjaman/{id}',['as'=>'divisi/peminjama
 Route::get('divisi/peminjaman/hapusdetaildatapeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/hapusdetaildatapeminjaman','uses'=> 'DivisiController@hapusdetaildatapeminjaman']);
 Route::post('divisi/peminjaman/posteditdatapeminjaman',['as'=>'divisi/peminjaman/editdatapeminjaman','uses'=> 'DivisiController@posteditdatapeminjaman']);
 Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
+// MAINTENANCE
+Route::get('divisi/tambahdatamaintenance',['as'=>'divisi/tambahdatamaintenance','uses'=> 'DivisiController@tambahdatamaintenance']);
 
 Route::get('divisi/masterbarang/dataloginventaris',['as'=>'divisi/masterbarang/dataloginventaris','uses'=> 'DivisiController@masterbarangloginventaris']);
 Route::get('divisi/masterbarang/dataloginventaris/editdata/{id}',['as'=>'divisi/masterbarang/dataloginventaris/editdata','uses'=> 'DivisiController@masterbarangeditloginventaris']);
