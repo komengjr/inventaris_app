@@ -1,6 +1,7 @@
 <div class="modal-header bg-success">
     <p class="modal-title text-white">
-        <a href="{{ url('divisi/masterbarang/dataloginventaris/resetdataloginventory', []) }}" class="btn-danger btn-sm" target="_blank" rel="noopener noreferrer"><i class="fa fa-reset"></i> Reset</a>
+        <a href="{{ url('divisi/masterbarang/dataloginventaris/resetdataloginventory', []) }}" class="btn-danger btn-sm"><i class="fa fa-reset"></i> Reset</a>
+        <a href="{{ url('divisi/masterbarang/dataloginventaris/fixtanggaldataloginventory', []) }}" class="btn-dark btn-sm"><i class="fa fa-reset"></i> Fix Tanggal</a>
     </p>
     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -41,7 +42,7 @@
                             @if ($cekklasifikasi)
                                 {{ $item->kd_inventaris }} : {{ $cekklasifikasi->nama_barang }}
                             @else
-                                {{ $item->kd_inventaris }} : <p style="color: red;">Tidak Ditemukan</p>
+                                {{ $item->kd_inventaris }} : <span class="badge badge-danger m-3" >Kode Tidak Ditemukan</span>
                                 @php
                                     $erorjenis = $erorjenis + 1;
                                 @endphp
@@ -56,7 +57,7 @@
                             @if ($ceklokasi)
                                 {{ $item->kd_lokasi }} : {{ $ceklokasi->nama_lokasi }}
                             @else
-                                {{ $item->kd_lokasi }} : <p style="color: red;">Tidak Ditemukan</p>
+                                {{ $item->kd_lokasi }} : <span class="badge badge-danger m-3" >Kode Tidak Ditemukan</span>
                                 @php
                                     $erorlokasi = $erorlokasi + 1;
                                 @endphp

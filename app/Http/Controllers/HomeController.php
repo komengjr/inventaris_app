@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Storage;
-use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
-use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+// use Illuminate\Contracts\Foundation\Application;
+// use Illuminate\Contracts\View\Factory;
+// use Illuminate\Contracts\View\View;
+// use Illuminate\Support\Facades\Storage;
+// use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+// use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use DB;
-use File;
+// use File;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+// use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 class HomeController extends Controller
 {
@@ -61,29 +61,7 @@ class HomeController extends Controller
             $datakategori = DB::table('no_urut_barang')
             ->select('no_urut_barang.*')
             ->get();
-            foreach ($datakategori as $data) {
 
-
-            $dataklasifikasi1 = DB::table('tbl_inventory')
-            ->select('tbl_inventory.*')
-            ->where('no_urut_barang',$data->no_urut_barang)
-            ->get();
-
-                        foreach ($dataklasifikasi1 as $item1){
-
-                          $total = DB::table('sub_tbl_inventory')
-                          ->select('sub_tbl_inventory.*')
-                          ->where('kd_inventaris',$item1->kd_inventaris)
-                          ->where('kd_cabang', auth::user()->cabang)
-                          ->count();
-
-                                $jumlah = $jumlah + $total ;
-
-
-                        }
-
-
-            }
             if ($jumlah == 0) {
                 $jumlah = 1 ;
             }

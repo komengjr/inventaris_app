@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
+// use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -25,7 +25,7 @@ class DivisiController extends Controller
             $gambar = "";
         }
 
-        $nilai = $string = preg_replace("/[^0-9]/","",$request->harga_perolehan);
+        $nilai = preg_replace("/[^0-9]/","",$request->harga_perolehan);
         DB::table('sub_tbl_inventory')
         ->where('id_inventaris',$request->input('kode_kode'))
         ->update([
@@ -462,7 +462,7 @@ class DivisiController extends Controller
     }
     public function masterbarangloginventaris()
     {
-        $data = DB::table('sub_tbl_inventory_log')->where('kd_cabang',auth::user()->cabang)->get();
+        $data = DB::table('sub_tbl_inventory_log')->where('kd_cabang',Auth::user()->cabang)->get();
         return view('divisi.modal.masterbarangloginventaris',['data'=>$data]);
     }
     public function simpandetailbarang()
@@ -510,9 +510,13 @@ class DivisiController extends Controller
     public function downloaddataloginventory()
     {
         $no = 0;
-        $nomorcabang = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->first();
-        $total = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->count();
-        $datalog = DB::table('sub_tbl_inventory_log')->where('kd_cabang',auth::user()->cabang)->get();
+        $nomorcabang = DB::table('tbl_setting_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
+        $total = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->count();
+        $datalog = DB::table('sub_tbl_inventory_log')
+        ->orderBy('tgl_beli', 'ASC')
+        ->where('kd_cabang',Auth::user()->cabang)
+        ->get();
+        // dd($datalog);
         foreach ($datalog as $value) {
             DB::table('sub_tbl_inventory')->insert(
                 [
@@ -540,6 +544,22 @@ class DivisiController extends Controller
     {
         DB::table('sub_tbl_inventory_log')->where('kd_cabang', auth::user()->cabang)->delete();
         Session::flash('sukses','Berhasil Reset Data');
+        return redirect()->back();
+    }
+    public function fixtanggaldataloginventory()
+    {
+        $data = DB::table('sub_tbl_inventory_log')
+        ->where('kd_cabang', Auth::user()->cabang)
+        ->where('tgl_beli', NULL)
+        ->get();
+        foreach ($data as $value) {
+            DB::table('sub_tbl_inventory_log')
+            ->where('id_sub_tbl_inventory_log',$value->id_sub_tbl_inventory_log)
+            ->update([
+                    'tgl_beli' => $value->th_perolehan.'/01/01',
+                    ]);
+        }
+        Session::flash('sukses','Berhasil Fix Tanggal');
         return redirect()->back();
     }
     public function tokenmasterbarang()

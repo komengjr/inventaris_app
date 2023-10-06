@@ -92,6 +92,7 @@ Route::get('divisi/masterbarang/showedit/{id}',['as'=>'divisi/masterbarang/showe
 Route::post('divisi/masterbarang/postedit/{id}',['as'=>'divisi/masterbarang/postedit','uses'=> 'DivisiController@posteditdataloginventory']);
 Route::get('divisi/masterbarang/dataloginventaris/downloaddataloginventory',['as'=>'divisi/masterbarang/dataloginventaris/downloaddataloginventory','uses'=> 'DivisiController@downloaddataloginventory']);
 Route::get('divisi/masterbarang/dataloginventaris/resetdataloginventory',['as'=>'divisi/masterbarang/dataloginventaris/resetdataloginventory','uses'=> 'DivisiController@resetdataloginventory']);
+Route::get('divisi/masterbarang/dataloginventaris/fixtanggaldataloginventory',['as'=>'divisi/masterbarang/dataloginventaris/fixtanggaldataloginventory','uses'=> 'DivisiController@fixtanggaldataloginventory']);
 
 Route::get('divisi/dataaset/tabledataaset',['as'=>'divisi/dataaset/tabledataaset','uses'=> 'DivisiController@tabledataaset']);
 Route::get('divisi/dataaset/tambah',['as'=>'divisi/dataaset/tambah','uses'=> 'DivisiController@tambahdataaset']);
