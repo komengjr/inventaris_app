@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Pramita - {{ auth::user()->name }}</title>
+    <title>Pramita - {{ auth()->user()->name }}</title>
 
     <link rel="icon" href="{{ asset('icon.png', []) }}" type="image/x-icon">
     <link href="{{ asset('assets/plugins/select2/css/select2.min.css', []) }}" rel="stylesheet" />
@@ -183,8 +183,8 @@
                                         <div class="avatar"><img class="align-self-start mr-3"
                                                 src="{{ asset('icon.png', []) }}" alt="user avatar"></div>
                                         <div class="media-body">
-                                            <h6 class="mt-2 user-title">{{ auth::user()->name }}</h6>
-                                            <p class="user-subtitle">{{ auth::user()->email }}</p>
+                                            <h6 class="mt-2 user-title">{{ auth()->user()->name }}</h6>
+                                            <p class="user-subtitle">{{ auth()->user()->name }}</p>
                                         </div>
                                     </div>
                                 </a>
@@ -246,7 +246,7 @@
                     </a>
                     <!-- Level Two-->
                     <ul>
-                        @if (auth::user()->akses == 'sdm')
+                        @if (auth()->user()->akses == 'sdm')
                             <li><a href="{{ asset('menu/formpinjam', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
                                     Menu Peminjaman</a></li>
                             <li><a href="{{ asset('menu/formmaintenance', []) }}"><i
@@ -259,7 +259,7 @@
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Stock Opname</a></li>
                             <li><a href="{{ asset('menu/formdepresiasi', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Aset</a></li>
-                        @elseif(auth::user()->akses == 'admin')
+                        @elseif(auth()->user()->akses == 'admin')
 
                         @endif
                     </ul>
@@ -274,7 +274,7 @@
                     </a>
                     <!-- Level Two-->
                     <ul>
-                        @if (auth::user()->akses == 'sdm')
+                        @if (auth()->user()->akses == 'sdm')
                             <li><a href="{{ asset('menu/masterlokasi', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i>
                                     Master Lokasi</a></li>
@@ -284,10 +284,10 @@
                             <li><a href="{{ asset('menu/masterstaff', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i>
                                     Master Staff</a></li>
-                        @elseif(auth::user()->akses == 'keu')
+                        @elseif(auth()->user()->akses == 'keu')
                             <li><a href="{{ asset('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
                                     Keuangan</a></li>
-                        @elseif(auth::user()->akses == 'admin')
+                        @elseif(auth()->user()->akses == 'admin')
                             <li><a href="{{ asset('masteradmin', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Admin</a></li>
                             {{-- <li><a href="{{ asset('datamutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
                                     Mutasi</a></li>
@@ -430,14 +430,14 @@
     </div>
     <!--End wrapper-->
 
-    @if (auth::user()->akses == 'sdm')
+    @if (auth()->user()->akses == 'sdm')
         @php
             $settingno = DB::table('tbl_setting_cabang')
                 ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_setting_cabang.kd_cabang')
-                ->where('tbl_cabang.kd_cabang', auth::user()->cabang)
+                ->where('tbl_cabang.kd_cabang', auth()->user()->cabang)
                 ->get();
             $settingttd = DB::table('tbl_ttd')
-                ->where('kd_cabang', auth::user()->cabang)
+                ->where('kd_cabang', auth()->user()->cabang)
                 ->get();
         @endphp
         <div class="modal fade" id="settingmodal">

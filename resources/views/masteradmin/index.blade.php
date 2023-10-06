@@ -22,7 +22,7 @@
                     <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu">
-                    @if (auth::user()->akses == 'admin')
+                    @if (Auth::user()->akses == 'admin')
                         <a href="javaScript:void();" data-toggle="modal" data-target="#formdatamaster"
                             class="dropdown-item" id="buttondatacabang" data-url="{{ url('master/datacabang', []) }}"><i class="fa fa-file-text-o"></i> 1. Data Cabang</a>
                         <a href="javaScript:void();" data-toggle="modal" data-target="#formdatamaster"

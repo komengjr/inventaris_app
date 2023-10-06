@@ -46,12 +46,12 @@ Route::post('master/datainventaris/simpandetailbarang', 'MasterController@simpan
 Route::post('master/datainventaris/simpanupdateinventaris', 'MasterController@simpanupdateinventaris');
 Route::get('master/datainventaris/simpanupdateinventaris/{id}', 'MasterController@simpanupdateinventariscabang');
 // Master Admin Get Lokasi
-Route::get('master/datalokasi/{id}',['as'=>'master/datalokasi','uses'=> 'MasterController@datalokasi']);
+Route::get('master/datalokasi/{id}',['as'=>'master/datalokasiid','uses'=> 'MasterController@datalokasi']);
 // Master Admin Get Data Peminjaman
 Route::get('master/datapeminjaman/{id}',['as'=>'master/datapeminjaman','uses'=> 'MasterController@datapeminjaman']);
 // Master Admin Get Data Mutasi
 Route::get('master/datamutasi/{id}',['as'=>'master/datamutasi','uses'=> 'MasterController@datamutasi']);
-Route::get('master/datamutasi/tampilformmuitasi/{id}',['as'=>'tampilformmuitasi','uses'=> 'MasterController@tampilformmuitasi']);
+Route::get('master/datamutasi/tampilformmuitasi/{id}',['as'=>'master/datamutasi/tampilformmuitasi','uses'=> 'MasterController@tampilformmuitasi']);
 // Master Admin Get Data Pemusnahan
 Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 'MasterController@datapemusnahan']);
 
@@ -81,7 +81,7 @@ Route::get('divisi/peminjaman/editdatatablepeminjaman/{id}',['as'=>'divisi/pemin
 Route::get('divisi/peminjaman/editdatapeminjaman/{id}',['as'=>'divisi/peminjaman/editdatapeminjaman','uses'=> 'DivisiController@editdatapeminjaman']);
 Route::get('divisi/peminjaman/balikdatapeminjaman/{id}',['as'=>'divisi/peminjaman/balikdatapeminjaman','uses'=> 'DivisiController@balikdatapeminjaman']);
 Route::get('divisi/peminjaman/hapusdetaildatapeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/hapusdetaildatapeminjaman','uses'=> 'DivisiController@hapusdetaildatapeminjaman']);
-Route::post('divisi/peminjaman/posteditdatapeminjaman',['as'=>'divisi/peminjaman/editdatapeminjaman','uses'=> 'DivisiController@posteditdatapeminjaman']);
+Route::post('divisi/peminjaman/posteditdatapeminjaman',['as'=>'divisi/peminjaman/posteditdatapeminjaman','uses'=> 'DivisiController@posteditdatapeminjaman']);
 Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
 // MAINTENANCE
 Route::get('divisi/tambahdatamaintenance',['as'=>'divisi/tambahdatamaintenance','uses'=> 'DivisiController@tambahdatamaintenance']);
@@ -133,7 +133,7 @@ Route::post('admin/datainventaris/uploaddatabaranginventaris', 'DivisiController
 
 Route::get('divisi/datamutasi/datatable/{id}',['as'=>'divisi/datamutasi/datatable','uses'=> 'DivisiController@datatablemutasi']);
 Route::get('divisi/datamutasi/tambahdata',['as'=>'divisi/datamutasi/tambahdata','uses'=> 'DivisiController@ordertiketmutasi']);
-Route::get('divisi/datamutasi/caridata/{id}/{ids}',['as'=>'divisi/datamutasi/tambahdata','uses'=> 'DivisiController@caridatabarangmutasi']);
+Route::get('divisi/datamutasi/caridata/{id}/{ids}',['as'=>'divisi/datamutasi/caridata','uses'=> 'DivisiController@caridatabarangmutasi']);
 Route::get('divisi/tambahdatamutasi',['as'=>'master/tambahdatamutasi','uses'=> 'DivisiController@tambahdatamutasi']);
 Route::get('divisi/datamutasi/detaildatamutasi/{id}',['as'=>'divisi/datamutasi/detaildatamutasi','uses'=> 'DivisiController@detaildatamutasi']);
 Route::get('divisi/datamutasi/editdatamutasi/{id}',['as'=>'divisi/datamutasi/editdatamutasi','uses'=> 'DivisiController@editdetailbarangmutasi']);
@@ -206,18 +206,18 @@ Route::get('faq','DivisiController@faq');
 
 
 
-Route::get('formulir', function () {
-    return view('admin.formformulir');
-});
-Route::get('formulir1', function () {
-    return view('form.formformulir1');
-});
-Route::get('formulir2', function () {
-    return view('form.formformulir2');
-});
-Route::get('template', function () {
-    return view('index');
-});
+// Route::get('formulir', function () {
+//     return view('admin.formformulir');
+// });
+// Route::get('formulir1', function () {
+//     return view('form.formformulir1');
+// });
+// Route::get('formulir2', function () {
+//     return view('form.formformulir2');
+// });
+// Route::get('template', function () {
+//     return view('index');
+// });
 
 // Route::get('/pdf', 'PdfController@print')->name('print');
 Route::post('/pdf/{id}', 'PdfController@print');
@@ -244,7 +244,7 @@ Route::get('import', 'DataTableController@importData');
 Route::post('import', 'DataTableController@import');
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('base');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('lihatdatabarang/{id}',['as'=>'lihatdatabarang','uses'=> 'HomeController@lihatdatabarang']);
 Route::get('lihatdatabarang1/{id}',['as'=>'lihatdatabarang1','uses'=> 'HomeController@lihatdatabarang1']);
@@ -272,19 +272,6 @@ Route::post('file-upload/uploadgambarbarang', [FileUploadController::class, 'upl
 Route::get('view/{no}/{cb}/{kd}/{id}', 'DataController@showdata');
 
 
-
-
-
-
-
-
-
-
-
-
-Route::get('registerpasien', function () {
-    return view('form.formregispasien');
-});
 Route::get('viewregistrasi/{id}', 'DataTableController@viewdatapasien');
 Route::post('simpandataregsiter',['as'=>'simpandataregsiter','uses'=> 'DataController@simpandataregsiter']);
 Route::get('log-eror-inventaris', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
