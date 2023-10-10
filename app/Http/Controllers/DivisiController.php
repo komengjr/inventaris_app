@@ -1041,7 +1041,7 @@ class DivisiController extends Controller
         ->where('id_nomor_ruangan_cbaang','=',NULL)
         ->get();
         $lokasi = DB::table('tbl_lokasi')->get();
-        return view('divisi.lokasi.tablelokasibarang',['lokasi'=>$lokasi,'datainventaris'=>$datainventaris,'id'=>$id,'no'=>$cekruangan]);
+        return view('divisi.lokasi.tablelokasibarang',['lokasi'=>$lokasi,'datainventaris'=>$datainventaris,'id'=>$id,'no'=>$cekruangan,'nomor'=>$no]);
     }
     public function resetdatamasterlokasibarang($no,$id)
     {

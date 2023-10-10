@@ -30,9 +30,12 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $nomor = 1;
+            @endphp
             @foreach ($datainventaris as $item)
                 <tr>
-                    <td>1</td>
+                    <td>{{$nomor++}}</td>
                     <td>{{ $item->nama_barang }}</td>
                     <td>{{ $item->no_inventaris }}</td>
                     <td>{{ $item->merk }}</td>

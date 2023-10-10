@@ -3,7 +3,7 @@
         <div class="card-body" >
             <div class="media align-items-center">
                 <div class="media-body text-left">
-                    <h4 class="text-primary mb-0">{{$no->nomor_ruangan}}</h4>
+                    <h4 class="text-primary mb-0"></h4>
                     <span class="small-font">Nomor Ruangan</span>
                 </div>
                 <div class="w-circle-icon rounded bg-success" style="cursor: pointer;" data-toggle="modal"
@@ -30,16 +30,19 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                    $no = 1;
+                @endphp
             @foreach ($datainventaris as $item)
                 <tr>
-                    <td>1</td>
+                    <td>{{$no++}}</td>
                     <td>{{ $item->nama_barang }}</td>
                     <td>{{ $item->no_inventaris }}</td>
                     <td>{{ $item->merk }}</td>
                     <td>{{ $item->tgl_beli }}</td>
                     <td>{{ $item->th_perolehan }}</td>
                     <td>{{ $item->harga_perolehan }}</td>
-                    <td><button class="btn-warning" id="buttoninputdatalokasi" data-id="{{$item->id_inventaris}}" data-no="{{$id}}"><i class="fa fa-dot-circle-o"></i> Pilih</button></td>
+                    <td><button class="btn-warning" id="buttoninputdatalokasi" data-id="{{$item->id_inventaris}}" data-no="{{$nomor}}"><i class="fa fa-dot-circle-o"></i> Pilih</button></td>
                 </tr>
             @endforeach
         </tbody>

@@ -13,7 +13,7 @@
                 <div class="media align-items-center">
                     <div class="media-body text-left">
                         <h4 class="text-primary mb-0">{{$no->nomor_ruangan}}</h4>
-                        <span class="small-font">Nomor Ruangan</span>
+                        <span class="small-font">Nomor Ruangan1</span>
                     </div>
                     <div class="w-circle-icon rounded bg-warning" style="cursor: pointer;" data-toggle="modal"
                         data-target="#menusmasterbarang">
@@ -39,15 +39,18 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $no = 1;
+                @endphp
                 @foreach ($datainventaris as $item)
                     <tr>
-                        <td>1</td>
-                        <td>{{ $item->nama_barang }}</td>
-                        <td>{{ $item->no_inventaris }}</td>
-                        <td>{{ $item->merk }}</td>
-                        <td>{{ $item->tgl_beli }}</td>
-                        <td>{{ $item->th_perolehan }}</td>
-                        <td>{{ $item->harga_perolehan }}</td>
+                        <td data-label="Nomor">{{$no++}}</td>
+                        <td data-label="Nama Barang">{{ $item->nama_barang }}</td>
+                        <td data-label="Nomor Inventaris">{{ $item->no_inventaris }}</td>
+                        <td data-label="Merk">{{ $item->merk }}</td>
+                        <td data-label="Tanggal Beli">{{ $item->tgl_beli }}</td>
+                        <td data-label="Tahun Perolehan">{{ $item->th_perolehan }}</td>
+                        <td data-label="Harga Perolehan">{{ $item->harga_perolehan }}</td>
                         <td><button class="btn-warning" id="buttoninputdatalokasi" data-id="{{$item->id_inventaris}}" data-no="{{$id}}"><i class="fa fa-dot-circle-o"></i> Pilih</button></td>
                     </tr>
                 @endforeach
