@@ -112,14 +112,14 @@
                                         <td>Kode Klasifikasi</td>
                                         <td>Nomor Ruangan</td>
                                         <td>Lokasi</td>
-                                        <td>Merek / Type</td>
+                                        {{-- <td>Merek / Type</td>
                                         <td>Tanggal Pembelian</td>
                                         <td>Tahun Perolehan</th>
-                                        <td>Harga</td>
+                                        <td>Harga</td> --}}
                                         <td>action</td>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                {{-- <tbody>
                                     @php
                                         $no = 1;
                                     @endphp
@@ -152,7 +152,7 @@
                                                         class="fa fa-pencil"></i> edit</button></td>
                                         </tr>
                                     @endforeach
-                                </tbody>
+                                </tbody> --}}
                             </table>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
 
     </div>
     <script src="{{ url('assets/js/app-script.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>
+    {{-- <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script> --}}
     {{-- <script src="{{ url('assets/plugins/Chart.js/Chart.min.js', []) }}"></script> --}}
     {{-- <script src="{{ url('assets/js/dashboard-logistics.js', []) }}"></script> --}}
 
@@ -220,8 +220,8 @@
             </div>
         </div>
     </div>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
+    {{-- <script src="{{ url('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script> --}}
+    {{-- <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.bootstrap4.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/bootstrap-datatable/js/jszip.min.js', []) }}"></script>
@@ -229,8 +229,8 @@
     <script src="{{ url('assets/plugins/bootstrap-datatable/js/vfs_fonts.js', []) }}"></script>
     <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.html5.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.print.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.colVis.min.js', []) }}"></script>
-    <script>
+    <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.colVis.min.js', []) }}"></script> --}}
+    {{-- <script>
         $(document).ready(function() {
             //Default data table
             $('#default-datatablexx').DataTable();
@@ -244,6 +244,50 @@
             table.buttons().container()
                 .appendTo('#example_wrapper .col-md-6:eq(0)');
 
+        });
+    </script> --}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            // DataTable
+            var table = $('#example').DataTable({
+                // responsive: true
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('master.barang') }}",
+                columns: [{
+                        data: 'id',
+                        "width": "4%"
+                    },
+                    {
+                        data: 'nama_barang'
+                    },
+                    {
+                        data: 'no_inventaris',
+                        className: 'text-right'
+                    },
+                    {
+                        data: 'harga_perolehan',
+                        className: 'text-right'
+                    },
+                    {
+                        data: 'kd_inventaris',
+                        className: 'text-right'
+                    },
+                    {
+                        data: 'dataruangan',
+                        className: 'text-right'
+                    },
+                    {
+                        data: 'btn',
+                        className: 'text-center',
+                        "width": "4%"
+                    }
+                ]
+
+            });
+            // console.log(columns);
+            // new $.fn.dataTable.FixedHeader(table);
         });
     </script>
 @endsection

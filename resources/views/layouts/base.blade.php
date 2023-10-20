@@ -7,8 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title')</title>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"> --}}
+    {{-- <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ url('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
@@ -19,169 +19,14 @@
         type="text/css">
     <link href="{{ url('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet"
         type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"> --}}
     <style>
-        html,
-        body {
-            background-color: #fff;
-            color: #000000;
-            /* font-family: 'Raleway', sans-serif; */
-            font-weight: 100;
-            height: 100vh;
-            margin: 0;
-        }
 
-        .full-height {
-            height: 100vh;
-        }
-
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
-        }
-
-        .links>a {
-            color: #00aaff;
-            padding: 0 25px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
-        }
-
-        body {
-            padding-top: 70px;
-        }
-
-        .navbar {
-            background-color: #000000;
-        }
-
-        .footerx {
-            padding: 5px;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: rgb(255, 255, 255);
-            color: rgb(0, 0, 0);
-            text-align: center;
-            border: 2px solid #2c717f;
-        }
     </style>
     <style>
-        @media only screen and (max-width: 800px) {
 
-            td,
-            tr {
-                display: block;
-            }
-
-            /* Hide table headers (but not display: none;, for accessibility) */
-            thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-
-            tr {
-                border: 1px solid #000000;
-            }
-
-            tr+tr {
-                margin-top: 1.5em;
-            }
-
-            td {
-                /* make like a "row" */
-                border: 5px;
-                border-bottom: 1px solid #eee;
-                position: relative;
-                padding-left: 50%;
-                background-color: #bcc6c1;
-                text-align: left;
-            }
-
-            td:before {
-                content: attr(data-label);
-                display: inline-block;
-                font-family: 'Orbitron', sans-serif;
-                padding-left: 10px;
-                line-height: 2.5;
-                margin-left: -100%;
-                width: 100%;
-                white-space: nowrap;
-            }
-        }
-
-        .styled-table {
-            /* position: static; */
-            border-collapse: collapse;
-            margin: 0px 0;
-            font-size: 0.9em;
-
-            width: 100%;
-            /* min-width: 400px; */
-            box-shadow: 0 0 20px rgba(217, 211, 211, 0.15);
-
-        }
-
-        .styled-table thead tr {
-            background-color: #ff7300;
-            color: #ffffff;
-            text-align: left;
-        }
-
-        @media only screen and (min-width: 760px) {
-
-            .styled-table th,
-            .styled-table td {
-                padding: 12px 15px;
-            }
-        }
-
-        .styled-table tbody tr {
-            border-bottom: 1px solid #dddddd;
-        }
-
-        .styled-table tbody tr:nth-of-type(even) {
-            background-color: #f3f3f3;
-        }
-
-        .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #030303;
-        }
-
-        .styled-table tbody tr.active-row {
-            font-weight: bold;
-            color: #020202;
-        }
     </style>
-    @yield('style')
+    {{-- @yield('style') --}}
 </head>
 
 <body>

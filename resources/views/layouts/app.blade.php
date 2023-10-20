@@ -28,23 +28,13 @@
     <link href="{{ asset('assets/css/app-style.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
+    {{-- <link href="{{ asset('assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" /> --}}
     <script src="{{ asset('assets/js/jqueryapp.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.min.js') }}"></script>
     <style>
-        .footerx {
-            padding: 5px;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: rgb(255, 255, 255);
-            color: rgb(0, 0, 0);
-            text-align: center;
-            border: 2px solid #2c717f;
-        }
+
     </style>
-    <style>
+    {{-- <style>
         @media only screen and (max-width: 800px) {
 
             td,
@@ -131,7 +121,7 @@
             font-weight: bold;
             color: #020202;
         }
-    </style>
+    </style> --}}
 </head>
 
 <body>
@@ -301,12 +291,6 @@
                     <ul>
                         <li><a href="{{ asset('faq', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> FAQ</a>
                         </li>
-                        {{-- <li><a href="{{ asset('formulir', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form</a>
-                        </li>
-                        <li><a href="{{ asset('formulir1', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form 1</a>
-                        </li>
-                        <li><a href="{{ asset('formulir2', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form 2</a>
-                        </li> --}}
 
                     </ul>
                 </li>
@@ -376,7 +360,7 @@
         <!--end footer-->
 
         <!--start color switcher-->
-        <div class="right-sidebar">
+        {{-- <div class="right-sidebar">
 
             <div class="right-sidebar-content">
 
@@ -416,7 +400,7 @@
                 </ul>
 
             </div>
-        </div>
+        </div> --}}
         <!--end color switcher-->
 
     </div>
@@ -618,25 +602,7 @@
 
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            //Default data table
-            $('#default-datatable').DataTable();
-            $('#default-asd').DataTable();
-            $('#default-table1').DataTable();
-            $('#default-datatablesubbarang').DataTable();
 
-
-            var table = $('#example').DataTable({
-                lengthChange: false,
-                buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
-            });
-
-            table.buttons().container()
-                .appendTo('#example_wrapper .col-md-6:eq(0)');
-
-        });
-    </script>
 
 
 

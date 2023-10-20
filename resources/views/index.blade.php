@@ -15,7 +15,12 @@
         margin-left: 25px;
         margin-top: 5px;
     }
-
+    /* @media print {
+        @page {
+            size: 86mm 54mm;
+            margin: 0;
+        }
+    } */
 </style>
 <style>
     div.relative {

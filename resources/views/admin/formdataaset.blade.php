@@ -88,7 +88,7 @@
             <button type="button" class="btn-primary" id="showtableaset">
                 <i class="fa fa-chevron-circle-left"></i>
             </button>
-            @if (auth::user()->akses == 'keu')
+            @if (Auth::user()->akses == 'keu')
                 <button class="btn-success"  id="buttontambahdataaset"><i class="fa fa-plus"> </i> Data Asset</button>
                 <button class="btn-warning"  id="buttonpilihdataaset"><i class="fa fa-dot-circle-o"> </i> Pilih Asset</button>
             @endif
@@ -140,7 +140,7 @@
                                     </td>
                                     <td class="text-center">
                                         <button class="btn-dark" id="buttondetaildataaset" data-id="{{$item->id_inventaris}}"> <i class="fa fa-eye"></i></button>
-                                        @if (auth::user()->akses == 'keu')
+                                        @if (Auth::user()->akses == 'keu')
                                             <button class="btn-warning"><i class="fa fa-pencil" id="buttoneditdetailaset" data-id="{{$item->id_inventaris}}"></i></button>
                                         @endif
                                     </td>

@@ -6,8 +6,6 @@
 .row label{
     padding-top: 10px;
 }
-
-
 </style>
 
 <div class="modal-content" id="showdatabarang">
@@ -24,7 +22,12 @@
         <div class="row">
             <div class="col-6">
                 <label for="">Tujuan Peminjaman</label>
-                <input type="text" class="form-control" name="nama_kegiatan" required>
+                <select name="nama_kegiatan" id="" class="form-control single-select" required>
+                    <option value="">Pilih Cabang</option>
+                    <option value="MCU">MCU</option>
+                    <option value="EVENT">EVENT</option>
+                    <option value="Oprasional Pelayanan">Oprasional Pelayanan</option>
+                </select>
                 <input type="text" class="form-control" name="tiket_peminjaman" value="{{$tiket}}" hidden>
             </div>
             <div class="col-6">
