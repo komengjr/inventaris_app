@@ -52,7 +52,7 @@
 
     <div class="col-12 pt-3">
         <button type="button" class="btn-primary" style="float: right;" id="buttoneditdataloginventory"
-            data-url="{{ route('divisi/masterbarang/postedit', ['id' => $data->id_sub_tbl_inventory_log]) }}"><i
+            data-url="{{ route('divisi/masterbarang/postedit', ['id' => $data->id]) }}"><i
                 class="fa fa-save"></i> Simpan</button>
     </div>
 </form>

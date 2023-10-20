@@ -121,6 +121,7 @@ Route::get('divisi/dataaset/depresiasi/pilihdatadepresiasi/{id}',['as'=>'divisi/
 
 Route::get('menu/masterbarang','DivisiController@masterbarang');
 Route::get('menu/masterbarang/table','BigDataController@masterbarang')->name('master.barang');
+Route::get('divisi/masterbarang/dataloginventaris/table','BigDataController@masterbaranglog')->name('master.barang.upload.data');
 Route::get('menu/masterstaff','DivisiController@masterstaff');
 
 Route::get('divisi/masterstaff/tambah',['as'=>'divisi/masterstaff/tambah','uses'=> 'DivisiController@tambahdatastaffkaryawan']);

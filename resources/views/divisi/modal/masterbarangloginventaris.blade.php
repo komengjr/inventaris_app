@@ -1,3 +1,4 @@
+<link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
 <div class="modal-header bg-success">
     <p class="modal-title text-white">
         <a href="{{ url('divisi/masterbarang/dataloginventaris/resetdataloginventory', []) }}" class="btn-danger btn-sm"><i class="fa fa-reset"></i> Reset</a>
@@ -9,21 +10,22 @@
 </div>
 <div class="modal-body" id="showmenudataloginventaris">
     <div class="pb-2" style="font-size: 12px;">
-        <table class="styled-table" id="default-datatablelog">
+        <table class="styled-table" id="example1" style="width: 100%;">
             <thead style="font-size: 12px;">
-                <tr style="font-size: 12px;">
-                    <th style="width: 1px; height: 1px;;">No</th>
-                    <th>Nama Barang</th>
-                    <th>Kode Klasifikasi</th>
-                    <th>Kode Lokasi</th>
-                    <th>Merek / Type</th>
-                    <th>Tanggal Pembelian</th>
-                    <th>Tahun Perolehan</th>
-                    <th>Harga</th>
-                    <th>action</th>
+                <tr style="font-size: 10px;">
+                    <td>No</td>
+                    <td>Nama Barang</td>
+                    <td>Kode Klasifikasi</td>
+                    <td>Lokasi</td>
+                    <td>Merek</td>
+                    <td>Type</td>
+                    <td>Tanggal Pembelian</td>
+                    <td>Tahun Perolehan</td>
+                    <td>Harga</td>
+                    <td>action</td>
                 </tr>
             </thead>
-            <tbody>
+            {{-- <tbody>
                 @php
                     $no = 1;
                     $erorjenis = 0;
@@ -72,7 +74,7 @@
                             @else
                             @currency($item->harga_perolehan)
                             @endif
-                            {{-- {{$item->harga_perolehan}} --}}
+
                         </td>
                         <td class="text-center">
 
@@ -83,12 +85,12 @@
                         </td>
                     </tr>
                 @endforeach
-            </tbody>
+            </tbody> --}}
         </table>
     </div>
 </div>
 <div class="modal-footer" style="float: left;">
-@if ($data->isEmpty())
+{{-- @if ($data->isEmpty())
 @else
 
     @if ($erorjenis == 0 && $erorlokasi == 0)
@@ -99,13 +101,63 @@
 
     @endif
 
-@endif
-
+@endif --}}
+<script src="{{ asset('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
+<script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
 </div>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
-            //Default data table
+
             $('#default-datatablelog').DataTable();
 
+        });
+    </script> --}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#example1').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('master.barang.upload.data') }}",
+                columns: [{
+                        data: 'id',
+                        "width": "4%"
+                    },
+                    {
+                        data: 'nama_barang'
+                    },
+
+                    {
+                        data: 'kd_inventaris',
+                        className: 'text-right'
+                    },
+                    {
+                        data: 'kd_lokasi',
+                    },
+                    {
+                        data: 'merk',
+                    },
+                    {
+                        data: 'type',
+                    },
+                    {
+                        data: 'tgl_beli',
+                    },
+                    {
+                        data: 'th_perolehan',
+                    },
+                    {
+                        data: 'harga_perolehan',
+                        className: 'text-right'
+                    },
+                    {
+                        data: 'btn',
+                        className: 'text-center',
+                        "width": "4%"
+                    }
+                ]
+
+            });
+            // console.log(columns);
+            // new $.fn.dataTable.FixedHeader(table);
         });
     </script>

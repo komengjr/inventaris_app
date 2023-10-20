@@ -119,40 +119,7 @@
                                         <td>action</td>
                                     </tr>
                                 </thead>
-                                {{-- <tbody>
-                                    @php
-                                        $no = 1;
-                                    @endphp
-                                    @foreach ($data as $item)
-                                        <tr>
-                                            <td>
-                                                {{ $no++ }}
-                                            </td>
-                                            <td>{{ $item->nama_barang }}</td>
-                                            <td>{{ $item->no_inventaris }}</td>
-                                            <td>{{ $item->kd_inventaris }}</td>
-                                            @php
-                                                $ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$item->id_nomor_ruangan_cbaang)->first();
-                                            @endphp
-                                            @if ($ruangan)
-                                            <td>{{ $ruangan->nomor_ruangan  }}</td>
-                                            @else
-                                            <td><button class="btn-danger" disabled>undefinded</button></td>
-                                            @endif
 
-
-                                            <td>{{ $item->kd_lokasi }} : {{ $item->nama_lokasi }}</td>
-                                            <td>{{ $item->merk }} / {{ $item->type }}</td>
-                                            <td>{{ $item->tgl_beli }}</td>
-                                            <td>{{ $item->th_perolehan }}</td>
-                                            <td>@currency($item->harga_perolehan)</td>
-                                            <td><button class="btn-dark" data-toggle="modal" data-target="#editmasterbarang"
-                                                    id="editbarangmaster"
-                                                    data-url="{{ url('divisi/masterbarang/showedit', ['id' => $item->id_inventaris]) }}"><i
-                                                        class="fa fa-pencil"></i> edit</button></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody> --}}
                             </table>
                         </div>
                     </div>
@@ -162,7 +129,7 @@
         <!-- End container-fluid-->
 
     </div>
-    <script src="{{ url('assets/js/app-script.js', []) }}"></script>
+    {{-- <script src="{{ url('assets/js/app-script.js', []) }}"></script> --}}
     {{-- <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script> --}}
     {{-- <script src="{{ url('assets/plugins/Chart.js/Chart.min.js', []) }}"></script> --}}
     {{-- <script src="{{ url('assets/js/dashboard-logistics.js', []) }}"></script> --}}

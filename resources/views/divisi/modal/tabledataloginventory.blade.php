@@ -1,70 +1,70 @@
 <div class="pb-2" style="font-size: 12px;">
-    <table class="styled-table" id="default-datatablelog">
+    <table class="styled-table" id="example1" style="width: 100%;">
         <thead style="font-size: 12px;">
-            <tr style="font-size: 12px;">
-                <th style="width: 1px; height: 1px;;">No</th>
-
-                <th>Nama Barang</th>
-                <th>Kode Klasifikasi</th>
-                <th>Kode Lokasi</th>
-                <th>Merek / Type</th>
-                <th>Tanggal Pembelian</th>
-                <th>Tahun Perolehan</th>
-                <th>Harga</th>
-                <th>action</th>
+            <tr style="font-size: 10px;">
+                <td>No</td>
+                <td>Nama Barang</td>
+                <td>No Inventaris</td>
+                <td>Kode Klasifikasi</td>
+                {{-- <td>Nomor Ruangan</td> --}}
+                <td>Lokasi</td>
+                <td>Merek / Type</td>
+                <td>Tanggal Pembelian</td>
+                <td>Tahun Perolehan</td>
+                <td>Harga</td>
+                <td>action</td>
             </tr>
         </thead>
-        <tbody>
-            @php
-                $no = 1;
-            @endphp
-            @foreach ($data as $item)
-                <tr>
-                    <td data-label="No">{{ $no++ }} </td>
-                    <td data-label="Nama Barang">{{ $item->nama_barang }}</td>
-                    <td>
-                        @php
-                            $cekklasifikasi = DB::table('tbl_inventory')
-                                ->where('kd_inventaris', $item->kd_inventaris)
-                                ->first();
-                        @endphp
-                        @if ($cekklasifikasi)
-                            {{ $item->kd_inventaris }} : {{ $cekklasifikasi->nama_barang }}
-                        @else
-                            {{ $item->kd_inventaris }} : <p style="color: red;">Tidak Ditemukan</p>
-                        @endif
-                    </td>
-                    <td data-label="Kode Lokasi">
-                        @php
-                            $ceklokasi = DB::table('tbl_lokasi')
-                                ->where('kd_lokasi', $item->kd_lokasi)
-                                ->first();
-                        @endphp
-                        @if ($ceklokasi)
-                            {{ $item->kd_lokasi }} : {{ $ceklokasi->nama_lokasi }}
-                        @else
-                            {{ $item->kd_lokasi }} : <p style="color: red;">Tidak Ditemukan</p>
-                        @endif
-                    </td>
-                    <td data-label="Merek & Type">{{ $item->merk }} / {{ $item->type }}</td>
-                    <td data-label="Tanggal Pembelian">{{ $item->tgl_beli }}</td>
-                    <td data-label="Tahun Perolehan">{{ $item->th_perolehan }}</td>
-                    <td data-label="Harga Perolehan">{{ $item->harga_perolehan }}</td>
-                    <td class="text-center">
-                        <button class="btn-warning" id="buttoneditloginventaris"
-                            data-id="{{ $item->id_sub_tbl_inventory_log }}"><i class="fa fa-pencil"></i></button>
-                        <button class="btn-danger"><i class="fa fa-trash"></i></button>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
+
     </table>
 
 </div>
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
-        //Default data table
-        $('#default-datatablelog').DataTable();
+        $('#example1').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('master.barang.upload.data') }}",
+            columns: [{
+                    data: 'id',
+                    "width": "4%"
+                },
+                {
+                    data: 'nama_barang'
+                },
 
+                {
+                    data: 'kd_inventaris',
+                    className: 'text-right'
+                },
+                {
+                    data: 'kd_lokasi',
+                },
+                {
+                    data: 'merk',
+                },
+                {
+                    data: 'type',
+                },
+                {
+                    data: 'tgl_beli',
+                },
+                {
+                    data: 'th_perolehan',
+                },
+                {
+                    data: 'harga_perolehan',
+                    className: 'text-right'
+                },
+                {
+                    data: 'btn',
+                    className: 'text-center',
+                    "width": "4%"
+                }
+            ]
+
+        });
+        // console.log(columns);
+        // new $.fn.dataTable.FixedHeader(table);
     });
 </script>

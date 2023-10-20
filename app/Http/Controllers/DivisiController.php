@@ -482,7 +482,7 @@ class DivisiController extends Controller
     }
     public function masterbarangeditloginventaris($id)
     {
-        $data = DB::table('sub_tbl_inventory_log')->where('id_sub_tbl_inventory_log',$id)->first();
+        $data = DB::table('sub_tbl_inventory_log')->where('id',$id)->first();
         $klasifikasi = DB::table('tbl_inventory')->get();
         $lokasi = DB::table('tbl_lokasi')->get();
         return view('divisi.modal.editdataloginventaris',['data'=>$data,'klasifikasi'=>$klasifikasi,'lokasi'=>$lokasi]);
@@ -490,7 +490,7 @@ class DivisiController extends Controller
     public function posteditdataloginventory(Request $request , $id)
     {
         DB::table('sub_tbl_inventory_log')
-        ->where('id_sub_tbl_inventory_log',$id)
+        ->where('id',$id)
         ->update([
                     'nama_barang' => $request->nama_barang,
                     'kd_inventaris' => $request->kd_inventaris,
@@ -554,7 +554,7 @@ class DivisiController extends Controller
         ->get();
         foreach ($data as $value) {
             DB::table('sub_tbl_inventory_log')
-            ->where('id_sub_tbl_inventory_log',$value->id_sub_tbl_inventory_log)
+            ->where('id',$value->id)
             ->update([
                     'tgl_beli' => $value->th_perolehan.'/01/01',
                     ]);
