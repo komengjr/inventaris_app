@@ -29,7 +29,7 @@ class MaintenanceController extends Controller
     }
     public function pilihdatabarangmaintenance($id)
     {
-        $data = DB::table('sub_tbl_inventory')->where('iinventaris', 'like', '%' . $id . '%')->get();
+        $data = DB::table('sub_tbl_inventory')->where('id_inventaris',$id)->first();
         return view('divisi.maintenance.formmaintenance',['data'=>$data]);
     }
 }

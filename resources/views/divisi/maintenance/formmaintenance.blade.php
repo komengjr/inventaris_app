@@ -1,5 +1,16 @@
 <form  method="POST" action="{{ url('divisi/tambahdatamaintenance', []) }}" enctype="multipart/form-data" >
+    @csrf
     <div class="row">
+        <div class="col-6">
+            <label for="">Nama Barang</label>
+            <input type="text" class="form-control" name="nama_barang" value="{{$data->nama_barang}}" disabled>
+
+        </div>
+        <div class="col-6">
+            <label for="">No Inventaris</label>
+            <input type="text" class="form-control" name="no_inventaris" value="{{$data->no_inventaris}}" disabled>
+
+        </div>
         <div class="col-6">
             <label for="">Pelapor</label>
             <input type="text" class="form-control" name="pelapor" required>
@@ -29,8 +40,12 @@
             <textarea class="form-control" id="" cols="30" rows="10" name="deskripsi"></textarea>
         </div>
         <div class="col-12">
-            <button type="submit" class="btn-info"><i class="zmdi zmdi-save"></i></button>
+            {{-- <button type="submit" class="btn-info"><i class="zmdi zmdi-save"></i></button> --}}
         </div>
+    </div>
+    <div class="modal-footer">
+        {{-- <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button> --}}
+        <button type="submit" class="btn-success" id="" data-url=""><i class="fa fa-save" ></i> Simpan Data</button>
     </div>
 </form>
 <script type="text/javascript">
