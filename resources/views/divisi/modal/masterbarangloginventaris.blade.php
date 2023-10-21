@@ -1,12 +1,21 @@
-<link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet"
+    type="text/css">
 <div class="modal-header bg-success">
     <p class="modal-title text-white">
-        <a href="{{ url('divisi/masterbarang/dataloginventaris/resetdataloginventory', []) }}" class="btn-danger btn-sm"><i class="fa fa-reset"></i> Reset</a>
-        <a href="{{ url('divisi/masterbarang/dataloginventaris/fixtanggaldataloginventory', []) }}" class="btn-dark btn-sm"><i class="fa fa-reset"></i> Fix Tanggal</a>
+        <a href="{{ url('divisi/masterbarang/dataloginventaris/resetdataloginventory', []) }}"
+            class="btn-danger btn-sm"><i class="fa fa-reset"></i> Reset</a>
+        <a href="{{ url('divisi/masterbarang/dataloginventaris/fixtanggaldataloginventory', []) }}"
+            class="btn-dark btn-sm"><i class="fa fa-reset"></i> Fix Tanggal</a>
     </p>
-    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
+    <span>
+        <button class="btn-danger" id="button-cek-datalog-eror"><i class="zmdi zmdi-alert-circle-o"></i> Eror
+            Lokasi</button>
+        <button class="btn-danger" id="button-cek-datalog-erorklasifikasi"><i class="zmdi zmdi-alert-circle-o"></i> Eror
+            Klasifikasi</button>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </span>
 </div>
 <div class="modal-body" id="showmenudataloginventaris">
     <div class="pb-2" style="font-size: 12px;">
@@ -25,72 +34,12 @@
                     <td>action</td>
                 </tr>
             </thead>
-            {{-- <tbody>
-                @php
-                    $no = 1;
-                    $erorjenis = 0;
-                    $erorlokasi = 0;
-                @endphp
-                @foreach ($data as $item)
-                    <tr>
-                        <td data-label="No">{{ $no++ }} </td>
-                        <td data-label="Nama Barang">{{ $item->nama_barang }}</td>
-                        <td>
-                            @php
-                                $cekklasifikasi = DB::table('tbl_inventory')
-                                    ->where('kd_inventaris', $item->kd_inventaris)
-                                    ->first();
-                            @endphp
-                            @if ($cekklasifikasi)
-                                {{ $item->kd_inventaris }} : {{ $cekklasifikasi->nama_barang }}
-                            @else
-                                {{ $item->kd_inventaris }} : <span class="badge badge-danger m-3" >Kode Tidak Ditemukan</span>
-                                @php
-                                    $erorjenis = $erorjenis + 1;
-                                @endphp
-                            @endif
-                        </td>
-                        <td data-label="Kode Lokasi">
-                            @php
-                                $ceklokasi = DB::table('tbl_lokasi')
-                                    ->where('kd_lokasi', $item->kd_lokasi)
-                                    ->first();
-                            @endphp
-                            @if ($ceklokasi)
-                                {{ $item->kd_lokasi }} : {{ $ceklokasi->nama_lokasi }}
-                            @else
-                                {{ $item->kd_lokasi }} : <span class="badge badge-danger m-3" >Kode Tidak Ditemukan</span>
-                                @php
-                                    $erorlokasi = $erorlokasi + 1;
-                                @endphp
-                            @endif
-                        </td>
-                        <td data-label="Merek & Type">{{ $item->merk }} / {{ $item->type }}</td>
-                        <td data-label="Tanggal Pembelian">{{ $item->tgl_beli }}</td>
-                        <td data-label="Tahun Perolehan">{{ $item->th_perolehan }}</td>
-                        <td data-label="Harga Perolehan">
-                            @if ($item->harga_perolehan == "")
-                            @currency('1')
-                            @else
-                            @currency($item->harga_perolehan)
-                            @endif
 
-                        </td>
-                        <td class="text-center">
-
-                            <button class="btn-warning" id="buttoneditloginventaris"
-                                data-id="{{ $item->id_sub_tbl_inventory_log }}"><i class="fa fa-pencil"></i></button>
-                            <button class="btn-danger"><i class="fa fa-trash"></i></button>
-
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody> --}}
         </table>
     </div>
 </div>
-<div class="modal-footer" style="float: left;">
-{{-- @if ($data->isEmpty())
+<div class="modal-footer" style="text-align: left;">
+    {{-- @if ($data->isEmpty())
 @else
 
     @if ($erorjenis == 0 && $erorlokasi == 0)
@@ -102,62 +51,58 @@
     @endif
 
 @endif --}}
+    <a href="{{ url('divisi/masterbarang/dataloginventaris/downloaddataloginventory', []) }}" class="btn-dark btn-sm"><i
+            class="fa fa-download"></i> Download Data</a>
+
+</div>
 <script src="{{ asset('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
-</div>
-    {{-- <script>
-        $(document).ready(function() {
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#example1').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('master.barang.upload.data') }}",
+            columns: [{
+                    data: 'id',
+                    "width": "4%"
+                },
+                {
+                    data: 'nama_barang'
+                },
 
-            $('#default-datatablelog').DataTable();
+                {
+                    data: 'kd_inventaris',
+
+                },
+                {
+                    data: 'kd_lokasi',
+                },
+                {
+                    data: 'merk',
+                },
+                {
+                    data: 'type',
+                },
+                {
+                    data: 'tgl_beli',
+                },
+                {
+                    data: 'th_perolehan',
+                },
+                {
+                    data: 'harga_perolehan',
+                    className: 'text-right'
+                },
+                {
+                    data: 'btn',
+                    className: 'text-center',
+                    "width": "4%"
+                }
+            ]
 
         });
-    </script> --}}
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#example1').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('master.barang.upload.data') }}",
-                columns: [{
-                        data: 'id',
-                        "width": "4%"
-                    },
-                    {
-                        data: 'nama_barang'
-                    },
-
-                    {
-                        data: 'kd_inventaris',
-                        className: 'text-right'
-                    },
-                    {
-                        data: 'kd_lokasi',
-                    },
-                    {
-                        data: 'merk',
-                    },
-                    {
-                        data: 'type',
-                    },
-                    {
-                        data: 'tgl_beli',
-                    },
-                    {
-                        data: 'th_perolehan',
-                    },
-                    {
-                        data: 'harga_perolehan',
-                        className: 'text-right'
-                    },
-                    {
-                        data: 'btn',
-                        className: 'text-center',
-                        "width": "4%"
-                    }
-                ]
-
-            });
-            // console.log(columns);
-            // new $.fn.dataTable.FixedHeader(table);
-        });
-    </script>
+        // console.log(columns);
+        // new $.fn.dataTable.FixedHeader(table);
+    });
+</script>

@@ -123,7 +123,7 @@
 
 <body>
 
-    <div id="wrapper" style="font-family: 'Russo One', sans-serif;">
+    <div id="wrapper" style="font-family:'Calibri', sans-serif;">
 
         <!--Start header-->
         <header class="topbar-nav">

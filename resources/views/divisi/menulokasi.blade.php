@@ -187,4 +187,11 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+
+            $('#default-datatable').DataTable();
+
+        });
+    </script>
 @endsection

@@ -481,6 +481,46 @@ $(document).on("click", "#showbarangmasterloginventory", function (e) {
             );
         });
 });
+$(document).on("click", "#button-cek-datalog-eror", function (e) {
+    e.preventDefault();
+    var url = "../divisi/masterbarang/dataloginventaris/cekeror";
+    $("#showmenudataloginventaris").html(
+        "<img src='../anim.gif'  style='display: block; margin: auto;'>"
+    );
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showmenudataloginventaris").html(data);
+        })
+        .fail(function () {
+            $("#showmenudataloginventaris").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
+$(document).on("click", "#button-cek-datalog-erorklasifikasi", function (e) {
+    e.preventDefault();
+    var url = "../divisi/masterbarang/dataloginventaris/cekerorklasifikasi";
+    $("#showmenudataloginventaris").html(
+        "<img src='../anim.gif'  style='display: block; margin: auto;'>"
+    );
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showmenudataloginventaris").html(data);
+        })
+        .fail(function () {
+            $("#showmenudataloginventaris").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 $(document).on("click", "#buttoneditloginventaris", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
@@ -529,6 +569,7 @@ $(document).on("click", "#buttoneditdataloginventory", function (e) {
             );
         });
 });
+
 
 $(document).on("click", "#buttontambahdataaset", function (e) {
     e.preventDefault();
@@ -1060,7 +1101,7 @@ $(document).on("click", "#buttonresetmasterbarangdatalokasi", function (e) {
 $(document).on("click", "#buttontablemasterlokasibarang", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
-    var no = $(this).data("no");
+    // var no = $(this).data("no");
     $.ajax({
         url: '../divisi/masterlokasi/datasetup/tablemasterlokasibarang/'+id,
         type: "GET",
@@ -1071,6 +1112,25 @@ $(document).on("click", "#buttontablemasterlokasibarang", function (e) {
         })
         .fail(function () {
             $("#showdatalengkapi").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
+$(document).on("click", "#button-pilih-barang-maintenance", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    // var no = $(this).data("no");
+    $.ajax({
+        url: '../divisi/maintenance/pilihdatabarang/'+id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menu-daftar-inevntaris").html(data);
+        })
+        .fail(function () {
+            $("#menu-daftar-inevntaris").html(
                 '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
             );
         });

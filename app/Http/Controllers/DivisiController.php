@@ -450,20 +450,22 @@ class DivisiController extends Controller
 
     public function masterbarang()
     {
-        $datakategori = DB::table('no_urut_barang')->get();
         $inventory_log = DB::table('sub_tbl_inventory_log')->where('kd_cabang',auth::user()->cabang)->count();
         $inventory = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->count();
-        $data = DB::table('sub_tbl_inventory')
-        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
-        ->orderBy('sub_tbl_inventory.no', 'asc')
-        ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->get();
-        // dd($data);
-        return view('divisi.masterbarang',[ 'datakategori' => $datakategori, 'data'=>$data, 'inventory_log'=>$inventory_log, 'inventory'=>$inventory]);
+
+        return view('divisi.masterbarang',[ 'inventory_log'=>$inventory_log, 'inventory'=>$inventory]);
     }
     public function masterbarangloginventaris()
     {
-        $data = DB::table('sub_tbl_inventory_log')->where('kd_cabang',Auth::user()->cabang)->get();
-        return view('divisi.modal.masterbarangloginventaris',['data'=>$data]);
+        return view('divisi.modal.masterbarangloginventaris');
+    }
+    public function cekerorloginventaris()
+    {
+        return view('divisi.modal.tableerorloginventory');
+    }
+    public function cekerorklasifikasiloginventaris()
+    {
+        return view('divisi.modal.tableerorklasifikasiloginventory');
     }
     public function simpandetailbarang()
     {
@@ -535,7 +537,7 @@ class DivisiController extends Controller
                     'suplier' => $value->suplier,
                     'harga_perolehan' => $value->harga_perolehan,
             ]);
-            DB::table('sub_tbl_inventory_log')->where('id_sub_tbl_inventory_log', $value->id_sub_tbl_inventory_log)->delete();
+            DB::table('sub_tbl_inventory_log')->where('id', $value->id)->delete();
         }
         Session::flash('sukses','Upload Data Sukses');
         return redirect()->back();

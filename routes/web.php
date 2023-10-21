@@ -84,9 +84,14 @@ Route::get('divisi/peminjaman/hapusdetaildatapeminjaman/{id}/{ids}',['as'=>'divi
 Route::post('divisi/peminjaman/posteditdatapeminjaman',['as'=>'divisi/peminjaman/posteditdatapeminjaman','uses'=> 'DivisiController@posteditdatapeminjaman']);
 Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
 // MAINTENANCE
-Route::get('divisi/tambahdatamaintenance',['as'=>'divisi/tambahdatamaintenance','uses'=> 'DivisiController@tambahdatamaintenance']);
+Route::get('divisi/tambahdatamaintenance',['as'=>'divisi/tambahdatamaintenance','uses'=> 'MaintenanceController@tambahdatamaintenance']);
+Route::post('divisi/tambahdatamaintenance','MaintenanceController@posttambahdatamaintenance');
+Route::get('divisi/maintenance/caridatabarang/{id}','MaintenanceController@caridatabarangmaintenance');
+Route::get('divisi/maintenance/pilihdatabarang/{id}','MaintenanceController@pilihdatabarangmaintenance');
 
 Route::get('divisi/masterbarang/dataloginventaris',['as'=>'divisi/masterbarang/dataloginventaris','uses'=> 'DivisiController@masterbarangloginventaris']);
+Route::get('divisi/masterbarang/dataloginventaris/cekeror',['as'=>'divisi/masterbarang/dataloginventaris/cekeror','uses'=> 'DivisiController@cekerorloginventaris']);
+Route::get('divisi/masterbarang/dataloginventaris/cekerorklasifikasi',['as'=>'divisi/masterbarang/dataloginventaris/cekerorklasifikasi','uses'=> 'DivisiController@cekerorklasifikasiloginventaris']);
 Route::get('divisi/masterbarang/dataloginventaris/editdata/{id}',['as'=>'divisi/masterbarang/dataloginventaris/editdata','uses'=> 'DivisiController@masterbarangeditloginventaris']);
 Route::get('divisi/masterbarang/showedit/{id}',['as'=>'divisi/masterbarang/showedit','uses'=> 'DivisiController@masterbarangshowedit']);
 Route::post('divisi/masterbarang/postedit/{id}',['as'=>'divisi/masterbarang/postedit','uses'=> 'DivisiController@posteditdataloginventory']);
@@ -122,6 +127,8 @@ Route::get('divisi/dataaset/depresiasi/pilihdatadepresiasi/{id}',['as'=>'divisi/
 Route::get('menu/masterbarang','DivisiController@masterbarang');
 Route::get('menu/masterbarang/table','BigDataController@masterbarang')->name('master.barang');
 Route::get('divisi/masterbarang/dataloginventaris/table','BigDataController@masterbaranglog')->name('master.barang.upload.data');
+Route::get('divisi/masterbarang/dataloginventaris/erordata','BigDataController@erorbaranglog')->name('master.barang.eror.data');
+Route::get('divisi/masterbarang/dataloginventaris/erorklasifikasi','BigDataController@erorklasifikasi')->name('master.barang.erorklasifikasi.data');
 Route::get('menu/masterstaff','DivisiController@masterstaff');
 
 Route::get('divisi/masterstaff/tambah',['as'=>'divisi/masterstaff/tambah','uses'=> 'DivisiController@tambahdatastaffkaryawan']);
@@ -269,6 +276,7 @@ Route::get('file-upload', [FileUploadController::class, 'index'])->name('files.i
 Route::post('file-upload/upload-large-files/{id}', [FileUploadController::class, 'uploadLargeFiles'])->name('files.upload.large');
 Route::post('file-upload/upload-large-files', [FileUploadController::class, 'uploadLargeFiles1'])->name('files.upload.large1');
 Route::post('file-upload/uploadgambarbarang', [FileUploadController::class, 'uploadgambarbarang'])->name('file-upload.uploadgambarbarang');
+Route::post('file-upload/uploaddatamaintenance', [FileUploadController::class, 'uploaddatamaintenancebarang'])->name('file-upload.uploaddatamaintenance');
 
 
 

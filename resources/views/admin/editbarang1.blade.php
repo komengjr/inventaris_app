@@ -106,7 +106,7 @@
                 <div class="row g-2">
                     <div class="col-md-4 text-center">
                         {{-- <input type="file" accept="image/*" onchange="loadFile(event)"> --}}
-                        @if (auth::user()->akses == 'sdm')
+                        @if (Auth::user()->akses == 'sdm')
                             <label class="custom-file-upload form-control" id="upload-container"
                                 id="browseFile{{ $id }}">
                                 <input type="file" id="browseFile{{ $id }}" class="form-control" />

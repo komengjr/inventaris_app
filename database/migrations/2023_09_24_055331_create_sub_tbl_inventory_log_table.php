@@ -14,7 +14,7 @@ class CreateSubTblInventoryLogTable extends Migration
     public function up()
     {
         Schema::create('sub_tbl_inventory_log', function (Blueprint $table) {
-            $table->id('id_sub_tbl_inventory_log');
+            $table->id('id');
             $table->string('kd_inventaris')->index();
             $table->string('kd_lokasi')->index();
             $table->string('kd_jenis')->nullable();

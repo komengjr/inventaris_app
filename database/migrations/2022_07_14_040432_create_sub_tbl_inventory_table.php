@@ -33,7 +33,7 @@ class CreateSubTblInventoryTable extends Migration
             $table->string('tgl_mutasi')->nullable();
             $table->string('tujuan_mutasi')->nullable();
             $table->string('nilai_buku')->nullable();
-            $table->string('tgl_musnah')->nullable();
+            $table->string('tgl_mutasi')->nullable();
             $table->string('ket_musnah')->nullable();
             $table->string('kondisi_barang')->nullable();
             $table->string('jam_input')->nullable();

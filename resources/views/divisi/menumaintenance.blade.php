@@ -90,13 +90,13 @@
                                     data-url="{{ url('divisi/tambahdatamaintenance', []) }}">
                                     <i class="fa fa-plus mr-1"></i> Tambah Data
                                 </button>
-                                <button type="button" class="btn-primary waves-effect waves-light">
+                                {{-- <button type="button" class="btn-primary waves-effect waves-light">
                                     <i class="fa fa-print mr-1"></i> Print
-                                </button>
+                                </button> --}}
 
                             </div>
                             <div class="table-responsive pb-5">
-                                <table class="table styled-table align-items-center table-flush pb-2" id="default-table1">
+                                <table class="table styled-table align-items-center table-flush pb-2" id="default-datatable">
                                     <thead>
                                         <tr>
                                             <th>Photo</th>
@@ -189,14 +189,6 @@
             });
 
 
-
-
-
-
-
-
-
-
             // chart 6
 
             var ctx = document.getElementById("timeChart").getContext('2d');
@@ -281,6 +273,13 @@
             });
 
 
+
+        });
+    </script>
+      <script>
+        $(document).ready(function() {
+
+            $('#default-datatable').DataTable();
 
         });
     </script>
