@@ -128,11 +128,7 @@
             </div>
         </div> --}}
     </div>
-    @php
-        $hari_ini = date('2023-10-01');
-        $tgl_pertama = date('Y-m-01', strtotime($hari_ini));
-        $tgl_terakhir = date('Y-m-t', strtotime($hari_ini));
-    @endphp
+
     <div class="row pt-2 pb-2">
         <div class="col-sm-9">
             <h4 class="page-title">Klasifikasi</h4>

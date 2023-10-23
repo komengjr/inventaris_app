@@ -511,7 +511,17 @@
     <script src="{{ asset('assets/plugins/select2/js/select2.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/inputtags/js/bootstrap-tagsinput.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js', []) }}"></script>
-    <script>
+    <script src="{{ asset('js/scriptx.js', []) }}"></script>
+    <script src="{{ asset('js/admin.js', []) }}"></script>
+    <script src="{{ asset('js/master.js', []) }}"></script>
+
+    <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.multi-select.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.quicksearch.js', []) }}"></script>
+    <script src="{{ asset('https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js', []) }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js', []) }}"></script>
+    {{-- <script>
         $('#default-datepicker').datepicker({
             todayHighlight: true
         });
@@ -525,26 +535,14 @@
         });
 
         $('#dateragne-picker .input-daterange').datepicker({});
-    </script>
-    <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.multi-select.js', []) }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.quicksearch.js', []) }}"></script>
-    <script src="{{ asset('https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js', []) }}"></script>
-    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
-    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js', []) }}"></script>
-    <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js', []) }}"></script>
+    </script> --}}
 
-    <script src="{{ asset('js/scriptx.js', []) }}"></script>
-    <script src="{{ asset('js/admin.js', []) }}"></script>
-    <script src="{{ asset('js/master.js', []) }}"></script>
     <script>
         $(document).ready(function() {
             $('.single-select').select2();
             $('.single-selectkode').select2();
             $('.single-selectlokasi').select2();
             $('.single-selectlokasi1').select2();
-
-
-
         });
     </script>
 
