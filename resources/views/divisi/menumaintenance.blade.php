@@ -96,13 +96,16 @@
 
                             </div>
                             <div class="table-responsive pb-5">
-                                <table class="table styled-table align-items-center table-flush pb-2" id="default-datatable">
+                                <table class="table styled-table align-items-center table-flush pb-2"
+                                    id="default-datatable">
                                     <thead>
                                         <tr>
                                             <th>Photo</th>
+                                            <th>Tiket Maintenance</th>
                                             <th>Nama Barang</th>
                                             <th>Pelapor</th>
-                                            <th>Tanggal Masuk</th>
+                                            <th>Tanggal Masuk Laporan</th>
+                                            <th>Tanggal Selesai Laporan</th>
                                             <th>Document Upload</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -115,31 +118,61 @@
                                                     <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
                                                         class="product-img" />
                                                 </td>
+                                                <td>{{ $item->kd_maintenance }}</td>
                                                 <td>{{ $item->nama_barang }}</td>
                                                 <td>{{ $item->pelapor }}</td>
                                                 <td>{{ $item->tgl_mulai }}</td>
-                                                <td>{{$item->file_maintenance}}</td>
+                                                <td>{{ $item->tgl_akhir }}</td>
+                                                <td class="text-center">
+                                                    @if ($item->file_maintenance == '')
+                                                        <span class="badge badge-danger shadow-danger m-1">Belum Ada
+                                                            File</span>
+                                                    @else
+                                                        <button class="btn-info" data-toggle="modal"
+                                                            data-target="#modalmaintenance"
+                                                            id="button-lihat-file-maintenance"
+                                                            data-id="{{ $item->id_maintenance }}"><i
+                                                                class="fa fa-eye"></i></button>
+                                                    @endif
+                                                </td>
                                                 <td>
-                                                    <span class="badge-dot">
-                                                        <i class="bg-danger"></i> pending
-                                                    </span>
+                                                    @if ($item->status_maintenance == 1)
+                                                        <span class="badge-dot">
+                                                            <i class="bg-danger"></i> pending
+                                                        </span>
+                                                    @else
+                                                        <span class="badge-dot">
+                                                            <i class="bg-success"></i> Selesai
+                                                        </span>
+                                                    @endif
                                                 </td>
 
                                                 <td class="text-center">
                                                     <div class="dropdown">
-                                                        <button
-                                                            class="dropdown-toggle dropdown-toggle-nocaret btn-info"
+                                                        <button class="dropdown-toggle dropdown-toggle-nocaret btn-dark"
                                                             data-toggle="dropdown">
-                                                            <i class="fa fa-eye"></i>
-                                                    </button>
+                                                            <i class="zmdi zmdi-menu"></i>
+                                                        </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="javascript:void();"
+                                                            @if ($item->file_maintenance == '')
+                                                                <a class="dropdown-item" href="javascript:void();"
+                                                                    data-toggle="modal" data-target="#modalmaintenance"><i
+                                                                        class="fa fa-upload"></i> Upload Document</a>
+                                                            @else
+                                                                @if ($item->status_maintenance == 1)
+                                                                    <a class="dropdown-item" href="javascript:void();"
+                                                                        data-toggle="modal" data-target="#modalmaintenance"
+                                                                        id="tomboltindakanmaintenance"
+                                                                        data-url="{{ url('divisi/maintenance/tindakan', ['id' => $item->kd_maintenance]) }}"><i
+                                                                            class="fa fa-cog"></i> Lakukan Tindakan</a>
+                                                                @else
+                                                                <a class="dropdown-item" href="javascript:void();"
                                                                 data-toggle="modal" data-target="#modalmaintenance"
                                                                 id="tomboltindakanmaintenance"
                                                                 data-url="{{ url('divisi/maintenance/tindakan', ['id' => $item->kd_maintenance]) }}"><i
-                                                                    class="fa fa-cog"></i> Lakukan Tindakan</a>
-                                                            <a class="dropdown-item" href="javascript:void();" data-toggle="modal" data-target="#modalmaintenance"><i class="fa fa-upload"></i> Upload Document</a>
-
+                                                                    class="fa fa-print"></i> Cetak</a>
+                                                                @endif
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </td>
@@ -276,7 +309,7 @@
 
         });
     </script>
-      <script>
+    <script>
         $(document).ready(function() {
 
             $('#default-datatable').DataTable();

@@ -1136,4 +1136,23 @@ $(document).on("click", "#button-pilih-barang-maintenance", function (e) {
         });
 
 });
+$(document).on("click", "#button-lihat-file-maintenance", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    // var no = $(this).data("no");
+    $.ajax({
+        url: '../divisi/maintenance/showfilemaintenance/'+id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showdatasdm").html(data);
+        })
+        .fail(function () {
+            $("#showdatasdm").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
 

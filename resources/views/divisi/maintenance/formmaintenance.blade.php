@@ -9,6 +9,7 @@
         <div class="col-6">
             <label for="">No Inventaris</label>
             <input type="text" class="form-control" name="no_inventaris" value="{{$data->no_inventaris}}" disabled>
+            <input type="text" class="form-control" name="id_inventaris" value="{{$data->id_inventaris}}" hidden>
 
         </div>
         <div class="col-6">
@@ -18,7 +19,7 @@
         </div>
         <div class="col-6">
             <label for="">Tanggal Maintenance</label>
-            <input type="date" class="form-control" name="tgl_pinjam" required>
+            <input type="date" class="form-control" name="tgl_mulai" required>
         </div>
 
         <div class="col-12">
@@ -37,7 +38,7 @@
 
         <div class="col-12">
             <label for="">Deskripsi Peminjaman</label>
-            <textarea class="form-control" id="" cols="30" rows="10" name="deskripsi"></textarea>
+            <textarea class="form-control" id="" cols="30" rows="10" name="ket_maintenance"></textarea>
         </div>
         <div class="col-12">
             {{-- <button type="submit" class="btn-info"><i class="zmdi zmdi-save"></i></button> --}}

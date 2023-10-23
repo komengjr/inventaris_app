@@ -59,10 +59,8 @@ Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 
 
 // Divisi Controller
 Route::get('menu/formpinjam','DivisiController@menu');
-Route::get('menu/formmaintenance','DivisiController@menumaintenance');
 Route::get('menu/formdepresiasi','DivisiController@depresiasisemuaaset');
 Route::get('menu/formmutasi','DivisiController@mutasidatainventaris');
-Route::get('divisi/maintenance/tindakan/{id}',['as'=>'divisi/maintenance/tindakan','uses'=> 'DivisiController@tindakanmaintenance']);
 Route::get('menu/formpemusnahan','DivisiController@menupemusnahan');
 Route::get('menu/verifdatainventaris','DivisiController@verifdatainventaris');
 //PEMINJAMAN
@@ -84,10 +82,15 @@ Route::get('divisi/peminjaman/hapusdetaildatapeminjaman/{id}/{ids}',['as'=>'divi
 Route::post('divisi/peminjaman/posteditdatapeminjaman',['as'=>'divisi/peminjaman/posteditdatapeminjaman','uses'=> 'DivisiController@posteditdatapeminjaman']);
 Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
 // MAINTENANCE
+Route::get('menu/formmaintenance','MaintenanceController@menumaintenance');
 Route::get('divisi/tambahdatamaintenance',['as'=>'divisi/tambahdatamaintenance','uses'=> 'MaintenanceController@tambahdatamaintenance']);
 Route::post('divisi/tambahdatamaintenance','MaintenanceController@posttambahdatamaintenance');
 Route::get('divisi/maintenance/caridatabarang/{id}','MaintenanceController@caridatabarangmaintenance');
 Route::get('divisi/maintenance/pilihdatabarang/{id}','MaintenanceController@pilihdatabarangmaintenance');
+Route::get('divisi/maintenance/showfilemaintenance/{id}','MaintenanceController@showfilemaintenance');
+Route::get('divisi/maintenance/tindakan/{id}','MaintenanceController@tindakanmaintenance');
+Route::post('divisi/maintenance/tindakan','MaintenanceController@posttindakanmaintenance');
+
 
 Route::get('divisi/masterbarang/dataloginventaris',['as'=>'divisi/masterbarang/dataloginventaris','uses'=> 'DivisiController@masterbarangloginventaris']);
 Route::get('divisi/masterbarang/dataloginventaris/cekeror',['as'=>'divisi/masterbarang/dataloginventaris/cekeror','uses'=> 'DivisiController@cekerorloginventaris']);
