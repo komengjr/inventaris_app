@@ -158,20 +158,20 @@
                                             ->get();
                                         ?>
                                         <tr>
-                                            <td style="width: 10%;">
+                                            <td >
                                                 @if ($data->gambar == '')
-                                                    <a href="https://via.placeholder.com/1920x1080"
+                                                    <a href="https://via.placeholder.com/1020x780"
                                                         data-fancybox="images" data-caption="{{ $data->nama_barang }}">
-                                                        <img src="https://via.placeholder.com/800x500" alt="lightbox"
+                                                        <img src="https://via.placeholder.com/50x30" alt="lightbox"
                                                             class="lightbox-thumb img-thumbnail" id="videoPreview"
                                                             width="50" height="50">
                                                     </a>
                                                 @else
                                                     <a href="{{ url($data->gambar, []) }}" data-fancybox="images"
-                                                        data-caption="{{ $data->nama_barang }}">
+                                                        data-caption="{{ $data->nama_barang }}" style="width: 50px;">
                                                         <img src="{{ url($data->gambar, []) }}" alt="lightbox"
                                                             class="lightbox-thumb img-thumbnail" id="videoPreview"
-                                                            width="50" height="50">
+                                                            width="50" height="50" style="width: 100px;">
                                                     </a>
                                                 @endif
                                             </td>

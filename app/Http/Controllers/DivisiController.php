@@ -71,7 +71,7 @@ class DivisiController extends Controller
         // dd($id);
         $data = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*')
-        ->where('kd_lokasi',$id)
+        ->where('id_nomor_ruangan_cbaang',$id)
         ->where('kd_cabang',auth::user()->cabang)
         ->orderBy('id', 'DESC')
         ->get();

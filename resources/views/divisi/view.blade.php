@@ -230,7 +230,7 @@
             $ceklokasix = DB::table('sub_tbl_inventory')
                 ->select('sub_tbl_inventory.*')
                 ->where('kd_cabang', auth::user()->cabang)
-                ->where('kd_lokasi', $itemx->kd_lokasi)
+                ->where('id_nomor_ruangan_cbaang', $itemx->id_nomor_ruangan_cbaang)
                 ->count();
             ?>
             @if ($ceklokasix == 0)
@@ -239,7 +239,7 @@
                     <div class="card gradient-success rounded-0">
                         <div class="card-body p-1" style="cursor: pointer" data-toggle="modal"
                             data-target="#lihat-detail-data" id="lihatdatabarang"
-                            data-url="{{ route('lihatdatabarang1', ['id' => $itemx->kd_lokasi]) }}">
+                            data-url="{{ route('lihatdatabarang1', ['id' => $itemx->id_nomor_ruangan_cbaang]) }}">
                             <div class="media align-items-center bg-white p-3">
                                 <div class="media-body">
                                     <p class="text-dark text-uppercase extra-small-font font-weight-bold">
