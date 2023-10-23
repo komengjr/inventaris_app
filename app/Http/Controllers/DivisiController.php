@@ -66,7 +66,18 @@ class DivisiController extends Controller
 
         }
     }
-
+    public function lihatdatabarang1($id)
+    {
+        // dd($id);
+        $data = DB::table('sub_tbl_inventory')
+        ->select('sub_tbl_inventory.*')
+        ->where('kd_lokasi',$id)
+        ->where('kd_cabang',auth::user()->cabang)
+        ->orderBy('id', 'DESC')
+        ->get();
+        // dd($id);
+        return view('divisi.dashboard.listbarang',['data'=>$data,'id'=>$id ]);
+    }
 
     public function menupemusnahan()
     {

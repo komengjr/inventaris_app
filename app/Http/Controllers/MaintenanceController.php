@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
+use PDF;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Imports\LogInventarisImport;
-use Maatwebsite\Excel\Facades\Excel;
+// use App\Imports\LogInventarisImport;
+// use Maatwebsite\Excel\Facades\Excel;
 
 class MaintenanceController extends Controller
 {
@@ -75,5 +75,12 @@ class MaintenanceController extends Controller
     ]);
     Session::flash('sukses','Berhasil Update Data');
     return redirect()->back();
+    }
+    public function printmaintenance($id)
+    {
+        $data = 123;
+        $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate('string'));
+        $pdf = PDF::loadview('divisi.maintenance.cetakmaintenance',['id'=>$id,'data'=>$data],compact('qrcode'))->setPaper('A4','potrait');
+        return base64_encode($pdf->stream());
     }
 }

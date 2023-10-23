@@ -66,16 +66,17 @@ class HomeController extends Controller
                 $jumlah = 1 ;
             }
 
-            $datalokasi = DB::table('tbl_lokasi')
-            ->select('tbl_lokasi.*')
-            ->get();
+            $ruangan = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->orderBy('tbl_nomor_ruangan_cabang.nomor_ruangan')->get();
+            // dd($ruangan);
             $datainventariscabang = DB::table('sub_tbl_inventory')->where('kd_jenis',0)->where('kd_cabang',auth::user()->cabang)->count();
             if ($datainventariscabang == 0) {
                 $datainventariscabang = 0;
             }
             $dataasetcabang = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->count();
             return view('home',[
-                'datakategori'=>$datakategori,'datalokasi'=>$datalokasi,
+                'datakategori'=>$datakategori,'ruangan'=>$ruangan,
                 'totalinventaris'=>$datainventariscabang,'totaljumlahaset'=>$totaljumlahaset,
                 'dataasetcabang'=>$dataasetcabang, 'totaljumlahinventaris'=>$totaljumlahinventaris
             ]);

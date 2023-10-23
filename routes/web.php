@@ -56,8 +56,8 @@ Route::get('master/datamutasi/tampilformmuitasi/{id}',['as'=>'master/datamutasi/
 Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 'MasterController@datapemusnahan']);
 
 
-
 // Divisi Controller
+Route::get('lihatdatabarang1/{id}',['as'=>'lihatdatabarang1','uses'=> 'DivisiController@lihatdatabarang1']);
 Route::get('menu/formpinjam','DivisiController@menu');
 Route::get('menu/formdepresiasi','DivisiController@depresiasisemuaaset');
 Route::get('menu/formmutasi','DivisiController@mutasidatainventaris');
@@ -90,6 +90,7 @@ Route::get('divisi/maintenance/pilihdatabarang/{id}','MaintenanceController@pili
 Route::get('divisi/maintenance/showfilemaintenance/{id}','MaintenanceController@showfilemaintenance');
 Route::get('divisi/maintenance/tindakan/{id}','MaintenanceController@tindakanmaintenance');
 Route::post('divisi/maintenance/tindakan','MaintenanceController@posttindakanmaintenance');
+Route::get('divisi/maintenance/printmaintenance/{id}','MaintenanceController@printmaintenance');
 
 
 Route::get('divisi/masterbarang/dataloginventaris',['as'=>'divisi/masterbarang/dataloginventaris','uses'=> 'DivisiController@masterbarangloginventaris']);
@@ -260,7 +261,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('base');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('lihatdatabarang/{id}',['as'=>'lihatdatabarang','uses'=> 'HomeController@lihatdatabarang']);
-Route::get('lihatdatabarang1/{id}',['as'=>'lihatdatabarang1','uses'=> 'HomeController@lihatdatabarang1']);
+
 Route::get('editdatabarang/{id}',['as'=>'editdatabarang','uses'=> 'HomeController@editdatabarang']);
 Route::get('editdatabarang1/{id}',['as'=>'editdatabarang1','uses'=> 'HomeController@editdatabarang1']);
 Route::get('hapusdatabarang/{kode}/{id}',['as'=>'hapusdatabarang','uses'=> 'HomeController@hapusdatabarang']);

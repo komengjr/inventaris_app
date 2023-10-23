@@ -443,6 +443,25 @@ $(document).on("click", "#tomboltindakanmaintenance", function (e) {
             );
         });
 });
+$(document).on("click", "#button-cetak-maintenance", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+
+    $.ajax({
+        url: "../divisi/maintenance/printmaintenance/"+id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            // $("#showdatasdm").html(data);
+            $("#showdatasdm").html('<iframe src="data:application/pdf;base64, '+data+'" style="width:100%; height:500px;" frameborder="0"></iframe>');
+        })
+        .fail(function () {
+            $("#showdatasdm").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 $(document).on("click", "#editbarangmaster", function (e) {
     e.preventDefault();
     var url = $(this).data("url");

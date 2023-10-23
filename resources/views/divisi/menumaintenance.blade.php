@@ -166,11 +166,7 @@
                                                                         data-url="{{ url('divisi/maintenance/tindakan', ['id' => $item->kd_maintenance]) }}"><i
                                                                             class="fa fa-cog"></i> Lakukan Tindakan</a>
                                                                 @else
-                                                                <a class="dropdown-item" href="javascript:void();"
-                                                                data-toggle="modal" data-target="#modalmaintenance"
-                                                                id="tomboltindakanmaintenance"
-                                                                data-url="{{ url('divisi/maintenance/tindakan', ['id' => $item->kd_maintenance]) }}"><i
-                                                                    class="fa fa-print"></i> Cetak</a>
+                                                                <a class="dropdown-item" href="javascript:void();" data-toggle="modal" data-target="#modalmaintenance" id="button-cetak-maintenance" data-id="{{$item->id_maintenance}}"><i class="fa fa-print"></i> Cetak</a>
                                                                 @endif
                                                             @endif
                                                         </div>

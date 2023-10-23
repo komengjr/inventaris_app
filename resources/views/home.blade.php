@@ -4,8 +4,8 @@
 
         @if (Auth::user()->akses == "admin")
         {{-- @include('admin.view') --}}
-        @else
-        @include('admin.view')
+        @elseif(Auth::user()->akses == "sdm")
+        @include('divisi.view')
         @endif
 
 
