@@ -29,7 +29,7 @@ class PdfController extends Controller
     {
         $data = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*')
-        ->where('kd_lokasi',$request->input('kd_lokasi'))
+        ->where('id_nomor_ruangan_cbaang',$id)
         ->where('kd_cabang',auth::user()->cabang)
         ->get();
         // dd($data);
