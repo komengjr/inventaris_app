@@ -126,8 +126,6 @@ Route::get('divisi/dataaset/depresiasi/tambahmaintenance/{id}',['as'=>'divisi/da
 Route::get('divisi/dataaset/depresiasi/tambahinvoiceaset/{id}',['as'=>'divisi/dataaset/depresiasi/tambahinvoiceaset','uses'=> 'DivisiController@formtambahdatainvoiceaset']);
 Route::get('divisi/dataaset/depresiasi/pilihdatadepresiasi/{id}',['as'=>'divisi/dataaset/depresiasi/pilihdatadepresiasi','uses'=> 'DivisiController@pilihdatadepresiasi']);
 
-
-
 Route::get('menu/masterbarang','DivisiController@masterbarang');
 Route::get('menu/masterbarang/table','BigDataController@masterbarang')->name('master.barang');
 Route::get('divisi/masterbarang/dataloginventaris/table','BigDataController@masterbaranglog')->name('master.barang.upload.data');
@@ -164,10 +162,6 @@ Route::get('divisi/masterlokasi/datasetup/inputdatamaster/{no}/{id}',['as'=>'div
 Route::get('divisi/masterlokasi/datasetup/resetdatamaster/{no}/{id}',['as'=>'divisi/masterlokasi/datasetup/resetdatamaster/','uses'=> 'DivisiController@resetdatamasterlokasibarang']);
 Route::get('divisi/masterlokasi/datasetup/tablemasterlokasibarang/{id}',['as'=>'divisi/masterlokasi/datasetup/tablemasterlokasibarang/','uses'=> 'DivisiController@tabledatamasterlokasibarang']);
 Route::post('divisi/masterlokasi/posttambah', 'DivisiController@posttambahdatanomorruangan');
-
-
-
-
 
 Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','uses'=> 'DivisiController@tambahdatapemusnahan']);
 Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
@@ -216,24 +210,6 @@ Route::get('hapussubtablemusnah/{id}/{no}',['as'=>'hapussubtablemusnah','uses'=>
 */
 Route::get('faq','DivisiController@faq');
 
-
-
-
-
-// Route::get('formulir', function () {
-//     return view('admin.formformulir');
-// });
-// Route::get('formulir1', function () {
-//     return view('form.formformulir1');
-// });
-// Route::get('formulir2', function () {
-//     return view('form.formformulir2');
-// });
-// Route::get('template', function () {
-//     return view('index');
-// });
-
-// Route::get('/pdf', 'PdfController@print')->name('print');
 Route::post('/pdf/{id}', 'PdfController@print');
 Route::post('/printbarcodelokasi/{id}', 'PdfController@printbarcodelokasi');
 Route::get('/printbarcodebyid/{id}', 'PdfController@printbarcodebyid');

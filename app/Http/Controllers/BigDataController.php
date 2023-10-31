@@ -185,13 +185,30 @@ class BigDataController extends Controller
         $searchValue = $search_arr['value']; // Search value
 
         // Total records
-        $totalRecords = sub_tbl_inventory_log::select('count(*) as allcount')->where('kd_cabang', Auth::user()->cabang)->count();
-        $totalRecordswithFilter = sub_tbl_inventory_log::select('count(*) as allcount')->where('kd_lokasi', 'like', '%' . $searchValue . '%')->where('kd_cabang', Auth::user()->cabang)->count();
+        $totalRecords = sub_tbl_inventory_log::select('count(*) as allcount')
+        ->whereNotExists( function ($query) {
+            $query->select(DB::raw(1))
+            ->from('tbl_lokasi')
+            ->whereRaw('sub_tbl_inventory_log.kd_lokasi = tbl_lokasi.kd_lokasi');
+        })
+        ->where('sub_tbl_inventory_log.kd_cabang', Auth::user()->cabang)->count();
+        $totalRecordswithFilter = sub_tbl_inventory_log::select('count(*) as allcount')
+        ->whereNotExists( function ($query) {
+            $query->select(DB::raw(1))
+            ->from('tbl_lokasi')
+            ->whereRaw('sub_tbl_inventory_log.kd_lokasi = tbl_lokasi.kd_lokasi');
+        })
+        ->where('kd_lokasi', 'like', '%' . $searchValue . '%')->where('kd_cabang', Auth::user()->cabang)->count();
 
         // Fetch records
         $records = sub_tbl_inventory_log::orderBy($columnName, $columnSortOrder)
+            ->whereNotExists( function ($query) {
+                $query->select(DB::raw(1))
+                ->from('tbl_lokasi')
+                ->whereRaw('sub_tbl_inventory_log.kd_lokasi = tbl_lokasi.kd_lokasi');
+            })
             ->where('sub_tbl_inventory_log.nama_barang', 'like', '%' . $searchValue . '%')
-            ->where('kd_cabang', Auth::user()->cabang)
+            ->where('sub_tbl_inventory_log.kd_cabang', Auth::user()->cabang)
             ->select('sub_tbl_inventory_log.*')
             ->skip($start)
             ->take($rowperpage)
@@ -232,6 +249,7 @@ class BigDataController extends Controller
                     <button class='btn-warning' id='buttoneditloginventaris'  data-id=".$idx."><i class='zmdi zmdi-edit'></i> edit</button>
                     "
                 );
+
             }
 
 
@@ -264,13 +282,30 @@ class BigDataController extends Controller
         $searchValue = $search_arr['value']; // Search value
 
         // Total records
-        $totalRecords = sub_tbl_inventory_log::select('count(*) as allcount')->where('kd_cabang', Auth::user()->cabang)->count();
-        $totalRecordswithFilter = sub_tbl_inventory_log::select('count(*) as allcount')->where('kd_lokasi', 'like', '%' . $searchValue . '%')->where('kd_cabang', Auth::user()->cabang)->count();
+        $totalRecords = sub_tbl_inventory_log::select('count(*) as allcount')
+        ->whereNotExists( function ($query) {
+            $query->select(DB::raw(1))
+            ->from('tbl_inventory')
+            ->whereRaw('sub_tbl_inventory_log.kd_inventaris = tbl_inventory.kd_inventaris');
+        })
+        ->where('sub_tbl_inventory_log.kd_cabang', Auth::user()->cabang)->count();
+        $totalRecordswithFilter = sub_tbl_inventory_log::select('count(*) as allcount')
+        ->whereNotExists( function ($query) {
+            $query->select(DB::raw(1))
+            ->from('tbl_inventory')
+            ->whereRaw('sub_tbl_inventory_log.kd_inventaris = tbl_inventory.kd_inventaris');
+        })
+        ->where('sub_tbl_inventory_log.nama_barang', 'like', '%' . $searchValue . '%')->where('kd_cabang', Auth::user()->cabang)->count();
 
         // Fetch records
         $records = sub_tbl_inventory_log::orderBy($columnName, $columnSortOrder)
+            ->whereNotExists( function ($query) {
+                $query->select(DB::raw(1))
+                ->from('tbl_inventory')
+                ->whereRaw('sub_tbl_inventory_log.kd_inventaris = tbl_inventory.kd_inventaris');
+            })
             ->where('sub_tbl_inventory_log.nama_barang', 'like', '%' . $searchValue . '%')
-            ->where('kd_cabang', Auth::user()->cabang)
+            ->where('sub_tbl_inventory_log.kd_cabang', Auth::user()->cabang)
             ->select('sub_tbl_inventory_log.*')
             ->skip($start)
             ->take($rowperpage)

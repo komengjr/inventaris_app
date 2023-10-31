@@ -8,19 +8,15 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Pramita - {{ auth()->user()->name }}</title>
-
     <link rel="icon" href="{{ asset('icon.png', []) }}" type="image/x-icon">
     <link href="{{ asset('assets/plugins/select2/css/select2.min.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/inputtags/css/bootstrap-tagsinput.css', []) }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet"
-        type="text/css">
-    <link href="{{ asset('assets/plugins/fancybox/css/jquery.fancybox.min.css', []) }}" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ asset('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/plugins/fancybox/css/jquery.fancybox.min.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css', []) }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet"> --}}
     <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" />
     <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
@@ -31,94 +27,6 @@
     <link href="{{ asset('assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
     <script src="{{ asset('assets/js/jqueryapp.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.min.js') }}"></script>
-    {{-- <style>
-        @media only screen and (max-width: 800px) {
-
-            td,
-            tr {
-                display: block;
-            }
-
-            /* Hide table headers (but not display: none;, for accessibility) */
-            thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-
-            tr {
-                border: 1px solid #000000;
-            }
-
-            tr+tr {
-                margin-top: 1.5em;
-            }
-
-            td {
-                /* make like a "row" */
-                border: 5px;
-                border-bottom: 1px solid #eee;
-                position: relative;
-                padding-left: 50%;
-                background-color: #bcc6c1;
-                text-align: left;
-            }
-
-            td:before {
-                content: attr(data-label);
-                display: inline-block;
-                font-family: 'Orbitron', sans-serif;
-                padding-left: 10px;
-                line-height: 2.5;
-                margin-left: -100%;
-                width: 100%;
-                white-space: nowrap;
-            }
-        }
-
-        .styled-table {
-            /* position: static; */
-            border-collapse: collapse;
-            margin: 0px 0;
-            font-size: 0.9em;
-
-            width: 100%;
-            /* min-width: 400px; */
-            box-shadow: 0 0 20px rgba(217, 211, 211, 0.15);
-
-        }
-
-        .styled-table thead tr {
-            background-color: #924405;
-            color: #ffffff;
-            text-align: left;
-        }
-
-        @media only screen and (min-width: 760px) {
-
-            .styled-table th,
-            .styled-table td {
-                padding: 12px 15px;
-            }
-        }
-
-        .styled-table tbody tr {
-            border-bottom: 1px solid #dddddd;
-        }
-
-        .styled-table tbody tr:nth-of-type(even) {
-            background-color: #f3f3f3;
-        }
-
-        .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #030303;
-        }
-
-        .styled-table tbody tr.active-row {
-            font-weight: bold;
-            color: #020202;
-        }
-    </style> --}}
 </head>
 
 <body>
@@ -514,10 +422,8 @@
     <script src="{{ asset('js/scriptx.js', []) }}"></script>
     <script src="{{ asset('js/admin.js', []) }}"></script>
     <script src="{{ asset('js/master.js', []) }}"></script>
-
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.multi-select.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.quicksearch.js', []) }}"></script>
-    <script src="{{ asset('https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js', []) }}"></script>
@@ -545,7 +451,7 @@
             $('.single-selectlokasi1').select2();
         });
     </script>
-
+    <script src="{{ asset('https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js', []) }}"></script>
 </body>
 
 </html>

@@ -4,11 +4,11 @@
             <tr style="font-size: 10px;">
                 <td>No</td>
                 <td>Nama Barang</td>
-                <td>No Inventaris</td>
                 <td>Kode Klasifikasi</td>
+                <td>Kode Lokasi</td>
                 {{-- <td>Nomor Ruangan</td> --}}
-                <td>Lokasi</td>
-                <td>Merek / Type</td>
+                <td>Merek</td>
+                <td>Type</td>
                 <td>Tanggal Pembelian</td>
                 <td>Tahun Perolehan</td>
                 <td>Harga</td>
