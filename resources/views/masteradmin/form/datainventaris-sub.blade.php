@@ -70,9 +70,9 @@
                         <input type="text" name="kd_lokasi" class="form-control" value="{{ $id }}" hidden>
                         <label for="inputPassword4" class="form-label">Kode Cabang</label>
                         <input type="text" name="kd_cabang" class="form-control" id="inputPassword4"
-                            value="{{ auth::user()->cabang }}" hidden>
+                            value="{{ Auth::user()->cabang }}" hidden>
                         <input type="text" name="kd_cabang" class="form-control" id="inputPassword4"
-                            value="{{ auth::user()->cabang }}" disabled>
+                            value="{{ Auth::user()->cabang }}" disabled>
                         <label for="inputPassword4" class="form-label">Tahun Perolehan</label>
                         <input type="text" name="th_perolehan" class="form-control" value="">
                     </div>

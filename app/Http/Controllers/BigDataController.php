@@ -233,7 +233,7 @@ class BigDataController extends Controller
                 // $kd_lokasi = $ceklokasi->nama_lokasi;
             } else {
                 $id = $no++;
-                $kd_lokasi = '<button class="btn-danger" disabled>undefinded</button>';
+                $kd_lokasi = $record->kd_lokasi.' : <button class="btn-danger" disabled>undefinded</button>';
                 $data_arr[] = array(
                     "id" => $id,
                     "nama_barang" => $nama_barang,
@@ -318,8 +318,6 @@ class BigDataController extends Controller
 
             $idx = $record->id;
             $nama_barang = $record->nama_barang;
-
-
             $merk = $record->merk;
             $type = $record->type;
             $tgl_beli = $record->tgl_beli;
@@ -330,7 +328,7 @@ class BigDataController extends Controller
                 // $kd_lokasi = $ceklokasi->nama_lokasi;
             } else {
                 $id = $no++;
-                $kd_inventaris = '<button class="btn-danger" disabled>undefinded</button>';
+                $kd_inventaris = $record->kd_inventaris.' : <button class="btn-danger" disabled>undefinded</button>';
                 $kd_lokasi = $record->kd_lokasi;
                 $data_arr[] = array(
                     "id" => $id,

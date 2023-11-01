@@ -16,6 +16,18 @@
             <label for="">Nama Cabang</label>
             <input type="text" class="form-control" name="nama_cabang">
         </div>
+        <div class="col-12">
+            <label for="">No Telp</label>
+            <input type="text" class="form-control" name="phone">
+        </div>
+        <div class="col-12">
+            <label for="">Kota / Kabupaten</label>
+            <input type="text" class="form-control" name="city">
+        </div>
+        <div class="col-12">
+            <label for="">Alamat</label>
+            <textarea  class="form-control" name="alamat" id="" cols="30" rows="10"></textarea>
+        </div>
     </div>
 </div>
 

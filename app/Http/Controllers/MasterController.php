@@ -59,13 +59,12 @@ class MasterController extends Controller
             [
                 'kd_cabang' => $request->input('kd_cabang'),
                 'nama_cabang' => $request->input('nama_cabang'),
+                'city' => $request->input('city'),
+                'alamat' => $request->input('alamat'),
+                'phone' => $request->input('phone'),
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-        // $data = DB::table('tbl_cabang')
-        // ->select('tbl_cabang.*')
-        // ->get();
 
-        // return view('masteradmin.form.datauser',['data'=>$data,'id'=>$id])->with(['success' => 'Pesan Berhasil']);
         return redirect()->back();
     }
     public function deletedatacabang(Request $request)
