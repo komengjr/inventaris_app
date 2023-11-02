@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-// use Sentinel;
+use Session;
 use DB;
 class DataController extends Controller
 {
@@ -205,5 +205,23 @@ class DataController extends Controller
         ->where('no_registerasi', $nomorregistrasi)
         ->get();
         return view('form.hasilregister',['data'=>$data]);
+    }
+    public function pendaftaran(Request $request)
+    {
+        $cekuser = DB::table('tbl_daftar_user')->where('username', $request->input('username'))->first();
+        if ($cekuser) {
+            Session::flash('Gagal','Pendaftaran Gagal');
+            return redirect()->back();
+        } else {
+            DB::table('tbl_daftar_user')->insert([
+                'username'=> $request->input('username'),
+                'password'=> $request->input('password'),
+                'nama_cabang'=> $request->input('cabang'),
+            ]);
+            Session::flash('sukses','Pendaftaran Berhasil');
+            return redirect()->back();
+        }
+
+
     }
 }
