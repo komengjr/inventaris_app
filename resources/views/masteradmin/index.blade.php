@@ -134,9 +134,7 @@
                                     <small class="extra-small-font text-white">77%</small>
                                 </div>
                                 <div class="progress-wrapper mt-2">
-                                    <div class="progress" style="height: 4px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 77%"></div>
-                                    </div>
+                                    <p class="mb-0 font-weight-bold text-white text-uppercase">City : {{$data->city}}<br> Alamat : {{$data->alamat}}</p>
                                 </div>
                             </div>
                         </div>
