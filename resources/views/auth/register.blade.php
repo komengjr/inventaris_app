@@ -50,7 +50,7 @@
                         <i class="fa fa-check"></i>
                         </div>
                         <div class="alert-message">
-                        <span><strong>{{ $message }}</strong> Silahkan Menunggu Beberapa Menit</span>
+                        <span><strong>{{ $message }}</strong> Silahkan Menunggu Konfirmasi</span>
                         </div>
                     </div>
                 @elseif ($message = Session::get('Gagal'))
