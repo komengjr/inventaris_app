@@ -64,7 +64,7 @@
     $.FormWizard = new FormWizard, $.FormWizard.Constructor = FormWizard
 }(window.jQuery),
 
-//initializing 
+//initializing
 function($) {
     "use strict";
     $.FormWizard.init()
