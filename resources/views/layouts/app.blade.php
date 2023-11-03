@@ -401,9 +401,6 @@
     @endif
     <!-- Bootstrap core JavaScript-->
 
-
-
-
     <script src="{{ asset('assets/js/popper.min.js', []) }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/simplebar/js/simplebar.js', []) }}"></script>
@@ -428,23 +425,8 @@
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.multi-select.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.quicksearch.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
-    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js', []) }}"></script>
+    {{-- <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js', []) }}"></script> --}}
     <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js', []) }}"></script>
-    {{-- <script>
-        $('#default-datepicker').datepicker({
-            todayHighlight: true
-        });
-        $('#autoclose-datepicker').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        });
-
-        $('#inline-datepicker').datepicker({
-            todayHighlight: true
-        });
-
-        $('#dateragne-picker .input-daterange').datepicker({});
-    </script> --}}
 
     <script>
         $(document).ready(function() {
