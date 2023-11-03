@@ -14,9 +14,8 @@
     <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/app-style.css', []) }}" rel="stylesheet" />
-    {{-- <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"> --}}
     <style>
-        body{
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,10 +28,7 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-
         }
-
-
     </style>
 </head>
 
@@ -52,7 +48,7 @@
             <div class="card-body">
                 <div class="card-content p-0">
                     <div class="text-center m-0 p-0">
-                        <img src="{{ asset('anim.gif', []) }}"  width="350">
+                        {{-- <img src="{{ asset('anim.gif', []) }}"  width="350"> --}}
                     </div>
                     <div class="card-title text-uppercase text-center py-3"
                         style="font-family: "Copperplate", "Courier New" , Monospace;">Login Aplikasi</div>
@@ -116,7 +112,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('assets/js/jquery.min.js', []) }}"></script>
-    <script src="{{ asset('assets/js/popper.min.js', []) }}"></script>
+    {{-- <script src="{{ asset('assets/js/popper.min.js', []) }}"></script> --}}
     <script src="{{ asset('assets/js/bootstrap.min.js', []) }}"></script>
     <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script>
     <script src="{{ asset('assets/js/app-script.js', []) }}"></script>
