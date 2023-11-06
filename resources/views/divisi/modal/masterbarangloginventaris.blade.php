@@ -52,7 +52,7 @@
 
 @endif --}}
     <a href="{{ url('divisi/masterbarang/dataloginventaris/downloaddataloginventory', []) }}" class="btn-dark btn-sm"><i
-            class="fa fa-download"></i> Download Data</a>
+            class="fa fa-download"></i> Simpan Data Master Barang</a>
 
 </div>
 <script src="{{ asset('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
