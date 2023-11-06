@@ -364,7 +364,7 @@
                                 <div class="form-group">
                                     <label for="input-3">Nomor Cabang</label>
                                     <input type="text" class="form-control" name="no_cabang"
-                                        value="{{ $settingno[0]->no_cabang }}" required>
+                                        value="{{ $settingno[0]->no_cabang }}" required disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-3">Nama 1</label>
