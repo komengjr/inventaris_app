@@ -356,11 +356,11 @@
                                     <input type="text" class="form-control" name="nama_3" required>
                                 </div>
                             @else
-                                <div class="form-group">
-                                    <label for="input-2">Kode Cabang</label>
+                                {{-- <div class="form-group">
+                                    <label for="input-2">Nomor Cabang</label>
                                     <input type="text" class="form-control" id="input-2"
                                         value="{{ $settingno[0]->kd_cabang }}" required>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="input-3">Nomor Cabang</label>
                                     <input type="text" class="form-control" name="no_cabang"
