@@ -109,7 +109,7 @@
                                         <td>No</td>
                                         <td>Nama Barang</td>
                                         <td>No Inventaris</td>
-                                        <td>Kode Klasifikasi</td>
+                                        <td>Harga Perolehan</td>
                                         <td>Nomor Ruangan</td>
                                         <td>Lokasi</td>
                                         {{-- <td>Merek / Type</td>

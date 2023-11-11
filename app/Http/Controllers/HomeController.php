@@ -441,7 +441,7 @@ class HomeController extends Controller
             DB::table('sub_tbl_inventory')->insert(
                 [
                             'id_inventaris' => auth::user()->cabang.''.mt_rand(100000, 9999999),
-                            'no_inventaris' => ($jumlahbarang+1).'/'.$request->input('kd_inventaris').'/'.$request->input('kd_lokasi').'/'.$entitas->simbol_entitas.".".$nomor->no_cabang.'/'.$tahun,
+                            'no_inventaris' => ($jumlahbarang+1).'/'.$request->input('kd_inventaris').'/'.$cekruangan->kd_lokasi.'/'.$entitas->simbol_entitas.".".$nomor->no_cabang.'/'.$tahun,
                             'nama_barang' => $request->input('nama_barang'),
                             'gambar' => $gambar,
                             'kd_inventaris' => $request->input('kd_inventaris'),
