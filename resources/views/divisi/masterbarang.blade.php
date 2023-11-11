@@ -109,13 +109,13 @@
                                         <td>No</td>
                                         <td>Nama Barang</td>
                                         <td>No Inventaris</td>
-                                        <td>Harga Perolehan</td>
+
                                         <td>Kode Klasifikasi</td>
                                         <td>Nomor Ruangan</td>
-                                        {{-- <td>Merek / Type</td>
+                                        <td>Merek / Type</td>
                                         <td>Tanggal Pembelian</td>
                                         <td>Tahun Perolehan</th>
-                                        <td>Harga</td> --}}
+                                            <td>Harga Perolehan</td>
                                         <td>action</td>
                                     </tr>
                                 </thead>
@@ -233,16 +233,26 @@
                         data: 'no_inventaris',
                         className: 'text-right'
                     },
-                    {
-                        data: 'harga_perolehan',
-                        className: 'text-right'
-                    },
+
                     {
                         data: 'kd_inventaris',
                         className: 'text-right'
                     },
                     {
                         data: 'dataruangan',
+                        className: 'text-right'
+                    },
+                    {
+                        data: 'merk',
+                    },
+                    {
+                        data: 'tglbeli',
+                    },
+                    {
+                        data: 'thperolehan',
+                    },
+                    {
+                        data: 'harga_perolehan',
                         className: 'text-right'
                     },
                     {

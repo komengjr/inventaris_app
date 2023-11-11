@@ -53,6 +53,9 @@ class BigDataController extends Controller
             $no_inventaris = $record->no_inventaris;
             $harga_perolehan = $record->harga_perolehan;
             $kd_inventaris = $record->kd_inventaris;
+            $merk = $record->merk;
+            $tglbeli = $record->tgl_beli;
+            $thperolehan = $record->th_perolehan;
             $ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $record->id_nomor_ruangan_cbaang)->first();
             if ($ruangan) {
                 $dataruangan = $ruangan->nomor_ruangan;
@@ -69,6 +72,9 @@ class BigDataController extends Controller
                 "harga_perolehan" => number_format($harga_perolehan, 0, ",", "."),
                 "kd_inventaris" => $kd_inventaris,
                 "dataruangan" => $dataruangan,
+                "merk" => $merk,
+                "tglbeli" => $tglbeli,
+                "thperolehan" => $thperolehan,
                 "btn" => "
                 <button class='btn-warning' data-toggle='modal' data-target='#editmasterbarang' id='editbarangmaster' data-url=" . url('divisi/masterbarang/showedit', ['id' => $id_inventaris]) . "><i class='bx bx-pencil'></i> edit</button>
                 "
