@@ -514,35 +514,41 @@ class DivisiController extends Controller
     }
     public function downloaddataloginventory()
     {
-        $no = 0;
-        $nomorcabang = DB::table('tbl_setting_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
-        $total = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->count();
-        $datalog = DB::table('sub_tbl_inventory_log')
-        ->orderBy('tgl_beli', 'ASC')
-        ->where('kd_cabang',Auth::user()->cabang)
-        ->get();
-        // dd($datalog);
-        foreach ($datalog as $value) {
-            DB::table('sub_tbl_inventory')->insert(
-                [
-                    'id_inventaris' => auth::user()->cabang."".auth::user()->cabang."".(100000+($total + $no++)),
-                    'no_inventaris' => ($total + $no)."/".$value->kd_inventaris."/".$value->kd_lokasi."/P.".$nomorcabang->no_cabang."/".$value->th_perolehan,
-                    'nama_barang' => $value->nama_barang,
-                    'kd_inventaris' => $value->kd_inventaris,
-                    'kd_lokasi' => $value->kd_lokasi,
-                    'kd_jenis' => $value->kd_jenis,
-                    'kd_cabang' => auth::user()->cabang,
-                    'th_perolehan' => $value->th_perolehan,
-                    'tgl_beli' => $value->tgl_beli,
-                    'merk' => $value->merk,
-                    'type' => $value->type,
-                    'no_seri' => $value->no_seri,
-                    'suplier' => $value->suplier,
-                    'harga_perolehan' => $value->harga_perolehan,
-            ]);
-            DB::table('sub_tbl_inventory_log')->where('id', $value->id)->delete();
+        $entitas = DB::table('tbl_entitas_cabang')
+        ->join('tbl_cabang','tbl_cabang.kd_entitas_cabang','=','tbl_entitas_cabang.kd_entitas_cabang')
+        ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
+        if($entitas){
+            $no = 0;
+            $nomorcabang = DB::table('tbl_setting_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
+
+            $total = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->count();
+            $datalog = DB::table('sub_tbl_inventory_log')
+            ->orderBy('tgl_beli', 'ASC')
+            ->where('kd_cabang',Auth::user()->cabang)
+            ->get();
+            // dd($datalog);
+            foreach ($datalog as $value) {
+                DB::table('sub_tbl_inventory')->insert(
+                    [
+                        'id_inventaris' => auth::user()->cabang."".auth::user()->cabang."".(100000+($total + $no++)),
+                        'no_inventaris' => ($total + $no)."/".$value->kd_inventaris."/".$value->kd_lokasi."/".$entitas->simbol_entitas.".".$nomorcabang->no_cabang."/".$value->th_perolehan,
+                        'nama_barang' => $value->nama_barang,
+                        'kd_inventaris' => $value->kd_inventaris,
+                        'kd_lokasi' => $value->kd_lokasi,
+                        'kd_jenis' => $value->kd_jenis,
+                        'kd_cabang' => auth::user()->cabang,
+                        'th_perolehan' => $value->th_perolehan,
+                        'tgl_beli' => $value->tgl_beli,
+                        'merk' => $value->merk,
+                        'type' => $value->type,
+                        'no_seri' => $value->no_seri,
+                        'suplier' => $value->suplier,
+                        'harga_perolehan' => $value->harga_perolehan,
+                ]);
+                DB::table('sub_tbl_inventory_log')->where('id', $value->id)->delete();
+            }
+            Session::flash('sukses','Upload Data Sukses');
         }
-        Session::flash('sukses','Upload Data Sukses');
         return redirect()->back();
     }
     public function resetdataloginventory()

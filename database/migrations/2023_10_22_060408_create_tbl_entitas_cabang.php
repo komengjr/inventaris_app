@@ -17,6 +17,7 @@ class CreateTblEntitasCabang extends Migration
             $table->id('id_entitas_cabang');
             $table->string('kd_entitas_cabang');
             $table->string('nama_entitas_cabang');
+            $table->string('simbol_entitas');
             $table->string('status_entitas_cabang');
             $table->timestamps();
         });

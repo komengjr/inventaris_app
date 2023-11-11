@@ -433,31 +433,40 @@ class HomeController extends Controller
         $jumlahbarang = DB::table('sub_tbl_inventory')->where('kd_cabang',auth::user()->cabang)->count();
         $nomor = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->first();
         $tahun = date('Y', strtotime($request->input('tgl_beli')));
-        $nilai = $string = preg_replace("/[^0-9]/","",$request->harga_perolehan);
-        DB::table('sub_tbl_inventory')->insert(
-            [
-                        'id_inventaris' => auth::user()->cabang.''.mt_rand(100000, 9999999),
-                        'no_inventaris' => ($jumlahbarang+1).'/'.$request->input('kd_inventaris').'/'.$request->input('kd_lokasi').'/P.'.$nomor->no_cabang.'/'.$tahun,
-                        'nama_barang' => $request->input('nama_barang'),
-                        'gambar' => $gambar,
-                        'kd_inventaris' => $request->input('kd_inventaris'),
-                        'kd_lokasi' => $cekruangan->kd_lokasi,
-                        'id_nomor_ruangan_cbaang' => $request->input('no_ruangan'),
-                        'kd_cabang' => auth::user()->cabang,
-                        'th_perolehan' => $tahun,
-                        'tgl_beli' => $request->input('tgl_beli'),
-                        'merk' => $request->input('merk'),
-                        'type' => $request->input('type'),
-                        'no_seri' => $request->input('no_seri'),
-                        'suplier' => $request->input('suplier'),
-                        'kd_jenis' => $request->input('kategori'),
-                        'harga_perolehan' => $nilai,
-                        'kondisi_barang' => 'BAIK',
-                        'jam_input' => date("h:i:sa"),
-            ]
-        );
-        Session::flash('sukses','Berhasil Membuat Tiket Peminjaman : ');
-        return redirect()->back();
+        $nilai = preg_replace("/[^0-9]/","",$request->harga_perolehan);
+        $entitas = DB::table('tbl_entitas_cabang')
+        ->join('tbl_cabang','tbl_cabang.kd_entitas_cabang','=','tbl_entitas_cabang.kd_entitas_cabang')
+        ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
+        if ($entitas) {
+            DB::table('sub_tbl_inventory')->insert(
+                [
+                            'id_inventaris' => auth::user()->cabang.''.mt_rand(100000, 9999999),
+                            'no_inventaris' => ($jumlahbarang+1).'/'.$request->input('kd_inventaris').'/'.$request->input('kd_lokasi').'/'.$entitas->simbol_entitas.".".$nomor->no_cabang.'/'.$tahun,
+                            'nama_barang' => $request->input('nama_barang'),
+                            'gambar' => $gambar,
+                            'kd_inventaris' => $request->input('kd_inventaris'),
+                            'kd_lokasi' => $cekruangan->kd_lokasi,
+                            'id_nomor_ruangan_cbaang' => $request->input('no_ruangan'),
+                            'kd_cabang' => auth::user()->cabang,
+                            'th_perolehan' => $tahun,
+                            'tgl_beli' => $request->input('tgl_beli'),
+                            'merk' => $request->input('merk'),
+                            'type' => $request->input('type'),
+                            'no_seri' => $request->input('no_seri'),
+                            'suplier' => $request->input('suplier'),
+                            'kd_jenis' => $request->input('kategori'),
+                            'harga_perolehan' => $nilai,
+                            'kondisi_barang' => 'BAIK',
+                            'jam_input' => date("h:i:sa"),
+                ]
+            );
+            Session::flash('sukses','Berhasil Membuat Tiket Peminjaman : ');
+            return redirect()->back();
+        }else{
+            Session::flash('gagal','Entitas Cabang Masih Kosong');
+            return redirect()->back();
+        }
+
     }
 
 }
