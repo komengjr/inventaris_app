@@ -460,7 +460,7 @@ class HomeController extends Controller
                             'jam_input' => date("h:i:sa"),
                 ]
             );
-            Session::flash('sukses','Berhasil Membuat Tiket Peminjaman : ');
+            Session::flash('sukses','Berhasil Input Data Barang Baru');
             return redirect()->back();
         }else{
             Session::flash('gagal','Entitas Cabang Masih Kosong');
