@@ -1116,6 +1116,7 @@ class DivisiController extends Controller
     }
     public function detaildatacaseid($id)
     {
-        return view('faq.detailcase',['data'=>$id]);
+        $data = DB::table('tbl_case')->where('tiket_case',$id)->first();
+        return view('faq.detailcase',['data'=>$data]);
     }
 }

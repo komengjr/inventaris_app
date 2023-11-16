@@ -32,13 +32,13 @@
                                     <div class="card mt-3 shadow">
                                         <div class="list-group shadow-none">
                                             <a href="javascript:void();" class="list-group-item"><i
-                                                    class="fa fa-inbox mr-2"></i>Case Baru
-                                                <b>(12)</b></a>
+                                                    class="fa fa-inbox mr-2"></i>Data Case
+                                                <b></b></a>
                                             <a href="javascript:void();" class="list-group-item"><i
                                                     class="fa fa-star-o mr-2"></i>Case Proses</a>
                                             <a href="javascript:void();" class="list-group-item"><i
                                                     class="fa fa-file-text-o mr-2"></i>Case Selesai
-                                                <b>(10)</b></a>
+                                                <b></b></a>
 
                                         </div>
                                     </div>
@@ -226,11 +226,11 @@
             <div class="modal-content animated flipInX">
                 <div class="modal-header">
                     <h5 class="modal-title">Detail Case</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body" id="data-modal-case">
+                <div class="modal-body gradient-royal" id="data-modal-case">
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, dicta. Voluptate cumque odit quam
                         velit maiores sint rerum, dolore impedit commodi. Tempora eveniet odit vero rem blanditiis, tenetur
                         laudantium cumque.</p>
