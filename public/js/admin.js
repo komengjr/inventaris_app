@@ -1175,3 +1175,77 @@ $(document).on("click", "#button-lihat-file-maintenance", function (e) {
 
 });
 
+
+
+/// CASE DATA
+
+$(document).on("click", "#button-tambah-data-case-baru", function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: '../divisi/case/databaru/',
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menu-data-case").html(data);
+        })
+        .fail(function () {
+            $("#menu-data-case").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
+$(document).on("click", "#button-case-data-lokasi", function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: '../divisi/case/datalokasi/',
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menu-data-case").html(data);
+        })
+        .fail(function () {
+            $("#menu-data-case").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
+$(document).on("click", "#button-case-data-klasifikasi", function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: '../divisi/case/dataklasifikasi/',
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menu-data-case").html(data);
+        })
+        .fail(function () {
+            $("#menu-data-case").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
+$(document).on("click", "#button-detail-data-case", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $.ajax({
+        url: '../divisi/case/datacase/detail/'+id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#data-modal-case").html(data);
+        })
+        .fail(function () {
+            $("#data-modal-case").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
+

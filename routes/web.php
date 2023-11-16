@@ -210,6 +210,11 @@ Route::get('hapussubtablemusnah/{id}/{no}',['as'=>'hapussubtablemusnah','uses'=>
 |
 */
 Route::get('faq','DivisiController@faq');
+Route::get('divisi/case/databaru/',['as'=>'divisi/case/databaru/','uses'=> 'DivisiController@tambahdatacase']);
+Route::get('divisi/case/datacase/detail/{id}',['as'=>'divisi/case/datacase/detail/','uses'=> 'DivisiController@detaildatacaseid']);
+Route::get('divisi/case/datalokasi/',['as'=>'divisi/case/datalokasi/','uses'=> 'DivisiController@casedatalokasi']);
+Route::get('divisi/case/dataklasifikasi/',['as'=>'divisi/case/dataklasifikasi/','uses'=> 'DivisiController@casedataklasifikasi']);
+Route::post('divisi/case/databaru/','DivisiController@posttambahdatacase');
 
 Route::post('/pdf/{id}', 'PdfController@print');
 Route::post('/printbarcodelokasi/{id}', 'PdfController@printbarcodelokasi');

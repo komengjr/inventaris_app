@@ -193,11 +193,11 @@
                 <li>
                     <a class="" href="javascript:;">
                         <i class="zmdi zmdi-receipt"></i>
-                        <span class="title">Faq</span>
+                        <span class="title">Case</span>
                         <span class="arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="{{ asset('faq', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> FAQ</a>
+                        <li><a href="{{ asset('faq', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Data Case</a>
                         </li>
 
                     </ul>

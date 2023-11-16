@@ -5,10 +5,10 @@
             <!-- Breadcrumb-->
             <div class="row pt-2 pb-2">
                 <div class="col-sm-9">
-                    <h4 class="page-title">Case Inbox</h4>
+                    <h4 class="page-title">Case Report</h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="javaScript:void();">Dashtreme</a>
+                            <a href="javaScript:void();">Menu</a>
                         </li>
                         <li class="breadcrumb-item">
                             <a href="javaScript:void();">Case</a>
@@ -18,20 +18,20 @@
                         </li>
                     </ol>
                 </div>
-
             </div>
             <!-- End Breadcrumb-->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <div class="card gradient-meridian">
                         <div class="card-body">
                             <div class="row">
                                 <!-- Left sidebar -->
                                 <div class="col-lg-3 col-md-4">
-                                    <a href="mail-compose.html" class="btn btn-danger btn-block">New Case</a>
-                                    <div class="card mt-3 shadow-none">
+                                    <a href="mail-compose.html" class="btn btn-danger btn-block"
+                                        id="button-tambah-data-case-baru">New Case</a>
+                                    <div class="card mt-3 shadow">
                                         <div class="list-group shadow-none">
-                                            <a href="javascript:void();" class="list-group-item active"><i
+                                            <a href="javascript:void();" class="list-group-item"><i
                                                     class="fa fa-inbox mr-2"></i>Case Baru
                                                 <b>(12)</b></a>
                                             <a href="javascript:void();" class="list-group-item"><i
@@ -39,6 +39,18 @@
                                             <a href="javascript:void();" class="list-group-item"><i
                                                     class="fa fa-file-text-o mr-2"></i>Case Selesai
                                                 <b>(10)</b></a>
+
+                                        </div>
+                                    </div>
+                                    <div class="card mt-3 shadow">
+                                        <div class="list-group shadow-none">
+                                            <a href="javascript:void();" class="list-group-item"
+                                                id="button-case-data-lokasi"><i class="fa fa-map-marker mr-2"></i>Data
+                                                Lokasi</a>
+                                            <a href="javascript:void();" class="list-group-item"
+                                                id="button-case-data-klasifikasi"><i class="fa fa-sitemap mr-2"></i>Data
+                                                Klasifikasi</a>
+
 
                                         </div>
                                     </div>
@@ -122,437 +134,34 @@
                                         </div>
 
                                         <div class="col-lg-4">
-                                            <div class="position-relative has-icon-right">
+                                            {{-- <div class="position-relative has-icon-right">
                                                 <input type="text" class="form-control" placeholder="search mail" />
                                                 <div class="form-control-position">
                                                     <i class="fa fa-search"></i>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <!-- End row -->
 
-                                    <div class="card mt-3 shadow-none">
-                                        <div class="card-body">
+                                    <div class="card mt-1 shadow">
+                                        <div class="card-body" id="menu-data-case">
                                             <div class="table-responsive">
-                                                <table class="table table-hover">
+                                                <table class="table styled-table" id="example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Judul</th>
+                                                            <th>Keterangan</th>
+                                                            <th>Report</th>
+                                                            <th>Waktu</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox1" type="checkbox"
-                                                                        checked="checked" />
-                                                                    <label for="checkbox1"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Google Inc</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-info mr-2"></i>Lorem ipsum
-                                                                    dolor sit amet, consectetuer
-                                                                    adipiscing</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">08:23 AM</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox2" type="checkbox"
-                                                                        checked="checked" />
-                                                                    <label for="checkbox2"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star text-warning"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">John Deo</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-success mr-2"></i>Hi Bro,
-                                                                    How are you?</a>
-                                                            </td>
-                                                            <td></td>
-                                                            <td class="text-right">07:03 AM</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox3" type="checkbox" />
-                                                                    <label for="checkbox3"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Director</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-blue mr-2"></i>Dolor sit
-                                                                    amet, consectetuer
-                                                                    adipiscing</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">03:00 AM</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox4" type="checkbox"
-                                                                        checked="checked" />
-                                                                    <label for="checkbox4"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star text-warning"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Manager</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-warning mr-2"></i>Lorem
-                                                                    ipsum dolor sit amet, consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">20 Jan</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox5" type="checkbox" />
-                                                                    <label for="checkbox5"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star text-warning"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Facebook</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
-                                                                    consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td></td>
-                                                            <td class="text-right">20 Jan</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox6" type="checkbox"
-                                                                        checked="checked" />
-                                                                    <label for="checkbox6"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star text-warning"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Facebook</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
-                                                                    consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td></td>
-                                                            <td class="text-right">20 Jan</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox7" type="checkbox" />
-                                                                    <label for="checkbox7"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Twitter Inc</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-info mr-2"></i>Lorem ipsum
-                                                                    dolor sit amet, consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">20 Jan</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox-7" type="checkbox" />
-                                                                    <label for="checkbox-7"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">LinkedIn</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-rose mr-2"></i>Lorem ipsum
-                                                                    dolor sit amet, consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">20 Jan</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox8" type="checkbox" />
-                                                                    <label for="checkbox8"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Yahoo</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
-                                                                    consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">20 Jan</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox9" type="checkbox"
-                                                                        checked="checked" />
-                                                                    <label for="checkbox9"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Google</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-info mr-2"></i>Lorem ipsum
-                                                                    dolor sit amet, consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">20 Jan</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox10" type="checkbox" />
-                                                                    <label for="checkbox10"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star text-warning"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">John Deo</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-success mr-2"></i>Hi
-                                                                    brother, How are you?</a>
-                                                            </td>
-                                                            <td></td>
-                                                            <td class="text-right">18 Jan</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox11" type="checkbox"
-                                                                        checked="checked" />
-                                                                    <label for="checkbox11"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Manager</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-primary mr-2"></i>Dolor
-                                                                    sit amet, consectetuer
-                                                                    adipiscing</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">18 Jan</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox12" type="checkbox" />
-                                                                    <label for="checkbox12"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star text-warning"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Manager</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-warning mr-2"></i>Lorem
-                                                                    ipsum dolor sit amet, consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">10 Jan</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox13" type="checkbox"
-                                                                        checked="checked" />
-                                                                    <label for="checkbox13"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star text-warning"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Facebook</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
-                                                                    consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td></td>
-                                                            <td class="text-right">15 Jan</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox14" type="checkbox" />
-                                                                    <label for="checkbox14"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star text-warning"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Google Inc</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
-                                                                    consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td></td>
-                                                            <td class="text-right">04 March</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox15" type="checkbox"
-                                                                        checked="checked" />
-                                                                    <label for="checkbox15"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Twitter Inc</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-info mr-2"></i>Lorem ipsum
-                                                                    dolor sit amet, consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">12 March</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
-                                                                <div class="icheck-material-primary my-0">
-                                                                    <input id="checkbox16" type="checkbox" />
-                                                                    <label for="checkbox16"> </label>
-                                                                </div>
-                                                            </td>
-                                                            <td class="mail-rateing">
-                                                                <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Jhon Smith</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html"><i
-                                                                        class="fa fa-circle text-rose mr-2"></i>Lorem ipsum
-                                                                    dolor sit amet, consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">15 March</td>
-                                                        </tr>
-
-                                                        <tr class="table-active">
-                                                            <td>
+                                                        @foreach ($data as $item)
+                                                            <tr>
+                                                                {{-- <td>
                                                                 <div class="icheck-material-primary my-0">
                                                                     <input id="checkbox17" type="checkbox" />
                                                                     <label for="checkbox17"> </label>
@@ -560,39 +169,39 @@
                                                             </td>
                                                             <td class="mail-rateing">
                                                                 <i class="fa fa-star"></i>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Google Inc</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="mail-read.html">Lorem ipsum dolor sit amet,
-                                                                    consectetuer
-                                                                    adipiscing elit</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-paperclip"></i>
-                                                            </td>
-                                                            <td class="text-right">10 March</td>
-                                                        </tr>
+                                                            </td> --}}
+                                                                <td>
+                                                                    1
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#">{{ $item->judul_case }}</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#">{{ $item->keterangan_case }}</a>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <button class="btn-dark" data-toggle="modal" data-target="#modal-case" id="button-detail-data-case" data-id="{{$item->tiket_case}}"><i
+                                                                            class="fa fa-paperclip"></i></button>
+                                                                </td>
+                                                                <td class="text-right">{{ $item->created_at }}</td>
+                                                                <td>
+                                                                    @if ($item->status_case == 1)
+                                                                        <span class="badge badge-success m-1">Selesai</span>
+                                                                    @else
+                                                                        <span class="badge badge-danger m-1">Belum
+                                                                            Selesai</span>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+
                                                     </tbody>
                                                 </table>
                                             </div>
 
-                                            <hr />
+                                            {{-- <hr /> --}}
 
-                                            <div class="row">
-                                                <div class="col-7">Showing 1 - 25 of 300</div>
-                                                <div class="col-5">
-                                                    <div class="btn-group float-right">
-                                                        <button type="button" class="btn btn-light waves-effect">
-                                                            <i class="fa fa-chevron-left"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-light waves-effect">
-                                                            <i class="fa fa-chevron-right"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <!-- card body -->
                                     </div>
@@ -612,4 +221,42 @@
         </div>
         <!-- End container-fluid-->
     </div>
+    <div class="modal fade" id="modal-case" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content animated flipInX">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detail Case</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="data-modal-case">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, dicta. Voluptate cumque odit quam
+                        velit maiores sint rerum, dolore impedit commodi. Tempora eveniet odit vero rem blanditiis, tenetur
+                        laudantium cumque.</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i>
+                        Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            //Default data table
+            $('#default-datatable').DataTable();
+
+
+            var table = $('#example').DataTable({
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
+            });
+
+            table.buttons().container()
+                .appendTo('#example_wrapper .col-md-6:eq(0)');
+
+        });
+    </script>
 @endsection

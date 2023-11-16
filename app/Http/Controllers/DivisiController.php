@@ -627,10 +627,7 @@ class DivisiController extends Controller
         Session::flash('sukses','Berhasil Setup System');
         return redirect()->back();
     }
-    public function faq()
-    {
-        return view('faq');
-    }
+
     public function masterbarangshowedit($id)
     {
         $data = DB::table('sub_tbl_inventory')
@@ -1079,5 +1076,46 @@ class DivisiController extends Controller
         ->where('id_nomor_ruangan_cbaang',$id)
         ->get();
         return view('divisi.lokasi.tablemasterlokasibarang',['datainventaris'=>$datainventaris,'no'=>$cekruangan]);
+    }
+
+
+
+    // CASE
+    public function faq()
+    {
+        $data = DB::table('tbl_case')->where('kd_cabang',Auth::user()->cabang)->get();
+        return view('faq',['data'=>$data]);
+    }
+    public function tambahdatacase()
+    {
+        return view('faq.formtambah');
+    }
+    public function casedatalokasi()
+    {
+        $data = DB::table('tbl_lokasi')->orderBy('kd_lokasi', 'ASC')->get();
+        return view('faq.datalokasi',['data'=>$data]);
+    }
+    public function casedataklasifikasi()
+    {
+        $data=DB::table('no_urut_barang')->get();
+        return view('faq.dataklasifikasi',['data'=>$data]);
+    }
+    public function posttambahdatacase(Request $request)
+    {
+        DB::table('tbl_case')->insert([
+            'tiket_case'=> 'case-'.date('Y-m-d').'-'.Str::random(4),
+            'judul_case'=> $request->input('judul'),
+            'keterangan_case'=> $request->input('ket'),
+            'deskripsi_case'=> $request->input('desk'),
+            'kd_cabang'=> Auth::user()->cabang,
+            'status_case'=> 0,
+            'created_at'=> date('Y-m-d H:i:s'),
+        ]);
+        Session::flash('sukses','Berhasil Membuat Tiket Case');
+            return redirect()->back();
+    }
+    public function detaildatacaseid($id)
+    {
+        return view('faq.detailcase',['data'=>$id]);
     }
 }
