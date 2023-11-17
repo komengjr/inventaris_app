@@ -23,7 +23,7 @@
         overflow-y: auto;
     }
 </style>
-    <div class="content-wrapper">
+    <div class="content-wrapper gradient-forest">
         <div class="container-fluid" id="menudetaildataaset">
             <div class="row pl-2 pt-2 pb-2">
                 <div class="col-sm-9">
@@ -92,7 +92,7 @@
                             </div>
 
                             <div class="table-responsive pb-5">
-                                <table class="table styled-table align-items-center table-flush pb-2" id="default-table1">
+                                <table class="table styled-table align-items-center table-flush pb-2" id="default-datatable">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -100,7 +100,7 @@
                                             <th>Jenis Mutasi</th>
                                             <th>Penanggung Jawab</th>
                                             <th>Tanggal Terbit</th>
-                                            <th>Tanggal Pembelian</th>
+                                            <th>Tanggal Keluar</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -129,7 +129,7 @@
                                             <td>
                                                 {{$item->tanggal_buat}}
                                             </td>
-                                            <td>{{$item->tanggal_buat}}</td>
+                                            <td></td>
                                             <td><button class="btn-warning" data-toggle="modal" data-target="#modalmutasi" id="buttondetailmutasibarang" data-url="{{ url('divisi/datamutasi/detaildatamutasi',['id'=>$item->kd_mutasi]) }}" ><i class="fa fa-pencil"></i> Update</button></td>
                                         </tr>
                                         @endforeach
@@ -168,5 +168,11 @@
     <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
     {{-- <script src="{{ url('assets/js/dashboard-logistics.js', []) }}"></script> --}}
+    <script>
+        $(document).ready(function() {
 
+            $('#default-datatable').DataTable();
+
+        });
+    </script>
 @endsection

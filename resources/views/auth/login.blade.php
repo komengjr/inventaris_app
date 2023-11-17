@@ -21,7 +21,7 @@
             align-items: center;
             min-height: 100vh;
             /* background: url(1.gif) 0px 0px; */
-            background: linear-gradient(30deg,#4c5153,transparent,#229ccb);
+            /* background: linear-gradient(30deg,#4c5153,transparent,#229ccb); */
             height: 100%;
 
             /* Center and scale the image nicely */
@@ -32,14 +32,14 @@
     </style>
 </head>
 
-<body>
+<body class="gradient-forest">
 
     <!-- start loader -->
 
     <!-- end loader -->
 
     <!-- Start wrapper-->
-    <div id="wrapper" style="font-family: 'Russo One', sans-serif;" class="p-3">
+    <div id="wrapper" style="font-family: 'Russo One', sans-serif;" class="p-3 ">
 
 
         {{-- <div class="pb-5"></div>

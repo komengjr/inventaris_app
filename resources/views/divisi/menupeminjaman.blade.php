@@ -20,7 +20,7 @@
   overflow-y: auto;
 }
 </style>
-    <div class="content-wrapper">
+    <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
             <div class="row pl-2 pt-2 pb-2">
                 <div class="col-sm-9">
@@ -85,10 +85,6 @@
                                     data-url="{{ url('divisi/tambahdatapeminjaman', []) }}">
                                     <i class="fa fa-plus mr-1"></i> Tambah Data
                                 </button>
-                                <button type="button" class="btn-primary waves-effect waves-light">
-                                    <i class="fa fa-print mr-1"></i> Print
-                                </button>
-
                             </div>
                             <div class="table-responsive" id="showdatamutasi">
                                 <table id="default-datatable" class="table styled-table table-bordered align-items-center">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="content-wrapper">
+    <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
             <div class="row pl-2 pt-2 pb-2">
                 <div class="col-sm-9">
@@ -112,4 +112,11 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+
+            $('#default-datatable').DataTable();
+
+        });
+    </script>
 @endsection

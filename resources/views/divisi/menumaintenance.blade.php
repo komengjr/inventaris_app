@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="content-wrapper">
+    <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
             <div class="row pl-2 pt-2 pb-2">
                 <div class="col-sm-9">
@@ -80,9 +80,8 @@
             <div class="row">
                 <div class="col-12 col-lg-12">
                     <div class="card">
-                        <div class="card-body">
                             <div class="float-sm-left m-3 m-3">
-                                {{-- <h4 class="page-title">Data Peminjaman </h4> --}}
+                                <h4 class="page-title">Data Peminjaman </h4>
                             </div>
                             <div class="float-sm-right m-3 m-3">
                                 <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
@@ -90,13 +89,9 @@
                                     data-url="{{ url('divisi/tambahdatamaintenance', []) }}">
                                     <i class="fa fa-plus mr-1"></i> Tambah Data
                                 </button>
-                                {{-- <button type="button" class="btn-primary waves-effect waves-light">
-                                    <i class="fa fa-print mr-1"></i> Print
-                                </button> --}}
-
                             </div>
                             <div class="table-responsive pb-5">
-                                <table class="table styled-table align-items-center table-flush pb-2"
+                                <table class="styled-table align-items-center pb-2"
                                     id="default-datatable">
                                     <thead>
                                         <tr>
@@ -177,7 +172,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

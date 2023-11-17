@@ -208,7 +208,7 @@
         <!-- End Menu -->
         <div class="clearfix"></div>
 
-        <div class="content-wrapper">
+        <div class="content-wrapper ">
             @if ($message = Session::get('sukses'))
                 <button class="btn btn-warning" onclick="sukses_notifikasi()" id="buttonnotif" hidden>SHOW
                     ME</button>
