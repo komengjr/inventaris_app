@@ -567,7 +567,7 @@ class DivisiController extends Controller
             DB::table('sub_tbl_inventory_log')
             ->where('id',$value->id)
             ->update([
-                    'tgl_beli' => $value->th_perolehan.'/01/01',
+                    'tgl_beli' => $value->th_perolehan.'-01-02',
                     ]);
         }
         Session::flash('sukses','Berhasil Fix Tanggal');
