@@ -15,8 +15,8 @@
                 <div class="col-sm-10">
                     <select name="jenis_mutasi" id="" class="form-control single-select" required>
                         <option value="">Pilih Jenis</option>
-                        <option value="1">Penempatan</option>
-                        <option value="2">Penarikan</option>
+                        {{-- <option value="1">Penempatan</option>
+                        <option value="2">Penarikan</option> --}}
                         <option value="3">Mutasi Antar Cabang</option>
                     </select>
                 </div>
@@ -44,22 +44,16 @@
             </div>
 
             <div class="form-group row">
-                <label for="input-10" class="col-sm-2 col-form-label">Penanggung Jawab</label>
-                <div class="col-sm-10">
+                <label for="input-10" class="col-sm-2 col-form-label" style="font-size: 11px;">Penanggung Jawab Alat</label>
+                <div class="col-sm-4">
                     <input type="text" class="form-control" name="pj" id="" required>
                 </div>
-
-            </div>
-            <div class="form-group row">
                 <label for="input-14" class="col-sm-2 col-form-label">Tanggal Order</label>
                 <div class="col-sm-4">
                     <input type="date" class="form-control" id="input-14" name="tgl_buat" required/>
                 </div>
-                <label for="input-15" class="col-sm-2 col-form-label">Penerima</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="input-15" name="penerima" required/>
-                </div>
             </div>
+
             <div class="form-group row">
                 <label for="input-14" class="col-sm-2 col-form-label">Menyetujui</label>
                 <div class="col-sm-4">
@@ -70,9 +64,24 @@
                     <input type="text" class="form-control" id="input-15" name="menyerahkan" required/>
                 </div>
             </div>
-
             <div class="form-group row">
-                <label for="input-17" class="col-sm-2 col-form-label">Deskripsi</label>
+                <label for="input-17" class="col-sm-2 col-form-label">Deskripsi Yang Menyerahkan</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="4" id="input-17" name="deskripsi" required></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="input-15" class="col-sm-2 col-form-label">Penerima</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="input-15" name="penerima" required/>
+                </div>
+                <label for="input-14" class="col-sm-2 col-form-label">Tanggal Terima</label>
+                <div class="col-sm-4">
+                    <input type="date" class="form-control" id="input-14" name="tgl_buat" required/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="input-17" class="col-sm-2 col-form-label">Deskripsi Yang Menerima</label>
                 <div class="col-sm-10">
                     <textarea class="form-control" rows="4" id="input-17" name="deskripsi" required></textarea>
                 </div>

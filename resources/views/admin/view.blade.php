@@ -65,7 +65,7 @@
             }
         }
     </style>
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-12 col-lg-4 col-xl-4">
             <div class="card gradient-warning rounded-0">
                 <div class="card-body p-1">

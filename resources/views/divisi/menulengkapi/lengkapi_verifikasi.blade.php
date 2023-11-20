@@ -58,7 +58,7 @@
                                 <?php
                                 $ceklokasix = DB::table('sub_tbl_inventory')
                                     ->select('sub_tbl_inventory.*')
-                                    ->where('kd_cabang', auth::user()->cabang)
+                                    ->where('kd_cabang', Auth::user()->cabang)
                                     ->where('kd_lokasi', $lokasi->kd_lokasi)
                                     ->count();
                                 ?>

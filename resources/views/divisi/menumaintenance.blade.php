@@ -2,14 +2,16 @@
 @section('content')
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-            <div class="row pl-2 pt-2 pb-2">
-                <div class="col-sm-9">
-                    {{-- <h4 class="page-title">Form SDM & Umum</h4> --}}
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Menu Maintenance</li>
-                    </ol>
+            <div class="card mt-3">
+                <div class="row pl-4 pt-3">
+                    <div class="col-sm-9">
+                        <h4 class="page-title">Menu Maintenance</h4>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Menu Maintenance</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
             <!--End Row-->
@@ -80,13 +82,13 @@
             <div class="row">
                 <div class="col-12 col-lg-12">
                     <div class="card">
-                            <div class="float-sm-left m-3 m-3">
+                            {{-- <div class="float-left m-3 m-3">
                                 <h4 class="page-title">Data Peminjaman </h4>
-                            </div>
-                            <div class="float-sm-right m-3 m-3">
+                            </div> --}}
+                            <div class="float-right m-3 m-3">
                                 <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
                                     data-target="#modalmaintenance" id="tombolbarumaintenance"
-                                    data-url="{{ url('divisi/tambahdatamaintenance', []) }}">
+                                    data-url="{{ url('divisi/tambahdatamaintenance', []) }}" style="float: right;">
                                     <i class="fa fa-plus mr-1"></i> Tambah Data
                                 </button>
                             </div>

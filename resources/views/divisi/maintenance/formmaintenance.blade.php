@@ -37,7 +37,7 @@
         </div>
 
         <div class="col-12">
-            <label for="">Deskripsi Peminjaman</label>
+            <label for="">Deskripsi Maintenance</label>
             <textarea class="form-control" id="" cols="30" rows="10" name="ket_maintenance"></textarea>
         </div>
         <div class="col-12">

@@ -2,15 +2,18 @@
 @section('content')
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-            <div class="row pl-2 pt-2 pb-2">
+          <div class="card mt-3">
+            <div class="row pl-4 pt-3">
                 <div class="col-sm-9">
+                    <h4 class="page-title">Menu Stock Opname Barang</h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Inventaris & aset</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Form</li>
+                        <li class="breadcrumb-item"><a href="javaScript:void();">Data</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Stock Opname</li>
                     </ol>
                 </div>
             </div>
+          </div>
             @if ($message = Session::get('sukses'))
                 <div class="pl-3 pt-2 pb-2">
                     <div class="alert alert-icon-success alert-dismissible" role="alert">

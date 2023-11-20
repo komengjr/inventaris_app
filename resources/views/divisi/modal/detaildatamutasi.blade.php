@@ -47,7 +47,7 @@
                 <input type="text" class="form-control" value="{{$data->divisi}}">
             </div>
             <div class="col-6">
-                <label for="">Penanggung Jawab</label>
+                <label for="">Penanggung Jawab Alat</label>
                 <input type="text" class="form-control" value="{{$data->penanggung_jawab}}">
             </div>
             <div class="col-6">

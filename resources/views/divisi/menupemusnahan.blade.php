@@ -2,9 +2,10 @@
 @section('content')
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-            <div class="row pl-2 pt-2 pb-2">
+           <div class="card mt-3">
+            <div class="row pl-2 pt-2 ">
                 <div class="col-sm-9">
-                    {{-- <h4 class="page-title">Form SDM & Umum</h4> --}}
+                    <h4 class="page-title">Form SDM & Umum</h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
                         <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
@@ -12,6 +13,7 @@
                     </ol>
                 </div>
             </div>
+           </div>
 
 
             <div class="row">
@@ -119,8 +121,20 @@
                                             </span>
                                         </td>
 
-                                        <td>
-                                            <button></button>
+                                        <td class="text-center">
+                                            <div class="dropdown">
+                                                <button class="dropdown-toggle dropdown-toggle-nocaret btn-primary"
+                                                    data-toggle="dropdown">
+                                                    <i class="icon-options"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="javascript:void();">Action</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="javascript:void();">Another action</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="#">Download Template</a>
+
+                                            </div>
                                         </td>
                                     </tr>
 

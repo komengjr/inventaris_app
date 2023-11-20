@@ -22,14 +22,16 @@
 </style>
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-            <div class="row pl-2 pt-2 pb-2">
-                <div class="col-sm-9">
-                    {{-- <h4 class="page-title">Form SDM & Umum</h4> --}}
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Menu Peminjaman</li>
-                    </ol>
+            <div class="card mt-3">
+                <div class="row pl-4 pt-3">
+                    <div class="col-sm-9">
+                        <h4 class="page-title">Menu Peminjaman</h4>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Menu Peminjaman</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
             <div class="row">
