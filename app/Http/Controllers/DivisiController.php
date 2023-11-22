@@ -777,7 +777,7 @@ class DivisiController extends Controller
     public function ordertiketmutasi()
     {
         $cabang = DB::table('tbl_cabang')->get();
-        return view('divisi.modal.ordertiketmutasi',['cabang'=>$cabang]);
+        return view('divisi.mutasi.ordertiketmutasi',['cabang'=>$cabang]);
     }
     public function showdataordermutasi()
     {
@@ -798,7 +798,7 @@ class DivisiController extends Controller
                 'kd_mutasi' => 'mutasi-'.mt_rand(1000000, 99999999),
                 'jenis_mutasi' => $request->jenis_mutasi,
                 'kd_cabang' => auth::user()->cabang,
-                'asal_mutasi' => $request->asal_cabang,
+                'asal_mutasi' => auth::user()->cabang,
                 'target_mutasi' => $request->tujuan_cabang,
                 'departemen' => 0,
                 'divisi' => 0,
@@ -810,6 +810,7 @@ class DivisiController extends Controller
                 'ket' => $request->deskripsi,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
+        Session::flash('sukses','Berhasil Membuat Order Mutasi');
         return redirect()->back();
     }
     public function detaildatamutasi($id)

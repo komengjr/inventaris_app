@@ -39,7 +39,7 @@
         <!--Start header-->
         <header class="topbar-nav">
             <nav class="navbar navbar-expand">
-                <ul class="navbar-nav mr-auto align-items-center">
+                <ul class="navbar-nav mr-auto align-items-left">
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:void();">
                             <div class="media align-items-center">
@@ -137,16 +137,16 @@
                     <!-- Level Two-->
                     <ul>
                         @if (auth()->user()->akses == 'sdm')
-                            <li><a href="{{ asset('menu/formpinjam', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                            <li><a href="{{ asset('menu/formpinjam', []) }}"><i class="zmdi zmdi-assignment"></i>
                                     Menu Peminjaman</a></li>
                             <li><a href="{{ asset('menu/formmaintenance', []) }}"><i
-                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Maintenance</a></li>
-                            <li><a href="{{ asset('menu/formmutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                                        class="zmdi zmdi-assignment"></i> Menu Maintenance</a></li>
+                            <li><a href="{{ asset('menu/formmutasi', []) }}"><i class="zmdi zmdi-assignment"></i>
                                     Menu Mutasi</a></li>
                             <li><a href="{{ asset('menu/formpemusnahan', []) }}"><i
-                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Pemusnahan</a></li>
+                                        class="zmdi zmdi-assignment"></i> Menu Pemusnahan</a></li>
                             <li><a href="{{ asset('menu/verifdatainventaris', []) }}"><i
-                                        class="zmdi zmdi-dot-circle-alt"></i> Menu Stock Opname</a></li>
+                                        class="zmdi zmdi-assignment"></i> Menu Stock Opname</a></li>
                             {{-- <li><a href="{{ asset('menu/formdepresiasi', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Aset</a></li> --}}
                         @elseif(auth()->user()->akses == 'admin')
@@ -166,16 +166,16 @@
                     <ul>
                         @if (auth()->user()->akses == 'sdm')
                             <li><a href="{{ asset('menu/masterlokasi', []) }}"><i
-                                        class="zmdi zmdi-dot-circle-alt"></i>
+                                        class="zmdi zmdi-wrench"></i>
                                     Master Lokasi</a></li>
                             <li><a href="{{ asset('menu/masterbarang', []) }}"><i
-                                        class="zmdi zmdi-dot-circle-alt"></i>
+                                        class="zmdi zmdi-wrench"></i>
                                     Master Barang</a></li>
                             <li><a href="{{ asset('menu/masterstaff', []) }}"><i
-                                        class="zmdi zmdi-dot-circle-alt"></i>
+                                        class="zmdi zmdi-wrench"></i>
                                     Master Staff</a></li>
                         @elseif(auth()->user()->akses == 'keu')
-                            <li><a href="{{ asset('formsdm', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
+                            <li><a href="{{ asset('formsdm', []) }}"><i class="zmdi zmdi-wrench"></i> Form
                                     Keuangan</a></li>
                         @elseif(auth()->user()->akses == 'admin')
                             <li><a href="{{ asset('masteradmin', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Admin</a></li>
@@ -192,12 +192,12 @@
 
                 <li>
                     <a class="" href="javascript:;">
-                        <i class="zmdi zmdi-receipt"></i>
-                        <span class="title">Case</span>
+                        <i class="zmdi zmdi-help"></i>
+                        <span class="title">Bantuan</span>
                         <span class="arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="{{ asset('faq', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Data Case</a>
+                        <li><a href="{{ asset('faq', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Bantuan</a>
                         </li>
 
                     </ul>

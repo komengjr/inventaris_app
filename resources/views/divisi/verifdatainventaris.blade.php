@@ -8,7 +8,7 @@
                     <h4 class="page-title">Menu Stock Opname Barang</h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Data</a></li>
+                        <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Stock Opname</li>
                     </ol>
                 </div>

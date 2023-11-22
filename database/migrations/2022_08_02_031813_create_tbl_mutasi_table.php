@@ -27,7 +27,9 @@ class CreateTblMutasiTable extends Migration
             $table->string('penerima');
             $table->string('menyetujui');
             $table->string('yang_menyerahkan');
-            $table->string('ket')->nullable();
+            $table->longText('ket')->nullable();
+            $table->string('tgl_terima')->nullable();
+            $table->longText('ket_penerima')->nullable();
             $table->timestamps();
         });
     }

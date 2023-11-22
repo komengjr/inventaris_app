@@ -5,16 +5,16 @@
             <!-- Breadcrumb-->
             <div class="row pt-2 pb-2">
                 <div class="col-sm-9">
-                    <h4 class="page-title">Case Report</h4>
+                    <h4 class="page-title">Bantuan</h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="javaScript:void();">Menu</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="javaScript:void();">Case</a>
+                            <a href="javaScript:void();">Master Data</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Report
+                            Bantuan
                         </li>
                     </ol>
                 </div>
