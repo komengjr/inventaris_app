@@ -136,8 +136,40 @@
                                                             data-id="{{ $item->id_nomor_ruangan_cbaang }}"><i
                                                                 class="fa fa-eye"></i> master</button>
                                                     @else
-                                                        <button type="button" class="btn-danger"
-                                                            id="confirm-btn-alert" data-id="{{$item->id_nomor_ruangan_cbaang}}">Hapus</button>
+                                                        <button type="button" class="btn-danger" id="confirm-btn-alert{{ $item->id_nomor_ruangan_cbaang }}"
+                                                            data-id="{{ $item->id_nomor_ruangan_cbaang }}">Hapus</button>
+                                                        <script>
+                                                            $("#confirm-btn-alert{{ $item->id_nomor_ruangan_cbaang }}").click(function() {
+                                                                swal({
+                                                                    title: "Are you sure?",
+                                                                    text: "Delete Data lokasi dengan Kode ",
+                                                                    icon: "warning",
+                                                                    buttons: true,
+                                                                    dangerMode: false,
+                                                                }).then((willDelete) => {
+                                                                    if (willDelete) {
+                                                                        swal("Data Lokasi Berhasil Di Hapus", {
+                                                                            icon: "success",
+                                                                        });
+                                                                        var id = $(this).data("id");
+                                                                        $.ajax({
+                                                                                url: '../divisipost/datalokasi/delete/detail/' + id,
+                                                                                type: "GET",
+                                                                                // data: data,
+                                                                                // dataType: "html",
+                                                                            })
+                                                                            .done(function(data) {
+                                                                                location.reload();
+                                                                            })
+                                                                            .fail(function() {
+                                                                                swal("Batal Menghapus");
+                                                                            });
+                                                                    } else {
+                                                                        swal("Batal Menghapus");
+                                                                    }
+                                                                });
+                                                            });
+                                                        </script>
                                                     @endif
 
                                                 </td>
@@ -220,5 +252,4 @@
         });
     </script>
     <script src="{{ asset('assets/plugins/alerts-boxes/js/sweetalert.min.js') }}"></script>
-
 @endsection
