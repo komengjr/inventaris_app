@@ -126,15 +126,14 @@ class HomeController extends Controller
         $data = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*')
         ->where('id',$id)
-        ->get();
+        ->first();
         $datalokasi = DB::table('tbl_lokasi')
         ->select('tbl_lokasi.*')
         ->get();
         $kode = DB::table('tbl_inventory')
         ->select('tbl_inventory.*')
         ->get();
-        // dd($id);
-        return view('admin.editbarang1',[ 'data'=>$data, 'datalokasi'=>$datalokasi, 'kode'=>$kode, 'id'=>$id]);
+        return view('divisi.editdatabarang',[ 'data'=>$data, 'datalokasi'=>$datalokasi, 'kode'=>$kode, 'id'=>$id]);
     }
     public function hapusdatabarang($kode , $id)
     {
@@ -173,7 +172,6 @@ class HomeController extends Controller
                         'kd_lokasi' => $request->input('kd_lokasi'),
                         'kd_cabang' => $request->input('kd_cabang'),
                         'th_pembuatan' => $request->input('th_pembuatan'),
-                        // 'nir' => $request->input('nir')
                         'outlet' => $request->input('outlet'),
                         'th_perolehan' => $request->input('th_perolehan'),
                         'merk' => $request->input('merk'),

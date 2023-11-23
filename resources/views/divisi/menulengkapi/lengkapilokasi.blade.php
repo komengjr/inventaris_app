@@ -1,10 +1,10 @@
-<div class="modal-header">
+{{-- <div class="modal-header">
     <span><button class="btn-info"><i class="fa fa-arrow-circle-o-left"></i></button>
     </span>
     <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
         <i class="fa fa-close"></i>
     </button>
-</div>
+</div> --}}
 <div class="modal-body">
     <div class="card-body">
         <!-- Content Header (Page header) -->
@@ -20,7 +20,7 @@
                         <th>No</th>
                         <th>Nama Ruangan</th>
                         <th>Status Cek Barang</th>
-                        <th>Keterangan</th>
+                        {{-- <th>Keterangan</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -97,7 +97,7 @@
 
                             </td>
 
-                            <td>
+                            {{-- <td>
                                 <div id="div{{$databarang->id}}">
                                     <div style="display: none;">
                                         <textarea id="ket{{$databarang->id}}" class="form-control"></textarea>
@@ -105,7 +105,7 @@
                                     </div>
 
                                 </div>
-                            </td>
+                            </td> --}}
                         </tr>
                         <script>
                             function displayResult(buah){

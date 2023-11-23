@@ -25,28 +25,52 @@ class DivisiController extends Controller
             $gambar = "";
         }
 
-        $nilai = preg_replace("/[^0-9]/","",$request->harga_perolehan);
-        DB::table('sub_tbl_inventory')
-        ->where('id_inventaris',$request->input('kode_kode'))
-        ->update([
-                    'nama_barang' => $request->input('nama_barang'),
-                    'kd_lokasi' => $request->input('kd_lokasi'),
-                    'th_perolehan' => $request->input('th_perolehan'),
-                    'merk' => $request->input('merk'),
-                    'no_seri' => $request->input('no_seri'),
-                    'suplier' => $request->input('suplier'),
-                    'type' => $request->input('type'),
-                    'harga_perolehan' => $nilai,
-                    'gambar' => $gambar
-                ]);
-        $data = DB::table('sub_tbl_inventory')
-        ->select('sub_tbl_inventory.*')
-        ->where('kd_lokasi',$request->input('kd_lokasi'))
-        ->where('kd_cabang',$request->input('kd_cabang'))
-        ->get();
-        $id = $request->input('kd_lokasi');
-        // dd($id);
-        return view('admin.sub_barang1',['data'=>$data,'id'=>$id ]);
+        $entitas = DB::table('tbl_entitas_cabang')
+        ->join('tbl_cabang','tbl_cabang.kd_entitas_cabang','=','tbl_entitas_cabang.kd_entitas_cabang')
+        ->join('tbl_setting_cabang','tbl_setting_cabang.kd_cabang','=','tbl_cabang.kd_cabang')
+        ->where('tbl_setting_cabang.kd_cabang',Auth::user()->cabang)->first();
+        $cekdata = DB::table('sub_tbl_inventory')->where('id_inventaris',$request->input('kode_kode'))->first();
+        if ($cekdata->kd_lokasi != $request->input('kd_lokasi')) {
+            $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_lokasi',$request->input('kd_lokasi'))->where('kd_cabang',Auth::user()->cabang)->first();
+            $nilai = preg_replace("/[^0-9]/","",$request->harga_perolehan);
+            DB::table('sub_tbl_inventory')
+            ->where('id_inventaris',$request->input('kode_kode'))
+            ->update([
+                        'no_inventaris' => $cekdata->no.'/'.$cekdata->kd_inventaris.'/'.$request->input('kd_lokasi').'/'.$entitas->simbol_entitas.'.'.$entitas->no_cabang.'/'.$cekdata->th_perolehan,
+                        'nama_barang' => $request->input('nama_barang'),
+                        'kd_lokasi' => $request->input('kd_lokasi'),
+                        'th_perolehan' => $request->input('th_perolehan'),
+                        'merk' => $request->input('merk'),
+                        'no_seri' => $request->input('no_seri'),
+                        'suplier' => $request->input('suplier'),
+                        'type' => $request->input('type'),
+                        'harga_perolehan' => $nilai,
+                        'id_nomor_ruangan_cbaang' => $no_ruangan->id_nomor_ruangan_cbaang ,
+                        'gambar' => $gambar
+                    ]);
+        } else {
+            $nilai = preg_replace("/[^0-9]/","",$request->harga_perolehan);
+            DB::table('sub_tbl_inventory')
+            ->where('id_inventaris',$request->input('kode_kode'))
+            ->update([
+                        'nama_barang' => $request->input('nama_barang'),
+                        'th_perolehan' => $request->input('th_perolehan'),
+                        'merk' => $request->input('merk'),
+                        'no_seri' => $request->input('no_seri'),
+                        'suplier' => $request->input('suplier'),
+                        'type' => $request->input('type'),
+                        'harga_perolehan' => $nilai,
+                        'gambar' => $gambar
+                    ]);
+        }
+
+        // $data = DB::table('sub_tbl_inventory')
+        // ->select('sub_tbl_inventory.*')
+        // ->where('kd_lokasi',$request->input('kd_lokasi'))
+        // ->where('kd_cabang',$request->input('kd_cabang'))
+        // ->get();
+        // $id = $request->input('kd_lokasi');
+        // return view('admin.sub_barang1',['data'=>$data,'id'=>$id ]);
     }
 
 
@@ -573,36 +597,32 @@ class DivisiController extends Controller
         Session::flash('sukses','Berhasil Fix Tanggal');
         return redirect()->back();
     }
-    public function tokenmasterbarang()
+    public function fixdatamasterbarang()
     {
-        $no = 0 ;
-        $datakategori = DB::table('sub_tbl_inventory')->get();
-        $data = DB::table('sub_tbl_inventory')->distinct()->select('sub_tbl_inventory.th_perolehan')
-        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
-        ->orderBy('sub_tbl_inventory.th_perolehan', 'asc')
-        ->where('kd_cabang',auth::user()->cabang)->get();
-        foreach ($data as $data) {
-
         $cekjumlah = DB::table('sub_tbl_inventory')
-        ->join('tbl_setting_cabang','tbl_setting_cabang.kd_cabang','=','sub_tbl_inventory.kd_cabang')
-        ->orderBy('sub_tbl_inventory.th_perolehan', 'asc')
-        ->where('sub_tbl_inventory.th_perolehan',$data->th_perolehan)
         ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->get();
-
             foreach ($cekjumlah as $value) {
-                $no = $no + 1;
-                DB::table('sub_tbl_inventory')
-                ->where('id_inventaris',$value->id_inventaris)
-                ->where('kd_cabang',auth::user()->cabang)
-                ->update([
-                            'no_inventaris' => $no.'/'.$value->kd_inventaris.'/'.$value->kd_lokasi.'/P.'.$value->no_cabang.'/'.$value->th_perolehan,
-                            'no' =>  $no
-                            // 'no_inventaris' => $item->id.'/'.$item->kd_inventaris.'/'.$item->kd_lokasi.'/P.'.$item->no_cabang.'/'.$item->th_perolehan,
-                        ]);
+                $nourut = explode('/', trim($value->no_inventaris ))[0];
+                if ($value->kd_jenis == NULL) {
+                    DB::table('sub_tbl_inventory')
+                    ->where('id_inventaris',$value->id_inventaris)
+                    ->where('kd_cabang',auth::user()->cabang)
+                    ->update([
+                                'kd_jenis' => '0',
+                                'no' =>  $nourut
+
+                            ]);
+                } else {
+                    DB::table('sub_tbl_inventory')
+                    ->where('id_inventaris',$value->id_inventaris)
+                    ->where('kd_cabang',auth::user()->cabang)
+                    ->update([
+                                'no' =>  $nourut
+
+                            ]);
+                }
             }
-
-
-        }
+        Session::flash('sukses','Berhasil Fix Tanggal');
         return redirect()->back();
     }
     public function settingsystem(Request $request)

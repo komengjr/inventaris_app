@@ -135,7 +135,7 @@ Route::get('divisi/masterbarang/dataloginventaris/erorklasifikasi','BigDataContr
 Route::get('menu/masterstaff','DivisiController@masterstaff');
 
 Route::get('divisi/masterstaff/tambah',['as'=>'divisi/masterstaff/tambah','uses'=> 'DivisiController@tambahdatastaffkaryawan']);
-Route::get('divisi/masterbarang/token','DivisiController@tokenmasterbarang');
+Route::get('divisi/masterbarang/fixdata','DivisiController@fixdatamasterbarang');
 Route::post('divisi/masterstaff/tambah','DivisiController@posttambahdatastaff');
 Route::post('divisi/setting/system','DivisiController@settingsystem');
 Route::post('divisi/masterbarang/editbarang','DivisiController@posteditbarang');

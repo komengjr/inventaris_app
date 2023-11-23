@@ -346,6 +346,7 @@ $(document).on("click", "#updatedatainventori", function (e) {
         .done(function (data) {
             // console.log(data);
             $("#showdatabarang").html(data);
+            location.reload();
         })
         .fail(function () {
             $("#showdatabarang").html(

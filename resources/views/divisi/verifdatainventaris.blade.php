@@ -2,18 +2,18 @@
 @section('content')
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-          <div class="card mt-3">
-            <div class="row pl-4 pt-3">
-                <div class="col-sm-9">
-                    <h4 class="page-title">Menu Stock Opname Barang</h4>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Stock Opname</li>
-                    </ol>
+            <div class="card mt-3">
+                <div class="row pl-4 pt-3">
+                    <div class="col-sm-9">
+                        <h4 class="page-title">Menu Stock Opname Barang</h4>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Stock Opname</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
-          </div>
             @if ($message = Session::get('sukses'))
                 <div class="pl-3 pt-2 pb-2">
                     <div class="alert alert-icon-success alert-dismissible" role="alert">
@@ -28,6 +28,36 @@
                     </div>
                 </div>
             @endif
+
+            <div class="row">
+                <div class="col-12 col-lg-12 col-xl-12">
+                    <div class="card">
+                        <div class="card-header">Avg Stock Opname
+                            <div class="card-action">
+                                <div class="dropdown">
+                                    <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
+                                        data-toggle="dropdown">
+                                        <i class="icon-options"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="javascript:void();">Action</a>
+                                        <a class="dropdown-item" href="javascript:void();">Another action</a>
+                                        <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="javascript:void();">Separated link</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container-11">
+                                <canvas id="timeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -64,17 +94,17 @@
                                         @php
                                             $no = 1;
                                         @endphp
-                                        @foreach ($dataverif as $dataverif)
+                                        @foreach ($dataverif as $item)
                                             <tr>
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $dataverif->kode_verif }}</td>
-                                                <td>{{ $dataverif->tgl_verif }}</td>
-                                                <td>{{ $dataverif->status_verif }}</td>
+                                                <td>{{ $item->kode_verif }}</td>
+                                                <td>{{ $item->tgl_verif }}</td>
+                                                <td>{{ $item->status_verif }}</td>
 
                                                 <td class="text-center">
                                                     <button class="btn-warning" data-toggle="modal"
                                                         data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                        data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $dataverif->kode_verif]) }}">Lengkapi
+                                                        data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $item->kode_verif]) }}">Lengkapi
                                                         data</button>
                                                     <button class="btn-danger"><i class="fa fa-trash"></i></button>
                                                 </td>
@@ -117,6 +147,115 @@
         $(document).ready(function() {
 
             $('#default-datatable').DataTable();
+
+        });
+    </script>
+    <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>
+    <script src="{{ url('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
+    {{-- <script src="{{ url('assets/js/dashboard-logistics.js', []) }}"></script> --}}
+    <script>
+        $(function() {
+            "use strict";
+
+
+            // chart 1
+
+            $('.fleet-chart').easyPieChart({
+                easing: 'easeOutBounce',
+                barColor: '#ffffff',
+                lineWidth: 10,
+                trackColor: 'rgba(255, 255, 255, 0.12)',
+                scaleColor: false,
+                onStep: function(from, to, percent) {
+                    $(this.el).find('.fleet-status-percent').text(Math.round(percent));
+                }
+            });
+
+
+            // chart 6
+
+            var ctx = document.getElementById("timeChart").getContext('2d');
+
+
+            var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+            gradientStroke3.addColorStop(0, '#42e695');
+            gradientStroke3.addColorStop(1, '#3bb2b8');
+
+            var gradientStroke4 = ctx.createLinearGradient(0, 0, 0, 300);
+            gradientStroke4.addColorStop(0, ' #8E2DE2');
+            gradientStroke4.addColorStop(0.5, '#4A00E0');
+
+            var gradientStroke5 = ctx.createLinearGradient(0, 0, 0, 300);
+            gradientStroke5.addColorStop(0, ' #F5AF19');
+            gradientStroke5.addColorStop(0.5, '#F12711');
+
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        @foreach ($dataverif as $dataverif1)
+                            "{{ $dataverif1->tgl_verif }}",
+                        @endforeach
+
+                    ],
+                    datasets: [{
+                        label: 'Baik',
+                        data: [522, 425],
+                        backgroundColor: gradientStroke3,
+                        hoverBackgroundColor: gradientStroke3
+                    }, {
+                        label: 'Mintenance',
+                        data: [10, 18],
+                        backgroundColor: gradientStroke4,
+                        hoverBackgroundColor: gradientStroke4,
+                    }, {
+                        label: 'Rusak',
+                        data: [18, 22],
+                        backgroundColor: gradientStroke5,
+                        hoverBackgroundColor: gradientStroke5,
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: true,
+                        labels: {
+                            fontColor: '#585757',
+                            boxWidth: 40
+                        }
+                    },
+                    tooltips: {
+                        enabled: true,
+                        displayColors: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            categoryPercentage: 0.3,
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: '#585757'
+                            },
+                            gridLines: {
+                                display: true,
+                                color: "rgba(0, 0, 0, 0.05)"
+                            },
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: '#585757'
+                            },
+                            gridLines: {
+                                display: true,
+                                color: "rgba(0, 0, 0, 0.05)"
+                            },
+                        }]
+                    }
+
+                }
+            });
+
+
 
         });
     </script>

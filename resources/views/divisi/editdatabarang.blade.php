@@ -92,7 +92,7 @@
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
         <button class="btn-warning" id="lihatdatabarang"
-            data-url="{{ route('lihatdatabarang1', ['id' => $data[0]->kd_lokasi]) }}"><i
+            data-url="{{ route('lihatdatabarang1', ['id' => $data->kd_lokasi]) }}"><i
                 class="fa fa-arrow-circle-o-left"></i></button>
         <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-close"></i>
@@ -110,24 +110,24 @@
                             <label class="custom-file-upload form-control" id="upload-container"
                                 id="browseFile{{ $id }}">
                                 <input type="file" id="browseFile{{ $id }}" class="form-control" />
-                                <i class="fa fa-upload "> Upload Gambar22</i>
+                                <i class="fa fa-upload "> Upload Gambar</i>
                             </label>
                         @else
                         @endif
 
 
 
-                        @if ($data[0]->gambar == '')
+                        @if ($data->gambar == '')
                             <a href="https://via.placeholder.com/1920x1080" data-fancybox="images"
-                                data-caption="{{ $data[0]->nama_barang }}">
+                                data-caption="{{ $data->nama_barang }}">
                                 <img src="https://via.placeholder.com/800x500" alt="lightbox"
                                     class="lightbox-thumb img-thumbnail" id="videoPreview" width="50"
                                     height="50">
                             </a>
                         @else
-                            <a href="{{ url($data[0]->gambar, []) }}" data-fancybox="images"
-                                data-caption="{{ $data[0]->nama_barang }}">
-                                <img src="{{ url($data[0]->gambar, []) }}" alt="lightbox"
+                            <a href="{{ url($data->gambar, []) }}" data-fancybox="images"
+                                data-caption="{{ $data->nama_barang }}">
+                                <img src="{{ url($data->gambar, []) }}" alt="lightbox"
                                     class="lightbox-thumb img-thumbnail" id="videoPreview" width="50"
                                     height="50">
                             </a>
@@ -148,60 +148,61 @@
 
                     <div class="col-md-4">
                         <label for="inputEmail4" class="form-label">Kode Barang</label>
-                        <input type="text" class="form-control" value="{{ $data[0]->kd_inventaris }}" disabled>
+                        <input type="text" class="form-control" value="{{ $data->kd_inventaris }}" disabled>
 
-                        <label for="inputEmail4" class="form-label">Lokasi</label>
+                        <label for="inputEmail4" class="form-label">Lokasiss</label>
                         <?php
-                        $nama_lokasi = DB::table('tbl_lokasi')
-                            ->select('tbl_lokasi.nama_lokasi')
-                            ->where('kd_lokasi', $data[0]->kd_lokasi)
-                            ->get();
-                        $lokasi_all = DB::table('tbl_lokasi')->get();
+                        $nama_lokasi = DB::table('tbl_nomor_ruangan_cabang')
+                        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+                        ->where('tbl_nomor_ruangan_cabang.kd_lokasi', $data->kd_lokasi)
+                        ->first();
+                        $lokasi_all = DB::table('tbl_nomor_ruangan_cabang')
+                        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+                        ->get();
                         ?>
                         <select class="form-control single-select" name="kd_lokasi">
-                            <option value="{{ $data[0]->kd_lokasi }}">{{ $nama_lokasi[0]->nama_lokasi }}</option>
+                            <option value="{{ $data->kd_lokasi }}">{{ $nama_lokasi->nomor_ruangan}} - {{ $nama_lokasi->nama_lokasi }}</option>
                             @foreach ($lokasi_all as $lokasi_all)
-                                <option value="{{ $lokasi_all->kd_lokasi }}">{{ $lokasi_all->nama_lokasi }}</option>
+                                <option value="{{ $lokasi_all->kd_lokasi }}"> {{ $lokasi_all->nomor_ruangan }} - {{ $lokasi_all->nama_lokasi }}</option>
                             @endforeach
 
                         </select>
                         {{-- <input type="text" class="form-control" value="{{$nama_lokasi[0]->nama_lokasi}}" disabled> --}}
 
                         <label for="inputEmail4" class="form-label">Tanggal Pembelian</label>
-                        <input type="text" name="tgl_beli" class="form-control"
-                            value="{{ $data[0]->th_pembuatan }}">
+                        <input type="date" name="tgl_beli" class="form-control"  value="{{ $data->tgl_beli }}">
                         <input id="link" type="text" name="link" class="form-control" value="" hidden>
                         <input id="urut" type="text" name="urut" class="form-control" value="{{ $id }}" hidden>
                         {{-- <input type="text" name="kd_inventaris" class="form-control" value="{{$data[0]->kd_inventaris}}"> --}}
 
                         <label for="inputPassword4" class="form-label">Nomor Serial</label>
-                        <input type="text" name="no_seri" class="form-control" value="{{ $data[0]->no_seri }}">
+                        <input type="text" name="no_seri" class="form-control" value="{{ $data->no_seri }}">
                         <label for="inputPassword4" class="form-label">Supplier</label>
-                        <input type="text" name="suplier" class="form-control" value="{{ $data[0]->suplier }}">
+                        <input type="text" name="suplier" class="form-control" value="{{ $data->suplier }}">
 
                     </div>
                     <div class="col-md-4">
                         <label for="inputPassword4" class="form-label">Nama Barang</label>
                         <input type="text" name="kode_kode" class="form-control"
-                            value="{{ $data[0]->id_inventaris }}" hidden>
+                            value="{{ $data->id_inventaris }}" hidden>
                         <input type="text" name="nama_barang" class="form-control" id="inputPassword4"
-                            value="{{ $data[0]->nama_barang }}">
+                            value="{{ $data->nama_barang }}">
                         {{-- <label for="inputPassword4" class="form-label">Kode Cabang</label> --}}
                         <input type="text" name="kd_cabang" class="form-control" id="inputPassword4"
-                            value="{{ $data[0]->kd_cabang }}" hidden>
+                            value="{{ $data->kd_cabang }}" hidden>
                         {{-- <label for="inputEmail4" class="form-label">Otlet</label>
                     <input type="text" name="outlet" class="form-control" value="{{$data[0]->outlet}}"> --}}
 
                         <label for="inputPassword4" class="form-label">Tahun Perolehan</label>
                         <input type="text" name="th_perolehan" class="form-control"
-                            value="{{ $data[0]->th_perolehan }}">
+                            value="{{ $data->th_perolehan }}">
                         <label for="inputPassword4" class="form-label">Merek</label>
-                        <input type="text" name="merk" class="form-control" value="{{ $data[0]->merk }}">
+                        <input type="text" name="merk" class="form-control" value="{{ $data->merk }}">
                         <label for="inputPassword4" class="form-label">Type Barang</label>
-                        <input type="text" name="type" class="form-control" value="{{ $data[0]->type }}">
+                        <input type="text" name="type" class="form-control" value="{{ $data->type }}">
                         <label for="inputPassword4" class="form-label">Harga Perolehan</label>
                         <input type="text" name="harga_perolehan" class="form-control" id="dengan-rupiah"
-                            value="@currency($data[0]->harga_perolehan)">
+                            value="@currency($data->harga_perolehan)">
                     </div>
 
                 </div>
@@ -233,7 +234,7 @@
                                 <?php
                                 $datapinjam = DB::table('tbl_peminjaman')
                                     ->join('tbl_sub_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
-                                    ->where('tbl_sub_peminjaman.id_inventaris', $data[0]->id_inventaris)
+                                    ->where('tbl_sub_peminjaman.id_inventaris', $data->id_inventaris)
                                     ->get();
                                 ?>
                                 @foreach ($datapinjam as $datapinjam)

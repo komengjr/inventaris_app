@@ -97,7 +97,7 @@
                                         <a class="dropdown-item" href="javascript:void();">Another action</a> --}}
                                         <a class="dropdown-item" href="{{ url('download/inv_nama_cabang.xls', []) }}">Download Template</a>
                                         <div class="dropdown-divider"></div>
-                                        {{-- <a class="dropdown-item" href="{{ url('divisi/masterbarang/token', []) }}">Create Nomor</a> --}}
+                                        <a class="dropdown-item" href="{{ url('divisi/masterbarang/fixdata', []) }}">Fix Data</a>
                                     </div>
                                 </div>
                             </div>
