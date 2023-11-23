@@ -189,10 +189,7 @@
             </div>
         </div>
     </div>
-    <form method="post" id="form-delete-master-lokasi">
-        @csrf
-        <button type="submit" id="button-delete-master-lokasi"></button>
-    </form>
+
     <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
     <script>
