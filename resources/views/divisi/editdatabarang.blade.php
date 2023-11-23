@@ -245,11 +245,11 @@
                                             @php
                                                 $cabang = DB::table('tbl_cabang')->where('kd_cabang',$datapinjam->kd_cabang)->first();
                                             @endphp
-                                        <td>{{ $cabang->nama_cabang }}</td>
+                                        <td>-</td>
                                             @php
                                                 $cabang1 = DB::table('tbl_cabang')->where('kd_cabang',$datapinjam->tujuan_cabang)->first();
                                             @endphp
-                                        <td>{{ $cabang1->nama_cabang }}</td>
+                                        <td>-</td>
                                             @php
                                                 $pj = DB::table('tbl_staff')->where('nip',$datapinjam->pj_pinjam)->first();
                                             @endphp
