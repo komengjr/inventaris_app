@@ -158,6 +158,7 @@
                         ->first();
                         $lokasi_all = DB::table('tbl_nomor_ruangan_cabang')
                         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+                        -where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)
                         ->get();
                         ?>
                         <select class="form-control single-select" name="kd_lokasi">
