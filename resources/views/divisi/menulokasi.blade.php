@@ -1,25 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-.modal {
-  padding: 10px; !important; //
-}
-.modal .modal-xl {
-  width: 100%;
-  max-width: none;
-  /* height: 100%; */
-  margin: 0;
-}
-.modal .modal-content {
-  /* height: 100%; */
-  border: 0;
-  border-radius: 0;
-}
-.modal .modal-body {
-  overflow-y: auto;
-}
-</style>
+    <style>
+        .modal {
+            padding: 10px;
+            !important; //
+        }
+
+        .modal .modal-xl {
+            width: 100%;
+            max-width: none;
+            /* height: 100%; */
+            margin: 0;
+        }
+
+        .modal .modal-content {
+            /* height: 100%; */
+            border: 0;
+            border-radius: 0;
+        }
+
+        .modal .modal-body {
+            overflow-y: auto;
+        }
+    </style>
     <div class="content-wrapper">
         <div class="container-fluid">
             <div class="row pl-2 pt-2 pb-2">
@@ -28,7 +32,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
                         <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Menu Peminjaman</li>
+                        <li class="breadcrumb-item active" aria-current="page">Menu Lokasi</li>
                     </ol>
                 </div>
             </div>
@@ -59,34 +63,38 @@
                 </div>
             </div>
             @if ($message = Session::get('sukses'))
-                    <div class="pl-1 pt-2 pb-2">
-                        <div class="alert alert-icon-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <div class="alert-icon icon-part-success">
-                                <i class="fa fa-check"></i>
-                            </div>
-                            <div class="alert-message">
-                                <span><strong>Success!</strong> ---- <a href="javascript:void();"
-                                        class="alert-link">{{ $message }}</a></span>
-                            </div>
+                <div class="pl-1 pt-2 pb-2">
+                    <div class="alert alert-icon-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <div class="alert-icon icon-part-success">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="alert-message">
+                            <span><strong>Success!</strong> ---- <a href="javascript:void();"
+                                    class="alert-link">{{ $message }}</a></span>
                         </div>
                     </div>
+                </div>
             @endif
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="">
                             <div class="float-sm-left m-3 m-3">
-                                {{-- <h4 class="page-title">Data Peminjaman </h4> --}}
+                                <h4 class="page-title">Data Nomor Lokasi Cabang</h4>
                             </div>
                             <div class="float-sm-right m-3 m-3">
                                 <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                    data-target="#tambahdatabaru" id="buttontambahnomorruangan" >
+                                    data-target="#tambahdatabaru" id="buttontambahnomorruangan">
                                     <i class="fa fa-plus mr-1"></i> Tambah Nomor Ruangan
                                 </button>
-                                <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                    data-target="#tambahdatabaru" id="buttonlihatmasterlokasi" >
-                                    <i class="fa fa-plus mr-1"></i> Master Lokasi
+                                <button type="button" class="btn-info waves-effect waves-light" data-toggle="modal"
+                                    data-target="#tambahdatabaru" id="button-show-lokasi-cabang">
+                                    <i class="fa fa-eye mr-1"></i> Data Lokasi Cabang
+                                </button>
+                                <button type="button" class="btn-dark waves-effect waves-light" data-toggle="modal"
+                                    data-target="#tambahdatabaru" id="buttonlihatmasterlokasi">
+                                    <i class="fa fa-eye mr-1"></i> Master Lokasi
                                 </button>
 
 
@@ -98,7 +106,6 @@
                                             <th>No</th>
                                             <th>Nomor Ruangan</th>
                                             <th>Nama Ruangan</th>
-
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -108,14 +115,30 @@
                                         @endphp
                                         @foreach ($ruangan as $item)
                                             <tr>
-                                                <td>{{$no++}}</td>
-                                                <td>{{$item->nomor_ruangan}}</td>
-                                                <td>{{$item->nama_lokasi}}</td>
-
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $item->nomor_ruangan }}</td>
+                                                <td>{{ $item->nama_lokasi }}</td>
                                                 <td class="text-center">
-                                                    <button class="btn-primary" data-toggle="modal" data-target="#buttontableruangan" id="buttonsetupdataruangan" data-id="{{$item->id_nomor_ruangan_cbaang}}"><i class="fa fa-cog"></i> setup</button>
-                                                    <button class="btn-info" data-toggle="modal" data-target="#buttontableruangan" id="buttontablemasterlokasibarang" data-id="{{$item->id_nomor_ruangan_cbaang}}"><i class="fa fa-eye"></i> master</button>
-                                                    {{-- <button class="btn-warning"><i class="fa fa-pencil"></i></button> --}}
+                                                    @php
+                                                        $cekdata = DB::table('sub_tbl_inventory')
+                                                            ->where('kd_lokasi', $item->kd_lokasi)
+                                                            ->first();
+                                                    @endphp
+                                                    @if ($cekdata)
+                                                        <button class="btn-primary" data-toggle="modal"
+                                                            data-target="#buttontableruangan" id="buttonsetupdataruangan"
+                                                            data-id="{{ $item->id_nomor_ruangan_cbaang }}"><i
+                                                                class="fa fa-cog"></i> setup</button>
+                                                        <button class="btn-info" data-toggle="modal"
+                                                            data-target="#buttontableruangan"
+                                                            id="buttontablemasterlokasibarang"
+                                                            data-id="{{ $item->id_nomor_ruangan_cbaang }}"><i
+                                                                class="fa fa-eye"></i> master</button>
+                                                    @else
+                                                        <button type="button" class="btn-danger"
+                                                            id="confirm-btn-alert" data-id="{{$item->id_nomor_ruangan_cbaang}}">Hapus</button>
+                                                    @endif
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -166,6 +189,10 @@
             </div>
         </div>
     </div>
+    <form method="post" id="form-delete-master-lokasi">
+        @csrf
+        <button type="submit" id="button-delete-master-lokasi"></button>
+    </form>
     <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
     <script>
@@ -194,4 +221,6 @@
 
         });
     </script>
+    <script src="{{ asset('assets/plugins/alerts-boxes/js/sweetalert.min.js') }}"></script>
+
 @endsection

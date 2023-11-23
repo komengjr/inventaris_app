@@ -158,10 +158,12 @@ Route::get('divisi/datamutasi/showdataorder',['as'=>'divisi/datamutasi/showdatao
 Route::get('menu/masterlokasi','DivisiController@masterlokasi');
 Route::get('divisi/masterlokasi/tambah',['as'=>'divisi/masterlokasi/tambah','uses'=> 'DivisiController@formtambahnomoruangan']);
 Route::get('divisi/masterlokasi/lihatdata',['as'=>'divisi/masterlokasi/lihatdata','uses'=> 'DivisiController@masterlihatdatalokasi']);
+Route::get('divisi/masterlokasi/lihatdatacabang',['as'=>'divisi/masterlokasi/lihatdatacabang','uses'=> 'DivisiController@masterlihatdatalokasicabang']);
 Route::get('divisi/masterlokasi/datasetup/{id}',['as'=>'divisi/masterlokasi/datasetup','uses'=> 'DivisiController@datasetuplokasiruangan']);
 Route::get('divisi/masterlokasi/datasetup/inputdatamaster/{no}/{id}',['as'=>'divisi/masterlokasi/datasetup/inputdatamaster/','uses'=> 'DivisiController@inputdatamasterlokasibarang']);
 Route::get('divisi/masterlokasi/datasetup/resetdatamaster/{no}/{id}',['as'=>'divisi/masterlokasi/datasetup/resetdatamaster/','uses'=> 'DivisiController@resetdatamasterlokasibarang']);
 Route::get('divisi/masterlokasi/datasetup/tablemasterlokasibarang/{id}',['as'=>'divisi/masterlokasi/datasetup/tablemasterlokasibarang/','uses'=> 'DivisiController@tabledatamasterlokasibarang']);
+Route::get('divisipost/datalokasi/delete/detail/{id}',['as'=>'divisipost/datalokasi/delete/detail/','uses'=> 'DivisiController@deletemasterlokasicabang']);
 Route::post('divisi/masterlokasi/posttambah', 'DivisiController@posttambahdatanomorruangan');
 
 Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','uses'=> 'DivisiController@tambahdatapemusnahan']);

@@ -1061,6 +1061,25 @@ $(document).on("click", "#buttonlihatmasterlokasi", function (e) {
         });
 
 });
+$(document).on("click", "#button-show-lokasi-cabang", function (e) {
+    e.preventDefault();
+    var url = $(this).data("id");
+    $.ajax({
+        url: '../divisi/masterlokasi/lihatdatacabang',
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showdatalokasi").html(data);
+        })
+        .fail(function () {
+            $("#showdatalokasi").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
+
 $(document).on("click", "#buttonsetupdataruangan", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
@@ -1249,3 +1268,38 @@ $(document).on("click", "#button-detail-data-case", function (e) {
 
 });
 
+
+
+
+
+
+$("#confirm-btn-alert").click(function() {
+    swal({
+        title: "Are you sure?",
+        text: "Delete Data lokasi dengan Kode ",
+        icon: "warning",
+        buttons: true,
+        dangerMode: false,
+    }).then((willDelete) => {
+        if (willDelete) {
+            swal("Data Lokasi Berhasil Di Hapus", {
+                icon: "success",
+            });
+            var id = $(this).data("id");
+            $.ajax({
+                    url: '../divisipost/datalokasi/delete/detail/'+id,
+                    type: "GET",
+                    // data: data,
+                    // dataType: "html",
+                })
+                .done(function(data) {
+                    location.reload();
+                })
+                .fail(function() {
+                    swal("Batal Menghapus");
+                });
+        } else {
+            swal("Batal Menghapus");
+        }
+    });
+});

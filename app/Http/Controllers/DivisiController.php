@@ -1001,6 +1001,14 @@ class DivisiController extends Controller
         $lokasi = DB::table('tbl_lokasi')->get();
         return view('divisi.lokasi.mastertablelokasi',['lokasi'=>$lokasi]);
     }
+    public function masterlihatdatalokasicabang()
+    {
+        $lokasi = DB::table('sub_tbl_inventory')
+        ->select('tbl_lokasi.*')
+        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
+        ->distinct()->get(['sub_tbl_inventory.kd_lokasi']);
+        return view('divisi.lokasi.mastertablelokasicabang',['lokasi'=>$lokasi]);
+    }
     public function datasetuplokasiruangan($id)
     {
         $cekruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$id)->first();
@@ -1034,6 +1042,12 @@ class DivisiController extends Controller
         }
 
 
+    }
+    public function deletemasterlokasicabang($id)
+    {
+        DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang',Auth::user()->cabang)->where('id_nomor_ruangan_cbaang',$id)->delete();
+        Session::flash('sukses','Berhasil Membuat Nomor Ruangan');
+        return redirect()->back();
     }
     public function inputdatamasterlokasibarang($no,$id)
     {
