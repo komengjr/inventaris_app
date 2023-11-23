@@ -1005,6 +1005,7 @@ class DivisiController extends Controller
     {
         $lokasi = DB::table('sub_tbl_inventory')
         ->select('tbl_lokasi.*')
+        ->where('sub_tbl_inventory.kd_cabang',Auth::user()->cabang)
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
         ->distinct()->get(['sub_tbl_inventory.kd_lokasi']);
         return view('divisi.lokasi.mastertablelokasicabang',['lokasi'=>$lokasi]);
