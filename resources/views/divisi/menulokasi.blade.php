@@ -122,6 +122,7 @@
                                                     @php
                                                         $cekdata = DB::table('sub_tbl_inventory')
                                                             ->where('kd_lokasi', $item->kd_lokasi)
+                                                            ->where('kd_cabang', Auth::user()->cabang)
                                                             ->first();
                                                     @endphp
                                                     @if ($cekdata)
