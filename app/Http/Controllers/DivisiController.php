@@ -396,7 +396,7 @@ class DivisiController extends Controller
             [
                 'kode_verif' => $request->input('tiket_verif'),
                 'tgl_verif' => $request->input('waktu'),
-                'tahun' => 2022,
+                'tahun' => "-",
                 'kd_cabang' => auth::user()->cabang,
                 'status_verif' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -408,7 +408,7 @@ class DivisiController extends Controller
     {
         $cekdata = DB::table('tbl_verifdatainventaris')
         ->where('kode_verif',$id)
-        ->get();
+        ->first();
         $tbl_cabang = DB::table('tbl_cabang')->where('kd_cabang',auth::user()->cabang)->get();
         $lokasi = DB::table('tbl_lokasi')->get();
         // $databarang = DB::table('sub_tbl_inventory')->where('kode_verif',$id)->get();

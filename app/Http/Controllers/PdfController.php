@@ -75,14 +75,15 @@ class PdfController extends Controller
 
     public function printverifikasi($id)
     {
+        // $x = $id;
         $databrg = DB::table('tbl_sub_verifdatainventaris')
         ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
-
         ->where('tbl_sub_verifdatainventaris.kode_verif',$id)
         ->get();
+        $data = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->get();
         $ttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif',$id)->get();
-        $pdf = PDF::loadview('divisi.print.verif',['databrg'=>$databrg, 'dataverif'=>$dataverif, 'ttd'=>$ttd])->setPaper('A4','potrait');
+        $pdf = PDF::loadview('divisi.print.verif',['databrg'=>$databrg, 'dataverif'=>$dataverif,'data'=>$data, 'ttd'=>$ttd])->setPaper('A4','potrait');
         return $pdf->stream();
     }
     public function printpeminjaman($id)

@@ -55,7 +55,6 @@
                                             <th>No</th>
                                             <th>Kode Verifikasi</th>
                                             <th>Tanggal Verifikasi</th>
-                                            <th>Tahun Verifikasi</th>
                                             <th>Status Verifikasi</th>
 
                                             <th class="text-center">Action</th>
@@ -70,7 +69,6 @@
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $dataverif->kode_verif }}</td>
                                                 <td>{{ $dataverif->tgl_verif }}</td>
-                                                <td>{{ $dataverif->tahun }}</td>
                                                 <td>{{ $dataverif->status_verif }}</td>
 
                                                 <td class="text-center">

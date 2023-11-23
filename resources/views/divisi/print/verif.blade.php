@@ -5,8 +5,8 @@
 
     <title>Cetak</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 </head>
 <style>
     /* @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap'); */
@@ -150,7 +150,46 @@
            </tbody>
         </table>
         <hr>
+        <h3>Data Belum Di Verif</h3>
+        <table style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);" border="1">
+            <thead style="font-weight: bold;">
+                 <tr>
+                     <td class="text-center">No</td>
+                     <td>No Inventaris</td>
+                     <td>Nama Barang</td>
+                     <td>Merek</td>
+                     <td>Type</td>
+                     <td>No Seri</td>
+                     {{-- <td>Keterangan</td> --}}
+                 </tr>
+            </thead>
+            <tbody>
+             @php
+                 $no = 1;
+             @endphp
+             @foreach ($data as $data)
+                @php
+                    $cekdata = DB::table('tbl_sub_verifdatainventaris')
+                    ->where('id_inventaris',$data->id_inventaris)->where('kode_verif',$dataverif[0]->kode_verif)->first();
+                @endphp
+                @if ($cekdata)
 
+                @else
+                <tr>
+                    <td class="text-center">{{$no++}}</td>
+                    <td>{{$data->no_inventaris}}</td>
+                    <td>{{$data->nama_barang}}</td>
+                    <td>{{$data->merk}} </td>
+                    <td>{{$data->no_seri}}</td>
+                    <td class="text-center">
+
+                    </td>
+                </tr>
+                @endif
+
+             @endforeach
+            </tbody>
+         </table>
     <div class="footer">
         <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
