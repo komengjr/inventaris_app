@@ -102,7 +102,7 @@
                                                 <td>{{ $item->tgl_verif }}</td>
                                                 <td>
                                                     @php
-                                                        $jumlahi = DB::table('sub_tbl_inventory')->count();
+                                                        $jumlahi = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->count();
                                                     @endphp
                                                     {{ $jumlahi }}
                                                 </td>
