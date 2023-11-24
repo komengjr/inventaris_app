@@ -218,7 +218,7 @@
                 <div class="col-lg-9">
                     <div class="float-sm-right">
                         <button class="btn-success" id="button-penyelesaian-stockopname" data-id="{{$cekdata->kode_verif}}"><i class="fa fa-save"></i> Penyelesaian & Simpan</button>
-                        <button class="btn-info m-1" onclick="window.open('{{ url('divisi/verifikasi/print/verif', ['id'=>$cekdata->kode_verif]) }}', '', 'width=1200, height=700');"><i class="fa fa-print"></i> Preview PDF</button>
+                        {{-- <button class="btn-info m-1" onclick="window.open('{{ url('divisi/verifikasi/print/verif', ['id'=>$cekdata->kode_verif]) }}', '', 'width=1200, height=700');"><i class="fa fa-print"></i> Preview PDF</button> --}}
                     </div>
                 </div>
             </div>
