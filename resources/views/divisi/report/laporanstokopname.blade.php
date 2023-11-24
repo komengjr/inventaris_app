@@ -157,8 +157,8 @@
             </tbody>
         </table>
         <hr>
-        <h3>Data Belum Di Verif</h3>
-        {{-- <table
+        <h5>Data Belum Di Verif</h5>
+        <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="1">
             <thead style="font-weight: bold;">
@@ -168,36 +168,27 @@
                     <td>Nama Barang</td>
                     <td>Merek</td>
                     <td>Type</td>
-                    <td>No Seri</td>
+                    {{-- <td>Nama Barang</td>
+                    <td>Merek</td>
+                    <td>Type</td>
+                    <td>No Seri</td> --}}
                 </tr>
             </thead>
             <tbody>
                 @php
                     $no = 1;
                 @endphp
-                @foreach ($data as $data)
-                    @php
-                        $cekdata = DB::table('tbl_sub_verifdatainventaris')
-                            ->where('id_inventaris', $data->id_inventaris)
-                            ->where('kode_verif', $dataverif[0]->kode_verif)
-                            ->first();
-                    @endphp
-                    @if ($cekdata)
-                    @else
+                @foreach ($data_arr as $data)
                         <tr>
                             <td class="text-center">{{ $no++ }}</td>
-                            <td>{{ $data->no_inventaris }}</td>
-                            <td>{{ $data->nama_barang }}</td>
-                            <td>{{ $data->merk }} </td>
-                            <td>{{ $data->no_seri }}</td>
-                            <td class="text-center">
+                            <td>{{ $data['no_inventaris'] }}</td>
+                            <td>{{ $data['nama_barang'] }}</td>
+                            <td>{{ $data['merk'] }}</td>
+                            <td>{{ $data['type'] }}</td>
 
-                            </td>
-                        </tr>
-                    @endif
                 @endforeach
             </tbody>
-        </table> --}}
+        </table>
         <div class="footer">
             <table
                 style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"

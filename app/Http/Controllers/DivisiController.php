@@ -122,11 +122,34 @@ class DivisiController extends Controller
         ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
         ->where('tbl_sub_verifdatainventaris.kode_verif',$id)
         ->get();
-        $data = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->get();
+        $data = DB::table('sub_tbl_inventory')
+        ->select('sub_tbl_inventory.id_inventaris','sub_tbl_inventory.no_inventaris','sub_tbl_inventory.nama_barang','sub_tbl_inventory.merk','sub_tbl_inventory.type')
+        ->where('sub_tbl_inventory.kd_cabang',Auth::user()->cabang)->get();
+        $data_arr = array();
+        foreach ($data as $record) {
+        $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->where('id_inventaris',$record->id_inventaris)->first();
+        if ($cekdata) {
+
+        } else {
+            $data_arr[] = array(
+                // "id_inventaris" =>$record->id_inventaris,
+                "no_inventaris" =>$record->no_inventaris,
+                "nama_barang" =>$record->nama_barang,
+                "merk" =>$record->merk,
+                "type" =>$record->type,
+            );
+        }
+
+
+        }
+        // dd($data_arr);
+
+
+
         $ttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif',$id)->get();
         $image = base64_encode(file_get_contents(public_path('icon.png')));
-        $pdf = PDF::loadview('divisi.report.laporanstokopname',['databrg'=>$databrg, 'dataverif'=>$dataverif,'data'=>$data, 'ttd'=>$ttd],compact('image'))->setPaper('A4','potrait')->setOptions(['defaultFont' => 'Calibri']);
+        $pdf = PDF::loadview('divisi.report.laporanstokopname',['databrg'=>$databrg, 'dataverif'=>$dataverif,'data_arr'=>$data_arr, 'ttd'=>$ttd],compact('image'))->setPaper('A4','potrait')->setOptions(['defaultFont' => 'Calibri']);
         return base64_encode($pdf->stream());
     }
 
