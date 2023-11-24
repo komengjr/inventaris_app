@@ -127,22 +127,19 @@ class DivisiController extends Controller
         ->where('sub_tbl_inventory.kd_cabang',Auth::user()->cabang)->get();
         $data_arr = array();
         foreach ($data as $record) {
-        $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->where('id_inventaris',$record->id_inventaris)->first();
-        if ($cekdata) {
+            $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->where('id_inventaris',$record->id_inventaris)->first();
+            if ($cekdata) {
 
-        } else {
-            $data_arr[] = array(
-                // "id_inventaris" =>$record->id_inventaris,
-                "no_inventaris" =>$record->no_inventaris,
-                "nama_barang" =>$record->nama_barang,
-                "merk" =>$record->merk,
-                "type" =>$record->type,
-            );
+            } else {
+                $data_arr[] = array(
+                    // "id_inventaris" =>$record->id_inventaris,
+                    "no_inventaris" =>$record->no_inventaris,
+                    "nama_barang" =>$record->nama_barang,
+                    "merk" =>$record->merk,
+                    "type" =>$record->type,
+                );
+            }
         }
-
-
-        }
-
         $ttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif',$id)->get();
         $image = base64_encode(file_get_contents(public_path('icon.png')));

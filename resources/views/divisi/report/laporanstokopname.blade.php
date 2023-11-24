@@ -11,9 +11,7 @@
         margin-top: 5px;
         font-family: Calibri (Body);
     }
-    .pagenum:before {
-        content: counter(page);
-    }
+
 </style>
 <style>
     div.header {
@@ -101,7 +99,6 @@
     </div>
     <div class="body">
         <br>
-        <span class="pagenum"></span>
         <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="0">

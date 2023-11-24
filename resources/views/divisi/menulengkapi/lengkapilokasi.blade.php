@@ -18,7 +18,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Ruangan</th>
+                        <th>Detail Barang</th>
                         <th>Status Cek Barang</th>
                         {{-- <th>Keterangan</th> --}}
                     </tr>
@@ -30,7 +30,10 @@
                     @foreach ($databarang as $databarang)
                         <tr>
                             <td data-label="No">{{$no++}}</td>
-                            <td data-label="Nama Barang">{{$databarang->nama_barang}}</td>
+                            <td data-label="Detail Barang">
+                                {{$databarang->nama_barang}}
+                                <p>( {{$databarang->no_inventaris}} )</p>
+                            </td>
 
                             <td data-label="Pilih Kondisi" class="text-left">
                                 @php
