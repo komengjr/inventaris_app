@@ -564,6 +564,13 @@ class DivisiController extends Controller
         $lokasi = DB::table('tbl_lokasi')->get();
         return view('divisi.modal.editdataloginventaris',['data'=>$data,'klasifikasi'=>$klasifikasi,'lokasi'=>$lokasi]);
     }
+    public function masterbarangeditloginventarisklasifikasi($id)
+    {
+        $data = DB::table('sub_tbl_inventory_log')->where('id',$id)->first();
+        $klasifikasi = DB::table('tbl_inventory')->get();
+        $lokasi = DB::table('tbl_lokasi')->get();
+        return view('divisi.modal.editdataloginventarisklasifikasi',['data'=>$data,'klasifikasi'=>$klasifikasi,'lokasi'=>$lokasi]);
+    }
     public function posteditdataloginventory(Request $request , $id)
     {
         DB::table('sub_tbl_inventory_log')

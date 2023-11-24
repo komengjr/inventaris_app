@@ -348,7 +348,7 @@ class BigDataController extends Controller
                     "tgl_beli" => $tgl_beli,
                     "th_perolehan" => $th_perolehan,
                     "btn" => "
-                    <button class='btn-warning' id='buttoneditloginventaris'  data-id=".$idx."><i class='zmdi zmdi-edit'></i> edit</button>
+                    <button class='btn-warning' id='buttoneditloginventarisklasifikasi'  data-id=".$idx."><i class='zmdi zmdi-edit'></i> edit</button>
                     "
                 );
             }

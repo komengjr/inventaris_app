@@ -3,17 +3,17 @@
     <div class="col-md-6 pt-2">
         <label for="inputEmail4" class="form-label">Nama Barang</label>
         <input type="text" class="form-control" name="nama_barang" value="{{ $data->nama_barang }}">
-        <input type="text" class="form-control" name="kd_inventaris" value="{{$data->kd_inventaris}}" hidden>
+        <input type="text" class="form-control" name="kd_lokasi" value="{{$data->kd_lokasi}}" hidden>
     </div>
-
-    <div class="col-md-6 pt-2" >
-        <label for="inputAddress" class="form-label" style="color: red"><b>Kode Lokasi</b></label>
-        <select class="form-control single-select bg-danger" name="kd_lokasi" >
-            <option value="{{$data->kd_lokasi}}">{{$data->kd_lokasi}}</option>
-            @foreach ($lokasi as $lokasi)
-            <option value="{{$lokasi->kd_lokasi}}">{{$lokasi->nama_lokasi}}</option>
+    <div class="col-md-6 pt-2 bg-danger">
+        <label for="inputPassword4" class="form-label">Kode Klasifikasi</label>
+        <select class="form-control single-select" name="kd_inventaris">
+            <option value="{{$data->kd_inventaris}}">{{$data->kd_inventaris}}</option>
+            @foreach ($klasifikasi as $klasifikasi)
+            <option value="{{$klasifikasi->kd_inventaris}}">{{$klasifikasi->nama_barang}} ( {{$klasifikasi->kd_inventaris}} )</option>
             @endforeach
         </select>
+        {{-- <input type="text" class="form-control" name="kd_inventaris" value="{{$data->kd_inventaris}}"> --}}
     </div>
     <div class="col-md-4 pt-2">
         <label for="inputAddress2" class="form-label">Tahun Perolehan</label>
@@ -33,11 +33,11 @@
     </div>
     <div class="col-md-4 pt-2">
         <label for="inputCity" class="form-label">Suplier</label>
-        <input type="text" class="form-control" name="suplier" value="{{ $data->suplier }}">
+        <input type="text" class="form-control" name="suplier" value="{{ $data->suplier }}" >
     </div>
     <div class="col-md-4 pt-2">
         <label for="inputCity" class="form-label">Harga Perolehan</label>
-        <input type="text" class="form-control" name="harga" value="{{ $data->harga_perolehan }}">
+        <input type="text" class="form-control" name="harga" value="{{ $data->harga_perolehan }}" >
     </div>
 
 

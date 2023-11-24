@@ -560,6 +560,25 @@ $(document).on("click", "#buttoneditloginventaris", function (e) {
             );
         });
 });
+$(document).on("click", "#buttoneditloginventarisklasifikasi", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    var url = "../divisi/masterbarang/dataloginventaris/editdataklasifikasi/"+id;
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showmenudataloginventaris").html(data);
+        })
+        .fail(function () {
+            $("#showmenudataloginventaris").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 
 $(document).on("click", "#buttoneditdataloginventory", function (e) {
     var data = $("#form-updateloginventory").serialize();

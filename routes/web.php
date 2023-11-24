@@ -98,6 +98,7 @@ Route::get('divisi/masterbarang/dataloginventaris',['as'=>'divisi/masterbarang/d
 Route::get('divisi/masterbarang/dataloginventaris/cekeror',['as'=>'divisi/masterbarang/dataloginventaris/cekeror','uses'=> 'DivisiController@cekerorloginventaris']);
 Route::get('divisi/masterbarang/dataloginventaris/cekerorklasifikasi',['as'=>'divisi/masterbarang/dataloginventaris/cekerorklasifikasi','uses'=> 'DivisiController@cekerorklasifikasiloginventaris']);
 Route::get('divisi/masterbarang/dataloginventaris/editdata/{id}',['as'=>'divisi/masterbarang/dataloginventaris/editdata','uses'=> 'DivisiController@masterbarangeditloginventaris']);
+Route::get('divisi/masterbarang/dataloginventaris/editdataklasifikasi/{id}',['as'=>'divisi/masterbarang/dataloginventaris/editdataklasifikasi','uses'=> 'DivisiController@masterbarangeditloginventarisklasifikasi']);
 Route::get('divisi/masterbarang/showedit/{id}',['as'=>'divisi/masterbarang/showedit','uses'=> 'DivisiController@masterbarangshowedit']);
 Route::post('divisi/masterbarang/postedit/{id}',['as'=>'divisi/masterbarang/postedit','uses'=> 'DivisiController@posteditdataloginventory']);
 Route::get('divisi/masterbarang/dataloginventaris/downloaddataloginventory',['as'=>'divisi/masterbarang/dataloginventaris/downloaddataloginventory','uses'=> 'DivisiController@downloaddataloginventory']);
