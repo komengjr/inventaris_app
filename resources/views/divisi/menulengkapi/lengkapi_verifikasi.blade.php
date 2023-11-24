@@ -52,6 +52,7 @@
                                 <th>Nama Ruangan</th>
                                 <th>Total Barang</th>
                                 <th>Status Cek Barang</th>
+                                <th>Total Verifikasi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -131,6 +132,7 @@
                                         </table>
 
                                     </td>
+                                    <td><h5>{{$statusbarang+$statusbarang1+$statusbarang2}}</h5></td>
                                     <td>
                                         @if ($totalbarang == ($statusbarang+$statusbarang1+$statusbarang2))
                                         <button class="btn-success" disabled>Verified</button>
