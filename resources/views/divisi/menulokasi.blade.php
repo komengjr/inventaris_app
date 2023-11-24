@@ -24,11 +24,12 @@
             overflow-y: auto;
         }
     </style>
-    <div class="content-wrapper">
+    <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-            <div class="row pl-2 pt-2 pb-2">
+           <div class="card mt-3">
+            <div class="row pl-4 pt-3">
                 <div class="col-sm-9">
-                    {{-- <h4 class="page-title">Form SDM & Umum</h4> --}}
+                    <h4 class="page-title">Master Lokasi</h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
                         <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
@@ -36,6 +37,7 @@
                     </ol>
                 </div>
             </div>
+           </div>
             <div class="row">
                 <div class="col-12 col-lg-12 col-xl-12">
                     <div class="card gradient-ohhappiness">
@@ -78,7 +80,7 @@
             @endif
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <div class="card pb-4">
                         <div class="">
                             <div class="float-sm-left m-3 m-3">
                                 <h4 class="page-title">Data Nomor Lokasi Cabang</h4>
@@ -96,8 +98,6 @@
                                     data-target="#tambahdatabaru" id="buttonlihatmasterlokasi">
                                     <i class="fa fa-eye mr-1"></i> Master Lokasi
                                 </button>
-
-
                             </div>
                             <div class="table-responsive" id="showdatamutasi">
                                 <table id="default-datatable" class="table styled-table table-bordered align-items-center">
@@ -106,6 +106,7 @@
                                             <th>No</th>
                                             <th>Nomor Ruangan</th>
                                             <th>Nama Ruangan</th>
+                                            <th>Total Barang Masuk</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -118,6 +119,14 @@
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $item->nomor_ruangan }}</td>
                                                 <td>{{ $item->nama_lokasi }}</td>
+                                                <td>
+                                                    @php
+                                                        $barang = DB::table('sub_tbl_inventory')
+                                                        // ->join('tbl_nomor_ruangan_cabang','tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang','=','sub_tbl_inventory.id_nomor_ruangan_cbaang')
+                                                        ->where('id_nomor_ruangan_cbaang',$item->id_nomor_ruangan_cbaang)->count();
+                                                    @endphp
+                                                    {{$barang}}
+                                                </td>
                                                 <td class="text-center">
                                                     @php
                                                         $cekdata = DB::table('sub_tbl_inventory')

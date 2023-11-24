@@ -102,7 +102,9 @@
                                                 <td>{{ $item->tgl_verif }}</td>
                                                 <td>
                                                     @php
-                                                        $jumlahi = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->count();
+                                                        $jumlahi = DB::table('sub_tbl_inventory')
+                                                            ->where('kd_cabang', Auth::user()->cabang)
+                                                            ->count();
                                                     @endphp
                                                     {{ $jumlahi }}
                                                 </td>
@@ -123,15 +125,21 @@
                                                 </td>
 
                                                 <td class="text-center">
-                                                    <button class="btn-primary" data-toggle="modal"
-                                                        data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                        data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $item->kode_verif]) }}"><i
-                                                            class="fa fa-shield"></i> Lengkapi
-                                                        data</button>
-                                                    <button class="btn-info" data-toggle="modal"
-                                                        data-target="#modal-data-verifikasi" id="button-cetak-stock-opname"
-                                                        data-id="{{ $item->kode_verif }}"><i class="fa fa-print"></i>
-                                                        Cetak</button>
+                                                    @if ($item->status_verif == 0)
+                                                        <button class="btn-primary" data-toggle="modal"
+                                                            data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
+                                                            data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $item->kode_verif]) }}"><i
+                                                                class="fa fa-shield"></i> Lengkapi
+                                                            data</button>
+                                                    @else
+                                                        <button class="btn-info" data-toggle="modal"
+                                                            data-target="#modal-data-verifikasi"
+                                                            id="button-cetak-stock-opname"
+                                                            data-id="{{ $item->kode_verif }}"><i class="fa fa-print"></i>
+                                                            Cetak</button>
+                                                    @endif
+
+
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -1,10 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    <div class="content-wrapper">
+    <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-            <div class="row pl-2 pt-2 pb-2">
+          <div class="card mt-3">
+            <div class="row pl-4 pt-3">
                 <div class="col-sm-9">
-                    {{-- <h4 class="page-title">Form SDM & Umum</h4> --}}
+                    <h4 class="page-title">Master Staff</h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
                         <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
@@ -12,31 +13,17 @@
                     </ol>
                 </div>
             </div>
+          </div>
 
 
             <div class="row">
-                <div class="col-12 col-lg-6 col-xl-6">
+                <div class="col-12 col-lg-12 col-xl-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body text-left">
-                                    <h4 class="text-primary mb-0">0 Item</h4>
-                                    <span class="small-font">Avg Loading Time</span>
-                                </div>
-                                <div class="w-circle-icon rounded bg-primary">
-                                    <i class="fa fa-clock-o text-white"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6 col-xl-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="media align-items-center">
-                                <div class="media-body text-left">
-                                    <h4 class="text-secondary mb-0">15 Item</h4>
-                                    <span class="small-font">Avg Loading Weight</span>
+                                    <h4 class="text-secondary mb-0">{{count($data)}} Staff</h4>
+                                    <span class="small-font">Total Staff</span>
                                 </div>
                                 <div class="w-circle-icon rounded bg-secondary">
                                     <i class="fa fa-tasks text-white"></i>
@@ -61,14 +48,14 @@
                             Recent History
                             <div class="card-action">
                                 <div class="dropdown">
-                                    <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
+                                    <button class="btn-dark dropdown-toggle dropdown-toggle-nocaret"
                                         data-toggle="dropdown">
                                         <i class="icon-options"></i>
-                                    </a>
+                                    </button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="javascript:void();">Action</a>
+                                        {{-- <a class="dropdown-item" href="javascript:void();">Action</a>
                                         <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                        <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                                        <a class="dropdown-item" href="javascript:void();">Something else here</a> --}}
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modaldatastaff" id="buttontambahstaff">Tambah Staff</a>
                                     </div>
@@ -76,7 +63,7 @@
                             </div>
                         </div>
                         <div class="table-responsive pb-5">
-                            <table class="table styled-table align-items-center table-flush pb-2" id="example">
+                            <table class="table styled-table align-items-center table-flush pb-2" id="default-datatable">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -139,19 +126,9 @@
     <script src="{{ url('assets/plugins/bootstrap-datatable/js/buttons.colVis.min.js', []) }}"></script>
     <script>
         $(document).ready(function() {
-         //Default data table
-          $('#default-datatablexx').DataTable();
 
+            $('#default-datatable').DataTable();
 
-          var table = $('#examplexx').DataTable( {
-           lengthChange: false,
-           buttons: [ 'copy', 'excel', 'pdf', 'print', 'colvis' ]
-         } );
-
-        table.buttons().container()
-           .appendTo( '#example_wrapper .col-md-6:eq(0)' );
-
-         } );
-
-       </script>
+        });
+    </script>
 @endsection

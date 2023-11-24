@@ -11,6 +11,9 @@
         margin-top: 5px;
         font-family: Calibri (Body);
     }
+    .pagenum:before {
+        content: counter(page);
+    }
 </style>
 <style>
     div.header {
@@ -48,10 +51,12 @@
         border: 1px solid #252424;
     }
 
-    table {
+    /* table {
         border-style: solid;
+    } */
+    table {
+        border-collapse: collapse;
     }
-
     table tr td p {
 
         padding: 0px;
@@ -96,6 +101,7 @@
     </div>
     <div class="body">
         <br>
+        <span class="pagenum"></span>
         <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="0">
@@ -200,21 +206,21 @@
                 <tr>
                     <td class="text-center" style="padding-top: 15px; padding-bottom: 15px; width: 33%;">
                         {{-- <img style="padding-left: 2px; left: 20px;" src=""> --}}
-                        <br><br><br><br><br>
-                        -
-                        <br>
+                        <br><br><br>
+
+
                         {{-- (..........................) --}}
                     </td>
                     <td class="text-center" style="width: 33%;">
-                        <br><br><br><br><br>
+                        <br><br><br>
                         {{-- Manager SDM & UMUM --}}
-                        <br>
+
                         {{-- (..........................) --}}
                     </td>
                     <td class="text-center" style="width: 33%;">
-                        <br><br><br><br><br>
+                        <br><br><br>
                         {{-- Kepala Cabang ( Yang Bersangkutan ) --}}
-                        <br>
+
                         {{-- (..........................) --}}
                     </td>
                 </tr>

@@ -64,7 +64,7 @@
                                 <?php
                                 $ceklokasix = DB::table('sub_tbl_inventory')
                                     ->select('sub_tbl_inventory.*')
-                                    ->where('kd_cabang', Auth::user()->cabang)
+                                    ->where('kd_cabang',Auth::user()->cabang)
                                     ->where('kd_lokasi', $lokasi->kd_lokasi)
                                     ->count();
                                 ?>
@@ -217,7 +217,8 @@
                 </div>
                 <div class="col-lg-9">
                     <div class="float-sm-right">
-                        <button class="btn-success m-1" onclick="window.open('{{ url('divisi/verifikasi/print/verif', ['id'=>$cekdata->kode_verif]) }}', '', 'width=1200, height=700');"><i class="fa fa-print"></i> Submit Penyelesaian & Generate PDF</button>
+                        <button class="btn-success" id="button-penyelesaian-stockopname" data-id="{{$cekdata->kode_verif}}"><i class="fa fa-save"></i> Penyelesaian & Simpan</button>
+                        <button class="btn-info m-1" onclick="window.open('{{ url('divisi/verifikasi/print/verif', ['id'=>$cekdata->kode_verif]) }}', '', 'width=1200, height=700');"><i class="fa fa-print"></i> Preview PDF</button>
                     </div>
                 </div>
             </div>
@@ -227,3 +228,36 @@
 <div class="modal-footer">
     <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 </div>
+<script src="{{ asset('assets/plugins/alerts-boxes/js/sweetalert.min.js') }}"></script>
+<script>
+    $("#button-penyelesaian-stockopname").click(function() {
+        swal({
+            title: "Are you sure?",
+            text: "Menyelesaikan Verifikasi Data Inventaris",
+            icon: "success",
+            buttons: true,
+
+        }).then((willDelete) => {
+            if (willDelete) {
+                swal("Data Lokasi Berhasil Di Hapus", {
+                    icon: "success",
+                });
+                var id = $(this).data("id");
+                $.ajax({
+                        url: '../divisipostpenyelesaian/data/stockopname/'+id,
+                        type: "GET",
+                        // data: data,
+                        // dataType: "html",
+                    })
+                    .done(function(data) {
+                        location.reload();
+                    })
+                    .fail(function() {
+                        swal("Batal Menghapus");
+                    });
+            } else {
+                swal("Batal Menghapus");
+            }
+        });
+    });
+</script>

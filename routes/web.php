@@ -178,6 +178,7 @@ Route::get('divisi/verifikasi/print/peminjaman/{id}','PdfController@printpeminja
 Route::get('divisi/verifikasi/print/pemusnahan/{id}','PdfController@printpemusnahan');
 Route::get('divisi/datamutasi/print/datamutasi/{id}','PdfController@printdatamutasi');
 Route::get('divisi/verifikasi/peminjaman/pemyelesaian/{id}','PdfController@penyelesaianpeminjaman');
+Route::get('divisipostpenyelesaian/data/stockopname/{id}','DivisiController@divisipostpenyelesaianstockopname');
 // Admin Controller
 //Mutasi
 Route::post('divisi/datamutasi/posttambahdata', 'DivisiController@posttambahdatamutasi');

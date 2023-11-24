@@ -142,14 +142,16 @@ class DivisiController extends Controller
 
 
         }
-        // dd($data_arr);
-
-
 
         $ttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif',$id)->get();
         $image = base64_encode(file_get_contents(public_path('icon.png')));
         $pdf = PDF::loadview('divisi.report.laporanstokopname',['databrg'=>$databrg, 'dataverif'=>$dataverif,'data_arr'=>$data_arr, 'ttd'=>$ttd],compact('image'))->setPaper('A4','potrait')->setOptions(['defaultFont' => 'Calibri']);
+        $pdf->output();
+
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
 
@@ -170,6 +172,15 @@ class DivisiController extends Controller
 
 
         return view('divisi.formverivikasi',['tiket' => $jadi ]);
+    }
+    public function divisipostpenyelesaianstockopname($id)
+    {
+        DB::table('tbl_verifdatainventaris')
+        ->where('kode_verif',$id)
+        ->where('kd_cabang',Auth::user()->cabang)
+        ->update([
+                    'status_verif' => 1,
+                ]);
     }
     public function lengkapipeminjaman($id)
     {
@@ -1023,7 +1034,8 @@ class DivisiController extends Controller
     public function masterstaff()
     {
         $data = DB::table('tbl_staff')->where('kd_cabang',auth::user()->cabang)->get();
-        return view('divisi.menustaff',['data'=>$data]);
+        $staff = DB::table('tbl_staff')->where('kd_cabang',Auth::user()->cabang)->count();
+        return view('divisi.menustaff',['data'=>$data, 'staff'=>$staff]);
     }
     public function tambahdatastaffkaryawan()
     {
