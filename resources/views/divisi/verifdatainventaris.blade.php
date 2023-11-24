@@ -40,9 +40,9 @@
                                         <i class="icon-options"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="javascript:void();">Action</a>
+                                        {{-- <a class="dropdown-item" href="javascript:void();">Action</a>
                                         <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                        <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                                        <a class="dropdown-item" href="javascript:void();">Something else here</a> --}}
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="javascript:void();">Separated link</a>
                                     </div>
@@ -85,8 +85,9 @@
                                             <th>No</th>
                                             <th>Kode Verifikasi</th>
                                             <th>Tanggal Verifikasi</th>
+                                            <th>Jumlah Inventaris</th>
+                                            <th>Jumlah Terverifikasi</th>
                                             <th>Status Verifikasi</th>
-
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -99,14 +100,38 @@
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $item->kode_verif }}</td>
                                                 <td>{{ $item->tgl_verif }}</td>
-                                                <td>{{ $item->status_verif }}</td>
+                                                <td>
+                                                    @php
+                                                        $jumlahi = DB::table('sub_tbl_inventory')->count();
+                                                    @endphp
+                                                    {{ $jumlahi }}
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        $jumlah = DB::table('tbl_sub_verifdatainventaris')
+                                                            ->where('kode_verif', $item->kode_verif)
+                                                            ->count();
+                                                    @endphp
+                                                    {{ $jumlah }}
+                                                </td>
+                                                <td>
+                                                    @if ($item->status_verif == 0)
+                                                        <span class="badge badge-danger m-1">Belum Selesai</span>
+                                                    @else
+                                                        <span class="badge badge-success m-1">Selesai</span>
+                                                    @endif
+                                                </td>
 
                                                 <td class="text-center">
-                                                    <button class="btn-warning" data-toggle="modal"
+                                                    <button class="btn-primary" data-toggle="modal"
                                                         data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                        data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $item->kode_verif]) }}">Lengkapi
+                                                        data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $item->kode_verif]) }}"><i
+                                                            class="fa fa-shield"></i> Lengkapi
                                                         data</button>
-                                                    <button class="btn-danger"><i class="fa fa-trash"></i></button>
+                                                    <button class="btn-info" data-toggle="modal"
+                                                        data-target="#modal-data-verifikasi" id="button-cetak-stock-opname"
+                                                        data-id="{{ $item->kode_verif }}"><i class="fa fa-print"></i>
+                                                        Cetak</button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -140,6 +165,27 @@
                     <div class="modal-body">
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-data-verifikasi" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Report</h5>
+                    <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="show-menu-report-stockopname">
+
+                </div>
+                {{-- <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i>
+                        Close</button>
+                    <button type="button" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Save
+                        changes</button>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -200,17 +246,47 @@
                     ],
                     datasets: [{
                         label: 'Baik',
-                        data: [522, 425],
+                        data: [
+                            @foreach ($dataverif as $data)
+                                @php
+                                    $totalbaik = DB::table('tbl_sub_verifdatainventaris')
+                                        ->where('kode_verif', $data->kode_verif)
+                                        ->where('status_data_inventaris', 0)
+                                        ->count();
+                                @endphp
+                                    "{{ $totalbaik }}",
+                            @endforeach
+                        ],
                         backgroundColor: gradientStroke3,
                         hoverBackgroundColor: gradientStroke3
                     }, {
                         label: 'Mintenance',
-                        data: [10, 18],
+                        data: [
+                            @foreach ($dataverif as $dataverif3)
+                                @php
+                                    $totalmaintenance = DB::table('tbl_sub_verifdatainventaris')
+                                        ->where('kode_verif', $dataverif3->kode_verif)
+                                        ->where('status_data_inventaris', 1)
+                                        ->count();
+                                @endphp
+                                    "{{ $totalmaintenance }}",
+                            @endforeach
+                        ],
                         backgroundColor: gradientStroke4,
                         hoverBackgroundColor: gradientStroke4,
                     }, {
                         label: 'Rusak',
-                        data: [18, 22],
+                        data: [
+                            @foreach ($dataverif as $dataverif4)
+                                @php
+                                    $totalrusak = DB::table('tbl_sub_verifdatainventaris')
+                                        ->where('kode_verif', $dataverif4->kode_verif)
+                                        ->where('status_data_inventaris', 2)
+                                        ->count();
+                                @endphp
+                                    "{{ $totalrusak }}",
+                            @endforeach
+                        ],
                         backgroundColor: gradientStroke5,
                         hoverBackgroundColor: gradientStroke5,
                     }]

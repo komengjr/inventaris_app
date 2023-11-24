@@ -172,6 +172,7 @@ Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
 Route::get('divisi/verifikasi/lengkapi/{id}',['as'=>'master/verifikasi/lengkapi','uses'=> 'DivisiController@verifikasilengkapi']);
 Route::get('divisi/verifikasi/lokasi/{tiket}/{id}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);
 Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}/{ket}',['as'=>'master/verifikasi/update','uses'=> 'DivisiController@verifikasilengkapiupdatebaranglokasi']);
+Route::get('menu/verifdatainventaris/cetak/detail/{id}',['as'=>'menu/verifdatainventaris/cetak/detail','uses'=> 'DivisiController@cetakreportstockopname']);
 Route::get('divisi/verifikasi/print/verif/{id}','PdfController@printverifikasi');
 Route::get('divisi/verifikasi/print/peminjaman/{id}','PdfController@printpeminjaman');
 Route::get('divisi/verifikasi/print/pemusnahan/{id}','PdfController@printpemusnahan');

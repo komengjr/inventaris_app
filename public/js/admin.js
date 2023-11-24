@@ -1268,6 +1268,25 @@ $(document).on("click", "#button-detail-data-case", function (e) {
         });
 
 });
+$(document).on("click", "#button-cetak-stock-opname", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $("#show-menu-report-stockopname").html('<span class="badge badge-warning m-1">Loading..</span>');
+    $.ajax({
+        url: '../menu/verifdatainventaris/cetak/detail/'+id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#show-menu-report-stockopname").html('<iframe src="data:application/pdf;base64, '+data+'" style="width:100%;; height:500px;" frameborder="0"></iframe>');
+        })
+        .fail(function () {
+            $("#show-menu-report-stockopname").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
 
 
 

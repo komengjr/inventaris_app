@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h6>Form Peminjaman <span style="color: royalblue;"> Nomor tiket : </span> </h6>
+    <h6>Form Verifikasi Data <span style="color: royalblue;"></span> </h6>
     <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
     <i class="fa fa-close"></i>
     </button>
@@ -73,7 +73,16 @@
 
                                 <tr>
                                     <td data-label="No">{{$no++}}</td>
-                                    <td>{{$lokasi->nama_lokasi}}</td>
+                                    <td>{{$lokasi->nama_lokasi}}
+                                    @php
+                                        $cekruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_lokasi',$lokasi->kd_lokasi)->where('kd_cabang',Auth::user()->cabang)->first();
+                                    @endphp
+                                    @if ($cekruangan)
+                                        <span class="badge badge-info m-1">{{$cekruangan->nomor_ruangan}}</span>
+                                    @else
+                                        <span class="badge badge-danger m-1">Tidak ditemukan</span>
+                                    @endif
+                                    </td>
                                     @php
                                         $totalbarang = DB::table('sub_tbl_inventory')
                                         ->where('kd_cabang',auth::user()->cabang)
@@ -81,7 +90,7 @@
                                         ->count();
                                         $jumlah = $totalbarang + $jumlah;
                                     @endphp
-                                    <td>{{$totalbarang}}</td>
+                                    <td><h5>{{$totalbarang}}</h5></td>
                                     @php
                                         $statusbarang = DB::table('tbl_sub_verifdatainventaris')
                                         ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
@@ -126,7 +135,7 @@
                                         @if ($totalbarang == ($statusbarang+$statusbarang1+$statusbarang2))
                                         <button class="btn-success" disabled>Verified</button>
                                         @else
-                                        <button class="btn-warning" id="verifdatainventaris" data-url="{{ url('divisi/verifikasi/lokasi', ['tiket'=>$cekdata->kode_verif,'id' => $lokasi->kd_lokasi ]) }}">Verif</button>
+                                        <button class="btn-warning" id="verifdatainventaris" data-url="{{ url('divisi/verifikasi/lokasi', ['tiket'=>$cekdata->kode_verif,'id' => $lokasi->kd_lokasi ]) }}"><i class="fa fa-shield"></i> Verif</button>
                                         @endif
 
                                     </td>
@@ -142,7 +151,7 @@
 
             <div class="row">
                 <!-- accepted payments column -->
-                <div class="col-lg-6 payment-icons">
+                <div class="col-lg-4 payment-icons">
                     {{-- <p class="lead">Payment Methods:</p>
                     <img src="assets/images/payment-icons/visa-dark.png" alt="Visa">
                     <img src="assets/images/payment-icons/mastro-dark.png" alt="Mastercard">
@@ -154,10 +163,10 @@
                         <button class="btn-danger mt-3">C</button> : Rusak <br>
                     </p>
                 </div><!-- /.col -->
-                <div class="col-lg-6 pt-5" >
+                <div class="col-lg-8 pt-3">
 
-                    <div class="table-responsive">
-                        <table class="table" >
+                    <div class="">
+                        <table class="styled-table" border="1">
                             <tbody>
                                 <tr>
                                     <th>Keadaan Barang Baik</th>
@@ -165,7 +174,7 @@
                                         @php
                                             $barangbaik = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$cekdata->kode_verif)->where('status_data_inventaris',0)->count();
                                         @endphp
-                                        {{$barangbaik}}
+                                        <h5>{{$barangbaik}}</h5>
                                     </td>
                                 </tr>
                                 <tr>
@@ -174,7 +183,7 @@
                                         @php
                                             $barangmaintenance = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$cekdata->kode_verif)->where('status_data_inventaris',1)->count();
                                         @endphp
-                                        {{$barangmaintenance}}
+                                        <h5>{{$barangmaintenance}}</h5>
                                     </td>
                                 </tr>
                                 <tr>
@@ -183,12 +192,16 @@
                                         @php
                                         $barangrusak = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$cekdata->kode_verif)->where('status_data_inventaris',2)->count();
                                         @endphp
-                                        {{$barangrusak}}
+                                        <h5>{{$barangrusak}}</h5>
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th style="width:50%">Total Belum Verifikasi :</th>
+                                    <td><h5>{{$jumlah-$barangbaik-$barangmaintenance-$barangrusak}}</h5></td>
+                                </tr>
+                                <tr>
                                     <th style="width:50%">Total Data Keseluruhan :</th>
-                                    <td>{{$jumlah}}</td>
+                                    <td><h5>{{$jumlah}}</h5></td>
                                 </tr>
                             </tbody>
                         </table>

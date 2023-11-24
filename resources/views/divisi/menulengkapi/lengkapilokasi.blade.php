@@ -94,7 +94,7 @@
                                         </div>
                                     @endif
                                 @endif
-
+                                <textarea id="ket{{$databarang->id}}" class="form-control" hidden></textarea>
                             </td>
 
                             {{-- <td>
@@ -110,9 +110,6 @@
                         <script>
                             function displayResult(buah){
                                 var ket = document.getElementById("ket<?php echo $databarang->id ?>").value;
-
-                                console.log(buah);
-                                console.log(ket);
                                 $.ajax({
                                     url: '/menu/verifdatainventaris/lokasi/update/'+buah+'/-'+ket,
                                     type: 'GET',
