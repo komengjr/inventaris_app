@@ -545,3 +545,41 @@ $(document).on('click', '#datapemusnahancabang', function(e) {
                         );
                 });
 });
+
+
+//
+
+$(document).on('click', '#button-master-data-excel', function(e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    $.ajax({
+            url: '../master/dataexcel/'+id,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(function(data) {
+            $('#bodyformdatamaster').html(data);
+        })
+        .fail(function() {
+            $('#bodyformdatamaster').html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+        });
+});
+$(document).on('click', '#button-master-data-inventaris', function(e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    $.ajax({
+            url: '../master/masterdatainventaris/'+id,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(function(data) {
+            $('#bodyformdatamaster').html(data);
+        })
+        .fail(function() {
+            $('#bodyformdatamaster').html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+        });
+});

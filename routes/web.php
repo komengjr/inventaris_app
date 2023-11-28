@@ -31,9 +31,13 @@ Route::post('master/datauser/proses/reset',['as'=>'master/datauser/proses/reset'
 Route::post('master/datauser/proses/hapus',['as'=>'master/datauser/proses/hapus','uses'=> 'MasterController@hapusdatauser']);
 // Master Admin GET
 Route::get('masteradmin', 'MasterController@index')->name('index');
+Route::get('masteradmindetail', 'MasterController@masteradmindetail');
 Route::get('masterinjekupdate/{id}', 'MasterController@masterinjekupdate');
 // Master Admin GET User
 Route::get('master/datauser/{id}',['as'=>'master/datauser','uses'=> 'MasterController@datauser']);
+// Master Data Excel
+Route::get('master/dataexcel/{id}',['as'=>'master/dataexcel','uses'=> 'MasterController@dataexcelcabang']);
+Route::get('master/masterdatainventaris/{id}',['as'=>'master/masterdatainventaris','uses'=> 'MasterController@masterdatainventaris']);
 
 // Master Admin Get Inventaris
 Route::get('master/datainventaris/{id}',['as'=>'master/datainventaris','uses'=> 'MasterController@datainventaris']);

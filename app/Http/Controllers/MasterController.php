@@ -48,6 +48,19 @@ class MasterController extends Controller
 
 
     }
+    public function masteradmindetail()
+    {
+        if (auth::user()->akses == 'admin') {
+            $data = DB::table('tbl_cabang')
+            ->select('tbl_cabang.*')
+            ->get();
+            return view('masteradmin.datacabang',['data'=>$data]);
+        } else {
+            # code...
+        }
+
+
+    }
     public function datacabang()
     {
         return view('masteradmin.form.modal.cabang');
@@ -376,5 +389,18 @@ class MasterController extends Controller
         //         ]);
         // DB::table('sub_tbl_inventory_temp')->where('no_inventaris', $request->input('id'))->delete();
         return redirect()->back();
+    }
+
+    //
+
+    public function dataexcelcabang($id)
+    {
+        $data = DB::table('sub_tbl_inventory_log')->where('kd_cabang',$id)->get();
+        return view('masteradmin.dataexcel.excelcabang',['data'=>$data]);
+    }
+    public function masterdatainventaris($id)
+    {
+        $data = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->get();
+        return view('masteradmin.datainventaris.datainventaris',['data'=>$data]);
     }
 }

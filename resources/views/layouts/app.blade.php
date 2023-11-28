@@ -179,6 +179,7 @@
                                     Keuangan</a></li>
                         @elseif(auth()->user()->akses == 'admin')
                             <li><a href="{{ asset('masteradmin', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Admin</a></li>
+                            <li><a href="{{ asset('masteradmindetail', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Cabang</a></li>
                             {{-- <li><a href="{{ asset('datamutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
                                     Mutasi</a></li>
                             <li><a href="{{ asset('datapemusnahan', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
