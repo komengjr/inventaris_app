@@ -553,7 +553,7 @@ $(document).on('click', '#button-master-data-excel', function(e) {
     e.preventDefault();
     var id = $(this).data('id');
     $.ajax({
-            url: '../master/dataexcel/'+id,
+            url: 'master/dataexcel/'+id,
             type: 'GET',
             dataType: 'html'
         })
@@ -570,7 +570,7 @@ $(document).on('click', '#button-master-data-inventaris', function(e) {
     e.preventDefault();
     var id = $(this).data('id');
     $.ajax({
-            url: '../master/masterdatainventaris/'+id,
+            url: 'master/masterdatainventaris/'+id,
             type: 'GET',
             dataType: 'html'
         })
