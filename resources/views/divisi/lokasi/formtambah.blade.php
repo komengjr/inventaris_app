@@ -26,7 +26,7 @@
             </div>
             <div class="col-6">
                 <label for="">Nama Ruangan</label>
-                <select name="kd_lokasi" id="" class="form-control single-select">
+                <select name="kd_lokasi" id="" class="form-control single-select" required>
                     <option value="">Pilih Nama Ruangan</option>
                     @foreach ($lokasi as $item)
                         <option value="{{$item->kd_lokasi}}">{{$item->nama_lokasi}}</option>

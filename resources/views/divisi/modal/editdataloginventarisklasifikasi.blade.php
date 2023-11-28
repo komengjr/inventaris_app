@@ -50,10 +50,6 @@
 <script>
     $(document).ready(function() {
         $('.single-select').select2();
-
         $('.multiple-select').select2();
-
-
-
     });
 </script>
