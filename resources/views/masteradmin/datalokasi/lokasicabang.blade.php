@@ -59,7 +59,7 @@
                     </td>
                     <td>
                         @php
-                            $cek = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang',Auth::user()->cabang)->where('kd_lokasi',$lokasi->kd_lokasi)->first();
+                            $cek = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang',$id)->where('kd_lokasi',$lokasi->kd_lokasi)->first();
                         @endphp
                         @if ($cek)
                             <span class="badge badge-success m-1">Terdaftar</span>
