@@ -37,6 +37,8 @@ Route::get('masterinjekupdate/{id}', 'MasterController@masterinjekupdate');
 Route::get('master/datauser/{id}',['as'=>'master/datauser','uses'=> 'MasterController@datauser']);
 // Master Data Excel
 Route::get('master/dataexcel/{id}',['as'=>'master/dataexcel','uses'=> 'MasterController@dataexcelcabang']);
+Route::get('master/dataexcel/detail/data/{id}',['as'=>'master/dataexcel/detail/data','uses'=> 'MasterController@editdataexcelcabang']);
+Route::post('master/dataexcel/detail/postdata',['as'=>'master/dataexcel/detail/postdata','uses'=> 'MasterController@editpostdataexcelcabang']);
 Route::get('master/masterdatainventaris/{id}',['as'=>'master/masterdatainventaris','uses'=> 'MasterController@masterdatainventaris']);
 Route::get('master/masterdatalokasicabang/{id}',['as'=>'master/masterdatalokasicabang','uses'=> 'MasterController@masterdatalokasicabang']);
 

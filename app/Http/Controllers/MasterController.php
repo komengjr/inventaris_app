@@ -400,6 +400,24 @@ class MasterController extends Controller
             return view('masteradmin.dataexcel.excelcabang',['data'=>$data]);
         }
     }
+    public function editdataexcelcabang($id)
+    {
+        if (Auth::user()->akses == 'admin') {
+            $data = DB::table('sub_tbl_inventory_log')->where('id',$id)->first();
+            return view('masteradmin.dataexcel.detailexcelcabang',['data'=>$data]);
+        }
+    }
+    public function editpostdataexcelcabang(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            DB::table('sub_tbl_inventory_log')->where('id',$request->id)->update([
+                'nama_barang'=>$request->nama_barang,
+                'harga_perolehan'=>$request->harga,
+            ]);
+            Session::flash('sukses','Berhasil update data');
+            return redirect()->back();
+        }
+    }
     public function masterdatainventaris($id)
     {
         if (Auth::user()->akses == 'admin') {

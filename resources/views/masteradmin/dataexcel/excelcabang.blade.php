@@ -38,7 +38,7 @@
                         <td data-label="Kode Lokasi">{{$data->kd_lokasi}}</td>
                         <td data-label="Tanggal Beli">{{$data->tgl_beli}}</td>
                         <td data-label="Harga Perolehan">{{$data->harga_perolehan}}</td>
-                        <td><button class="btn-warning"><i class="fa fa-pencil"></i></button></td>
+                        <td><button class="btn-warning" id="button-edit-data-excel-cabang" data-id="{{$data->id}}"><i class="fa fa-pencil"></i></button></td>
                     </tr>
                 @endforeach
             </tbody>
