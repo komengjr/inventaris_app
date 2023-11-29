@@ -49,7 +49,14 @@
                         @endphp
                         {{$databarang}}
                     </td>
-                    <td>0</td>
+                    <td>
+                        @if ($noruangan)
+                            @php
+                                $databarangmasuk = DB::table('sub_tbl_inventory')->where('kd_lokasi',$lokasi->kd_lokasi)->where('id_nomor_ruangan_cbaang',$noruangan->id_nomor_ruangan_cbaang )->where('kd_cabang',$id)->count();
+                            @endphp
+                            {{$databarangmasuk}}
+                        @endif
+                    </td>
                     <td>
                         @php
                             $cek = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang',Auth::user()->cabang)->where('kd_lokasi',$lokasi->kd_lokasi)->first();
