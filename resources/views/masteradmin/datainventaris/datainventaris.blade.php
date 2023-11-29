@@ -33,14 +33,14 @@
                 @endphp
                 @foreach ($data as $data)
                     <tr>
-                        <td>{{$no++}}</td>
+                        <td data-label="No">{{$no++}}</td>
 
-                        <td>{{$data->nama_barang}}</td>
-                        <td>{{$data->no_inventaris}}</td>
-                        <td>{{$data->kd_inventaris}}</td>
-                        <td>{{$data->kd_lokasi}}</td>
-                        <td>{{$data->tgl_beli}}</td>
-                        <td>{{$data->harga_perolehan}}</td>
+                        <td data-label="Nama Barang">{{$data->nama_barang}}</td>
+                        <td data-label="No Inventaris">{{$data->no_inventaris}}</td>
+                        <td data-label="Kode Klasifikasi">{{$data->kd_inventaris}}</td>
+                        <td data-label="Kode Lokasi">{{$data->kd_lokasi}}</td>
+                        <td data-label="Tanggal Beli">{{$data->tgl_beli}}</td>
+                        <td data-label="Harga Perolehan">{{$data->harga_perolehan}}</td>
                         <td><button class="btn-warning"><i class="fa fa-pencil"></i></button></td>
                     </tr>
                 @endforeach

@@ -79,16 +79,16 @@
                     <?php $no=1;?>
                     @foreach ($data as $data)
                     <tr>
-                        <td>{{$no++}}</td>
-                        <td>{{$data->nama_cabang}}</td>
-                        <td>{{$data->alamat}}</td>
-                        <td>
+                        <td data-label="No">{{$no++}}</td>
+                        <td data-label="Nama Cabang">{{$data->nama_cabang}}</td>
+                        <td data-label="Alamat">{{$data->alamat}}</td>
+                        <td data-label="Data Excel">
                             @php
                                 $dataexcel = DB::table('sub_tbl_inventory_log')->where('kd_cabang',$data->kd_cabang)->count();
                             @endphp
                             {{$dataexcel}}
                         </td>
-                        <td>
+                        <td data-label="Data Master">
                             @php
                                 $datainventaris = DB::table('sub_tbl_inventory')->where('kd_cabang',$data->kd_cabang)->count();
                             @endphp

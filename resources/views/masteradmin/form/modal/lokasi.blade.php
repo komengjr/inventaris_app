@@ -1,11 +1,15 @@
 <div class="modal-header bg-success">
     <h5 class="modal-title text-white">Data Lokasi</h5>
-    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
+    <span>
+        <button class="btn-dark" id="tambahdatalokasi" data-url="{{ url('master/datalokasi/tambah', []) }}"><i class="fa fa-plus"></i> tambah</button>
+
+        <button type="button" class="btn-danger text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fa fa-times"></i></span>
+        </button>
+    </span>
 </div>
 <div class="modal-body" id="divtablelokasi">
-    <div class="card-body pb-2" id="diveditlokasi">  
+    <div class="card-body pb-2" id="diveditlokasi">
     </div>
     <div class="card-body pt-2" >
         <table class="styled-table" id="default-datatable">
@@ -21,9 +25,9 @@
                 @endphp
                 @foreach ($data as $data)
                     <tr>
-                        <td>{{$no++}}</td>
-                        <td>{{$data->kd_lokasi}}</td>
-                        <td>{{$data->nama_lokasi}}</td>
+                        <td data-label="No">{{$no++}}</td>
+                        <td data-label="Kode Lokasi">{{$data->kd_lokasi}}</td>
+                        <td data-label="Nama Lokasi">{{$data->nama_lokasi}}</td>
                         <td class="text-center">
                             <button class="btn-warning" id="editdatalokasi" data-url="{{ url('master/datalokasi/edit', ['id'=>$data->kd_lokasi]) }}"><i class="fa fa-pencil"></i> edit</button>
                             {{-- <a href="{{ url('master/datalokasi/hapusdata', ['id',$data->kd_lokasi]) }}" class="btn-danger"><i class="fa fa-trash"></i> Hapus</a> --}}
