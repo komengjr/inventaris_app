@@ -583,3 +583,20 @@ $(document).on('click', '#button-master-data-inventaris', function(e) {
                 );
         });
 });
+$(document).on('click', '#button-master-data-lokasi', function(e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    $.ajax({
+            url: 'master/masterdatalokasicabang/'+id,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(function(data) {
+            $('#bodyformdatamaster').html(data);
+        })
+        .fail(function() {
+            $('#bodyformdatamaster').html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+        });
+});

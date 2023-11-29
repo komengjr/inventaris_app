@@ -38,6 +38,7 @@ Route::get('master/datauser/{id}',['as'=>'master/datauser','uses'=> 'MasterContr
 // Master Data Excel
 Route::get('master/dataexcel/{id}',['as'=>'master/dataexcel','uses'=> 'MasterController@dataexcelcabang']);
 Route::get('master/masterdatainventaris/{id}',['as'=>'master/masterdatainventaris','uses'=> 'MasterController@masterdatainventaris']);
+Route::get('master/masterdatalokasicabang/{id}',['as'=>'master/masterdatalokasicabang','uses'=> 'MasterController@masterdatalokasicabang']);
 
 // Master Admin Get Inventaris
 Route::get('master/datainventaris/{id}',['as'=>'master/datainventaris','uses'=> 'MasterController@datainventaris']);

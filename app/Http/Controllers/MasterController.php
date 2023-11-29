@@ -395,12 +395,28 @@ class MasterController extends Controller
 
     public function dataexcelcabang($id)
     {
-        $data = DB::table('sub_tbl_inventory_log')->where('kd_cabang',$id)->get();
-        return view('masteradmin.dataexcel.excelcabang',['data'=>$data]);
+        if (Auth::user()->akses == 'admin') {
+            $data = DB::table('sub_tbl_inventory_log')->where('kd_cabang',$id)->get();
+            return view('masteradmin.dataexcel.excelcabang',['data'=>$data]);
+        }
     }
     public function masterdatainventaris($id)
     {
-        $data = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->get();
-        return view('masteradmin.datainventaris.datainventaris',['data'=>$data]);
+        if (Auth::user()->akses == 'admin') {
+            $data = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->get();
+            return view('masteradmin.datainventaris.datainventaris',['data'=>$data]);
+        }
+    }
+    public function masterdatalokasicabang($id)
+    {
+        if (Auth::user()->akses == 'admin') {
+            $lokasi = DB::table('sub_tbl_inventory')
+            ->select('tbl_lokasi.*')
+            ->where('sub_tbl_inventory.kd_cabang',$id)
+            ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
+            ->distinct()->get(['sub_tbl_inventory.kd_lokasi']);
+            return view('masteradmin.datalokasi.lokasicabang',['lokasi'=>$lokasi,'id'=>$id]);
+        }
+
     }
 }

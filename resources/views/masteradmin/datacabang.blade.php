@@ -109,7 +109,7 @@
                                         <a href="javaScript:void();" data-toggle="modal" data-target="#formdatamaster"
                                             class="dropdown-item" id="button-master-data-inventaris" data-id="{{$data->kd_cabang}}"><i class="fa fa-file-text-o"></i> 2. Data Master Barang</a>
                                         <a href="javaScript:void();" data-toggle="modal" data-target="#formdatamaster"
-                                            class="dropdown-item" id="buttondataklasifikasi" data-url="{{ url('master/dataklasifikasi', []) }}"><i class="fa fa-file-text-o"></i> 3. Data Lokasi Cabang</a>
+                                            class="dropdown-item" id="button-master-data-lokasi" data-id="{{$data->kd_cabang}}"><i class="fa fa-file-text-o"></i> 3. Data Lokasi Cabang</a>
                                     @else
                                     @endif
 
