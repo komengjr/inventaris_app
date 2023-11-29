@@ -552,7 +552,7 @@ $(document).on('click', '#datapemusnahancabang', function(e) {
 $(document).on('click', '#button-master-data-excel', function(e) {
     e.preventDefault();
     var id = $(this).data('id');
-    $('#bodyformdatamaster').html('<div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span></div>');
+    $('#bodyformdatamaster').html('<div class="spinner-border text-primary m-5 text-center" role="status"> <span class="sr-only">Loading...</span></div>');
     $.ajax({
             url: 'master/dataexcel/'+id,
             type: 'GET',
@@ -570,7 +570,7 @@ $(document).on('click', '#button-master-data-excel', function(e) {
 $(document).on('click', '#button-master-data-inventaris', function(e) {
     e.preventDefault();
     var id = $(this).data('id');
-    $('#bodyformdatamaster').html('<div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span></div>');
+    $('#bodyformdatamaster').html('<div class="spinner-border text-primary m-5 text-center" role="status"> <span class="sr-only">Loading...</span></div>');
     $.ajax({
             url: 'master/masterdatainventaris/'+id,
             type: 'GET',
@@ -588,7 +588,7 @@ $(document).on('click', '#button-master-data-inventaris', function(e) {
 $(document).on('click', '#button-master-data-lokasi', function(e) {
     e.preventDefault();
     var id = $(this).data('id');
-    $('#bodyformdatamaster').html('<div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span></div>');
+    $('#bodyformdatamaster').html('<div class="spinner-border text-primary m-5 text-center" role="status"> <span class="sr-only">Loading...</span></div>');
     $.ajax({
             url: 'master/masterdatalokasicabang/'+id,
             type: 'GET',
