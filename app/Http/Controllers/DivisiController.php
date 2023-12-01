@@ -1143,6 +1143,19 @@ class DivisiController extends Controller
         $lokasi = DB::table('tbl_lokasi')->get();
         return view('divisi.lokasi.tablelokasibarang',['lokasi'=>$lokasi,'datainventaris'=>$datainventaris,'id'=>$id,'no'=>$cekruangan,'nomor'=>$no]);
     }
+    public function postdatasetuplokasiruangan(Request $request)
+    {
+        $data = DB::table('sub_tbl_inventory')->where('kd_lokasi',$request->kd_lokasi)->where('kd_cabang',Auth::user()->cabang)->get();
+        foreach ($data as $data) {
+            DB::table('sub_tbl_inventory')
+            ->where('id_inventaris',$data->id_inventaris)
+            ->update([
+                    'id_nomor_ruangan_cbaang' => $request->no_ruangan,
+                ]);
+        }
+        Session::flash('sukses','Berhasil Membuat Tiket Case');
+        return redirect()->back();
+    }
     public function resetdatamasterlokasibarang($no,$id)
     {
         DB::table('sub_tbl_inventory')

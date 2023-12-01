@@ -13,11 +13,17 @@
                 <div class="media align-items-center">
                     <div class="media-body text-left">
                         <h4 class="text-primary mb-0">{{$no->nomor_ruangan}}</h4>
-                        <span class="small-font">Nomor Ruangan1</span>
+                        <span class="small-font">Nomor Ruangan</span>
                     </div>
-                    <div class="w-circle-icon rounded bg-warning" style="cursor: pointer;" data-toggle="modal"
+                    <div class=""
                         data-target="#menusmasterbarang">
-                        <i class="fa fa-download text-white"></i>
+                        <form action="{{ url('divisi/postmasterlokasi/datasetup/postdataall', []) }}" method="post">
+                            @csrf
+                            <input type="text" name="no_ruangan" value="{{$no->id_nomor_ruangan_cbaang}}" hidden>
+                            <input type="text" name="kd_lokasi" value="{{$no->kd_lokasi}}" hidden>
+                            <button class="btn-info"><i class="fa fa-download"></i> Pilih Semua</button>
+                        </form>
+
                     </div>
                 </div>
             </div>

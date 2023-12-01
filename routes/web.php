@@ -173,6 +173,7 @@ Route::get('divisi/masterlokasi/datasetup/resetdatamaster/{no}/{id}',['as'=>'div
 Route::get('divisi/masterlokasi/datasetup/tablemasterlokasibarang/{id}',['as'=>'divisi/masterlokasi/datasetup/tablemasterlokasibarang/','uses'=> 'DivisiController@tabledatamasterlokasibarang']);
 Route::get('divisipost/datalokasi/delete/detail/{id}',['as'=>'divisipost/datalokasi/delete/detail/','uses'=> 'DivisiController@deletemasterlokasicabang']);
 Route::post('divisi/masterlokasi/posttambah', 'DivisiController@posttambahdatanomorruangan');
+Route::post('divisi/postmasterlokasi/datasetup/postdataall',['as'=>'divisi/postmasterlokasi/datasetup/postdataall','uses'=> 'DivisiController@postdatasetuplokasiruangan']);
 
 Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','uses'=> 'DivisiController@tambahdatapemusnahan']);
 Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
