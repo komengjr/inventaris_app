@@ -422,8 +422,30 @@ class MasterController extends Controller
     {
         if (Auth::user()->akses == 'admin') {
             $data = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->get();
-            return view('masteradmin.datainventaris.datainventaris',['data'=>$data]);
+            return view('masteradmin.datainventaris.datainventaris',['data'=>$data,'id'=>$id]);
         }
+    }
+    public function createnomorinventariscabang(Request $request)
+    {
+        $no = 1;
+        $entitas = DB::table('tbl_entitas_cabang')
+        ->join('tbl_cabang','tbl_cabang.kd_entitas_cabang','=','tbl_entitas_cabang.kd_entitas_cabang')
+        ->join('tbl_setting_cabang','tbl_setting_cabang.kd_cabang','=','tbl_cabang.kd_cabang')
+        ->where('tbl_setting_cabang.kd_cabang',$request->kd_cabang)->first();
+        $data = DB::table('sub_tbl_inventory')
+            ->orderBy('id', 'ASC')
+            ->where('kd_cabang',$request->kd_cabang)
+            ->get();
+        foreach ($data as $data) {
+            DB::table('sub_tbl_inventory')
+            ->where('id_inventaris',$data->id_inventaris)
+            ->update([
+                        'no_inventaris' => $no++.'/'.$data->kd_inventaris.'/'.$data->kd_lokasi.'/'.$entitas->simbol_entitas.'.'.$entitas->no_cabang.'/'.$data->th_perolehan,
+
+                    ]);
+        }
+
+        return redirect()->back();
     }
     public function masterdatalokasicabang($id)
     {

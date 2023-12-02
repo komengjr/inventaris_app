@@ -50,6 +50,7 @@ Route::get('master/data-inventaris/update/{id}',['as'=>'master/data-inventaris/u
 Route::get('masteradmin/data-inventaris/updatedata/{id}',['as'=>'masteradmin/data-inventaris/updatedata','uses'=> 'MasterController@getupdatedatainevntaris']);
 // Master Admin Post Inventaris
 Route::post('master/datainventaris/simpandetailbarang', 'MasterController@simpandetailbarang');
+Route::post('master/datainventaris/createnomorinventariscabang', 'MasterController@createnomorinventariscabang');
 
 Route::post('master/datainventaris/simpanupdateinventaris', 'MasterController@simpanupdateinventaris');
 Route::get('master/datainventaris/simpanupdateinventaris/{id}', 'MasterController@simpanupdateinventariscabang');

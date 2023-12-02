@@ -7,6 +7,12 @@
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
         <h6>Form Mutasi <span style="color: royalblue;"> Data Excel Cabang</span> </h6>
+
+        <form action="{{ url('master/datainventaris/createnomorinventariscabang', []) }}" method="post">
+            @csrf
+            <input type="text" name="kd_cabang" value="{{$id}}" id="" hidden>
+            <button type="submit" class="btn-dark"><i class="fa fa-cog"></i> Set Up Nomor Inventaris</button>
+        </form>
         <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-close"></i>
         </button>
