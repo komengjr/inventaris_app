@@ -62,7 +62,7 @@
                                                 ->style('round')
                                                 ->eye('circle')
                                                 ->eyeColor(0, 255, 0, 0, 255, 0, 0)
-                                                ->mergeString(Storage::get('qr.png'), .3)
+                                                // ->mergeString(Storage::get('qr.png'), .3)
                                                 ->generate($data->no_inventaris)) !!} ">
                 <div class="absolute">
                     <table style="font-size: 8px; margin: 0px; padding: 0px; width: 107px;" border="1" cla>
