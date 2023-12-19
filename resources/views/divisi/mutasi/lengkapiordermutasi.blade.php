@@ -23,7 +23,7 @@
             </div>
             <div class="form-group row">
                 {{-- <label for="input-12" class="col-sm-2 col-form-label">Asal Lokasi</label>
-                <div class="col-sm-4">
+                <div clsass="col-sm-4">
                     <select name="asal_cabang" id="" class="form-control single-select" required>
                         <option value="">Pilih Cabang</option>
                         @foreach ($cabang as $item)

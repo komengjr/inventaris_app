@@ -106,6 +106,8 @@
         <span>
             <button type="button" class="btn-outline-primary"  onclick="submitForm()"><i
                     class="fa fa-print"> </i> Print Barcode</button>
+            <button type="button" class="btn-outline-dark" id="button-print-all" data-id="{{$id}}"><i
+                    class="fa fa-print"> </i> Print All</button>
             <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
                 <i class="fa fa-close"></i>
             </button>

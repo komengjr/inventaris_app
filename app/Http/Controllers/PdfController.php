@@ -49,6 +49,18 @@ class PdfController extends Controller
         $pdf = PDF::loadview('index',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
         return $pdf->stream();
     }
+    public function printdataalllokasi($id)
+    {
+        $data = DB::table('sub_tbl_inventory')
+        ->select('sub_tbl_inventory.*')
+        ->where('id_nomor_ruangan_cbaang',$id)
+        ->where('kd_cabang',auth::user()->cabang)
+        ->get();
+        // dd($data);
+        $qrcode = base64_encode(QrCode::format('png')->size(500)->errorCorrection('H')->generate('string'));
+        $pdf = PDF::loadview('divisi.report.lokasi',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
+        return base64_encode($pdf->stream());
+    }
     public function printpeserta()
     {
         $data = DB::table('tbl_peserta')
