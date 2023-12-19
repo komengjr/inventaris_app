@@ -16,6 +16,8 @@ class CreateTblPemusnahanTable extends Migration
         Schema::create('tbl_pemusnahan', function (Blueprint $table) {
             $table->id('id_pemusnahan');
             $table->string('kd_pemusnahan')->unique();
+            $table->string('id_inventaris');
+            $table->string('kd_cabang');
             $table->string('dasar_pengajuan');
             $table->string('verifikasi')->nullable();
             $table->string('persetujuan')->nullable();

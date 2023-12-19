@@ -1,8 +1,8 @@
-<form  method="POST" action="{{ url('divisi/tambahdatapemusnahan', []) }}" enctype="multipart/form-data" >
+<form  method="POST" action="{{ url('divisi/posttambahdatapemusnahan', []) }}" enctype="multipart/form-data" >
     @csrf
     <div class="row">
         <div class="col-6">
-            <label for="">Nama Barang Pe</label>
+            <label for="">Nama Barang</label>
             <input type="text" class="form-control" name="nama_barang" value="{{$data->nama_barang}}" disabled>
 
         </div>
@@ -12,9 +12,9 @@
             <input type="text" class="form-control" name="id_inventaris" value="{{$data->id_inventaris}}" hidden>
 
         </div>
-        <div class="col-6">
+        <div class="col-12">
             <label for="">Dasar Pengajuan</label>
-            <input type="text" class="form-control" name="pelapor" required>
+            <input type="text" class="form-control" name="dasar_pengajuan" required>
 
         </div>
         <div class="col-6">
@@ -23,7 +23,7 @@
         </div>
         <div class="col-6">
             <label for="">Verifikasi</label>
-            <select name="verifikasi" class="form-control" id="">
+            <select name="verifikasi" class="form-control" id="" required>
                 <option value="">Pilih</option>
                 <option value="Kondisi Barang Rusak">Kondisi Barang Rusak</option>
                 <option value="Tidak Layak Pakai">Tidak Layak Pakai</option>
@@ -32,7 +32,7 @@
         </div>
         <div class="col-6">
             <label for="">Persetujuan</label>
-            <select name="verifikasi" class="form-control" id="">
+            <select name="persetujuan" class="form-control" id="" required>
                 <option value="">Pilih</option>
                 <option value="Kondisi Barang Rusak">Kondisi Barang Rusak</option>
                 <option value="Tidak Layak Pakai">Tidak Layak Pakai</option>
@@ -41,16 +41,7 @@
         </div>
         <div class="col-6">
             <label for="">Eksekusi</label>
-            <input type="text" class="form-control" name="tgl_mulai" required>
-        </div>
-
-
-        <div class="col-12">
-            <label for="">Deskripsi Maintenance</label>
-            <textarea class="form-control" id="" cols="30" rows="10" name="ket_maintenance"></textarea>
-        </div>
-        <div class="col-12">
-            {{-- <button type="submit" class="btn-info"><i class="zmdi zmdi-save"></i></button> --}}
+            <input type="text" class="form-control" name="eksekusi" required>
         </div>
     </div>
     <div class="modal-footer">

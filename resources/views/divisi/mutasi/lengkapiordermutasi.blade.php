@@ -7,7 +7,7 @@
             <span aria-hidden="true"><i class="fa fa-close"></i></span>
         </button>
     </div>
-    <form id="signupForm" method="POST" action="{{ url('divisi/datamutasi/posteditdatamutasi', []) }}" >
+    <form id="signupForm" method="POST" action="{{ url('divisi/datamutasi/postpenerimamutasi', []) }}" >
         @csrf
         <div class="modal-body" >
             <div class="form-group row">
@@ -75,11 +75,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>asda</td>
-                            <td>asda</td>
-                            <td>asda</td>
-                        </tr>
+                        @php
+                            $databarang = DB::table('tbl_sub_mutasi')
+                            ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_mutasi.id_inventaris')
+                            ->where('tbl_sub_mutasi.kd_mutasi',$data->kd_mutasi)
+                            ->get();
+                        @endphp
+                        @foreach ($databarang as $databarang)
+                            <tr>
+                                <td>{{$databarang->nama_barang}}</td>
+                                <td>{{$databarang->merk}}</td>
+                                <td>{{$databarang->type}}</td>
+                            </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>
@@ -87,16 +96,17 @@
                 <label for="input-15" class="col-sm-2 col-form-label">Penerima</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" id="input-15" name="penerima" required/>
+                    <input type="text" name="kd_mutasi" value="{{$data->kd_mutasi}}" hidden>
                 </div>
                 <label for="input-14" class="col-sm-2 col-form-label">Tanggal Terima</label>
                 <div class="col-sm-4">
-                    <input type="date" class="form-control" id="input-14" name="tgl_buat" required/>
+                    <input type="date" class="form-control" id="input-14" name="tgl_terima" required/>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="input-17" class="col-sm-2 col-form-label">Deskripsi Yang Menerima</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="4" id="input-17" name="deskripsi" required></textarea>
+                    <textarea class="form-control" rows="4" id="input-17" name="deskripsi_penerima" required></textarea>
                 </div>
             </div>
 

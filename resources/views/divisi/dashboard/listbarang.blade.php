@@ -113,7 +113,7 @@
             </button>
         </span>
     </div>
-    <div class="body" id="show-menu-data-barang">
+    <div class="body" id="show-menu-data-lokasi-barang">
         <div class="row">
             <div class="col-lg-12">
 

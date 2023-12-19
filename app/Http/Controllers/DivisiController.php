@@ -107,7 +107,10 @@ class DivisiController extends Controller
     public function menupemusnahan()
     {
         $datakategori = DB::table('no_urut_barang')->get();
-        return view('divisi.menupemusnahan',[ 'datakategori' => $datakategori]);
+        $data = DB::table('tbl_pemusnahan')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_pemusnahan.id_inventaris')
+        ->where('tbl_pemusnahan.kd_cabang',Auth::user()->cabang)->get();
+        return view('divisi.menupemusnahan',[ 'datakategori' => $datakategori,'data'=>$data]);
     }
     public function verifdatainventaris()
     {
@@ -429,6 +432,25 @@ class DivisiController extends Controller
         $jadi = 'PM-'.$tgl.'-'.$randomString;
         return view('divisi.pemusnahan.tambahdata',['tiket' => $jadi]);
     }
+    public function posttambahdatapemusnahan(Request $request)
+    {
+        DB::table('tbl_pemusnahan')->insert([
+            'kd_pemusnahan'=>1312123,
+            'id_inventaris'=>$request->id_inventaris,
+            'kd_cabang'=>Auth::user()->cabang,
+            'dasar_pengajuan'=>$request->dasar_pengajuan,
+            'verifikasi'=>$request->verifikasi,
+            'persetujuan'=>$request->persetujuan,
+            'eksekusi'=>$request->eksekusi,
+            'status_pemusnahan'=>1,
+            'tgl_pemusnahan'=>date('Y-m-d'),
+        ]);
+        DB::table('sub_tbl_inventory')->where('id_inventaris',$request->id_inventaris)->update([
+            'status_barang'=>5,
+        ]);
+        Session::flash('sukses','Berhasil Menambahkan Barang Pemusnahan');
+        return redirect()->back();
+    }
     public function caridatabarangpemusnahan($id)
     {
         $data = DB::table('sub_tbl_inventory')->where('nama_barang', 'like', '%' . $id . '%')->get();
@@ -632,6 +654,7 @@ class DivisiController extends Controller
                         'type' => $value->type,
                         'no_seri' => $value->no_seri,
                         'suplier' => $value->suplier,
+                        'status_barang' => 0,
                         'harga_perolehan' => $value->harga_perolehan,
                 ]);
                 DB::table('sub_tbl_inventory_log')->where('id', $value->id)->delete();
@@ -867,7 +890,7 @@ class DivisiController extends Controller
     public function showdataordermutasi()
     {
         $cabang = DB::table('tbl_cabang')->get();
-        $dataorder = DB::table('tbl_mutasi')->where('kd_cabang',Auth::user()->cabang)->where('tgl_terima',NULl)->get();
+        $dataorder = DB::table('tbl_mutasi')->where('target_mutasi',Auth::user()->cabang)->where('tgl_terima',NULl)->get();
         return view('divisi.mutasi.ordermutasi',['cabang'=>$cabang,'data'=>$dataorder]);
     }
     public function lengkapidataordermutasi($id)
@@ -883,12 +906,24 @@ class DivisiController extends Controller
         ->where('nama_barang', 'like', '%' . $id . '%')->get();
         return view('divisi.mutasi.tablecarimutasi',['data'=>$data,'ids'=>$ids,'datax'=>$id ]);
     }
+    public function postpenerimadatamutasi(Request $request)
+    {
+        DB::table('tbl_mutasi')
+        ->where('kd_mutasi',$request->kd_mutasi)
+        ->update([
+                    'penerima' => $request->penerima,
+                    'tgl_terima' => $request->tgl_terima,
+                    'ket_penerima' => $request->deskripsi_penerima,
+                ]);
+        Session::flash('sukses','Berhasil Menerima Order Mutasi');
+        return redirect()->back();
+    }
     public function posttambahdatamutasi(Request $request)
     {
         DB::table('tbl_mutasi')->insert(
             [
                 'kd_mutasi' => 'mutasi-'.mt_rand(1000000, 99999999),
-                'jenis_mutasi' => $request->jenis_mutasi,
+                'jenis_mutasi' => 1,
                 'kd_cabang' => auth::user()->cabang,
                 'asal_mutasi' => auth::user()->cabang,
                 'target_mutasi' => $request->tujuan_cabang,
@@ -896,10 +931,10 @@ class DivisiController extends Controller
                 'divisi' => 0,
                 'penanggung_jawab' => $request->pj,
                 'tanggal_buat' => $request->tgl_buat,
-                'penerima' => $request->penerima,
                 'menyetujui' => $request->menyetujui,
                 'yang_menyerahkan' => $request->menyerahkan,
                 'ket' => $request->deskripsi,
+                'status_mutasi' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
         Session::flash('sukses','Berhasil Membuat Order Mutasi');
@@ -909,7 +944,7 @@ class DivisiController extends Controller
     {
         $data = DB::table('tbl_mutasi')->where('kd_mutasi',$id)->first();
         $datamutasi = DB::table('tbl_sub_mutasi')->where('kd_mutasi',$id)->get();
-        return view('divisi.modal.detaildatamutasi',['data'=>$data,'datamutasi'=>$datamutasi]);
+        return view('divisi.mutasi.detaildatamutasi',['data'=>$data,'datamutasi'=>$datamutasi]);
     }
     public function inserttablepencarian($ids,$id,$datax)
     {
@@ -946,6 +981,16 @@ class DivisiController extends Controller
         ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_mutasi.id_inventaris')
         ->where('id_sub_mutasi', $id)->first();
         return view('divisi.mutasi.formeditmutasi',['datamutasi'=>$datamutasi]);
+    }
+    public function penyelesaianpostdatamutasi(Request $request)
+    {
+        DB::table('tbl_mutasi')
+        ->where('kd_mutasi',$request->kd_mutasi)
+        ->update([
+                    'status_mutasi' => 1,
+                ]);
+        Session::flash('sukses','Berhasil Menyelesaikan Order Mutasi');
+        return redirect()->back();
     }
     // ASET
 

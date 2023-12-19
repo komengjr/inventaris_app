@@ -455,6 +455,7 @@ class HomeController extends Controller
                             'kd_jenis' => $request->input('kategori'),
                             'harga_perolehan' => $nilai,
                             'kondisi_barang' => 'BAIK',
+                            'status_barang' => 0,
                             'jam_input' => date("h:i:sa"),
                 ]
             );

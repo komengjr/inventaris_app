@@ -26,11 +26,11 @@
             <td>{{$dataintentaris->type}}</td>
             <td>{{$dataintentaris->harga_perolehan}}</td>
             <td class="text-center">
-                <button type="button" class="btn btn-dark btn-sm waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn-dark waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                 </button>
                 <div class="dropdown-menu">
-                    <a href="javaScript:void();" class="dropdown-item" id="buttoneditbarangmutasi" data-url="{{ url('divisi/datamutasi/editdatamutasi', ['id'=>$datamutasi->id_sub_mutasi]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                    {{-- <a href="javaScript:void();" class="dropdown-item" id="buttoneditbarangmutasi" data-url="{{ url('divisi/datamutasi/editdatamutasi', ['id'=>$datamutasi->id_sub_mutasi]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a> --}}
                     <div class="dropdown-divider"></div>
                     <a href="javaScript:void();" class="dropdown-item" id="buttonhapusdatabarangmutasi" data-id="{{$datamutasi->id_sub_mutasi}}" data-kode="{{$datamutasi->kd_mutasi}}"><i class="fa fa-trash-o"></i> Hapus</a>
                 </div>

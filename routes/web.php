@@ -164,6 +164,8 @@ Route::get('divisi/datamutasi/inserttable/{ids}/{id}/{data}',['as'=>'divisi/data
 Route::get('divisi/datamutasi/hapusdetaildatamutasi/{id}/{kode}',['as'=>'divisi/datamutasi/hapusdetaildatamutasi','uses'=> 'DivisiController@hapusdetaildatamutasi']);
 Route::get('divisi/datamutasi/showdataorder',['as'=>'divisi/datamutasi/showdataorder','uses'=> 'DivisiController@showdataordermutasi']);
 Route::get('divisi/datamutasi/lengkapimutasi/{id}',['as'=>'divisi/datamutasi/lengkapimutasi','uses'=> 'DivisiController@lengkapidataordermutasi']);
+Route::post('divisi/datamutasi/post/datamutasi',['as'=>'divisi/datamutasi/post/datamutasi','uses'=> 'DivisiController@penyelesaianpostdatamutasi']);
+Route::post('divisi/datamutasi/postpenerimamutasi',['as'=>'divisi/datamutasi/postpenerimamutasi','uses'=> 'DivisiController@postpenerimadatamutasi']);
 
 // DATA LOKASI
 Route::get('menu/masterlokasi','DivisiController@masterlokasi');
@@ -179,6 +181,7 @@ Route::post('divisi/masterlokasi/posttambah', 'DivisiController@posttambahdatano
 Route::post('divisi/postmasterlokasi/datasetup/postdataall',['as'=>'divisi/postmasterlokasi/datasetup/postdataall','uses'=> 'DivisiController@postdatasetuplokasiruangan']);
 // PEMUSNAHAN
 Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','uses'=> 'DivisiController@tambahdatapemusnahan']);
+Route::post('divisi/posttambahdatapemusnahan',['as'=>'master/posttambahdatapemusnahan','uses'=> 'DivisiController@posttambahdatapemusnahan']);
 Route::get('divisi/pemusnahan/caridatabarang/{id}','DivisiController@caridatabarangpemusnahan');
 Route::get('divisi/pemusnahan/pilihdatabarang/{id}','DivisiController@pilihdatabarangpemusnahan');
 Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);

@@ -799,10 +799,9 @@ $(document).on("click", "#ordertiketmutasi", function (e) {
 });
 $(document).on("click", "#buttondetailmutasibarang", function (e) {
     e.preventDefault();
-    var url = $(this).data("url");
-
+    var id = $(this).data("id");
     $.ajax({
-        url: url,
+        url: '../../divisi/datamutasi/detaildatamutasi/'+id,
         type: "GET",
         dataType: "html",
     })
@@ -917,7 +916,6 @@ $(document).on("click", "#buttonshownotiforder", function (e) {
 $(document).on("click", "#button-lengkapi-data-mutasi", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
-    console.log(id);
     $.ajax({
         url: '../divisi/datamutasi/lengkapimutasi/'+id,
         type: "GET",
@@ -1347,17 +1345,17 @@ $(document).on("click", "#button-print-all", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
     // console.log(id);
-    $("#show-menu-data-barang").html("<img src='loading.gif'  style='display: block; margin: auto;'>");
+    $("#show-menu-data-lokasi-barang").html("<img src='../loading.gif'  style='display: block; margin: auto;'>");
     $.ajax({
-        url: '../divisi/printall/ruangan/'+id,
+        url: '/divisi/printall/ruangan/'+id,
         type: "GET",
         dataType: "html",
     })
         .done(function (data) {
-            $("#show-menu-data-barang").html('<iframe src="data:application/pdf;base64, '+data+'" style="width:100%;; height:500px;" frameborder="0"></iframe>');
+            $("#show-menu-data-lokasi-barang").html('<iframe src="data:application/pdf;base64, '+data+'" style="width:100%;; height:500px;" frameborder="0"></iframe>');
         })
         .fail(function () {
-            $("#show-menu-data-barang").html(
+            $("#show-menu-data-lokasi-barang").html(
                 '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
             );
         });

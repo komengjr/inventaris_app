@@ -53,7 +53,7 @@
             <div class="relative">
                 {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate($data->id_inventaris), ) !!}"> --}}
                 <img style="padding-top: 11.5px; width: 107px; height: 107px;" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
-                                                ->backgroundColor(255, 255, 255)
+                                                // ->backgroundColor(255, 255, 255)
                                                 ->size(150)
                                                 ->style('round')
                                                 ->eye('circle')

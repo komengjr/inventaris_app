@@ -112,13 +112,13 @@ class PdfController extends Controller
     }
     public function printdatamutasi($id)
     {
-        $databrg = DB::table('tbl_sub_peminjaman')
-        ->join('tbl_peminjaman','tbl_peminjaman.id_pinjam','=','tbl_sub_peminjaman.id_pinjam')
-        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')
-        ->where('tbl_peminjaman.tiket_peminjaman',$id)
+        $databrg = DB::table('tbl_sub_mutasi')
+        ->join('tbl_mutasi','tbl_mutasi.kd_mutasi','=','tbl_sub_mutasi.kd_mutasi')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_mutasi.id_inventaris')
+        ->where('tbl_mutasi.kd_mutasi',$id)
         ->get();
         $ttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
-        $datamutasi = DB::table('tbl_mutasi')->where('kd_mutasi','mutasi-12549858')->first();
+        $datamutasi = DB::table('tbl_mutasi')->where('kd_mutasi',$id)->first();
         $pdf = PDF::loadview('divisi.print.datamutasi',['databrg'=>$databrg, 'datamutasi'=>$datamutasi, 'ttd'=>$ttd])->setPaper('A4','potrait');
         return $pdf->stream();
     }

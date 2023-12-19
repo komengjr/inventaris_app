@@ -36,7 +36,14 @@
                         <td>{{$item->menyetujui}}</td>
                         <td>{{$item->yang_menyerahkan}}</td>
                         <td>{{$item->tgl_terima}}</td>
-                        <td><button class="btn-warning" id="button-lengkapi-data-mutasi" data-id='{{$item->kd_mutasi}}'><i class="fa fa-cogs" ></i> Lengkapi Data</button></td>
+                        <td>
+                            @if ($item->penerima == NULL)
+                            <button class="btn-warning" id="button-lengkapi-data-mutasi" data-id='{{$item->kd_mutasi}}'><i class="fa fa-cogs" ></i> Lengkapi Data</button>
+                            @else
+                                <button class="btn-info"><i class="fa fa-print"></i></button>
+                            @endif
+
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

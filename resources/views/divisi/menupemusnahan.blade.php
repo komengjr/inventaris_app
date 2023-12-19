@@ -98,22 +98,25 @@
                                         <th>Nama Barang</th>
                                         <th>Type</th>
                                         <th>Merek</th>
+                                        <th>Eksekusi</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($data as $data)
                                     <tr>
                                         <td>
                                             <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
                                                 class="product-img" />
                                         </td>
-                                        <td>Kursi Kerja</td>
-                                        <td>Futura</td>
-                                        <td>Seat</td>
+                                        <td>{{$data->nama_barang}}</td>
+                                        <td>{{$data->type}}</td>
+                                        <td>{{$data->merk}}</td>
+                                        <td>{{$data->eksekusi}}</td>
                                         <td>
                                             <span class="badge-dot">
-                                                <i class="bg-danger"></i> pending
+                                                <i class="bg-danger"></i> {{$data->persetujuan}}
                                             </span>
                                         </td>
 
@@ -124,15 +127,17 @@
                                                     <i class="icon-options"></i>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="javascript:void();">Action</a>
+                                                    {{-- <a class="dropdown-item" href="javascript:void();">Action</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="javascript:void();">Another action</a>
+                                                    <a class="dropdown-item" href="javascript:void();">Another action</a> --}}
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">Download Template</a>
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Batal</a>
 
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
+
 
                                 </tbody>
                             </table>

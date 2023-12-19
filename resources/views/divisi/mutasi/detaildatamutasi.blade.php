@@ -16,7 +16,7 @@
 
     <div class="modal-body">
         <div class="row pb-3">
-            <div class="col-12">
+            {{-- <div class="col-12">
                 <label for="">Jenis Mutasi</label>
                 @if ($data->jenis_mutasi == 1)
                 <input type="text" class="form-control" value="Penempatan" disabled>
@@ -26,40 +26,43 @@
                 <input type="text" class="form-control" value="Mutasi Antar Cabang" disabled>
                 @endif
 
-            </div>
+            </div> --}}
             @php
-                $cabangasal = DB::table('tbl_cabang')->select('nama_cabang')->where('kd_cabang',$data->jenis_mutasi)
+                $cabangasal = DB::table('tbl_cabang')->select('nama_cabang')->where('kd_cabang',$data->asal_mutasi)->first();
             @endphp
             <div class="col-6">
                 <label for="">Asal Lokasi Barang</label>
-                <input type="text" class="form-control" >
+                <input type="text" class="form-control" value="{{$cabangasal->nama_cabang}}" disabled>
             </div>
+            @php
+                $cabangtujuan = DB::table('tbl_cabang')->select('nama_cabang')->where('kd_cabang',$data->target_mutasi)->first();
+            @endphp
             <div class="col-6">
                 <label for="">Lokasi Penempatan</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" value="{{$cabangtujuan->nama_cabang}}" disabled>
             </div>
-            <div class="col-6">
-                <label for="">Departemen</label>
-                <input type="text" class="form-control" value="{{$data->departemen}}">
-            </div>
-            <div class="col-6">
-                <label for="">Divisi</label>
-                <input type="text" class="form-control" value="{{$data->divisi}}">
-            </div>
+
             <div class="col-6">
                 <label for="">Penanggung Jawab Alat</label>
                 <input type="text" class="form-control" value="{{$data->penanggung_jawab}}">
+            </div>
+            <div class="col-6">
+                <label for="">Menyetujui</label>
+                <input type="text" class="form-control" value="{{$data->menyetujui}}">
+            </div>
+            <div class="col-6">
+                <label for="">Yang Menyerahkan</label>
+                <input type="text" class="form-control" value="{{$data->yang_menyerahkan}}">
             </div>
             <div class="col-6">
                 <label for="">Tanggal Order</label>
                 <input type="text" class="form-control" value="{{$data->tanggal_buat}}">
             </div>
             <hr>
+            <p></p>
             <div class="col-12 pt-5">
-                <div class="input-group">
+                    <label for="">Cari Nama Barang</label>
                     <input type="text" class="form-control" placeholder="Ketikan Nama Barang" id="idinventarismutasi" onkeydown="caribarangmutasi(this)">
-
-                </div>
             </div>
 
         </div>
@@ -95,11 +98,11 @@
                         <td>{{$dataintentaris->type}}</td>
                         <td>{{$dataintentaris->harga_perolehan}}</td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-dark btn-sm waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn-dark waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                             </button>
                             <div class="dropdown-menu">
-                                <a href="javaScript:void();" class="dropdown-item" id="buttoneditbarangmutasi" data-url="{{ url('divisi/datamutasi/editdatamutasi', ['id'=>$datamutasi->id_sub_mutasi]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                                {{-- <a href="javaScript:void();" class="dropdown-item" id="buttoneditbarangmutasi" data-url="{{ url('divisi/datamutasi/editdatamutasi', ['id'=>$datamutasi->id_sub_mutasi]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a> --}}
                                 <div class="dropdown-divider"></div>
                                 <a href="javaScript:void();" class="dropdown-item" id="buttonhapusdatabarangmutasi" data-id="{{$datamutasi->id_sub_mutasi}}" data-kode="{{$datamutasi->kd_mutasi}}"><i class="fa fa-trash-o"></i> Hapus</a>
                             </div>
@@ -114,8 +117,16 @@
         <button type="button" class="btn-info" id="buttonrefreshtablemutasi" data-url="{{ url('divisi/datamutasi/datatable', ['id'=>$data->kd_mutasi]) }}"><i class="fa fa-refresh"></i></button>
         <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
         {{-- <button type="submit" class="btn btn-primary" ><i class="fa fa-save" ></i> Update Data</button> --}}
-        <button onclick="window.open('{{ url('divisi/datamutasi/print/datamutasi', ['id'=>123]) }}', '', 'width=1200, height=700');"class="btn-info"
-        id="" data-url="asdasd"><i class="fa fa-print"></i> Cetak / Print</button>
+        @if ($data->penerima != NULL)
+        <form action="{{ url('divisi/datamutasi/post/datamutasi', []) }}" method="post">
+            @csrf
+            <input type="text" name="kd_mutasi" value="{{$data->kd_mutasi}}" hidden>
+            <button type="submit" class="btn-info" id="" data-url="asdasd"><i class="fa fa-print"></i> Simpan & Penyelesaian</button>
+        </form>
+        @else
+
+        @endif
+
     </div>
 </div>
 <script>

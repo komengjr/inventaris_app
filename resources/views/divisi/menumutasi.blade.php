@@ -87,10 +87,6 @@
                                 <button type="button" class="btn-success waves-effect waves-light"  data-toggle="modal" data-target="#modalmutasi" id="ordertiketmutasi" data-url={{ url('divisi/datamutasi/tambahdata', []) }}>
                                     <i class="fa fa-plus mr-1"></i> Tambah Data
                                 </button>
-                                <button type="button" class="btn-primary waves-effect waves-light">
-                                    <i class="fa fa-print mr-1"></i> Print
-                                </button>
-
                             </div>
 
                             <div class="table-responsive pb-5">
@@ -98,11 +94,13 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Order Tiket</th>
+                                            <th>Tiket Order</th>
                                             <th>Jenis Mutasi</th>
                                             <th>Penanggung Jawab</th>
-                                            <th>Tanggal Terbit</th>
-                                            <th>Tanggal Keluar</th>
+                                            <th>Menyetujui</th>
+                                            <th>Yang Menyerahkan</th>
+                                            <th>Penerima</th>
+                                            <th>Tanggal Terima</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -118,10 +116,6 @@
                                             <td>{{$item->kd_mutasi}}</td>
                                             <td>
                                                 @if ($item->jenis_mutasi == 1)
-                                                Penempatan
-                                                @elseif ($item->jenis_mutasi == 2)
-                                                Penarikan
-                                                @else
                                                 Mutasi Antar Cabang
                                                 @endif
                                             </td>
@@ -129,10 +123,26 @@
                                             {{$item->penanggung_jawab}}
                                             </td>
                                             <td>
-                                                {{$item->tanggal_buat}}
+                                                {{$item->menyetujui}}
                                             </td>
-                                            <td></td>
-                                            <td><button class="btn-warning" data-toggle="modal" data-target="#modalmutasi" id="buttondetailmutasibarang" data-url="{{ url('divisi/datamutasi/detaildatamutasi',['id'=>$item->kd_mutasi]) }}" ><i class="fa fa-pencil"></i> Update</button></td>
+                                            <td>
+                                                {{$item->yang_menyerahkan}}
+                                            </td>
+                                            <td>
+                                                {{$item->penerima}}
+                                            </td>
+                                            <td>
+                                                {{$item->tgl_terima}}
+                                            </td>
+                                            <td>
+                                                @if ($item->status_mutasi == 0)
+                                                <button class="btn-warning" data-toggle="modal" data-target="#modalmutasi" id="buttondetailmutasibarang" data-id="{{$item->kd_mutasi}}" ><i class="fa fa-pencil"></i> Lengkapi Data</button>
+                                                @else
+                                                <button onclick="window.open('{{ url('divisi/datamutasi/print/datamutasi', ['id'=>$item->kd_mutasi]) }}', '', 'width=1200, height=700');"class="btn-info"
+                                                    id="" data-url="asdasd"><i class="fa fa-print"></i> Cetak / Print</button>
+                                                @endif
+
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

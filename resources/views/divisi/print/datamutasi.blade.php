@@ -102,11 +102,11 @@
                 </td>
 
             </tr>
-            <tr>
+            {{-- <tr>
                 <td style="width: 150px;">Jenis Mutasi</td>
                 <td style="width: 5px;">:</td>
                 <td></td>
-            </tr>
+            </tr> --}}
             <tr>
                 <td>Asal Lokasi Barang</td>
                 <td style="width: 5px;">:</td>
@@ -119,23 +119,10 @@
                 <td>Lokasi Penempatan</td>
                 <td>:</td>
                 <td>
-
+                    {{$datamutasi->target_mutasi}}
                 </td>
             </tr>
-            <tr>
-                <td>Departemen</td>
-                <td>:</td>
-                <td>
 
-                </td>
-            </tr>
-            <tr>
-                <td>Divisi</td>
-                <td>:</td>
-                <td>
-
-                </td>
-            </tr>
             <tr>
                 <td style="width: 150px;">Penanggung Jawab</td>
                 <td style="width: 5px;">:</td>
@@ -145,7 +132,14 @@
                 <td>Tanggal Order</td>
                 <td>:</td>
                 <td>
-
+                    {{$datamutasi->tanggal_buat}}
+                </td>
+            </tr>
+            <tr>
+                <td>Tanggal di terima</td>
+                <td>:</td>
+                <td>
+                    {{$datamutasi->tgl_terima}}
                 </td>
             </tr>
 
@@ -166,8 +160,19 @@
            <tbody>
             @php
                 $no = 1;
+                // $databarang = DB::table('tbl_sub_mutasi')->where('kd_mutasi',$datamutasi->kd_mutasi)->get();
             @endphp
-
+                @foreach ($databrg as $databrg)
+                    <tr>
+                        <td>{{$no++}}</td>
+                        <td>{{$databrg->nama_barang}}</td>
+                        <td>{{$databrg->no_inventaris}}</td>
+                        <td>{{$databrg->merk}}</td>
+                        <td>{{$databrg->harga_perolehan}}</td>
+                        <td>{{$databrg->th_perolehan}}</td>
+                        <td>123</td>
+                    </tr>
+                @endforeach
            </tbody>
         </table>
         <br><br><br>
