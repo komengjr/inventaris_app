@@ -15,8 +15,7 @@
             </div>
            </div>
 
-
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card">
                         <div class="card-body">
@@ -47,9 +46,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--End Row-->
-
+            </div> --}}
 
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-6">
@@ -89,8 +86,7 @@
 
                         <div class="float-sm-right m-3 m-3" >
                             <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                data-target="#modalmaintenance" id="tombolbarumaintenance"
-                                data-url="{{ url('divisi/tambahdatamaintenance', []) }}" style="float: right;">
+                                data-target="#modalpemusnahan" id="tombolbarupemusnahan" style="float: right;">
                                 <i class="fa fa-plus mr-1"></i> Tambah Data
                             </button>
                         </div>
@@ -147,6 +143,16 @@
         </div>
         <!-- End container-fluid-->
 
+    </div>
+    <div class="modal fade" id="modalpemusnahan">
+        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+            <div class="modal-content">
+                <div id="showdatasdm">
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="{{ url('assets/js/app-script.js', []) }}"></script>
     <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>

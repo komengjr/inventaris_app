@@ -312,9 +312,8 @@ $(document).on("click", "#tombolbarumutasi", function (e) {
 $(document).on("click", "#tombolbarupemusnahan", function (e) {
     e.preventDefault();
     var url = $(this).data("url");
-
     $.ajax({
-        url: url,
+        url: '../../divisi/tambahdatapemusnahan',
         type: "GET",
         dataType: "html",
     })
@@ -915,6 +914,25 @@ $(document).on("click", "#buttonshownotiforder", function (e) {
     });
 
 });
+$(document).on("click", "#button-lengkapi-data-mutasi", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    console.log(id);
+    $.ajax({
+        url: '../divisi/datamutasi/lengkapimutasi/'+id,
+        type: "GET",
+        dataType: "html",
+    })
+    .done(function (data) {
+        $("#bodymodalmutasirecord").html(data);
+    })
+    .fail(function () {
+        $("#bodymodalmutasirecord").html(
+            '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+        );
+    });
+
+});
 
 $(document).on("click", "#buttontambahmaintenance", function (e) {
     e.preventDefault();
@@ -1170,6 +1188,25 @@ $(document).on("click", "#buttontablemasterlokasibarang", function (e) {
         })
         .fail(function () {
             $("#showdatalengkapi").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
+$(document).on("click", "#button-pilih-barang-pemusnahan", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    // var no = $(this).data("no");
+    $.ajax({
+        url: '../divisi/pemusnahan/pilihdatabarang/'+id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menu-daftar-inevntaris").html(data);
+        })
+        .fail(function () {
+            $("#menu-daftar-inevntaris").html(
                 '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
             );
         });

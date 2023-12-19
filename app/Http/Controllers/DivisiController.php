@@ -427,7 +427,17 @@ class DivisiController extends Controller
         $randomString = Str::random(4);
         $tgl = date('d/m/Y');
         $jadi = 'PM-'.$tgl.'-'.$randomString;
-        return view('divisi.formpemusnahan',['tiket' => $jadi]);
+        return view('divisi.pemusnahan.tambahdata',['tiket' => $jadi]);
+    }
+    public function caridatabarangpemusnahan($id)
+    {
+        $data = DB::table('sub_tbl_inventory')->where('nama_barang', 'like', '%' . $id . '%')->get();
+        return view('divisi.pemusnahan.daftarlistinventaris',['data'=>$data]);
+    }
+    public function pilihdatabarangpemusnahan($id)
+    {
+        $data = DB::table('sub_tbl_inventory')->where('id_inventaris',$id)->first();
+        return view('divisi.pemusnahan.formpemusnahan',['data'=>$data]);
     }
     public function posttambah(Request $request)
     {
@@ -857,7 +867,14 @@ class DivisiController extends Controller
     public function showdataordermutasi()
     {
         $cabang = DB::table('tbl_cabang')->get();
-        return view('divisi.mutasi.ordermutasi',['cabang'=>$cabang]);
+        $dataorder = DB::table('tbl_mutasi')->where('kd_cabang',Auth::user()->cabang)->where('tgl_terima',NULl)->get();
+        return view('divisi.mutasi.ordermutasi',['cabang'=>$cabang,'data'=>$dataorder]);
+    }
+    public function lengkapidataordermutasi($id)
+    {
+        $cabang = DB::table('tbl_cabang')->get();
+        $dataorder = DB::table('tbl_mutasi')->where('kd_mutasi',$id)->first();
+        return view('divisi.mutasi.lengkapiordermutasi',['cabang'=>$cabang,'data'=>$dataorder]);
     }
     public function caridatabarangmutasi($id,$ids)
     {

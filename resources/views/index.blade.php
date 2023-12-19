@@ -5,10 +5,6 @@
 
     <title>Print Barcode</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" /> --}}
-    {{-- <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet"> --}}
-    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> --}}
 </head>
 <style>
     @page {
@@ -117,29 +113,5 @@
             </div>
         @endif
     @endforeach
-    {{-- <body> --}}
-
-
-    {{-- <div class="container text-center">
-    @foreach ($data as $data)
-
-    @if ($data->kd_lokasi == '-')
-
-    @else
-
-      <div class="row" style="border: dotted;width: 105px; height: 50px;">
-        <div class="col">
-          <img src="data:image/png;base64, {!! base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate($data->id_inventaris)) !!}">
-        </div>
-        <div class="col">
-          <strong>{{$data->nama_barang}}</strong>
-        </div>
-      </div>
-    @endif
-
-    @endforeach
-
-  </div> --}}
-    {{-- </body> --}}
 
 </html>
