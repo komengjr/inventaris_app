@@ -49,7 +49,7 @@ class MaintenanceController extends Controller
     }
     public function caridatabarangmaintenance($id)
     {
-        $data = DB::table('sub_tbl_inventory')->where('nama_barang', 'like', '%' . $id . '%')->get();
+        $data = DB::table('sub_tbl_inventory')->where('nama_barang', 'like', '%' . $id . '%')->where('kd_cabang',Auth::user()->cabang)->get();
         return view('divisi.maintenance.daftarlistinventaris',['data'=>$data]);
     }
     public function pilihdatabarangmaintenance($id)
