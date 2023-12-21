@@ -20,17 +20,23 @@ class DivisiController extends Controller
     }
     public function updatedatainventori(Request $request)
     {
-        if ($request->link != "") {
-            $gambar = 'public/databrg/sdm/'.$request->input('urut').'/'.$request->input('link');
-        } else {
-            $gambar = "";
-        }
+
 
         $entitas = DB::table('tbl_entitas_cabang')
         ->join('tbl_cabang','tbl_cabang.kd_entitas_cabang','=','tbl_entitas_cabang.kd_entitas_cabang')
         ->join('tbl_setting_cabang','tbl_setting_cabang.kd_cabang','=','tbl_cabang.kd_cabang')
         ->where('tbl_setting_cabang.kd_cabang',Auth::user()->cabang)->first();
         $cekdata = DB::table('sub_tbl_inventory')->where('id_inventaris',$request->input('kode_kode'))->first();
+        if ($request->link != "") {
+            $gambar = 'public/databrg/sdm/'.$request->input('urut').'/'.$request->input('link');
+        } else {
+            if ($cekdata->gambar == "") {
+                $gambar = "";
+            } else {
+                $gambar = $cekdata->gambar;
+            }
+
+        }
         if ($cekdata->kd_lokasi != $request->input('kd_lokasi')) {
             $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_lokasi',$request->input('kd_lokasi'))->where('kd_cabang',Auth::user()->cabang)->first();
             $nilai = preg_replace("/[^0-9]/","",$request->harga_perolehan);
@@ -73,8 +79,6 @@ class DivisiController extends Controller
         // $id = $request->input('kd_lokasi');
         // return view('admin.sub_barang1',['data'=>$data,'id'=>$id ]);
     }
-
-
     public function menu()
     {
         if (auth::user()->akses == 'sdm') {
@@ -103,7 +107,6 @@ class DivisiController extends Controller
         // dd($id);
         return view('divisi.dashboard.listbarang',['data'=>$data,'id'=>$id ]);
     }
-
     public function menupemusnahan()
     {
         $datakategori = DB::table('no_urut_barang')->get();
@@ -435,7 +438,7 @@ class DivisiController extends Controller
     public function posttambahdatapemusnahan(Request $request)
     {
         DB::table('tbl_pemusnahan')->insert([
-            'kd_pemusnahan'=>1312123,
+            'kd_pemusnahan'=>Str::random(4),
             'id_inventaris'=>$request->id_inventaris,
             'kd_cabang'=>Auth::user()->cabang,
             'dasar_pengajuan'=>$request->dasar_pengajuan,

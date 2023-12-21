@@ -220,6 +220,10 @@ Route::post('inputdatamusnahbaru',['as'=>'inputdatamusnahbaru','uses'=> 'AdminCo
 Route::get('selectlokasi1/{id}/{kd}',['as'=>'selectlokasi1','uses'=> 'AdminController@selectlokasi1']);
 Route::post('kliktambahbrgmusnah/{id}',['as'=>'kliktambahbrgmusnah','uses'=> 'AdminController@kliktambahbrgmusnah']);
 Route::get('hapussubtablemusnah/{id}/{no}',['as'=>'hapussubtablemusnah','uses'=> 'AdminController@hapussubtablemusnah']);
+
+
+// Laporan
+Route::get('menu/masterlaporan','LaporanController@laporan');
 /*
 |--------------------------------------------------------------------------
 | Web Routes

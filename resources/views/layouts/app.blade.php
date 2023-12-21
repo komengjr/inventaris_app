@@ -174,17 +174,15 @@
                             <li><a href="{{ asset('menu/masterstaff', []) }}"><i
                                         class="zmdi zmdi-wrench"></i>
                                     Master Staff</a></li>
+                            <li><a href="{{ asset('menu/masterlaporan', []) }}"><i
+                                        class="zmdi zmdi-view-carousel"></i>
+                                    Master Laporan</a></li>
                         @elseif(auth()->user()->akses == 'keu')
                             <li><a href="{{ asset('formsdm', []) }}"><i class="zmdi zmdi-wrench"></i> Form
                                     Keuangan</a></li>
                         @elseif(auth()->user()->akses == 'admin')
                             <li><a href="{{ asset('masteradmin', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Admin</a></li>
                             <li><a href="{{ asset('masteradmindetail', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Cabang</a></li>
-                            {{-- <li><a href="{{ asset('datamutasi', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Form
-                                    Mutasi</a></li>
-                            <li><a href="{{ asset('datapemusnahan', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
-                                    Form
-                                    Pemusnahan</a></li> --}}
                         @endif
 
 

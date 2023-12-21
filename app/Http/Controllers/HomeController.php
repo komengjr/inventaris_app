@@ -456,6 +456,7 @@ class HomeController extends Controller
                             'harga_perolehan' => $nilai,
                             'kondisi_barang' => 'BAIK',
                             'status_barang' => 0,
+                            'no' => ($jumlahbarang+1),
                             'jam_input' => date("h:i:sa"),
                 ]
             );
