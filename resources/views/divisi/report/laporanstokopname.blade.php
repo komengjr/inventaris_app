@@ -161,7 +161,7 @@
         </table>
         <hr>
         <h5>Data Belum Di Verif</h5>
-        <table
+        {{-- <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="1">
             <thead style="font-weight: bold;">
@@ -171,10 +171,6 @@
                     <td>Nama Barang</td>
                     <td>Merek</td>
                     <td>Type</td>
-                    {{-- <td>Nama Barang</td>
-                    <td>Merek</td>
-                    <td>Type</td>
-                    <td>No Seri</td> --}}
                 </tr>
             </thead>
             <tbody>
@@ -191,7 +187,7 @@
 
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
         <div class="footer">
             <table
                 style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"

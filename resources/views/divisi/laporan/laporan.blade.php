@@ -170,4 +170,14 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-laporan">
+        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+            <div class="modal-content">
+                <div id="showdatasdm">
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
