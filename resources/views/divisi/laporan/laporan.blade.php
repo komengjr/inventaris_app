@@ -141,7 +141,7 @@
                                         <h6 class="mb-0">Barang Keseluruhan</h6>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark"><i class="zmdi zmdi-assignment"></i></button>
+                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"><i class="zmdi zmdi-assignment"></i></button>
                                     </div>
                                 </div>
                             </li>
