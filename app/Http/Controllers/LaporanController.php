@@ -22,4 +22,14 @@ class LaporanController extends Controller
     {
         return view('divisi.laporan.laporan');
     }
+    public function allbarangcabang()
+    {
+        return view('divisi.laporan.view');
+    }
+    public function cetakallbarangcabang()
+    {
+        $data = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->get();
+        $pdf = PDF::loadview('divisi.laporan.report.all-barang',['data'=>$data])->setPaper('A4','potrait');
+        return base64_encode($pdf->stream());
+    }
 }

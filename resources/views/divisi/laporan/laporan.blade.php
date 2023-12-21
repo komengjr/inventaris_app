@@ -141,7 +141,7 @@
                                         <h6 class="mb-0">Barang Keseluruhan</h6>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"><i class="zmdi zmdi-assignment"></i></button>
+                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan" id="button-laporan-barang-keseluruhan"><i class="zmdi zmdi-assignment"></i></button>
                                     </div>
                                 </div>
                             </li>
@@ -173,7 +173,7 @@
     <div class="modal fade" id="modal-laporan">
         <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
             <div class="modal-content">
-                <div id="showdatasdm">
+                <div id="menu-laporan">
                     <div class="modal-body">
                     </div>
                 </div>
