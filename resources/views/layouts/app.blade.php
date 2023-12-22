@@ -16,10 +16,9 @@
     <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('online/bootstrap.min.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('online/all.min.css', []) }}" rel="stylesheet" />
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"> --}}
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
-    {{-- <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet"> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" /> --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
     <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
@@ -34,7 +33,7 @@
 
 <body>
 
-    <div id="wrapper" style="font-family:'Calibri', sans-serif;">
+    <div id="wrapper">
 
         <!--Start header-->
         <header class="topbar-nav">
@@ -128,7 +127,7 @@
 
             </div>
 
-            <ul id="respMenu" class="horizontal-menu" style="font-family: 'Russo One', sans-serif;">
+            <ul id="respMenu" class="horizontal-menu">
 
                 <li>
                     <a href="javascript:;">

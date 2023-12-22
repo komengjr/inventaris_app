@@ -2,7 +2,6 @@
 
 /* General */
 html {
-    font-family:"Calibri", sans-serif;
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
 	-ms-overflow-style: scrollbar;
@@ -17,7 +16,7 @@ html{
 }
 body {
    	background-color: #f8f7ff;
-       font-family:"Calibri", sans-serif;
+    font-family:'Calibri', sans-serif;
     font-size: 14px;
     color: #757575;
     letter-spacing: .5px;
