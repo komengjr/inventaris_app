@@ -43,7 +43,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:void();">
                             <div class="media align-items-center">
-                                <img src="{{ asset('anim.gif', []) }}" class="logo" alt="logo icon" width="200">
+                                <img src="{{ asset('vendor/anim1.gif', []) }}" class="logo" alt="logo icon" width="200">
                                 <div class="media-body">
                                     {{-- <h5 class="logo-text">APP-Serve</h5> --}}
                                 </div>
@@ -63,7 +63,7 @@
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown"
                             href="#">
-                            <span class="user-profile"><img src="{{ asset('icon.png', []) }}" class="img-circle"
+                            <span class="user-profile"><img src="{{ asset('profile.png', []) }}" class="img-circle"
                                     alt="user avatar"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -71,7 +71,7 @@
                                 <a href="javaScript:void();">
                                     <div class="media">
                                         <div class="avatar"><img class="align-self-start mr-3"
-                                                src="{{ asset('icon.png', []) }}" alt="user avatar"></div>
+                                                src="{{ asset('profile.png', []) }}" alt="user avatar"></div>
                                         <div class="media-body">
                                             <h6 class="mt-2 user-title">{{ auth()->user()->name }}</h6>
                                             <p class="user-subtitle">{{ auth()->user()->name }}</p>

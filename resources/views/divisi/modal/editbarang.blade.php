@@ -20,6 +20,20 @@
                 <label for="">type</label>
                 <input type="text" class="form-control" name="type" value="{{$data->type}}">
             </div>
+            @php
+                $cekdata = DB::table('tbl_lokasi')->where('kd_lokasi',$data->kd_lokasi)->first();
+            @endphp
+            @if ($cekdata)
+                <div class="col-12">
+                    <label for="">Lokasi Barang</label>
+                    <input type="text" class="form-control" name="type" value="{{$data->kd_lokasi}}" disabled>
+                </div>
+            @else
+                <div class="col-12">
+                    <label for="">Lokasi Barang</label>
+                    <input type="text" class="form-control" name="type" value="{{$data->kd_lokasi}}" disabled>
+                </div>
+            @endif
             <div class="col-12">
                 <label for="">Merek</label>
                 <input type="text" class="form-control" name="merk" value="{{$data->merk}}">
