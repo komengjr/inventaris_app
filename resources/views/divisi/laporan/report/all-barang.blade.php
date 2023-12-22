@@ -152,7 +152,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @php
+                @php
                     $no = 1;
                 @endphp
                 @foreach ($data as $data)
@@ -165,7 +165,7 @@
                         <td style="text-align: right;">@currency($data->harga_perolehan)</td>
                         <td>Baik</td>
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
         <br><br><br>
