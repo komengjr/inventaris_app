@@ -48,7 +48,7 @@
             <div class="card-body">
                 <div class="card-content p-0">
                     <div class="text-center m-0 p-0">
-                        <img src="{{ asset('vendor/new-anim.gif', []) }}" width="350">
+                        <img src="{{ asset('vendor/new-anim.gif', []) }}" width="350" style="width: 100%; height: auto;">
                     </div>
                     <div class="card-title text-uppercase text-center py-2" style="font-size: 10px;">Login Aplikasi</div>
                     <form method="POST" action="{{ route('login') }}">
@@ -98,13 +98,13 @@
             <div class="card-footer text-center py-3">
                 <p class="text-dark mb-0">Copyright © 2022</p>
                 <div class="row mt-3">
-                    <div class="col-12 col-lg-6 col-xl-3">
+                    <div class="col-4 col-lg-6 col-xl-4">
                         <img src="{{ asset('vendor/pramita.png') }}" alt="" srcset="" width="80">
                     </div>
-                    <div class="col-12 col-lg-6 col-xl-3">
+                    <div class="col-4 col-lg-6 col-xl-4">
                         <img src="{{ asset('vendor/sima.jpeg') }}" alt="" srcset="" width="80">
                     </div>
-                    <div class="col-12 col-lg-6 col-xl-3">
+                    <div class="col-4 col-lg-6 col-xl-4">
                         <img src="{{ asset('vendor/prospek.png') }}" alt="" srcset="" width="80">
                     </div>
 
