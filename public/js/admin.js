@@ -1385,7 +1385,7 @@ $(document).on("click", "#button-print-laporan", function (e) {
     e.preventDefault();
     $("#show-data-laporan").html('<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
     $.ajax({
-        url: '../menu/masterlaporan/cetak-all-barang-cabang/',
+        url: '../../menu/masterlaporan/cetak-all-barang-cabang/',
         type: "GET",
         dataType: "html",
     })
