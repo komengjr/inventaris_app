@@ -2,19 +2,9 @@
 <html lang="en">
 
 <head>
-
     <title>Report Data Inventaris</title>
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"> --}}
-    {{-- <link href="{{ asset('online/bootstrap.min.css', []) }}" rel="stylesheet" />
-    <link href="{{ asset('online/all.min.css', []) }}" rel="stylesheet" /> --}}
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 </head>
 <style>
-    /* @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap'); */
-
-    /* General */
-
 
     @page {
         margin-left: 25px;
@@ -152,7 +142,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @php
+                @php
                     $no = 1;
                 @endphp
                 @foreach ($data as $data)
@@ -165,7 +155,7 @@
                         <td style="text-align: right;">@currency($data->harga_perolehan)</td>
                         <td>Baik</td>
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
         <br><br><br>
