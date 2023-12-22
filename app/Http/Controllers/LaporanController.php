@@ -28,7 +28,9 @@ class LaporanController extends Controller
     }
     public function cetakallbarangcabang()
     {
-        $data = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->get();
+        $data = DB::table('sub_tbl_inventory')
+        ->select('no_inventaris','nama_barang','merk','type','harga_perolehan')
+        ->where('kd_cabang',Auth::user()->cabang)->get();
         $pdf = PDF::loadview('divisi.laporan.report.all-barang',['data'=>$data])->setPaper('A4','potrait');
         return base64_encode($pdf->stream());
     }
