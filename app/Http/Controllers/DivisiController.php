@@ -49,6 +49,7 @@ class DivisiController extends Controller
                         'th_perolehan' => $request->input('th_perolehan'),
                         'merk' => $request->input('merk'),
                         'no_seri' => $request->input('no_seri'),
+                        'tgl_beli' => $request->input('tgl_beli'),
                         'suplier' => $request->input('suplier'),
                         'type' => $request->input('type'),
                         'harga_perolehan' => $nilai,
@@ -65,6 +66,7 @@ class DivisiController extends Controller
                         'merk' => $request->input('merk'),
                         'no_seri' => $request->input('no_seri'),
                         'suplier' => $request->input('suplier'),
+                        'tgl_beli' => $request->input('tgl_beli'),
                         'type' => $request->input('type'),
                         'harga_perolehan' => $nilai,
                         'gambar' => $gambar
