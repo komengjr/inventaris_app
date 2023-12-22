@@ -9,7 +9,7 @@
     <meta name="author" content="" /> --}}
     <title> Pramita - Panel Login</title>
     <!--favicon-->
-    <link rel="icon" href="{{ asset('icon.png', []) }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('vendor/logo.png', []) }}" type="image/x-icon">
     <link href="{{ asset('assets/css/bootstrap.min.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
@@ -48,10 +48,9 @@
             <div class="card-body">
                 <div class="card-content p-0">
                     <div class="text-center m-0 p-0">
-                        <img src="{{ asset('vendor/anim1.gif', []) }}" width="350">
+                        <img src="{{ asset('vendor/new-anim.gif', []) }}" width="350">
                     </div>
-                    <div class="card-title text-uppercase text-center py-3"
-                        style="font-family: "Copperplate", "Courier New" , Monospace;">Login Aplikasi</div>
+                    <div class="card-title text-uppercase text-center py-2" style="font-size: 10px;">Login Aplikasi</div>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group">

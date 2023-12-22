@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Pramita - {{ auth()->user()->name }}</title>
-    <link rel="icon" href="{{ asset('icon.png', []) }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('vendor/logo.png', []) }}" type="image/x-icon">
     <link href="{{ asset('assets/plugins/select2/css/select2.min.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/inputtags/css/bootstrap-tagsinput.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet" type="text/css">
@@ -43,7 +43,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:void();">
                             <div class="media align-items-center">
-                                <img src="{{ asset('vendor/anim1.gif', []) }}" class="logo" alt="logo icon" width="200">
+                                <img src="{{ asset('vendor/new-anim.gif', []) }}" class="logo" alt="logo icon" width="200">
                                 <div class="media-body">
                                     {{-- <h5 class="logo-text">APP-Serve</h5> --}}
                                 </div>
