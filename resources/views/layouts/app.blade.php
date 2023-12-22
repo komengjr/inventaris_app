@@ -106,12 +106,26 @@
         <nav>
             <!-- Menu Toggle btn-->
             <div class="menu-toggle">
-                <h3>Pramita Inventaris</h3>
-                <button type="button" id="menu-btn">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                <div class="row mt-1">
+                    <div class="col-3 col-lg-3 col-xl-3 mt-3" style="text-align: center;">
+                        <img src="{{ asset('vendor/pramita.png') }}" alt="" srcset="" width="50">
+                    </div>
+                    <div class="col-3 col-lg-3 col-xl-3 mt-3" style="text-align: center;">
+                        <img src="{{ asset('vendor/sima.jpeg') }}" alt="" srcset="" width="50">
+                    </div>
+                    <div class="col-3 col-lg-3 col-xl-3 mt-3" style="text-align: center;">
+                        <img src="{{ asset('vendor/prospek.png') }}" alt="" srcset="" width="50">
+                    </div>
+                    <div class="col-3 col-lg-3 col-xl-3">
+                        <button type="button" id="menu-btn">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                </div>
+
             </div>
 
             <ul id="respMenu" class="horizontal-menu" style="font-family: 'Russo One', sans-serif;">
@@ -324,15 +338,15 @@
                 ->get();
         @endphp
         <div class="modal fade" id="settingmodal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content animated zoomInUp">
                     <div class="modal-header">
                         <h5 class="modal-title">Setup System</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" >
                         <form method="POST" action="{{ asset('divisi/setting/system', []) }}"
                             enctype="multipart/form-data">
                             @csrf
@@ -353,6 +367,10 @@
                                 <div class="form-group">
                                     <label for="input-3">Nama 3</label>
                                     <input type="text" class="form-control" name="nama_3" required>
+                                </div>
+                                <div class="form-group pt-2" style="text-align: right;">
+                                    <button type="submit" class="btn-success px-5"><i class="icon-lock"></i>
+                                        Simpan</button>
                                 </div>
                             @else
                                 {{-- <div class="form-group">
@@ -382,16 +400,7 @@
                                 </div>
                             @endif
 
-                            <div class="form-group">
-                                <div class="icheck-material-danger">
-                                    <input type="checkbox" id="user-checkbox1">
-                                    <label for="user-checkbox1">Remember me</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary px-5"><i class="icon-lock"></i>
-                                    Simpan</button>
-                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -420,7 +429,9 @@
     <script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js', []) }}"></script>
     <script src="{{ asset('js/scriptx.js', []) }}"></script>
     <script src="{{ asset('js/admin.js', []) }}"></script>
+    @if (Auth::user()->akses == 'admin')
     <script src="{{ asset('js/master.js', []) }}"></script>
+    @endif
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.multi-select.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.quicksearch.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>

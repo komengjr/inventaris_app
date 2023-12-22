@@ -1291,4 +1291,20 @@ class DivisiController extends Controller
         $data = DB::table('tbl_case')->where('tiket_case',$id)->first();
         return view('faq.detailcase',['data'=>$data]);
     }
+
+
+
+    // Iklan
+    public function updatedataiklan($id)
+    {
+        $cek = DB::table('q_iklan')->where('status_iklan',1)->first();
+        if ($id == 'check') {
+            DB::table('q_iklan_cabang')->insert([
+                'kd_iklan'=>$cek->kd_iklan,
+                'kd_cabang'=>Auth::user()->cabang,
+            ]);
+        }else{
+            DB::table('q_iklan_cabang')->where('kd_iklan',$cek->kd_iklan)->where('kd_cabang',Auth::user()->cabang)->delete();
+        }
+    }
 }

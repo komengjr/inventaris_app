@@ -241,7 +241,10 @@ Route::get('divisi/case/databaru/',['as'=>'divisi/case/databaru/','uses'=> 'Divi
 Route::get('divisi/case/datacase/detail/{id}',['as'=>'divisi/case/datacase/detail/','uses'=> 'DivisiController@detaildatacaseid']);
 Route::get('divisi/case/datalokasi/',['as'=>'divisi/case/datalokasi/','uses'=> 'DivisiController@casedatalokasi']);
 Route::get('divisi/case/dataklasifikasi/',['as'=>'divisi/case/dataklasifikasi/','uses'=> 'DivisiController@casedataklasifikasi']);
+Route::get('/divisi/iklan/update/{id}',['as'=>'/divisi/iklan/update','uses'=> 'DivisiController@updatedataiklan']);
 Route::post('divisi/case/databaru/','DivisiController@posttambahdatacase');
+
+
 
 Route::post('/pdf/{id}', 'PdfController@print');
 Route::post('/printbarcodelokasi/{id}', 'PdfController@printbarcodelokasi');

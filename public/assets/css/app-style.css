@@ -5975,7 +5975,7 @@ table.grid td {
 
   .topbar-nav .navbar {
     padding: 20px 10px 20px 5px;
-    background: linear-gradient(90deg,transparent,#13edd8,transparent,#00ffe5);
+    background: linear-gradient(90deg,transparent,#fff,transparent,#fff);
   }
 
 

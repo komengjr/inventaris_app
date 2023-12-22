@@ -318,6 +318,7 @@
     </div>
 </div>
 
+<button id="button-iklan" data-toggle="modal" data-target="#cardmodal" style="display: none;"></button>
 <script type="text/javascript">
     function submitForm1() {
         document.form2.target = "myActionWin";
@@ -325,3 +326,69 @@
         document.form2.submit();
     }
 </script>
+@php
+    $cekiklan = DB::table('q_iklan_cabang')
+        ->join('q_iklan', 'q_iklan.kd_iklan', '=', 'q_iklan_cabang.kd_iklan')
+        ->where('q_iklan_cabang.kd_cabang', Auth::user()->cabang)
+        ->where('q_iklan.status_iklan', 1)
+        ->get();
+@endphp
+@if ($cekiklan->isEmpty())
+    @php
+        $iklan = DB::table('q_iklan')
+            ->where('status_iklan', 1)
+            ->get();
+    @endphp
+    <div class="modal fade" id="cardmodal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0">
+                <div class="card mb-0">
+                    <div id="carousel-2" class="carousel slide" data-ride="carousel">
+
+                        <div class="carousel-inner">
+                            @foreach ($iklan as $iklan)
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100 card-img-top"
+                                        src="{{$iklan->link}}"
+                                        alt="Card image cap">
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="card-body pt-2 p-0">
+                        <div class="form-group col-12">
+                            <div class="icheck-material-info">
+                                <input type="checkbox" id="iklan-checkbox" onclick="status_iklan()">
+                                <label for="iklan-checkbox">Tidak ditampilkan Kembali Ketika Login</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#button-iklan').click();
+        });
+
+        function status_iklan() {
+            if ($('#iklan-checkbox').is(':checked')) {
+                $.ajax({
+                    url: '/divisi/iklan/update/check',
+                    type: 'GET',
+                    dataType: 'html'
+                })
+            } else {
+                $.ajax({
+                    url: '/divisi/iklan/update/removecheck',
+                    type: 'GET',
+                    dataType: 'html'
+                })
+            }
+
+        };
+    </script>
+@else
+@endif
