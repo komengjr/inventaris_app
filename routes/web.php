@@ -225,7 +225,7 @@ Route::get('hapussubtablemusnah/{id}/{no}',['as'=>'hapussubtablemusnah','uses'=>
 // Laporan
 Route::get('menu/masterlaporan','LaporanController@laporan');
 Route::get('menu/masterlaporan/all-barang-cabang',['as'=>'menu/masterlaporan/all-barang-cabang','uses'=> 'LaporanController@allbarangcabang']);
-Route::get('menu/masterlaporan/cetak-all-barang-cabang',['as'=>'menu/masterlaporan/cetak-all-barang-cabang','uses'=> 'LaporanController@cetakallbarangcabang']);
+Route::get('menureport/masterlaporan/cetak-all-barang-cabang',['as'=>'menureport/masterlaporan/cetak-all-barang-cabang','uses'=> 'LaporanController@cetakallbarangcabang']);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
