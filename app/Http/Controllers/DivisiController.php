@@ -711,11 +711,26 @@ class DivisiController extends Controller
                     ->where('kd_cabang',auth::user()->cabang)
                     ->update([
                                 'no' =>  $nourut
-
                             ]);
                 }
             }
-        Session::flash('sukses','Berhasil Fix Tanggal');
+        Session::flash('sukses','Berhasil Fix Data');
+        return redirect()->back();
+    }
+    public function fixnourutmasterbarang()
+    {
+        $no = 1;
+        $data = DB::table('sub_tbl_inventory')
+        ->where('sub_tbl_inventory.kd_cabang',auth::user()->cabang)->orderBy('id','ASC')->get();
+        foreach ($data as $data) {
+            DB::table('sub_tbl_inventory')
+            ->where('id_inventaris',$data->id_inventaris)
+            ->where('kd_cabang',auth::user()->cabang)
+            ->update([
+                        'no' =>  $no++
+                    ]);
+        }
+        Session::flash('sukses','Berhasil Fix No Urut');
         return redirect()->back();
     }
     public function settingsystem(Request $request)
@@ -749,14 +764,30 @@ class DivisiController extends Controller
     }
     public function posteditbarang(Request $request)
     {
-        DB::table('sub_tbl_inventory')
-        ->where('id_inventaris',$request->id_inventaris)
-        ->update([
-                    'nama_barang' => $request->nama_barang,
-                    'merk' => $request->merk,
-                    'type' => $request->type,
-                    'harga_perolehan' => $request->harga,
-                ]);
+        $cekulang = DB::table('tbl_lokasi')->where('kd_lokasi',$request->lokasi)->first();
+        if ($cekulang) {
+            DB::table('sub_tbl_inventory')
+            ->where('id_inventaris',$request->id_inventaris)
+            ->update([
+                        'nama_barang' => $request->nama_barang,
+                        'merk' => $request->merk,
+                        'type' => $request->type,
+                        'harga_perolehan' => $request->harga,
+                    ]);
+        } else {
+            DB::table('sub_tbl_inventory')
+            ->where('id_inventaris',$request->id_inventaris)
+            ->update([
+                        'nama_barang' => $request->nama_barang,
+                        'merk' => $request->merk,
+                        'type' => $request->type,
+                        'no_inventaris' => $request->no_inventaris,
+                        'kd_lokasi' => $request->lokasi,
+                        'harga_perolehan' => $request->harga,
+                    ]);
+        }
+
+
         return redirect()->back();
     }
 

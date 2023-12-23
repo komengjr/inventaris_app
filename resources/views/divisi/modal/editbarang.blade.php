@@ -13,8 +13,8 @@
                 <input type="text" class="form-control" name="nama_barang" value="{{$data->nama_barang}}">
             </div>
             <div class="col-12">
-                <label for="">ID</label>
-                <input type="text" class="form-control" name="id_inventaris" value="{{$data->id_inventaris}}">
+                {{-- <label for="">ID</label> --}}
+                <input type="text" class="form-control" name="id_inventaris" value="{{$data->id_inventaris}}" hidden>
             </div>
             <div class="col-12">
                 <label for="">type</label>
@@ -25,13 +25,21 @@
             @endphp
             @if ($cekdata)
                 <div class="col-12">
+                    <label for="">No Inventaris</label>
+                    <input type="text" class="form-control" name="no_inventaris" value="{{$data->no_inventaris}}" disabled>
+                </div>
+                <div class="col-12">
                     <label for="">Lokasi Barang</label>
-                    <input type="text" class="form-control" name="type" value="{{$data->kd_lokasi}}" disabled>
+                    <input type="text" class="form-control" name="lokasi" value="{{$data->kd_lokasi}}" disabled>
                 </div>
             @else
                 <div class="col-12">
+                    <label for="">No Inventaris</label>
+                    <input type="text" class="form-control" name="no_inventaris" value="{{$data->no_inventaris}}">
+                </div>
+                <div class="col-12">
                     <label for="">Lokasi Barang</label>
-                    <input type="text" class="form-control" name="type" value="{{$data->kd_lokasi}}" disabled>
+                    <input type="text" class="form-control" name="lokasi" value="{{$data->kd_lokasi}}">
                 </div>
             @endif
             <div class="col-12">

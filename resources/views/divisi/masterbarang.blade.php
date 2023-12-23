@@ -98,6 +98,7 @@
                                         <a class="dropdown-item" href="{{ url('download/inv_nama_cabang.xls', []) }}">Download Template</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ url('divisi/masterbarang/fixdata', []) }}">Fix Data</a>
+                                        <a class="dropdown-item" href="{{ url('divisi/masterbarang/fixnourutdata', []) }}">Fix Nmor Urut</a>
                                     </div>
                                 </div>
                             </div>

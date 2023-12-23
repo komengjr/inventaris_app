@@ -146,6 +146,7 @@ Route::get('menu/masterstaff','DivisiController@masterstaff');
 
 Route::get('divisi/masterstaff/tambah',['as'=>'divisi/masterstaff/tambah','uses'=> 'DivisiController@tambahdatastaffkaryawan']);
 Route::get('divisi/masterbarang/fixdata','DivisiController@fixdatamasterbarang');
+Route::get('divisi/masterbarang/fixnourutdata','DivisiController@fixnourutmasterbarang');
 Route::post('divisi/masterstaff/tambah','DivisiController@posttambahdatastaff');
 Route::post('divisi/setting/system','DivisiController@settingsystem');
 Route::post('divisi/masterbarang/editbarang','DivisiController@posteditbarang');
