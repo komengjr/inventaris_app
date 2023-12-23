@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     {{-- <meta name="description" content="" />
     <meta name="author" content="" /> --}}
-    <title> Pramita - Panel Login</title>
+    <title> Inventaris APP - Halaman Login</title>
     <!--favicon-->
     <link rel="icon" href="{{ asset('vendor/logo.png', []) }}" type="image/x-icon">
     <link href="{{ asset('assets/css/bootstrap.min.css', []) }}" rel="stylesheet" />
