@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('scan', 'DataController@scandata');
 Route::post('pendaftaran', 'DataController@pendaftaran')->name('daftarakuncabang');
-Route::post('data/{id}', 'DataController@cekdataineventaris');
+Route::post('data/inventaris', 'DataController@cekdataineventaris');
+Route::post('postdata/inventaris', 'DataController@scandataineventaris');
 Route::get('barcode_qr_reader', 'ImageUploadController@page');
 Route::post('/barcode_qr_reader/upload', 'ImageUploadController@upload')->name('image.upload');
 

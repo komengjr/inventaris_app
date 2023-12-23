@@ -520,17 +520,19 @@ class DivisiController extends Controller
         ->first();
         $tbl_cabang = DB::table('tbl_cabang')->where('kd_cabang',auth::user()->cabang)->get();
         $lokasi = DB::table('tbl_lokasi')->get();
+        $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang',Auth::user()->cabang)->orderBy('nomor_ruangan','ASC')->get();
         // $databarang = DB::table('sub_tbl_inventory')->where('kode_verif',$id)->get();
         // $databarang = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->get();
-        return view('divisi.menulengkapi.lengkapi_verifikasi',['cekdata'=> $cekdata,'cabang'=>$tbl_cabang, 'lokasi'=>$lokasi]);
+        return view('divisi.stockopname.lengkapi_verifikasi',['cekdata'=> $cekdata,'cabang'=>$tbl_cabang, 'lokasi'=>$lokasi,'no_ruangan'=>$no_ruangan]);
     }
     public function verifikasilengkapilokasi($tiket,$id)
     {
         $databarang = DB::table('sub_tbl_inventory')
-        ->where('kd_lokasi',$id)
+        ->where('id_nomor_ruangan_cbaang',$id)
         ->where('kd_cabang',auth::user()->cabang)
         ->get();
-        return view('divisi.menulengkapi.lengkapilokasi',['databarang'=>$databarang,'tiket'=>$tiket]);
+        // return view('divisi.stockopname.lengkapilokasi',['databarang'=>$databarang,'tiket'=>$tiket]);
+        return view('divisi.stockopname.scandata',['databarang'=>$databarang,'tiket'=>$tiket]);
     }
     public function verifikasilengkapiupdatebaranglokasi($id,$tiket,$id_inventaris,$ket)
     {

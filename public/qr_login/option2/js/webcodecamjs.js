@@ -1,5 +1,5 @@
 /*!
- * WebCodeCamJS 2.5.0 javascript Bar code and QR code decoder 
+ * WebCodeCamJS 2.5.0 javascript Bar code and QR code decoder
  * Author: Tóth András
  * Web: http://atandrastoth.co.uk
  * email: atandrastoth@gmail.com
@@ -62,8 +62,8 @@ var WebCodeCamJS = function(element) {
             flipVertical: false,
             flipHorizontal: false,
             zoom: 0,
-             beep: 'qr_login/option2/audio/beep.mp3',
-            decoderWorker: 'qr_login/option2/js/DecoderWorker.js',
+            beep: window.location.origin+"/qr_login/option2/audio/beep.mp3",
+            decoderWorker: window.location.origin+"/qr_login/option2/js/DecoderWorker.js",
             brightness: 0,
             autoBrightnessValue: 0,
             grayScale: 0,

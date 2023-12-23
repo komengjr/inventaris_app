@@ -13,7 +13,6 @@
                 {{-- <small> {{$cekdata[0]->kode_verif}}</small> --}}
             </h3>
         </section>
-
         <!-- Main content -->
         <section class="invoice">
             <!-- title row -->
@@ -46,6 +45,106 @@
             <div class="row">
                 <div class="col-12 table-responsive" >
                     <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>No Ruangan ( Nama Ruangan )</th>
+                                <th>Total Barang</th>
+                                <th>Status Cek Barang</th>
+                                <th>Total Verifikasi</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $no = 1;
+                                $jumlah = 0;
+                            @endphp
+                            @foreach ($no_ruangan as $no_ruangan)
+                                <?php
+                                $ceklokasix = DB::table('sub_tbl_inventory')
+                                    ->select('sub_tbl_inventory.*')
+                                    ->where('kd_cabang',Auth::user()->cabang)
+                                    ->where('id_nomor_ruangan_cbaang', $no_ruangan->id_nomor_ruangan_cbaang)
+                                    ->count();
+                                ?>
+                                @if ($ceklokasix == 0)
+                                @else
+
+                                <tr>
+                                    <td data-label="No">{{$no++}}</td>
+                                    <td>{{$no_ruangan->nomor_ruangan}}
+                                        @php
+                                            $nama_lokasi = DB::table('tbl_lokasi')->select('nama_lokasi')->where('kd_lokasi',$no_ruangan->kd_lokasi)->first();
+                                        @endphp
+                                        <span class="badge badge-secondary m-1">{{$nama_lokasi->nama_lokasi}}</span>
+
+                                    </td>
+                                    @php
+                                        $totalbarang = DB::table('sub_tbl_inventory')
+                                        ->where('kd_cabang',auth::user()->cabang)
+                                        ->where('id_nomor_ruangan_cbaang',$no_ruangan->id_nomor_ruangan_cbaang)
+                                        ->count();
+                                        $jumlah = $totalbarang + $jumlah;
+                                    @endphp
+                                    <td><h5>{{$totalbarang}}</h5></td>
+                                    @php
+                                        $statusbarang = DB::table('tbl_sub_verifdatainventaris')
+                                        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
+                                        ->where('tbl_sub_verifdatainventaris.kode_verif',$cekdata->kode_verif)
+                                        ->where('id_nomor_ruangan_cbaang',$no_ruangan->id_nomor_ruangan_cbaang)
+                                        ->where('status_data_inventaris',0)
+                                        ->count();
+                                        $statusbarang1 = DB::table('tbl_sub_verifdatainventaris')
+                                        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
+                                        ->where('tbl_sub_verifdatainventaris.kode_verif',$cekdata->kode_verif)
+                                        ->where('id_nomor_ruangan_cbaang',$no_ruangan->id_nomor_ruangan_cbaang)
+                                        ->where('status_data_inventaris',1)
+                                        ->count();
+                                        $statusbarang2 = DB::table('tbl_sub_verifdatainventaris')
+                                        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
+                                        ->where('tbl_sub_verifdatainventaris.kode_verif',$cekdata->kode_verif)
+                                        ->where('id_nomor_ruangan_cbaang',$no_ruangan->id_nomor_ruangan_cbaang)
+                                        ->where('status_data_inventaris',2)
+                                        ->count();
+                                    @endphp
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>Baik</td>
+                                                <td>:</td>
+                                                <td> {{$statusbarang}} </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Maintenance</td>
+                                                <td>:</td>
+                                                <td>{{$statusbarang1}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Rusak</td>
+                                                <td>:</td>
+                                                <td>{{$statusbarang2}}</td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+                                    <td><h5>{{$statusbarang+$statusbarang1+$statusbarang2}}</h5></td>
+                                    <td>
+                                        @if ($totalbarang == ($statusbarang+$statusbarang1+$statusbarang2))
+                                        <button class="btn-success" disabled>Verified</button>
+                                        @else
+                                        <button class="btn-warning" id="verifdatainventaris" data-url="{{ url('divisi/verifikasi/lokasi', ['tiket'=>$cekdata->kode_verif,'id' => $no_ruangan->id_nomor_ruangan_cbaang ]) }}"><i class="fa fa-shield"></i> Verif</button>
+                                        @endif
+
+                                    </td>
+                                </tr>
+                                @endif
+                            @endforeach
+
+
+                        </tbody>
+                    </table>
+                    {{-- <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -147,7 +246,7 @@
 
 
                         </tbody>
-                    </table>
+                    </table> --}}
                 </div><!-- /.col -->
             </div><!-- /.row -->
 
