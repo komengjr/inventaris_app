@@ -17,7 +17,7 @@ class DataController extends Controller
         $data = DB::table('sub_tbl_inventory')->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')->where('sub_tbl_inventory.no_inventaris',$request->data)->get();
         return view('tampil',['data'=>$data]);
     }
-    public function scandataineventaris(Request $request, $id)
+    public function scandataineventaris(Request $request,$id)
     {
         $data = DB::table('sub_tbl_inventory')->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')->where('sub_tbl_inventory.no_inventaris',$request->data)->first();
         return view('divisi.stockopname.inputverif',['data'=>$data]);
