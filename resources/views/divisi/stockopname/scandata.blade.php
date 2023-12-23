@@ -2,7 +2,7 @@
 <div class="modal-body">
     {{-- <meta name="csrf-token" content="{{ csrf_token() }}" /> --}}
         <div class="containera p-0" id="QR-Code">
-
+            <input type="text" name="tiket" id="tiket" value="{{$tiket}}" hidden>
             <div class="col-md-4" id="kamera">
                 <div class="well" style="position: relative;display: inline-block;">
                     <canvas width="320" height="320" id="webcodecam-canvas"></canvas>
@@ -82,9 +82,9 @@
 
 <script>
     function CallAjaxLoginQr(code) {
-
+        var tiket = document.getElementById("tiket").value;
         $.ajax({
-                url: "../postdata/inventaris",
+                url: "../postdata/inventaris/"+tiket,
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
                 },
