@@ -1,5 +1,7 @@
-<link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+    type="text/css">
+<link href="{{ asset('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css') }}" rel="stylesheet"
+    type="text/css">
 <div class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title">Report</h5>
@@ -8,50 +10,42 @@
         </button>
     </div>
     <div class="modal-body" id="show-data-laporan">
-        <table id="example" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama Barang</th>
-                    <th>Kode Inventaris</th>
-                    <th>Kode Lokasi</th>
-                    <th>Type</th>
-                    <th>Merek</th>
-                    <th>Harga Perolehan</th>
-                    <th>Status Barang</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $no = 1;
-                @endphp
-                @foreach ($data as $data)
-                <tr>
-                    <td>{{$no++}}</td>
-                    <td>{{$data->nama_barang}}</td>
-                    <td>{{$data->kd_inventaris}}</td>
-                    <td>{{$data->kd_lokasi}}</td>
-                    <td>{{$data->type}}</td>
-                    <td>{{$data->merk}}</td>
-                    <td>{{$data->harga_perolehan}}</td>
-                    <td>{{$data->status_barang}}</td>
-                </tr>
-                @endforeach
-                  
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>No</th>
-                    <th>Nama Barang</th>
-                    <th>Kode Inventaris</th>
-                    <th>Kode Lokasi</th>
-                    <th>Type</th>
-                    <th>Merek</th>
-                    <th>Harga Perolehan</th>
-                    <th>Status Barang</th>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="table-responsive pb-3">
+            <table id="example" class="table styled-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Barang</th>
+                        <th>Kode Inventaris</th>
+                        <th>Kode Lokasi</th>
+                        <th>Type</th>
+                        <th>Merek</th>
+                        <th>Harga Perolehan</th>
+                        <th>Status Barang</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $no = 1;
+                    @endphp
+                    @foreach ($data as $data)
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $data->nama_barang }}</td>
+                            <td>{{ $data->kd_inventaris }}</td>
+                            <td>{{ $data->kd_lokasi }}</td>
+                            <td>{{ $data->type }}</td>
+                            <td>{{ $data->merk }}</td>
+                            <td>{{ $data->harga_perolehan }}</td>
+                            <td>{{ $data->status_barang }}</td>
+                        </tr>
+                    @endforeach
+
+                </tbody>
+               
+            </table>
+        </div>
+
         <div class="modal-footer">
             {{-- <a href="{{ url('menureport/masterlaporan/cetak-all-barang-cabang/', []) }}" class="btn-dark"><i
                     class="fa fa-times"></i> Download PDF</a>
@@ -103,11 +97,19 @@
 
             var table = $('#example').DataTable({
                 lengthChange: false,
-                buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
+                buttons: ['excel']
+                // buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
             });
 
             table.buttons().container()
                 .appendTo('#example_wrapper .col-md-6:eq(0)');
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            $('#default-datatable').DataTable();
 
         });
     </script>
