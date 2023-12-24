@@ -16,10 +16,20 @@
         <!-- Main content -->
         <section class="invoice">
             <!-- title row -->
-            <div class="row mt-3">
+            <div class="row">
                 <div class="col-lg-6">
-                    <h4><img src="{{ asset('icon.png') }}" alt="" width="200"></h4>
-                    <p>{{$cabang[0]->nama_cabang}}</p>
+                    <div class="row">
+                        <div class="col-4 col-lg-6 col-xl-4">
+                            <img src="{{ asset('vendor/pramita.png') }}" alt="" srcset="" width="100" style="width: 70%; height: auto;">
+                        </div>
+                        <div class="col-4 col-lg-6 col-xl-4">
+                            <img src="{{ asset('vendor/sima.jpeg') }}" alt="" srcset="" width="100" style="width: 70%; height: auto;">
+                        </div>
+                        <div class="col-4 col-lg-6 col-xl-4">
+                            <img src="{{ asset('vendor/prospek.png') }}" alt="" srcset="" width="100" style="width: 70%; height: auto;">
+                        </div>
+
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     <h5 class="float-sm-right">Date : {{$cekdata->tgl_verif}}</h5>
