@@ -14,7 +14,7 @@
                     <input type="date" class="form-control" name="startdate" id="startdate">
                 </div>
                 <div class="col-md-6">
-                    <label for="">Start Date</label>
+                    <label for="">End Date</label>
                     <input type="date" class="form-control" name="enddate" id="enddate">
                 </div>
             </div>
