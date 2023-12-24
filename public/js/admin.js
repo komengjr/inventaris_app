@@ -1440,24 +1440,7 @@ $(document).on("click", "#button-print-laporan-ruangan-pdf", function (e) {
         });
 
 });
-$(document).on("click", "#button-print-laporan", function (e) {
-    e.preventDefault();
-    $("#show-data-laporan").html('<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
-    $.ajax({
-        url: '../menureport/masterlaporan/cetak-all-barang-cabang/',
-        type: "GET",
-        dataType: "html",
-    })
-        .done(function (data) {
-            $("#show-data-laporan").html('<iframe src="data:application/pdf;base64, '+data+'" style="width:100%;; height:500px;" frameborder="0"></iframe>');
-        })
-        .fail(function () {
-            $("#show-data-laporan").html(
-                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-            );
-        });
 
-});
 
 $(document).on("click", "#button-simpan-hasil-verifikasi", function(e) {
     var data = $("#form-verifikasi-data-inevntaris").serialize();
