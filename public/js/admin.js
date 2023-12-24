@@ -1418,10 +1418,11 @@ $(document).on("click", "#button-laporan-barang-lokasi", function (e) {
 });
 $(document).on("click", "#button-print-laporan-ruangan-pdf", function (e) {
     e.preventDefault();
+    var url = $(this).data("url");
     var data = $("#form-report-pilihan-ruangan").serialize();
     $("#hasil-report-ruangan").html('<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
     $.ajax({
-        url: '../menu/masterlaporan/lokasi-barang-cabang-ruangan/',
+        url: url,
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
         },
