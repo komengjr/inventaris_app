@@ -56,4 +56,22 @@ class LaporanController extends Controller
         $pdf = PDF::loadview('divisi.laporan.report.per-ruangan',['data'=>$data])->setPaper('A4','landscape');
         return base64_encode($pdf->stream());
     }
+    public function reportpeminjaman()
+    {
+        return view('divisi.laporan.viewpeminjaman');
+    }
+    public function reportstokopname()
+    {
+        return view('divisi.laporan.viewstokeopname');
+    }
+    public function postreportpeminjaman(Request $request)
+    {
+        $pdf = PDF::loadview('divisi.laporan.report.laporanpeminjaman',['data'=>11]);
+    	return base64_encode($pdf->stream());
+    }
+    public function postreportstokopname(Request $request)
+    {
+        $pdf = PDF::loadview('divisi.laporan.report.laporanstokopname',['data'=>11]);
+    	return base64_encode($pdf->stream());
+    }
 }

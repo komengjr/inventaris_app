@@ -233,6 +233,10 @@ Route::get('menu/masterlaporan/all-barang-cabang',['as'=>'menu/masterlaporan/all
 Route::get('menu/masterlaporan/lokasi-barang-cabang',['as'=>'menu/masterlaporan/lokasi-barang-cabang','uses'=> 'LaporanController@reportlokasibarangcabang']);
 Route::get('menureport/masterlaporan/cetak-all-barang-cabang',['as'=>'menureport/masterlaporan/cetak-all-barang-cabang','uses'=> 'LaporanController@cetakallbarangcabang']);
 Route::post('menu/postmasterlaporan/lokasi-barang-cabang-ruangan',['as'=>'menu/postmasterlaporan/lokasi-barang-cabang-ruangan','uses'=> 'LaporanController@cetakbarangperuanganpdf']);
+Route::get('menu/masterlaporan/report-peminjaman/',['as'=>'menu/masterlaporan/report-peminjaman/','uses'=> 'LaporanController@reportpeminjaman']);
+Route::get('menu/masterlaporan/report-stokopname/',['as'=>'menu/masterlaporan/report-stokopname/','uses'=> 'LaporanController@reportstokopname']);
+Route::post('menu/postmasterlaporan/laporanpeminjaman',['as'=>'menu/postmasterlaporan/laporanpeminjaman','uses'=> 'LaporanController@postreportpeminjaman']);
+Route::post('menu/postmasterlaporan/laporanstokopname',['as'=>'menu/postmasterlaporan/laporanstokopname','uses'=> 'LaporanController@postreportstokopname']);
 /*
 |--------------------------------------------------------------------------
 | Web Routes

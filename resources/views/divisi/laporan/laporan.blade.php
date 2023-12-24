@@ -42,10 +42,11 @@
                                         class="customer-img rounded">
                                     <div class="media-body ml-3">
                                         <h6 class="mb-0">Menu Peminjaman</h6>
-                                        <small class="small-font">Soon</small>
+                                        <small class="small-font"><span class="badge badge-success shadow-success m-0">Aktif</span></small>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark"><i class="zmdi zmdi-assignment"></i></button>
+                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"
+                                            id="button-report-peminjaman"><i class="zmdi zmdi-assignment"></i></button>
                                     </div>
                                 </div>
                             </li>
@@ -84,7 +85,7 @@
                                         <small class="small-font">Soon</small>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark"><i class="zmdi zmdi-assignment"></i></button>
+                                        <button class="btn-dark" ><i class="zmdi zmdi-assignment"></i></button>
                                     </div>
                                 </div>
                             </li>
@@ -94,10 +95,11 @@
                                         class="customer-img rounded">
                                     <div class="media-body ml-3">
                                         <h6 class="mb-0">Menu Stockopname</h6>
-                                        <small class="small-font">Soon</small>
+                                        <small class="small-font"><span class="badge badge-success shadow-success m-0">Aktif</span></small>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark"><i class="zmdi zmdi-assignment"></i></button>
+                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"
+                                        id="button-report-stokopname"><i class="zmdi zmdi-assignment"></i></button>
                                     </div>
                                 </div>
                             </li>
@@ -141,7 +143,9 @@
                                         <h6 class="mb-0">Barang Keseluruhan</h6>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan" id="button-laporan-barang-keseluruhan"><i class="zmdi zmdi-assignment"></i></button>
+                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"
+                                            id="button-laporan-barang-keseluruhan"><i
+                                                class="zmdi zmdi-assignment"></i></button>
                                     </div>
                                 </div>
                             </li>
@@ -154,7 +158,9 @@
                                         <h6 class="mb-0">Barang Per Ruangan</h6>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan" id="button-laporan-barang-lokasi"><i class="zmdi zmdi-assignment"></i></button>
+                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"
+                                            id="button-laporan-barang-lokasi"><i
+                                                class="zmdi zmdi-assignment"></i></button>
                                     </div>
                                 </div>
                             </li>
@@ -180,4 +186,44 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).on("click", "#button-report-peminjaman", function(e) {
+            e.preventDefault();
+            $("#menu-laporan").html(
+                '<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
+            $.ajax({
+                    url: '../menu/masterlaporan/report-peminjaman/',
+                    type: "GET",
+                    dataType: "html",
+                })
+                .done(function(data) {
+                    $("#menu-laporan").html(data);
+                })
+                .fail(function() {
+                    $("#menu-laporan").html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
+                });
+
+        });
+        $(document).on("click", "#button-report-stokopname", function(e) {
+            e.preventDefault();
+            $("#menu-laporan").html(
+                '<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
+            $.ajax({
+                    url: '../menu/masterlaporan/report-stokopname/',
+                    type: "GET",
+                    dataType: "html",
+                })
+                .done(function(data) {
+                    $("#menu-laporan").html(data);
+                })
+                .fail(function() {
+                    $("#menu-laporan").html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
+                });
+
+        });
+    </script>
 @endsection
