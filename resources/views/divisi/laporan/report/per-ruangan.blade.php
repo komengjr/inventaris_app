@@ -88,7 +88,7 @@
             @endif
 
             <hr style="padding: 0%; margin: 0%;">
-            <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">123</p>
+            <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">{{$entitas->alamat}}</p>
         </div>
         <h5 style="padding-top: 20px; margin: 20px; left: 100px; padding-left: 155px;text-decoration: underline;">DAFTAR
             LIST BARANG INVENTARIS</h5>
@@ -147,12 +147,12 @@
                 border="1">
                 <tr>
 
-                    <td colspan="3" class="text-right"><strong>asd , {{ date('d - m - Y ') }}</strong></td>
+                    <td colspan="3" class="text-right"><strong>{{$entitas->nama_cabang}} , {{ date('d - m - Y ') }}</strong></td>
                 </tr>
                 <tr>
-                    <td>Penanggung Jawab ,</td>
-                    <td>Yang Menyerahkan ,</td>
-                    <td>Yang Mengetahui ,</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
                 </tr>
                 <tr>
                     <td class="text-center" style="padding-top: 10px; padding-bottom: 10px; width: 33%;">
