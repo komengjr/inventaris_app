@@ -10,16 +10,17 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> EXCEL</button>
-        <button type="button" class="btn-success" id="button-print-laporan"><i class="fa fa-print"></i> PDF</button>
+        <button type="button" class="btn-success" id="button-print-laporan" data-url="{{ url('menureport/masterlaporan/cetak-all-barang-cabang/', []) }}"><i class="fa fa-print"></i> PDF</button>
     </div>
 </div>
 <script>
     $(document).on("click", "#button-print-laporan", function(e) {
         e.preventDefault();
+        var url = $(this).data("url");
         $("#show-data-laporan").html(
             '<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
         $.ajax({
-                url: '../menureport/masterlaporan/cetak-all-barang-cabang/',
+                url: url,
                 type: "GET",
                 dataType: "html",
             })
