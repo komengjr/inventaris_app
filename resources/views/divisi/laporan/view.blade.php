@@ -25,8 +25,9 @@
                 dataType: "html",
             })
             .done(function(data) {
-                $("#show-data-laporan").html('<iframe src="data:application/pdf;base64, ' + data +
-                    '" style="width:100%;; height:500px;" frameborder="0"></iframe>');
+                $("#show-data-laporan").html(data);
+                // $("#show-data-laporan").html('<iframe src="data:application/pdf;base64, ' + data +
+                //     '" style="width:100%;; height:500px;" frameborder="0"></iframe>');
             })
             .fail(function() {
                 $("#show-data-laporan").html(
