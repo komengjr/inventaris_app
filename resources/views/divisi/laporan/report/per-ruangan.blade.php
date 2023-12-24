@@ -78,14 +78,14 @@
 
     <div class="header">
         <div class="absolute-kiri">
-            {{-- @php
+            @php
                 $entitas = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
             @endphp
             @if ($entitas->kd_entitas_cabang == 'PTP')
             <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/pramita.png" width="152">
             @else
             <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/sima.jpeg" width="152">
-            @endif --}}
+            @endif
 
             <hr style="padding: 0%; margin: 0%;">
             <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">123</p>
@@ -95,9 +95,9 @@
         {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate(123123),) !!}"> --}}
 
         <div class="absolute">
-            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
+            {{-- <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
                 QrCode::eyeColor(0, 0, 111, 115, 255, 114, 232)->style('dot')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate(123),
-            ) !!}">
+            ) !!}"> --}}
         </div>
     </div>
     <div class="body">
