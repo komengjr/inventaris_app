@@ -232,7 +232,7 @@ Route::get('menu/masterlaporan','LaporanController@laporan');
 Route::get('menu/masterlaporan/all-barang-cabang',['as'=>'menu/masterlaporan/all-barang-cabang','uses'=> 'LaporanController@allbarangcabang']);
 Route::get('menu/masterlaporan/lokasi-barang-cabang',['as'=>'menu/masterlaporan/lokasi-barang-cabang','uses'=> 'LaporanController@reportlokasibarangcabang']);
 Route::get('menureport/masterlaporan/cetak-all-barang-cabang',['as'=>'menureport/masterlaporan/cetak-all-barang-cabang','uses'=> 'LaporanController@cetakallbarangcabang']);
-Route::post('menu/masterlaporan/lokasi-barang-cabang-ruangan',['as'=>'menu/masterlaporan/lokasi-barang-cabang-ruangan','uses'=> 'LaporanController@cetakbarangperuanganpdf']);
+Route::post('menu/postmasterlaporan/lokasi-barang-cabang-ruangan',['as'=>'menu/postmasterlaporan/lokasi-barang-cabang-ruangan','uses'=> 'LaporanController@cetakbarangperuanganpdf']);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
