@@ -36,6 +36,10 @@
                         Telepon : {{$cabang[0]->phone}}<br>
 
                     </address>
+                </div>
+                <div class="col-sm-8 invoice-col p-1" style="text-align: right;">
+                    <button class="btn btn-secondary btn-round waves-effect waves-light m-2" id="verifdatainventaris" data-url="{{ url('divisi/verifikasi/lokasi', ['tiket'=>$cekdata->kode_verif ]) }}"><i class="fa fa-shield"></i> Verif Menggunakan Kamera</button>
+                    <button class="btn btn-secondary btn-round waves-effect waves-light m-2" id="button-scanner-verifdatainventaris" data-url="{{ url('divisi/verifikasi/scanner', ['tiket'=>$cekdata->kode_verif ]) }}"><i class="fa fa-shield"></i> Verif Menggunakan Scanner</button>
                 </div><!-- /.col -->
 
 
@@ -52,7 +56,7 @@
                                 <th>Total Barang</th>
                                 <th>Status Cek Barang</th>
                                 <th>Total Verifikasi</th>
-                                <th>Action</th>
+                                <th>Status Verifikasi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -133,7 +137,7 @@
                                         @if ($totalbarang == ($statusbarang+$statusbarang1+$statusbarang2))
                                         <button class="btn-success" disabled>Verified</button>
                                         @else
-                                        <button class="btn-warning" id="verifdatainventaris" data-url="{{ url('divisi/verifikasi/lokasi', ['tiket'=>$cekdata->kode_verif,'id' => $no_ruangan->id_nomor_ruangan_cbaang ]) }}"><i class="fa fa-shield"></i> Verif</button>
+                                        <button class="btn-danger" disabled>Unverified</button>
                                         @endif
 
                                     </td>

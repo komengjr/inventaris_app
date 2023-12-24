@@ -290,6 +290,24 @@ $(document).on("click", "#verifdatainventaris", function (e) {
             );
         });
 });
+$(document).on("click", "#button-scanner-verifdatainventaris", function (e) {
+    e.preventDefault();
+    var url = $(this).data("url");
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menuverifikasi").html(data);
+        })
+        .fail(function () {
+            $("#menuverifikasi").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 
 $(document).on("click", "#tombolbarumutasi", function (e) {
     e.preventDefault();
@@ -1399,7 +1417,24 @@ $(document).on("click", "#button-print-laporan", function (e) {
         });
 
 });
-
+$(document).on("click", "#button-simpan-hasil-verifikasi", function(e) {
+    var data = $("#form-verifikasi-data-inevntaris").serialize();
+    e.preventDefault();
+    $.ajax({
+            url: "../divisi/postverifikasi/scanner/simpandata",
+            type: "POST",
+            data: data,
+            dataType: "html",
+        })
+        .done(function(data) {
+            $("#hasil-pencarian").html(data);
+        })
+        .fail(function() {
+            $("#hasil-pencarian").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 
 
 

@@ -525,14 +525,33 @@ class DivisiController extends Controller
         // $databarang = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->get();
         return view('divisi.stockopname.lengkapi_verifikasi',['cekdata'=> $cekdata,'cabang'=>$tbl_cabang, 'lokasi'=>$lokasi,'no_ruangan'=>$no_ruangan]);
     }
-    public function verifikasilengkapilokasi($tiket,$id)
+    public function verifikasilengkapilokasi($tiket)
     {
-        $databarang = DB::table('sub_tbl_inventory')
-        ->where('id_nomor_ruangan_cbaang',$id)
-        ->where('kd_cabang',auth::user()->cabang)
-        ->get();
-        // return view('divisi.stockopname.lengkapilokasi',['databarang'=>$databarang,'tiket'=>$tiket]);
-        return view('divisi.stockopname.scandata',['databarang'=>$databarang,'tiket'=>$tiket]);
+        return view('divisi.stockopname.scandata',['tiket'=>$tiket]);
+    }
+    public function verifikasidatascanner($tiket)
+    {
+        return view('divisi.stockopname.scanerdata',['tiket'=>$tiket]);
+    }
+    public function postverifikasidatascanner(Request $request)
+    {
+        $data = DB::table('sub_tbl_inventory')
+        ->where('kd_cabang',Auth::user()->cabang)
+        ->where('no_inventaris',$request->nama)->first();
+
+        return view('divisi.stockopname.hasilpencarianscanner',['data'=>$data,'kode'=>$request->tiket]);
+    }
+    public function postverifikasisimpandatascanner(Request $request)
+    {
+        // $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->kode)->where('id_inventaris',$request->id_inventaris)->first();
+        DB::table('tbl_sub_verifdatainventaris')->insert([
+            'kode_verif'=>$request->kode,
+            'id_inventaris'=>$request->id_inventaris,
+            'status_data_inventaris'=>$request->inlineradio,
+            'keterangan_data_inventaris'=>$request->keterangan,
+            'created_at'=>date('Y-m-d H:i:s'),
+        ]);
+        return "<span class='badge badge-pill badge-success m-1'>Success</span>";
     }
     public function verifikasilengkapiupdatebaranglokasi($id,$tiket,$id_inventaris,$ket)
     {

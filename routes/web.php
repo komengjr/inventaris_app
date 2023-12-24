@@ -189,7 +189,10 @@ Route::get('divisi/pemusnahan/pilihdatabarang/{id}','DivisiController@pilihdatab
 Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
 Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
 Route::get('divisi/verifikasi/lengkapi/{id}',['as'=>'master/verifikasi/lengkapi','uses'=> 'DivisiController@verifikasilengkapi']);
-Route::get('divisi/verifikasi/lokasi/{tiket}/{id}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);
+Route::get('divisi/verifikasi/lokasi/{tiket}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);
+Route::get('divisi/verifikasi/scanner/{tiket}',['as'=>'divisi/verifikasi/scanner','uses'=> 'DivisiController@verifikasidatascanner']);
+Route::post('divisi/postverifikasi/scanner/',['as'=>'divisi/postverifikasi/scanner','uses'=> 'DivisiController@postverifikasidatascanner']);
+Route::post('divisi/postverifikasi/scanner/simpandata',['as'=>'divisi/postverifikasi/scanner/simpandata','uses'=> 'DivisiController@postverifikasisimpandatascanner']);
 Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}/{ket}',['as'=>'master/verifikasi/update','uses'=> 'DivisiController@verifikasilengkapiupdatebaranglokasi']);
 Route::get('menu/verifdatainventaris/cetak/detail/{id}',['as'=>'menu/verifdatainventaris/cetak/detail','uses'=> 'DivisiController@cetakreportstockopname']);
 Route::get('divisi/verifikasi/print/verif/{id}','PdfController@printverifikasi');
