@@ -28,6 +28,7 @@
     <link href="{{ asset('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
     <script src="{{ asset('assets/js/jqueryapp.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/jquery.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/script.min.js') }}"></script>
 </head>
 
@@ -416,7 +417,7 @@
     <script src="{{ asset('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
+    {{-- <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script> --}}
     <script src="{{ asset('assets/plugins/jquery.steps/js/jquery.steps.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/jquery-validation/js/jquery.validate.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/jquery.steps/js/jquery.wizard-init.js', []) }}"></script>

@@ -1384,6 +1384,7 @@ $(document).on("click", "#button-print-all", function (e) {
 // REPORT
 $(document).on("click", "#button-laporan-barang-keseluruhan", function (e) {
     e.preventDefault();
+    $("#menu-laporan").html('<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
     $.ajax({
         url: '../menu/masterlaporan/all-barang-cabang/',
         type: "GET",

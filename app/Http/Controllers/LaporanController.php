@@ -24,7 +24,10 @@ class LaporanController extends Controller
     }
     public function allbarangcabang()
     {
-        return view('divisi.laporan.view');
+        $data = DB::table('sub_tbl_inventory')
+        ->select('no_inventaris','nama_barang','kd_inventaris','kd_lokasi','merk','type','harga_perolehan','status_barang')
+        ->where('kd_cabang',Auth::user()->cabang)->get();
+        return view('divisi.laporan.view',['data'=>$data]);
     }
     public function cetakallbarangcabang()
     {
