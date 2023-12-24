@@ -1420,6 +1420,8 @@ $(document).on("click", "#button-print-laporan-ruangan-pdf", function (e) {
     e.preventDefault();
     var url = $(this).data("url");
     var data = $("#form-report-pilihan-ruangan").serialize();
+    console.log(url);
+    console.log(data);
     $("#hasil-report-ruangan").html('<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
     $.ajax({
         url: url,
