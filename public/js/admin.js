@@ -1399,6 +1399,46 @@ $(document).on("click", "#button-laporan-barang-keseluruhan", function (e) {
         });
 
 });
+$(document).on("click", "#button-laporan-barang-lokasi", function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: '../menu/masterlaporan/lokasi-barang-cabang/',
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menu-laporan").html(data);
+        })
+        .fail(function () {
+            $("#menu-laporan").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
+$(document).on("click", "#button-print-laporan-ruangan-pdf", function (e) {
+    e.preventDefault();
+    var data = $("#form-report-pilihan-ruangan").serialize();
+    $("#hasil-report-ruangan").html('<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
+    $.ajax({
+        url: '../menu/masterlaporan/lokasi-barang-cabang-ruangan/',
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+        },
+        type: "POST",
+        data: data,
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#hasil-report-ruangan").html('<iframe src="data:application/pdf;base64, '+data+'" style="width:100%;; height:500px;" frameborder="0"></iframe>');
+        })
+        .fail(function () {
+            $("#hasil-report-ruangan").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+
+});
 $(document).on("click", "#button-print-laporan", function (e) {
     e.preventDefault();
     $("#show-data-laporan").html('<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>');
@@ -1417,6 +1457,7 @@ $(document).on("click", "#button-print-laporan", function (e) {
         });
 
 });
+
 $(document).on("click", "#button-simpan-hasil-verifikasi", function(e) {
     var data = $("#form-verifikasi-data-inevntaris").serialize();
     e.preventDefault();

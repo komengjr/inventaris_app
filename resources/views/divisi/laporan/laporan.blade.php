@@ -38,7 +38,7 @@
                         <ul class="list-group list-group-flush shadow-none">
                             <li class="list-group-item">
                                 <div class="media align-items-center">
-                                    <img src="https://via.placeholder.com/110x110" alt="user avatar"
+                                    <img src="{{ asset('vendor/icon/1.png') }}" alt="user avatar"
                                         class="customer-img rounded">
                                     <div class="media-body ml-3">
                                         <h6 class="mb-0">Menu Peminjaman</h6>
@@ -51,7 +51,7 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="media align-items-center">
-                                    <img src="https://via.placeholder.com/110x110" alt="user avatar"
+                                    <img src="{{ asset('vendor/icon/2.png') }}" alt="user avatar"
                                         class="customer-img rounded">
                                     <div class="media-body ml-3">
                                         <h6 class="mb-0">Menu Maintenance</h6>
@@ -64,7 +64,7 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="media align-items-center">
-                                    <img src="https://via.placeholder.com/110x110" alt="user avatar"
+                                    <img src="{{ asset('vendor/icon/3.png') }}" alt="user avatar"
                                         class="customer-img rounded">
                                     <div class="media-body ml-3">
                                         <h6 class="mb-0">Menu Mutasi</h6>
@@ -77,7 +77,7 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="media align-items-center">
-                                    <img src="https://via.placeholder.com/110x110" alt="user avatar"
+                                    <img src="{{ asset('vendor/icon/4.png') }}" alt="user avatar"
                                         class="customer-img rounded">
                                     <div class="media-body ml-3">
                                         <h6 class="mb-0">Menu Pemusnahan</h6>
@@ -90,7 +90,7 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="media align-items-center">
-                                    <img src="https://via.placeholder.com/110x110" alt="user avatar"
+                                    <img src="{{ asset('vendor/icon/5.png') }}" alt="user avatar"
                                         class="customer-img rounded">
                                     <div class="media-body ml-3">
                                         <h6 class="mb-0">Menu Stockopname</h6>
@@ -154,7 +154,7 @@
                                         <h6 class="mb-0">Barang Per Ruangan</h6>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark"><i class="zmdi zmdi-assignment"></i></button>
+                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan" id="button-laporan-barang-lokasi"><i class="zmdi zmdi-assignment"></i></button>
                                     </div>
                                 </div>
                             </li>
