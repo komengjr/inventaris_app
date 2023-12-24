@@ -9,7 +9,7 @@
         <img src="https://via.placeholder.com/800x500" class="img-fluid rounded shadow" alt="Card image cap">
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> EXCEL</button>
+        <a href="{{ url('menureport/masterlaporan/cetak-all-barang-cabang/', []) }}" class="btn-dark"><i class="fa fa-times"></i> Download PDF</a>
         <button type="button" class="btn-success" id="button-print-laporan" data-url="{{ url('menureport/masterlaporan/cetak-all-barang-cabang/', []) }}"><i class="fa fa-print"></i> PDF</button>
     </div>
 </div>
@@ -25,7 +25,7 @@
                 dataType: "html",
             })
             .done(function(data) {
-                $("#show-data-laporan").html(data);
+                // $("#show-data-laporan").html(data);
                 // $("#show-data-laporan").html('<iframe src="data:application/pdf;base64, ' + data +
                 //     '" style="width:100%;; height:500px;" frameborder="0"></iframe>');
             })

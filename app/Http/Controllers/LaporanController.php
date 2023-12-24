@@ -33,7 +33,9 @@ class LaporanController extends Controller
         ->where('kd_cabang',Auth::user()->cabang)->get();
         // $pdf = PDF::loadview('divisi.laporan.report.all-barang',['data'=>$data])->setPaper('A4','potrait');
         // return base64_encode($pdf->stream());
-        return view('divisi.laporan.report.all-barang',['data'=>$data]);
+        // return view('divisi.laporan.report.all-barang',['data'=>$data]);
+        $pdf = PDF::loadview('divisi.laporan.report.all-barang',['data'=>$data]);
+    	return $pdf->download('data_report.pdf');
     }
     public function reportlokasibarangcabang()
     {
