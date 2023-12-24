@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://inventory.pramita.co.id:8000/'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('127.0.0.1', null),
 

@@ -32,8 +32,7 @@ class LaporanController extends Controller
         ->select('no_inventaris','nama_barang','merk','type','harga_perolehan')
         ->where('kd_cabang',Auth::user()->cabang)->get();
         $pdf = PDF::loadview('divisi.laporan.report.all-barang',['data'=>$data])->setPaper('A4','potrait');
-        // return base64_encode($pdf->stream());
-        return $pdf->download('teste.pdf');
+        return base64_encode($pdf->stream());
     }
     public function reportlokasibarangcabang()
     {
