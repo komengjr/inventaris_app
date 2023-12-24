@@ -24,7 +24,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> EXCEL</button>
-        <button type="button" class="btn-success" id="button-print-laporan-ruangan-pdf" data-url="{{ url('menu/masterlaporan/lokasi-barang-cabang-ruangan', []) }}"><i class="fa fa-print"></i> PDF</button>
+        <button type="button" class="btn-success" id="button-print-laporan-ruangan-pdf" data-url="{{ url('menu/postmasterlaporan/lokasi-barang-cabang-ruangan', []) }}"><i class="fa fa-print"></i> PDF</button>
     </div>
 </div>
 <script>
