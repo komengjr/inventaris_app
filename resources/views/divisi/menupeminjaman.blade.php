@@ -1,25 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-.modal {
-  padding: 10px; !important; //
-}
-.modal .modal-xl {
-  width: 100%;
-  max-width: none;
-  /* height: 100%; */
-  margin: 0;
-}
-.modal .modal-content {
-  /* height: 100%; */
-  border: 0;
-  border-radius: 0;
-}
-.modal .modal-body {
-  overflow-y: auto;
-}
-</style>
+    <style>
+        .modal {
+            padding: 10px;
+            !important; //
+        }
+
+        .modal .modal-xl {
+            width: 100%;
+            max-width: none;
+            /* height: 100%; */
+            margin: 0;
+        }
+
+        .modal .modal-content {
+            /* height: 100%; */
+            border: 0;
+            border-radius: 0;
+        }
+
+        .modal .modal-body {
+            overflow-y: auto;
+        }
+    </style>
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
             <div class="card mt-3">
@@ -40,19 +44,20 @@
                         <div class="card-body">
                             <div class="row row-group align-items-center">
                                 <div class="col-12 col-lg-3 text-center p-3 border-white-2">
-                                    <div class="fleet-status fleet-chart" data-percent="{{(($jumlahdataselesai)*100)/$jumlahdata}}">
+                                    <div class="fleet-status fleet-chart"
+                                        data-percent="{{ ($jumlahdataselesai * 100) / $jumlahdata }}">
                                         <span class="fleet-status-percent"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-4 text-center p-3  border-white-2">
-                                    <h4 class="mb-0 text-white">{{round((($jumlahdataselesai)*100)/$jumlahdata)}}%</h4>
+                                    <h4 class="mb-0 text-white">{{ round(($jumlahdataselesai * 100) / $jumlahdata) }}%</h4>
                                     <p class="mb-0 small-font text-white">Persentase</p>
                                 </div>
                                 <div class="col-12 col-lg-5 p-3">
                                     <ul>
-                                        <li class="text-white">Total Peminjaman : {{$jumlahdata}}</li>
-                                        <li class="text-white">Selesai : {{$jumlahdataselesai}}</li>
-                                        <li class="text-white">Belum Selesai : {{$jumlahdata - $jumlahdataselesai}}</li>
+                                        <li class="text-white">Total Peminjaman : {{ $jumlahdata }}</li>
+                                        <li class="text-white">Selesai : {{ $jumlahdataselesai }}</li>
+                                        <li class="text-white">Belum Selesai : {{ $jumlahdata - $jumlahdataselesai }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -61,18 +66,18 @@
                 </div>
             </div>
             @if ($message = Session::get('sukses'))
-                    <div class="pl-1 pt-2 pb-2">
-                        <div class="alert alert-icon-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <div class="alert-icon icon-part-success">
-                                <i class="fa fa-check"></i>
-                            </div>
-                            <div class="alert-message">
-                                <span><strong>Success!</strong> ---- <a href="javascript:void();"
-                                        class="alert-link">{{ $message }}</a></span>
-                            </div>
+                <div class="pl-1 pt-2 pb-2">
+                    <div class="alert alert-icon-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <div class="alert-icon icon-part-success">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="alert-message">
+                            <span><strong>Success!</strong> ---- <a href="javascript:void();"
+                                    class="alert-link">{{ $message }}</a></span>
                         </div>
                     </div>
+                </div>
             @endif
             <div class="row">
                 <div class="col-lg-12">
@@ -116,29 +121,42 @@
                                                 {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
                                                 <td class="text-center">
                                                     @if ($datapinjam->status_pinjam == 0)
-                                                    <span class="badge badge-danger p-2">Pending</span>
+                                                        <span class="badge badge-danger p-2">Pending</span>
                                                     @else
-                                                    <span class="badge badge-success p-2">Done</span>
+                                                        <span class="badge badge-success p-2">Done</span>
                                                     @endif
 
                                                 </td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn-info waves-effect waves-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button type="button"
+                                                        class="btn-info waves-effect waves-light dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         @if ($datapinjam->status_pinjam == 0)
-                                                        <a href="javaScript:void();" class="dropdown-item" class="btn-warning" data-toggle="modal"
-                                                        data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                        data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-file-text"></i> Lengkapi Data</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#tambahdatabaru" id="editdatapeminjamaninventaris" data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                                                            <a href="javaScript:void();" class="dropdown-item"
+                                                                class="btn-warning" data-toggle="modal"
+                                                                data-target="#lengkapipeminjaman"
+                                                                id="tombollengkapipeminjaman"
+                                                                data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i
+                                                                    class="fa fa-file-text"></i> Lengkapi Data</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="javaScript:void();" class="dropdown-item"
+                                                                data-toggle="modal" data-target="#tambahdatabaru"
+                                                                id="editdatapeminjamaninventaris"
+                                                                data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i
+                                                                    class="fa fa-pencil-square-o"></i> Edit</a>
                                                         @else
-                                                        <a href="javaScript:void();" class="dropdown-item" onclick="window.open('{{ url('divisi/verifikasi/print/peminjaman', ['id'=>$datapinjam->tiket_peminjaman]) }}', '', 'width=1200, height=700');"
-                                                        id=""><i class="fa fa-print"></i> Cetak / Print</a>
+                                                            <a href="javaScript:void();" class="dropdown-item"
+                                                                id="button-print-hasipeminjaman" data-toggle="modal"
+                                                                data-target="#modal-report"
+                                                                data-id="{{ $datapinjam->tiket_peminjaman }}"><i
+                                                                    class="fa fa-print"></i>
+                                                                Cetak / Print</a>
                                                         @endif
 
-                                                      {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
+                                                        {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
                                                     </div>
 
 
@@ -177,16 +195,18 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="upload-detail-barang">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content animated fadeInUp">
+    <div class="modal fade" id="modal-report">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content animated fadeInUp ">
                 <div class="modal-header">
-                    <h5 class="modal-title">Upload Data</h5>
+                    <h5 class="modal-title">Report</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body" id="modal-report-peminjaman" style="text-align: center;">
 
+                </div>
 
 
             </div>
@@ -213,11 +233,35 @@
             });
         });
     </script>
-     <script>
+    <script>
         $(document).ready(function() {
 
             $('#default-datatable').DataTable();
 
+        });
+        $(document).on("click", "#button-print-hasipeminjaman", function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $("#modal-report-peminjaman").html(
+                '<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>'
+            );
+            $.ajax({
+                    url: "../divisi/verifikasi/print/peminjaman/" + id,
+                    type: "GET",
+                    dataType: "html",
+                })
+                .done(function(data) {
+                    $("#modal-report-peminjaman").html(
+                        '<iframe src="data:application/pdf;base64, ' +
+                        data +
+                        '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                    );
+                })
+                .fail(function() {
+                    $("#modal-report-peminjaman").html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
+                });
         });
     </script>
 @endsection
