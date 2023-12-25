@@ -1,5 +1,5 @@
 <link href=" {{ URL::asset('qr_login/option2/css/style.css') }}" rel="stylesheet">
-<div class="modal-body">
+<div class="modal-body gradient-branding">
     {{-- <meta name="csrf-token" content="{{ csrf_token() }}" /> --}}
         <div class="containera p-0" id="QR-Code">
             <input type="text" name="tiket" id="tiket" value="{{$tiket}}" hidden>

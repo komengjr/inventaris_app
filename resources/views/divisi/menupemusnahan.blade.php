@@ -147,7 +147,6 @@
             </div>
         </div>
         <!-- End container-fluid-->
-
     </div>
     <div class="modal fade" id="modalpemusnahan">
         <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
@@ -159,15 +158,13 @@
             </div>
         </div>
     </div>
-    <script src="{{ url('assets/js/app-script.js', []) }}"></script>
+    {{-- <script src="{{ url('assets/js/app-script.js', []) }}"></script> --}}
     <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
     {{-- <script src="{{ url('assets/js/dashboard-logistics.js', []) }}"></script> --}}
     <script>
         $(function() {
             "use strict";
-
-
             // chart 1
 
             $('.fleet-chart').easyPieChart({
@@ -252,15 +249,6 @@
                     }
                 }
             });
-
-
-
-
-
-
-            // chart 6
-
-
 
 
         });

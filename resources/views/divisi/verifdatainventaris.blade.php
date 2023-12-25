@@ -167,7 +167,7 @@
         </div>
     </div>
     <div class="modal fade" id="lengkapipeminjaman">
-        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div id="showdatalengkapi">
                     <div class="modal-body">
