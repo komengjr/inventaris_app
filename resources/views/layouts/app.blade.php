@@ -116,7 +116,7 @@
                     <div class="col-3 col-lg-3 col-xl-3 mt-3" style="text-align: center;">
                         <img src="{{ asset('vendor/prospek.png') }}" alt="" srcset="" width="50">
                     </div>
-                    <div class="col-3 col-lg-3 col-xl-3">
+                    <div class="col-3 col-lg-3 col-xl-3 ">
                         <button type="button" id="menu-btn">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
