@@ -341,6 +341,7 @@
         DB::table('z_log_kunjungan')->insert([
             'ip_addres'=>\Request::getClientIp(true),
             'cabang'=>Auth::user()->cabang,
+            'browser'=>\Request::header('User-Agent'),
             'created_at'=>date('Y-m-d H:i:s'),
         ]);
     @endphp

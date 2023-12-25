@@ -17,6 +17,7 @@ class CreateZLogKunjunganTable extends Migration
             $table->id('id_ip_public');
             $table->string('ip_addres');
             $table->string('cabang');
+            $table->text('browser');
             $table->timestamps();
         });
     }
