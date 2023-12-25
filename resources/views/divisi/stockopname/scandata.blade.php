@@ -60,10 +60,10 @@
                         <button class="btn-warning"><div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
                           </div></button>
-                        <p id="scanned-QR"></p>
+                        <p id="scanned-QR" style="display: none;"></p>
                     </div>
                 </div>
-                <div class="card" id="verif-data-barang"></div>
+                <div class="card" id="hasil-pencarian"></div>
             </div>
 
 
@@ -100,10 +100,10 @@
             })
 
             .done(function(data) {
-                $('#verif-data-barang').html(data);
+                $('#hasil-pencarian').html(data);
             })
             .fail(function() {
-                $('#showdatabarang').html(
+                $('#hasil-pencarian').html(
                     '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                 );
             });
