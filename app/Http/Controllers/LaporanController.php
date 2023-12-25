@@ -66,7 +66,8 @@ class LaporanController extends Controller
     }
     public function postreportpeminjaman(Request $request)
     {
-        $pdf = PDF::loadview('divisi.laporan.report.laporanpeminjaman',['data'=>11]);
+        $data = DB::table('tbl_peminjaman')->where('kd_cabang',Auth::user()->cabang)->whereBetween('tgl_pinjam', [$request->startdate, $request->enddate])->get();
+        $pdf = PDF::loadview('divisi.laporan.report.laporanpeminjaman',['data'=>$data,'startdate'=>$request->startdate,'enddate'=>$request->enddate])->setPaper('A4','landscape');
     	return base64_encode($pdf->stream());
     }
     public function postreportstokopname(Request $request)

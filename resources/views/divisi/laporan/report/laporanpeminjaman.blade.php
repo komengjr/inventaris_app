@@ -61,7 +61,8 @@
 
     th,
     td {
-        border: 1px solid black;
+        border: 1px solid rgb(54, 48, 48);
+
     }
 
     div.footer {
@@ -91,52 +92,87 @@
             <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">{{$entitas->alamat}}</p>
         </div>
         <h5 style="padding-top: 20px; margin: 20px; left: 100px; padding-left: 155px;text-decoration: underline;">DAFTAR
-            LIST BARANG INVENTARIS</h5>
+            LIST PEMINJAMAN BARANG INVENTARIS</h5>
         {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate(123123),) !!}"> --}}
 
         <div class="absolute">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::eyeColor(0, 0, 111, 115, 255, 114, 232)->style('dot')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate(123),
+                QrCode::style('round')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate(123),
             ) !!}">
         </div>
     </div>
     <div class="body">
         <br>
         <table
-            style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid black;border-collapse:collapse;">
+            style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:0px solid rgb(255, 253, 253);border-collapse:collapse;">
             <tr>
                 <td colspan="3" class="text-right"><strong>SDM.33-FRM-PP-07.2/02 </strong></td>
             </tr>
 
         </table>
+        <h5>Periode ;  {{$startdate}} Sampai {{$enddate}}</h5>
         <br>
         <table style="font-size: 8px; margin: 0px; padding: 2px; width: 100%; font-size: 11px; font-family: Calibri (Body);">
             <thead style="font-weight: bold;">
                 <tr>
-                    <td style="width: 4%;">No</td>
-                    <td>Nomor Inventaris</td>
-                    <td>Nama Barang</td>
-                    <td>Merek</td>
-                    <td>Type</td>
-                    <td style="width: 15%;">Harga Perolehan</td>
-                    <td>Status Barang</td>
+                    <td style="width: 4%; text-align: center;">No</td>
+                    <td>Tiket Peminjaman</td>
+                    <td>Tujuan Peminjaman</td>
+                    <td>Tanggal Order</td>
+                    <td>Penanggung Jawab</td>
+                    <td>Asal Cabang</td>
+                    <td>Tujuan Cabang</td>
+                    <td>Detail Barang</td>
+                    {{-- <td style="width: 15%;">Jumlah Barang Kembali</td> --}}
+                    {{-- <td>Status Barang</td> --}}
                 </tr>
             </thead>
             <tbody>
-                {{-- @php
+                @php
                     $no = 1;
                 @endphp
                 @foreach ($data as $data)
                     <tr>
-                        <td>{{ $no++ }}</td>
-                        <td>{{ $data->no_inventaris }}</td>
-                        <td>{{ $data->nama_barang }}</td>
-                        <td>{{ $data->merk }}</td>
-                        <td>{{ $data->type }}</td>
-                        <td style="text-align: right;">@currency($data->harga_perolehan)</td>
-                        <td>Baik</td>
+                        <td style="text-align: center;">{{ $no++ }}</td>
+                        <td>{{ $data->tiket_peminjaman }}</td>
+                        <td>{{ $data->nama_kegiatan }}</td>
+                        <td>{{ $data->tgl_pinjam }}</td>
+                        <td>{{ $data->pj_pinjam }}</td>
+                        <td>
+                            @php
+                                $cabang = DB::table('tbl_cabang')->select('nama_cabang')->where('kd_cabang',$data->kd_cabang)->first();
+                            @endphp
+                            {{ $cabang->nama_cabang }}</td>
+                        <td>
+                            @php
+                                $cabang1 = DB::table('tbl_cabang')->select('nama_cabang')->where('kd_cabang',$data->tujuan_cabang)->first();
+                            @endphp
+                            {{ $cabang1->nama_cabang }}</td>
+                        <td>
+                            @php
+                                $cekbarang = DB::table('tbl_sub_peminjaman')
+                                ->select('tbl_sub_peminjaman.*','sub_tbl_inventory.nama_barang')
+                                ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')
+                                ->where('tbl_sub_peminjaman.id_pinjam',$data->id_pinjam)->get();
+                            @endphp
+                            <table style=" border:none !important;width: 100%;">
+                                @foreach ($cekbarang as $item)
+                                    <tr>
+                                        <td>{{$item->nama_barang}}</td>
+                                        <td>
+                                            @if ($item->status_sub_peminjaman == 0)
+                                            Barang Keluar
+                                            @else
+                                            Barang Kembali
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </td>
+                        {{-- <td>12</td> --}}
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
         <br><br><br>
