@@ -5,7 +5,9 @@
             <input type="text" name="tiket" id="tiket" value="{{$tiket}}" hidden>
             <div class="col-md-4" id="kamera">
                 <div class="well" style="position: relative;display: inline-block;">
-                    <canvas width="320" height="320" id="webcodecam-canvas"></canvas>
+                    <div class="card bg-dark">
+                        <canvas  id="webcodecam-canvas" style="width: 100%; height: auto;"></canvas>
+                    </div>
                     <div class="scanner-laser laser-rightBottom" style="opacity: 0.5;"></div>
                     <div class="scanner-laser laser-rightTop" style="opacity: 0.5;"></div>
                     <div class="scanner-laser laser-leftBottom" style="opacity: 0.5;"></div>
@@ -35,7 +37,7 @@
                     <input id="flipHorizontal" onchange="Page.changeHorizontal();" type="checkbox">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <select class="form-control pb-2" id="camera-select"></select>
                 <div class="form-group " style="padding-top: 20px; display: none;">
                     <button title="Decode Image" class="btn btn-default btn-sm" id="decode-img" type="button"
@@ -52,7 +54,7 @@
 
                 <div class="thumbnail pt-2" id="result">
                     <div class="well">
-                        <img width="320" height="240" id="scanned-img" src="">
+                        <img  id="scanned-img" src="" style="width: 100%; height: auto;">
                     </div>
                     <div class="caption pt-2">
                         <button class="btn-warning"><div class="spinner-border" role="status">
