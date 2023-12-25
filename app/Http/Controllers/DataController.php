@@ -20,12 +20,10 @@ class DataController extends Controller
     public function scandataineventaris(Request $request,$id)
     {
         $data = DB::table('sub_tbl_inventory')->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')->where('sub_tbl_inventory.no_inventaris',$request->data)->first();
-        return view('divisi.stockopname.inputverif',['data'=>$data]);
+        return view('divisi.stockopname.inputverif',['data'=>$data,'kode'=>$id]);
     }
     public function showdata($no,$cb,$kd,$id)
     {
-
-
         $data = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*','no_urut_barang.*','tbl_lokasi.kd_lokasi','tbl_lokasi.nama_lokasi')
         ->join('tbl_inventory','tbl_inventory.kd_inventaris','=','sub_tbl_inventory.kd_inventaris')

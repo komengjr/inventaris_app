@@ -94,7 +94,8 @@
                 cache: false,
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "data" : code
+                    "data" : code,
+                    "tiket": tiket,
                 },
                 dataType: 'html',
             })
