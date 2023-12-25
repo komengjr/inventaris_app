@@ -66,7 +66,7 @@
     }
 
     div.footer {
-        position: fixed;
+        /* position: fixed; */
         left: 0;
         bottom: 15px;
         border: 0px solid #302a2a;
