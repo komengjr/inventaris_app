@@ -63,9 +63,11 @@
                         <p id="scanned-QR" style="display: none;"></p>
                     </div>
                 </div>
-                <div class="card" id="hasil-pencarian"></div>
-            </div>
 
+            </div>
+            <div class="col-lg-12" id="hasil-pencarian">
+
+            </div>
 
             <div class="col-md-12">
                 @if ($message = Session::get('sukses'))
