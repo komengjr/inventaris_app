@@ -338,6 +338,11 @@
         $iklan = DB::table('q_iklan')
             ->where('status_iklan', 1)
             ->get();
+        DB::table('z_log_kunjungan')->insert([
+            'ip_addres'=>\Request::getClientIp(true),
+            'cabang'=>Auth::user()->cabang,
+            'created_at'=>date('Y-m-d H:i:s'),
+        ]);
     @endphp
     <div class="modal fade" id="cardmodal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
