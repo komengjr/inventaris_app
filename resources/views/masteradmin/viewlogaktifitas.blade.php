@@ -47,9 +47,12 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>User</th>
                         <th>Cabang</th>
+                        <th>Device</th>
+                        <th>Operating System</th>
                         <th>Ip Address</th>
-                        <th>Header</th>
+                        <th>Browser</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +60,10 @@
                     @foreach ($data as $data)
                         <tr>
                             <td data-label="No">{{$no++}}</td>
+                            <td data-label="Nama User">{{$data->user}}</td>
                             <td data-label="Nama Cabang">{{$data->nama_cabang}}</td>
+                            <td data-label="Device">{{$data->device}}</td>
+                            <td data-label="os">{{$data->os}}</td>
                             <td data-label="Ip Address">{{$data->ip_addres}}</td>
                             <td data-label="Header">{{$data->browser}}</td>
                         </tr>
