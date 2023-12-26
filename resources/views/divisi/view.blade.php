@@ -327,6 +327,7 @@
     }
 </script>
 @php
+    use Jenssegers\Agent\Facades\Agent;
     $browser = Agent::browser();
     $platform = Agent::platform();
     DB::table('z_log_kunjungan')->insert([
