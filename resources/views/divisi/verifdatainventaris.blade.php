@@ -157,7 +157,7 @@
     </div>
 
     <div class="modal fade" id="tambahdatabaru">
-        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div id="showdatasdm">
                     <div class="modal-body">

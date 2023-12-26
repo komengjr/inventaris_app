@@ -157,7 +157,7 @@
 
     </div>
     <div class="modal fade" id="modalmutasi">
-        <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div id="showdatalengkapi">
                     <div class="modal-body">
@@ -167,7 +167,7 @@
         </div>
     </div>
     <div class="modal fade" id="modalmutasirecord">
-        <div class="modal-dialog modal-dialog-centered modal-full" style="width: 100%;">
+        <div class="modal-dialog modal-dialog-centered modal-full">
             <div class="modal-content">
                 <div id="bodymodalmutasirecord">
                     <div class="modal-body">
@@ -176,7 +176,6 @@
             </div>
         </div>
     </div>
-    <script src="{{ url('assets/js/app-script.js', []) }}"></script>
     <script src="{{ url('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js', []) }}"></script>
     <script src="{{ url('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
     {{-- <script src="{{ url('assets/js/dashboard-logistics.js', []) }}"></script> --}}
