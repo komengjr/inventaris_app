@@ -327,6 +327,17 @@
     }
 </script>
 @php
+    $browser = Agent::browser();
+    $platform = Agent::platform();
+    DB::table('z_log_kunjungan')->insert([
+        'ip_addres' => \Request::getClientIp(true),
+        'user' => Auth::user()->email,
+        'cabang' => Auth::user()->cabang,
+        'device' => $device = Agent::device(),
+        'os' => Agent::platform().' '.Agent::version($platform),
+        'browser' => Agent::browser() . ' Version ' . Agent::version($browser),
+        'created_at' => date('Y-m-d H:i:s'),
+    ]);
     $cekiklan = DB::table('q_iklan_cabang')
         ->join('q_iklan', 'q_iklan.kd_iklan', '=', 'q_iklan_cabang.kd_iklan')
         ->where('q_iklan_cabang.kd_cabang', Auth::user()->cabang)
@@ -338,12 +349,6 @@
         $iklan = DB::table('q_iklan')
             ->where('status_iklan', 1)
             ->get();
-        DB::table('z_log_kunjungan')->insert([
-            'ip_addres'=>\Request::getClientIp(true),
-            'cabang'=>Auth::user()->cabang,
-            'browser'=>\Request::header('User-Agent'),
-            'created_at'=>date('Y-m-d H:i:s'),
-        ]);
     @endphp
     <div class="modal fade" id="cardmodal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -354,8 +359,7 @@
                         <div class="carousel-inner">
                             @foreach ($iklan as $iklan)
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100 card-img-top"
-                                        src="{{$iklan->link}}"
+                                    <img class="d-block w-100 card-img-top" src="{{ $iklan->link }}"
                                         alt="Card image cap">
                                 </div>
                             @endforeach

@@ -24,7 +24,6 @@ Route::post('master/datacabang/lokasi/tambah',['as'=>'master/datacabang/lokasi/t
 Route::post('master/datacabang/lokasi/update',['as'=>'master/datacabang/lokasi/update','uses'=> 'MasterController@updatelokasibaru']);
 Route::post('master/datacabang/lokasi/delete',['as'=>'master/datacabang/lokasi/delete','uses'=> 'MasterController@deletelokasibaru']);
 
-
 // Master Admin POST
 Route::post('master/datauser/proses/tambah/{id}',['as'=>'master/datauser/proses/tambah/','uses'=> 'MasterController@tambahdatauser']);
 Route::post('master/datauser/proses/edit',['as'=>'master/datauser/proses/edit','uses'=> 'MasterController@editdatauser']);
@@ -58,6 +57,8 @@ Route::post('master/datainventaris/simpanupdateinventaris', 'MasterController@si
 Route::get('master/datainventaris/simpanupdateinventaris/{id}', 'MasterController@simpanupdateinventariscabang');
 // Master Admin Get Lokasi
 Route::get('master/datalokasi/{id}',['as'=>'master/datalokasiid','uses'=> 'MasterController@datalokasi']);
+Route::get('master/data-inventaris/detail/{id}',['as'=>'master/data-inventaris/detail','uses'=> 'MasterController@detaildatainventaris']);
+Route::post('masteradmin/post-data-inventaris/',['as'=>'masteradmin/post-data-inventaris/','uses'=> 'MasterController@postdetaildatainventaris']);
 // Master Admin Get Data Peminjaman
 Route::get('master/datapeminjaman/{id}',['as'=>'master/datapeminjaman','uses'=> 'MasterController@datapeminjaman']);
 // Master Admin Get Data Mutasi
@@ -65,7 +66,6 @@ Route::get('master/datamutasi/{id}',['as'=>'master/datamutasi','uses'=> 'MasterC
 Route::get('master/datamutasi/tampilformmuitasi/{id}',['as'=>'master/datamutasi/tampilformmuitasi','uses'=> 'MasterController@tampilformmuitasi']);
 // Master Admin Get Data Pemusnahan
 Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 'MasterController@datapemusnahan']);
-
 
 // Divisi Controller
 Route::get('lihatdatabarang1/{id}',['as'=>'lihatdatabarang1','uses'=> 'DivisiController@lihatdatabarang1']);

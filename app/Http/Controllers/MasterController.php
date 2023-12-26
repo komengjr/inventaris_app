@@ -473,4 +473,29 @@ class MasterController extends Controller
         }
 
     }
+    public function detaildatainventaris($id)
+    {
+        if (Auth::user()->akses == 'admin') {
+            $data = DB::table('sub_tbl_inventory')
+            ->where('id',$id)->first();
+            return view('masteradmin.datainventaris.detaildata',['data'=>$data]);
+        }
+
+    }
+    public function postdetaildatainventaris(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            DB::table('sub_tbl_inventory')
+            ->where('id',$request->id)
+            ->update([
+                        'nama_barang' => $request->nama_barang,
+                        'no_inventaris' => $request->no_inventaris,
+                        'kd_lokasi' => $request->kd_lokasi,
+                        'kd_jenis' => $request->kd_jenis,
+                    ]);
+            Session::flash('sukses','Berhasil update data');
+            return redirect()->back();
+        }
+
+    }
 }

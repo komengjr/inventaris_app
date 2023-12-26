@@ -16,7 +16,10 @@ class CreateZLogKunjunganTable extends Migration
         Schema::create('z_log_kunjungan', function (Blueprint $table) {
             $table->id('id_ip_public');
             $table->string('ip_addres');
+            $table->string('user');
             $table->string('cabang');
+            $table->string('device');
+            $table->string('os');
             $table->text('browser');
             $table->timestamps();
         });

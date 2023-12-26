@@ -50,20 +50,17 @@
                         <th>Cabang</th>
                         <th>Ip Address</th>
                         <th>Header</th>
-
                     </tr>
                 </thead>
                 <tbody>
-
                     <?php $no=1;?>
                     @foreach ($data as $data)
-                    <tr>
-                        <td data-label="No">{{$no++}}</td>
-                        <td data-label="Nama Cabang">{{$data->nama_cabang}}</td>
-                        <td data-label="Ip Address">{{$data->ip_addres}}</td>
-                        <td data-label="Header">{{$data->browser}}</td>
-                    </tr>
-
+                        <tr>
+                            <td data-label="No">{{$no++}}</td>
+                            <td data-label="Nama Cabang">{{$data->nama_cabang}}</td>
+                            <td data-label="Ip Address">{{$data->ip_addres}}</td>
+                            <td data-label="Header">{{$data->browser}}</td>
+                        </tr>
                     @endforeach
                 </tbody>
 

@@ -6,7 +6,7 @@
 
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
-        <h6>Form Mutasi <span style="color: royalblue;"> Data Excel Cabang</span> </h6>
+        <h6>Form Mutasi <span style="color: royalblue;"> Data Master Cabang</span> </h6>
 
         <form action="{{ url('master/datainventaris/createnomorinventariscabang', []) }}" method="post">
             @csrf
@@ -19,7 +19,7 @@
     </div>
     {{-- <form  method="POST" action="" enctype="multipart/form-data" id="form-update"> --}}
 
-    <div class="modal-body">
+    <div class="modal-body" id="master-menu-inventaris">
         <table class="styled-table align-items-center table-flush pb-2 " id="data-table97">
             <thead>
                 <tr>
@@ -47,7 +47,7 @@
                         <td data-label="Kode Lokasi">{{$data->kd_lokasi}}</td>
                         <td data-label="Tanggal Beli">{{$data->tgl_beli}}</td>
                         <td data-label="Harga Perolehan">{{$data->harga_perolehan}}</td>
-                        <td><button class="btn-warning"><i class="fa fa-pencil"></i></button></td>
+                        <td><button class="btn-warning" id="button-master-edit" data-id="{{$data->id}}"><i class="fa fa-pencil"></i></button></td>
                     </tr>
                 @endforeach
             </tbody>
@@ -64,3 +64,25 @@
     $('#data-table97').DataTable();
 </script>
 
+<script>
+    $(document).on("click", "#button-master-edit", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $("#master-menu-inventaris").html(
+        '<span class="badge badge-warning m-1">Loading..</span>'
+    );
+    $.ajax({
+        url: "../master/data-inventaris/detail/" + id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#master-menu-inventaris").html(data);
+        })
+        .fail(function () {
+            $("#show-menu-report-stockopname").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
+</script>
