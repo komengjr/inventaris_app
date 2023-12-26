@@ -197,7 +197,7 @@
                         @elseif(auth()->user()->akses == 'admin')
                             <li><a href="{{ asset('masteradmin', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Admin</a></li>
                             <li><a href="{{ asset('masteradmindetail', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Cabang</a></li>
-                            <li><a href="{{ asset('masterlogactifity', []) }}"><i class="zmdi zmdi-airplay"></i> Master Log Aktifitas</a></li>
+                            <li><a href="{{ asset('masterlogactifity', []) }}"><i class="zmdi zmdi-airplay"></i> Log Aktifitas</a></li>
                         @endif
 
 

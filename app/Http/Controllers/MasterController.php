@@ -67,6 +67,7 @@ class MasterController extends Controller
             $data = DB::table('z_log_kunjungan')
             ->select('z_log_kunjungan.*','tbl_cabang.nama_cabang')
             ->join('tbl_cabang','tbl_cabang.kd_cabang','=','z_log_kunjungan.cabang')
+            ->orderBy('id_ip_public','DESC')
             ->get();
             return view('masteradmin.viewlogaktifitas',['data'=>$data]);
         } else {
