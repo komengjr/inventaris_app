@@ -61,6 +61,20 @@ class MasterController extends Controller
 
 
     }
+    public function masterlogactifity()
+    {
+        if (auth::user()->akses == 'admin') {
+            $data = DB::table('z_log_kunjungan')
+            ->select('z_log_kunjungan.*','tbl_cabang.nama_cabang')
+            ->join('tbl_cabang','tbl_cabang.kd_cabang','=','z_log_kunjungan.cabang')
+            ->get();
+            return view('masteradmin.viewlogaktifitas',['data'=>$data]);
+        } else {
+            # code...
+        }
+
+
+    }
     public function datacabang()
     {
         return view('masteradmin.form.modal.cabang');
