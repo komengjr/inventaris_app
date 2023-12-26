@@ -20,7 +20,7 @@
     @csrf
     <div class="modal-body">
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Tujuan Peminjaman</label>
                 <select name="nama_kegiatan" id="" class="form-control single-select" required>
                     <option value="">Pilih Cabang</option>
@@ -30,7 +30,7 @@
                 </select>
                 <input type="text" class="form-control" name="tiket_peminjaman" value="{{$tiket}}" hidden>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Tujuan Cabang</label>
                 <select name="cabang" id="" class="form-control single-select">
                     <option value="">Pilih Cabang</option>
@@ -39,7 +39,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Penanggung Jawab Peminjam</label>
                 <select name="pj_pinjam" id="" class="form-control single-select">
                     <option value="">Pilih Staff</option>
@@ -48,11 +48,11 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Tanggal Peminjam</label>
                 <input type="date" class="form-control" name="tgl_pinjam" required>
             </div>
-            <div class="col-12">
+            <div class="col-md-12">
                 <label for="">Deskripsi Peminjaman</label>
                 <textarea class="form-control" id="" cols="30" rows="10" name="deskripsi"></textarea>
             </div>
