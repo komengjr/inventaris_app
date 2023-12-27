@@ -117,7 +117,7 @@
                 })
                 .fail(function() {
                     $("#menu-modal-master").html(
-                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                        '<span class="badge badge-pill badge-warning shadow-warning m-1">Data Maps Tidak Dapat Ditemukan</span>'
                     );
                 });
         });
