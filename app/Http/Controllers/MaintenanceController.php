@@ -8,8 +8,7 @@ use PDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-// use App\Imports\LogInventarisImport;
-// use Maatwebsite\Excel\Facades\Excel;
+use Jenssegers\Agent\Facades\Agent;
 
 class MaintenanceController extends Controller
 {
@@ -43,6 +42,19 @@ class MaintenanceController extends Controller
             'status_maintenance'=>1,
             'ket_maintenance'=>$request->ket_maintenance,
             'file_maintenance'=>$file,
+        ]);
+        $browser = Agent::browser();
+        $platform = Agent::platform();
+        DB::table('z_log_actifity')->insert([
+            'ip_addres' => \Request::getClientIp(true),
+            'user' => Auth::user()->email,
+            'cabang' => Auth::user()->cabang,
+            'device' => Agent::device(),
+            'os' => Agent::platform() . ' ' . Agent::version($platform),
+            'browser' => Agent::browser() . ' Version ' . Agent::version($browser),
+            'menu' => 'Meintenance',
+            'ket_log' => implode(",", $request->all()),
+            'created_at' => date('Y-m-d H:i:s'),
         ]);
         Session::flash('sukses','Berhasil Membuat Tiket Maintenance');
         return redirect()->back();

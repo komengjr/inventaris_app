@@ -53,6 +53,7 @@
                         <th>Operating System</th>
                         <th>Ip Address</th>
                         <th>Browser</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,6 +67,7 @@
                             <td data-label="os">{{$data->os}}</td>
                             <td data-label="Ip Address">{{$data->ip_addres}}</td>
                             <td data-label="Header">{{$data->browser}}</td>
+                            <td data-label="Header">{{$data->created_at}}</td>
                         </tr>
                     @endforeach
                 </tbody>
