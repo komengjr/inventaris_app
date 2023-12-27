@@ -42,7 +42,7 @@
                 lng: {{$data->longitude}}
             };
             var map = new google.maps.Map(document.getElementById('marker-map'), {
-                zoom: 4,
+                zoom: 10,
                 center: myLatLng
             });
             var marker = new google.maps.Marker({
