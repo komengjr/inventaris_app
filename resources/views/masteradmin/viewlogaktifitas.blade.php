@@ -33,16 +33,16 @@
             <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <div class="alert-icon">
-                <i class="fa fa-check"></i>
+                    <i class="fa fa-check"></i>
                 </div>
                 <div class="alert-message">
-                <span><strong>{{ $message }}</strong> This is a success alert—check it out!</span>
+                    <span><strong>{{ $message }}</strong> This is a success alert—check it out!</span>
                 </div>
             </div>
         @endif
     </div>
     <div class="body" id="showdatamaster">
-        <div class="row pl-3 pt-2 pb-2" >
+        <div class="row pl-3 pt-2 pb-2">
             <table id="default-datatable" class="styled-table table-bordered">
                 <thead>
                     <tr>
@@ -57,17 +57,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $no=1;?>
+                    <?php $no = 1; ?>
                     @foreach ($data as $data)
                         <tr>
-                            <td data-label="No">{{$no++}}</td>
-                            <td data-label="Nama User">{{$data->user}}</td>
-                            <td data-label="Nama Cabang">{{$data->nama_cabang}}</td>
-                            <td data-label="Device">{{$data->device}}</td>
-                            <td data-label="os">{{$data->os}}</td>
-                            <td data-label="Ip Address">{{$data->ip_addres}}</td>
-                            <td data-label="Header">{{$data->browser}}</td>
-                            <td data-label="Header">{{$data->created_at}}</td>
+                            <td data-label="No">{{ $no++ }}</td>
+                            <td data-label="Nama User">{{ $data->user }}</td>
+                            <td data-label="Nama Cabang">{{ $data->nama_cabang }}</td>
+                            <td data-label="Device">{{ $data->device }}</td>
+                            <td data-label="os">{{ $data->os }}</td>
+                            <td data-label="Ip Address"><a href="#" data-toggle="modal" data-target="#modal-location"
+                                    id="button-data-ip_addres" data-id="{{$data->ip_addres}}">{{ $data->ip_addres }}</a></td>
+                            <td data-label="Header">{{ $data->browser }}</td>
+                            <td data-label="Header">{{ $data->created_at }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -77,13 +78,18 @@
     </div>
 
 
-    <div class="modal fade" id="formdatamaster">
-        <div class="modal-dialog modal-dialog-centered modal-full">
-          <div class="modal-content border-danger" id="bodyformdatamaster">
-
-
-
-          </div>
+    <div class="modal fade" id="modal-location">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content border-danger modal-xl">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white">Data Maps</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="menu-modal-master" style="text-align: center;">
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -91,6 +97,29 @@
             //Default data table
             $('#default-datatable').DataTable();
 
+        });
+    </script>
+    <script>
+        $(document).on("click", "#button-data-ip_addres", function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            // console.log(id);
+            $("#menu-modal-master").html(
+                '<div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div>'
+            );
+            $.ajax({
+                    url: "/masterlogactifity/detail/" + id,
+                    type: "GET",
+                    dataType: "html",
+                })
+                .done(function(data) {
+                    $("#menu-modal-master").html(data);
+                })
+                .fail(function() {
+                    $("#menu-modal-master").html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
+                });
         });
     </script>
 @endsection

@@ -33,6 +33,7 @@ Route::post('master/datauser/proses/hapus',['as'=>'master/datauser/proses/hapus'
 Route::get('masteradmin', 'MasterController@index')->name('index');
 Route::get('masteradmindetail', 'MasterController@masteradmindetail');
 Route::get('masterlogactifity', 'MasterController@masterlogactifity');
+Route::get('masterlogactifity/detail/{id}', 'MasterController@findmymasterlogactifity');
 Route::get('masterinjekupdate/{id}', 'MasterController@masterinjekupdate');
 // Master Admin GET User
 Route::get('master/datauser/{id}',['as'=>'master/datauser','uses'=> 'MasterController@datauser']);

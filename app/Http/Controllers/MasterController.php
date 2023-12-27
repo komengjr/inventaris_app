@@ -73,8 +73,13 @@ class MasterController extends Controller
         } else {
             # code...
         }
-
-
+    }
+    public function findmymasterlogactifity($id)
+    {
+            $userIp = $id;
+            $locationData = \Location::get($userIp);
+            return view('masteradmin.log.ipscan',['data'=>$locationData]);
+            // dd($locationData);
     }
     public function datacabang()
     {
