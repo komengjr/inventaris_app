@@ -25,7 +25,7 @@
 </style>
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid" id="menudetaildataaset">
-           <div class="card mt-3">
+           <div class="card mt-3 mr-2">
             <div class="row pl-4 pt-3">
                 <div class="col-sm-9">
                     <h4 class="page-title">Menu Mutasi</h4>
