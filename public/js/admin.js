@@ -347,7 +347,7 @@ $(document).on("click", "#updatedatainventori", function (e) {
     var data = $("#form-update").serialize();
     e.preventDefault();
     $("#showdatabarang").html(
-        "<br><br><br><img src='icon.png'  style='display: block; margin: auto;'>"
+        ""
     );
     $.ajax({
         url: "divisi/inventori/updatedatainventori",
@@ -360,9 +360,22 @@ $(document).on("click", "#updatedatainventori", function (e) {
         dataType: "html",
     })
         .done(function (data) {
-            // console.log(data);
-            $("#showdatabarang").html(data);
-            location.reload();
+            $("#showdatabarang").html( "" );
+            Lobibox.notify("success", {
+                pauseDelayOnHover: true,
+                icon: "fa fa-info-circle",
+                continueDelayOnInactiveTab: false,
+                position: "center top",
+                showClass: "bounceIn",
+                hideClass: "bounceOut",
+                width: 600,
+                msg: "Berhasil Update data",
+            });
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+
+
         })
         .fail(function () {
             $("#showdatabarang").html(
