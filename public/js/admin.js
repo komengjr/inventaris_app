@@ -37,7 +37,7 @@ $(document).on("click", "#tombolbarupeminjaman", function (e) {
 $(document).on("click", "#tombollengkapipeminjaman", function (e) {
     e.preventDefault();
     var url = $(this).data("url");
-
+    $("#showdatalengkapi").html('<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>');
     $.ajax({
         url: url,
         type: "GET",
