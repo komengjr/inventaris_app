@@ -10,14 +10,15 @@
 </script>
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
-        <h5>Data List Barang</h5>
+        {{-- <h5>Data List Barang</h5> --}}
+        <button type="button" class="btn-outline-dark" id="button-print-all" data-id="{{$id}}"><i
+            class="fa fa-print"> </i> Print All</button>
         {{-- <button class="btn-success" id="tambahdatabarang" data-url="{{ route('tambahdatabarang', ['id' => $id]) }}"><i
                 class="fa fa-plus"> </i> Tambah Data Barang</button> --}}
         <span>
-            <button type="button" class="btn-outline-primary"  onclick="submitForm()"><i
-                    class="fa fa-print"> </i> Print Barcode</button>
-            <button type="button" class="btn-outline-dark" id="button-print-all" data-id="{{$id}}"><i
-                    class="fa fa-print"> </i> Print All</button>
+            {{-- <button type="button" class="btn-outline-primary"  onclick="submitForm()"><i
+                    class="fa fa-print"> </i> Print Barcode</button> --}}
+
             <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
                 <i class="fa fa-close"></i>
             </button>
@@ -187,7 +188,7 @@
                     </div>
 
                 </div>
-                <div class="modal-footer bg-primary">
+                <div class="modal-footer bg-primary" style="justify-content: center;">
                     {{-- <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"> Close</i></button> --}}
                     {{-- <input type="button" name="btnSubmit" value="Submit" onclick="submitForm()" /> --}}
                     <a type="submit" class="btn btn-success" onclick="submitForm()"> Cetak</i></a>

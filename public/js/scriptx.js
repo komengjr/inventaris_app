@@ -374,7 +374,7 @@ $(document).ready(function() {
         delete window.resumable288;
         e.preventDefault();
         var url = $(this).data('url');
-        $('#showdatabarang').html("<img src='loading.gif'  style='display: block; margin: auto;'>");
+        $('#showdatabarang').html('<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>');
         setTimeout(() => {
             $.ajax({
                 url: url,

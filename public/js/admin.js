@@ -1344,7 +1344,7 @@ $(document).on("click", "#button-print-all", function (e) {
     var id = $(this).data("id");
     // console.log(id);
     $("#show-menu-data-lokasi-barang").html(
-        "<img src='../loading.gif'  style='display: block; margin: auto;'>"
+        '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
     );
     $.ajax({
         url: "/divisi/printall/ruangan/" + id,

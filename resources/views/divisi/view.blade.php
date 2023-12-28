@@ -300,8 +300,8 @@
 <div class="modal fade" id="lihat-detail-data">
     <div class="modal-dialog modal-dialog-centered modal-full" style="margin-top: 2%;">
         <div class="modal-content">
-            <div id="showdatabarang">
-                <div class="modal-body" style="font-size: 9px;">
+            <div  id="showdatabarang">
+                <div class="modal-body" style="font-size: 9px;" >
                 </div>
             </div>
         </div>
