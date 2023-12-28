@@ -51,7 +51,7 @@
                         <img src="{{ asset('vendor/new-anim.gif', []) }}" width="350" style="width: 100%; height: auto;">
                     </div>
                     <div class="card-title text-uppercase text-center py-2" style="font-size: 10px;">Login Aplikasi</div>
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('masuk') }}">
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputUsername" class="sr-only">Username</label>

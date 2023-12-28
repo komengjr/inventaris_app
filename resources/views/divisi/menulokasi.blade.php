@@ -26,18 +26,18 @@
     </style>
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-           <div class="card mt-3">
-            <div class="row pl-4 pt-3">
-                <div class="col-sm-9">
-                    <h4 class="page-title">Master Lokasi</h4>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Menu Lokasi</li>
-                    </ol>
+            <div class="card mt-3">
+                <div class="row pl-4 pt-3">
+                    <div class="col-sm-9">
+                        <h4 class="page-title">Master Lokasi</h4>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Menu Lokasi</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
-           </div>
             <div class="row">
                 <div class="col-12 col-lg-12 col-xl-12">
                     <div class="card gradient-ohhappiness">
@@ -83,21 +83,26 @@
                     <div class="card pb-4">
                         <div class="">
                             <div class="float-sm-left m-3 m-3">
-                                <h4 class="page-title">Data Nomor Lokasi Cabang</h4>
+                                <h4 class="page-title"></h4>
                             </div>
                             <div class="float-sm-right m-3 m-3">
-                                <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                    data-target="#tambahdatabaru" id="buttontambahnomorruangan">
-                                    <i class="fa fa-plus mr-1"></i> Tambah Nomor Ruangan
-                                </button>
-                                <button type="button" class="btn-info waves-effect waves-light" data-toggle="modal"
-                                    data-target="#tambahdatabaru" id="button-show-lokasi-cabang">
-                                    <i class="fa fa-eye mr-1"></i> Data Lokasi Cabang
-                                </button>
-                                <button type="button" class="btn-dark waves-effect waves-light" data-toggle="modal"
-                                    data-target="#tambahdatabaru" id="buttonlihatmasterlokasi">
-                                    <i class="fa fa-eye mr-1"></i> Master Lokasi
-                                </button>
+                                <div class="btn-group m-0">
+                                    <button type="button" class="btn btn-info waves-effect waves-light"> <i
+                                            class="fa fa-cog"></i> <span>Menu Option</span> </button>
+                                    <button type="button"
+                                        class="btn btn-info split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu" x-placement="bottom-start"
+                                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
+                                        <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#tambahdatabaru" id="buttontambahnomorruangan"><i class="fa fa-plus mr-1"></i> Tambah Nomor Ruangan</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#tambahdatabaru" id="button-show-lokasi-cabang"><i class="fa fa-eye mr-1"></i> Data Lokasi Cabang</a>
+                                        <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#tambahdatabaru" id="buttonlihatmasterlokasi"><i class="fa fa-eye mr-1"></i> Master Lokasi</a>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="table-responsive" id="showdatamutasi">
                                 <table id="default-datatable" class="table styled-table table-bordered align-items-center">
@@ -122,10 +127,11 @@
                                                 <td>
                                                     @php
                                                         $barang = DB::table('sub_tbl_inventory')
-                                                        // ->join('tbl_nomor_ruangan_cabang','tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang','=','sub_tbl_inventory.id_nomor_ruangan_cbaang')
-                                                        ->where('id_nomor_ruangan_cbaang',$item->id_nomor_ruangan_cbaang)->count();
+                                                            // ->join('tbl_nomor_ruangan_cabang','tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang','=','sub_tbl_inventory.id_nomor_ruangan_cbaang')
+                                                            ->where('id_nomor_ruangan_cbaang', $item->id_nomor_ruangan_cbaang)
+                                                            ->count();
                                                     @endphp
-                                                    {{$barang}}
+                                                    {{ $barang }}
                                                 </td>
                                                 <td class="text-center">
                                                     @php
@@ -145,7 +151,8 @@
                                                             data-id="{{ $item->id_nomor_ruangan_cbaang }}"><i
                                                                 class="fa fa-eye"></i> master</button>
                                                     @else
-                                                        <button type="button" class="btn-danger" id="confirm-btn-alert{{ $item->id_nomor_ruangan_cbaang }}"
+                                                        <button type="button" class="btn-danger"
+                                                            id="confirm-btn-alert{{ $item->id_nomor_ruangan_cbaang }}"
                                                             data-id="{{ $item->id_nomor_ruangan_cbaang }}">Hapus</button>
                                                         <script>
                                                             $("#confirm-btn-alert{{ $item->id_nomor_ruangan_cbaang }}").click(function() {
@@ -197,7 +204,7 @@
         </div>
     </div>
     <div class="modal fade" id="tambahdatabaru">
-        <div class="modal-dialog modal-dialog-centered modal-lg" style="width: 100%;">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div id="showdatalokasi">
                     <div class="modal-body">

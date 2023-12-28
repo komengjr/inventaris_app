@@ -2,13 +2,13 @@
     <p class="modal-title text-white">
 
     </p>
-    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+    <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true"><i class="fa fa-close"></i></span>
     </button>
 </div>
 <div class="modal-body" id="showmenudatalokasibarang">
     <div class="col-12 col-lg-12 col-xl-12">
-        <div class="card" >
+        <div class="card">
             <div class="card-body" >
                 <div class="media align-items-center">
                     <div class="media-body text-left">

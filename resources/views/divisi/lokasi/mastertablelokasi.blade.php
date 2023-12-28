@@ -2,21 +2,18 @@
     <p class="modal-title text-white">
 
     </p>
-    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+    <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true"><i class="fa fa-close"></i></span>
     </button>
 </div>
 <div class="modal-body" id="showmenudatalokasibarang">
-
     <div class="pb-2" style="font-size: 12px;">
         <table class="styled-table" id="default-datatablelog">
             <thead style="font-size: 12px;">
                 <tr style="font-size: 12px;">
                     <th style="width: 1px; height: 1px;;">No</th>
-
                     <th>Kode Lokasi</th>
                     <th>Nama Lokasi</th>
-
                 </tr>
             </thead>
             <tbody>

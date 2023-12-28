@@ -11,8 +11,10 @@
     <link rel="icon" href="{{ asset('vendor/logo.png', []) }}" type="image/x-icon">
     <link href="{{ asset('assets/plugins/select2/css/select2.min.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/inputtags/css/bootstrap-tagsinput.css', []) }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/plugins/fancybox/css/jquery.fancybox.min.css', []) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/jquery-multi-select/multi-select.css', []) }}" rel="stylesheet"
+        type="text/css">
+    <link href="{{ asset('assets/plugins/fancybox/css/jquery.fancybox.min.css', []) }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('online/bootstrap.min.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('online/all.min.css', []) }}" rel="stylesheet" />
@@ -24,12 +26,45 @@
     <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/horizontal-menu.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/app-style.css', []) }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css', []) }}"
+        rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css', []) }}" rel="stylesheet"
+        type="text/css">
     <link href="{{ asset('assets/plugins/jquery.steps/css/jquery.steps.css', []) }}" />
     {{-- <script src="{{ asset('assets/js/jqueryapp.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.min.js') }}"></script>
+    @if ($message = Session::get('success'))
+        <script>
+            $(document).ready(function() {
+                Lobibox.notify('success', {
+                    pauseDelayOnHover: true,
+                    icon: 'fa fa-info-circle',
+                    continueDelayOnInactiveTab: false,
+                    position: 'center top',
+                    showClass: 'bounceIn',
+                    hideClass: 'bounceOut',
+                    width: 600,
+                    msg: '{{ $message }}'
+                });
+            });
+        </script>
+    @elseif($message = Session::get('error'))
+        <script>
+            $(document).ready(function() {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    icon: 'fa fa-info-circle',
+                    continueDelayOnInactiveTab: false,
+                    position: 'center top',
+                    showClass: 'bounceIn',
+                    hideClass: 'bounceOut',
+                    width: 600,
+                    msg: 'Hubungi Administrator Jika terjadi Eror'
+                });
+            });
+        </script>
+    @endif
 </head>
 
 <body>
@@ -43,7 +78,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:void();">
                             <div class="media align-items-center">
-                                <img src="{{ asset('vendor/new-anim.gif', []) }}" class="logo" alt="logo icon" width="200">
+                                <img src="{{ asset('vendor/new-anim.gif', []) }}" class="logo" alt="logo icon"
+                                    width="200">
                                 <div class="media-body">
                                     {{-- <h5 class="logo-text">APP-Serve</h5> --}}
                                 </div>
@@ -157,14 +193,13 @@
                                         class="zmdi zmdi-assignment"></i> Menu Maintenance</a></li>
                             <li><a href="{{ asset('menu/formmutasi', []) }}"><i class="zmdi zmdi-assignment"></i>
                                     Menu Mutasi</a></li>
-                            <li><a href="{{ asset('menu/formpemusnahan', []) }}"><i
-                                        class="zmdi zmdi-assignment"></i> Menu Pemusnahan</a></li>
+                            <li><a href="{{ asset('menu/formpemusnahan', []) }}"><i class="zmdi zmdi-assignment"></i>
+                                    Menu Pemusnahan</a></li>
                             <li><a href="{{ asset('menu/verifdatainventaris', []) }}"><i
                                         class="zmdi zmdi-assignment"></i> Menu Stock Opname</a></li>
                             {{-- <li><a href="{{ asset('menu/formdepresiasi', []) }}"><i
                                         class="zmdi zmdi-dot-circle-alt"></i> Menu Aset</a></li> --}}
                         @elseif(auth()->user()->akses == 'admin')
-
                         @endif
                     </ul>
                 </li>
@@ -179,14 +214,11 @@
                     <!-- Level Two-->
                     <ul>
                         @if (auth()->user()->akses == 'sdm')
-                            <li><a href="{{ asset('menu/masterlokasi', []) }}"><i
-                                        class="zmdi zmdi-wrench"></i>
+                            <li><a href="{{ asset('menu/masterlokasi', []) }}"><i class="zmdi zmdi-wrench"></i>
                                     Master Lokasi</a></li>
-                            <li><a href="{{ asset('menu/masterbarang', []) }}"><i
-                                        class="zmdi zmdi-wrench"></i>
+                            <li><a href="{{ asset('menu/masterbarang', []) }}"><i class="zmdi zmdi-wrench"></i>
                                     Master Barang</a></li>
-                            <li><a href="{{ asset('menu/masterstaff', []) }}"><i
-                                        class="zmdi zmdi-wrench"></i>
+                            <li><a href="{{ asset('menu/masterstaff', []) }}"><i class="zmdi zmdi-wrench"></i>
                                     Master Staff</a></li>
                             <li><a href="{{ asset('menu/masterlaporan', []) }}"><i
                                         class="zmdi zmdi-view-carousel"></i>
@@ -195,9 +227,12 @@
                             <li><a href="{{ asset('formsdm', []) }}"><i class="zmdi zmdi-wrench"></i> Form
                                     Keuangan</a></li>
                         @elseif(auth()->user()->akses == 'admin')
-                            <li><a href="{{ asset('masteradmin', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Admin</a></li>
-                            <li><a href="{{ asset('masteradmindetail', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i> Master Cabang</a></li>
-                            <li><a href="{{ asset('masterlogactifity', []) }}"><i class="zmdi zmdi-airplay"></i> Log Aktifitas</a></li>
+                            <li><a href="{{ asset('masteradmin', []) }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                                    Master Admin</a></li>
+                            <li><a href="{{ asset('masteradmindetail', []) }}"><i
+                                        class="zmdi zmdi-dot-circle-alt"></i> Master Cabang</a></li>
+                            <li><a href="{{ asset('masterlogactifity', []) }}"><i class="zmdi zmdi-airplay"></i> Log
+                                    Aktifitas</a></li>
                         @endif
 
 
@@ -347,7 +382,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
                         <form method="POST" action="{{ asset('divisi/setting/system', []) }}"
                             enctype="multipart/form-data">
                             @csrf
@@ -431,7 +466,7 @@
     <script src="{{ asset('js/scriptx.js', []) }}"></script>
     <script src="{{ asset('js/admin.js', []) }}"></script>
     @if (Auth::user()->akses == 'admin')
-    <script src="{{ asset('js/master.js', []) }}"></script>
+        <script src="{{ asset('js/master.js', []) }}"></script>
     @endif
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.multi-select.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.quicksearch.js', []) }}"></script>

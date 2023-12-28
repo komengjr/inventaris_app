@@ -1,8 +1,11 @@
 <?php
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('scan', 'DataController@scandata');
+Route::post('masuk-halaman', 'Auth\LoginController@authenticate')->name('masuk');
+// Route::post('masuk-halaman', [App\Http\Controllers\LoginController::class, 'authenticate'])->name('masuk');
 Route::post('pendaftaran', 'DataController@pendaftaran')->name('daftarakuncabang');
 Route::post('data/inventaris', 'DataController@cekdataineventaris');
 Route::post('postdata/inventaris/{id}', 'DataController@scandataineventaris');
@@ -289,7 +292,7 @@ Route::get('lihatdatabarang/{id}',['as'=>'lihatdatabarang','uses'=> 'HomeControl
 
 Route::get('editdatabarang/{id}',['as'=>'editdatabarang','uses'=> 'HomeController@editdatabarang']);
 Route::get('editdatabarang1/{id}',['as'=>'editdatabarang1','uses'=> 'HomeController@editdatabarang1']);
-Route::get('hapusdatabarang/{kode}/{id}',['as'=>'hapusdatabarang','uses'=> 'HomeController@hapusdatabarang']);
+// Route::get('hapusdatabarang/{kode}/{id}',['as'=>'hapusdatabarang','uses'=> 'HomeController@hapusdatabarang']);
 Route::get('tambahdatabarang/{id}',['as'=>'tambahdatabarang','uses'=> 'HomeController@tambahdatabarang']);
 Route::get('admin/formdataaset/',['as'=>'admin/formdataaset','uses'=> 'HomeController@formdataaset']);
 Route::get('admin/formdatainventaris/tambadata',['as'=>'admin/formdatainventaris/tambadata','uses'=> 'HomeController@tambahdatainventaris']);

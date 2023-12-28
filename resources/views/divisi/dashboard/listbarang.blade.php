@@ -1,4 +1,3 @@
-
 <script src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
 <script src="assets/plugins/alerts-boxes/js/sweet-alert-script.js"></script>
 <script type="text/javascript">
@@ -11,8 +10,8 @@
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
         {{-- <h5>Data List Barang</h5> --}}
-        <button type="button" class="btn-outline-dark" id="button-print-all" data-id="{{$id}}"><i
-            class="fa fa-print"> </i> Print All</button>
+        <button type="button" class="btn-outline-dark" id="button-print-all" data-id="{{ $id }}"><i
+                class="fa fa-print"> </i> Print All</button>
         {{-- <button class="btn-success" id="tambahdatabarang" data-url="{{ route('tambahdatabarang', ['id' => $id]) }}"><i
                 class="fa fa-plus"> </i> Tambah Data Barang</button> --}}
         <span>
@@ -57,86 +56,62 @@
                             <tbody>
                                 <?php $no = 1; ?>
                                 @foreach ($data as $data)
-                                        <style>
-                                            @media only screen and (max-width: 800px) {
-                                                td {
-                                                    background-color: #cdcecd;
-                                                }
+                                    <style>
+                                        @media only screen and (max-width: 800px) {
+                                            td {
+                                                background-color: #cdcecd;
                                             }
-                                        </style>
-                                        <?php
-                                        $nama_lokasi = DB::table('tbl_lokasi')
-                                            ->select('tbl_lokasi.nama_lokasi')
-                                            ->where('kd_lokasi', $data->kd_lokasi)
-                                            ->get();
-                                        ?>
-                                        <tr>
-                                            <td >
-                                                @if ($data->gambar == '')
-                                                    <a href="https://via.placeholder.com/1020x780"
-                                                        data-fancybox="images" data-caption="{{ $data->nama_barang }}">
-                                                        <img src="https://via.placeholder.com/50x30" alt="lightbox"
-                                                            class="lightbox-thumb img-thumbnail" id="videoPreview"
-                                                            width="50" height="50">
-                                                    </a>
-                                                @else
-                                                    <a href="{{ url($data->gambar, []) }}" data-fancybox="images"
-                                                        data-caption="{{ $data->nama_barang }}" style="width: 50px;">
-                                                        <img src="{{ url($data->gambar, []) }}" alt="lightbox"
-                                                            class="lightbox-thumb img-thumbnail" id="videoPreview"
-                                                            width="50" height="50" style="width: 100px;">
-                                                    </a>
-                                                @endif
-                                            </td>
-                                            <td>{{ $data->id_inventaris }}</td>
-                                            <td>{{ $data->no_inventaris }}</td>
-                                            <td>{{ $data->nama_barang }}</td>
-                                            @if ($nama_lokasi->isEmpty())
-                                                <td>{{ $data->kd_lokasi }}</td>
+                                        }
+                                    </style>
+                                    <?php
+                                    $nama_lokasi = DB::table('tbl_lokasi')
+                                        ->select('tbl_lokasi.nama_lokasi')
+                                        ->where('kd_lokasi', $data->kd_lokasi)
+                                        ->get();
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            @if ($data->gambar == '')
+                                                <a href="https://via.placeholder.com/1020x780" data-fancybox="images"
+                                                    data-caption="{{ $data->nama_barang }}">
+                                                    <img src="https://via.placeholder.com/50x30" alt="lightbox"
+                                                        class="lightbox-thumb img-thumbnail" id="videoPreview"
+                                                        width="50" height="50">
+                                                </a>
                                             @else
-                                                <td>{{ $data->kd_lokasi }} ( {{ $nama_lokasi[0]->nama_lokasi }} )</td>
+                                                <a href="{{ url($data->gambar, []) }}" data-fancybox="images"
+                                                    data-caption="{{ $data->nama_barang }}" style="width: 50px;">
+                                                    <img src="{{ url($data->gambar, []) }}" alt="lightbox"
+                                                        class="lightbox-thumb img-thumbnail" id="videoPreview"
+                                                        width="50" height="50" style="width: 100px;">
+                                                </a>
                                             @endif
+                                        </td>
+                                        <td>{{ $data->id_inventaris }}</td>
+                                        <td>{{ $data->no_inventaris }}</td>
+                                        <td>{{ $data->nama_barang }}</td>
+                                        @if ($nama_lokasi->isEmpty())
+                                            <td>{{ $data->kd_lokasi }}</td>
+                                        @else
+                                            <td>{{ $data->kd_lokasi }} ( {{ $nama_lokasi[0]->nama_lokasi }} )</td>
+                                        @endif
 
 
-                                            <td>
-                                                {{ $data->merk }} / {{ $data->type }}
-                                            </td>
+                                        <td>
+                                            {{ $data->merk }} / {{ $data->type }}
+                                        </td>
 
-                                            <td>@currency($data->harga_perolehan)</td>
-                                            <td class="text-center">
-                                                <button class="btn-dark" id="editdatabarang"
-                                                    data-url="{{ route('editdatabarang1', ['id' => $data->id]) }}"><i
-                                                        class="fa fa-eye"> </i> Detail</button><br><br>
-                                                        <button class="btn-info" onclick="window.open('printbarcodebyid/{{ $data->id}}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i class="fa fa-print"></i> Print</button>
-                                                {{-- <button type="button" class="btn btn-danger btn-sm" id="confirm-btn-hapus{{$data->id}}"><i class="fa fa-trash"> Hapus</i></button> --}}
-                                                <a class="tombolhapus{{ $data->id }} btn btn-danger"
-                                                    style="display: none;" id="hapusdatabarang"
-                                                    data-url="{{ route('hapusdatabarang', ['kode' => $data->kd_inventaris, 'id' => $data->id]) }}"></a>
-                                            </td>
-                                        </tr>
+                                        <td>@currency($data->harga_perolehan)</td>
+                                        <td class="text-center">
+                                            <button class="btn-dark" id="editdatabarang"
+                                                data-url="{{ route('editdatabarang1', ['id' => $data->id]) }}"><i
+                                                    class="fa fa-eye"> </i> Detail</button><br><br>
+                                            <button class="btn-info"
+                                                onclick="window.open('printbarcodebyid/{{ $data->id }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i
+                                                    class="fa fa-print"></i> Print</button>
 
-                                        <script>
-                                            $("#confirm-btn-hapus<?php echo $data->id; ?>").click(function() {
-                                                swal({
-                                                        title: "Yakin Untuk Di Hapus ?",
-                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                        icon: "warning",
-                                                        buttons: true,
-                                                        dangerMode: true,
-                                                    })
-                                                    .then((willDelete) => {
-                                                        if (willDelete) {
-                                                            swal("Poof! Your imaginary file has been deleted!", {
-                                                                icon: "success",
-                                                            });
-                                                            document.getElementsByClassName('tombolhapus<?php echo $data->id; ?>')[0].click();
-                                                        } else {
-                                                            swal("Your imaginary file is safe!");
-                                                        }
-                                                    });
-
-                                            });
-                                        </script>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
 
@@ -161,7 +136,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form name="form1" action="{{ url('printbarcodelokasi', ['id' => $id]) }}" method="post" id="print-barcode-form">
+            <form name="form1" action="{{ url('printbarcodelokasi', ['id' => $id]) }}" method="post"
+                id="print-barcode-form">
                 @csrf
                 <div class="modal-body">
                     <input type="text" name="kd_lokasi" value="{{ $id }}" id="" hidden>
@@ -210,7 +186,7 @@
 </script>
 <script src="{{ url('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
 <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
-    <script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
+<script src="{{ url('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
 <script>
     $(document).ready(function() {
         //Default data table

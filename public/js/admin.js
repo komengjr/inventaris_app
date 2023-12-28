@@ -37,7 +37,9 @@ $(document).on("click", "#tombolbarupeminjaman", function (e) {
 $(document).on("click", "#tombollengkapipeminjaman", function (e) {
     e.preventDefault();
     var url = $(this).data("url");
-    $("#showdatalengkapi").html('<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>');
+    $("#showdatalengkapi").html(
+        '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+    );
     $.ajax({
         url: url,
         type: "GET",
@@ -421,7 +423,7 @@ $(document).on("click", "#editdatabarang", function (e) {
     e.preventDefault();
     var url = $(this).data("url");
     $("#showdatabarang").html(
-        "<img src='loading.gif'  style='display: block; margin: auto;'>"
+        '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
     );
     setTimeout(() => {
         $.ajax({
@@ -433,9 +435,16 @@ $(document).on("click", "#editdatabarang", function (e) {
                 $("#showdatabarang").html(data);
             })
             .fail(function () {
-                $("#showdatabarang").html(
-                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-                );
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    icon: "fa fa-info-circle",
+                    continueDelayOnInactiveTab: false,
+                    position: "center top",
+                    showClass: "bounceIn",
+                    hideClass: "bounceOut",
+                    width: 600,
+                    msg: "Hubungi Administrator Jika terjadi Eror",
+                });
             });
     }, 1500);
 });
@@ -453,9 +462,16 @@ $(document).on("click", "#tomboltindakanmaintenance", function (e) {
             $("#showdatasdm").html(data);
         })
         .fail(function () {
-            $("#showdatasdm").html(
-                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-            );
+            Lobibox.notify("error", {
+                pauseDelayOnHover: true,
+                icon: "fa fa-info-circle",
+                continueDelayOnInactiveTab: false,
+                position: "center top",
+                showClass: "bounceIn",
+                hideClass: "bounceOut",
+                width: 600,
+                msg: "Hubungi Administrator Jika terjadi Eror",
+            });
         });
 });
 $(document).on("click", "#button-cetak-maintenance", function (e) {

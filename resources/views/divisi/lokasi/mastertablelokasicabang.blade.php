@@ -2,8 +2,8 @@
     <p class="modal-title text-white">
 
     </p>
-    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+    <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true"><i class="fa fa-close"></i></span>
     </button>
 </div>
 <div class="modal-body" id="showmenudatalokasibarang">

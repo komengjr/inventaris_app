@@ -20,11 +20,11 @@
     @csrf
     <div class="modal-body">
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Nomor Ruangan</label>
                 <input type="text" class="form-control" name="nomor_ruangan" value="" required >
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Nama Ruangan</label>
                 <select name="kd_lokasi" id="" class="form-control single-select" required>
                     <option value="">Pilih Nama Ruangan</option>
