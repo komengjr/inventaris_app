@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h5 class="float-sm-right">Date : {{$cekdata->tgl_verif}}</h5>
+                    {{-- <h5 class="float-sm-right">Date : {{$cekdata->tgl_verif}}</h5> --}}
                 </div>
             </div>
 
