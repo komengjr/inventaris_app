@@ -418,7 +418,7 @@
     <script src="{{ asset('assets/plugins/Chart.js/Chart.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js', []) }}"></script>
-    {{-- <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script> --}}
+    <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/jquery.steps/js/jquery.steps.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/jquery-validation/js/jquery.validate.min.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/jquery.steps/js/jquery.wizard-init.js', []) }}"></script>
