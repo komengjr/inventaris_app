@@ -57,7 +57,7 @@
     </style>
 </head>
 
-<body>
+<body class="mb-0">
 
     <!-- start loader -->
 
@@ -146,7 +146,7 @@
     <script src="{{ asset('assets/js/jquery.min.js', []) }}"></script>
     {{-- <script src="{{ asset('assets/js/popper.min.js', []) }}"></script> --}}
     <script src="{{ asset('assets/js/bootstrap.min.js', []) }}"></script>
-    {{-- <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script> --}}
+    <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script>
     <script src="{{ asset('assets/js/app-script.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
     @if ($message = Session::get('success'))
