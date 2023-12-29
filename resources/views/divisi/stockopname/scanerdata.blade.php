@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="input-group">
                         <input type="text" name="tiket" id="tiket" value="{{$tiket}}" hidden>
-                        <input type="text" class="form-control" name="data_inventaris" id="data_inventaris"
+                        <input type="text" class="form-control" name="data_inventaris" id="data_inventaris" autofocus
                             placeholder="some text" onkeydown="caridata(this)">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fa fa-refresh fa-spin"></i></span>
