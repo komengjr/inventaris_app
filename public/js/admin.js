@@ -346,9 +346,7 @@ $(document).on("click", "#tombolbarupemusnahan", function (e) {
 $(document).on("click", "#updatedatainventori", function (e) {
     var data = $("#form-update").serialize();
     e.preventDefault();
-    $("#showdatabarang").html(
-        ""
-    );
+    $("#showdatabarang").html("");
     $.ajax({
         url: "divisi/inventori/updatedatainventori",
         headers: {
@@ -360,7 +358,7 @@ $(document).on("click", "#updatedatainventori", function (e) {
         dataType: "html",
     })
         .done(function (data) {
-            $("#showdatabarang").html( "" );
+            $("#showdatabarang").html("");
             Lobibox.notify("success", {
                 pauseDelayOnHover: true,
                 icon: "fa fa-info-circle",
@@ -374,8 +372,6 @@ $(document).on("click", "#updatedatainventori", function (e) {
             setTimeout(() => {
                 location.reload();
             }, 1500);
-
-
         })
         .fail(function () {
             $("#showdatabarang").html(
@@ -1373,26 +1369,48 @@ $(document).on("click", "#button-print-all", function (e) {
     var id = $(this).data("id");
     var page = document.getElementById("page").value;
     // console.log(id);
-    $("#show-menu-data-lokasi-barang").html(
-        '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
-    );
-    $.ajax({
-        url: "/divisi/printall/ruangan/" + id +"/"+page,
-        type: "GET",
-        dataType: "html",
-    })
-        .done(function (data) {
-            $("#show-menu-data-lokasi-barang").html(
-                '<iframe src="data:application/pdf;base64, ' +
-                    data +
-                    '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
-            );
-        })
-        .fail(function () {
-            $("#show-menu-data-lokasi-barang").html(
-                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-            );
+    if (page == '-') {
+        Lobibox.notify("warning", {
+            pauseDelayOnHover: true,
+            icon: "fa fa-info-circle",
+            continueDelayOnInactiveTab: false,
+            position: "center top",
+            showClass: "bounceIn",
+            hideClass: "bounceOut",
+            sound: false,
+            width: 400,
+            msg: "Mohon Dipilih Option",
         });
+    } else {
+        $("#show-menu-data-lokasi-barang").html(
+            '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+        );
+        $.ajax({
+            url: "/divisi/printall/ruangan/" + id + "/" + page,
+            type: "GET",
+            dataType: "html",
+        })
+            .done(function (data) {
+                $("#show-menu-data-lokasi-barang").html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                        data +
+                        '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                );
+            })
+            .fail(function () {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    icon: "fa fa-info-circle",
+                    continueDelayOnInactiveTab: false,
+                    position: "center top",
+                    showClass: "bounceIn",
+                    hideClass: "bounceOut",
+                    sound: false,
+                    width: 400,
+                    msg: "Hubungi Administrator Jika terjadi Eror",
+                });
+            });
+    }
 });
 
 // REPORT

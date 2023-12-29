@@ -44,7 +44,8 @@
                     position: 'center top',
                     showClass: 'bounceIn',
                     hideClass: 'bounceOut',
-                    width: 600,
+                    sound: false,
+                    width: 400,
                     msg: '{{ $message }}'
                 });
             });
@@ -59,7 +60,8 @@
                     position: 'center top',
                     showClass: 'bounceIn',
                     hideClass: 'bounceOut',
-                    width: 600,
+                    sound: false,
+                    width: 400,
                     msg: 'Hubungi Administrator Jika terjadi Eror'
                 });
             });
