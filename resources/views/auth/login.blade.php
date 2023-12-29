@@ -19,7 +19,7 @@
         body {
             background-image: url('vendor/bg.jpg');
             height: 100%;
-
+            /* width: 100%; */
             /* Center and scale the image nicely */
             background-position: center;
             background-repeat: no-repeat;
@@ -30,12 +30,7 @@
         @media only screen and (max-width: 550px) {
             body {
                 background-image: url('vendor/bg.png');
-                height: 100%;
 
-                /* Center and scale the image nicely */
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
             }
         }
     </style>
@@ -57,12 +52,12 @@
     </style>
 </head>
 
-<body class="mb-0">
+<body style="">
 
     <!-- start loader -->
 
     <!-- end loader -->
-
+    <div class="clearfix"></div>
     <!-- Start wrapper-->
     <div id="wrapper" style="font-family: 'Russo One', sans-serif;" class="p-3">
 
