@@ -90,16 +90,23 @@ class PdfController extends Controller
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(250)->limit(300)
+            ->offset(200)->limit(250)
             ->get();
         } elseif ($page == 6) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(300)->limit(350)
+            ->offset(250)->limit(300)
             ->get();
         } elseif ($page == 7) {
+            $data = DB::table('sub_tbl_inventory')
+            ->select('sub_tbl_inventory.*')
+            ->where('id_nomor_ruangan_cbaang',$id)
+            ->where('kd_cabang',auth::user()->cabang)
+            ->offset(300)->limit(350)
+            ->get();
+        } elseif ($page == 8) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
