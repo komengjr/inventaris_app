@@ -96,42 +96,93 @@
 
                 <ul class="navbar-nav align-items-center right-nav-link">
 
+                    <li class="nav-item dropdown-lg">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
+                            href="javascript:void();">
+                            <i class="fa fa-bell-o"></i><span class="badge badge-info badge-up">0</span></a>
+                        <div class="">
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    You have 0 Notifications
+                                    <span class="badge badge-info">0</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="javaScript:void();">
+                                        <div class="media">
+                                            <i class="zmdi zmdi-accounts fa-2x mr-3 text-info"></i>
+                                            <div class="media-body">
+                                                <h6 class="mt-0 msg-title">Recent Login Users</h6>
+                                                <p class="msg-info">Lorem ipsum dolor sit amet...</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="javaScript:void();">
+                                        <div class="media">
+                                            <i class="zmdi zmdi-coffee fa-2x mr-3 text-warning"></i>
+                                            <div class="media-body">
+                                                <h6 class="mt-0 msg-title">New Received Orders</h6>
+                                                <p class="msg-info">Lorem ipsum dolor sit amet...</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="javaScript:void();">
+                                        <div class="media">
+                                            <i class="zmdi zmdi-notifications-active fa-2x mr-3 text-danger"></i>
+                                            <div class="media-body">
+                                                <h6 class="mt-0 msg-title">New Updates</h6>
+                                                <p class="msg-info">Lorem ipsum dolor sit amet...</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item text-center">
+                                    <a href="javaScript:void();">See All Notifications</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
                     <li class="nav-item">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown"
-                            href="#">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
+                            href="javascript:void();">
                             <span class="user-profile"><img src="{{ asset('profile.png', []) }}" class="img-circle"
                                     alt="user avatar"></span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-item user-details">
-                                <a href="javaScript:void();">
-                                    <div class="media">
-                                        <div class="avatar"><img class="align-self-start mr-3"
-                                                src="{{ asset('profile.png', []) }}" alt="user avatar"></div>
-                                        <div class="media-body">
-                                            <h6 class="mt-2 user-title">{{ auth()->user()->name }}</h6>
-                                            <p class="user-subtitle">{{ auth()->user()->name }}</p>
+                        <div class="">
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-item user-details">
+                                    <a href="javaScript:void();">
+                                        <div class="media">
+                                            <div class="avatar"><img class="align-self-start mr-3"
+                                                    src="{{ asset('profile.png', []) }}" alt="user avatar"></div>
+                                            <div class="media-body">
+                                                <h6 class="mt-2 user-title">{{ auth()->user()->name }}</h6>
+                                                <p class="user-subtitle">{{ auth()->user()->name }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="dropdown-divider"></li>
-                            {{-- <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Inbox</li> --}}
-                            <li class="dropdown-divider"></li>
-                            {{-- <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li> --}}
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item" style="cursor: pointer;" data-toggle="modal"
-                                data-target="#settingmodal"><i class="icon-settings mr-2"></i>
-                                Setting</li>
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item"><i class="icon-power mr-2"></i><a href="http://"
-                                    onclick="event.preventDefault();
-          document.getElementById('logout-form').submit();">Logout</a>
-                            </li>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </ul>
+                                    </a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                {{-- <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Inbox</li> --}}
+                                <li class="dropdown-divider"></li>
+                                {{-- <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li> --}}
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-item" style="cursor: pointer;" data-toggle="modal"
+                                    data-target="#settingmodal"><i class="icon-settings mr-2"></i>
+                                    Setting</li>
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-item"><i class="icon-power mr-2"></i><a href="http://"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </nav>
