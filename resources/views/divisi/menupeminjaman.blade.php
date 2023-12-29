@@ -101,8 +101,8 @@
                                             <th>Tiket Peminjaman</th>
                                             <th>Nama Kegiatan</th>
                                             <th>Tanggal Peminjaman</th>
+                                            <th>Batas Tanggal Peminjaman</th>
                                             <th>Penanggung Jawab</th>
-                                            {{-- <th>Tujuan Cabang</th> --}}
                                             <th>Status Peminjaman</th>
                                             <th class="text-center">Action</th>
                                         </tr>
@@ -117,6 +117,7 @@
                                                 <td>{{ $datapinjam->tiket_peminjaman }}</td>
                                                 <td>{{ $datapinjam->nama_kegiatan }}</td>
                                                 <td>{{ $datapinjam->tgl_pinjam }}</td>
+                                                <td>{{ $datapinjam->batas_tgl_pinjam }}</td>
                                                 <td>{{ $datapinjam->nama_staff }}</td>
                                                 {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
                                                 <td class="text-center">

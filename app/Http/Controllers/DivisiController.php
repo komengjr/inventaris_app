@@ -285,7 +285,7 @@ class DivisiController extends Controller
         $cekdata = DB::table('tbl_peminjaman')
             ->where('id_pinjam', $id)->get();
         $cabang = DB::table('tbl_cabang')->get();
-        return view('divisi.menulengkapi.editdatapeminjaman', ['cekdata' => $cekdata, 'cabang' => $cabang]);
+        return view('divisi.peminjaman.editdatapeminjaman', ['cekdata' => $cekdata, 'cabang' => $cabang]);
     }
     public function editdatapeminjaman($id)
     {
@@ -478,6 +478,7 @@ class DivisiController extends Controller
                 'tujuan_cabang' => $request->input('cabang'),
                 'tgl_pinjam' => $request->input('tgl_pinjam'),
                 'pj_pinjam' => $request->input('pj_pinjam'),
+                'batas_pj_pinjam' => $request->input('batas_pj_pinjam'),
                 'status_pinjam' => 0,
                 'kd_cabang' => auth::user()->cabang,
                 'deskripsi' => $request->input('deskripsi'),
@@ -506,6 +507,7 @@ class DivisiController extends Controller
                 'nama_kegiatan' => $request->input('nama_kegiatan'),
                 'tujuan_cabang' => $request->input('cabang'),
                 'tgl_pinjam' => $request->input('tgl_pinjam'),
+                'batas_tgl_pinjam' => $request->input('batas_tgl_pinjam'),
                 'pj_pinjam' => $request->input('pj_pinjam'),
                 'status_pinjam' => 0,
                 'kd_cabang' => auth::user()->cabang,

@@ -20,32 +20,36 @@
     @csrf
     <div class="modal-body">
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Tujuan Peminjaman</label>
                 <input type="text" class="form-control" name="nama_kegiatan" value="{{ $cekdata[0]->nama_kegiatan }}">
                 <input type="text" class="form-control" name="tiket_peminjaman" value="{{ $cekdata[0]->tiket_peminjaman }}" hidden>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Tujuan Cabang</label>
-                <select name="cabang" id="" class="form-control single-select">
-                    <option value="{{ $cekdata[0]->tujuan_cabang }}">Pilih Cabang</option>
-                    <option value=""></option>
+                <select name="cabang" id="" class="form-control single-select" disabled>
+                    <option value="{{ $cekdata[0]->tujuan_cabang }}">{{ $cekdata[0]->tujuan_cabang }}</option>
                     @foreach ($cabang as $item)
                         <option value="{{$item->kd_cabang}}">{{$item->nama_cabang}}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-6">
+            <div class="col-md-12">
                 <label for="">Penanggung Jawab Peminjam</label>
                 <input type="text" class="form-control" name="pj_pinjam" value="{{ $cekdata[0]->pj_pinjam }}"
                     required>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Tanggal Peminjam</label>
                 <input type="date" class="form-control" name="tgl_pinjam" value="{{ $cekdata[0]->tgl_pinjam }}"
                     required>
             </div>
-            <div class="col-12">
+            <div class="col-md-6">
+                <label for="">Batas Tanggal Peminjam</label>
+                <input type="date" class="form-control" name="batas_tgl_pinjam" value="{{ $cekdata[0]->batas_tgl_pinjam }}"
+                    required>
+            </div>
+            <div class="col-md-12">
                 <label for="">Deskripsi Peminjaman</label>
                 <textarea class="form-control" id="" cols="10" rows="3" name="deskripsi"> {{ $cekdata[0]->deskripsi }}</textarea>
             </div>

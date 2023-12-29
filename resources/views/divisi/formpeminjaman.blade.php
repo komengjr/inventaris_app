@@ -39,7 +39,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label for="">Penanggung Jawab Peminjam</label>
                 <select name="pj_pinjam" id="" class="form-control single-select">
                     <option value="">Pilih Staff</option>
@@ -51,6 +51,10 @@
             <div class="col-md-6">
                 <label for="">Tanggal Peminjam</label>
                 <input type="date" class="form-control" name="tgl_pinjam" required>
+            </div>
+            <div class="col-md-6">
+                <label for="">Batas Tanggal Peminjam</label>
+                <input type="date" class="form-control" name="batas_tgl_pinjam" required>
             </div>
             <div class="col-md-12">
                 <label for="">Deskripsi Peminjaman</label>
