@@ -14,6 +14,7 @@
     <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/app-style.css', []) }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
     <style>
         body {
             display: flex;
@@ -30,6 +31,7 @@
             background-size: cover;
         }
     </style>
+
 </head>
 
 <body class="gradient-forest">
@@ -48,9 +50,11 @@
             <div class="card-body">
                 <div class="card-content p-0">
                     <div class="text-center m-0 p-0">
-                        <img src="{{ asset('vendor/new-anim.gif', []) }}" width="350" style="width: 100%; height: auto;">
+                        <img src="{{ asset('vendor/new-anim.gif', []) }}" width="350"
+                            style="width: 100%; height: auto;">
                     </div>
-                    <div class="card-title text-uppercase text-center py-2" style="font-size: 10px;">Login Aplikasi</div>
+                    <div class="card-title text-uppercase text-center py-2" style="font-size: 10px;">Login Aplikasi
+                    </div>
                     <form method="POST" action="{{ route('masuk') }}">
                         @csrf
                         <div class="form-group">
@@ -127,7 +131,38 @@
     <script src="{{ asset('assets/js/bootstrap.min.js', []) }}"></script>
     <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script>
     <script src="{{ asset('assets/js/app-script.js', []) }}"></script>
-
+    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
+    @if ($message = Session::get('success'))
+        <script>
+            $(document).ready(function() {
+                Lobibox.notify('success', {
+                    pauseDelayOnHover: true,
+                    icon: 'fa fa-info-circle',
+                    continueDelayOnInactiveTab: false,
+                    position: 'center top',
+                    showClass: 'bounceIn',
+                    hideClass: 'bounceOut',
+                    width: 600,
+                    msg: '{{ $message }}'
+                });
+            });
+        </script>
+    @elseif($message = Session::get('error'))
+        <script>
+            $(document).ready(function() {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    icon: 'fa fa-info-circle',
+                    continueDelayOnInactiveTab: false,
+                    position: 'center top',
+                    showClass: 'bounceIn',
+                    hideClass: 'bounceOut',
+                    width: 400,
+                    msg: '{{ $message }}'
+                });
+            });
+        </script>
+    @endif
 </body>
 
 </html>
