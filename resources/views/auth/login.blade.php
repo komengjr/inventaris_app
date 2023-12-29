@@ -18,6 +18,11 @@
     <style>
         body {
             background-image: url('vendor/bg.jpg');
+            height: 100%;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         /* For width 400px and larger: */
@@ -25,7 +30,6 @@
             body {
                 background-image: url('vendor/bg.png');
                 height: 100%;
-
                 /* Center and scale the image nicely */
                 background-position: center;
                 background-repeat: no-repeat;
@@ -141,7 +145,7 @@
     <script src="{{ asset('assets/js/jquery.min.js', []) }}"></script>
     {{-- <script src="{{ asset('assets/js/popper.min.js', []) }}"></script> --}}
     <script src="{{ asset('assets/js/bootstrap.min.js', []) }}"></script>
-    {{-- <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script> --}}
+    <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script>
     <script src="{{ asset('assets/js/app-script.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
     @if ($message = Session::get('success'))
