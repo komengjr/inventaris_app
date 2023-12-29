@@ -18,13 +18,13 @@
                         @php
                             $cetak = $data->count();
                         @endphp
-                        @for ($i = 1; $i < 5; $i++)
+                        @for ($i = 1; $i < 10; $i++)
                             @if ($cetak < 0)
                             @else
                                 <option value="{{ $i }}">Page {{ $i }}</option>
                             @endif
                             @php
-                                $cetak = $cetak - 100;
+                                $cetak = $cetak - 50;
                             @endphp
                         @endfor
                         <option value="all">All</option>

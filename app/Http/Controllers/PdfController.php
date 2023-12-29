@@ -62,37 +62,52 @@ class PdfController extends Controller
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(0)->limit(100)
+            ->offset(0)->limit(50)
             ->get();
         } elseif ($page == 2) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(101)->limit(200)
+            ->offset(50)->limit(100)
             ->get();
         } elseif ($page == 3) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(201)->limit(300)
+            ->offset(100)->limit(150)
             ->get();
         } elseif ($page == 4) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(301)->limit(400)
+            ->offset(150)->limit(200)
             ->get();
         } elseif ($page == 5) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(401)->limit(500)
+            ->offset(250)->limit(300)
+            ->get();
+        } elseif ($page == 6) {
+            $data = DB::table('sub_tbl_inventory')
+            ->select('sub_tbl_inventory.*')
+            ->where('id_nomor_ruangan_cbaang',$id)
+            ->where('kd_cabang',auth::user()->cabang)
+            ->offset(300)->limit(350)
+            ->get();
+        } elseif ($page == 7) {
+            $data = DB::table('sub_tbl_inventory')
+            ->select('sub_tbl_inventory.*')
+            ->where('id_nomor_ruangan_cbaang',$id)
+            ->where('kd_cabang',auth::user()->cabang)
+            ->offset(350)->limit(400)
             ->get();
         }
+
         // dd($data);
         $qrcode = base64_encode(QrCode::format('png')->size(500)->errorCorrection('H')->generate('string'));
         $pdf = PDF::loadview('divisi.report.lokasi',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
