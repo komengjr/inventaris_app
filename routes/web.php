@@ -73,7 +73,7 @@ Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 
 
 // Divisi Controller
 Route::get('lihatdatabarang1/{id}',['as'=>'lihatdatabarang1','uses'=> 'DivisiController@lihatdatabarang1']);
-Route::get('divisi/printall/ruangan/{id}',['as'=>'divisi/printall/ruangan/','uses'=> 'PdfController@printdataalllokasi']);
+Route::get('divisi/printall/ruangan/{id}/{page}',['as'=>'divisi/printall/ruangan/','uses'=> 'PdfController@printdataalllokasi']);
 Route::get('menu/formpinjam','DivisiController@menu');
 Route::get('menu/formdepresiasi','DivisiController@depresiasisemuaaset');
 Route::get('menu/formmutasi','DivisiController@mutasidatainventaris');

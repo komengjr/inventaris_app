@@ -10,8 +10,35 @@
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
         {{-- <h5>Data List Barang</h5> --}}
-        <button type="button" class="btn-outline-dark" id="button-print-all" data-id="{{ $id }}"><i
-                class="fa fa-print"> </i> Print All</button>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <select class="custom-select" name="page" id="page">
+                        <option selected="">Pilih Option Print</option>
+                        @php
+                            $cetak = $data->count();
+                        @endphp
+                        @for ($i = 1; $i < 5; $i++)
+                            @if ($cetak < 0)
+                            @else
+                                <option value="{{ $i }}">Page {{ $i }}</option>
+                            @endif
+                            @php
+                                $cetak = $cetak - 100;
+                            @endphp
+                        @endfor
+                        <option value="all">All</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-dark" type="button" id="button-print-all" data-id="{{ $id }}">
+                            <i class="fa fa-print"> </i> Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <button type="button" class="btn-outline-dark" id="button-print-all" data-id="{{ $id }}"><i
+                class="fa fa-print"> </i> Print All</button> --}}
+
         {{-- <button class="btn-success" id="tambahdatabarang" data-url="{{ route('tambahdatabarang', ['id' => $id]) }}"><i
                 class="fa fa-plus"> </i> Tambah Data Barang</button> --}}
         <span>

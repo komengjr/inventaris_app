@@ -1371,12 +1371,13 @@ $(document).on("click", "#button-cetak-stock-opname", function (e) {
 $(document).on("click", "#button-print-all", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
+    var page = document.getElementById("page").value;
     // console.log(id);
     $("#show-menu-data-lokasi-barang").html(
         '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
     );
     $.ajax({
-        url: "/divisi/printall/ruangan/" + id,
+        url: "/divisi/printall/ruangan/" + id +"/"+page,
         type: "GET",
         dataType: "html",
     })
