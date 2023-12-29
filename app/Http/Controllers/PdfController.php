@@ -69,49 +69,49 @@ class PdfController extends Controller
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(50)->limit(100)
+            ->offset(50)->limit(50)
             ->get();
         } elseif ($page == 3) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(100)->limit(150)
+            ->offset(100)->limit(50)
             ->get();
         } elseif ($page == 4) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(150)->limit(200)
+            ->offset(150)->limit(50)
             ->get();
         } elseif ($page == 5) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(200)->limit(250)
+            ->offset(200)->limit(50)
             ->get();
         } elseif ($page == 6) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(250)->limit(300)
+            ->offset(250)->limit(50)
             ->get();
         } elseif ($page == 7) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(300)->limit(350)
+            ->offset(300)->limit(50)
             ->get();
         } elseif ($page == 8) {
             $data = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang',$id)
             ->where('kd_cabang',auth::user()->cabang)
-            ->offset(350)->limit(400)
+            ->offset(350)->limit(50)
             ->get();
         }
 
