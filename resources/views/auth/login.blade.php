@@ -64,7 +64,7 @@
 
         {{-- <div class="pb-5"></div>
         <div class="pb-5"></div> --}}
-        <div class="card card-authentication1 mx-auto my-5 pt-2">
+        <div class="card card-authentication1 mx-auto pt-2">
             <div class="card-body">
                 <div class="card-content p-0">
                     <div class="text-center m-0 p-0">
