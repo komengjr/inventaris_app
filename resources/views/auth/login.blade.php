@@ -11,7 +11,7 @@
     <!--favicon-->
     <link rel="icon" href="{{ asset('vendor/logo.png', []) }}" type="image/x-icon">
     <link href="{{ asset('assets/css/bootstrap.min.css', []) }}" rel="stylesheet" />
-    {{-- <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" /> --}}
+    <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/app-style.css', []) }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
@@ -19,6 +19,7 @@
         body {
             background-image: url('vendor/bg.jpg');
             height: 100%;
+
             /* Center and scale the image nicely */
             background-position: center;
             background-repeat: no-repeat;
@@ -30,6 +31,7 @@
             body {
                 background-image: url('vendor/bg.png');
                 height: 100%;
+
                 /* Center and scale the image nicely */
                 background-position: center;
                 background-repeat: no-repeat;
@@ -53,7 +55,6 @@
             background-size: cover;
         }
     </style>
-
 </head>
 
 <body>
@@ -145,7 +146,7 @@
     <script src="{{ asset('assets/js/jquery.min.js', []) }}"></script>
     {{-- <script src="{{ asset('assets/js/popper.min.js', []) }}"></script> --}}
     <script src="{{ asset('assets/js/bootstrap.min.js', []) }}"></script>
-    <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script>
+    {{-- <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script> --}}
     <script src="{{ asset('assets/js/app-script.js', []) }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
     @if ($message = Session::get('success'))

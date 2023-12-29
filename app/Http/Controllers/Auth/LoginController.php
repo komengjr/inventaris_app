@@ -44,7 +44,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('dashboard')->withSuccess('Kamu Berhasil Masuk di Account  '.Auth::user()->name);
+            return redirect()->intended('home')->withSuccess('Kamu Berhasil Masuk di Account  '.Auth::user()->name);
         }
         else{
             return redirect()->back()->withError('Username dan Password Salah');
