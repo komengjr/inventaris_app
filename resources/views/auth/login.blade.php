@@ -17,6 +17,18 @@
     <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
     <style>
         body {
+            background-image: url('vendor/bg.jpg');
+        }
+
+        /* For width 400px and larger: */
+        @media only screen and (max-width: 550px) {
+            body {
+                background-image: url('vendor/bg.png');
+            }
+        }
+    </style>
+    <style>
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -34,14 +46,14 @@
 
 </head>
 
-<body class="gradient-forest">
+<body class="">
 
     <!-- start loader -->
 
     <!-- end loader -->
 
     <!-- Start wrapper-->
-    <div id="wrapper" style="font-family: 'Russo One', sans-serif;" class="p-3 ">
+    <div id="wrapper" style="font-family: 'Russo One', sans-serif;" class="p-3">
 
 
         {{-- <div class="pb-5"></div>

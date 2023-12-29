@@ -478,7 +478,7 @@ class DivisiController extends Controller
                 'tujuan_cabang' => $request->input('cabang'),
                 'tgl_pinjam' => $request->input('tgl_pinjam'),
                 'pj_pinjam' => $request->input('pj_pinjam'),
-                'batas_pj_pinjam' => $request->input('batas_pj_pinjam'),
+                'batas_tgl_pinjam' => $request->input('batas_tgl_pinjam'),
                 'status_pinjam' => 0,
                 'kd_cabang' => auth::user()->cabang,
                 'deskripsi' => $request->input('deskripsi'),
