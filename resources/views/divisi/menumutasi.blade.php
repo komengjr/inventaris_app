@@ -84,80 +84,86 @@
             <div class="row">
                 <div class="col-12 col-lg-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="float-sm-right m-3 m-3">
-                                <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                    data-target="#modalmutasi" id="ordertiketmutasi"
-                                    data-url={{ url('divisi/datamutasi/tambahdata', []) }}>
-                                    <i class="fa fa-plus mr-1"></i> Tambah Data
+                        <div class="float-right m-3 m-3">
+                            <div class="btn-group m-0" style="float: right;">
+                                <button type="button" class="btn-info waves-effect waves-light"> <i class="fa fa-cog"></i>
+                                    <span>Menu Option</span> </button>
+                                <button type="button"
+                                    class="btn-info split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
                                 </button>
+                                <div class="dropdown-menu" x-placement="bottom-start"
+                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#modalmutasi" id="ordertiketmutasi"
+                                    data-url="{{ url('divisi/datamutasi/tambahdata', []) }}"><i class="fa fa-plus mr-1"></i> Tambah Data Mutasi</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
                             </div>
-
-                            <div class="table-responsive pb-5">
-                                <table class="table styled-table align-items-center table-flush pb-2"
-                                    id="default-datatable">
-                                    <thead>
+                        </div>
+                        <div class="table-responsive pb-5">
+                            <table class="table styled-table align-items-center table-flush pb-2" id="default-datatable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tiket Order</th>
+                                        <th>Jenis Mutasi</th>
+                                        <th>Penanggung Jawab</th>
+                                        <th>Menyetujui</th>
+                                        <th>Yang Menyerahkan</th>
+                                        <th>Penerima</th>
+                                        <th>Tanggal Terima</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($data as $item)
                                         <tr>
-                                            <th>No</th>
-                                            <th>Tiket Order</th>
-                                            <th>Jenis Mutasi</th>
-                                            <th>Penanggung Jawab</th>
-                                            <th>Menyetujui</th>
-                                            <th>Yang Menyerahkan</th>
-                                            <th>Penerima</th>
-                                            <th>Tanggal Terima</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $no = 1;
-                                        @endphp
-                                        @foreach ($data as $item)
-                                            <tr>
-                                                <td>
-                                                    {{ $no++ }}
-                                                </td>
-                                                <td>{{ $item->kd_mutasi }}</td>
-                                                <td>
-                                                    @if ($item->jenis_mutasi == 1)
-                                                        Mutasi Antar Cabang
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    {{ $item->penanggung_jawab }}
-                                                </td>
-                                                <td>
-                                                    {{ $item->menyetujui }}
-                                                </td>
-                                                <td>
-                                                    {{ $item->yang_menyerahkan }}
-                                                </td>
-                                                <td>
-                                                    {{ $item->penerima }}
-                                                </td>
-                                                <td>
-                                                    {{ $item->tgl_terima }}
-                                                </td>
-                                                <td>
-                                                    @if ($item->status_mutasi == 0)
-                                                        <button class="btn-warning" data-toggle="modal"
-                                                            data-target="#modalmutasi" id="buttondetailmutasibarang"
-                                                            data-id="{{ $item->kd_mutasi }}"><i class="fa fa-pencil"></i>
-                                                            Lengkapi Data</button>
-                                                    @else
-                                                        <button class="btn-info" id="button-report-mutasi-cabang"
-                                                            data-toggle="modal" data-target="#modal-report-mutasi"
-                                                            data-id="{{ $item->kd_mutasi }}"><i class="fa fa-print"></i>
-                                                            Cetak / Print</button>
-                                                    @endif
+                                            <td>
+                                                {{ $no++ }}
+                                            </td>
+                                            <td>{{ $item->kd_mutasi }}</td>
+                                            <td>
+                                                @if ($item->jenis_mutasi == 1)
+                                                    Mutasi Antar Cabang
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{ $item->penanggung_jawab }}
+                                            </td>
+                                            <td>
+                                                {{ $item->menyetujui }}
+                                            </td>
+                                            <td>
+                                                {{ $item->yang_menyerahkan }}
+                                            </td>
+                                            <td>
+                                                {{ $item->penerima }}
+                                            </td>
+                                            <td>
+                                                {{ $item->tgl_terima }}
+                                            </td>
+                                            <td>
+                                                @if ($item->status_mutasi == 0)
+                                                    <button class="btn-warning" data-toggle="modal"
+                                                        data-target="#modalmutasi" id="buttondetailmutasibarang"
+                                                        data-id="{{ $item->kd_mutasi }}"><i class="fa fa-pencil"></i>
+                                                        Lengkapi Data</button>
+                                                @else
+                                                    <button class="btn-info" id="button-report-mutasi-cabang"
+                                                        data-toggle="modal" data-target="#modal-report-mutasi"
+                                                        data-id="{{ $item->kd_mutasi }}"><i class="fa fa-print"></i>
+                                                        Cetak / Print</button>
+                                                @endif
 
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

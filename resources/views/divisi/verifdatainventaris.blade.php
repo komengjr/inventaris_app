@@ -61,24 +61,26 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="float-sm-left m-3 m-3">
+                            <div class="float-right m-3 m-3">
+                                <div class="btn-group m-0" style="float: right;">
+                                    <button type="button" class="btn-info waves-effect waves-light"> <i class="fa fa-cog"></i>
+                                        <span>Menu Option</span> </button>
+                                    <button type="button"
+                                        class="btn-primary split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu" x-placement="bottom-start"
+                                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
+                                        <a href="javaScript:void();" class="dropdown-item" data-toggle="modal"
+                                        data-target="#tambahdatabaru" id="tombolbarupeminjaman"
+                                        data-url="{{ url('divisi/tambahdataverifikasiinventaris', []) }}"><i class="fa fa-plus mr-1"></i> Tambah Data Stockopname</a>
+                                        <div class="dropdown-divider"></div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            </div>
-                            <div class="float-sm-right m-3 m-3">
-                                <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                    data-target="#tambahdatabaru" id="tombolbarupeminjaman"
-                                    data-url="{{ url('divisi/tambahdataverifikasiinventaris', []) }}">
-                                    <i class="fa fa-plus mr-1"></i> Tambah Data
-                                </button>
-                                {{-- <button type="button" class="btn-primary waves-effect waves-light">
-                            <i class="fa fa-print mr-1"></i> Print
-                        </button> --}}
-                                {{-- <button type="button" data-toggle="modal" data-target="#upload-detail-barang" class="btn-dark waves-effect waves-light" >
-                <i class="fa fa-upload mr-1"></i> Upload Data
-                </button> --}}
-                            </div>
-                            <div class="table-responsive" id="showdatamutasi">
+                            <div class="table-responsive pb-3" id="showdatamutasi">
                                 <table id="default-datatable" class="table styled-table table-bordered">
                                     <thead>
                                         <tr>
@@ -149,7 +151,6 @@
                                     </tfoot>
                                 </table>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

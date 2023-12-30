@@ -44,24 +44,25 @@
             <div class="row">
                 <div class="col-12 col-lg-12">
                     <div class="card">
-                        <div class="card-header border-0">
-                            Recent History
-                            <div class="card-action">
-                                <div class="dropdown">
-                                    <button class="btn-dark dropdown-toggle dropdown-toggle-nocaret"
-                                        data-toggle="dropdown">
-                                        <i class="icon-options"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        {{-- <a class="dropdown-item" href="javascript:void();">Action</a>
-                                        <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                        <a class="dropdown-item" href="javascript:void();">Something else here</a> --}}
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modaldatastaff" id="buttontambahstaff">Tambah Staff</a>
-                                    </div>
+                        <div class="float-sm-right m-3 m-3">
+                            <div class="btn-group m-0" style="float: right;">
+                                <button type="button" class="btn-info waves-effect waves-light"> <i
+                                        class="fa fa-cog"></i> <span>Menu Option</span> </button>
+                                <button type="button"
+                                    class="btn-info split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu" x-placement="bottom-start"
+                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#modaldatastaff" id="buttontambahstaff"><i class="fa fa-plus mr-1"></i> Tambah Staff Baru</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#modaldatastaff" id="button-upload-excel-staff"><i class="fa fa-upload mr-1"></i> Upload Excel Staff</a>
                                 </div>
                             </div>
+
                         </div>
+
                         <div class="table-responsive pb-5">
                             <table class="table styled-table align-items-center table-flush pb-2" id="default-datatable">
                                 <thead>

@@ -83,13 +83,23 @@
             <div class="row">
                 <div class="col-12 col-lg-12">
                     <div class="card">
-
-                        <div class="float-sm-right m-3 m-3" >
-                            <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                data-target="#modalpemusnahan" id="tombolbarupemusnahan" style="float: right;">
-                                <i class="fa fa-plus mr-1"></i> Tambah Data
-                            </button>
+                        <div class="float-right m-3 m-3">
+                            <div class="btn-group m-0" style="float: right;">
+                                <button type="button" class="btn-info waves-effect waves-light"> <i class="fa fa-cog"></i>
+                                    <span>Menu Option</span> </button>
+                                <button type="button"
+                                    class="btn-primary split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu" x-placement="bottom-start"
+                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#modalpemusnahan" id="tombolbarupemusnahan" style="float: right;"><i class="fa fa-plus mr-1"></i> Tambah Data Pemusnahan</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="table-responsive pb-5">
                             <table class="table styled-table align-items-center table-flush pb-2" id="default-datatable">
                                 <thead>

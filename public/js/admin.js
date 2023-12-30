@@ -1092,6 +1092,23 @@ $(document).on("click", "#buttontambahstaff", function (e) {
             );
         });
 });
+$(document).on("click", "#button-upload-excel-staff", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $.ajax({
+        url: "../divisi/masterstaff/uploadexcel",
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showdatastaff").html(data);
+        })
+        .fail(function () {
+            $("#showdatastaff").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 // Menu Lokasi
 $(document).on("click", "#buttontambahnomorruangan", function (e) {
     e.preventDefault();

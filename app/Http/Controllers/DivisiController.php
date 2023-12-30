@@ -1182,6 +1182,10 @@ class DivisiController extends Controller
     {
         return view('divisi.menustaff.tambahstaff');
     }
+    public function uploaddatastaffkaryawan()
+    {
+        return view('divisi.menustaff.formuploadstaff');
+    }
     public function posttambahdatastaff(Request $request)
     {
         DB::table('tbl_staff')->insert(

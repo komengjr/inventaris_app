@@ -65,7 +65,7 @@
         {{-- <div class="pb-5"></div>
         <div class="pb-5"></div> --}}
         <div class="card card-authentication1 mx-auto pt-2">
-            <div class="card-body">
+            <div class="card-body Larger shadow">
                 <div class="card-content p-0">
                     <div class="text-center m-0 p-0">
                         <img src="{{ asset('vendor/new-anim.gif', []) }}" width="350"

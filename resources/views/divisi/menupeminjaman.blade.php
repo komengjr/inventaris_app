@@ -80,97 +80,104 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-12 col-lg-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="float-sm-left m-3 m-3">
-                                {{-- <h4 class="page-title">Data Peminjaman </h4> --}}
-                            </div>
-                            <div class="float-sm-right m-3 m-3">
-                                <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                    data-target="#tambahdatabaru" id="tombolbarupeminjaman"
-                                    data-url="{{ url('divisi/tambahdatapeminjaman', []) }}">
-                                    <i class="fa fa-plus mr-1"></i> Tambah Data
+                        <div class="float-right m-3 m-3">
+                            <div class="btn-group m-0" style="float: right;">
+                                <button type="button" class="btn-info waves-effect waves-light"> <i class="fa fa-cog"></i>
+                                    <span>Menu Option</span> </button>
+                                <button type="button"
+                                    class="btn-info split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
                                 </button>
-                            </div>
-                            <div class="table-responsive" id="showdatamutasi">
-                                <table id="default-datatable" class="table styled-table table-bordered align-items-center">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Tiket Peminjaman</th>
-                                            <th>Nama Kegiatan</th>
-                                            <th>Tanggal Peminjaman</th>
-                                            <th>Batas Tanggal Peminjaman</th>
-                                            <th>Penanggung Jawab</th>
-                                            <th>Status Peminjaman</th>
-                                            <th class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $no = 1;
-                                        @endphp
-                                        @foreach ($datapinjam as $datapinjam)
-                                            <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $datapinjam->tiket_peminjaman }}</td>
-                                                <td>{{ $datapinjam->nama_kegiatan }}</td>
-                                                <td>{{ $datapinjam->tgl_pinjam }}</td>
-                                                <td>{{ $datapinjam->batas_tgl_pinjam }}</td>
-                                                <td>{{ $datapinjam->nama_staff }}</td>
-                                                {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
-                                                <td class="text-center">
-                                                    @if ($datapinjam->status_pinjam == 0)
-                                                        <span class="badge badge-danger p-2">Pending</span>
-                                                    @else
-                                                        <span class="badge badge-success p-2">Done</span>
-                                                    @endif
-
-                                                </td>
-                                                <td class="text-center">
-                                                    <button type="button"
-                                                        class="btn-info waves-effect waves-light dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        @if ($datapinjam->status_pinjam == 0)
-                                                            <a href="javaScript:void();" class="dropdown-item"
-                                                                class="btn-warning" data-toggle="modal"
-                                                                data-target="#lengkapipeminjaman"
-                                                                id="tombollengkapipeminjaman"
-                                                                data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i
-                                                                    class="fa fa-file-text"></i> Lengkapi Data</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a href="javaScript:void();" class="dropdown-item"
-                                                                data-toggle="modal" data-target="#tambahdatabaru"
-                                                                id="editdatapeminjamaninventaris"
-                                                                data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i
-                                                                    class="fa fa-pencil-square-o"></i> Edit</a>
-                                                        @else
-                                                            <a href="javaScript:void();" class="dropdown-item"
-                                                                id="button-print-hasipeminjaman" data-toggle="modal"
-                                                                data-target="#modal-report"
-                                                                data-id="{{ $datapinjam->tiket_peminjaman }}"><i
-                                                                    class="fa fa-print"></i>
-                                                                Cetak / Print</a>
-                                                        @endif
-
-                                                        {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
-                                                    </div>
-
-
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
-
-                                    </tfoot>
-                                </table>
+                                <div class="dropdown-menu" x-placement="bottom-start"
+                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal"
+                                        data-target="#tambahdatabaru" id="tombolbarupeminjaman"
+                                        data-url="{{ url('divisi/tambahdatapeminjaman', []) }}"><i
+                                            class="fa fa-plus mr-1"></i> Tambah Data Peminjaman</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
                             </div>
                         </div>
+                        <div class="table-responsive" id="showdatamutasi">
+                            <table id="default-datatable" class="table styled-table table-bordered align-items-center">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tiket Peminjaman</th>
+                                        <th>Nama Kegiatan</th>
+                                        <th>Tanggal Peminjaman</th>
+                                        <th>Batas Tanggal Peminjaman</th>
+                                        <th>Penanggung Jawab</th>
+                                        <th>Status Peminjaman</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($datapinjam as $datapinjam)
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $datapinjam->tiket_peminjaman }}</td>
+                                            <td>{{ $datapinjam->nama_kegiatan }}</td>
+                                            <td>{{ $datapinjam->tgl_pinjam }}</td>
+                                            <td>{{ $datapinjam->batas_tgl_pinjam }}</td>
+                                            <td>{{ $datapinjam->nama_staff }}</td>
+                                            {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
+                                            <td class="text-center">
+                                                @if ($datapinjam->status_pinjam == 0)
+                                                    <span class="badge badge-danger p-2">Pending</span>
+                                                @else
+                                                    <span class="badge badge-success p-2">Done</span>
+                                                @endif
+
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button"
+                                                    class="btn-info waves-effect waves-light dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    @if ($datapinjam->status_pinjam == 0)
+                                                        <a href="javaScript:void();" class="dropdown-item"
+                                                            class="btn-warning" data-toggle="modal"
+                                                            data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
+                                                            data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i
+                                                                class="fa fa-file-text"></i> Lengkapi Data</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="javaScript:void();" class="dropdown-item"
+                                                            data-toggle="modal" data-target="#tambahdatabaru"
+                                                            id="editdatapeminjamaninventaris"
+                                                            data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i
+                                                                class="fa fa-pencil-square-o"></i> Edit</a>
+                                                    @else
+                                                        <a href="javaScript:void();" class="dropdown-item"
+                                                            id="button-print-hasipeminjaman" data-toggle="modal"
+                                                            data-target="#modal-report"
+                                                            data-id="{{ $datapinjam->tiket_peminjaman }}"><i
+                                                                class="fa fa-print"></i>
+                                                            Cetak / Print</a>
+                                                    @endif
+
+                                                    {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
+                                                </div>
+
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -151,6 +151,7 @@ Route::get('divisi/masterbarang/dataloginventaris/erorklasifikasi','BigDataContr
 Route::get('menu/masterstaff','DivisiController@masterstaff');
 
 Route::get('divisi/masterstaff/tambah',['as'=>'divisi/masterstaff/tambah','uses'=> 'DivisiController@tambahdatastaffkaryawan']);
+Route::get('divisi/masterstaff/uploadexcel',['as'=>'divisi/masterstaff/uploadexcel','uses'=> 'DivisiController@uploaddatastaffkaryawan']);
 Route::get('divisi/masterbarang/fixdata','DivisiController@fixdatamasterbarang');
 Route::get('divisi/masterbarang/fixnourutdata','DivisiController@fixnourutmasterbarang');
 Route::post('divisi/masterstaff/tambah','DivisiController@posttambahdatastaff');

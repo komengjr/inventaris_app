@@ -82,15 +82,13 @@
                 <div class="col-lg-12">
                     <div class="card pb-4">
                         <div class="">
-                            <div class="float-sm-left m-3 m-3">
-                                <h4 class="page-title"></h4>
-                            </div>
+
                             <div class="float-sm-right m-3 m-3">
                                 <div class="btn-group m-0">
-                                    <button type="button" class="btn btn-info waves-effect waves-light"> <i
+                                    <button type="button" class="btn-info waves-effect waves-light"> <i
                                             class="fa fa-cog"></i> <span>Menu Option</span> </button>
                                     <button type="button"
-                                        class="btn btn-info split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                                        class="btn-info split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
                                         data-toggle="dropdown" aria-expanded="false">
                                         <span class="caret"></span>
                                     </button>

@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="input-group">
-                    <select class="custom-select" name="page" id="page">
+                    <select class="custom-select" name="page" id="page" style="width:100px;height:30px;font-size: 12px;">
                         <option value="-">Pilih Option Print</option>
                         @php
                             $cetak = $data->count();
@@ -30,7 +30,7 @@
                         <option value="all">All</option>
                     </select>
                     <div class="input-group-append">
-                        <button class="btn btn-dark" type="button" id="button-print-all" data-id="{{ $id }}">
+                        <button class="btn-dark" type="button" id="button-print-all" data-id="{{ $id }}">
                             <i class="fa fa-print"> </i> Print</button>
                     </div>
                 </div>

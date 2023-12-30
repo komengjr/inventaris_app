@@ -82,98 +82,110 @@
             <div class="row">
                 <div class="col-12 col-lg-12">
                     <div class="card">
-                            {{-- <div class="float-left m-3 m-3">
-                                <h4 class="page-title">Data Peminjaman </h4>
-                            </div> --}}
-                            <div class="float-right m-3 m-3">
-                                <button type="button" class="btn-success waves-effect waves-light" data-toggle="modal"
-                                    data-target="#modalmaintenance" id="tombolbarumaintenance"
-                                    data-url="{{ url('divisi/tambahdatamaintenance', []) }}" style="float: right;">
-                                    <i class="fa fa-plus mr-1"></i> Tambah Data
+                        <div class="float-right m-3 m-3">
+                            <div class="btn-group m-0" style="float: right;">
+                                <button type="button" class="btn-info waves-effect waves-light"> <i class="fa fa-cog"></i>
+                                    <span>Menu Option</span> </button>
+                                <button type="button"
+                                    class="btn-info split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
                                 </button>
+                                <div class="dropdown-menu" x-placement="bottom-start"
+                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal"
+                                        data-target="#modalmaintenance" id="tombolbarumaintenance"
+                                        data-url="{{ url('divisi/tambahdatamaintenance', []) }}"><i
+                                            class="fa fa-plus mr-1"></i> Tambah Data Maintenance</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
                             </div>
-                            <div class="table-responsive pb-5">
-                                <table class="styled-table align-items-center pb-2"
-                                    id="default-datatable">
-                                    <thead>
-                                        <tr>
-                                            <th>Photo</th>
-                                            <th>Tiket Maintenance</th>
-                                            <th>Nama Barang</th>
-                                            <th>Pelapor</th>
-                                            <th>Tanggal Masuk Laporan</th>
-                                            <th>Tanggal Selesai Laporan</th>
-                                            <th>Document Upload</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($datamaintenance as $item)
-                                            <tr>
-                                                <td>
-                                                    <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
-                                                        class="product-img" />
-                                                </td>
-                                                <td>{{ $item->kd_maintenance }}</td>
-                                                <td>{{ $item->nama_barang }}</td>
-                                                <td>{{ $item->pelapor }}</td>
-                                                <td>{{ $item->tgl_mulai }}</td>
-                                                <td>{{ $item->tgl_akhir }}</td>
-                                                <td class="text-center">
-                                                    @if ($item->file_maintenance == '')
-                                                        <span class="badge badge-danger shadow-danger m-1">Belum Ada
-                                                            File</span>
-                                                    @else
-                                                        <button class="btn-info" data-toggle="modal"
-                                                            data-target="#modalmaintenance"
-                                                            id="button-lihat-file-maintenance"
-                                                            data-id="{{ $item->id_maintenance }}"><i
-                                                                class="fa fa-eye"></i></button>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if ($item->status_maintenance == 1)
-                                                        <span class="badge-dot">
-                                                            <i class="bg-danger"></i> pending
-                                                        </span>
-                                                    @else
-                                                        <span class="badge-dot">
-                                                            <i class="bg-success"></i> Selesai
-                                                        </span>
-                                                    @endif
-                                                </td>
+                        </div>
 
-                                                <td class="text-center">
-                                                    <div class="dropdown">
-                                                        <button class="dropdown-toggle dropdown-toggle-nocaret btn-dark"
-                                                            data-toggle="dropdown">
-                                                            <i class="zmdi zmdi-menu"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            @if ($item->file_maintenance == '')
+                        <div class="table-responsive pb-5">
+                            <table class="styled-table align-items-center pb-2" id="default-datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Photo</th>
+                                        <th>Tiket Maintenance</th>
+                                        <th>Nama Barang</th>
+                                        <th>Pelapor</th>
+                                        <th>Tanggal Masuk Laporan</th>
+                                        <th>Tanggal Selesai Laporan</th>
+                                        <th>Document Upload</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($datamaintenance as $item)
+                                        <tr>
+                                            <td>
+                                                <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
+                                                    class="product-img" />
+                                            </td>
+                                            <td>{{ $item->kd_maintenance }}</td>
+                                            <td>{{ $item->nama_barang }}</td>
+                                            <td>{{ $item->pelapor }}</td>
+                                            <td>{{ $item->tgl_mulai }}</td>
+                                            <td>{{ $item->tgl_akhir }}</td>
+                                            <td class="text-center">
+                                                @if ($item->file_maintenance == '')
+                                                    <span class="badge badge-danger shadow-danger m-1">Belum Ada
+                                                        File</span>
+                                                @else
+                                                    <button class="btn-info" data-toggle="modal"
+                                                        data-target="#modalmaintenance" id="button-lihat-file-maintenance"
+                                                        data-id="{{ $item->id_maintenance }}"><i
+                                                            class="fa fa-eye"></i></button>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($item->status_maintenance == 1)
+                                                    <span class="badge-dot">
+                                                        <i class="bg-danger"></i> pending
+                                                    </span>
+                                                @else
+                                                    <span class="badge-dot">
+                                                        <i class="bg-success"></i> Selesai
+                                                    </span>
+                                                @endif
+                                            </td>
+
+                                            <td class="text-center">
+                                                <div class="dropdown">
+                                                    <button class="dropdown-toggle dropdown-toggle-nocaret btn-dark"
+                                                        data-toggle="dropdown">
+                                                        <i class="zmdi zmdi-menu"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        @if ($item->file_maintenance == '')
+                                                            <a class="dropdown-item" href="javascript:void();"
+                                                                data-toggle="modal" data-target="#modalmaintenance"><i
+                                                                    class="fa fa-upload"></i> Upload Document</a>
+                                                        @else
+                                                            @if ($item->status_maintenance == 1)
                                                                 <a class="dropdown-item" href="javascript:void();"
-                                                                    data-toggle="modal" data-target="#modalmaintenance"><i
-                                                                        class="fa fa-upload"></i> Upload Document</a>
+                                                                    data-toggle="modal" data-target="#modalmaintenance"
+                                                                    id="tomboltindakanmaintenance"
+                                                                    data-url="{{ url('divisi/maintenance/tindakan', ['id' => $item->kd_maintenance]) }}"><i
+                                                                        class="fa fa-cog"></i> Lakukan Tindakan</a>
                                                             @else
-                                                                @if ($item->status_maintenance == 1)
-                                                                    <a class="dropdown-item" href="javascript:void();"
-                                                                        data-toggle="modal" data-target="#modalmaintenance"
-                                                                        id="tomboltindakanmaintenance"
-                                                                        data-url="{{ url('divisi/maintenance/tindakan', ['id' => $item->kd_maintenance]) }}"><i
-                                                                            class="fa fa-cog"></i> Lakukan Tindakan</a>
-                                                                @else
-                                                                <a class="dropdown-item" href="javascript:void();" data-toggle="modal" data-target="#modalmaintenance" id="button-cetak-maintenance" data-id="{{$item->id_maintenance}}"><i class="fa fa-print"></i> Cetak</a>
-                                                                @endif
+                                                                <a class="dropdown-item" href="javascript:void();"
+                                                                    data-toggle="modal" data-target="#modalmaintenance"
+                                                                    id="button-cetak-maintenance"
+                                                                    data-id="{{ $item->id_maintenance }}"><i
+                                                                        class="fa fa-print"></i> Cetak</a>
                                                             @endif
-                                                        </div>
+                                                        @endif
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,7 +200,7 @@
                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
                     </button>
                 </div>
-                <div >
+                <div>
                     <div class="modal-body" id="showdatasdm">
                     </div>
                 </div>
