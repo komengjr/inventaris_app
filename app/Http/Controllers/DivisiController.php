@@ -195,7 +195,7 @@ class DivisiController extends Controller
             ->where('id_pinjam', $id)
             ->get();
         $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam', $id)->get();
-        return view('divisi.menulengkapi.lengkapi_peminjaman', ['cekdata' => $cekdata, 'databarang' => $databarang]);
+        return view('divisi.peminjaman.lengkapi_peminjaman', ['cekdata' => $cekdata, 'databarang' => $databarang]);
     }
     public function inputdatabarangpinjam($id)
     {
@@ -250,7 +250,8 @@ class DivisiController extends Controller
                             'kondisi_pinjam' => $cekdata[0]->kondisi_barang,
                             'status_sub_peminjaman' => 0,
                             'created_at' => date('Y-m-d H:i:s'),
-                        ]);
+                        ]
+                    );
                     $notif = 1;
                     $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam', $ids)->get();
                     return view('divisi.menulengkapi.tablepeminjaman', ['notif' => $notif, 'databarang' => $databarang]);
@@ -349,29 +350,40 @@ class DivisiController extends Controller
         $data = DB::table('sub_tbl_inventory')
             ->where('kd_cabang', auth::user()->cabang)
             ->where('nama_barang', 'like', '%' . $datax . '%')->get();
-        return view('divisi.menulengkapi.tablecaridata', ['id' => $id, 'data' => $data, 'datax' => $datax]);
+        return view('divisi.peminjaman.tablecaridata', ['id' => $id, 'data' => $data, 'datax' => $datax]);
     }
     public function inserttablepeminjaman($id, $ids, $datax)
     {
-        DB::table('tbl_sub_peminjaman')->insert(
-            [
-                'id_pinjam' => $id,
-                'id_inventaris' => $ids,
-                'tgl_pinjam_barang' => date('Y-m-d H:i:s'),
-                'kd_cabang' => auth::user()->cabang,
-                'kondisi_pinjam' => 'BAIK',
-                'status_sub_peminjaman' => 0,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
-        $notif = 1;
+        $cekbarang = DB::table('tbl_sub_peminjaman')->where('id_inventaris', $ids)->where('status_sub_peminjaman', 99)->first();
+        if ($cekbarang) {
+        } else {
+            $cekbarang1 = DB::table('tbl_sub_peminjaman')->where('id_inventaris', $ids)->where('status_sub_peminjaman', 0)->first();
+            if ($cekbarang1) {
+
+            } else {
+                DB::table('tbl_sub_peminjaman')->insert(
+                    [
+                        'id_pinjam' => $id,
+                        'id_inventaris' => $ids,
+                        'tgl_pinjam_barang' => date('Y-m-d H:i:s'),
+                        'kd_cabang' => auth::user()->cabang,
+                        'kondisi_pinjam' => 'BAIK',
+                        'status_sub_peminjaman' => 0,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]
+                );
+            }
+        }
+        // $notif = 1;
         $data = DB::table('sub_tbl_inventory')
             ->where('kd_cabang', auth::user()->cabang)
             ->where('nama_barang', 'like', '%' . $datax . '%')->get();
-        return view('divisi.menulengkapi.tablecaridata', ['id' => $id, 'data' => $data, 'datax' => $datax]);
+        return view('divisi.peminjaman.tablecaridata', ['id' => $id, 'data' => $data, 'datax' => $datax]);
+
     }
     public function caridatabarang($id)
     {
-        return view('divisi.menulengkapi.caridatabarang', ['id' => $id]);
+        return view('divisi.peminjaman.caridatabarang', ['id' => $id]);
     }
     public function pengembaliantablepeminjaman($id, $ids)
     {
@@ -483,7 +495,8 @@ class DivisiController extends Controller
                 'kd_cabang' => auth::user()->cabang,
                 'deskripsi' => $request->input('deskripsi'),
                 'created_at' => date('Y-m-d H:i:s'),
-            ]);
+            ]
+        );
         $browser = Agent::browser();
         $platform = Agent::platform();
         DB::table('z_log_actifity')->insert([
@@ -513,7 +526,8 @@ class DivisiController extends Controller
                 'kd_cabang' => auth::user()->cabang,
                 'deskripsi' => $request->input('deskripsi'),
                 'created_at' => date('Y-m-d H:i:s'),
-            ]);
+            ]
+        );
         Session::flash('sukses', 'Berhasil Membuat Tiket Peminjaman : ' . $request->input('tiket_peminjaman'));
         return redirect()->back();
     }
@@ -527,7 +541,8 @@ class DivisiController extends Controller
                 'kd_cabang' => auth::user()->cabang,
                 'status_verif' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
-            ]);
+            ]
+        );
         Session::flash('sukses', 'Berhasil Membuat Tiket Tugas User' . $request->input('tiket_verif'));
         return redirect()->back();
     }
@@ -585,7 +600,8 @@ class DivisiController extends Controller
                     'status_data_inventaris' => $id,
                     'keterangan_data_inventaris' => $ket,
                     'created_at' => date('Y-m-d H:i:s'),
-                ]);
+                ]
+            );
         } else {
             DB::table('tbl_sub_verifdatainventaris')
                 ->where('id_inventaris', $id_inventaris)
@@ -700,7 +716,8 @@ class DivisiController extends Controller
                         'suplier' => $value->suplier,
                         'status_barang' => 0,
                         'harga_perolehan' => $value->harga_perolehan,
-                    ]);
+                    ]
+                );
                 DB::table('sub_tbl_inventory_log')->where('id', $value->id)->delete();
             }
             Session::flash('sukses', 'Upload Data Sukses');
@@ -780,14 +797,16 @@ class DivisiController extends Controller
                 [
                     'kd_cabang' => auth::user()->cabang,
                     'no_cabang' => $request->no_cabang,
-                ]);
+                ]
+            );
             DB::table('tbl_ttd')->insert(
                 [
                     'kd_cabang' => auth::user()->cabang,
                     'ttd_1' => $request->nama_1,
                     'ttd_2' => $request->nama_2,
                     'ttd_3' => $request->nama_3,
-                ]);
+                ]
+            );
         } else {
 
         }
@@ -936,7 +955,10 @@ class DivisiController extends Controller
         $jumlahdata = DB::table('sub_tbl_inventory')->where('kd_jenis', 1)->where('kd_cabang', auth::user()->cabang)->count();
         $datakategori = DB::table('no_urut_barang')->get();
         $jumlahmasadepresiasi = DB::table('tbl_depresiasi')->count();
-        return view('divisi.menudepresiasi', ['datakategori' => $datakategori, 'data' => $data, 'jumlahdatadepresiasi' => $jumlahmasadepresiasi,
+        return view('divisi.menudepresiasi', [
+            'datakategori' => $datakategori,
+            'data' => $data,
+            'jumlahdatadepresiasi' => $jumlahmasadepresiasi,
             'jumlahdata' => $jumlahdata
         ]);
     }
@@ -1011,7 +1033,8 @@ class DivisiController extends Controller
                 'ket' => $request->deskripsi,
                 'status_mutasi' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
-            ]);
+            ]
+        );
         Session::flash('sukses', 'Berhasil Membuat Order Mutasi');
         return redirect()->back();
     }
@@ -1032,7 +1055,8 @@ class DivisiController extends Controller
                 'kd_cabang_awal' => '',
                 'kd_cabang_tujuan' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
-            ]);
+            ]
+        );
         $data = DB::table('sub_tbl_inventory')
             ->where('kd_cabang', auth::user()->cabang)
             ->where('nama_barang', 'like', '%' . $datax . '%')->get();

@@ -15,10 +15,6 @@
 
 </div>
 <script>
-    $(document).ready(function() {
-        $('.single-select').select2();
-
-      });
       function caridata(ele) {
         if(event.key === 'Enter') {
             var nama = document.getElementById('data_inventaris').value;

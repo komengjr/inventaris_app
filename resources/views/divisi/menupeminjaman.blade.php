@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive" id="showdatamutasi">
+                        <div class="table-responsive pb-3" id="showdatamutasi">
                             <table id="default-datatable" class="table styled-table table-bordered align-items-center">
                                 <thead>
                                     <tr>

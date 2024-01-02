@@ -49,9 +49,17 @@ $(document).on("click", "#tombollengkapipeminjaman", function (e) {
             $("#showdatalengkapi").html(data);
         })
         .fail(function () {
-            $("#showdatalengkapi").html(
-                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-            );
+            Lobibox.notify("error", {
+                pauseDelayOnHover: true,
+                icon: "fa fa-info-circle",
+                continueDelayOnInactiveTab: false,
+                position: "center top",
+                showClass: "bounceIn",
+                hideClass: "bounceOut",
+                sound: false,
+                width: 400,
+                msg: "Hubungi Administrator Jika terjadi Eror",
+            });
         });
 });
 $(document).on("click", "#editdatapeminjamaninventaris", function (e) {
@@ -103,9 +111,17 @@ $(document).on("click", "#buttoncarinamabarang", function (e) {
             $("#buttoninputbarangpeminjaman").html(data);
         })
         .fail(function () {
-            $("#buttoninputbarangpeminjaman").html(
-                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-            );
+            Lobibox.notify("error", {
+                pauseDelayOnHover: true,
+                icon: "fa fa-info-circle",
+                continueDelayOnInactiveTab: false,
+                position: "center top",
+                showClass: "bounceIn",
+                hideClass: "bounceOut",
+                sound: false,
+                width: 400,
+                msg: "Hubungi Administrator Jika terjadi Eror",
+            });
         });
 });
 $(document).on("click", "#buttoninsertdatapeminjaman", function (e) {
@@ -1386,7 +1402,7 @@ $(document).on("click", "#button-print-all", function (e) {
     var id = $(this).data("id");
     var page = document.getElementById("page").value;
     // console.log(id);
-    if (page == '-') {
+    if (page == "-") {
         Lobibox.notify("warning", {
             pauseDelayOnHover: true,
             icon: "fa fa-info-circle",

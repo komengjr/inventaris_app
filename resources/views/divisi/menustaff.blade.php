@@ -103,7 +103,7 @@
         <!-- End container-fluid-->
 
     </div>
-    <script src="{{ url('assets/js/app-script.js', []) }}"></script>
+    {{-- <script src="{{ url('assets/js/app-script.js', []) }}"></script> --}}
 
     <div class="modal fade" id="modaldatastaff">
         <div class="modal-dialog modal-dialog-centered modal-xl" style="width: 100%;">

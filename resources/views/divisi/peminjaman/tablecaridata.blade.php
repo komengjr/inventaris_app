@@ -14,7 +14,7 @@
         @php
             $cekdata = DB::table('tbl_sub_peminjaman')
             ->where('id_inventaris',$item->id_inventaris)
-            ->where('id_pinjam',$id)->first();
+            ->where('status_sub_peminjaman',0)->first();
         @endphp
             @if ($cekdata)
 
