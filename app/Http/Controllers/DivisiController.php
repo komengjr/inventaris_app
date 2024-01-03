@@ -822,7 +822,9 @@ class DivisiController extends Controller
     }
     public function posteditbarang(Request $request)
     {
-        $cekulang = DB::table('tbl_lokasi')->where('kd_lokasi', $request->lokasi)->first();
+        $cekulang = DB::table('sub_tbl_inventory')
+        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
+        ->where('id_inventaris', $request->id_inventaris)->first();
         if ($cekulang) {
             DB::table('sub_tbl_inventory')
                 ->where('id_inventaris', $request->id_inventaris)
@@ -843,10 +845,9 @@ class DivisiController extends Controller
                     'kd_lokasi' => $request->lokasi,
                     'harga_perolehan' => $request->harga,
                 ]);
+                return redirect()->back();
         }
 
-
-        return redirect()->back();
     }
 
     public function tabledataaset()

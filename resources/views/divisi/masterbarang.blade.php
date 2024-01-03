@@ -110,13 +110,12 @@
                                         <td>No</td>
                                         <td>Nama Barang</td>
                                         <td>No Inventaris</td>
-
                                         <td>Kode Klasifikasi</td>
                                         <td>Nomor Ruangan</td>
                                         <td>Merek / Type</td>
                                         <td>Tanggal Pembelian</td>
                                         <td>Tahun Perolehan</th>
-                                            <td>Harga Perolehan</td>
+                                        <td>Harga Perolehan</td>
                                         <td>action</td>
                                     </tr>
                                 </thead>
