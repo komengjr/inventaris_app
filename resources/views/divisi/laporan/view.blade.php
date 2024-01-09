@@ -5,9 +5,13 @@
 <div class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title">Report</h5>
-        <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
+        <span>
+            <button class="btn-warning" id="button-download-excel-inventaris"><i class="fa fa-download"></i> Download
+                Excel</button>
+            <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </span>
     </div>
     <div class="modal-body" id="show-data-laporan">
         <div class="table-responsive pb-3">
@@ -42,7 +46,7 @@
                     @endforeach
 
                 </tbody>
-               
+
             </table>
         </div>
 
@@ -54,6 +58,7 @@
                     class="fa fa-print"></i> PDF</button> --}}
         </div>
     </div>
+    <a href="{{ url('export-data', []) }}" style="display: none;" id="button-download"></a>
     <script src="{{ asset('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js') }}"></script>
@@ -93,11 +98,9 @@
         $(document).ready(function() {
             //Default data table
             $('#default-datatable').DataTable();
-
-
             var table = $('#example').DataTable({
                 lengthChange: false,
-                buttons: ['excel']
+                //buttons: ['excel']
                 // buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
             });
 
@@ -107,9 +110,41 @@
         });
     </script>
     <script>
-        $(document).ready(function() {
-
-            $('#default-datatable').DataTable();
-
+        $(document).on("click", "#button-download-excel-inventaris", function(e) {
+            e.preventDefault();
+            $("#show-data-laporan").html('<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>');
+            $.ajax({
+                    url: '../../export-data',
+                    type: "GET",
+                    dataType: "html",
+                })
+                .done(function(data) {
+                    document.getElementById("button-download").click();
+                    Lobibox.notify('success', {
+                        pauseDelayOnHover: true,
+                        icon: 'fa fa-info-circle',
+                        continueDelayOnInactiveTab: false,
+                        position: 'center top',
+                        showClass: 'bounceIn',
+                        hideClass: 'bounceOut',
+                        sound: false,
+                        width: 400,
+                        msg: 'Berhasil Download'
+                    });
+                    $("#show-data-laporan").html('<span class="badge badge-success shadow-success m-1">Downloaded</span>');
+                })
+                .fail(function() {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        icon: 'fa fa-info-circle',
+                        continueDelayOnInactiveTab: false,
+                        position: 'center top',
+                        showClass: 'bounceIn',
+                        hideClass: 'bounceOut',
+                        sound: false,
+                        width: 400,
+                        msg: 'Hubungi Administrator Jika terjadi Eror'
+                    });
+                });
         });
     </script>
