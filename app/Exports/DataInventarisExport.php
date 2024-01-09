@@ -3,33 +3,56 @@
 namespace App\Exports;
 
 use App\tbl_barang;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
-class DataInventarisExport implements FromQuery
+use Maatwebsite\Excel\Concerns\WithHeadings;
+
+class DataInventarisExport implements FromQuery, WithHeadings
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function __construct(string $keyword)
     {
         $this->nama = $keyword;
     }
     public function query()
     {
-        return tbl_barang::query()->select('id_inventaris',
-        'kd_inventaris',
-        'no_inventaris',
-        'kd_lokasi',
-        'nama_barang',
-        'outlet',
-        'kd_cabang',
-        'th_perolehan',
-        'merk',
-        'type',
-        'no_seri',
-        'suplier',
-        'harga_perolehan',
-        'tgl_beli',
-        'kondisi_barang',)->where('kd_cabang', 'like', '%' . $this->nama . '%');
+        return tbl_barang::query()->select(
+            'id_inventaris',
+            'kd_inventaris',
+            'no_inventaris',
+            'kd_lokasi',
+            'nama_barang',
+            'outlet',
+            'kd_cabang',
+            'th_perolehan',
+            'merk',
+            'type',
+            'no_seri',
+            'suplier',
+            'harga_perolehan',
+            'tgl_beli',
+            'kondisi_barang',
+        )->where('kd_cabang', 'like', '%' . $this->nama . '%');
+    }
+    public function headings(): array
+    {
+        return [
+            'id_inventaris',
+            'kd_inventaris',
+            'no_inventaris',
+            'kd_lokasi',
+            'nama_barang',
+            'outlet',
+            'kd_cabang',
+            'th_perolehan',
+            'merk',
+            'type',
+            'no_seri',
+            'suplier',
+            'harga_perolehan',
+            'tgl_beli',
+            'kondisi_barang',
+        ];
     }
 }
