@@ -5,8 +5,9 @@ namespace App\Exports;
 use App\tbl_barang;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class DataInventarisExport implements FromQuery, WithHeadings
+class DataInventarisExport implements FromQuery, WithHeadings, ShouldAutoSize
 {
     /**
      * @return \Illuminate\Support\Collection
