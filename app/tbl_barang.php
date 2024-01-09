@@ -15,21 +15,13 @@ class tbl_barang extends Model
         'nama_barang',
         'outlet',
         'kd_cabang',
-        'th_pembuatan',
         'th_perolehan',
         'merk',
         'type',
         'no_seri',
         'suplier',
         'harga_perolehan',
-        'tgl_mutasi',
-        'tujuan_mutasi',
-        'nilai_buku',
         'tgl_beli',
-        'ket_musnah',
         'kondisi_barang',
-        'jam_input',
-        'gambar',
-        'id_nomor_ruangan_cbaang'
     ];
 }
