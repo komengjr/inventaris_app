@@ -16,6 +16,20 @@ class DataInventarisExport implements FromQuery
     }
     public function query()
     {
-        return tbl_barang::query()->where('kd_cabang', 'like', '%' . $this->nama . '%');
+        return tbl_barang::query()->select('id_inventaris',
+        'kd_inventaris',
+        'no_inventaris',
+        'kd_lokasi',
+        'nama_barang',
+        'outlet',
+        'kd_cabang',
+        'th_perolehan',
+        'merk',
+        'type',
+        'no_seri',
+        'suplier',
+        'harga_perolehan',
+        'tgl_beli',
+        'kondisi_barang',)->where('kd_cabang', 'like', '%' . $this->nama . '%');
     }
 }
