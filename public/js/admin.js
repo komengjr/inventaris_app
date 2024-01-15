@@ -197,10 +197,7 @@ $(document).on("click", "#buttonbalikbarangpeminjaman", function (e) {
             );
         });
 });
-$(document).on(
-    "click",
-    "#buttonsimpandataupdatedetailpeminjaman",
-    function (e) {
+$(document).on("click", "#buttonsimpandataupdatedetailpeminjaman", function (e) {
         var data = $("#updatedatadetailpeminjaman").serialize();
 
         e.preventDefault();
@@ -1251,6 +1248,26 @@ $(document).on("click", "#buttontablemasterlokasibarang", function (e) {
             );
         });
 });
+$(document).on("click", "#button-edit-master-nomor-lokasi", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    // var no = $(this).data("no");
+    $.ajax({
+        url: "../divisi/masterlokasi/dataedit/masterlokasibarang/" + id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showdatalokasi").html(data);
+        })
+        .fail(function () {
+            $("#showdatalokasi").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
+
+
 $(document).on("click", "#button-pilih-barang-pemusnahan", function (e) {
     e.preventDefault();
     var id = $(this).data("id");

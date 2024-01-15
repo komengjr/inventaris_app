@@ -39,14 +39,15 @@ class DivisiController extends Controller
             }
 
         }
-        if ($cekdata->kd_lokasi != $request->input('kd_lokasi')) {
+        if ($cekdata->kd_lokasi != $request->input('kd_lokasi') || $cekdata->kd_inventaris != $request->input('kd_inventaris')) {
             $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_lokasi', $request->input('kd_lokasi'))->where('kd_cabang', Auth::user()->cabang)->first();
             $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
             DB::table('sub_tbl_inventory')
                 ->where('id_inventaris', $request->input('kode_kode'))
                 ->update([
-                    'no_inventaris' => $cekdata->no . '/' . $cekdata->kd_inventaris . '/' . $request->input('kd_lokasi') . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . $cekdata->th_perolehan,
+                    'no_inventaris' => $cekdata->no . '/' . $request->input('kd_inventaris') . '/' . $request->input('kd_lokasi') . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . $cekdata->th_perolehan,
                     'nama_barang' => $request->input('nama_barang'),
+                    'kd_inventaris' => $request->input('kd_inventaris'),
                     'kd_lokasi' => $request->input('kd_lokasi'),
                     'th_perolehan' => $request->input('th_perolehan'),
                     'merk' => $request->input('merk'),
@@ -1291,6 +1292,10 @@ class DivisiController extends Controller
         DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->where('id_nomor_ruangan_cbaang', $id)->delete();
         Session::flash('sukses', 'Berhasil Membuat Nomor Ruangan');
         return redirect()->back();
+    }
+    public function editmasterlokasicabang($id)
+    {
+        return view('divisi.lokasi.formedit');
     }
     public function inputdatamasterlokasibarang($no, $id)
     {

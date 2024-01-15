@@ -147,10 +147,19 @@
                     {{-- <img id="output"/> --}}
 
                     <div class="col-md-4">
+                        @php
+                            $kode_lokasi = DB::table('tbl_inventory')->where('kd_inventaris',$data->kd_inventaris)->first();
+                        @endphp
                         <label for="inputEmail4" class="form-label">Kode Barang</label>
-                        <input type="text" class="form-control" value="{{ $data->kd_inventaris }}" disabled>
+                        {{-- <input type="text" class="form-control" value="{{ $data->kd_inventaris }}" disabled> --}}
+                        <select class="form-control single-select" name="kd_inventaris">
+                            <option value="{{ $data->kd_inventaris }}">{{ $data->kd_inventaris }} {{ $kode_lokasi->nama_barang }}</option>
+                            @foreach ($kode as $kode)
+                                <option value="{{ $kode->kd_inventaris }}"> {{ $kode->kd_inventaris }} - {{ $kode->nama_barang }}</option>
+                            @endforeach
 
-                        <label for="inputEmail4" class="form-label">Lokasiss</label>
+                        </select>
+                        <label for="inputEmail4" class="form-label">Lokasis</label>
                         <?php
                         $nama_lokasi = DB::table('tbl_nomor_ruangan_cabang')
                         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
@@ -291,9 +300,7 @@
     $(document).ready(function() {
         $('.single-select<?php echo $id; ?>').select2();
         $('.single-select').select2();
-
-
-
+        $('.single-select-kode').select2();
     });
 </script>
 

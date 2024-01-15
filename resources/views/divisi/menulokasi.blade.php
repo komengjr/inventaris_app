@@ -119,8 +119,8 @@
                                         @endphp
                                         @foreach ($ruangan as $item)
                                             <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $item->nomor_ruangan }}</td>
+                                                <td>{{ $no++ }} </td>
+                                                <td>{{ $item->nomor_ruangan }} </td>
                                                 <td>{{ $item->nama_lokasi }}</td>
                                                 <td>
                                                     @php
@@ -142,12 +142,13 @@
                                                         <button class="btn-primary" data-toggle="modal"
                                                             data-target="#buttontableruangan" id="buttonsetupdataruangan"
                                                             data-id="{{ $item->id_nomor_ruangan_cbaang }}"><i
-                                                                class="fa fa-cog"></i> setup</button>
+                                                                class="fa fa-cog"></i> Setup</button>
                                                         <button class="btn-info" data-toggle="modal"
                                                             data-target="#buttontableruangan"
                                                             id="buttontablemasterlokasibarang"
                                                             data-id="{{ $item->id_nomor_ruangan_cbaang }}"><i
-                                                                class="fa fa-eye"></i> master</button>
+                                                                class="fa fa-eye"></i> Master</button>
+
                                                     @else
                                                         <button type="button" class="btn-danger"
                                                             id="confirm-btn-alert{{ $item->id_nomor_ruangan_cbaang }}"
@@ -185,7 +186,7 @@
                                                             });
                                                         </script>
                                                     @endif
-
+                                                    <button class="btn-warning"data-toggle="modal" data-target="#tambahdatabaru" id="button-edit-master-nomor-lokasi" data-id="{{ $item->id_nomor_ruangan_cbaang }}"><i class="fa fa-pencil"></i> Edit</button>
                                                 </td>
                                             </tr>
                                         @endforeach
