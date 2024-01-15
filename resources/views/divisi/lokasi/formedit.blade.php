@@ -6,7 +6,7 @@
             <i class="fa fa-close"></i>
         </button>
     </div>
-    <form  method="POST" action="{{ url('divisi/masterlokasi/posttambah', []) }}" enctype="multipart/form-data" id="form-update">
+    <form  method="POST" action="#" enctype="multipart/form-data" id="form-update">
     @csrf
     <div class="modal-body">
         <div class="row">
