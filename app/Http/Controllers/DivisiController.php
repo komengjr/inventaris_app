@@ -1284,8 +1284,20 @@ class DivisiController extends Controller
             Session::flash('sukses', 'Berhasil Membuat Nomor Ruangan');
             return redirect()->back();
         }
-
-
+    }
+    public function posteditdatanomorruangan(Request $request)
+    {
+        $data = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang',Auth::user()->cabang)->where('nomor_ruangan',$request->nomor_ruangan)->first();
+        if ($data) {
+            Session::flash('gagal', 'Nomor Ruangan Sudah ada');
+            return redirect()->back();
+        } else {
+            DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$request->id_nomor_ruangan)->update([
+                'nomor_ruangan' => $request->nomor_ruangan,
+            ]);
+        }
+        Session::flash('sukses', 'Berhasil Membuat Nomor Ruangan');
+        return redirect()->back();
     }
     public function deletemasterlokasicabang($id)
     {
@@ -1295,7 +1307,7 @@ class DivisiController extends Controller
     }
     public function editmasterlokasicabang($id)
     {
-        return view('divisi.lokasi.formedit');
+        return view('divisi.lokasi.formedit',['id'=>$id]);
     }
     public function inputdatamasterlokasibarang($no, $id)
     {

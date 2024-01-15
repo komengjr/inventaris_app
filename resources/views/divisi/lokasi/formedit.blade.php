@@ -6,19 +6,20 @@
             <i class="fa fa-close"></i>
         </button>
     </div>
-    <form  method="POST" action="#" enctype="multipart/form-data" id="form-update">
+    <form  method="POST" action="{{ url('divisi/masterlokasi/postedit', []) }}" enctype="multipart/form-data" id="form-update">
     @csrf
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
                 <label for="">Nomor Ruangan</label>
                 <input type="text" class="form-control" name="nomor_ruangan" value="" required >
+                <input type="text" class="form-control" name="id_nomor_ruangan" value="{{$id}}" hidden>
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-        <button type="button" class="btn-success"><i class="fa fa-save"></i> Update</button>
+        <button type="submit" class="btn-success"><i class="fa fa-save"></i> Update</button>
     </div>
     </form>
 </div>
