@@ -18,7 +18,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-        <button type="submit" class="btn-success"><i class="fa fa-save"></i> Update</button>
+        <button type="button" class="btn-success"><i class="fa fa-save"></i> Update</button>
     </div>
     </form>
 </div>
