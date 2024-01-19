@@ -124,7 +124,7 @@
                     <td colspan="12">Kondisi / Keterangan Setiap Bulan</td>
                 </tr>
                 <tr>
-                    <td>Sarana Fisiki</td>
+                    <td>Sarana Fisik</td>
                     <td>Merek</td>
                     <td>Harga</td>
                     <td>Keterangan</td>
