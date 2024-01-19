@@ -57,7 +57,7 @@
                     width: 400,
                     msg: 'Berhasil Download'
                 });
-                $("#show-data-laporan").html('<span class="badge badge-success shadow-success m-1">Downloaded</span>');
+                $("#hasil-report-ruangan").html('<span class="badge badge-success shadow-success m-1">Downloaded</span>');
             })
             .fail(function() {
                 Lobibox.notify('error', {
