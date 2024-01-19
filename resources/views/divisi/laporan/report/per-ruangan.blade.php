@@ -95,31 +95,51 @@
         {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate(123123),) !!}"> --}}
 
         <div class="absolute">
+            @php
+                $kode = $dataruangan->nomor_ruangan . ( $dataruangan->nama_lokasi );
+            @endphp
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::eyeColor(0, 0, 111, 115, 255, 114, 232)->style('dot')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate(123),
+                QrCode::eyeColor(0, 0, 111, 115, 255, 114, 232)->style('dot')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($kode),
             ) !!}">
         </div>
     </div>
     <div class="body">
         <br>
-        <table
-            style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid black;border-collapse:collapse;">
+        <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);" border="0">
             <tr>
-                <td colspan="3" class="text-right"><strong>SDM.33-FRM-PP-07.2/02 </strong></td>
+                <td colspan="1" class="text-right" ><strong>Ruangan : {{$dataruangan->nomor_ruangan}} ( {{$dataruangan->nama_lokasi}} )</strong></td>
+                <td colspan="2" class="text-right" style="text-align: right;"><strong>SDM.33-FRM-PP-07.2/02 </strong></td>
             </tr>
 
         </table>
         <br>
         <table style="font-size: 8px; margin: 0px; padding: 2px; width: 100%; font-size: 11px; font-family: Calibri (Body);">
-            <thead style="font-weight: bold;">
+            <thead style="font-weight: bold; text-align: center;">
                 <tr>
-                    <td style="width: 4%;">No</td>
-                    <td>Nomor Inventaris</td>
+                    <td style="width: 2%;" rowspan="2">No</td>
+                    <td style="width: 4%;" rowspan="2">Tgl Beli</td>
+                    <td rowspan="2">Nomor Inventaris</td>
                     <td>Nama Barang</td>
+                    <td colspan="3">Spesifikasi Teknik</td>
+                    <td colspan="12">Kondisi / Keterangan Setiap Bulan</td>
+                </tr>
+                <tr>
+                    <td>Sarana Fisiki</td>
                     <td>Merek</td>
-                    <td>Type</td>
-                    <td style="width: 15%;">Harga Perolehan</td>
-                    <td>Status Barang</td>
+                    <td>Harga</td>
+                    <td>Keterangan</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
                 </tr>
             </thead>
             <tbody>
@@ -129,12 +149,25 @@
                 @foreach ($data as $data)
                     <tr>
                         <td>{{ $no++ }}</td>
+                        <td>{{ $data->th_perolehan }}</td>
                         <td>{{ $data->no_inventaris }}</td>
                         <td>{{ $data->nama_barang }}</td>
-                        <td>{{ $data->merk }}</td>
-                        <td>{{ $data->type }}</td>
+                        <td>{{ $data->merk }} / {{ $data->type }}</td>
                         <td style="text-align: right;">@currency($data->harga_perolehan)</td>
-                        <td>Baik</td>
+                        <td></td>
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 @endforeach
             </tbody>

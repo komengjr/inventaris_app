@@ -50,10 +50,13 @@ class LaporanController extends Controller
     public function cetakbarangperuanganpdf(Request $request)
     {
         $data = DB::table('sub_tbl_inventory')
-        ->select('no_inventaris','nama_barang','merk','type','harga_perolehan')
+        ->select('no_inventaris','nama_barang','merk','type','harga_perolehan','th_perolehan')
         ->where('kd_cabang',Auth::user()->cabang)
         ->where('id_nomor_ruangan_cbaang',$request->kd_lokasi)->get();
-        $pdf = PDF::loadview('divisi.laporan.report.per-ruangan',['data'=>$data])->setPaper('A4','landscape');
+        $dataruangan = DB::table('tbl_nomor_ruangan_cabang')
+        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+        ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang',$request->kd_lokasi)->first();
+        $pdf = PDF::loadview('divisi.laporan.report.per-ruangan',['data'=>$data,'dataruangan'=>$dataruangan])->setPaper('A4','landscape');
         return base64_encode($pdf->stream());
     }
     public function reportpeminjaman()

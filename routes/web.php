@@ -322,3 +322,4 @@ Route::get('viewregistrasi/{id}', 'DataTableController@viewdatapasien');
 Route::post('simpandataregsiter',['as'=>'simpandataregsiter','uses'=> 'DataController@simpandataregsiter']);
 Route::get('log-eror-inventaris', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::get('export-data', [\App\Http\Controllers\ExcelController::class, 'index']);
+Route::get('export-data-ruangan/{id}', [\App\Http\Controllers\ExcelController::class, 'exportruangan']);
