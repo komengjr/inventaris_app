@@ -194,9 +194,11 @@ Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','u
 Route::post('divisi/posttambahdatapemusnahan',['as'=>'master/posttambahdatapemusnahan','uses'=> 'DivisiController@posttambahdatapemusnahan']);
 Route::get('divisi/pemusnahan/caridatabarang/{id}','DivisiController@caridatabarangpemusnahan');
 Route::get('divisi/pemusnahan/pilihdatabarang/{id}','DivisiController@pilihdatabarangpemusnahan');
+// STOCK OPNAME
 Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
 Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
 Route::get('divisi/verifikasi/lengkapi/{id}',['as'=>'master/verifikasi/lengkapi','uses'=> 'DivisiController@verifikasilengkapi']);
+Route::get('divisi/verifikasi/kondisi/{status}/{id}',['as'=>'divisi/verifikasi/kondisi','uses'=> 'DivisiController@verifikasikondisibarang']);
 Route::get('divisi/verifikasi/lokasi/{tiket}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);
 Route::get('divisi/verifikasi/scanner/{tiket}',['as'=>'divisi/verifikasi/scanner','uses'=> 'DivisiController@verifikasidatascanner']);
 Route::post('divisi/postverifikasi/scanner/',['as'=>'divisi/postverifikasi/scanner','uses'=> 'DivisiController@postverifikasidatascanner']);

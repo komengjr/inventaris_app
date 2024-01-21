@@ -62,6 +62,35 @@ $(document).on("click", "#tombollengkapipeminjaman", function (e) {
             });
         });
 });
+$(document).on("click", "#button-verifikasi-kondisi-barang-baik", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    var status = $(this).data("status");
+    $("#showdatalengkapi").html(
+        '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+    );
+    $.ajax({
+        url: '../../divisi/verifikasi/kondisi/'+status+'/'+id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showdatalengkapi").html(data);
+        })
+        .fail(function () {
+            Lobibox.notify("error", {
+                pauseDelayOnHover: true,
+                icon: "fa fa-info-circle",
+                continueDelayOnInactiveTab: false,
+                position: "center top",
+                showClass: "bounceIn",
+                hideClass: "bounceOut",
+                sound: false,
+                width: 400,
+                msg: "Hubungi Administrator Jika terjadi Eror",
+            });
+        });
+});
 $(document).on("click", "#editdatapeminjamaninventaris", function (e) {
     e.preventDefault();
     var url = $(this).data("url");

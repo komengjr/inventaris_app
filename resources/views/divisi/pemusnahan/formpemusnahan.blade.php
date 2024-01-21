@@ -34,9 +34,8 @@
             <label for="">Persetujuan</label>
             <select name="persetujuan" class="form-control" id="" required>
                 <option value="">Pilih</option>
-                <option value="Kondisi Barang Rusak">Kondisi Barang Rusak</option>
-                <option value="Tidak Layak Pakai">Tidak Layak Pakai</option>
-                <option value="Spare Part Discontinu">Kondisi Barang Rusak</option>
+                <option value="Setuju">Setuju</option>
+                <option value="Tidak Setuju">Tidak Setuju</option>
             </select>
         </div>
         <div class="col-6">

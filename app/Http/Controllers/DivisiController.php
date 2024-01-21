@@ -45,7 +45,7 @@ class DivisiController extends Controller
             DB::table('sub_tbl_inventory')
                 ->where('id_inventaris', $request->input('kode_kode'))
                 ->update([
-                    'no_inventaris' => $cekdata->no . '/' . $request->input('kd_inventaris') . '/' . $request->input('kd_lokasi') . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . $cekdata->th_perolehan,
+                    'no_inventaris' => $cekdata->no . '/' . $request->input('kd_inventaris') . '/' . $request->input('kd_lokasi') . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . $request->input('th_perolehan'),
                     'nama_barang' => $request->input('nama_barang'),
                     'kd_inventaris' => $request->input('kd_inventaris'),
                     'kd_lokasi' => $request->input('kd_lokasi'),
@@ -558,6 +558,15 @@ class DivisiController extends Controller
         // $databarang = DB::table('sub_tbl_inventory')->where('kode_verif',$id)->get();
         // $databarang = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->get();
         return view('divisi.stockopname.lengkapi_verifikasi', ['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan]);
+    }
+    public function verifikasikondisibarang($status,$id)
+    {
+        $databarang = DB::table('tbl_sub_verifdatainventaris')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
+        ->where('tbl_sub_verifdatainventaris.kode_verif',$id)
+        ->where('tbl_sub_verifdatainventaris.status_data_inventaris',$status)
+        ->get();
+        return view('divisi.pemusnahan.daftarlistkondisibarang',['databarang'=>$databarang]);
     }
     public function verifikasilengkapilokasi($tiket)
     {

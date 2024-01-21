@@ -89,6 +89,7 @@
                                             <th>Tanggal Verifikasi</th>
                                             <th>Jumlah Inventaris</th>
                                             <th>Jumlah Terverifikasi</th>
+                                            <th>Kondisi Barang</th>
                                             <th>Status Verifikasi</th>
                                             <th class="text-center">Action</th>
                                         </tr>
@@ -117,6 +118,11 @@
                                                             ->count();
                                                     @endphp
                                                     {{ $jumlah }}
+                                                </td>
+                                                <td>
+                                                    <button class="btn-success" data-toggle="modal" data-target="#lengkapipeminjaman" id="button-verifikasi-kondisi-barang-baik" data-id="{{ $item->kode_verif }}" data-status="0"><i class="fa fa-tasks"> B</i></button>
+                                                    <button class="btn-warning" data-toggle="modal" data-target="#lengkapipeminjaman" id="button-verifikasi-kondisi-barang-baik" data-id="{{ $item->kode_verif }}" data-status="1"><i class="fa fa-tasks"> M</i></button>
+                                                    <button class="btn-danger" data-toggle="modal" data-target="#lengkapipeminjaman" id="button-verifikasi-kondisi-barang-baik" data-id="{{ $item->kode_verif }}" data-status="2"><i class="fa fa-tasks"> R</i></button>
                                                 </td>
                                                 <td>
                                                     @if ($item->status_verif == 0)

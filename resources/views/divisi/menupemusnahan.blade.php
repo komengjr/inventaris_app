@@ -124,6 +124,7 @@
                                         <td>{{$data->type}}</td>
                                         <td>{{$data->merk}}</td>
                                         <td>{{$data->eksekusi}}</td>
+
                                         <td>
                                             <span class="badge-dot">
                                                 <i class="bg-danger"></i> {{$data->persetujuan}}
