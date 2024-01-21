@@ -18,9 +18,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $no = 1;
+                    @endphp
                     @foreach ($databarang as $item)
                         <tr>
-                            <td>1</td>
+                            <td>{{$no++}}</td>
                             <td>{{$item->nama_barang}}</td>
                             <td>{{$item->merk}} / {{$item->type}}</td>
                             <td>{{$item->keterangan_data_inventaris}}</td>
