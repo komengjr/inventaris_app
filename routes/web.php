@@ -325,3 +325,6 @@ Route::post('simpandataregsiter',['as'=>'simpandataregsiter','uses'=> 'DataContr
 Route::get('log-eror-inventaris', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::get('export-data', [\App\Http\Controllers\ExcelController::class, 'index']);
 Route::get('export-data-ruangan/{id}', [\App\Http\Controllers\ExcelController::class, 'exportruangan']);
+
+
+Route::get('nav/user-login',['as'=>'nav/user-login','uses'=> 'NavController@recentuserlogin']);

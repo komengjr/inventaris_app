@@ -109,7 +109,7 @@
                                     <span class="badge badge-info">0</span>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="javaScript:void();">
+                                    <a href="javaScript:void();" data-toggle="modal" data-target="#modal-nav" id="button-nav-login-user" data-url="{{ url('nav/user-login', []) }}">
                                         <div class="media">
                                             <i class="zmdi zmdi-accounts fa-2x mr-3 text-info"></i>
                                             <div class="media-body">
@@ -149,8 +149,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
-                            href="javascript:void();">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect"
+                            data-toggle="dropdown" href="javascript:void();">
                             <span class="user-profile"><img src="{{ asset('profile.png', []) }}" class="img-circle"
                                     alt="user avatar"></span>
                         </a>
@@ -180,7 +180,8 @@
                                 <li class="dropdown-item"><i class="icon-power mr-2"></i><a href="http://"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                                 </li>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
                             </ul>
@@ -496,6 +497,13 @@
             </div>
         </div>
     @endif
+    <div class="modal fade" id="modal-nav" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content" id="menu-modal-nav">
+
+            </div>
+        </div>
+    </div>
     <!-- Bootstrap core JavaScript-->
 
     <script src="{{ asset('assets/js/popper.min.js', []) }}"></script>
@@ -518,6 +526,7 @@
     <script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js', []) }}"></script>
     <script src="{{ asset('js/scriptx.js', []) }}"></script>
     <script src="{{ asset('js/admin.js', []) }}"></script>
+    <script src="{{ asset('js/navbar.js', []) }}"></script>
     @if (Auth::user()->akses == 'admin')
         <script src="{{ asset('js/master.js', []) }}"></script>
     @endif
