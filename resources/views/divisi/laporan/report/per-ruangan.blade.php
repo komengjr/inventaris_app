@@ -90,8 +90,14 @@
             <hr style="padding: 0%; margin: 0%;">
             <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">{{$entitas->alamat}}</p>
         </div>
-        <h5 style="padding-top: 20px; margin: 20px; left: 100px; padding-left: 155px;text-decoration: underline;">DAFTAR
-            LIST BARANG INVENTARIS</h5>
+        <h4 style="padding-top: 1px; margin: 20px; left: 150px; padding-left: 5%;text-align: center;">DAFTAR BARANG INVENTARIS <br>FISIK AKTIVA TETAP
+        <br>
+        RUANG : {{ $dataruangan->nomor_ruangan}} ( {{ $dataruangan->nama_lokasi }} )
+        <br>
+        {{-- Tanggal Cetak : {{ date('d - m - Y ') }} --}}
+
+        </h4>
+        {{-- <h5 style="padding-top: 20px; margin: 20px; left: 100px; padding-left: 155px;text-decoration: underline;">DAFTAR BARANG INVENTARIS</h5> --}}
         {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate(123123),) !!}"> --}}
 
         <div class="absolute">
@@ -99,7 +105,7 @@
                 $kode = $dataruangan->nomor_ruangan . ( $dataruangan->nama_lokasi );
             @endphp
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::eyeColor(0, 0, 111, 115, 255, 114, 232)->style('dot')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($kode),
+                QrCode::style('round')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($kode),
             ) !!}">
         </div>
     </div>
@@ -107,7 +113,7 @@
         <br>
         <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);" border="0">
             <tr>
-                <td colspan="1" class="text-right" ><strong>Ruangan : {{$dataruangan->nomor_ruangan}} ( {{$dataruangan->nama_lokasi}} )</strong></td>
+                <td colspan="1" class="text-right" ><strong>Diperiksa Oleh :  </strong></td>
                 <td colspan="2" class="text-right" style="text-align: right;"><strong>SDM.33-FRM-PP-07.2/02 </strong></td>
             </tr>
 
@@ -180,12 +186,12 @@
                 border="1">
                 <tr>
 
-                    <td colspan="3" class="text-right"><strong>{{$entitas->nama_cabang}} , {{ date('d - m - Y ') }}</strong></td>
+                    <td colspan="3" class="text-right" style="text-align: right;"><strong>{{$entitas->nama_cabang}} , {{ date('d - m - Y ') }}</strong></td>
                 </tr>
                 <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
+                    <td>:</td>
+                    <td>:</td>
+                    <td>:</td>
                 </tr>
                 <tr>
                     <td class="text-center" style="padding-top: 10px; padding-bottom: 10px; width: 33%;">
