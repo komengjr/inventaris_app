@@ -56,7 +56,8 @@ class LaporanController extends Controller
         $dataruangan = DB::table('tbl_nomor_ruangan_cabang')
         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
         ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang',$request->kd_lokasi)->first();
-        $pdf = PDF::loadview('divisi.laporan.report.per-ruangan',['data'=>$data,'dataruangan'=>$dataruangan])->setPaper('A4','landscape');
+        $nocabang = DB::table('tbl_setting_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
+        $pdf = PDF::loadview('divisi.laporan.report.per-ruangan',['data'=>$data,'dataruangan'=>$dataruangan,'nocabang'=>$nocabang])->setPaper('A4','landscape');
         return base64_encode($pdf->stream());
     }
     public function reportpeminjaman()
