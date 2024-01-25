@@ -114,7 +114,7 @@
         <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);" border="0">
             <tr>
                 <td colspan="1" class="text-right" ><strong>Diperiksa Oleh :  </strong></td>
-                <td colspan="2" class="text-right" style="text-align: right;"><strong>SDM.33-FRM-PP-07.2/02 </strong></td>
+                <td colspan="2" class="text-right" style="text-align: right;"><strong>SDM.26-FRM-PP-07.2/07</strong></td>
             </tr>
 
         </table>
