@@ -105,6 +105,7 @@
                                 <thead>
                                     <tr>
                                         <th>Gambar</th>
+                                        <th>Nomor Inventaris</th>
                                         <th>Nama Barang</th>
                                         <th>Type</th>
                                         <th>Merek</th>
@@ -120,6 +121,7 @@
                                             <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
                                                 class="product-img" />
                                         </td>
+                                        <td>{{$data->no_inventaris}}</td>
                                         <td>{{$data->nama_barang}}</td>
                                         <td>{{$data->type}}</td>
                                         <td>{{$data->merk}}</td>
