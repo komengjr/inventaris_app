@@ -114,7 +114,7 @@
         <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);" border="0">
             <tr>
                 <td colspan="1" class="text-right" ><strong>Diperiksa Oleh :  </strong></td>
-                <td colspan="2" class="text-right" style="text-align: right;"><strong>SDM.{{$nocabang->no_cabang}}-FRM-PP-07.2/07</strong></td>
+                <td colspan="2" class="text-right" style="text-align: right;"><strong>SDM.{{$nocabang->no_cabang}}-FRM-PP-07.2</strong></td>
             </tr>
 
         </table>
@@ -181,33 +181,35 @@
         <br><br><br>
 
         <div class="footer">
-            <table
-                style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
-                border="1">
+            <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);" border="1">
                 <tr>
-
                     <td colspan="3" class="text-right" style="text-align: right;"><strong>{{$entitas->nama_cabang}} , {{ date('d - m - Y ') }}</strong></td>
                 </tr>
                 <tr>
-                    <td>:</td>
-                    <td>:</td>
-                    <td>:</td>
+                    <td>1.</td>
+                    <td>2.</td>
+                    <td rowspan="5"></td>
                 </tr>
                 <tr>
-                    <td class="text-center" style="padding-top: 10px; padding-bottom: 10px; width: 33%;">
-                        <br><br><br><br><br>
-
-
-                    </td>
-                    <td class="text-center" style="width: 33%;">
-                        <br><br><br><br><br>
-
-
-                    </td>
-                    <td class="text-center" style="width: 33%;">
-                        <br><br><br><br><br>
-
-                    </td>
+                    <td>3.</td>
+                    <td>4.</td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td>6.</td>
+                </tr>
+                <tr>
+                    <td>7.</td>
+                    <td>8.</td>
+                </tr>
+                <tr>
+                    <td>9.</td>
+                    <td>10.</td>
+                </tr>
+                <tr>
+                    <td>11.</td>
+                    <td>12.</td>
+                    <td style="text-align: center;">Manager SDM & Umum</td>
                 </tr>
 
             </table>
