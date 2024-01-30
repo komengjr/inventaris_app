@@ -11,6 +11,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>No Inventaris</th>
                         <th>Nama Barang</th>
                         <th>Merek / Type</th>
                         <th>Keterangan</th>
@@ -24,6 +25,7 @@
                     @foreach ($databarang as $item)
                         <tr>
                             <td>{{$no++}}</td>
+                            <td>{{$item->no_inventaris}}</td>
                             <td>{{$item->nama_barang}}</td>
                             <td>{{$item->merk}} / {{$item->type}}</td>
                             <td>{{$item->keterangan_data_inventaris}}</td>
