@@ -587,14 +587,20 @@ class DivisiController extends Controller
     public function postverifikasisimpandatascanner(Request $request)
     {
         // $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->kode)->where('id_inventaris',$request->id_inventaris)->first();
-        DB::table('tbl_sub_verifdatainventaris')->insert([
-            'kode_verif' => $request->kode,
-            'id_inventaris' => $request->id_inventaris,
-            'status_data_inventaris' => $request->inlineradio,
-            'keterangan_data_inventaris' => $request->keterangan,
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
-        return "<span class='badge badge-pill badge-success m-1'>Success</span>";
+        $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->kode)->where('id_inventaris',$request->id_inventaris)->first();
+        if ($cekdata) {
+            return "<span class='badge badge-pill badge-warning m-1'>Data Sudah DI Verifikasi</span>";
+        } else {
+            DB::table('tbl_sub_verifdatainventaris')->insert([
+                'kode_verif' => $request->kode,
+                'id_inventaris' => $request->id_inventaris,
+                'status_data_inventaris' => $request->inlineradio,
+                'keterangan_data_inventaris' => $request->keterangan,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            return "<span class='badge badge-pill badge-success m-1'>Success</span>";
+        }
+
     }
     public function verifikasilengkapiupdatebaranglokasi($id, $tiket, $id_inventaris, $ket)
     {
