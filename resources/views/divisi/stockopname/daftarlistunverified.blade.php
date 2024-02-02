@@ -24,7 +24,16 @@
                     <td>{{$item->merk}} </td>
                     <td>{{$item->type}}</td>
                     <td>{{$item->kd_lokasi}}</td>
-                    <td>{{$item->id_nomor_ruangan_cbaang}}</td>
+                    <td>
+                        @php
+                            $cekdata = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$item->id_nomor_ruangan_cbaang)->first();
+                        @endphp
+                        @if ($cekdata)
+                            {{$cekdata->nomor_ruangan}}
+                        @else
+                        <span class="badge badge-danger m-1">Tidak ditemukan</span>
+                        @endif
+                    </td>
                     {{-- <td>{{$item->no_seri}}</td> --}}
                 </tr>
             @endforeach
