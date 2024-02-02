@@ -3,10 +3,11 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>No Inventaris</th>
+                <th>ID Inventaris</th>
                 <th>Nama Barang</th>
-                <th>Merek / Type</th>
-                <th>Keterangan</th>
+                <th>Merek</th>
+                <th>Type</th>
+                {{-- <th>Serial</th> --}}
             </tr>
         </thead>
         <tbody>
@@ -16,10 +17,11 @@
             @foreach ($data as $item)
                 <tr>
                     <td>{{$no++}}</td>
-                    <td>{{$item->no_inventaris}}</td>
+                    <td>{{$item->id_inventaris}}</td>
                     <td>{{$item->nama_barang}}</td>
-                    <td>{{$item->merk}} / {{$item->type}}</td>
-                    <td></td>
+                    <td>{{$item->merk}} </td>
+                    <td>{{$item->type}}</td>
+                    {{-- <td>{{$item->no_seri}}</td> --}}
                 </tr>
             @endforeach
         </tbody>
