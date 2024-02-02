@@ -113,7 +113,7 @@
                     <td>Merek</td>
                     <td>Type</td>
                     <td>No Seri</td>
-                    <td>Keterangan</td>
+                    {{-- <td>Keterangan</td> --}}
                 </tr>
             </thead>
             <tbody>
@@ -129,7 +129,7 @@
                         <td>{{ $databrg->merk }} </td>
                         <td>{{ $databrg->type }}</td>
                         <td>{{ $databrg->no_seri }}</td>
-                        <td class="text-center">
+                        {{-- <td class="text-center">
                             @if ($databrg->status_data_inventaris == 0)
                                 Baik
                             @elseif($databrg->status_data_inventaris == 1)
@@ -137,7 +137,7 @@
                             @elseif($databrg->status_data_inventaris == 2)
                                 Rusak
                             @endif
-                        </td>
+                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>

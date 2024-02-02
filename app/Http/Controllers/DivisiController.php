@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Support\Carbon;
+use App\sub_tbl_inventory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -128,11 +128,8 @@ class DivisiController extends Controller
     }
     public function cetakreportstockopname($id)
     {
-        $databrg = DB::table('tbl_sub_verifdatainventaris')
-            ->select('sub_tbl_inventory.no_inventaris','sub_tbl_inventory.nama_barang','sub_tbl_inventory.merk','sub_tbl_inventory.type','sub_tbl_inventory.no_seri','tbl_sub_verifdatainventaris.status_data_inventaris')
-            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
-            ->where('tbl_sub_verifdatainventaris.kode_verif', $id)
-            ->get();
+
+        $databrg = sub_tbl_inventory::select('sub_tbl_inventory.*')->where('kd_cabang', Auth::user()->cabang)->get();
         // $data = DB::table('sub_tbl_inventory')
         //     ->select('sub_tbl_inventory.id_inventaris', 'sub_tbl_inventory.no_inventaris', 'sub_tbl_inventory.nama_barang', 'sub_tbl_inventory.merk', 'sub_tbl_inventory.type')
         //     ->where('sub_tbl_inventory.kd_cabang', Auth::user()->cabang)->get();
@@ -151,6 +148,7 @@ class DivisiController extends Controller
         //         );
         //     }
         // }
+
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->get();
         $pdf = PDF::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif,  'ttd' => $ttd])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri'])->save('myfile.pdf');
@@ -159,8 +157,8 @@ class DivisiController extends Controller
         // $dompdf = $pdf->getDomPDF();
         // $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
         // $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
-        // return base64_encode($pdf->stream());
-        return $pdf->stream();
+        return base64_encode($pdf->stream());
+        // return $pdf->stream();
         // return Pdf::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif,  'ttd' => $ttd])->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
     }
 
