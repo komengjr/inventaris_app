@@ -120,21 +120,21 @@
                 @php
                     $no = 1;
                 @endphp
-                @foreach ($databrg as $item)
+                @foreach ($databrg as $databrg)
                     <tr>
                         <td class="text-center">{{ $no++ }}</td>
-                        <td>{{ $item->no_inventaris }}
+                        <td>{{ $databrg->no_inventaris }}
                         </td>
-                        <td>{{ $item->nama_barang }}</td>
-                        <td>{{ $item->merk }} </td>
-                        <td>{{ $item->type }}</td>
-                        <td>{{ $item->no_seri }}</td>
+                        <td>{{ $databrg->nama_barang }}</td>
+                        <td>{{ $databrg->merk }} </td>
+                        <td>{{ $databrg->type }}</td>
+                        <td>{{ $databrg->no_seri }}</td>
                         <td class="text-center">
-                            @if ($item->status_data_inventaris == 0)
+                            @if ($databrg->status_data_inventaris == 0)
                                 Baik
-                            @elseif($item->status_data_inventaris == 1)
+                            @elseif($databrg->status_data_inventaris == 1)
                                 Maintenance
-                            @elseif($item->status_data_inventaris == 2)
+                            @elseif($databrg->status_data_inventaris == 2)
                                 Rusak
                             @endif
                         </td>
