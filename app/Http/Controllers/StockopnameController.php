@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use DB;
 class StockopnameController extends Controller
 {
@@ -18,7 +19,7 @@ class StockopnameController extends Controller
             ->from('tbl_sub_verifdatainventaris')
             ->where('kode_verif',$id)
             ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
-        })->get();
+        })->where('kd_cabang',Auth::user()->cabang)->get();
         return view('divisi.stockopname.daftarlistunverified',['data'=>$data]);
     }
 }
