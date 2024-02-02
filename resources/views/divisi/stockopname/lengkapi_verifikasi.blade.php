@@ -332,7 +332,8 @@
                 </div>
                 <div class="col-lg-9">
                     <div class="float-sm-right">
-                        @if (($barangbaik+$barangmaintenance+$barangrusak) == $jumlah)
+                        @if (54 == $jumlah)
+                        {{-- @if (($barangbaik+$barangmaintenance+$barangrusak) == $jumlah) --}}
                         <button class="btn-success" id="button-penyelesaian-stockopname" data-id="{{$cekdata->kode_verif}}"><i class="fa fa-save"></i> Penyelesaian & Simpan</button>
                         @else
                         <button class="btn-danger" disabled><i class="fa fa-info"></i> Belum Selesai</button>
@@ -373,7 +374,7 @@
                         location.reload();
                     })
                     .fail(function() {
-                        swal("Batal Setuju");
+                        swal("gagal");
                     });
             } else {
                 swal("Batal Setuju");
