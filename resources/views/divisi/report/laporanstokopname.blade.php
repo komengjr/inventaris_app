@@ -144,7 +144,7 @@
         </table>
         <hr>
         <h5>Data Belum Di Verif</h5>
-        {{-- <table
+        <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="1">
             <thead style="font-weight: bold;">
@@ -160,24 +160,24 @@
                 @php
                     $no = 1;
                 @endphp
-                @foreach ($data_arr as $data)
+                @foreach ($data as $data)
                         <tr>
                             <td class="text-center">{{ $no++ }}</td>
-                            <td>{{ $data['no_inventaris'] }}</td>
-                            <td>{{ $data['nama_barang'] }}</td>
-                            <td>{{ $data['merk'] }}</td>
-                            <td>{{ $data['type'] }}</td>
+                            <td>{{ $data->no_inventaris }}</td>
+                            <td>{{ $data->nama_barang }}</td>
+                            <td>{{ $data->merk }}</td>
+                            <td>{{ $data->type }}</td>
 
                 @endforeach
             </tbody>
-        </table> --}}
+        </table>
         <div class="footer">
             <table
                 style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
                 border="1">
                 <tr>
                     <td colspan="2" style="border-right: 1px solid #ffffff;">Mengetahui :</td>
-                    <td colspan="1" class="text-right"><strong>Pontianak , {{ date('Y-m-d H:i:s') }}</strong></td>
+                    <td colspan="1" class="text-right" style="text-align: right;"><strong>Pontianak , {{ date('Y-m-d H:i:s') }}</strong></td>
                 </tr>
                 <tr>
                     <td class="text-center" style="padding-top: 15px; padding-bottom: 15px; width: 33%;">

@@ -129,13 +129,17 @@ class DivisiController extends Controller
     public function cetakreportstockopname($id)
     {
         $databrg = DB::table('tbl_sub_verifdatainventaris')
-            ->select('sub_tbl_inventory.no_inventaris','sub_tbl_inventory.nama_barang','sub_tbl_inventory.merk','sub_tbl_inventory.type','sub_tbl_inventory.no_seri','tbl_sub_verifdatainventaris.status_data_inventaris')
+            ->select('sub_tbl_inventory.no_inventaris', 'sub_tbl_inventory.nama_barang', 'sub_tbl_inventory.merk', 'sub_tbl_inventory.type', 'sub_tbl_inventory.no_seri', 'tbl_sub_verifdatainventaris.status_data_inventaris')
             ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
             ->where('tbl_sub_verifdatainventaris.kode_verif', $id)
             ->get();
-        // $data = DB::table('sub_tbl_inventory')
-        //     ->select('sub_tbl_inventory.id_inventaris', 'sub_tbl_inventory.no_inventaris', 'sub_tbl_inventory.nama_barang', 'sub_tbl_inventory.merk', 'sub_tbl_inventory.type')
-        //     ->where('sub_tbl_inventory.kd_cabang', Auth::user()->cabang)->get();
+        $data = DB::table('sub_tbl_inventory')
+            ->whereNotExists(function ($query) use ($id) {
+                $query->select(DB::raw(1))
+                    ->from('tbl_sub_verifdatainventaris')
+                    ->where('kode_verif', $id)
+                    ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
+            })->where('kd_cabang', Auth::user()->cabang)->get();
         // $data_arr = array();
         // foreach ($data as $record) {
         //     $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $id)->where('id_inventaris', $record->id_inventaris)->first();
@@ -153,7 +157,7 @@ class DivisiController extends Controller
         // }
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->get();
-        $pdf = PDF::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif,  'ttd' => $ttd])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
+        $pdf = PDF::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif, 'ttd' => $ttd,'data'=>$data])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
         $pdf->output();
 
         // $dompdf = $pdf->getDomPDF();
@@ -216,18 +220,18 @@ class DivisiController extends Controller
     }
     public function lengkapiverifikasidatapeminjaman($id)
     {
-        $staff = DB::table('tbl_staff')->where('kd_cabang',Auth::user()->cabang)->get();
-        $data = DB::table('tbl_peminjaman')->where('id_pinjam',$id)->first();
+        $staff = DB::table('tbl_staff')->where('kd_cabang', Auth::user()->cabang)->get();
+        $data = DB::table('tbl_peminjaman')->where('id_pinjam', $id)->first();
         $barangpinjam = DB::table('tbl_sub_peminjaman')
-        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')->where('tbl_sub_peminjaman.id_pinjam',$id)->get();
-        return view('divisi.peminjaman.verifikasidatapeminjaman',['data'=>$data,'staff'=>$staff,'barangpinjam'=>$barangpinjam]);
+            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_peminjaman.id_inventaris')->where('tbl_sub_peminjaman.id_pinjam', $id)->get();
+        return view('divisi.peminjaman.verifikasidatapeminjaman', ['data' => $data, 'staff' => $staff, 'barangpinjam' => $barangpinjam]);
     }
     public function lengkapipostverifikasidatadatapeminjaman(Request $request)
     {
-        DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->id)->update([
-            'pj_pinjam_cabang'=>$request->pj_pinjam,
-            'deskripsi_tujuan'=>$request->deskripsi,
-            'status_pinjam'=>'10'
+        DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->id)->update([
+            'pj_pinjam_cabang' => $request->pj_pinjam,
+            'deskripsi_tujuan' => $request->deskripsi,
+            'status_pinjam' => '10'
         ]);
         return redirect()->back();
     }
@@ -592,14 +596,14 @@ class DivisiController extends Controller
         // $databarang = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->get();
         return view('divisi.stockopname.lengkapi_verifikasi', ['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan]);
     }
-    public function verifikasikondisibarang($status,$id)
+    public function verifikasikondisibarang($status, $id)
     {
         $databarang = DB::table('tbl_sub_verifdatainventaris')
-        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
-        ->where('tbl_sub_verifdatainventaris.kode_verif',$id)
-        ->where('tbl_sub_verifdatainventaris.status_data_inventaris',$status)
-        ->get();
-        return view('divisi.pemusnahan.daftarlistkondisibarang',['databarang'=>$databarang]);
+            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->where('tbl_sub_verifdatainventaris.kode_verif', $id)
+            ->where('tbl_sub_verifdatainventaris.status_data_inventaris', $status)
+            ->get();
+        return view('divisi.pemusnahan.daftarlistkondisibarang', ['databarang' => $databarang]);
     }
     public function verifikasilengkapilokasi($tiket)
     {
@@ -620,7 +624,7 @@ class DivisiController extends Controller
     public function postverifikasisimpandatascanner(Request $request)
     {
         // $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->kode)->where('id_inventaris',$request->id_inventaris)->first();
-        $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->kode)->where('id_inventaris',$request->id_inventaris)->first();
+        $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->kode)->where('id_inventaris', $request->id_inventaris)->first();
         if ($cekdata) {
             return "<span class='badge badge-pill badge-warning m-1'>Data Sudah DI Verifikasi</span>";
         } else {
@@ -872,8 +876,8 @@ class DivisiController extends Controller
     public function posteditbarang(Request $request)
     {
         $cekulang = DB::table('sub_tbl_inventory')
-        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','sub_tbl_inventory.kd_lokasi')
-        ->where('id_inventaris', $request->id_inventaris)->first();
+            ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'sub_tbl_inventory.kd_lokasi')
+            ->where('id_inventaris', $request->id_inventaris)->first();
         if ($cekulang) {
             DB::table('sub_tbl_inventory')
                 ->where('id_inventaris', $request->id_inventaris)
@@ -894,7 +898,7 @@ class DivisiController extends Controller
                     'kd_lokasi' => $request->lokasi,
                     'harga_perolehan' => $request->harga,
                 ]);
-                return redirect()->back();
+            return redirect()->back();
         }
 
     }
@@ -1335,12 +1339,12 @@ class DivisiController extends Controller
     }
     public function posteditdatanomorruangan(Request $request)
     {
-        $data = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang',Auth::user()->cabang)->where('nomor_ruangan',$request->nomor_ruangan)->first();
+        $data = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->where('nomor_ruangan', $request->nomor_ruangan)->first();
         if ($data) {
             Session::flash('gagal', 'Nomor Ruangan Sudah ada');
             return redirect()->back();
         } else {
-            DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$request->id_nomor_ruangan)->update([
+            DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->id_nomor_ruangan)->update([
                 'nomor_ruangan' => $request->nomor_ruangan,
             ]);
         }
@@ -1355,7 +1359,7 @@ class DivisiController extends Controller
     }
     public function editmasterlokasicabang($id)
     {
-        return view('divisi.lokasi.formedit',['id'=>$id]);
+        return view('divisi.lokasi.formedit', ['id' => $id]);
     }
     public function inputdatamasterlokasibarang($no, $id)
     {
