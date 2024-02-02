@@ -1431,15 +1431,11 @@ $(document).on("click", "#button-cetak-stock-opname", function (e) {
         dataType: "html",
     })
         .done(function (data) {
-            $("#show-menu-report-stockopname").html(
-                '<iframe src="data:application/pdf;base64, ' +
-                    data +
-                    '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
-            );
+            $("#show-menu-report-stockopname").html(data);
         })
         .fail(function () {
             $("#show-menu-report-stockopname").html(
-                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                '<span class="badge badge-danger m-1">Gagal Baca Dokumen..</span>'
             );
         });
 });
