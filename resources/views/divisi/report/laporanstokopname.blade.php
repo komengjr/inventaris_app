@@ -79,24 +79,7 @@
             ->where('kd_cabang', $dataverif[0]->kd_cabang)
             ->get();
     @endphp
-    <div class="header">
-        <div class="absolute-kiri">
-            <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="data:image/png;base64, {{ $image }}"
-                width="152">
-            <hr style="padding: 0%; margin: 0%;">
-            <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">{{ $cabang[0]->alamat }}
-            </p>
-        </div>
-        <h5 style="padding-top: 20px; margin: 20px; left: 100px; padding-left: 155px;text-decoration: underline;">STOCK
-            OPNAME BARANG INVENTARIS</h5>
-        {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate(123123),) !!}"> --}}
 
-        <div class="absolute">
-            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::eyeColor(0, 0, 111, 115, 255, 114, 232)->style('dot')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate(123123),
-            ) !!}">
-        </div>
-    </div>
     <div class="body">
         <br>
         <table
