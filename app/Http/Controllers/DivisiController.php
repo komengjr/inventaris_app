@@ -94,8 +94,7 @@ class DivisiController extends Controller
                 $jumlahdataselesai = 1;
             }
             $datapinjam = DB::table('tbl_peminjaman')
-                ->join('tbl_staff', 'tbl_staff.nip', '=', 'tbl_peminjaman.pj_pinjam')
-                ->where('tbl_peminjaman.kd_cabang', auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
+                ->join('tbl_staff', 'tbl_staff.nip', '=', 'tbl_peminjaman.pj_pinjam')->orderBy('id_pinjam', 'DESC')->get();
             return view('divisi.menupeminjaman', ['datapinjam' => $datapinjam, 'jumlahdata' => $jumlahdata, 'jumlahdataselesai' => $jumlahdataselesai]);
 
         }
@@ -214,6 +213,23 @@ class DivisiController extends Controller
             ->get();
         $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam', $id)->get();
         return view('divisi.peminjaman.lengkapi_peminjaman', ['cekdata' => $cekdata, 'databarang' => $databarang]);
+    }
+    public function lengkapiverifikasidatapeminjaman($id)
+    {
+        $staff = DB::table('tbl_staff')->where('kd_cabang',Auth::user()->cabang)->get();
+        $data = DB::table('tbl_peminjaman')->where('id_pinjam',$id)->first();
+        $barangpinjam = DB::table('tbl_sub_peminjaman')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')->where('tbl_sub_peminjaman.id_pinjam',$id)->get();
+        return view('divisi.peminjaman.verifikasidatapeminjaman',['data'=>$data,'staff'=>$staff,'barangpinjam'=>$barangpinjam]);
+    }
+    public function lengkapipostverifikasidatadatapeminjaman(Request $request)
+    {
+        DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->id)->update([
+            'pj_pinjam_cabang'=>$request->pj_pinjam,
+            'deskripsi_tujuan'=>$request->deskripsi,
+            'status_pinjam'=>'10'
+        ]);
+        return redirect()->back();
     }
     public function inputdatabarangpinjam($id)
     {

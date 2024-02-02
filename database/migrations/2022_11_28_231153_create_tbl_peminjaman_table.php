@@ -23,8 +23,10 @@ class CreateTblPeminjamanTable extends Migration
             $table->string('pj_pinjam');
             $table->string('status_pinjam');
             $table->string('kd_cabang');
+            $table->string('pj_pinjam_cabang')->nullable();
             $table->string('tgl_selesai')->nullable();
             $table->text('deskripsi')->nullable();
+            $table->text('deskripsi_tujuan')->nullable();
             $table->timestamps();
         });
     }

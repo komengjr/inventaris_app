@@ -84,6 +84,8 @@ Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
 Route::post('divisi/peminjaman/editdata','DivisiController@editdatapeminjamanpost');
 Route::get('divisi/tambahdatapeminjaman',['as'=>'master/tambahdatapeminjaman','uses'=> 'DivisiController@tambahdatapeminjaman']);
 Route::get('divisi/peminjaman/lengkapi/{id}',['as'=>'master/peminjaman/lengkapi','uses'=> 'DivisiController@lengkapipeminjaman']);
+Route::get('divisi/peminjaman/verifikasidata/{id}',['as'=>'master/peminjaman/verifikasidata','uses'=> 'DivisiController@lengkapiverifikasidatapeminjaman']);
+Route::post('divisi/peminjaman/postverifikasidata/',['as'=>'master/peminjaman/postverifikasidata','uses'=> 'DivisiController@lengkapipostverifikasidatadatapeminjaman']);
 Route::get('divisi/peminjaman/inputdatabarang/{id}',['as'=>'divisi/peminjaman/inputdatabarang','uses'=> 'DivisiController@inputdatabarangpinjam']);
 Route::get('divisi/peminjaman/caridatabarang/{id}',['as'=>'divisi/peminjaman/caridatabarang','uses'=> 'DivisiController@caridatabarang']);
 Route::get('divisi/peminjaman/pengembaliandatabarang/{id}',['as'=>'divisi/peminjaman/pengembaliandatabarang','uses'=> 'DivisiController@pengembaliandatabarang']);
