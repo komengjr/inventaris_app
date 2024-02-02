@@ -5,9 +5,10 @@
                 <th>No</th>
                 <th>ID Inventaris</th>
                 <th>Nama Barang</th>
-                <th>Kode Lokasi</th>
                 <th>Merek</th>
                 <th>Type</th>
+                <th>Kode Lokasi</th>
+                <th>Nomor Ruangan</th>
                 {{-- <th>Serial</th> --}}
             </tr>
         </thead>
@@ -20,9 +21,10 @@
                     <td>{{$no++}}</td>
                     <td>{{$item->id_inventaris}}</td>
                     <td>{{$item->nama_barang}}</td>
-                    <td>{{$item->kd_lokasi}}</td>
                     <td>{{$item->merk}} </td>
                     <td>{{$item->type}}</td>
+                    <td>{{$item->kd_lokasi}}</td>
+                    <td>{{$item->id_nomor_ruangan_cbaang}}</td>
                     {{-- <td>{{$item->no_seri}}</td> --}}
                 </tr>
             @endforeach
