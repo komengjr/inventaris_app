@@ -154,8 +154,7 @@ class DivisiController extends Controller
         // }
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->get();
-        $image = base64_encode(file_get_contents(public_path('icon.png')));
-        $pdf = PDF::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif,  'ttd' => $ttd], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
+        $pdf = PDF::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif,  'ttd' => $ttd])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
         $pdf->output();
 
         $dompdf = $pdf->getDomPDF();
