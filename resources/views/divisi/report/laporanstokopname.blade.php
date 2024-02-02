@@ -102,7 +102,7 @@
 
         </table>
         <br>
-        <table
+        {{-- <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="1">
             <thead style="font-weight: bold;">
@@ -141,7 +141,7 @@
                     </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
         <hr>
         <h5>Data Belum Di Verif</h5>
         {{-- <table
