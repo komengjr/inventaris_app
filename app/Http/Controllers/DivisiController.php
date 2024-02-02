@@ -160,7 +160,8 @@ class DivisiController extends Controller
         $dompdf = $pdf->getDomPDF();
         $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
         $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
-        return base64_encode($pdf->stream());
+        // return base64_encode($pdf->stream());
+        return $pdf->stream();
     }
 
     public function tambahdatapeminjaman()
