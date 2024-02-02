@@ -360,12 +360,12 @@
 
         }).then((willDelete) => {
             if (willDelete) {
-                swal("Data Lokasi Berhasil Di Hapus", {
+                swal("Data Berhasil Di Update", {
                     icon: "success",
                 });
                 var id = $(this).data("id");
                 $.ajax({
-                        url: '../divisipostpenyelesaian/data/stockopname/'+id,
+                        url: '../../divisipostpenyelesaian/data/stockopname/'+id,
                         type: "GET",
                         // data: data,
                         // dataType: "html",
