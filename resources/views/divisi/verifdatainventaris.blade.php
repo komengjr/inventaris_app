@@ -131,7 +131,6 @@
                                                         <span class="badge badge-success m-1">Selesai</span>
                                                     @endif
                                                 </td>
-
                                                 <td class="text-center">
                                                     @if ($item->status_verif == 0)
                                                         <button class="btn-primary" data-toggle="modal"
@@ -146,8 +145,6 @@
                                                             data-id="{{ $item->kode_verif }}"><i class="fa fa-print"></i>
                                                             Cetak</button>
                                                     @endif
-
-
                                                 </td>
                                             </tr>
                                         @endforeach

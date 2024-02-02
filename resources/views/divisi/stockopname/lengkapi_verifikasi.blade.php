@@ -368,10 +368,10 @@
                         location.reload();
                     })
                     .fail(function() {
-                        swal("Batal Menghapus");
+                        swal("Batal Setuju");
                     });
             } else {
-                swal("Batal Menghapus");
+                swal("Batal Setuju");
             }
         });
     });

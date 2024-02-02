@@ -183,6 +183,21 @@ class DivisiController extends Controller
     }
     public function divisipostpenyelesaianstockopname($id)
     {
+        $log = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $id)->get();
+        foreach ($log as $value) {
+            if ($value->status_data_inventaris > 0) {
+                DB::table('tbl_verifdatainventaris_log')->insert(
+                    [
+                        'id_sub_verifdatainventaris' => $value->id_sub_verifdatainventaris,
+                        'id_inventaris' => $value->id_inventaris,
+                        'tgl_stockopnemae' => $value->created_at,
+                        'status_stockopname' => $value->status_data_inventaris,
+                        'ket_stockopname' => $value->keterangan_data_inventaris,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]
+                );
+            }
+        }
         DB::table('tbl_verifdatainventaris')
             ->where('kode_verif', $id)
             ->where('kd_cabang', Auth::user()->cabang)
