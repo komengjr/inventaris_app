@@ -130,6 +130,7 @@ class DivisiController extends Controller
     public function cetakreportstockopname($id)
     {
         $databrg = DB::table('tbl_sub_verifdatainventaris')
+            ->select('sub_tbl_inventory.no_inventaris','sub_tbl_inventory.nama_barang','sub_tbl_inventory.merk','sub_tbl_inventory.type','sub_tbl_inventory.no_seri','tbl_sub_verifdatainventaris.status_data_inventaris')
             ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
             ->where('tbl_sub_verifdatainventaris.kode_verif', $id)
             ->get();

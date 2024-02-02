@@ -102,7 +102,7 @@
 
         </table>
         <br>
-        {{-- <table
+        <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="1">
             <thead style="font-weight: bold;">
@@ -123,7 +123,7 @@
                 @foreach ($databrg as $item)
                     <tr>
                         <td class="text-center">{{ $no++ }}</td>
-                        <td>{{ $item->id }}/{{ $item->kd_inventaris }}/{{ $item->kd_cabang }}/{{ $item->th_perolehan }}
+                        <td>{{ $item->no_inventaris }}
                         </td>
                         <td>{{ $item->nama_barang }}</td>
                         <td>{{ $item->merk }} </td>
@@ -141,7 +141,7 @@
                     </tr>
                 @endforeach
             </tbody>
-        </table> --}}
+        </table>
         <hr>
         <h5>Data Belum Di Verif</h5>
         {{-- <table
