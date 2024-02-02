@@ -186,30 +186,25 @@
                     <td colspan="3" class="text-right" style="text-align: right;"><strong>{{$entitas->nama_cabang}} , {{ date('d - m - Y ') }}</strong></td>
                 </tr>
                 <tr>
-                    <td>1.</td>
-                    <td>2.</td>
-                    <td rowspan="5"></td>
+                    <td class="text-right">Penanggung Jawab Ruangan</td>
+                    <td class="text-right">Manajer Terkait</td>
+                    <td>SDM & Umum</td>
                 </tr>
                 <tr>
-                    <td>3.</td>
-                    <td>4.</td>
-                </tr>
-                <tr>
-                    <td>5.</td>
-                    <td>6.</td>
-                </tr>
-                <tr>
-                    <td>7.</td>
-                    <td>8.</td>
-                </tr>
-                <tr>
-                    <td>9.</td>
-                    <td>10.</td>
-                </tr>
-                <tr>
-                    <td>11.</td>
-                    <td>12.</td>
-                    <td style="text-align: center;">Manager SDM & Umum</td>
+                    <td class="text-center" style="padding-top: 10px; padding-bottom: 10px; width: 33%;">
+                        <br><br><br><br><br>
+
+
+                    </td>
+                    <td class="text-center" style="width: 33%;">
+                        <br><br><br><br><br>
+
+
+                    </td>
+                    <td class="text-center" style="width: 33%;">
+                        <br><br><br><br><br>
+
+                    </td>
                 </tr>
 
             </table>

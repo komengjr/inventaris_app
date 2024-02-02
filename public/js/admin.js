@@ -1650,3 +1650,31 @@ $(document).on("click", "#button-simpan-hasil-verifikasi", function (e) {
             );
         });
 });
+$(document).on("click", "#btn-show-data-belum-verif", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $("#menu-form-verifikasi-data-stockopname").html(
+        '<span class="badge badge-warning m-1">Loading..</span>'
+    );
+    $.ajax({
+        url: "../menu/verifdatainventaris/unverified/data/" + id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menu-form-verifikasi-data-stockopname").html(data);
+        })
+        .fail(function () {
+            Lobibox.notify("error", {
+                pauseDelayOnHover: true,
+                icon: "fa fa-info-circle",
+                continueDelayOnInactiveTab: false,
+                position: "center top",
+                showClass: "bounceIn",
+                hideClass: "bounceOut",
+                sound: false,
+                width: 400,
+                msg: "Hubungi Administrator Jika terjadi Eror",
+            });
+        });
+});

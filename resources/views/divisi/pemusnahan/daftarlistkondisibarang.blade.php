@@ -15,7 +15,6 @@
                         <th>Nama Barang</th>
                         <th>Merek / Type</th>
                         <th>Keterangan</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,7 +28,6 @@
                             <td>{{$item->nama_barang}}</td>
                             <td>{{$item->merk}} / {{$item->type}}</td>
                             <td>{{$item->keterangan_data_inventaris}}</td>
-                            <td><button class="btn-danger"><i class="fa fa-trash"></i></button></td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -5,7 +5,7 @@
     </button>
 </div>
 <div id='menuverifikasi'>
-    <div class="card-body ">
+    <div class="card-body " id="menu-form-verifikasi-data-stockopname">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h3>
@@ -312,7 +312,7 @@
                                 </tr>
                                 <tr>
                                     <th style="width:50%">Total Belum Verifikasi :</th>
-                                    <td><h5>{{$jumlah-$barangbaik-$barangmaintenance-$barangrusak}}</h5></td>
+                                    <td><h5 style="cursor: pointer; color: rgb(255, 0, 0);" id="btn-show-data-belum-verif" data-id="{{$cekdata->kode_verif}}">{{$jumlah-$barangbaik-$barangmaintenance-$barangrusak}}</h5> </td>
                                 </tr>
                                 <tr>
                                     <th style="width:50%">Total Data Keseluruhan :</th>
@@ -332,7 +332,12 @@
                 </div>
                 <div class="col-lg-9">
                     <div class="float-sm-right">
+                        @if (($barangbaik+$barangmaintenance+$barangrusak) == $jumlah)
                         <button class="btn-success" id="button-penyelesaian-stockopname" data-id="{{$cekdata->kode_verif}}"><i class="fa fa-save"></i> Penyelesaian & Simpan</button>
+                        @else
+                        <button class="btn-danger" disabled><i class="fa fa-info"></i> Belum Selesai</button>
+                        @endif
+
                         {{-- <button class="btn-info m-1" onclick="window.open('{{ url('divisi/verifikasi/print/verif', ['id'=>$cekdata->kode_verif]) }}', '', 'width=1200, height=700');"><i class="fa fa-print"></i> Preview PDF</button> --}}
                     </div>
                 </div>

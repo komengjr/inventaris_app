@@ -211,6 +211,7 @@ Route::get('divisi/verifikasi/print/pemusnahan/{id}','PdfController@printpemusna
 Route::get('divisi/datamutasi/print/datamutasi/{id}','PdfController@printdatamutasi');
 Route::get('divisi/verifikasi/peminjaman/pemyelesaian/{id}','PdfController@penyelesaianpeminjaman');
 Route::get('divisipostpenyelesaian/data/stockopname/{id}','DivisiController@divisipostpenyelesaianstockopname');
+Route::get('menu/verifdatainventaris/unverified/data/{id}','StockopnameController@unverifieddatastockopname');
 // Admin Controller
 //Mutasi
 Route::post('divisi/datamutasi/posttambahdata', 'DivisiController@posttambahdatamutasi');
