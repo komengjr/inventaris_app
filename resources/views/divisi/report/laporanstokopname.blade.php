@@ -75,9 +75,9 @@
 <body style="padding-top: 25px; padding-left: 0px;">
     @php
         $cabang = DB::table('tbl_cabang')
-            ->select('nama_cabang', 'alamat')
+            ->select('nama_cabang', 'alamat','city')
             ->where('kd_cabang', $dataverif[0]->kd_cabang)
-            ->get();
+            ->first();
     @endphp
 
     <div class="body">
@@ -86,7 +86,7 @@
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="0">
             <tr>
-                <td colspan="3" class="text-right"><strong>SDM/323/P-33/123 </strong></td>
+                <td colspan="3" class="text-right"><strong> </strong></td>
             </tr>
             <tr>
                 <td colspan="3">
@@ -177,7 +177,7 @@
                 border="1">
                 <tr>
                     <td colspan="2" style="border-right: 1px solid #ffffff;">Mengetahui :</td>
-                    <td colspan="1" class="text-right" style="text-align: right;"><strong>Pontianak , {{ date('Y-m-d H:i:s') }}</strong></td>
+                    <td colspan="1" class="text-right" style="text-align: right;"><strong>{{$cabang->city}} , {{ date('Y-m-d H:i:s') }}</strong></td>
                 </tr>
                 <tr>
                     <td class="text-center" style="padding-top: 15px; padding-bottom: 15px; width: 33%;">
