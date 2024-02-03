@@ -63,9 +63,9 @@
     }
 
     div.footer {
-        position: fixed;
+        position: static;
         left: 0;
-        bottom: 20px;
+        bottom: 0px;
         border: 0px solid #302a2a;
         font-size: 15px;
     }
@@ -171,6 +171,7 @@
                 @endforeach
             </tbody>
         </table>
+        <br><br>
         <div class="footer">
             <table
                 style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
