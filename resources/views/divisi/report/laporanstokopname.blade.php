@@ -63,8 +63,9 @@
     }
 
     div.footer {
-        position: fixed;
+        position: abs;
         left: 0;
+        padding-top: 5%;
         bottom: 20px;
         border: 0px solid #302a2a;
         font-size: 15px;
