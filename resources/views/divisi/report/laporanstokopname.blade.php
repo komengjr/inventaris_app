@@ -11,7 +11,6 @@
         margin-top: 5px;
         font-family: Calibri (Body);
     }
-
 </style>
 <style>
     div.header {
@@ -55,6 +54,7 @@
     table {
         border-collapse: collapse;
     }
+
     table tr td p {
 
         padding: 0px;
@@ -63,7 +63,7 @@
     }
 
     div.footer {
-        position: static;
+        position: fixed;
         left: 0;
         bottom: 0px;
         border: 0px solid #302a2a;
@@ -75,7 +75,7 @@
 <body style="padding-top: 25px; padding-left: 0px;">
     @php
         $cabang = DB::table('tbl_cabang')
-            ->select('nama_cabang', 'alamat','city')
+            ->select('nama_cabang', 'alamat', 'city')
             ->where('kd_cabang', $dataverif[0]->kd_cabang)
             ->first();
     @endphp
@@ -161,24 +161,24 @@
                     $no = 1;
                 @endphp
                 @foreach ($data as $data)
-                        <tr>
-                            <td class="text-center">{{ $no++ }}</td>
-                            <td>{{ $data->no_inventaris }}</td>
-                            <td>{{ $data->nama_barang }}</td>
-                            <td>{{ $data->merk }}</td>
-                            <td>{{ $data->type }}</td>
-
+                    <tr>
+                        <td class="text-center">{{ $no++ }}</td>
+                        <td>{{ $data->no_inventaris }}</td>
+                        <td>{{ $data->nama_barang }}</td>
+                        <td>{{ $data->merk }}</td>
+                        <td>{{ $data->type }}</td>
                 @endforeach
             </tbody>
         </table>
-        <br><br>
+        <br><br><br><br>
         <div class="footer">
             <table
                 style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
                 border="1">
                 <tr>
                     <td colspan="2" style="border-right: 1px solid #ffffff;">Mengetahui :</td>
-                    <td colspan="1" class="text-right" style="text-align: right;"><strong>{{$cabang->city}} , {{ date('Y-m-d H:i:s') }}</strong></td>
+                    <td colspan="1" class="text-right" style="text-align: right;"><strong>{{ $cabang->city }} ,
+                            {{ date('Y-m-d H:i:s') }}</strong></td>
                 </tr>
                 <tr>
                     <td class="text-center" style="padding-top: 15px; padding-bottom: 15px; width: 33%;">
