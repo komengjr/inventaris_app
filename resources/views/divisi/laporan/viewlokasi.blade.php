@@ -23,8 +23,9 @@
         <div class="pt-3" id="hasil-report-ruangan"></div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn-primary" id="button-cetak-excel-ruangan"><i class="fa fa-download"></i> EXCEL</button>
-        <button type="button" class="btn-success" id="button-print-laporan-ruangan-pdf" data-url="{{ url('menu/postmasterlaporan/lokasi-barang-cabang-ruangan', []) }}"><i class="fa fa-print"></i> PDF</button>
+        <button type="button" class="btn-dark" id="button-cetak-barcode-ruangan" data-url="{{ url('menu/postmasterlaporan/lokasi-barcode-barang-cabang-ruangan', []) }}"><i class="fa fa-download"></i> Print Barcode</button>
+        <button type="button" class="btn-primary" id="button-cetak-excel-ruangan"><i class="fa fa-download"></i> Export Excel</button>
+        <button type="button" class="btn-success" id="button-print-laporan-ruangan-pdf" data-url="{{ url('menu/postmasterlaporan/lokasi-barang-cabang-ruangan', []) }}"><i class="fa fa-print"></i> Export PDF</button>
     </div>
 </div>
 
@@ -73,4 +74,34 @@
                 });
             });
     });
+
+    $(document).on("click", "#button-cetak-barcode-ruangan", function (e) {
+    e.preventDefault();
+    var url = $(this).data("url");
+    var data = $("#form-report-pilihan-ruangan").serialize();
+    $("#hasil-report-ruangan").html(
+        '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+    );
+    $.ajax({
+        url: url,
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+        },
+        type: "POST",
+        data: data,
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#hasil-report-ruangan").html(
+                '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+            );
+        })
+        .fail(function () {
+            $("#hasil-report-ruangan").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 </script>

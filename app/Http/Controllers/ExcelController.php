@@ -25,4 +25,16 @@ class ExcelController extends Controller
         ->where('id_nomor_ruangan_cbaang',$id)->first();
         return Excel::download(new DataInventarisExportRuangan(Auth::user()->cabang,$id), 'inventaris_'.$id.'('.$datalokasi->nama_lokasi.').xlsx');
     }
+    public function exportbarcoderuangan($id)
+    {
+        $data = DB::table('sub_tbl_inventory')
+        ->select('sub_tbl_inventory.*')
+        ->where('id_nomor_ruangan_cbaang',$id)
+        ->where('kd_cabang',auth::user()->cabang)
+        ->get();
+        // dd($data);
+        $qrcode = base64_encode(QrCode::format('png')->size(400)->errorCorrection('H')->generate('string'));
+        $pdf = PDF::loadview('index',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
+        return base64_encode($pdf->stream());
+    }
 }

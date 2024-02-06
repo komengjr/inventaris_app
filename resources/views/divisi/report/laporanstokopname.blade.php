@@ -56,7 +56,6 @@
     }
 
     table tr td p {
-
         padding: 0px;
         margin: 0px;
         font-weight: bold;
@@ -65,6 +64,7 @@
     div.footer {
         position: fixed;
         left: 0;
+        top: 10%;
         bottom: 0px;
         border: 0px solid #302a2a;
         font-size: 15px;

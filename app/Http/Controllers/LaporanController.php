@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+// use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use App\Imports\LogInventarisImport;
-use Maatwebsite\Excel\Facades\Excel;
+// use Illuminate\Support\Facades\Session;
+// use App\Imports\LogInventarisImport;
+// use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class LaporanController extends Controller
@@ -58,6 +58,18 @@ class LaporanController extends Controller
         ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang',$request->kd_lokasi)->first();
         $nocabang = DB::table('tbl_setting_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
         $pdf = PDF::loadview('divisi.laporan.report.per-ruangan',['data'=>$data,'dataruangan'=>$dataruangan,'nocabang'=>$nocabang])->setPaper('A4','landscape');
+        return base64_encode($pdf->stream());
+    }
+    public function cetakbarcodebarangperuanganpdf(Request $request)
+    {
+        $data = DB::table('sub_tbl_inventory')
+        ->select('sub_tbl_inventory.*')
+        ->where('id_nomor_ruangan_cbaang',$request->kd_lokasi)
+        ->where('kd_cabang',Auth::user()->cabang)
+        ->get();
+        // dd($data);
+        $customPaper = array(0,0,256.00,125.80);
+        $pdf = PDF::loadview('pdf.cetak_barang',['data'=>$data])->setPaper($customPaper,'landscape')->setOptions(['defaultFont' => 'Courier']);
         return base64_encode($pdf->stream());
     }
     public function reportpeminjaman()
