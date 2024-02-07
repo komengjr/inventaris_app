@@ -179,7 +179,16 @@
                                         <td>{{ $datapinjam->nama_kegiatan }}</td>
                                         <td>{{ $datapinjam->tgl_pinjam }}</td>
                                         <td>{{ $datapinjam->batas_tgl_pinjam }}</td>
-                                        <td>{{ $datapinjam->nama_staff }}</td>
+                                        <td>
+                                            @php
+                                                $nama_staff = DB::table('tbl_staff')->where('nip',$datapinjam->pj_pinjam_cabang)->first();
+                                            @endphp
+                                            @if ($nama_staff)
+                                                {{$nama_staff->nama_staff}}
+                                            @else
+
+                                            @endif
+                                        </td>
                                         {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
                                         <td class="text-center">
                                             @if ($datapinjam->status_pinjam == 0)
