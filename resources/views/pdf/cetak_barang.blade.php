@@ -6,29 +6,26 @@
     <title>Print Barcode</title>
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"> --}}
 </head>
-<style>
+@php
+    echo "<style>@page { margin-left: 2px; margin-top: 15px; size: ".($lebar+0.4)."cm ".$panjang."cm landscape; } </style>"
+@endphp
 
-    @page { margin-left: 2px;
-            margin-top: 4px;
-            size: 3cm 5.5cm landscape;
-        }
-
-</style>
 <style>
     div.relative {
         position: relative;
-        left: 0px;
-        width: 200px;
-        height: 50px;
+        /* top: -8px; */
+        /* left: 0px; */
+        width: {{$lebar}}cm;
+        height: {{$lebar-2}}cm;
         /* border: 2px solid #ff0000; */
     }
 
     div.absolute {
         position: absolute;
         /* top: -1px; */
-        right: -3px;
-        width: 95px;
-        height: 104px;
+        right: 0px;
+        width: 0cm;
+        height: 0cm;
         /* border: 1px solid #ff0404; */
     }
 
@@ -58,13 +55,14 @@
     }
 </style>
 </head>
+<body>
 
     @foreach ($data as $data)
         @if ($data->kd_lokasi == '-')
         @else
             <div class="relative">
 
-                <img style="width: 105px; height: 105px;" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
+                <img style="width: {{$lebar-0.2}}cm; height: {{$lebar-0.2}}cm;" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
                                                 ->backgroundColor(255, 255, 255)
                                                 ->size(507)
                                                 ->style('round')
@@ -73,7 +71,7 @@
                                                 ->mergeString(Storage::get('qr.png'), .2)
                                                 ->generate($data->no_inventaris)) !!} ">
                 <div class="absolute table-responsive">
-                    <table style="font-size: 7.5px; margin: 0px; padding: 0px; width: 95px; height: 100px;" border="1">
+                    <table style="font-size: 0.2cm; margin: 0px; padding: 0px; width: {{$lebar-2}}cm; height: {{$lebar-2}}cm;" border="1">
                         <tr>
 
                             <td colspan="3"><strong>{{ $data->nama_barang }}</strong></td>
@@ -124,4 +122,5 @@
         @endif
     @endforeach
 
+</body>
 </html>

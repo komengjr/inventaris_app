@@ -65,8 +65,9 @@
     }
 
     div.footer {
-        /* position: fixed; */
+        position: fixed;
         left: 0;
+        width: 100%;
         bottom: 15px;
         border: 0px solid #302a2a;
         font-size: 15px;
@@ -183,7 +184,7 @@
         <div class="footer">
             <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);" border="1">
                 <tr>
-                    <td colspan="2" style="text-align: center;">PENANGGUNG JAWAB RUANGAN</td>
+                    <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
                     <td colspan="1" class="text-right" style="text-align: right; width: 30%;"><strong>{{$entitas->nama_cabang}} , {{ date('d - m - Y ') }}</strong></td>
                 </tr>
                 <tr>

@@ -164,6 +164,21 @@
                                     </div>
                                 </div>
                             </li>
+                            <li class="list-group-item">
+                                <div class="media align-items-center">
+                                    <div class="icon-box border border-light">
+                                        <i class="zmdi zmdi-assignment"></i>
+                                    </div>
+                                    <div class="media-body ml-3">
+                                        <h6 class="mb-0">Barang Berdasarkan Klasifikasi</h6>
+                                    </div>
+                                    <div class="date">
+                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"
+                                            id="button-laporan-barang-klasifikasi"><i
+                                                class="zmdi zmdi-assignment"></i></button>
+                                    </div>
+                                </div>
+                            </li>
 
                         </ul>
 

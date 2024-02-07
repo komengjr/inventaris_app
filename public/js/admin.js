@@ -1527,6 +1527,22 @@ $(document).on("click", "#button-laporan-barang-lokasi", function (e) {
             );
         });
 });
+$(document).on("click", "#button-laporan-barang-klasifikasi", function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: "../menu/masterlaporan/klasifikasi-barang-cabang/",
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menu-laporan").html(data);
+        })
+        .fail(function () {
+            $("#menu-laporan").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 $(document).on("click", "#button-print-laporan-ruangan-pdf", function (e) {
     e.preventDefault();
     var url = $(this).data("url");

@@ -288,7 +288,7 @@
 
         <div class="modal-footer">
             {{-- <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button> --}}
-            <button type="submit" class="btn-primary" id="updatedatainventori"><i class="fa fa-save"></i> Update
+            <button type="submit" class="btn-primary" id="updatedatainventori"><i class="fa fa-save"></i> Update s
                 Data</button>
             {{-- <button type="submit" class="btn btn-primary" id="updatedatabarang" data-url="{{ route('updatedatabarang1',['id' => $data[0]->id])}}"><i class="fa fa-save" ></i> Update Data</button> --}}
         </div>

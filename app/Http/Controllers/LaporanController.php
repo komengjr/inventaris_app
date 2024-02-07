@@ -25,52 +25,58 @@ class LaporanController extends Controller
     public function allbarangcabang()
     {
         $data = DB::table('sub_tbl_inventory')
-        ->select('no_inventaris','nama_barang','kd_inventaris','kd_lokasi','merk','type','harga_perolehan','status_barang')
-        ->where('kd_cabang',Auth::user()->cabang)->get();
-        return view('divisi.laporan.view',['data'=>$data]);
+            ->select('no_inventaris', 'nama_barang', 'kd_inventaris', 'kd_lokasi', 'merk', 'type', 'harga_perolehan', 'status_barang')
+            ->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('divisi.laporan.view', ['data' => $data]);
     }
     public function cetakallbarangcabang()
     {
         $data = DB::table('sub_tbl_inventory')
-        ->select('no_inventaris','nama_barang','merk','type','harga_perolehan')
-        ->where('kd_cabang',Auth::user()->cabang)->get();
+            ->select('no_inventaris', 'nama_barang', 'merk', 'type', 'harga_perolehan')
+            ->where('kd_cabang', Auth::user()->cabang)->get();
         // $pdf = PDF::loadview('divisi.laporan.report.all-barang',['data'=>$data])->setPaper('A4','potrait');
         // return base64_encode($pdf->stream());
         // return view('divisi.laporan.report.all-barang',['data'=>$data]);
-        $pdf = PDF::loadview('divisi.laporan.report.all-barang',['data'=>$data]);
-    	return $pdf->download('data_report.pdf');
+        $pdf = PDF::loadview('divisi.laporan.report.all-barang', ['data' => $data]);
+        return $pdf->download('data_report.pdf');
     }
     public function reportlokasibarangcabang()
     {
         $data = DB::table('tbl_nomor_ruangan_cabang')
-        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
-        ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->get();
-        return view('divisi.laporan.viewlokasi',['data'=>$data]);
+            ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+        return view('divisi.laporan.viewlokasi', ['data' => $data]);
     }
     public function cetakbarangperuanganpdf(Request $request)
     {
         $data = DB::table('sub_tbl_inventory')
-        ->select('no_inventaris','nama_barang','merk','type','harga_perolehan','th_perolehan')
-        ->where('kd_cabang',Auth::user()->cabang)
-        ->where('id_nomor_ruangan_cbaang',$request->kd_lokasi)->get();
+            ->select('no_inventaris', 'nama_barang', 'merk', 'type', 'harga_perolehan', 'th_perolehan')
+            ->where('kd_cabang', Auth::user()->cabang)
+            ->where('id_nomor_ruangan_cbaang', $request->kd_lokasi)->get();
         $dataruangan = DB::table('tbl_nomor_ruangan_cabang')
-        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
-        ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang',$request->kd_lokasi)->first();
-        $nocabang = DB::table('tbl_setting_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
-        $pdf = PDF::loadview('divisi.laporan.report.per-ruangan',['data'=>$data,'dataruangan'=>$dataruangan,'nocabang'=>$nocabang])->setPaper('A4','landscape');
+            ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', $request->kd_lokasi)->first();
+        $nocabang = DB::table('tbl_setting_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
+        $pdf = PDF::loadview('divisi.laporan.report.per-ruangan', ['data' => $data, 'dataruangan' => $dataruangan, 'nocabang' => $nocabang])->setPaper('A4', 'landscape');
         return base64_encode($pdf->stream());
     }
     public function cetakbarcodebarangperuanganpdf(Request $request)
     {
-        $data = DB::table('sub_tbl_inventory')
-        ->select('sub_tbl_inventory.*')
-        ->where('id_nomor_ruangan_cbaang',$request->kd_lokasi)
-        ->where('kd_cabang',Auth::user()->cabang)
-        ->get();
-        // dd($data);
-        $customPaper = array(0,0,256.00,125.80);
-        $pdf = PDF::loadview('pdf.cetak_barang',['data'=>$data])->setPaper($customPaper,'landscape')->setOptions(['defaultFont' => 'Courier']);
-        return base64_encode($pdf->stream());
+        if ($request->kd_lokasi == "" || $request->panjang = "" || $request->lebar == "") {
+            return 'null';
+        } else {
+            $data = DB::table('sub_tbl_inventory')
+                ->select('sub_tbl_inventory.*')
+                ->where('id_nomor_ruangan_cbaang', $request->kd_lokasi)
+                ->where('kd_cabang', Auth::user()->cabang)
+                ->get();
+            $panjangx = $request->panjang_/2.54*72;
+            $lebar = $request->lebar/2.54*72;
+            $customPaper = array(0, 0, $panjangx, $lebar);
+            $pdf = PDF::loadview('pdf.cetak_barang', ['data' => $data, 'panjang'=>$request->panjang_,'lebar'=>$request->lebar])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'Courier']);
+            return base64_encode($pdf->stream());
+        }
+
     }
     public function reportpeminjaman()
     {
@@ -82,13 +88,27 @@ class LaporanController extends Controller
     }
     public function postreportpeminjaman(Request $request)
     {
-        $data = DB::table('tbl_peminjaman')->where('kd_cabang',Auth::user()->cabang)->whereBetween('tgl_pinjam', [$request->startdate, $request->enddate])->get();
-        $pdf = PDF::loadview('divisi.laporan.report.laporanpeminjaman',['data'=>$data,'startdate'=>$request->startdate,'enddate'=>$request->enddate])->setPaper('A4','landscape');
-    	return base64_encode($pdf->stream());
+        $data = DB::table('tbl_peminjaman')->where('kd_cabang', Auth::user()->cabang)->whereBetween('tgl_pinjam', [$request->startdate, $request->enddate])->get();
+        $pdf = PDF::loadview('divisi.laporan.report.laporanpeminjaman', ['data' => $data, 'startdate' => $request->startdate, 'enddate' => $request->enddate])->setPaper('A4', 'landscape');
+        return base64_encode($pdf->stream());
     }
     public function postreportstokopname(Request $request)
     {
-        $pdf = PDF::loadview('divisi.laporan.report.laporanstokopname',['data'=>11]);
-    	return base64_encode($pdf->stream());
+        $pdf = PDF::loadview('divisi.laporan.report.laporanstokopname', ['data' => 11]);
+        return base64_encode($pdf->stream());
+    }
+    public function reportklasifikasibarangcabang()
+    {
+        $data = DB::table('tbl_inventory')->get();
+        return view('divisi.laporan.viewklasifikasi',['data'=>$data]);
+    }
+    public function filterdataklasifikasi(Request $request)
+    {
+        $items = DB::table('sub_tbl_inventory')->where('kd_inventaris',91838130913801923809)->get();
+        for ($i=0; $i < $request->total; $i++) {
+            $data[$i] = DB::table('sub_tbl_inventory')->where('kd_inventaris',$request->klasifikasi[$i])->get();
+            $items=$items->merge($data[$i]);
+        }
+        return view('divisi.laporan.datafilterklasifikasi',['data'=>$items]);
     }
 }

@@ -244,6 +244,7 @@ Route::get('hapussubtablemusnah/{id}/{no}',['as'=>'hapussubtablemusnah','uses'=>
 Route::get('menu/masterlaporan','LaporanController@laporan');
 Route::get('menu/masterlaporan/all-barang-cabang',['as'=>'menu/masterlaporan/all-barang-cabang','uses'=> 'LaporanController@allbarangcabang']);
 Route::get('menu/masterlaporan/lokasi-barang-cabang',['as'=>'menu/masterlaporan/lokasi-barang-cabang','uses'=> 'LaporanController@reportlokasibarangcabang']);
+Route::get('menu/masterlaporan/klasifikasi-barang-cabang',['as'=>'menu/masterlaporan/klasifikasi-barang-cabang','uses'=> 'LaporanController@reportklasifikasibarangcabang']);
 Route::get('menureport/masterlaporan/cetak-all-barang-cabang',['as'=>'menureport/masterlaporan/cetak-all-barang-cabang','uses'=> 'LaporanController@cetakallbarangcabang']);
 Route::post('menu/postmasterlaporan/lokasi-barang-cabang-ruangan',['as'=>'menu/postmasterlaporan/lokasi-barang-cabang-ruangan','uses'=> 'LaporanController@cetakbarangperuanganpdf']);
 Route::post('menu/postmasterlaporan/lokasi-barcode-barang-cabang-ruangan',['as'=>'menu/postmasterlaporan/lokasi-barcode-barang-cabang-ruangan','uses'=> 'LaporanController@cetakbarcodebarangperuanganpdf']);
@@ -251,6 +252,7 @@ Route::get('menu/masterlaporan/report-peminjaman/',['as'=>'menu/masterlaporan/re
 Route::get('menu/masterlaporan/report-stokopname/',['as'=>'menu/masterlaporan/report-stokopname/','uses'=> 'LaporanController@reportstokopname']);
 Route::post('menu/postmasterlaporan/laporanpeminjaman',['as'=>'menu/postmasterlaporan/laporanpeminjaman','uses'=> 'LaporanController@postreportpeminjaman']);
 Route::post('menu/postmasterlaporan/laporanstokopname',['as'=>'menu/postmasterlaporan/laporanstokopname','uses'=> 'LaporanController@postreportstokopname']);
+Route::post('menu/postmasterlaporan/filterdataklasifikasi',['as'=>'menu/postmasterlaporan/filterdataklasifikasi','uses'=> 'LaporanController@filterdataklasifikasi']);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
