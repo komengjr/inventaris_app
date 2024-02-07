@@ -40,7 +40,7 @@
                 </select>
             </div>
             <div class="col-md-12">
-                <label for="">Penanggung Jawab Peminjam</label>
+                <label for="">Penanggung Jawab Cabang</label>
                 <select name="pj_pinjam" id="" class="form-control single-select">
                     <option value="">Pilih Staff</option>
                     @foreach ($staff as $staff)

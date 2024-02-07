@@ -206,7 +206,7 @@
                                                             class="fa fa-file-text"></i> Verif Data</a>
                                                     <div class="dropdown-divider"></div>
                                                 @elseif($datapinjam->status_pinjam == '10')
-                                                    <span class="badge badge-warning p-2">Barang Sedang di pinjam</span>
+                                                    <span class="badge badge-warning p-2">Barang Berhasil dipinjam</span>
                                                 @else
                                                     <a href="javaScript:void();" class="dropdown-item"
                                                         id="button-print-hasipeminjaman" data-toggle="modal"
