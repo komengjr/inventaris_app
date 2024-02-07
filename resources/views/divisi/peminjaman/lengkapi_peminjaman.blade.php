@@ -138,10 +138,9 @@
 <div class="modal-footer">
 
     <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-    <button
-        onclick="window.open('{{ url('divisi/verifikasi/print/peminjaman', ['id'=>$cekdata[0]->tiket_peminjaman]) }}', '', 'width=1200, height=700');"class="btn-info"
-        id="" data-url="asdasd"><i class="fa fa-print"></i> Cetak / Print</button>
-        @if ($cekdata[0]->status_pinjam == 0)
+    {{-- <button onclick="window.open('{{ url('divisi/verifikasi/print/peminjaman', ['id'=>$cekdata[0]->tiket_peminjaman]) }}', '', 'width=1200, height=700');"class="btn-info"
+        id="" data-url="asdasd"><i class="fa fa-print"></i> Cetak / Print</button> --}}
+        @if ($cekdata[0]->status_pinjam == 0 || $cekdata[0]->status_pinjam == 10)
         <a href="{{ url('divisi/verifikasi/peminjaman/pemyelesaian', ['id'=>$cekdata[0]->tiket_peminjaman]) }}"><button type="submit" class="btn-success" style="float: left;"><i class="fa fa-save"></i> Penyelesaian</button></a>
         @endif
 

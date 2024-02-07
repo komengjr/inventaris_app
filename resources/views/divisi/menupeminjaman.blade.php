@@ -110,7 +110,7 @@
                                         <th>Nama Kegiatan</th>
                                         <th>Tanggal Peminjaman</th>
                                         <th>Batas Tanggal Peminjaman</th>
-                                        <th>Penanggung Jawab</th>
+                                        <th>Penanggung Jawab Cabang</th>
                                         <th>Status Peminjaman</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -120,119 +120,139 @@
                                         $no = 1;
                                     @endphp
                                     @foreach ($datapinjam as $datapinjam)
-                                    @if ($datapinjam->kd_cabang == Auth::user()->cabang)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $datapinjam->tiket_peminjaman }}</td>
-                                        <td>{{ $datapinjam->nama_kegiatan }}</td>
-                                        <td>{{ $datapinjam->tgl_pinjam }}</td>
-                                        <td>{{ $datapinjam->batas_tgl_pinjam }}</td>
-                                        <td>{{ $datapinjam->nama_staff }}</td>
-                                        {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
-                                        <td class="text-center">
-                                                @if ($datapinjam->status_pinjam == 0)
-                                                    <span class="badge badge-danger p-2">Pending</span>
-                                                @elseif($datapinjam->status_pinjam == 10)
-                                                    <span class="badge badge-warning p-2">Proses</span>
-                                                @else
-                                                    <span class="badge badge-success p-2">Done</span>
-                                                @endif
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button"
-                                                class="btn-info waves-effect waves-light dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @if ($datapinjam->kd_cabang == Auth::user()->cabang)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>
+                                                    @if ($datapinjam->kd_cabang == $datapinjam->tujuan_cabang)
+                                                        <span class="badge badge-primary p-1">Antar Divisi</span> <br>
+                                                    @else
+                                                        <span class="badge badge-secondary p-1">Antar Cabang</span> <br>
+                                                    @endif
+                                                    {{ $datapinjam->tiket_peminjaman }}
+                                                </td>
+                                                <td>{{ $datapinjam->nama_kegiatan }}</td>
+                                                <td>{{ $datapinjam->tgl_pinjam }}</td>
+                                                <td>{{ $datapinjam->batas_tgl_pinjam }}</td>
+                                                <td>{{ $datapinjam->nama_staff }}</td>
+                                                {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
+                                                <td class="text-center">
+                                                    @if ($datapinjam->status_pinjam == 0)
+                                                        <span class="badge badge-danger p-2">Pending</span>
+                                                    @elseif($datapinjam->status_pinjam == 10)
+                                                        <span class="badge badge-warning p-2">Proses</span>
+                                                    @else
+                                                        <span class="badge badge-success p-2">Done</span>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button"
+                                                        class="btn-info waves-effect waves-light dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                @if ($datapinjam->status_pinjam == 0 || $datapinjam->status_pinjam == 10)
-                                                    <a href="javaScript:void();" class="dropdown-item"
-                                                        class="btn-warning" data-toggle="modal"
-                                                        data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                        data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i
-                                                            class="fa fa-file-text"></i> Lengkapi Data</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a href="javaScript:void();" class="dropdown-item"
-                                                        data-toggle="modal" data-target="#tambahdatabaru"
-                                                        id="editdatapeminjamaninventaris"
-                                                        data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i
-                                                            class="fa fa-pencil-square-o"></i> Edit</a>
-                                                @else
-                                                    <a href="javaScript:void();" class="dropdown-item"
-                                                        id="button-print-hasipeminjaman" data-toggle="modal"
-                                                        data-target="#modal-report"
-                                                        data-id="{{ $datapinjam->tiket_peminjaman }}"><i
-                                                            class="fa fa-print"></i>
-                                                        Cetak / Print</a>
-                                                @endif
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        @if ($datapinjam->status_pinjam == 0)
+                                                            <a href="javaScript:void();" class="dropdown-item"
+                                                                class="btn-warning" data-toggle="modal"
+                                                                data-target="#lengkapipeminjaman"
+                                                                id="tombollengkapipeminjaman"
+                                                                data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i
+                                                                    class="fa fa-file-text"></i> Lengkapi Data</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="javaScript:void();" class="dropdown-item"
+                                                                data-toggle="modal" data-target="#tambahdatabaru"
+                                                                id="editdatapeminjamaninventaris"
+                                                                data-url="{{ url('divisi/peminjaman/editdatatablepeminjaman', ['id' => $datapinjam->id_pinjam]) }}"><i
+                                                                    class="fa fa-pencil-square-o"></i> Edit</a>
+                                                        @elseif($datapinjam->status_pinjam == 10)
+                                                            <a href="javaScript:void();" class="dropdown-item"
+                                                                class="btn-warning" data-toggle="modal"
+                                                                data-target="#lengkapipeminjaman"
+                                                                id="tombollengkapipeminjaman"
+                                                                data-url="{{ url('divisi/peminjaman/lengkapi', ['id' => $datapinjam->id_pinjam]) }}"><i
+                                                                    class="fa fa-file-text"></i> Penyelesaian Data</a>
+                                                        @else
+                                                            <a href="javaScript:void();" class="dropdown-item"
+                                                                id="button-print-hasipeminjaman" data-toggle="modal"
+                                                                data-target="#modal-report"
+                                                                data-id="{{ $datapinjam->tiket_peminjaman }}"><i
+                                                                    class="fa fa-print"></i>
+                                                                Cetak / Print</a>
+                                                        @endif
 
-                                                {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
-                                            </div>
-
-
-                                        </td>
-                                    </tr>
-                                    @elseif ($datapinjam->tujuan_cabang == Auth::user()->cabang)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $datapinjam->tiket_peminjaman }}</td>
-                                        <td>{{ $datapinjam->nama_kegiatan }}</td>
-                                        <td>{{ $datapinjam->tgl_pinjam }}</td>
-                                        <td>{{ $datapinjam->batas_tgl_pinjam }}</td>
-                                        <td>
-                                            @php
-                                                $nama_staff = DB::table('tbl_staff')->where('nip',$datapinjam->pj_pinjam_cabang)->first();
-                                            @endphp
-                                            @if ($nama_staff)
-                                                {{$nama_staff->nama_staff}}
-                                            @else
-
-                                            @endif
-                                        </td>
-                                        {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
-                                        <td class="text-center">
-                                            @if ($datapinjam->status_pinjam == 0)
-                                                <span class="badge badge-danger p-2">Pending</span>
-                                            @elseif($datapinjam->status_pinjam == 10)
-                                                <span class="badge badge-warning p-2">Proses</span>
-                                            @else
-                                                <span class="badge badge-success p-2">Done</span>
-                                            @endif
-
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button"
-                                                class="btn-info waves-effect waves-light dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                @if ($datapinjam->status_pinjam == '0')
-                                                    <a href="javaScript:void();" class="dropdown-item"
-                                                        class="btn-warning" data-toggle="modal"
-                                                        data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                        data-url="{{ url('divisi/peminjaman/verifikasidata', ['id' => $datapinjam->id_pinjam]) }}"><i
-                                                            class="fa fa-file-text"></i> Verif Data</a>
-                                                    <div class="dropdown-divider"></div>
-                                                @elseif($datapinjam->status_pinjam == '10')
-                                                    <span class="badge badge-warning p-2">Barang Berhasil dipinjam</span>
-                                                @else
-                                                    <a href="javaScript:void();" class="dropdown-item"
-                                                        id="button-print-hasipeminjaman" data-toggle="modal"
-                                                        data-target="#modal-report"
-                                                        data-id="{{ $datapinjam->tiket_peminjaman }}"><i
-                                                            class="fa fa-print"></i>
-                                                        Cetak / Print</a>
-                                                @endif
-
-                                                {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
-                                            </div>
+                                                        {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
+                                                    </div>
 
 
-                                        </td>
-                                    </tr>
-                                    @endif
+                                                </td>
+                                            </tr>
+                                        @elseif ($datapinjam->tujuan_cabang == Auth::user()->cabang)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td><span class="badge badge-secondary p-1">Antar Cabang</span> <br>
+                                                    {{ $datapinjam->tiket_peminjaman }}
+                                                </td>
+                                                <td>{{ $datapinjam->nama_kegiatan }}</td>
+                                                <td>{{ $datapinjam->tgl_pinjam }}</td>
+                                                <td>{{ $datapinjam->batas_tgl_pinjam }}</td>
+                                                <td>
+                                                    @php
+                                                        $nama_staff = DB::table('tbl_staff')
+                                                            ->where('nip', $datapinjam->pj_pinjam_cabang)
+                                                            ->first();
+                                                    @endphp
+                                                    @if ($nama_staff)
+                                                        {{ $nama_staff->nama_staff }}
+                                                    @else
+                                                    @endif
+                                                </td>
+                                                {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
+                                                <td class="text-center">
+                                                    @if ($datapinjam->status_pinjam == 0)
+                                                        <span class="badge badge-danger p-2">Pending</span>
+                                                    @elseif($datapinjam->status_pinjam == 10)
+                                                        <span class="badge badge-warning p-2">Proses</span>
+                                                    @else
+                                                        <span class="badge badge-success p-2">Done</span>
+                                                    @endif
 
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button"
+                                                        class="btn-info waves-effect waves-light dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        @if ($datapinjam->status_pinjam == '0')
+                                                            <a href="javaScript:void();" class="dropdown-item"
+                                                                class="btn-warning" data-toggle="modal"
+                                                                data-target="#lengkapipeminjaman"
+                                                                id="tombollengkapipeminjaman"
+                                                                data-url="{{ url('divisi/peminjaman/verifikasidata', ['id' => $datapinjam->id_pinjam]) }}"><i
+                                                                    class="fa fa-file-text"></i> Verif Data</a>
+                                                            <div class="dropdown-divider"></div>
+                                                        @elseif($datapinjam->status_pinjam == '10')
+                                                            <span class="badge badge-warning p-2">Barang Berhasil
+                                                                dipinjam</span>
+                                                        @else
+                                                            <a href="javaScript:void();" class="dropdown-item"
+                                                                id="button-print-hasipeminjaman" data-toggle="modal"
+                                                                data-target="#modal-report"
+                                                                data-id="{{ $datapinjam->tiket_peminjaman }}"><i
+                                                                    class="fa fa-print"></i>
+                                                                Cetak / Print</a>
+                                                        @endif
+
+                                                        {{-- <a href="javaScript:void();" class="dropdown-item" ><i class="fa fa-trash"></i> Hapus</a> --}}
+                                                    </div>
+
+
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                                 <tfoot>

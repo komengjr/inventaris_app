@@ -74,6 +74,7 @@
 <body style="padding-top: 25px; padding-left: 0px;">
     @php
         $cabang = DB::table('tbl_cabang')->select('nama_cabang','alamat','city')->where('kd_cabang',$datapinjam[0]->kd_cabang)->get();
+        $staffantarcabang = DB::table('tbl_staff')->select('nama_staff')->where('nip',$datapinjam[0]->pj_pinjam_cabang)->first();
     @endphp
     <div class="header">
         <div class="absolute-kiri">
@@ -123,6 +124,7 @@
                     {{$cabang[0]->nama_cabang}}
                 </td>
             </tr>
+
             <tr>
                 <td>Tujuan Cabang</td>
                 <td>:</td>
@@ -220,17 +222,22 @@
                 <td class="text-center" style="padding-top: 10px; padding-bottom: 10px; width: 33%;">
                     {{-- <img style="padding-left: 2px; left: 20px;" src=""> --}}
                     <br><br><br><br><br>
-                    {{$namapj->nama_staff}}
+                    @if ($staffantarcabang)
+                        {{$staffantarcabang->nama_staff}}
+                    @else
+                        {{$namapj->nama_staff}}
+                    @endif
+
 
                 </td>
                 <td class="text-center" style="width: 33%;">
                     <br><br><br><br><br>
-                     {{$ttd[0]->ttd_1}}
+
 
                 </td>
                 <td class="text-center" style="width: 33%;">
                     <br><br><br><br><br>
-                    {{$ttd[0]->ttd_2}}
+
                 </td>
             </tr>
 
