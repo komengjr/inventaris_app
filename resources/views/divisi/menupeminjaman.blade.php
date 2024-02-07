@@ -130,7 +130,6 @@
                                         <td>{{ $datapinjam->nama_staff }}</td>
                                         {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
                                         <td class="text-center">
-                                            <td class="text-center">
                                                 @if ($datapinjam->status_pinjam == 0)
                                                     <span class="badge badge-danger p-2">Pending</span>
                                                 @elseif($datapinjam->status_pinjam == 10)
@@ -138,7 +137,6 @@
                                                 @else
                                                     <span class="badge badge-success p-2">Done</span>
                                                 @endif
-                                            </td>
                                         </td>
                                         <td class="text-center">
                                             <button type="button"
