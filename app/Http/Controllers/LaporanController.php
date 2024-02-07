@@ -106,7 +106,7 @@ class LaporanController extends Controller
     {
         $items = DB::table('sub_tbl_inventory')->where('kd_inventaris',91838130913801923809)->get();
         for ($i=0; $i < $request->total; $i++) {
-            $data[$i] = DB::table('sub_tbl_inventory')->where('kd_inventaris',$request->klasifikasi[$i])->get();
+            $data[$i] = DB::table('sub_tbl_inventory')->where('kd_inventaris',$request->klasifikasi[$i])->where('kd_cabang',Auth::user()->cabang)->get();
             $items=$items->merge($data[$i]);
         }
         return view('divisi.laporan.datafilterklasifikasi',['data'=>$items]);
