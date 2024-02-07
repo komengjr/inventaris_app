@@ -130,12 +130,15 @@
                                         <td>{{ $datapinjam->nama_staff }}</td>
                                         {{-- <td>{{ $datapinjam->tujuan_cabang }}</td> --}}
                                         <td class="text-center">
-                                            @if ($datapinjam->status_pinjam == 0)
-                                                <span class="badge badge-danger p-2">Pending</span>
-                                            @else
-                                                <span class="badge badge-success p-2">Done</span>
-                                            @endif
-
+                                            <td class="text-center">
+                                                @if ($datapinjam->status_pinjam == 0)
+                                                    <span class="badge badge-danger p-2">Pending</span>
+                                                @elseif($datapinjam->status_pinjam == 10)
+                                                    <span class="badge badge-warning p-2">Proses</span>
+                                                @else
+                                                    <span class="badge badge-success p-2">Done</span>
+                                                @endif
+                                            </td>
                                         </td>
                                         <td class="text-center">
                                             <button type="button"
@@ -144,7 +147,7 @@
 
                                             </button>
                                             <div class="dropdown-menu">
-                                                @if ($datapinjam->status_pinjam == 0)
+                                                @if ($datapinjam->status_pinjam == 0 || $datapinjam->status_pinjam == 10)
                                                     <a href="javaScript:void();" class="dropdown-item"
                                                         class="btn-warning" data-toggle="modal"
                                                         data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
