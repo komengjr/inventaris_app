@@ -95,13 +95,15 @@
                         </form>
                     </li>
                 </ul>
-
+                @php
+                    $orderdata = DB::table('tbl_pemnijaman_req')->where('cabang_req',Auth::user()->cabang)->where('status_req',0)->count();
+                @endphp
                 <ul class="navbar-nav align-items-center right-nav-link">
 
                     <li class="nav-item dropdown-lg">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
                             href="javascript:void();">
-                            <i class="fa fa-bell-o"></i><span class="badge badge-info badge-up">0</span></a>
+                            <i class="fa fa-bell-o"></i><span class="badge badge-info badge-up">{{$orderdata}}</span></a>
                         <div class="">
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -113,30 +115,30 @@
                                         <div class="media">
                                             <i class="zmdi zmdi-accounts fa-2x mr-3 text-info"></i>
                                             <div class="media-body">
-                                                <h6 class="mt-0 msg-title">Recent Login Users</h6>
-                                                <p class="msg-info">Lorem ipsum dolor sit amet...</p>
+                                                <h6 class="mt-0 msg-title">History Login User</h6>
+                                                <p class="msg-info">{{Auth::user()->name}}</p>
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="javaScript:void();">
+                                    <a href="javaScript:void();" data-toggle="modal" data-target="#modal-nav" id="button-nav-login-user" data-url="{{ url('nav/user-order', []) }}">
                                         <div class="media">
                                             <i class="zmdi zmdi-coffee fa-2x mr-3 text-warning"></i>
                                             <div class="media-body">
-                                                <h6 class="mt-0 msg-title">New Received Orders</h6>
-                                                <p class="msg-info">Lorem ipsum dolor sit amet...</p>
+                                                <h6 class="mt-0 msg-title">Order Terbaru</h6>
+                                                <p class="msg-info"><span class="badge badge-info">{{$orderdata}} Order</span></p>
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="javaScript:void();">
+                                    <a href="javaScript:void();" data-toggle="modal" data-target="#modal-nav">
                                         <div class="media">
                                             <i class="zmdi zmdi-notifications-active fa-2x mr-3 text-danger"></i>
                                             <div class="media-body">
-                                                <h6 class="mt-0 msg-title">New Updates</h6>
-                                                <p class="msg-info">Lorem ipsum dolor sit amet...</p>
+                                                <h6 class="mt-0 msg-title">Update Sistem</h6>
+                                                <p class="msg-info">V.1.3</p>
                                             </div>
                                         </div>
                                     </a>

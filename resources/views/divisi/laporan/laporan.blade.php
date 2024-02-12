@@ -201,6 +201,7 @@
             </div>
         </div>
     </div>
+
     <script>
         $(document).on("click", "#button-report-peminjaman", function(e) {
             e.preventDefault();

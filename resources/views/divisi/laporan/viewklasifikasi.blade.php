@@ -41,7 +41,7 @@
         var result = $("#klasifikasi_barang option:selected").map(function() {
             return $(this).data("name");
         }).get();
-        console.log(result[1]);
+        $("#hasil-report-klasifikasi").html('<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>');
         $.ajax({
                 url: '../../menu/postmasterlaporan/filterdataklasifikasi',
                 headers: {
@@ -62,6 +62,7 @@
                         );
                 } else {
                     $("#hasil-report-klasifikasi").html(data);
+
                 }
 
             })

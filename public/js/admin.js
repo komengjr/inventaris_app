@@ -34,6 +34,24 @@ $(document).on("click", "#tombolbarupeminjaman", function (e) {
             );
         });
 });
+$(document).on("click", "#button-request-peminjaman", function (e) {
+    e.preventDefault();
+    var url = $(this).data("url");
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showdatasdm").html(data);
+        })
+        .fail(function () {
+            $("#showdatasdm").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 $(document).on("click", "#tombollengkapipeminjaman", function (e) {
     e.preventDefault();
     var url = $(this).data("url");

@@ -1,5 +1,9 @@
-<div class="table-responsive pb-3">
-    <table id="example" class="table styled-table">
+<link href="{{ asset('https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css') }}" rel="stylesheet"
+    type="text/css">
+<link href="{{ asset('https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css') }}" rel="stylesheet"
+    type="text/css">
+<div class=" pb-3 pr-3">
+    <table id="example" class="display nowrap" style="width:100%">
         <thead>
             <tr>
                 <th>No</th>
@@ -30,18 +34,22 @@
 
     </table>
 </div>
+<script src="{{ asset('https://code.jquery.com/jquery-3.7.0.js') }}"></script>
+<script src="{{ asset('https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js') }}"></script>
+<script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js') }}"></script>
+<script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js') }}"></script>
+<script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js') }}"></script>
+
 <script>
     $(document).ready(function() {
-        //Default data table
-        $('#default-datatable').DataTable();
-        var table = $('#example').DataTable({
-            lengthChange: false,
-            //buttons: ['excel']
-            // buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
-        });
-
-        table.buttons().container()
-            .appendTo('#example_wrapper .col-md-6:eq(0)');
-
-    });
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
 </script>

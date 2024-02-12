@@ -177,6 +177,31 @@ class DivisiController extends Controller
         $staff = DB::table('tbl_staff')->where('kd_cabang', auth::user()->cabang)->get();
         return view('divisi.formpeminjaman', ['tiket' => $jadi, 'cabang' => $cabang, 'staff' => $staff]);
     }
+    public function requestdatapeminjaman()
+    {
+        $randomString = mt_rand(1, 10);
+        $tgl = date('d-m-Y');
+        $jadi = 'PJ-SDM-' . auth::user()->cabang . '-' . $tgl . '-' . $randomString;
+        $cabang = DB::table('tbl_cabang')->get();
+        return view('divisi.peminjaman.formprequesteminjaman', ['tiket' => $jadi, 'cabang' => $cabang]);
+    }
+    public function postrequestpeminjaman(Request $request)
+    {
+        DB::table('tbl_pemnijaman_req')->insert(
+            [
+                'tiket_req' => $request->tiket_peminjaman,
+                'kategori_req' => $request->nama_kegiatan,
+                'cabang_req' => $request->cabang,
+                'tgl_req' => date('Y-m-d H:i:s'),
+                'cabang_tujuan' => auth::user()->cabang,
+                'deskripsi_req' => $request->deskripsi,
+                'status_req' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]
+        );
+        Session::flash('sukses', 'Berhasil Membuat Tiket Request Peminjaman');
+        return redirect()->back();
+    }
     public function tambahdataverifikasiinventaris()
     {
         $randomString = Str::random(4);

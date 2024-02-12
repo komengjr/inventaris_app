@@ -81,8 +81,10 @@ Route::get('menu/formpemusnahan','DivisiController@menupemusnahan');
 Route::get('menu/verifdatainventaris','DivisiController@verifdatainventaris');
 //PEMINJAMAN
 Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
+Route::post('divisi/requestpeminjaman/tambah','DivisiController@postrequestpeminjaman');
 Route::post('divisi/peminjaman/editdata','DivisiController@editdatapeminjamanpost');
 Route::get('divisi/tambahdatapeminjaman',['as'=>'master/tambahdatapeminjaman','uses'=> 'DivisiController@tambahdatapeminjaman']);
+Route::get('divisi/requestdatapeminjaman',['as'=>'master/requestdatapeminjaman','uses'=> 'DivisiController@requestdatapeminjaman']);
 Route::get('divisi/peminjaman/lengkapi/{id}',['as'=>'master/peminjaman/lengkapi','uses'=> 'DivisiController@lengkapipeminjaman']);
 Route::get('divisi/peminjaman/verifikasidata/{id}',['as'=>'master/peminjaman/verifikasidata','uses'=> 'DivisiController@lengkapiverifikasidatapeminjaman']);
 Route::post('divisi/peminjaman/postverifikasidata/',['as'=>'master/peminjaman/postverifikasidata','uses'=> 'DivisiController@lengkapipostverifikasidatadatapeminjaman']);
@@ -334,3 +336,8 @@ Route::get('export-data-ruangan/{id}', [\App\Http\Controllers\ExcelController::c
 
 
 Route::get('nav/user-login',['as'=>'nav/user-login','uses'=> 'NavController@recentuserlogin']);
+Route::get('nav/user-order',['as'=>'nav/user-order','uses'=> 'NavController@recentuserorder']);
+Route::get('nav/user-order/detail/{id}',['as'=>'nav/user-order/detail','uses'=> 'NavController@detailrecentuserorder']);
+Route::get('nav/user-order/pindah-cabang/{id}',['as'=>'nav/user-order/pindah-cabang','uses'=> 'NavController@detailpindahcabangrecentuserorder']);
+Route::post('nav/user-order/post-pindah-cabang',['as'=>'nav/user-order/post-pindah-cabang','uses'=> 'NavController@postpindahcabangrecentuserorder']);
+Route::post('nav/user-order/post-terima-order',['as'=>'nav/user-order/post-terima-order','uses'=> 'NavController@postterimaordercabangrecentuserorder']);

@@ -10,13 +10,13 @@
 
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
-         <h6>Form Peminjaman <span style="color: royalblue;"> Nomor tiket : {{$tiket}}</span> </h6>
+         <h6>Form Request Peminjaman <span style="color: royalblue;"> Nomor tiket : {{$tiket}}</span> </h6>
          <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
          <i class="fa fa-close"></i>
          </button>
      </div>
 {{-- <form  method="POST" action="" enctype="multipart/form-data" id="form-update"> --}}
-<form  method="POST" action="{{ url('divisi/peminjaman/tambah', []) }}" enctype="multipart/form-data" >
+<form  method="POST" action="{{ url('divisi/requestpeminjaman/tambah', []) }}" enctype="multipart/form-data" >
     @csrf
     <div class="modal-body">
         <div class="row">
@@ -31,30 +31,13 @@
                 <input type="text" class="form-control" name="tiket_peminjaman" value="{{$tiket}}" hidden>
             </div>
             <div class="col-md-6">
-                <label for="">Tujuan Cabang</label>
+                <label for="">Tujuan Request Cabang</label>
                 <select name="cabang" id="" class="form-control single-select">
                     <option value="">Pilih Cabang</option>
                     @foreach ($cabang as $item)
                         <option value="{{$item->kd_cabang}}">{{$item->nama_cabang}}</option>
                     @endforeach
                 </select>
-            </div>
-            <div class="col-md-12">
-                <label for="">Penanggung Jawab Cabang</label>
-                <select name="pj_pinjam" id="" class="form-control single-select" required>
-                    <option value="">Pilih Staff</option>
-                    @foreach ($staff as $staff)
-                        <option value="{{$staff->nip}}">{{$staff->nama_staff}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="">Tanggal Peminjam</label>
-                <input type="date" class="form-control" name="tgl_pinjam" required>
-            </div>
-            <div class="col-md-6">
-                <label for="">Batas Tanggal Peminjam</label>
-                <input type="date" class="form-control" name="batas_tgl_pinjam" required>
             </div>
             <div class="col-md-12">
                 <label for="">Deskripsi Peminjaman</label>

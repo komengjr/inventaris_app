@@ -98,6 +98,10 @@
                                         data-url="{{ url('divisi/tambahdatapeminjaman', []) }}"><i
                                             class="fa fa-plus mr-1"></i> Tambah Data Peminjaman</a>
                                     <div class="dropdown-divider"></div>
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal"
+                                        data-target="#tambahdatabaru" id="button-request-peminjaman"
+                                        data-url="{{ url('divisi/requestdatapeminjaman', []) }}"><i
+                                            class="fa fa-plus mr-1"></i> Request Peminjaman Antar Cabang</a>
                                 </div>
                             </div>
                         </div>
@@ -287,7 +291,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-report">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content animated fadeInUp ">
                 <div class="modal-header">
                     <h5 class="modal-title">Report</h5>
