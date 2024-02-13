@@ -185,7 +185,7 @@
             <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);" border="1">
                 <tr>
                     <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
-                    <td colspan="1" class="text-right" style="text-align: right; width: 30%;"><strong>{{$entitas->nama_cabang}} , {{ date('d - m - Y ') }}</strong></td>
+                    <td colspan="1" class="text-right" style="text-align: right; width: 30%;"><strong>{{$entitas->nama_cabang}} , {{ $tgl }}</strong></td>
                 </tr>
                 <tr>
                     <td>1.</td>

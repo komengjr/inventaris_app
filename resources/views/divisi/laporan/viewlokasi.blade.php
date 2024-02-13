@@ -17,7 +17,11 @@
                     <label for="">Lebar</label>
                     <input type="number" class="form-control" name="lebar" id="lebar">
                 </div>
-                <div class="col-12">
+                <div class="col-md-4">
+                    <label for="">Tanggal Cetak</label>
+                    <input type="date" class="form-control" name="tanggal">
+                </div>
+                <div class="col-md-8">
                     <label for="">Cari Ruangan</label>
                     <select class="form-control single-select" name="kd_lokasi" id="ruangan">
                         <option value="">Pilih Lokasi</option>
