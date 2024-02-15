@@ -186,11 +186,12 @@
                 @endforeach
             </tbody>
         </table>
-        <br><br><br>
-        <hr>
+
 
 
     </div>
+    <br><br><br>
+    <hr>
     <div class="footer">
         <table
             style="font-size: 8px; margin: 0px; padding-left: 20px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
