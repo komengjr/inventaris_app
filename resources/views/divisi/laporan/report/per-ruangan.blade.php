@@ -6,6 +6,7 @@
 </head>
 <style>
     @page {
+        size: 29.7cm 21cm;
         margin-left: 25px;
         margin-top: 5px;
         font-family: Calibri (Body);
@@ -64,7 +65,7 @@
     }
 
     div.footer {
-        position: relative;
+        position: fixed;
         left: 0;
         width: 100%;
         bottom: 0px;
