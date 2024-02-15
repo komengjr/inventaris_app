@@ -67,7 +67,7 @@
         position: fixed;
         left: 0;
         width: 100%;
-        bottom: 15px;
+        bottom: 0px;
         border: 0px solid #302a2a;
         font-size: 15px;
     }
