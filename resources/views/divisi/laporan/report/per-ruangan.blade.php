@@ -22,10 +22,18 @@
     }
 
     div.body {
-        position: relative;
+        /* position: fixed; */
+        left: 60px;
+        width: 100%;
+        /* height: 300px; */
+        border: 0px solid #302a2a;
+        font-size: 15px;
+    }
+    div.body-after {
+        /* position: fixed; */
         left: 20px;
-        /* width: 100%; */
-        height: 500px;
+        width: 100%;
+        height: 100px;
         border: 0px solid #302a2a;
         font-size: 15px;
     }
@@ -65,7 +73,7 @@
     }
 
     div.footer {
-        position: fixed;
+        position: absolute;
         left: 0;
         width: 100%;
         bottom: 0px;
@@ -116,7 +124,7 @@
     </div>
     <div class="body">
         <br>
-        <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);" border="0">
+        <table style="font-size: 8px; margin: 0px; padding-left: 20px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);" border="0">
             <tr>
                 <td colspan="1" class="text-right"><strong>Diperiksa Oleh : </strong></td>
                 <td colspan="2" class="text-right" style="text-align: right;">
@@ -125,7 +133,7 @@
         </table>
         <br>
         <table
-            style="font-size: 8px; margin: 0px; padding: 2px; width: 100%; font-size: 11px; font-family: Calibri (Body);">
+            style="font-size: 8px; margin: 0px; padding-left: 20px; width: 100%; font-size: 11px; font-family: Calibri (Body);">
             <thead style="font-weight: bold; text-align: center;">
                 <tr>
                     <td style="width: 2%;" rowspan="2">No</td>
@@ -185,11 +193,21 @@
             </tbody>
         </table>
     </div>
+    <div class="body-after">
+        <table style="display: none;">
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
 
+        </table>
+    </div>
+    <br><br><br><br><br>
     {{-- <hr> --}}
     <div class="footer">
         <table
-            style="font-size: 8px; margin: 0px; padding-left: 20px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
+            style="font-size: 8px; margin: 0px; padding-left: 0%; width: 100%; font-size: 11px; font-family: Calibri (Body);"
             border="1">
             <tr>
                 <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
