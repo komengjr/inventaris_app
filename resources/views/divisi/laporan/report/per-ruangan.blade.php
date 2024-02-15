@@ -115,10 +115,10 @@
 
         <div class="absolute">
             @php
-                $kode = $dataruangan->nomor_ruangan . $dataruangan->nama_lokasi;
+                // $kode = $dataruangan->nomor_ruangan .''. $dataruangan->nama_lokasi .''.;
             @endphp
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($kode),
+                QrCode::style('round')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($dataruangan->nomor_ruangan . ' ( ' .$dataruangan->nama_lokasi.' )'),
             ) !!}">
         </div>
     </div>
