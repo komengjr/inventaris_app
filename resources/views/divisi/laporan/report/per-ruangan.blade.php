@@ -188,15 +188,11 @@
 
 
     </div>
-    <div style="padding-bottom: 5%; position: fixed; display: none;">
+    <div style="padding-bottom: 5%; position: fixed; ">
         <table
         style="font-size: 8px; margin: 0px; padding-left: 20px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
         border="1">
-        <tr>
-            <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
-            <td colspan="1" class="text-right" style="text-align: right; width: 30%;">
-                <strong>{{ $entitas->nama_cabang }} , {{ $tgl }}</strong></td>
-        </tr>
+
         <tr>
             <td>1.</td>
             <td>2.</td>
