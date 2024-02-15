@@ -64,7 +64,7 @@
     }
 
     div.footer {
-        /* position: fixed; */
+        position: relative;
         left: 0;
         width: 100%;
         bottom: 15px;
