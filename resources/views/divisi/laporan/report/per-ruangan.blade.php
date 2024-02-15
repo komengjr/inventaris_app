@@ -64,7 +64,7 @@
     }
 
     div.footer {
-        position: fixed;
+        position: relative;
         left: 0;
         width: 100%;
         bottom: 0px;
@@ -190,7 +190,7 @@
 
 
     </div>
-    <br><br><br><br><br><br><br>
+
     {{-- <hr> --}}
     <div class="footer">
         <table
