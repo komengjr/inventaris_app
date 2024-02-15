@@ -24,7 +24,7 @@
     div.body {
         position: relative;
         left: 20px;
-        width: 100%;
+        /* width: 100%; */
         height: 500px;
         border: 0px solid #302a2a;
         font-size: 15px;
@@ -184,44 +184,8 @@
                 @endforeach
             </tbody>
         </table>
-
-
-
     </div>
-    <div style="padding-bottom: 5%; position: fixed; ">
-        <table
-        style="font-size: 8px; margin: 0px; padding-left: 20px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
-        border="1">
 
-        <tr>
-            <td>1.</td>
-            <td>2.</td>
-            <td>Mengetahui </td>
-        </tr>
-        <tr>
-            <td>3.</td>
-            <td>4.</td>
-            <td rowspan="4"></td>
-        </tr>
-        <tr>
-            <td>5.</td>
-            <td>6.</td>
-        </tr>
-        <tr>
-            <td>7.</td>
-            <td>8.</td>
-        </tr>
-        <tr>
-            <td>9.</td>
-            <td>10.</td>
-        </tr>
-        <tr>
-            <td>11.</td>
-            <td>12.</td>
-            <td style="text-align: center;">Manager SDM & Umum</td>
-        </tr>
-
-    </table></div>
     {{-- <hr> --}}
     <div class="footer">
         <table
