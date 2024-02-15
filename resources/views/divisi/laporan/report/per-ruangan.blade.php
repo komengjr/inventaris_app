@@ -116,15 +116,12 @@
     </div>
     <div class="body">
         <br>
-        <table
-            style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);"
-            border="0">
+        <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);" border="0">
             <tr>
                 <td colspan="1" class="text-right"><strong>Diperiksa Oleh : </strong></td>
                 <td colspan="2" class="text-right" style="text-align: right;">
                     <strong>SDM.{{ $nocabang->no_cabang }}-FRM-PP-07.2</strong></td>
             </tr>
-
         </table>
         <br>
         <table
@@ -191,7 +188,7 @@
 
 
     </div>
-
+    <div style="padding-bottom: 5%;"></div>
     {{-- <hr> --}}
     <div class="footer">
         <table
