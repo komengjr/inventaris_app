@@ -5,7 +5,6 @@
     <title>Report Data Inventaris</title>
 </head>
 <style>
-
     @page {
         margin-left: 25px;
         margin-top: 5px;
@@ -80,22 +79,26 @@
     <div class="header">
         <div class="absolute-kiri">
             @php
-                $entitas = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
+                $entitas = DB::table('tbl_cabang')
+                    ->where('kd_cabang', Auth::user()->cabang)
+                    ->first();
             @endphp
             @if ($entitas->kd_entitas_cabang == 'PTP')
-            <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/pramita.png" width="152">
+                <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/pramita.png" width="152">
             @else
-            <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/sima.jpeg" width="152">
+                <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/sima.jpeg" width="152">
             @endif
 
             <hr style="padding: 0%; margin: 0%;">
-            <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">{{$entitas->alamat}}</p>
+            <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">{{ $entitas->alamat }}
+            </p>
         </div>
-        <h4 style="padding-top: 1px; margin: 20px; left: 150px; padding-left: 5%;text-align: center;">DAFTAR BARANG INVENTARIS <br>FISIK AKTIVA TETAP
-        <br>
-        RUANG : {{ $dataruangan->nomor_ruangan}} ( {{ $dataruangan->nama_lokasi }} )
-        <br>
-        {{-- Tanggal Cetak : {{ date('d - m - Y ') }} --}}
+        <h4 style="padding-top: 1px; margin: 20px; left: 150px; padding-left: 5%;text-align: center;">DAFTAR BARANG
+            INVENTARIS <br>FISIK AKTIVA TETAP
+            <br>
+            RUANG : {{ $dataruangan->nomor_ruangan }} ( {{ $dataruangan->nama_lokasi }} )
+            <br>
+            {{-- Tanggal Cetak : {{ date('d - m - Y ') }} --}}
 
         </h4>
         {{-- <h5 style="padding-top: 20px; margin: 20px; left: 100px; padding-left: 155px;text-decoration: underline;">DAFTAR BARANG INVENTARIS</h5> --}}
@@ -103,7 +106,7 @@
 
         <div class="absolute">
             @php
-                $kode = $dataruangan->nomor_ruangan . ( $dataruangan->nama_lokasi );
+                $kode = $dataruangan->nomor_ruangan . $dataruangan->nama_lokasi;
             @endphp
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
                 QrCode::style('round')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($kode),
@@ -112,15 +115,19 @@
     </div>
     <div class="body">
         <br>
-        <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);" border="0">
+        <table
+            style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body); border:1px solid rgb(255, 255, 255);"
+            border="0">
             <tr>
-                <td colspan="1" class="text-right" ><strong>Diperiksa Oleh :  </strong></td>
-                <td colspan="2" class="text-right" style="text-align: right;"><strong>SDM.{{$nocabang->no_cabang}}-FRM-PP-07.2</strong></td>
+                <td colspan="1" class="text-right"><strong>Diperiksa Oleh : </strong></td>
+                <td colspan="2" class="text-right" style="text-align: right;">
+                    <strong>SDM.{{ $nocabang->no_cabang }}-FRM-PP-07.2</strong></td>
             </tr>
 
         </table>
         <br>
-        <table style="font-size: 8px; margin: 0px; padding: 2px; width: 100%; font-size: 11px; font-family: Calibri (Body);">
+        <table
+            style="font-size: 8px; margin: 0px; padding: 2px; width: 100%; font-size: 11px; font-family: Calibri (Body);">
             <thead style="font-weight: bold; text-align: center;">
                 <tr>
                     <td style="width: 2%;" rowspan="2">No</td>
@@ -180,43 +187,48 @@
             </tbody>
         </table>
         <br><br><br>
+        {{-- <hr> --}}
 
-        <div class="footer">
-            <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);" border="1">
-                <tr>
-                    <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
-                    <td colspan="1" class="text-right" style="text-align: right; width: 30%;"><strong>{{$entitas->nama_cabang}} , {{ $tgl }}</strong></td>
-                </tr>
-                <tr>
-                    <td>1.</td>
-                    <td>2.</td>
-                    <td>Mengetahui </td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>4.</td>
-                    <td rowspan="4"></td>
-                </tr>
-                <tr>
-                    <td>5.</td>
-                    <td>6.</td>
-                </tr>
-                <tr>
-                    <td>7.</td>
-                    <td>8.</td>
-                </tr>
-                <tr>
-                    <td>9.</td>
-                    <td>10.</td>
-                </tr>
-                <tr>
-                    <td>11.</td>
-                    <td>12.</td>
-                    <td style="text-align: center;">Manager SDM & Umum</td>
-                </tr>
 
-            </table>
-        </div>
+    </div>
+    <div class="footer">
+        <table
+            style="font-size: 8px; margin: 0px; padding-left: 20px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
+            border="1">
+            <tr>
+                <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
+                <td colspan="1" class="text-right" style="text-align: right; width: 30%;">
+                    <strong>{{ $entitas->nama_cabang }} , {{ $tgl }}</strong></td>
+            </tr>
+            <tr>
+                <td>1.</td>
+                <td>2.</td>
+                <td>Mengetahui </td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>4.</td>
+                <td rowspan="4"></td>
+            </tr>
+            <tr>
+                <td>5.</td>
+                <td>6.</td>
+            </tr>
+            <tr>
+                <td>7.</td>
+                <td>8.</td>
+            </tr>
+            <tr>
+                <td>9.</td>
+                <td>10.</td>
+            </tr>
+            <tr>
+                <td>11.</td>
+                <td>12.</td>
+                <td style="text-align: center;">Manager SDM & Umum</td>
+            </tr>
+
+        </table>
     </div>
 </body>
 
