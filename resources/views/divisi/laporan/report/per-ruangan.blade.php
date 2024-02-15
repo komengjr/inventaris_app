@@ -187,7 +187,7 @@
             </tbody>
         </table>
         <br><br><br>
-        {{-- <hr> --}}
+        <hr>
 
 
     </div>
