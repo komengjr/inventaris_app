@@ -86,43 +86,7 @@
             ->where('kd_cabang', $dataverif[0]->kd_cabang)
             ->first();
     @endphp
-    <div class="header">
-        <div class="absolute-kiri">
-            @php
-                $entitas = DB::table('tbl_cabang')
-                    ->where('kd_cabang', Auth::user()->cabang)
-                    ->first();
-            @endphp
-            @if ($entitas->kd_entitas_cabang == 'PTP')
-                <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/pramita.png" width="152">
-            @else
-                <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/sima.jpeg" width="152">
-            @endif
 
-            <hr style="padding: 0%; margin: 0%;">
-            <p style="font-size: 9px; text-align: center; margin-left: 2px;margin-right: 2px;">46456
-            </p>
-        </div>
-        <h4 style="padding-top: 5px; margin: 20px; left: 150px; padding-left: 5%;text-align: center;">DAFTAR STOCK OPNAME <br> BARANG
-            INVENTARIS DAN ASET
-            <br>
-
-            <br>
-            {{-- Tanggal Cetak : {{ date('d - m - Y ') }} --}}
-
-        </h4>
-        {{-- <h5 style="padding-top: 20px; margin: 20px; left: 100px; padding-left: 155px;text-decoration: underline;">DAFTAR BARANG INVENTARIS</h5> --}}
-        {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate(123123),) !!}"> --}}
-
-        <div class="absolute">
-            @php
-                // $kode = $dataruangan->nomor_ruangan .''. $dataruangan->nama_lokasi .''.;
-            @endphp
-            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($dataverif[0]->kode_verif),
-            ) !!}">
-        </div>
-    </div>
     <div class="body">
         <br>
         <table
