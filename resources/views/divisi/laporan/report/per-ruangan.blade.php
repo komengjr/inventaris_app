@@ -125,7 +125,7 @@
             </tr>
         </table>
         <br>
-        <table
+        {{-- <table
             style="font-size: 8px; margin: 0px; padding-left: 20px; width: 100%; font-size: 11px; font-family: Calibri (Body);">
             <thead style="font-weight: bold; text-align: center;">
                 <tr>
@@ -184,7 +184,7 @@
                     </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
     </div>
     {{-- <div class="body-after">
         <table style="display: none;">
