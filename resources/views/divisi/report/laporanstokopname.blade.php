@@ -29,7 +29,14 @@
         border: 0px solid #302a2a;
         font-size: 15px;
     }
-
+    div.body-after {
+        /* position: fixed; */
+        left: 20px;
+        width: 100%;
+        height: 150px;
+        border: 0px solid #302a2a;
+        font-size: 15px;
+    }
     div.absolute {
         position: absolute;
         top: 0px;
@@ -62,9 +69,9 @@
     }
 
     div.footer {
-        position: fixed;
+        position: absolute;
         left: 0;
-        top: 10%;
+        width: 100%;
         bottom: 0px;
         border: 0px solid #302a2a;
         font-size: 15px;
@@ -171,40 +178,49 @@
             </tbody>
         </table>
         <br><br><br><br>
-        <div class="footer">
-            <table
-                style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
-                border="1">
-                <tr>
-                    <td colspan="2" style="border-right: 1px solid #ffffff;">Mengetahui :</td>
-                    <td colspan="1" class="text-right" style="text-align: right;"><strong>{{ $cabang->city }} ,
-                            {{ date('Y-m-d H:i:s') }}</strong></td>
-                </tr>
-                <tr>
-                    <td class="text-center" style="padding-top: 15px; padding-bottom: 15px; width: 33%;">
-                        {{-- <img style="padding-left: 2px; left: 20px;" src=""> --}}
-                        <br><br><br>
 
-
-                        {{-- (..........................) --}}
-                    </td>
-                    <td class="text-center" style="width: 33%;">
-                        <br><br><br>
-                        {{-- Manager SDM & UMUM --}}
-
-                        {{-- (..........................) --}}
-                    </td>
-                    <td class="text-center" style="width: 33%;">
-                        <br><br><br>
-                        {{-- Kepala Cabang ( Yang Bersangkutan ) --}}
-
-                        {{-- (..........................) --}}
-                    </td>
-                </tr>
-
-            </table>
-        </div>
     </div>
+    <div class="body-after">
+        <table style="display: none;">
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="footer">
+        <table
+            style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
+            border="1">
+            <tr>
+                <td colspan="2" style="border-right: 1px solid #ffffff;">Mengetahui :</td>
+                <td colspan="1" class="text-right" style="text-align: right;"><strong>{{ $cabang->city }} ,
+                        {{ date('Y-m-d H:i:s') }}</strong></td>
+            </tr>
+            <tr>
+                <td class="text-center" style="padding-top: 15px; padding-bottom: 15px; width: 33%;">
+                    {{-- <img style="padding-left: 2px; left: 20px;" src=""> --}}
+                    <br><br><br>
 
 
+                    {{-- (..........................) --}}
+                </td>
+                <td class="text-center" style="width: 33%;">
+                    <br><br><br>
+                    {{-- Manager SDM & UMUM --}}
+
+                    {{-- (..........................) --}}
+                </td>
+                <td class="text-center" style="width: 33%;">
+                    <br><br><br>
+                    {{-- Kepala Cabang ( Yang Bersangkutan ) --}}
+
+                    {{-- (..........................) --}}
+                </td>
+            </tr>
+
+        </table>
+    </div>
 </html>

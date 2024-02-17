@@ -1507,7 +1507,7 @@ class DivisiController extends Controller
             DB::table('tbl_sub_verifdatainventaris')->insert([
                 'kode_verif'=> $request->kode,
                 'id_inventaris'=> $value->id_inventaris,
-                'status_data_inventaris'=> 1,
+                'status_data_inventaris'=> 0,
                 'keterangan_data_inventaris'=> 'BAIK',
                 'created_at'=> date('Y-m-d H:i:s'),
             ]);
