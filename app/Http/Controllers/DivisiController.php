@@ -160,9 +160,9 @@ class DivisiController extends Controller
         $pdf = PDF::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif, 'ttd' => $ttd,'data'=>$data])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
         $pdf->output();
 
-        // $dompdf = $pdf->getDomPDF();
-        // $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
-        // $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
         // return $pdf->stream();
         // return Pdf::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif,  'ttd' => $ttd])->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
