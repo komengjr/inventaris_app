@@ -119,7 +119,7 @@
                 // $kode = $dataruangan->nomor_ruangan .''. $dataruangan->nama_lokasi .''.;
             @endphp
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($dataverif[0]->kode_verif),
+                QrCode::style('round')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($dataverif->kode_verif),
             ) !!}">
         </div>
     </div>
