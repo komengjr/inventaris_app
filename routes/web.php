@@ -216,6 +216,7 @@ Route::get('divisi/datamutasi/print/datamutasi/{id}','PdfController@printdatamut
 Route::get('divisi/verifikasi/peminjaman/pemyelesaian/{id}','PdfController@penyelesaianpeminjaman');
 Route::get('divisipostpenyelesaian/data/stockopname/{id}','DivisiController@divisipostpenyelesaianstockopname');
 Route::get('menu/verifdatainventaris/unverified/data/{id}','StockopnameController@unverifieddatastockopname');
+Route::post('divisi/postverifikasiall/datasemua/simpandata',['as'=>'divisi/postverifikasiall/datasemua/simpandata','uses'=> 'DivisiController@postverifikasialldatasimpandatascanner']);
 // Admin Controller
 //Mutasi
 Route::post('divisi/datamutasi/posttambahdata', 'DivisiController@posttambahdatamutasi');

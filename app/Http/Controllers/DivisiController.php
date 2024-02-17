@@ -1500,4 +1500,17 @@ class DivisiController extends Controller
             DB::table('q_iklan_cabang')->where('kd_iklan', $cek->kd_iklan)->where('kd_cabang', Auth::user()->cabang)->delete();
         }
     }
+    public function postverifikasialldatasimpandatascanner(Request $request)
+    {
+        $databarang = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->get();
+        foreach ($databarang as $value) {
+            DB::table('tbl_sub_verifdatainventaris')->insert([
+                'kode_verif'=> $request->kode,
+                'id_inventaris'=> $value->id_inventaris,
+                'status_data_inventaris'=> 1,
+                'keterangan_data_inventaris'=> 'BAIK',
+                'created_at'=> date('Y-m-d H:i:s'),
+            ]);
+        }
+    }
 }

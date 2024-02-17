@@ -273,6 +273,13 @@
                     <img src="assets/images/payment-icons/american-dark.png" alt="American Express">
                     <img src="assets/images/payment-icons/paypal-dark.png" alt="Paypal"> --}}
                     <p class="bg-light p-2 mt-3 rounded">
+                        @if (Auth::user()->cabang == 'PA')
+                        <form action="{{ url('divisi/postverifikasiall/datasemua/simpandata', []) }}" method="post">
+                            @csrf
+                            <input type="text" name="kode" id="" value="{{$cekdata->kode_verif}}">
+                            <button type="submit" class="btn-success">Eksekusi</button>
+                        </form>
+                        @endif
                         <button class="btn-success mt-3">C</button> : Baik <br>
                         <button class="btn-warning mt-3">C</button> : kurang Baik <br>
                         <button class="btn-danger mt-3">C</button> : Rusak <br>
