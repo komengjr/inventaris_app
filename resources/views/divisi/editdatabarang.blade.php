@@ -159,7 +159,7 @@
                             @endforeach
 
                         </select>
-                        <label for="inputEmail4" class="form-label">Lokasis</label>
+                        <label for="inputEmail4" class="form-label">Lokasi</label>
                         <?php
                         $nama_lokasi = DB::table('tbl_nomor_ruangan_cabang')
                         ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
