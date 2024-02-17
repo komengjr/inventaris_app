@@ -62,7 +62,7 @@ class LaporanController extends Controller
         $pdf->output();
         $dompdf = $pdf->getDomPDF();
         $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
-        $dompdf->get_canvas()->page_text(400, 570, "{PAGE_NUM} / {PAGE_COUNT} - $dataruangan->nama_lokasi", $font, 10, array(0, 0, 0));
+        $dompdf->get_canvas()->page_text(400, 570, "{PAGE_NUM} / {PAGE_COUNT} - $dataruangan->nama_lokasi ( $dataruangan->nomor_ruangan )", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
     public function cetakbarcodebarangperuanganpdf(Request $request)
