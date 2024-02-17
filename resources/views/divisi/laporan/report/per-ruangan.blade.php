@@ -193,7 +193,7 @@
             </tbody>
         </table>
     </div>
-    <div class="body-after">
+    {{-- <div class="body-after">
         <table style="display: none;">
             <tr>
                 <td>1</td>
@@ -202,8 +202,7 @@
             </tr>
 
         </table>
-    </div>
-    <br><br><br><br><br>
+    </div> --}}
     {{-- <hr> --}}
     <div class="footer">
         <table
