@@ -29,7 +29,14 @@
         border: 0px solid #302a2a;
         font-size: 15px;
     }
-
+    div.body-after {
+        /* position: fixed; */
+        left: 20px;
+        width: 100%;
+        height: 150px;
+        border: 0px solid #302a2a;
+        font-size: 15px;
+    }
 
     div.absolute {
         position: absolute;
@@ -184,7 +191,7 @@
             </tbody>
         </table>
     </div>
-    {{-- <div class="body-after">
+    <div class="body-after">
         <table style="display: none;">
             <tr>
                 <td>1</td>
@@ -193,7 +200,7 @@
             </tr>
 
         </table>
-    </div> --}}
+    </div>
     {{-- <hr> --}}
     <div class="footer">
         <table

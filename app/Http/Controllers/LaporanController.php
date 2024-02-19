@@ -57,12 +57,14 @@ class LaporanController extends Controller
             ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
             ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', $request->kd_lokasi)->first();
         $nocabang = DB::table('tbl_setting_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
+        $cabang = DB::table('tbl_cabang')->select('tbl_cabang.*')->where('kd_cabang',Auth::user()->cabang)->first();
         $tgl = date("d-m-Y",strtotime($request->tanggal));
         $pdf = PDF::loadview('divisi.laporan.report.per-ruangan', ['data' => $data, 'dataruangan' => $dataruangan, 'nocabang' => $nocabang , 'tgl'=>$tgl])->setPaper('A4', 'landscape');
         $pdf->output();
         $dompdf = $pdf->getDomPDF();
         $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
         $dompdf->get_canvas()->page_text(400, 570, "{PAGE_NUM} / {PAGE_COUNT} - $dataruangan->nama_lokasi ( $dataruangan->nomor_ruangan )", $font, 10, array(0, 0, 0));
+        $dompdf->get_canvas()->page_text(33, 570, "$cabang->nama_cabang", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
     public function cetakbarcodebarangperuanganpdf(Request $request)
