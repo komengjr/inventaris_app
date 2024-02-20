@@ -138,7 +138,7 @@
                                             <i class="zmdi zmdi-notifications-active fa-2x mr-3 text-danger"></i>
                                             <div class="media-body">
                                                 <h6 class="mt-0 msg-title">Update Sistem</h6>
-                                                <p class="msg-info">V.1.3</p>
+                                                <p class="msg-info">V.2.3</p>
                                             </div>
                                         </div>
                                     </a>
