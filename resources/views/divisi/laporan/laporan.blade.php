@@ -103,6 +103,20 @@
                                     </div>
                                 </div>
                             </li>
+                            {{-- <li class="list-group-item">
+                                <div class="media align-items-center">
+                                    <img src="{{ asset('vendor/icon/barcode.jpg') }}" alt="user avatar"
+                                        class="customer-img rounded" width="80">
+                                    <div class="media-body ml-3">
+                                        <h6 class="mb-0">Menu Cetak Barcode</h6>
+                                        <small class="small-font"><span class="badge badge-success shadow-success m-0">Aktif</span></small>
+                                    </div>
+                                    <div class="date">
+                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"
+                                        id="button-report-stokopname"><i class="zmdi zmdi-assignment"></i></button>
+                                    </div>
+                                </div>
+                            </li> --}}
 
                         </ul>
                         <div class="card-footer text-center bg-transparent border-0">

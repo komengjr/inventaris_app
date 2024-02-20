@@ -279,6 +279,7 @@ Route::post('divisi/case/databaru/','DivisiController@posttambahdatacase');
 Route::post('/pdf/{id}', 'PdfController@print');
 Route::post('/printbarcodelokasi/{id}', 'PdfController@printbarcodelokasi');
 Route::get('/printbarcodebyid/{id}', 'PdfController@printbarcodebyid');
+Route::get('/printbarcodebyidinventaris/{id}', 'PdfController@printbarcodebyidinventaris');
 Route::get('/printpeserta', 'PdfController@printpeserta');
 
 Route::get('print/{id}', 'DataTableController@print');

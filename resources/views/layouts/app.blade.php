@@ -431,7 +431,7 @@
         @endphp
         <div class="modal fade" id="settingmodal">
             <div class="modal-dialog modal-dialog-centered modal-xl">
-                <div class="modal-content animated zoomInUp">
+                <div class="modal-content animated flipInX">
                     <div class="modal-header">
                         <h5 class="modal-title">Setup System</h5>
                         <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">

@@ -49,6 +49,18 @@ class PdfController extends Controller
         $pdf = PDF::loadview('index',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
         return $pdf->stream();
     }
+    public function printbarcodebyidinventaris($id)
+    {
+        $data = DB::table('sub_tbl_inventory')
+        ->select('sub_tbl_inventory.*')
+        ->where('id',$id)
+        ->where('kd_cabang',auth::user()->cabang)
+        ->get();
+        // dd($data);
+        $qrcode = base64_encode(QrCode::format('png')->size(500)->errorCorrection('H')->generate('string'));
+        $pdf = PDF::loadview('index',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
+        return base64_encode($pdf->stream());
+    }
     public function printdataalllokasi($id,$page)
     {
         if ($page == 'all') {

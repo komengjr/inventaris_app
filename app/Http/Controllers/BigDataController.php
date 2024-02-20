@@ -59,8 +59,10 @@ class BigDataController extends Controller
             $ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $record->id_nomor_ruangan_cbaang)->first();
             if ($ruangan) {
                 $dataruangan = $ruangan->nomor_ruangan;
+                $button =  "<button class='btn-dark' data-toggle='modal' data-target='#editmasterbarang' id='print-barcode-master-barang' data-url=" . url('printbarcodebyidinventaris', ['id' => $record->id]) . "><i class='bx bx-print'></i> Cetak Barcode</button>";
             } else {
                 $dataruangan = '<button class="btn-danger" disabled>undefinded</button>';
+                $button = '';
             }
             ;
 
@@ -77,7 +79,7 @@ class BigDataController extends Controller
                 "thperolehan" => $thperolehan,
                 "btn" => "
                 <button class='btn-warning' data-toggle='modal' data-target='#editmasterbarang' id='editbarangmaster' data-url=" . url('divisi/masterbarang/showedit', ['id' => $id_inventaris]) . "><i class='bx bx-pencil'></i> edit</button>
-                "
+                ".$button
             );
         }
 
