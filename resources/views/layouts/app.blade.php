@@ -34,6 +34,8 @@
     {{-- <script src="{{ asset('assets/js/jqueryapp.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.min.js') }}"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4154628728879232"
+     crossorigin="anonymous"></script>
     @if ($message = Session::get('success'))
         <script>
             $(document).ready(function() {
