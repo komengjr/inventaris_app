@@ -37,7 +37,7 @@
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i>
+    <button type="button" class="btn btn-dark" data-dismiss="modal" ><i class="fa fa-times"></i>
         Close</button>
         <form action="{{ url('data-pemusnahan-inventaris/send', []) }}" method="post">
         @csrf
