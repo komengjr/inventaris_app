@@ -271,7 +271,10 @@ class AdminController extends Controller
     }
     public function datapemusnahaninventaris()
     {
-        $datapemusnahan = DB::table('tbl_pemusnahan')->get();
+        $datapemusnahan = DB::table('tbl_pemusnahan')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_pemusnahan.id_inventaris')
+        ->join('tbl_cabang','tbl_cabang.kd_cabang','=','sub_tbl_inventory.kd_cabang')
+        ->get();
         return view('admin.pemusnahan.list-pemusnahan',['datapemusnahan'=>$datapemusnahan]);
     }
     public function senddatapemusnahaninventaris(Request $request)
@@ -298,5 +301,13 @@ class AdminController extends Controller
     public function jenis_mutasi($id)
     {
         return view('admin.form.jenis_mutasi',['id'=>$id]);
+    }
+    // PEMINJAMAN
+    public function datapeminjamaninventaris(Request $request)
+    {
+        $datapeminjaman = DB::table('tbl_peminjaman')
+        ->join('tbl_cabang','tbl_cabang.kd_cabang','=','tbl_peminjaman.kd_cabang')
+        ->join('tbl_staff','tbl_staff.nip','=','tbl_peminjaman.pj_pinjam')->get();
+        return view('admin.peminjaman.list-peminjaman-barang',['datapeminjaman'=>$datapeminjaman]);
     }
 }

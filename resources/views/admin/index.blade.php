@@ -85,12 +85,12 @@
                                     <i class="icon-options"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="javascript:void();">Action</a>
-                                    <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                    <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                                    <a class="dropdown-item" href="javascript:void();" data-toggle="modal" data-target='#modal-admin' id="button-data-peminjaman"><i class="fa fa-laptop"></i> Data Peminjaman Barang</a>
+                                    <a class="dropdown-item" href="javascript:void();" data-toggle="modal" data-target='#modal-admin'><i class="fa fa-asl-interpreting"></i> Data Stock Opname Cabang</a>
+
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void();" data-toggle="modal"
-                                        data-target='#modal-admin' id="button-data-pemusnahan-inventaris">Pemusnahan
+                                        data-target='#modal-admin' id="button-data-pemusnahan-inventaris"><i class="fa fa-trash-o"></i> Data Pemusnahan
                                         Barang</a>
                                 </div>
                             </div>
@@ -246,23 +246,37 @@
                 });
             });
     });
-</script>
-<script>
-    $(document).ready(function() {
-        //Default data table
-        $('#default-datatablesubbarang').DataTable();
-
-
-        var table = $('#example').DataTable({
-            lengthChange: false,
-            buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
-        });
-
-        table.buttons().container()
-            .appendTo('#example_wrapper .col-md-6:eq(0)');
-
+    $(document).on("click", "#button-data-peminjaman", function(e) {
+        e.preventDefault();
+        var kode = $(this).data("id");
+        $("#menu-modal-admin").html(
+            '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
+        );
+        $.ajax({
+                url: "data-peminjaman-inventaris",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "tiket": kode,
+                },
+                dataType: 'html',
+            })
+            .done(function(data) {
+                $("#menu-modal-admin").html(data);
+            })
+            .fail(function() {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    icon: "bx bx-x-circle",
+                    msg: "Gagal",
+                });
+            });
     });
 </script>
+
 <script>
     var ctx = document.getElementById("timeChart").getContext('2d');
 
