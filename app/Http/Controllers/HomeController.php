@@ -35,8 +35,9 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (auth::user()->cabang == 'as') {
-            # code...
+        if (auth::user()->akses == 'admin') {
+            $datacabang = DB::table('tbl_cabang')->get();
+            return view('home',['datacabang'=>$datacabang]);
         } else {
 
             $jumlah = 0;

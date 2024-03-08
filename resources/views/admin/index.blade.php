@@ -260,3 +260,79 @@
 
     });
 </script>
+<script>
+    var ctx = document.getElementById("timeChart").getContext('2d');
+
+
+    var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke3.addColorStop(0, '#42e695');
+    gradientStroke3.addColorStop(1, '#3bb2b8');
+
+    var gradientStroke4 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke4.addColorStop(0, ' #7f00ff');
+    gradientStroke4.addColorStop(0.5, '#e100ff');
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [
+                @foreach ($datacabang as $datacabang1)
+                '{{$datacabang1->kd_cabang}}',
+                @endforeach
+            ],
+            datasets: [{
+                label: 'Total Barang',
+                data: [
+                    @foreach ($datacabang as $datacabang2)
+                    @php
+                            $totaldatatiketperson = DB::table('sub_tbl_inventory')
+                                ->where('kd_cabang', [$datacabang2->kd_cabang])
+                                ->count();
+                    @endphp
+                    '{{$totaldatatiketperson}}',
+                    @endforeach
+                ],
+                backgroundColor: gradientStroke3,
+                hoverBackgroundColor: gradientStroke3
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: {
+                display: true,
+                labels: {
+                    fontColor: '#585757',
+                    boxWidth: 40
+                }
+            },
+            tooltips: {
+                enabled: true,
+                displayColors: false
+            },
+            scales: {
+                xAxes: [{
+                    categoryPercentage: 0.3,
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: '#585757'
+                    },
+                    gridLines: {
+                        display: true,
+                        color: "rgba(0, 0, 0, 0.05)"
+                    },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: '#585757'
+                    },
+                    gridLines: {
+                        display: true,
+                        color: "rgba(0, 0, 0, 0.05)"
+                    },
+                }]
+            }
+
+        }
+    });
+</script>

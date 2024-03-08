@@ -263,7 +263,7 @@
                     {
                         data: 'btn',
                         className: 'text-center',
-                        "width": "4%"
+                        "width": "1%"
                     }
                 ]
 
