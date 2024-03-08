@@ -23,8 +23,9 @@
                                 <i class="fa fa-money text-white"></i>
                             </div>
                             <div class="media-body pl-3 border-left border-white-2">
-                                <h5 class="text-white mb-0">$876,524 <small class="small-font">(-1%)</small></h5>
-                                <span class="text-white small-font">Total Revenue</span>
+                                <h5 class="text-white mb-0">@currency($totalhargainventaris)<small class="small-font">(-1%)</small>
+                                </h5>
+                                <span class="text-white small-font">Total Harga Perolehan Inventaris</span>
                             </div>
                         </div>
                     </div>
@@ -38,11 +39,12 @@
                     <div class="card-body">
                         <div class="media align-items-center">
                             <div class="w-icon pr-3">
-                                <i class="fa fa-usd text-white"></i>
+                                <i class="fa fa-money text-white"></i>
                             </div>
                             <div class="media-body pl-3 border-left border-white-2">
-                                <h5 class="text-white mb-0">$976,324 <small class="small-font">(-28%)</small></h5>
-                                <span class="text-white small-font">Total Profit</span>
+                                <h5 class="text-white mb-0">@currency($totalhargaaset)<small class="small-font">(-28%)</small>
+                                </h5>
+                                <span class="text-white small-font">Total Harga Perolehan Aset</span>
                             </div>
                         </div>
                     </div>
@@ -59,8 +61,9 @@
                                 <i class="fa fa-truck text-white"></i>
                             </div>
                             <div class="media-body pl-3 border-left border-white-2">
-                                <h5 class="text-white mb-0">8245 <small class="small-font">(+11%)</small></h5>
-                                <span class="text-white small-font">Total Shipments</span>
+                                <h5 class="text-white mb-0">{{ $seluruhbarang }} <small
+                                        class="small-font">(+11%)</small></h5>
+                                <span class="text-white small-font">Total Semua Barang</span>
                             </div>
                         </div>
                     </div>
@@ -277,19 +280,19 @@
         data: {
             labels: [
                 @foreach ($datacabang as $datacabang1)
-                '{{$datacabang1->kd_cabang}}',
+                    '{{ $datacabang1->kd_cabang }}',
                 @endforeach
             ],
             datasets: [{
                 label: 'Total Barang',
                 data: [
                     @foreach ($datacabang as $datacabang2)
-                    @php
+                        @php
                             $totaldatatiketperson = DB::table('sub_tbl_inventory')
                                 ->where('kd_cabang', [$datacabang2->kd_cabang])
                                 ->count();
-                    @endphp
-                    '{{$totaldatatiketperson}}',
+                        @endphp
+                            '{{ $totaldatatiketperson }}',
                     @endforeach
                 ],
                 backgroundColor: gradientStroke3,
@@ -302,12 +305,12 @@
                 display: true,
                 labels: {
                     fontColor: '#585757',
-                    boxWidth: 40
+                    boxWidth: 10
                 }
             },
             tooltips: {
                 enabled: true,
-                displayColors: false
+                displayColors: true
             },
             scales: {
                 xAxes: [{
@@ -336,3 +339,4 @@
         }
     });
 </script>
+

@@ -37,7 +37,10 @@ class HomeController extends Controller
     {
         if (auth::user()->akses == 'admin') {
             $datacabang = DB::table('tbl_cabang')->get();
-            return view('home',['datacabang'=>$datacabang]);
+            $seluruhbarang = DB::table('sub_tbl_inventory')->count();
+            $totalhargainventaris = DB::table('sub_tbl_inventory')->where('kd_jenis',0)->sum('harga_perolehan');
+            $totalhargaaset = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->sum('harga_perolehan');
+            return view('home',['datacabang'=>$datacabang, 'seluruhbarang'=>$seluruhbarang,'totalhargainventaris'=>$totalhargainventaris,'totalhargaaset'=>$totalhargaaset]);
         } else {
 
             $jumlah = 0;
