@@ -63,8 +63,13 @@ class BigDataController extends Controller
             } else {
                 $dataruangan = '<button class="btn-danger" disabled>undefinded</button>';
                 $button = '';
-            }
-            ;
+            };
+            if ($record->status_barang == 5) {
+                $status_barang = '<button class="btn-danger" disabled>Musnah</button>';
+            } else {
+                $status_barang = '<button class="btn-info" disabled>Baik</button>';
+            };
+
 
 
             $data_arr[] = array(
@@ -77,6 +82,7 @@ class BigDataController extends Controller
                 "merk" => $merk,
                 "tglbeli" => $tglbeli,
                 "thperolehan" => $thperolehan,
+                "status_barang" => $status_barang,
                 "btn" => "
                 <button class='btn-warning' data-toggle='modal' data-target='#editmasterbarang' id='editbarangmaster' data-url=" . url('divisi/masterbarang/showedit', ['id' => $id_inventaris]) . "><i class='bx bx-pencil'></i> edit</button>
                 ".$button

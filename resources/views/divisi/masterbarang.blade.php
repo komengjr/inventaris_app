@@ -116,6 +116,7 @@
                                         <td>Tanggal Pembelian</td>
                                         <td>Tahun Perolehan</th>
                                         <td>Harga Perolehan</td>
+                                        <td>Status Barang</td>
                                         <td>action</td>
                                     </tr>
                                 </thead>
@@ -254,6 +255,10 @@
                     {
                         data: 'harga_perolehan',
                         className: 'text-right'
+                    },
+                    {
+                        data: 'status_barang',
+                        className: 'text-center'
                     },
                     {
                         data: 'btn',

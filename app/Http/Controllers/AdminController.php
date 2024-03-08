@@ -112,8 +112,8 @@ class AdminController extends Controller
                 ]
             );
         }
-        
-       
+
+
         $data = DB::table('tbl_mutasi')
         ->select('tbl_mutasi.*')
         ->get();
@@ -150,17 +150,17 @@ class AdminController extends Controller
        $lokasi = DB::table('tbl_lokasi')
        ->select('tbl_lokasi.*')
        ->get();
-       
+
         return view('admin.form.selectlokasi',['data_brg'=>$data_brg,'id'=>$kd,'lokasi'=>$lokasi]);
     }
 
     public function kliktambahbrgmutasi(Request $request , $id)
-    {   
+    {
         $cekbrg = DB::table('sub_tbl_inventory')
         ->select('sub_tbl_inventory.*')
         ->where('id',$request->input('kd_inventaris'))
         ->get();
-       
+
         DB::table('tbl_sub_mutasi')->insert(
             [
                 'kd_mutasi' => $id,
@@ -207,7 +207,7 @@ class AdminController extends Controller
         $data = DB::table('tbl_musnah')
         ->select('tbl_musnah.*')
         ->get();
-        
+
         return view('admin.form.tablepemusnahan',['data'=>$data]);
     }
     public function xxshowdatamusnah($id)
@@ -230,7 +230,7 @@ class AdminController extends Controller
         ->get();
         return view('admin.form.tbl_pemusnahan',['data_lokasi'=>$data_lokasi, 'id'=>$id]);
     }
-    
+
     public function selectlokasi1($id,$kd)
     {
        $data_brg = DB::table('sub_tbl_inventory')
@@ -238,12 +238,12 @@ class AdminController extends Controller
        ->where('kd_lokasi',$id)
        ->where('kd_cabang',auth::user()->cabang)
        ->get();
-       
+
         return view('admin.form.selectlokasi1',['data_brg'=>$data_brg,'id'=>$kd]);
     }
     public function kliktambahbrgmusnah(Request $request , $id)
-    {   
-       
+    {
+
         DB::table('tbl_sub_musnah')->insert(
             [
                 'id_musnah' => $id,
@@ -268,6 +268,22 @@ class AdminController extends Controller
         ->where('tbl_sub_musnah.id_musnah',$no)
         ->get();
         return view('admin.form.tablebarangmusnah',['databrg'=>$databrg]);
+    }
+    public function datapemusnahaninventaris()
+    {
+        $datapemusnahan = DB::table('tbl_pemusnahan')->get();
+        return view('admin.pemusnahan.list-pemusnahan',['datapemusnahan'=>$datapemusnahan]);
+    }
+    public function senddatapemusnahaninventaris(Request $request)
+    {
+        $data = DB::table('tbl_pemusnahan')->get();
+        foreach ($data as  $value) {
+            DB::table('sub_tbl_inventory')->where('id_inventaris',$value->id_inventaris)
+            ->update([
+                'status_barang' => 5,
+            ]);
+        }
+        return redirect()->back();
     }
     public function hapussubtablemutasi($id , $no)
     {

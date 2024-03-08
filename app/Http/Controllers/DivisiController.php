@@ -106,6 +106,7 @@ class DivisiController extends Controller
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang', $id)
             ->where('kd_cabang', auth::user()->cabang)
+            ->where('status_barang','<','5')
             ->orderBy('id', 'DESC')
             ->get();
         // dd($id);
