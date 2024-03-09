@@ -89,10 +89,18 @@
                         value="{{ $tujuancabang->nama_cabang }}" disabled>
                 </div>
                 <label for="inputLastName1" class="form-label">Penanggung Jawab</label>
+                @if ($pjpinjamcabang)
                 <div class="input-group"> <span class="input-group-text"><i class="fa fa-ticket"></i></span>
                     <input type="text" class="form-control border-start-0" id="inputLastName1"
                         value="{{ $pjpinjamcabang->nama_staff }}" disabled>
                 </div>
+                @else
+                <div class="input-group"> <span class="input-group-text"><i class="fa fa-ticket"></i></span>
+                    <input type="text" class="form-control border-start-0" id="inputLastName1"
+                        value="" disabled>
+                </div>
+                @endif
+
                 <label for="inputLastName1" class="form-label">Deskripsi</label>
                 <div class="input-group"> <span class="input-group-text"><i class="fa fa-ticket"></i></span>
                     <textarea name="" class="form-control" id="" cols="30" rows="2" disabled>{{ $data->deskripsi_tujuan }}</textarea>
