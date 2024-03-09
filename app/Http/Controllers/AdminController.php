@@ -312,5 +312,10 @@ class AdminController extends Controller
             ->join('tbl_staff', 'tbl_staff.nip', '=', 'tbl_peminjaman.pj_pinjam')->get();
         return view('admin.peminjaman.list-peminjaman-barang', ['datapeminjaman' => $datapeminjaman]);
     }
+    public function datapeminjamaninventarisdetail(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->tiket)->first();
+        return view('admin.peminjaman.detail-peminjaman',['data'=>$data]);
+    }
 
 }

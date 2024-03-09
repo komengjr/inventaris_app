@@ -305,13 +305,46 @@
                 });
             });
     });
-    $(document).on("click", "#button-eror-log", function(e) {
+
+    $(document).on("click", "#button-data-peminjaman-detail", function(e) {
         e.preventDefault();
-        $("#modal-eror-admin").html(
+        var id = $(this).data("id");
+        $("#modal-body-peminjaman").html(
             '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
         );
         $("#showdatabarang").html(
             "<img src='icon.png'  style='display: block; margin: auto;'>"
+        );
+        $.ajax({
+                url: 'data-peminjaman-inventaris/detail/'+id,
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "tiket": id,
+                },
+                dataType: 'html',
+            })
+            .done(function(data) {
+                $("#modal-body-peminjaman").html(data);
+            })
+            .fail(function() {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    icon: "bx bx-x-circle",
+                    msg: "Gagal",
+                });
+            });
+    });
+</script>
+{{-- EROR --}}
+<script>
+     $(document).on("click", "#button-eror-log", function(e) {
+        e.preventDefault();
+        $("#modal-eror-admin").html(
+            '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
         );
         $.ajax({
                 url: 'log-eror-aplikasi',
@@ -332,7 +365,6 @@
             });
     });
 </script>
-
 <script>
     var ctx = document.getElementById("timeChart").getContext('2d');
 

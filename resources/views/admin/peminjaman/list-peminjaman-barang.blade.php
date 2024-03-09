@@ -1,10 +1,10 @@
 <div class="modal-header">
-    <h5 class="modal-title">Daftar List Pemusnahan Barang</h5>
+    <h5 class="modal-title">Daftar List Peminjaman Barang</h5>
     <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">×</span>
     </button>
 </div>
-<div class="modal-body">
+<div class="modal-body" id="modal-body-peminjaman">
 
     <div class="table-responsive" style="letter-spacing: .0px;">
         <table id="default-datatablesubbarang" class="styled-table" style="font-size: 12px">
@@ -45,11 +45,10 @@
                         <td>{{$datapeminjaman->tgl_pinjam}}</td>
 
 
-                        <td class="text-center"><button class="btn-primary"><i class="fa fa-pencil-square-o"></i></button></td>
+                        <td class="text-center"><button class="btn-primary" id="button-data-peminjaman-detail" data-id="{{$datapeminjaman->tiket_peminjaman}}"><i class="fa fa-pencil-square-o"></i></button></td>
                     </tr>
                 @endforeach
             </tbody>
-
         </table>
     </div>
 

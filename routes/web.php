@@ -243,6 +243,7 @@ Route::post('kliktambahbrgmusnah/{id}',['as'=>'kliktambahbrgmusnah','uses'=> 'Ad
 Route::get('hapussubtablemusnah/{id}/{no}',['as'=>'hapussubtablemusnah','uses'=> 'AdminController@hapussubtablemusnah']);
 Route::post('data-pemusnahan-inventaris',['as'=>'data-pemusnahan-inventaris','uses'=> 'AdminController@datapemusnahaninventaris']);
 Route::post('data-peminjaman-inventaris',['as'=>'data-peminjaman-inventaris','uses'=> 'AdminController@datapeminjamaninventaris']);
+Route::post('data-peminjaman-inventaris/detail/{id}',['as'=>'data-peminjaman-inventaris/detail/','uses'=> 'AdminController@datapeminjamaninventarisdetail']);
 Route::post('data-pemusnahan-inventaris/send',['as'=>'data-pemusnahan-inventaris/send','uses'=> 'AdminController@senddatapemusnahaninventaris']);
 
 
