@@ -124,6 +124,7 @@
                     <thead>
                         <tr>
                             <th>Photo</th>
+                            <th>ID Barang</th>
                             <th>Nama Barang</th>
                             <th>Merek / Type / No Seri</th>
                             <th>Tanggal Barang Keluar</th>
@@ -146,6 +147,7 @@
                                     @endif
 
                                 </td>
+                                <td>{{$databarang->id_inventaris}}</td>
                                 <td>{{$databarang->nama_barang}}</td>
                                 <td>{{$databarang->merk}}</td>
                                 <td>{{$databarang->tgl_pinjam_barang}}</td>
