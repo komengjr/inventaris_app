@@ -2,9 +2,9 @@
 <table class="styled-table m-0" id="data-table98" style="width: 100%;">
     <thead>
         <tr>
-            <td>No</td>
-            <td>Date</td>
-            <td>Eror</td>
+            <th style="width: 2%;">No</th>
+            <th style="width: 10%;">Date</th>
+            <th>Eror</th>
         </tr>
     </thead>
     <tbody>
@@ -13,8 +13,8 @@
         @endphp
         @for ($i = 0; $i < count($data); $i++)
             <tr>
-                <td>{{$i+1}}</td>
-                <td>{{$data[$i]['date']}}</td>
+                <td style="width: 2%;">{{$i+1}}</td>
+                <td style="width: 10%;">{{$data[$i]['date']}}</td>
                 <td>{{$data[$i]['text']}}</td>
             </tr>
         @endfor
