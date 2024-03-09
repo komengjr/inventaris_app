@@ -59,12 +59,12 @@
                         value="{{ $asalcabang->nama_cabang }}" disabled>
                 </div>
                 <label for="inputLastName1" class="form-label">Penanggung Jawab</label>
-                <div class="input-group"> <span class="input-group-text"><i class="fa fa-ticket"></i></span>
+                <div class="input-group"> <span class="input-group-text"><i class="fa fa-user-o"></i></span>
                     <input type="text" class="form-control border-start-0" id="inputLastName1"
                         value="{{ $pjpinjam->nama_staff }}" disabled>
                 </div>
                 <label for="inputLastName1" class="form-label">Deskripsi</label>
-                <div class="input-group"> <span class="input-group-text"><i class="fa fa-ticket"></i></span>
+                <div class="input-group"> <span class="input-group-text"><i class="fa fa-tasks"></i></span>
                     <textarea name="" class="form-control" id="" cols="30" rows="2" disabled>{{ $data->deskripsi }}</textarea>
                 </div>
 
@@ -84,13 +84,13 @@
                         ->first();
                 @endphp
                 <label for="inputLastName1" class="form-label">Cabang</label>
-                <div class="input-group"> <span class="input-group-text"><i class="fa fa-ticket"></i></span>
+                <div class="input-group"> <span class="input-group-text"><i class="fa fa-flag"></i></span>
                     <input type="text" class="form-control border-start-0" id="inputLastName1"
                         value="{{ $tujuancabang->nama_cabang }}" disabled>
                 </div>
                 <label for="inputLastName1" class="form-label">Penanggung Jawab</label>
                 @if ($pjpinjamcabang)
-                <div class="input-group"> <span class="input-group-text"><i class="fa fa-ticket"></i></span>
+                <div class="input-group"> <span class="input-group-text"><i class="fa fa-user-o"></i></span>
                     <input type="text" class="form-control border-start-0" id="inputLastName1"
                         value="{{ $pjpinjamcabang->nama_staff }}" disabled>
                 </div>
@@ -102,7 +102,7 @@
                 @endif
 
                 <label for="inputLastName1" class="form-label">Deskripsi</label>
-                <div class="input-group"> <span class="input-group-text"><i class="fa fa-ticket"></i></span>
+                <div class="input-group"> <span class="input-group-text"><i class="fa fa-tasks"></i></span>
                     <textarea name="" class="form-control" id="" cols="30" rows="2" disabled>{{ $data->deskripsi_tujuan }}</textarea>
                 </div>
 
