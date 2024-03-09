@@ -137,8 +137,14 @@
                         @foreach ($databarang as $databarang)
                             <tr>
                                 <td>
+                                    @if ($databarang->gambar == "")
                                     <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
                                         class="product-img">
+                                    @else
+                                    <img alt="Image placeholder" src="{{ url($databarang->gambar, []) }}"
+                                        class="product-img">
+                                    @endif
+
                                 </td>
                                 <td>{{$databarang->nama_barang}}</td>
                                 <td>{{$databarang->merk}}</td>
