@@ -336,9 +336,11 @@ Route::get('view/{no}/{cb}/{kd}/{id}', 'DataController@showdata');
 Route::get('viewregistrasi/{id}', 'DataTableController@viewdatapasien');
 Route::post('simpandataregsiter',['as'=>'simpandataregsiter','uses'=> 'DataController@simpandataregsiter']);
 Route::get('log-eror-inventaris', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+Route::get('log-eror-aplikasi', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'indexx']);
 Route::get('export-data', [\App\Http\Controllers\ExcelController::class, 'index']);
 Route::get('export-data-ruangan/{id}', [\App\Http\Controllers\ExcelController::class, 'exportruangan']);
-
+// Route::get('log-eror-aplikasi', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+// Route::get('log-eror-aplikasi',['as'=>'log-eror-aplikasi','uses'=> 'ErorController@eroraplikasi']);
 
 Route::get('nav/user-login',['as'=>'nav/user-login','uses'=> 'NavController@recentuserlogin']);
 Route::get('nav/user-order',['as'=>'nav/user-order','uses'=> 'NavController@recentuserorder']);

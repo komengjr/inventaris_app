@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="robots" content="noindex, nofollow">
-  <title>Laravel log viewer</title>
+  <title>Eror Log</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -295,7 +295,7 @@
   const darkSwitch = document.getElementById('darkSwitch');
 
   // this is here so we can get the body dark mode before the page displays
-  // otherwise the page will be white for a second... 
+  // otherwise the page will be white for a second...
   initTheme();
 
   window.addEventListener('load', () => {
@@ -308,7 +308,7 @@
   });
 
   // end darkmode js
-        
+
   $(document).ready(function () {
     $('.table-container tr').on('click', function () {
       $('#' + $(this).data('display')).toggle();

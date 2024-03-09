@@ -10,6 +10,11 @@
         /* height: 100%; */
         margin: 0;
     }
+    #button-eror-log:hover{
+        cursor: pointer;
+        color: white;
+        background: red;
+    }
 </style>
 <div class="content-wrapper">
     <div class="container-fluid">
@@ -85,12 +90,17 @@
                                     <i class="icon-options"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="javascript:void();" data-toggle="modal" data-target='#modal-admin' id="button-data-peminjaman"><i class="fa fa-laptop"></i> Data Peminjaman Barang</a>
-                                    <a class="dropdown-item" href="javascript:void();" data-toggle="modal" data-target='#modal-admin'><i class="fa fa-asl-interpreting"></i> Data Stock Opname Cabang</a>
+                                    <a class="dropdown-item" href="javascript:void();" data-toggle="modal"
+                                        data-target='#modal-admin' id="button-data-peminjaman"><i
+                                            class="fa fa-laptop"></i> Data Peminjaman Barang</a>
+                                    <a class="dropdown-item" href="javascript:void();" data-toggle="modal"
+                                        data-target='#modal-admin'><i class="fa fa-asl-interpreting"></i> Data Stock
+                                        Opname Cabang</a>
 
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="javascript:void();" data-toggle="modal"
-                                        data-target='#modal-admin' id="button-data-pemusnahan-inventaris"><i class="fa fa-trash-o"></i> Data Pemusnahan
+                                        data-target='#modal-admin' id="button-data-pemusnahan-inventaris"><i
+                                            class="fa fa-trash-o"></i> Data Pemusnahan
                                         Barang</a>
                                 </div>
                             </div>
@@ -150,11 +160,11 @@
             </div>
             <div class="col-12 col-lg-6 col-xl-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" data-toggle="modal" data-target="#largesizemodal" id="button-eror-log">
                         <div class="media align-items-center">
                             <div class="media-body text-left">
-                                <h4 class="text-secondary mb-0">15 tons</h4>
-                                <span class="small-font">Avg Loading Weight</span>
+                                <h4 class="text-secondary mb-0">Eror Aplikasi</h4>
+                                <span class="small-font">Debuging Mode</span>
                             </div>
                             <div class="w-circle-icon rounded bg-secondary">
                                 <i class="fa fa-tasks text-white"></i>
@@ -208,6 +218,26 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="largesizemodal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-full">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Your modal title here</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modal-eror-admin">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, dicta. Voluptate cumque odit quam velit maiores sint rerum, dolore impedit commodi. Tempora eveniet odit vero rem blanditiis, tenetur laudantium cumque.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, dicta. Voluptate cumque odit quam velit maiores sint rerum, dolore impedit commodi. Tempora eveniet odit vero rem blanditiis, tenetur laudantium cumque.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+          <button type="button" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- Easy Pie Chart JS -->
 <script src="{{ asset('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
 <!-- Chart JS -->
@@ -264,6 +294,32 @@
             })
             .done(function(data) {
                 $("#menu-modal-admin").html(data);
+            })
+            .fail(function() {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    icon: "bx bx-x-circle",
+                    msg: "Gagal",
+                });
+            });
+    });
+    $(document).on("click", "#button-eror-log", function(e) {
+        e.preventDefault();
+        $("#modal-eror-admin").html(
+            '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
+        );
+        $("#showdatabarang").html(
+            "<img src='icon.png'  style='display: block; margin: auto;'>"
+        );
+        $.ajax({
+                url: 'log-eror-aplikasi',
+                type: "GET",
+                dataType: "html",
+            })
+            .done(function(data) {
+                $("#modal-eror-admin").html(data);
             })
             .fail(function() {
                 Lobibox.notify("error", {
@@ -353,4 +409,3 @@
         }
     });
 </script>
-
