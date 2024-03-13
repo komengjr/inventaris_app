@@ -226,6 +226,7 @@
             $ceklokasix = DB::table('sub_tbl_inventory')
                 ->select('sub_tbl_inventory.*')
                 ->where('kd_cabang', auth::user()->cabang)
+                ->where('status_barang','!=',5)
                 ->where('id_nomor_ruangan_cbaang', $itemx->id_nomor_ruangan_cbaang)
                 ->count();
             ?>
