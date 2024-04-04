@@ -12,7 +12,7 @@ class InventarisController extends Controller
     public function index($id)
     {
         try {
-            $category = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->where('kd_inventaris','05.04.03')->orWhere('kd_inventaris','05.04.04')->get();
+            $category = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->where('kd_inventaris','05.04.03')->get();
             return response()->json($category);
         } catch (QueryException $e) {
             $error = [
