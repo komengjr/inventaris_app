@@ -320,7 +320,7 @@ class AdminController extends Controller
     public function dataklasifikasiseluruhcabang()
     {
         $data = DB::table('sub_tbl_inventory')
-        ->select('sub_tbl_inventory.*','tbl_cabang.*')
+        ->select('sub_tbl_inventory.*','tbl_cabang.*','tbl_inventory.nama_klasifikasi_barang')
         ->join('tbl_inventory','tbl_inventory.kd_inventaris','=','sub_tbl_inventory.kd_inventaris')
         ->join('no_urut_barang','no_urut_barang.no_urut_barang','=','tbl_inventory.no_urut_barang')
         ->join('tbl_cabang','tbl_cabang.kd_cabang','=','sub_tbl_inventory.kd_cabang')

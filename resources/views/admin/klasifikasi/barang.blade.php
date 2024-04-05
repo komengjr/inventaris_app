@@ -32,14 +32,7 @@
                         <td>{{$data->nama_barang}}</td>
                         <td>{{$data->kd_inventaris}}</td>
                         <td>
-                            @php
-                                $cat = DB::table('tbl_inventory')->where('kd_inventaris',$data->kd_inventaris)->first();
-                            @endphp
-                                @if ($cat)
-                                    {{$cat->nama_barang}}
-                                @else
-                                    NULL
-                                @endif
+                            {{$data->nama_klasifikasi_barang}}
                         </td>
                         <td>{{$data->nama_cabang}}</td>
                         <td>{{$data->merk}}</td>
