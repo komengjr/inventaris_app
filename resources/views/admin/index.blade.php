@@ -10,7 +10,8 @@
         /* height: 100%; */
         margin: 0;
     }
-    #button-eror-log:hover{
+
+    #button-eror-log:hover {
         cursor: pointer;
         color: white;
         background: red;
@@ -102,6 +103,9 @@
                                         data-target='#modal-admin' id="button-data-pemusnahan-inventaris"><i
                                             class="fa fa-trash-o"></i> Data Pemusnahan
                                         Barang</a>
+                                    <a class="dropdown-item" href="javascript:void();" data-toggle="modal"
+                                        data-target='#modal-admin' id="button-data-klasifikasi-admin-inventaris"><i
+                                            class="fa fa-trash-o"></i> Data Inventaris By kalsifikasi</a>
                                 </div>
                             </div>
                         </div>
@@ -220,24 +224,30 @@
 </div>
 <div class="modal fade" id="largesizemodal" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-full">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Your modal title here</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Your modal title here</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-eror-admin">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, dicta. Voluptate cumque odit quam
+                    velit maiores sint rerum, dolore impedit commodi. Tempora eveniet odit vero rem blanditiis, tenetur
+                    laudantium cumque.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, dicta. Voluptate cumque odit quam
+                    velit maiores sint rerum, dolore impedit commodi. Tempora eveniet odit vero rem blanditiis, tenetur
+                    laudantium cumque.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i>
+                    Close</button>
+                <button type="button" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Save
+                    changes</button>
+            </div>
         </div>
-        <div class="modal-body" id="modal-eror-admin">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, dicta. Voluptate cumque odit quam velit maiores sint rerum, dolore impedit commodi. Tempora eveniet odit vero rem blanditiis, tenetur laudantium cumque.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, dicta. Voluptate cumque odit quam velit maiores sint rerum, dolore impedit commodi. Tempora eveniet odit vero rem blanditiis, tenetur laudantium cumque.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-          <button type="button" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Save changes</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 <!-- Easy Pie Chart JS -->
 <script src="{{ asset('assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
 <!-- Chart JS -->
@@ -316,7 +326,7 @@
             "<img src='icon.png'  style='display: block; margin: auto;'>"
         );
         $.ajax({
-                url: 'data-peminjaman-inventaris/detail/'+id,
+                url: 'data-peminjaman-inventaris/detail/' + id,
                 type: "POST",
                 cache: false,
                 data: {
@@ -341,7 +351,7 @@
 </script>
 {{-- EROR --}}
 <script>
-     $(document).on("click", "#button-eror-log", function(e) {
+    $(document).on("click", "#button-eror-log", function(e) {
         e.preventDefault();
         $("#modal-eror-admin").html(
             '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
@@ -353,6 +363,29 @@
             })
             .done(function(data) {
                 $("#modal-eror-admin").html(data);
+            })
+            .fail(function() {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    icon: "bx bx-x-circle",
+                    msg: "Gagal",
+                });
+            });
+    });
+    $(document).on("click", "#button-data-klasifikasi-admin-inventaris", function(e) {
+        e.preventDefault();
+        $("#menu-modal-admin").html(
+            '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
+        );
+        $.ajax({
+                url: 'admin/dataklasifikasi/seluruhcabang',
+                type: "GET",
+                dataType: "html",
+            })
+            .done(function(data) {
+                $("#menu-modal-admin").html(data);
             })
             .fail(function() {
                 Lobibox.notify("error", {

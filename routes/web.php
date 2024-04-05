@@ -319,6 +319,7 @@ Route::post('admin/datainventaris/simpandata', 'HomeController@simpandatainventa
 
 
 Route::get('mutasidatabarang/{id}',['as'=>'mutasidatabarang','uses'=> 'HomeController@mutasidatabarang']);
+Route::get('admin/dataklasifikasi/seluruhcabang',['as'=>'admin/dataklasifikasi/seluruhcabang','uses'=> 'AdminController@dataklasifikasiseluruhcabang']);
 
 
 

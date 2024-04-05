@@ -317,5 +317,16 @@ class AdminController extends Controller
         $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->tiket)->first();
         return view('admin.peminjaman.detail-peminjaman',['data'=>$data]);
     }
+    public function dataklasifikasiseluruhcabang()
+    {
+        $data = DB::table('sub_tbl_inventory')
+        ->select('sub_tbl_inventory.*','tbl_cabang.*')
+        ->join('tbl_inventory','tbl_inventory.kd_inventaris','=','sub_tbl_inventory.kd_inventaris')
+        ->join('no_urut_barang','no_urut_barang.no_urut_barang','=','tbl_inventory.no_urut_barang')
+        ->join('tbl_cabang','tbl_cabang.kd_cabang','=','sub_tbl_inventory.kd_cabang')
+        ->where('no_urut_barang.no_urut_barang','05')->get();
+        // dd($data);
+        return view('admin.klasifikasi.barang',['data'=>$data]);
+    }
 
 }
