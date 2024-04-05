@@ -153,9 +153,13 @@
                         <label for="inputEmail4" class="form-label">Kode Barang</label>
                         {{-- <input type="text" class="form-control" value="{{ $data->kd_inventaris }}" disabled> --}}
                         <select class="form-control single-select" name="kd_inventaris">
-                            <option value="{{ $data->kd_inventaris }}">{{ $data->kd_inventaris }} {{ $kode_lokasi->nama_barang }}</option>
+                            @if ($kode_lokasi)
+                            <option value="{{ $data->kd_inventaris }}">{{ $data->kd_inventaris }} {{ $kode_lokasi->nama_klasifikasi_barang }}</option>
+                            @else
+                            <option value="{{ $data->kd_inventaris }}">{{ $data->kd_inventaris }} Tidak Ditemukan</option>
+                            @endif
                             @foreach ($kode as $kode)
-                                <option value="{{ $kode->kd_inventaris }}"> {{ $kode->kd_inventaris }} - {{ $kode->nama_barang }}</option>
+                                <option value="{{ $kode->kd_inventaris }}"> {{ $kode->kd_inventaris }} - {{ $kode->nama_klasifikasi_barang }}</option>
                             @endforeach
 
                         </select>
