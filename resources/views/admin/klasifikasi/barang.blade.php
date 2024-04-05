@@ -14,6 +14,7 @@
                     <th>No Inventaris</th>
                     <th>Nama Barang</th>
                     <th>Klasifikasi</th>
+                    <th>Kategori Klasifikasi</th>
                     <th>Cabang</th>
                     <th>Merek</th>
                     <th>Type</th>
@@ -21,12 +22,25 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $no = 1;
+                @endphp
                 @foreach ($data as $data)
                     <tr>
-                        <td>1</td>
+                        <td>{{$no++}}</td>
                         <td>{{$data->no_inventaris}}</td>
                         <td>{{$data->nama_barang}}</td>
                         <td>{{$data->kd_inventaris}}</td>
+                        <td>
+                            @php
+                                $cat = DB::table('tbl_inventory')->where('kd_inventaris',$data->kd_inventaris)->first();
+                            @endphp
+                                @if ($cat)
+                                    {{$cat->nama_barang}}
+                                @else
+                                    NULL
+                                @endif
+                        </td>
                         <td>{{$data->nama_cabang}}</td>
                         <td>{{$data->merk}}</td>
                         <td>{{$data->type}}</td>
