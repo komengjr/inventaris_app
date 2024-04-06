@@ -48,9 +48,9 @@
                           <option value="">Pilih Jenis Inventaris</option>
                           @foreach ($kode as $kode)
                             @if (strlen($kode->kd_inventaris) <= 5)
-                            <option class="bg-info" value="{{$kode->kd_inventaris}}" disabled>{{$kode->nama_barang}} ( {{$kode->kd_inventaris}} )</option>
+                            <option class="bg-info" value="{{$kode->kd_inventaris}}" disabled>{{$kode->nama_klasifikasi_barang}} ( {{$kode->kd_inventaris}} )</option>
                             @else
-                            <option value="{{$kode->kd_inventaris}}" >{{$kode->nama_barang}} ( {{$kode->kd_inventaris}} )</option>
+                            <option value="{{$kode->kd_inventaris}}" >{{$kode->nama_klasifikasi_barang}} ( {{$kode->kd_inventaris}} )</option>
                             @endif
 
 
