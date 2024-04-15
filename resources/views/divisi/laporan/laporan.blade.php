@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+<style>
+    .list-group-item:hover{
+        background: rgb(168, 156, 156);
+        cursor: pointer;
+    }
+</style>
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
             <div class="card mt-3">
@@ -103,12 +109,12 @@
                                     </div>
                                 </div>
                             </li>
-                            {{-- <li class="list-group-item">
+                            <li class="list-group-item">
                                 <div class="media align-items-center">
-                                    <img src="{{ asset('vendor/icon/barcode.jpg') }}" alt="user avatar"
-                                        class="customer-img rounded" width="80">
+                                    <img src="{{ asset('vendor/icon/6.png') }}" alt="user avatar"
+                                        class="customer-img rounded" width="60">
                                     <div class="media-body ml-3">
-                                        <h6 class="mb-0">Menu Cetak Barcode</h6>
+                                        <h6 class="mb-0">Menu Laporan Maintenance Bulanan IT</h6>
                                         <small class="small-font"><span class="badge badge-success shadow-success m-0">Aktif</span></small>
                                     </div>
                                     <div class="date">
@@ -116,7 +122,7 @@
                                         id="button-report-stokopname"><i class="zmdi zmdi-assignment"></i></button>
                                     </div>
                                 </div>
-                            </li> --}}
+                            </li>
 
                         </ul>
                         <div class="card-footer text-center bg-transparent border-0">
@@ -148,7 +154,8 @@
                         </div>
 
                         <ul class="list-group list-group-flush shadow-none">
-                            <li class="list-group-item">
+                            <li class="list-group-item" data-toggle="modal" data-target="#modal-laporan"
+                            id="button-laporan-barang-keseluruhan">
                                 <div class="media align-items-center">
                                     <div class="icon-box border border-light">
                                         <i class="zmdi zmdi-assignment"></i>
@@ -157,13 +164,12 @@
                                         <h6 class="mb-0">Barang Keseluruhan</h6>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"
-                                            id="button-laporan-barang-keseluruhan"><i
-                                                class="zmdi zmdi-assignment"></i></button>
+                                        <i class="zmdi zmdi-assignment"></i>
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" data-toggle="modal" data-target="#modal-laporan"
+                            id="button-laporan-barang-lokasi">
                                 <div class="media align-items-center">
                                     <div class="icon-box border border-light">
                                         <i class="zmdi zmdi-assignment"></i>
@@ -172,13 +178,12 @@
                                         <h6 class="mb-0">Barang Per Ruangan</h6>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"
-                                            id="button-laporan-barang-lokasi"><i
-                                                class="zmdi zmdi-assignment"></i></button>
+                                    <i class="zmdi zmdi-assignment"></i>
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" data-toggle="modal" data-target="#modal-laporan"
+                            id="button-laporan-barang-klasifikasi">
                                 <div class="media align-items-center">
                                     <div class="icon-box border border-light">
                                         <i class="zmdi zmdi-assignment"></i>
@@ -187,9 +192,7 @@
                                         <h6 class="mb-0">Barang Berdasarkan Klasifikasi</h6>
                                     </div>
                                     <div class="date">
-                                        <button class="btn-dark" data-toggle="modal" data-target="#modal-laporan"
-                                            id="button-laporan-barang-klasifikasi"><i
-                                                class="zmdi zmdi-assignment"></i></button>
+                                        <i class="zmdi zmdi-assignment"></i>
                                     </div>
                                 </div>
                             </li>
