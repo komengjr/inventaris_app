@@ -14,7 +14,7 @@
                     <label for="">Cari Klasifikasi</label>
                     <select class="form-control multiple-select" multiple="multiple" id="klasifikasi_barang">
                         @foreach ($data as $data)
-                            <option data-name="{{ $data->kd_inventaris }}">{{ $data->nama_barang }}</option>
+                            <option data-name="{{ $data->kd_inventaris }}">{{ $data->nama_klasifikasi_barang }}</option>
                         @endforeach
                     </select>
                 </div>

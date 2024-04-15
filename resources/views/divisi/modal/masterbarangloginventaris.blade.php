@@ -12,8 +12,8 @@
             Lokasi</button>
         <button class="btn-danger" id="button-cek-datalog-erorklasifikasi"><i class="zmdi zmdi-alert-circle-o"></i> Eror
             Klasifikasi</button>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fa fa-x"></i></span>
         </button>
     </span>
 </div>

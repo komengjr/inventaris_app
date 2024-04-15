@@ -160,7 +160,7 @@ class BigDataController extends Controller
             }
             $cekklasifikasi = DB::table('tbl_inventory')->where('kd_inventaris',$record->kd_inventaris)->first();
             if ($cekklasifikasi) {
-                $kd_inventaris = $cekklasifikasi->kd_inventaris.' : '.$cekklasifikasi->nama_barang;
+                $kd_inventaris = $cekklasifikasi->kd_inventaris.' : '.$cekklasifikasi->nama_klasifikasi_barang;
             } else {
                 $kd_inventaris = '<button class="btn-danger" disabled>undefinded</button>';
             }
