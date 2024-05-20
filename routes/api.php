@@ -18,4 +18,4 @@ use App\Http\Controllers\api\InventarisController;
 //     return $request->user();
 // });
 // Route::apiResource('datainventaris', [InventarisController::class, 'index']);
-Route::get('datainventaris/{id}', 'api\InventarisController@index');
+Route::get('datainventaris/{id}/{kode}', 'api\InventarisController@index');

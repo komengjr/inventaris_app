@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Response;
 use DB;
 class InventarisController extends Controller
 {
-    public function index($id)
+    public function index($id,$kode)
     {
         try {
-            $category = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->where('kd_inventaris','05.04.03')->get();
+            $category = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->where('kd_inventaris',$kode)->get();
             return response()->json($category);
         } catch (QueryException $e) {
             $error = [

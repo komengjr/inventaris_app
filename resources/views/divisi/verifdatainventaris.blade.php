@@ -107,6 +107,7 @@
                                                     @php
                                                         $jumlahi = DB::table('sub_tbl_inventory')
                                                             ->where('kd_cabang', Auth::user()->cabang)
+                                                            ->where('status_barang','!=',5)
                                                             ->count();
                                                     @endphp
                                                     {{ $jumlahi }}
