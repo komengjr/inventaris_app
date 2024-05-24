@@ -34,7 +34,7 @@ class DataInventarisExport implements FromQuery, WithHeadings, ShouldAutoSize
             'harga_perolehan',
             'tgl_beli',
             'kondisi_barang',
-        )->where('kd_cabang', 'like', '%' . $this->nama . '%');
+        )->where('kd_cabang', $this->nama );
     }
     public function headings(): array
     {
