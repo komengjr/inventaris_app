@@ -39,12 +39,12 @@
 
             </div>
                 <div class="col-md-4">
-                    <label for="inputPassword4" class="form-label">Nama Barang</label>
+                    <label for="inputPassword4" class="form-label">Nama Barangs</label>
                     <input type="text" name="nama_barang" class="form-control" id="inputPassword4" required>
 
 
                     <label for="inputEmail4" class="form-label">Jenis Inventaris</label>
-                     <select class="form-control single-selectxx" style="color: red;" name="kd_inventaris" required>
+                     <select class="form-control jenis_inventaris" style="color: red;" name="kd_inventaris" required>
                           <option value="">Pilih Jenis Inventaris</option>
                           @foreach ($kode as $kode)
                             @if (strlen($kode->kd_inventaris) <= 5)
@@ -70,7 +70,7 @@
                 <div class="col-md-4">
                     <label for="inputEmail4" class="form-label">Lokasi</label>
 
-                     <select class="form-control single-selectxx" name="no_ruangan" required>
+                     <select class="form-control lokasi_barang" name="no_ruangan" required>
                           <option value="">Pilih Ruangan</option>
                           @foreach ($ruangan as $ruangan)
 
@@ -81,9 +81,10 @@
                     {{-- <input type="text" name="kd_lokasi" class="form-control" value="{{$id}}" disabled>
                     <input type="text" name="kd_lokasi" class="form-control" value="{{$id}}" hidden> --}}
                     <label for="inputPassword4" class="form-label">Kategori</label>
-                    <select class="form-control single-selectxx" name="kategori" required>
+                    <select class="form-control kategori_barang" name="kategori" required>
                         <option value="">Pilih Kategori</option>
                         <option value="0">Inventaris</option>
+                        <option value="1">Aset</option>
 
 
                     </select>
@@ -112,7 +113,9 @@
 <script>
 
     $(document).ready(function() {
-        $('.single-selectxx').select2();
+        $('.jenis_inventaris').select2();
+        $('.lokasi_barang').select2();
+        $('.kategori_barang').select2();
 
       });
 
