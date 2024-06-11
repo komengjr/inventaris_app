@@ -10,7 +10,7 @@
         <select class="form-control single-select" name="kd_inventaris">
             <option value="{{$data->kd_inventaris}}">{{$data->kd_inventaris}}</option>
             @foreach ($klasifikasi as $klasifikasi)
-            <option value="{{$klasifikasi->kd_inventaris}}">{{$klasifikasi->nama_barang}} ( {{$klasifikasi->kd_inventaris}} )</option>
+            <option value="{{$klasifikasi->kd_inventaris}}">{{$klasifikasi->nama_klasifikasi_barang}} ( {{$klasifikasi->kd_inventaris}} )</option>
             @endforeach
         </select>
         {{-- <input type="text" class="form-control" name="kd_inventaris" value="{{$data->kd_inventaris}}"> --}}
