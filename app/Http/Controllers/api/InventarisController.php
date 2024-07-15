@@ -21,10 +21,10 @@ class InventarisController extends Controller
             return response()->json($error, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    public function datainventaris(Request $request, $id)
+    public function datainventaris($id,$nama)
     {
         try {
-            $category = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->where('no_inventaris',$request->no)->get();
+            $category = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->where('nama_barang', 'like', '%' . $nama . '%')->get();
             return response()->json($category);
         } catch (QueryException $e) {
             $error = [
