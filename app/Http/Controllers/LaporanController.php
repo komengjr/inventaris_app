@@ -52,6 +52,7 @@ class LaporanController extends Controller
         $data = DB::table('sub_tbl_inventory')
             ->select('no_inventaris', 'nama_barang', 'merk', 'type', 'harga_perolehan', 'th_perolehan')
             ->where('kd_cabang', Auth::user()->cabang)
+            ->where('status_barang','!=',5)
             ->where('id_nomor_ruangan_cbaang', $request->kd_lokasi)->get();
         $dataruangan = DB::table('tbl_nomor_ruangan_cabang')
             ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
