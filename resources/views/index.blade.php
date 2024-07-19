@@ -61,20 +61,20 @@
                                                 // ->mergeString(Storage::get('qr.png'), .3)
                                                 ->generate($data->no_inventaris)) !!} ">
                 <div class="absolute">
-                    <table style="font-size: 8px; margin: 0px; padding: 0px; width: 107px;" border="1" cla>
+                    <table style="font-size: 8px; margin: 0px; padding: 0px; width: 107px color: #000000; " border="1" cla>
                         <tr>
 
-                            <td colspan="3"><strong>{{ $data->nama_barang }}</strong></td>
+                            <td colspan="3"><strong style="color: #000000">{{ $data->nama_barang }}</strong></td>
                         </tr>
                         <tr>
                             <td>
-                                <p>Lokasi</p>
+                                <p style="color: #000000">Lokasi</p>
                             </td>
                             <td class="text-center">
                                 <p>:</p>
                             </td>
                             <td>
-                                <p>
+                                <p style="color: #000000">
                                     @php
                                         $namalokasi = DB::table('tbl_lokasi')
                                             ->where('kd_lokasi', $data->kd_lokasi)
@@ -86,19 +86,19 @@
                         </tr>
                         <tr>
                             <td colspan="3" class="text-center" style="font-size: 7px">
-                                <strong>{{ $data->no_inventaris }}</strong>
+                                <strong style="color: #000000">{{ $data->no_inventaris }}</strong>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="3" class="text-center">
-                                <strong>{{ $data->merk }} / {{ $data->type }}</strong>
+                                <strong style="color: #000000">{{ $data->merk }} / {{ $data->type }}</strong>
                             </td>
                         </tr>
 
                         <tr>
 
                             <td colspan="3">
-                                <p>
+                                <p style="color: #000000">
                                     @php
                                         $namacabang = DB::table('tbl_cabang')
                                             ->where('kd_cabang', $data->kd_cabang)
