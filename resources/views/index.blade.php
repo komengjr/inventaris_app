@@ -57,7 +57,7 @@
                                                 ->size(507)
                                                 ->style('round')
                                                 ->eye('circle')
-                                                ->eyeColor(0, 255, 0, 0, 255, 0, 0)
+                                                // ->eyeColor(0, 255, 0, 0, 255, 0, 0)
                                                 // ->mergeString(Storage::get('qr.png'), .3)
                                                 ->generate($data->no_inventaris)) !!} ">
                 <div class="absolute">
