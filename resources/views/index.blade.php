@@ -24,7 +24,7 @@
         left: 0px;
         width: 220px;
         height: 107px;
-        border: 3px solid #73AD21;
+        border: 3px solid #000000;
     }
 
     div.absolute {
@@ -33,7 +33,7 @@
         right: 0;
         width: 106px;
         height: 101px;
-        border: 3px solid #f90505;
+        border: 3px solid #000000;
     }
 
     table tr td p {
