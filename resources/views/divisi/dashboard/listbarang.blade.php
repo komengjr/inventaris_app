@@ -135,7 +135,7 @@
                                                     class="fa fa-eye"> </i> Detail</button><br><br>
                                             <button class="btn-info"
                                                 onclick="window.open('printbarcodebyid/{{ $data->id }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i
-                                                    class="fa fa-print"></i> Print</button>
+                                                    class="fa fa-print"></i> Print barcode</button>
 
                                         </td>
                                     </tr>

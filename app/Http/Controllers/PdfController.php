@@ -33,7 +33,7 @@ class PdfController extends Controller
         ->where('kd_cabang',auth::user()->cabang)
         ->get();
         // dd($data);
-        $qrcode = base64_encode(QrCode::format('png')->size(400)->errorCorrection('H')->generate('string'));
+        $qrcode = base64_encode(QrCode::format('png')->size(500)->errorCorrection('H')->generate('string'));
         $pdf = PDF::loadview('index',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
         return $pdf->stream();
     }
