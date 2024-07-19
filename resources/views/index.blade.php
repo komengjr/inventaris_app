@@ -24,7 +24,7 @@
         left: 0px;
         width: 220px;
         height: 107px;
-        border: 3px solid #000000;
+        /* border: 3px solid #000000; */
     }
 
     div.absolute {
