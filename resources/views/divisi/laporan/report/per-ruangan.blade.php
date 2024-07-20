@@ -92,8 +92,12 @@
                     ->where('kd_cabang', Auth::user()->cabang)
                     ->first();
             @endphp
-
+                @if ($entitas->kd_entitas_cabang == 'PTP')
                 <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/pramita.png" width="152">
+                @elseif($entitas->kd_entitas_cabang == 'SIMA')
+                <img style="padding-top: 0px; margin: 2px; left: 2px; ;" src="vendor/sima.jpeg" width="152">
+                @endif
+
 
 
             <hr style="padding: 0%; margin: 0%;">

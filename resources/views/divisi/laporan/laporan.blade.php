@@ -7,8 +7,8 @@
     }
 </style>
     <div class="content-wrapper gradient-forest">
-        <div class="container-fluid">
-            <div class="card mt-3">
+        <div class="container-fluid pr-0">
+            <div class="card mt-3 mr-3">
                 <div class="row pl-4 pt-3">
                     <div class="col-sm-9">
                         <h4 class="page-title">Menu Laporan</h4>
@@ -20,8 +20,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-6">
+            <div class="row mr-1">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">Report Menu
                             <div class="card-action">
@@ -123,6 +123,43 @@
                                     </div>
                                 </div>
                             </li>
+                            <li class="list-group-item"  data-toggle="modal" data-target="#modal-laporan" id="button-report-laporan-kritis">
+                                <div class="media align-items-center">
+                                    <img src="{{ asset('vendor/icon/6.png') }}" alt="user avatar"
+                                        class="customer-img rounded" width="60">
+                                    <div class="media-body ml-3">
+                                        <h6 class="mb-0">Menu Laporan Kritis</h6>
+                                        <small class="small-font"><span class="badge badge-warning shadow-warning m-0">Soon</span></small>
+                                    </div>
+                                    <div class="date">
+                                        {{-- <but   ton class="btn-dark"><i class="zmdi zmdi-assignment"></i></button> --}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item"  data-toggle="modal" data-target="#modal-laporan" id="button-report-laporan-backup">
+                                <div class="media align-items-center">
+                                    <img src="{{ asset('vendor/icon/6.png') }}" alt="user avatar"
+                                        class="customer-img rounded" width="60">
+                                    <div class="media-body ml-3">
+                                        <h6 class="mb-0">Menu Laporan Backup</h6>
+                                        <small class="small-font"><span class="badge badge-warning shadow-warning m-0">Soon</span></small>
+                                    </div>
+                                    <div class="date">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item"  data-toggle="modal" data-target="#modal-laporan" id="button-report-laporan-backup">
+                                <div class="media align-items-center">
+                                    <img src="{{ asset('vendor/icon/6.png') }}" alt="user avatar"
+                                        class="customer-img rounded" width="60">
+                                    <div class="media-body ml-3">
+                                        <h6 class="mb-0">Menu Laporan User</h6>
+                                        <small class="small-font"><span class="badge badge-warning shadow-warning m-0">Soon</span></small>
+                                    </div>
+                                    <div class="date">
+                                    </div>
+                                </div>
+                            </li>
 
                         </ul>
                         <div class="card-footer text-center bg-transparent border-0">
@@ -132,7 +169,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">Report Data Barang
                             <div class="card-action">
