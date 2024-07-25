@@ -20,3 +20,4 @@ use App\Http\Controllers\api\InventarisController;
 // Route::apiResource('datainventaris', [InventarisController::class, 'index']);
 Route::get('datainventaris/{id}/{kode}', 'api\InventarisController@index');
 Route::get('datanoinventaris/{id}/{nama}', 'api\InventarisController@datainventaris');
+Route::get('datanidinventaris/{id}', 'api\InventarisController@dataidinventaris');
