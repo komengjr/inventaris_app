@@ -21,3 +21,4 @@ use App\Http\Controllers\api\InventarisController;
 Route::get('datainventaris/{id}/{kode}', 'api\InventarisController@index');
 Route::get('datanoinventaris/{id}/{nama}', 'api\InventarisController@datainventaris');
 Route::get('datanidinventaris/{id}', 'api\InventarisController@dataidinventaris');
+Route::get('datanoinventaris/{id}/{by}/{nama}', 'api\InventarisController@caridatabyinventaris');

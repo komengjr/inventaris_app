@@ -45,4 +45,21 @@ class InventarisController extends Controller
             return response()->json($error, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    public function caridatabyinventaris($id,$by,$nama)
+    {
+        try {
+            if ($by == 'no') {
+                $category = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->where('no_inventaris', 'like', '%' . $nama . '%')->get();
+            }elseif($by == 'nama'){
+                $category = DB::table('sub_tbl_inventory')->where('kd_cabang',$id)->where('nama_barang', 'like', '%' . $nama . '%')->get();
+            }
+
+            return response()->json($category);
+        } catch (QueryException $e) {
+            $error = [
+                'error' => $e->getMessage()
+            ];
+            return response()->json($error, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
