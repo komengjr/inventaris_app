@@ -79,6 +79,7 @@ Route::get('menu/formdepresiasi','DivisiController@depresiasisemuaaset');
 Route::get('menu/formmutasi','DivisiController@mutasidatainventaris');
 Route::get('menu/formpemusnahan','DivisiController@menupemusnahan');
 Route::get('menu/verifdatainventaris','DivisiController@verifdatainventaris');
+Route::post('menu/verifdatainventaris/stockopname-ruangan','DivisiController@verifdatastokopnameruangan');
 //PEMINJAMAN
 Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
 Route::post('divisi/requestpeminjaman/tambah','DivisiController@postrequestpeminjaman');

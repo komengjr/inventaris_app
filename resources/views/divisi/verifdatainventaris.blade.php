@@ -349,4 +349,41 @@
 
         });
     </script>
+    <script>
+        $(document).on("click", "#button-print-stockopname-ruangan", function(e) {
+            e.preventDefault();
+            var kode = $(this).data("id");
+            var lokasi = $(this).data("lokasi");
+            $("#view-report-stokopname-ruangan").html(
+                '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
+            );
+            $.ajax({
+                    url: "../../menu/verifdatainventaris/stockopname-ruangan",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "kode": kode,
+                        "lokasi": lokasi,
+                    },
+                    dataType: 'html',
+                })
+                .done(function(data) {
+                    $("#view-report-stokopname-ruangan").html(
+                        '<iframe src="data:application/pdf;base64, ' +
+                        data +
+                        '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                    );
+                })
+                .fail(function() {
+                    Lobibox.notify("error", {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: "top right",
+                        icon: "fa fa-info",
+                        msg: "Gagal",
+                    });
+                });
+        });
+    </script>
 @endsection

@@ -44,7 +44,7 @@
                         <strong>{{$cabang[0]->nama_cabang}}</strong><br>
                         {{$cabang[0]->alamat}}<br>
                         Telepon : {{$cabang[0]->phone}}<br>
-
+                        kode : {{$id}}
                     </address>
                 </div>
                 <div class="col-sm-8 invoice-col p-1" style="text-align: right;">
@@ -57,7 +57,7 @@
 
             <!-- Table row -->
             <div class="row">
-                <div class="col-12 table-responsive" >
+                <div class="col-12 table-responsive" id="view-report-stokopname-ruangan">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -145,7 +145,7 @@
                                     <td><h5>{{$statusbarang+$statusbarang1+$statusbarang2}}</h5></td>
                                     <td>
                                         @if ($totalbarang == ($statusbarang+$statusbarang1+$statusbarang2))
-                                        <button class="btn-success" disabled>Verified</button>
+                                        <button class="btn-success" id="button-print-stockopname-ruangan" data-id="{{$id}}" data-lokasi="{{$no_ruangan->id_nomor_ruangan_cbaang}}"><i class="fa fa-print"></i> Verified + Cetak</button>
                                         @else
                                         <button class="btn-danger" disabled>Unverified</button>
                                         @endif

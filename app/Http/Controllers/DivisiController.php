@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use App\Imports\LogInventarisImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Jenssegers\Agent\Facades\Agent;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
 
 // use Exception;
@@ -126,6 +127,36 @@ class DivisiController extends Controller
             ->orderBy('id_verifdatainventaris', 'desc')
             ->get();
         return view('divisi.verifdatainventaris', ['dataverif' => $dataverif]);
+    }
+    public function verifdatastokopnameruangan(Request $request)
+    {
+        $id = $request->kode;
+        $databrg = DB::table('tbl_sub_verifdatainventaris')
+            ->select('sub_tbl_inventory.no_inventaris', 'sub_tbl_inventory.nama_barang', 'sub_tbl_inventory.merk', 'sub_tbl_inventory.type', 'sub_tbl_inventory.no_seri', 'tbl_sub_verifdatainventaris.status_data_inventaris')
+            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->where('tbl_sub_verifdatainventaris.kode_verif', $id)
+            ->where('sub_tbl_inventory.id_nomor_ruangan_cbaang', $request->lokasi)
+            ->get();
+        $data = DB::table('sub_tbl_inventory')
+            ->whereNotExists(function ($query) use ($id) {
+                $query->select(DB::raw(1))
+                    ->from('tbl_sub_verifdatainventaris')
+                    ->where('kode_verif', $id)
+                    ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
+            })->where('kd_cabang', Auth::user()->cabang)->get();
+
+        $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','tbl_nomor_ruangan_cabang.kd_lokasi')
+        ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang',$request->lokasi)->first();
+        $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->get();
+        $pdf = PDF::loadview('divisi.report.laporanstockopname-ruangan', ['databrg' => $databrg, 'dataverif' => $dataverif, 'ttd' => $ttd,'data'=>$data,'lokasi'=>$lokasi])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
+        $pdf->output();
+
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
     }
     public function cetakreportstockopname($id)
     {
@@ -620,7 +651,7 @@ class DivisiController extends Controller
         $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->orderBy('nomor_ruangan', 'ASC')->get();
         // $databarang = DB::table('sub_tbl_inventory')->where('kode_verif',$id)->get();
         // $databarang = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->get();
-        return view('divisi.stockopname.lengkapi_verifikasi', ['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan]);
+        return view('divisi.stockopname.lengkapi_verifikasi', ['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan, 'id'=>$id]);
     }
     public function verifikasikondisibarang($status, $id)
     {
