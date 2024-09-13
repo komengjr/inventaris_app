@@ -33,7 +33,7 @@
         /* position: fixed; */
         left: 20px;
         width: 100%;
-        height: 150px;
+        height: 130px;
         border: 0px solid #302a2a;
         font-size: 15px;
     }

@@ -27,7 +27,7 @@
                             <div class="row">
                                 <!-- Left sidebar -->
                                 <div class="col-lg-3 col-md-4">
-                                    <a href="mail-compose.html" class="btn btn-danger btn-block"
+                                    {{-- <a href="mail-compose.html" class="btn btn-danger btn-block"
                                         id="button-tambah-data-case-baru">New Case</a>
                                     <div class="card mt-3 shadow">
                                         <div class="list-group shadow-none">
@@ -41,7 +41,7 @@
                                                 <b></b></a>
 
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="card mt-3 shadow">
                                         <div class="list-group shadow-none">
                                             <a href="javascript:void();" class="list-group-item"
