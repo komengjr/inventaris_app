@@ -27,7 +27,7 @@
                             <button type="button" id="button-masuk-log-sdm" class="btn btn-primary d-inline-block mx-auto">Masuk</button>
                         </div>
                         <div class="input-group mt-3">
-                            <p><em>Just put a character to login.</em></p>
+                            <p><em>Gunakan Nip Untuk Masuk Halaman</em></p>
                         </div>
                     </form>
                 </div>
@@ -35,3 +35,18 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        Lobibox.notify('error', {
+            pauseDelayOnHover: true,
+            icon: 'fa fa-info-circle',
+            continueDelayOnInactiveTab: false,
+            position: 'center top',
+            showClass: 'bounceIn',
+            hideClass: 'bounceOut',
+            sound: false,
+            width: 400,
+            msg: 'NIP Yang anda Masukan tidak ditemukan'
+        });
+    });
+</script>

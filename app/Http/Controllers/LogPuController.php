@@ -19,7 +19,8 @@ class LogPuController extends Controller
         if ($cekstaff) {
             $datacabang =  DB::table('tbl_cabang')->where('kd_cabang',$request->cabang)->first();
             $datalog = DB::table('s_log_sdm')->where('kd_cabang',$request->cabang)->get();
-            return view('publc_sdm.menu.daftar_log',['staff'=>$cekstaff,'cabang'=>$datacabang,'datalog'=>$datalog]);
+            $datalogx = DB::table('s_log_sdm')->where('kd_cabang',$request->cabang)->where('status_log_sdm',2)->get();
+            return view('publc_sdm.menu.daftar_log',['staff'=>$cekstaff,'cabang'=>$datacabang,'datalog'=>$datalog,'datalogx'=>$datalogx]);
         } else {
             return view('publc_sdm.setup-ulang');
         }

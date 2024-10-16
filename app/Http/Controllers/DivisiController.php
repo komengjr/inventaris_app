@@ -1327,6 +1327,7 @@ class DivisiController extends Controller
             [
                 'nip' => $request->nip,
                 'nama_staff' => $request->nama,
+                'class' => $request->class,
                 'kd_cabang' => auth::user()->cabang,
                 'status_staff' => 1,
             ]

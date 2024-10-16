@@ -24,7 +24,7 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex" href="#">
                             <i class="far fa-user mr-2 tm-logout-icon"></i>
-                            <span>{{ $staff->nama_staff }} </span>
+                            <span>{{ $staff->nama_staff }} ({{ $staff->nip }})</span>
                         </a>
                     </li>
                 </ul>
@@ -42,12 +42,22 @@
                 </div>
             </div>
             <ol class="tm-list-group tm-list-group-alternate-color tm-list-group-pad-big">
-                @foreach ($datalog as $datalog1)
-                    <li class="tm-list-group-item" id="button-log-form-sdm" data-id="{{ $datalog1->kd_log_sdm }}"
+                @if ($staff->class == 0)
+                    @foreach ($datalog as $datalog1)
+                        <li class="tm-list-group-item" id="button-log-form-sdm" data-id="{{ $datalog1->kd_log_sdm }}"
+                            data-user="{{ $staff->nama_staff }}">
+                            {{ $datalog1->nama_log_sdm }}
+                        </li>
+                    @endforeach
+                @else
+                @foreach ($datalogx as $datalogx)
+                    <li class="tm-list-group-item" id="button-log-form-sdm" data-id="{{ $datalogx->kd_log_sdm }}"
                         data-user="{{ $staff->nama_staff }}">
-                        {{ $datalog1->nama_log_sdm }}
+                        {{ $datalogx->nama_log_sdm }}
                     </li>
                 @endforeach
+                @endif
+
 
             </ol>
         </div>
@@ -88,7 +98,7 @@
                         <select class="form-control" name="kode" id="kode">
                             <option value="">Pilih Laporan</option>
                             @foreach ($datalog as $item)
-                                <option value="{{$item->kd_log_sdm}}">{{$item->nama_log_sdm}}</option>
+                                <option value="{{ $item->kd_log_sdm }}">{{ $item->nama_log_sdm }}</option>
                             @endforeach
                         </select>
                         <input type="text" name="user" id="username" value="{{ $staff->nama_staff }}" hidden>
@@ -108,7 +118,8 @@
                 <div id="display-laporan-maintenance"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="button-laporan-maintenance-sdm"><i class="fa fa-print"></i> Preview Laporan</button>
+                <button type="button" class="btn btn-primary" id="button-laporan-maintenance-sdm"><i
+                        class="fa fa-print"></i> Preview Laporan</button>
             </div>
         </div>
     </div>

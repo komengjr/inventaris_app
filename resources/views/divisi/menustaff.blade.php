@@ -70,6 +70,7 @@
                                         <th>No</th>
                                         <th>Nama Staff</th>
                                         <th>No Induk Pegawai</th>
+                                        <th>Class</th>
                                         <th>Status</th>
                                         <th>action</th>
                                     </tr>
@@ -83,6 +84,7 @@
                                             <td>{{$no++}}</td>
                                             <td>{{$item->nama_staff}}</td>
                                             <td>{{$item->nip}}</td>
+                                            <td>{{$item->class}}</td>
                                             <td class="text-center">
                                                 @if ($item->status_staff == 1)
                                                 <span class="badge badge-success p-2">Aktif</span>
