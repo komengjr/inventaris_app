@@ -180,6 +180,7 @@ return [
         Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
         Stevebauman\Location\LocationServiceProvider::class,
         Telegram\Bot\Laravel\TelegramServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -235,6 +236,7 @@ return [
         // 'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Location' => Stevebauman\Location\LocationServiceProvider::class,
         'Telegram' =>Telegram\Bot\Laravel\Facades\Telegram::class,
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
     ],
 
 ];

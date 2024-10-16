@@ -21,14 +21,11 @@
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="{{ asset('sdm/css/tooplate.css') }}">
     <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
-    <style>
-        color:green;
-    </style>
 </head>
 
 <body class="bg03">
     <div class="container" id="menu-log-sdm">
-        <div class="row tm-mt-big" >
+        <div class="row tm-mt-big">
             <div class="col-12 mx-auto tm-login-col">
                 <div class="bg-white tm-block">
                     <div class="row">
@@ -51,10 +48,11 @@
                                     <label for="password"
                                         class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">NIP</label>
                                     <input name="nip" type="text" class="form-control validate" id="nip"
-                                         required>
+                                        required>
                                 </div>
                                 <div class="input-group mt-3">
-                                    <button type="button" id="button-masuk-log-sdm" class="btn btn-primary d-inline-block mx-auto">Masuk</button>
+                                    <button type="button" id="button-masuk-log-sdm"
+                                        class="btn btn-primary d-inline-block mx-auto">Masuk</button>
                                 </div>
                                 <div class="input-group mt-3">
                                     <p><em>Just put a character to login.</em></p>
@@ -74,6 +72,7 @@
             </div>
         </footer>
     </div>
+
     <script src="{{ asset('sdm/js/jquery-3.3.1.min.js') }}"></script>
 
     <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
@@ -127,7 +126,7 @@
                 '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
             );
             $.ajax({
-                    url: "{{route('daftar_log')}}",
+                    url: "{{ route('daftar_log') }}",
                     type: "POST",
                     cache: false,
                     data: {
@@ -147,13 +146,13 @@
         });
         $(document).on("click", "#button-log-form-sdm", function(e) {
             e.preventDefault();
-            var id =  $(this).data("id");
-            var user =  $(this).data("user");
+            var id = $(this).data("id");
+            var user = $(this).data("user");
             $("#menu-form-log-sdm").html(
                 '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
             );
             $.ajax({
-                    url: "{{route('form_log')}}",
+                    url: "{{ route('form_log') }}",
                     type: "POST",
                     cache: false,
                     data: {
@@ -165,6 +164,40 @@
                 })
                 .done(function(data) {
                     $("#menu-form-log-sdm").html(data);
+                })
+                .fail(function() {
+                    console.log('eror');
+
+                });
+        });
+        $(document).on("click", "#button-laporan-maintenance-sdm", function(e) {
+            e.preventDefault();
+            var start = document.getElementById("start").value;
+            var end = document.getElementById("end").value;
+            var kode = document.getElementById("kode").value;
+            var username = document.getElementById("username").value;
+            $("#display-laporan-maintenance").html(
+                '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
+            );
+            $.ajax({
+                    url: "{{ route('show_laporan_user') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "start": start,
+                        "end": end,
+                        "kode": kode,
+                        "username": username,
+                    },
+                    dataType: 'html',
+                })
+                .done(function(data) {
+                    $("#display-laporan-maintenance").html(
+                        '<iframe src="data:application/pdf;base64, ' +
+                        data +
+                        '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                    );
                 })
                 .fail(function() {
                     console.log('eror');

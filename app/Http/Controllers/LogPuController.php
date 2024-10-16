@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Telegram;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
+use PDF;
 class LogPuController extends Controller
 {
     public function log_sdm() {
@@ -64,8 +65,21 @@ class LogPuController extends Controller
         Session::flash('success', 'Berhasl Melaksanakan Tugas : '.$ceklog->nama_log_sdm);
         return redirect()->back();
     }
-    public function telegram(){
+    public function show_laporan_user(Request $request){
+        $log = DB::table('s_log_sdm')->where('kd_log_sdm',$request->kode)->first();
+        $data = DB::table('s_log_sdm_answer')->where('kd_log_sdm',$request->kode)->where('user_answer',$request->username)->whereBetween('created_at', [$request->start." 00:00:00",$request->end." 23:59:59"])->get();
+        $header = DB::table('s_log_sdm_form')->where('kd_log_sdm',$request->kode)->get();
+        $pdf = PDF::loadview('publc_sdm.report.laporan',['log'=>$log , 'nama'=>$request->username, 'data'=>$data, 'header'=>$header])->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Courier']);
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("calibri", "bold");
+        $dompdf->get_canvas()->page_text(400, 570, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        // $dompdf->get_canvas()->page_text(33, 570, $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
+    }
+    public function telegram(): never{
         $updates = Telegram::getUpdates();
         dd($updates);
     }
+
 }
