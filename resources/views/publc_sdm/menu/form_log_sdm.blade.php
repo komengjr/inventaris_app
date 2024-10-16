@@ -119,7 +119,7 @@
                                 @endphp
                                 @foreach ($data as $data)
                                     <div class="form-check">
-                                        <input class="state" type="radio" name="{{ $form->kd_s_log_sdm_form }}" id="{{ $data->id }}" value="{{ $data->check }}">
+                                        <input class="state" type="radio" name="{{ $form->kd_s_log_sdm_form }}" id="{{ $data->id }}" value="{{ $data->check }}" required>
                                         <label class="label" for="{{ $data->id }}">
                                             <div class="indicator"></div>
                                             <span class="text">{{ $data->check }}</span>
