@@ -21,6 +21,9 @@
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="{{ asset('sdm/css/tooplate.css') }}">
     <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
+    <style>
+        color:green;
+    </style>
 </head>
 
 <body class="bg03">
