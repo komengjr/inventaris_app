@@ -21,6 +21,7 @@
                                 $data =  DB::table('s_log_sdm_form_option')->where('kd_s_log_sdm_form',$form->kd_s_log_sdm_form)->get();
                             @endphp
                            <select class="form-control" name="{{$form->kd_s_log_sdm_form }}" id="" required>
+                                <option value="">Pilihan</option>
                                 @foreach ($data as $data)
                                     <option value="{{$data->option}}">{{$data->option}}</option>
                                 @endforeach
