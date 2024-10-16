@@ -51,12 +51,16 @@ class LogPuController extends Controller
             ]);
             $data = $data. "\n".$value->nama_s_log_sdm_form." : <strong>". $request->$input. "</strong>";
         }
-        Telegram::sendMessage([
-            'chat_id' => 1258044592,
-            'parse_mode' => 'HTML',
-            'text' => "Tugas : $ceklog->nama_log_sdm \nSudah DiLaksanakan dengan baik Oleh : $request->user \nDeengan Tiket : $kode \n$data
-            ",
-        ]);
+        $notele = DB::table('t_no_telegram')->where('kd_cabang',$ceklog->kd_cabang)->get();
+        foreach ($notele as $kirim) {
+            Telegram::sendMessage([
+                'chat_id' => $kirim->chat_id,
+                'parse_mode' => 'HTML',
+                'text' => "Tugas : $ceklog->nama_log_sdm \nSudah DiLaksanakan dengan baik Oleh : $request->user \nDeengan Tiket : $kode \n$data
+                ",
+            ]);
+        }
+
         Session::flash('success', 'Berhasl Melaksanakan Tugas : '.$ceklog->nama_log_sdm);
         return redirect()->back();
     }
