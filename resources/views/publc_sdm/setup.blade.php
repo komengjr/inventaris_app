@@ -21,6 +21,12 @@
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="{{ asset('sdm/css/tooplate.css') }}">
     <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
+    <style>
+        .modal-dialog {
+            max-width: 1050px;
+            margin: 2rem auto;
+        }
+    </style>
 </head>
 
 <body class="bg03">
