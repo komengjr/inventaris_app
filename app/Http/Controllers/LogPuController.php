@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Http\Request;
 use Telegram;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 class LogPuController extends Controller
 {
     public function log_sdm() {
@@ -55,7 +56,8 @@ class LogPuController extends Controller
             'text' => "Tugas : $ceklog->nama_log_sdm \nSudah DiLaksanakan dengan baik Oleh : $request->user \nDeengan Tiket : $kode $data
             ",
         ]);
-        return redirect()->back()->withInput();
+        Session::flash('success', 'Berhasl Melaksanakan Tugas : '.$ceklog->nama_log_sdm);
+        return redirect()->back();
     }
     public function telegram(){
         $updates = Telegram::getUpdates();

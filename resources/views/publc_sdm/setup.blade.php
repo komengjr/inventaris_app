@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('sdm/css/bootstrap.min.css') }}">
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="{{ asset('sdm/css/tooplate.css') }}">
+    <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="bg03">
@@ -71,6 +72,43 @@
         </footer>
     </div>
     <script src="{{ asset('sdm/js/jquery-3.3.1.min.js') }}"></script>
+
+    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
+    {{-- <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js', []) }}"></script> --}}
+    <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js', []) }}"></script>
+    @if ($message = Session::get('success'))
+        <script>
+            $(document).ready(function() {
+                Lobibox.notify('success', {
+                    pauseDelayOnHover: true,
+                    icon: 'fa fa-info-circle',
+                    continueDelayOnInactiveTab: false,
+                    position: 'center top',
+                    showClass: 'bounceIn',
+                    hideClass: 'bounceOut',
+                    sound: false,
+                    width: 400,
+                    msg: '{{ $message }}'
+                });
+            });
+        </script>
+    @elseif($message = Session::get('error'))
+        <script>
+            $(document).ready(function() {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    icon: 'fa fa-info-circle',
+                    continueDelayOnInactiveTab: false,
+                    position: 'center top',
+                    showClass: 'bounceIn',
+                    hideClass: 'bounceOut',
+                    sound: false,
+                    width: 400,
+                    msg: 'Hubungi Administrator Jika terjadi Eror'
+                });
+            });
+        </script>
+    @endif
     <!-- https://jquery.com/download/ -->
     {{-- <script src="{{ asset('sdm/js/bootstrap.min.js') }}"></script> --}}
 
