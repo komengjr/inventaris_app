@@ -351,3 +351,11 @@ Route::get('nav/user-order/detail/{id}',['as'=>'nav/user-order/detail','uses'=> 
 Route::get('nav/user-order/pindah-cabang/{id}',['as'=>'nav/user-order/pindah-cabang','uses'=> 'NavController@detailpindahcabangrecentuserorder']);
 Route::post('nav/user-order/post-pindah-cabang',['as'=>'nav/user-order/post-pindah-cabang','uses'=> 'NavController@postpindahcabangrecentuserorder']);
 Route::post('nav/user-order/post-terima-order',['as'=>'nav/user-order/post-terima-order','uses'=> 'NavController@postterimaordercabangrecentuserorder']);
+
+Route::prefix('log_sdm')->group(function () {
+    Route::get('setup',  'LogPuController@log_sdm');
+    Route::post('setup/daftar_log',  'LogPuController@daftar_log')->name('daftar_log');
+    Route::post('setup/form_log',  'LogPuController@form_log')->name('form_log');
+    Route::post('setup/simpan',  'LogPuController@simpan_form_log')->name('simpan_form_log');
+    Route::get('setup/telegram',  'LogPuController@telegram')->name('telegram');
+});

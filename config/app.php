@@ -179,6 +179,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
         Stevebauman\Location\LocationServiceProvider::class,
+        Telegram\Bot\Laravel\TelegramServiceProvider::class,
     ],
 
     /*
@@ -231,9 +232,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+        // 'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Location' => Stevebauman\Location\LocationServiceProvider::class,
-
+        'Telegram' =>Telegram\Bot\Laravel\Facades\Telegram::class,
     ],
 
 ];
