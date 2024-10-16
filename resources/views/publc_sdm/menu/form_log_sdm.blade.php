@@ -20,13 +20,13 @@
                             @php
                                 $data =  DB::table('s_log_sdm_form_option')->where('kd_s_log_sdm_form',$form->kd_s_log_sdm_form)->get();
                             @endphp
-                           <select class="form-control" name="{{$form->kd_s_log_sdm_form }}" id="">
+                           <select class="form-control" name="{{$form->kd_s_log_sdm_form }}" id="" required>
                                 @foreach ($data as $data)
                                     <option value="{{$data->option}}">{{$data->option}}</option>
                                 @endforeach
                            </select>
                         @else
-                        <input id="{{$form->kd_s_log_sdm_form }}" name="{{$form->kd_s_log_sdm_form }}" type="{{$form->type_s_log_sdm_form}}" class="form-control validate">
+                        <input id="{{$form->kd_s_log_sdm_form }}" name="{{$form->kd_s_log_sdm_form }}" type="{{$form->type_s_log_sdm_form}}" class="form-control validate" required>
                         @endif
 
                     </div>
