@@ -24,8 +24,6 @@ class LogPuController extends Controller
         } else {
             return view('publc_sdm.setup-ulang');
         }
-
-
     }
     public function form_log(Request $request){
         $log = DB::table('s_log_sdm')->where('kd_log_sdm',$request->id)->first();

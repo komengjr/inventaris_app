@@ -74,7 +74,7 @@
             <div class="col-12 font-weight-light text-center">
                 <p class="d-inline-block tm-bg-black text-white py-2 px-4">
                     Copyright &copy; 2024. Created by
-                    <a href="http://www.tooplate.com" class="text-white tm-footer-link">J</a> | Pramita Pontianak</a>
+                    <a href="http://www.tooplate.com" class="text-white tm-footer-link">X</a> | SDM LOG MANAGEMENT</a>
                 </p>
             </div>
         </footer>
