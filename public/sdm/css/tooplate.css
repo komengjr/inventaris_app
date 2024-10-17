@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-family: "Fira Code", Helvetica, Arial, sans-serif;
   overflow-x: hidden;
 }
 
@@ -458,7 +458,7 @@ footer {
   .tm-col-big,
   .tm-col-small {
     width: 100%;
-    min-height: 383px;
+    /* min-height: 383px; */
     height: auto;
   }
   .tm-block {

@@ -65,7 +65,7 @@
     <div class="tm-col tm-col-big" id="menu-form-log-sdm">
 
     </div>
-    <div class="tm-col tm-col-sm">
+    <div class="tm-col tm-col-small">
         <div class="bg-white tm-block">
             <div class="row">
                 <div class="col-12">
