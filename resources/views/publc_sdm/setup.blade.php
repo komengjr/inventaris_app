@@ -42,7 +42,8 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-12">
-                            <form action="index.html" method="post" class="tm-login-form">
+                            <form class="tm-login-form">
+                                @csrf
                                 <div class="input-group">
                                     <label for="username"
                                         class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Cabang</label>
