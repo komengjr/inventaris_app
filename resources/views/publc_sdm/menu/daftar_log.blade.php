@@ -41,7 +41,15 @@
                     <h2 class="tm-block-title d-inline-block">Daftar LOG</h2>
                 </div>
             </div>
-            <ol class="tm-list-group tm-list-group-alternate-color tm-list-group-pad-big">
+            <div class="form-group">
+                <select name="" class="form-control" id="">
+                    <option value="">Pilih Log</option>
+                    @foreach ($datalog as $datalogx)
+                        <option value="" id="button-log-form-sdm" data-id="{{ $datalogx->kd_log_sdm }}" data-user="{{ $staff->nama_staff }}">{{$datalogx->nama_log_sdm}}</option>
+                    @endforeach
+                </select>
+            </div>
+            {{-- <ol class="tm-list-group tm-list-group-alternate-color tm-list-group-pad-big">
                 @if ($staff->class == 0)
                     @foreach ($datalog as $datalog1)
                         <li class="tm-list-group-item" id="button-log-form-sdm" data-id="{{ $datalog1->kd_log_sdm }}"
@@ -59,7 +67,7 @@
                 @endif
 
 
-            </ol>
+            </ol> --}}
         </div>
     </div>
     <div class="tm-col tm-col-big" id="menu-form-log-sdm">
