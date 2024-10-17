@@ -58,7 +58,7 @@ class LogPuController extends Controller
             Telegram::sendMessage([
                 'chat_id' => $kirim->chat_id,
                 'parse_mode' => 'HTML',
-                'text' => "Laporan : $ceklog->nama_log_sdm \nSudah DiLaksanakan dengan baik Oleh : $request->user \nDeengan Tiket : $kode \n$data
+                'text' => "Laporan : $ceklog->nama_log_sdm \nSudah DiLaksanakan dengan baik Oleh : $request->user \nDengan Tiket : $kode \n$data
                 ",
             ]);
         }
