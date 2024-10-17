@@ -118,8 +118,10 @@
                 <div id="display-laporan-maintenance"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="button-laporan-maintenance-sdm"><i
-                        class="fa fa-print"></i> Preview Laporan</button>
+                <button type="button" class="btn btn-primary btn-small" id="button-laporan-maintenance-sdm"><i
+                        class="fa fa-eye"></i> Show Data</button>
+                <button type="button" class="btn btn-primary btn-small" id="button-laporan-maintenance-sdm"><i
+                        class="fa fa-print"></i> Show PDF</button>
             </div>
         </div>
     </div>

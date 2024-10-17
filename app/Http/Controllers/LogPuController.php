@@ -33,12 +33,13 @@ class LogPuController extends Controller
     public function simpan_form_log(Request $request){
         $ceklog = DB::table('s_log_sdm')->where('kd_log_sdm',$request->kd_log_sdm)->first();
         $kode = $ceklog->kd_cabang.'-'.str::uuid();
+        $tglskrng = now();
         $log = DB::table('s_log_sdm_form')->where('kd_log_sdm',$request->kd_log_sdm)->get();
         DB::table('s_log_sdm_answer')->insert([
             'kd_log_sdm_answer'=>$kode,
             'kd_log_sdm'=>$request->kd_log_sdm,
             'user_answer'=>$request->user,
-            'created_at'=>now(),
+            'created_at'=>$tglskrng,
         ]);
         $data = "";
         foreach ($log as $value) {
@@ -47,7 +48,7 @@ class LogPuController extends Controller
                 'kd_log_sdm_answer'=>$kode,
                 'kd_s_log_sdm_form'=>$value->kd_s_log_sdm_form,
                 'log_sdm_answer'=>$request->$input,
-                'created_at'=>now(),
+                'created_at'=>$tglskrng,
             ]);
             $data = $data. "\n".$value->nama_s_log_sdm_form." : <strong>". $request->$input. "</strong>";
         }
@@ -56,7 +57,7 @@ class LogPuController extends Controller
             Telegram::sendMessage([
                 'chat_id' => $kirim->chat_id,
                 'parse_mode' => 'HTML',
-                'text' => "Laporan : $ceklog->nama_log_sdm \nPembuat Laporan : $request->user \nDengan Tiket : $kode \n$data
+                'text' => "Laporan : $ceklog->nama_log_sdm \nPembuat Laporan : $request->user \nDengan Tiket : $kode \n$data \n\n$tglskrng
                 ",
             ]);
         }
