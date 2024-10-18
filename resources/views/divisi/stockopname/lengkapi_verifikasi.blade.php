@@ -54,10 +54,10 @@
 
 
             </div><!-- /.row -->
-
+            <div id="view-report-stokopname-ruangan"></div>
             <!-- Table row -->
             <div class="row">
-                <div class="col-12 table-responsive" id="view-report-stokopname-ruangan">
+                <div class="col-12 table-responsive" >
                     <table class="table table-striped">
                         <thead>
                             <tr>

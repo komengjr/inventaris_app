@@ -13,30 +13,33 @@
     }
 </style>
 <style>
-    div.header {
+    /* div.header {
         position: relative;
         left: 20px;
         width: 710px;
         height: 106px;
         border: 0.2px solid #000000;
+    } */
+    body{
+        width: 100%;
+        height: 500px;
     }
-
     div.body {
         position: relative;
         left: 20px;
-        width: 710px;
-        height: 920px;
-        border: 0px solid #302a2a;
+        width: 100%;
+        height: 800px;
+        /* border: 0px solid #302a2a; */
         font-size: 15px;
     }
-    div.body-after {
-        /* position: fixed; */
+    /* div.body-after {
+
         left: 25px;
         width: 100%;
         height: 30px;
         border: 0px solid #302a2a;
         font-size: 15px;
-    }
+    } */
     div.absolute {
         position: absolute;
         top: 0px;
@@ -60,6 +63,7 @@
     } */
     table {
         border-collapse: collapse;
+        height: auto;
     }
 
     table tr td p {
@@ -70,10 +74,11 @@
 
     div.footer {
         position: absolute;
-        left: 15px;
+        left: 20px;
+        margin-top: 60px;
         width: 100%;
         bottom: 0px;
-        border: 0px solid #302a2a;
+        border: 1px solid #302a2a;
         font-size: 15px;
     }
 </style>
@@ -90,7 +95,7 @@
     <div class="body">
         <br>
         <table
-            style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
+            style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
             border="0">
             <tr>
                 <td colspan="3" class="text-right"><strong> </strong></td>
@@ -119,8 +124,7 @@
 
         </table>
         <br>
-        <table
-            style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
+        <table style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
             border="1">
             <thead style="font-weight: bold;">
                 <tr>
@@ -159,7 +163,7 @@
                 @endforeach
             </tbody>
         </table>
-        <hr>
+        {{-- <hr> --}}
         @if ($data->isEmpty())
             <h5>Data Belum Di Verif : Tidak Ada</h5>
         @else
@@ -194,7 +198,7 @@
         @endif
 
     </div>
-    <div class="body-after">
+    {{-- <div class="body-after">
         <table style="display: none;">
             <tr>
                 <td>1</td>
@@ -203,11 +207,9 @@
             </tr>
 
         </table>
-    </div>
+    </div> --}}
     <div class="footer">
-        <table
-            style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
-            border="1">
+        <table style="font-size: 8px;  width: 100%; font-size: 11px; font-family: Calibri (Body);" border="1">
             <tr>
                 <td colspan="2" style="border-right: 1px solid #ffffff;">Mengetahui :</td>
                 <td colspan="1" class="text-right" style="text-align: right;"><strong>{{ $cabang->city }} ,
@@ -237,4 +239,5 @@
 
         </table>
     </div>
+</body>
 </html>
