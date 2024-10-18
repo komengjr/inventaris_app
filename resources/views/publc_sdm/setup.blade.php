@@ -151,32 +151,7 @@
 
                 });
         });
-        $(document).on("click", "#button-log-form-sdm", function(e) {
-            e.preventDefault();
-            var id = $(this).data("id");
-            var user = $(this).data("user");
-            $("#menu-form-log-sdm").html(
-                '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
-            );
-            $.ajax({
-                    url: "{{ route('form_log') }}",
-                    type: "POST",
-                    cache: false,
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id,
-                        "user": user,
-                    },
-                    dataType: 'html',
-                })
-                .done(function(data) {
-                    $("#menu-form-log-sdm").html(data);
-                })
-                .fail(function() {
-                    console.log('eror');
 
-                });
-        });
         $(document).on("click", "#button-laporan-maintenance-sdm", function(e) {
             e.preventDefault();
             var start = document.getElementById("start").value;

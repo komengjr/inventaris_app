@@ -2,7 +2,7 @@
     <div class="col-12">
         <nav class="navbar navbar-expand-xl navbar-light bg-light">
             <a class="navbar-brand" href="#">
-                <i class="fas fa-3x fa-tachometer-alt tm-site-icon"></i>
+                <i class="fas fa-1x fa-tachometer-alt tm-site-icon"></i>
                 <h3 class="tm-site-title mb-0">{{ $cabang->nama_cabang }}</h3>
             </a>
             <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
@@ -38,14 +38,16 @@
         <div class="bg-white tm-block">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="tm-block-title d-inline-block">Daftar LOG</h2>
+                    <h2 class="tm-block-title d-inline-block">DAFTAR LOG</h2>
                 </div>
             </div>
             <div class="form-group">
-                <select name="" class="form-control" id="">
-                    <option value="">Pilih Log</option>
+                <select name="" class="form-control" id="comboA">
+                    <option value="" data-id="0" data-user="0">Pilih Log</option>
                     @foreach ($datalog as $datalogx)
-                        <option value="" id="button-log-form-sdm" data-id="{{ $datalogx->kd_log_sdm }}" data-user="{{ $staff->nama_staff }}">{{$datalogx->nama_log_sdm}}</option>
+                        <option value="{{ $staff->nama_staff }}" id="button-log-form-sdm"
+                            data-id="{{ $datalogx->kd_log_sdm }}" data-user="{{ $staff->nama_staff }}">
+                            {{ $datalogx->nama_log_sdm }}</option>
                     @endforeach
                 </select>
             </div>
@@ -134,3 +136,58 @@
         </div>
     </div>
 </div>
+<script>
+    // function getComboA(selectObject) {
+    //     var value = selectObject.value;
+    //     var id = $(this).find(':selected').attr('data-id');
+    //     var user = $(this).data("user");
+    //     console.log(value);
+    //     console.log(id);
+    //     console.log(user);
+    // }
+    // $('#comboA').change(function() {
+    //     alert($(this).children('option:selected').data('id'));
+    // });
+    $('#comboA').change(function() {
+        // e.preventDefault()
+        var id = $(this).children('option:selected').data('id');
+        var user = $(this).children('option:selected').data('user');
+        if (id == 0) {
+            $(document).ready(function() {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    icon: 'fa fa-info-circle',
+                    continueDelayOnInactiveTab: false,
+                    position: 'center top',
+                    showClass: 'bounceIn',
+                    hideClass: 'bounceOut',
+                    sound: false,
+                    width: 400,
+                    msg: 'Pilih Dulu Bro'
+                });
+            });
+        } else {
+            $("#menu-form-log-sdm").html(
+                '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
+            );
+            $.ajax({
+                    url: "{{ route('form_log') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                        "user": user,
+                    },
+                    dataType: 'html',
+                })
+                .done(function(data) {
+                    $("#menu-form-log-sdm").html(data);
+                })
+                .fail(function() {
+                    console.log('eror');
+
+                });
+        }
+    });
+</script>
