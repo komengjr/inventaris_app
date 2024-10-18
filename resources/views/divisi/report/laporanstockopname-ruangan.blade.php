@@ -160,34 +160,38 @@
             </tbody>
         </table>
         <hr>
-        <h5>Data Belum Di Verif</h5>
-        <table
-            style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
-            border="1">
-            <thead style="font-weight: bold;">
-                <tr>
-                    <td class="text-center">No</td>
-                    <td>No Inventaris</td>
-                    <td>Nama Barang</td>
-                    <td>Merek</td>
-                    <td>Type</td>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $no = 1;
-                @endphp
-                @foreach ($data as $data)
+        @if ($data->isEmpty())
+            <h5>Data Belum Di Verif : Tidak Ada</h5>
+        @else
+            <h5>Data Belum Di Verif</h5>
+            <table
+                style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
+                border="1">
+                <thead style="font-weight: bold;">
                     <tr>
-                        <td class="text-center">{{ $no++ }}</td>
-                        <td>{{ $data->no_inventaris }}</td>
-                        <td>{{ $data->nama_barang }}</td>
-                        <td>{{ $data->merk }}</td>
-                        <td>{{ $data->type }}</td>
-                @endforeach
-            </tbody>
-        </table>
-        <br><br><br><br>
+                        <td class="text-center">No</td>
+                        <td>No Inventaris</td>
+                        <td>Nama Barang</td>
+                        <td>Merek</td>
+                        <td>Type</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $no = 1;
+                    @endphp
+                    @foreach ($data as $data)
+                        <tr>
+                            <td class="text-center">{{ $no++ }}</td>
+                            <td>{{ $data->no_inventaris }}</td>
+                            <td>{{ $data->nama_barang }}</td>
+                            <td>{{ $data->merk }}</td>
+                            <td>{{ $data->type }}</td>
+                    @endforeach
+                </tbody>
+            </table>
+            <br><br><br><br>
+        @endif
 
     </div>
     <div class="body-after">
