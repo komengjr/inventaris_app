@@ -31,9 +31,9 @@
     }
     div.body-after {
         /* position: fixed; */
-        left: 20px;
+        left: 25px;
         width: 100%;
-        height: 130px;
+        height: 30px;
         border: 0px solid #302a2a;
         font-size: 15px;
     }
@@ -70,7 +70,7 @@
 
     div.footer {
         position: absolute;
-        left: 0;
+        left: 15px;
         width: 100%;
         bottom: 0px;
         border: 0px solid #302a2a;
