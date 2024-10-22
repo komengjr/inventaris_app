@@ -16,7 +16,7 @@ html {
 
 body {
     background-color: #f8f7ff;
-    font-family: 'Calibri', sans-serif;
+    font-family: 'Mulish', sans-serif;
     font-size: 14px;
     color: #757575;
     letter-spacing: .5px;
@@ -1176,7 +1176,7 @@ small {
 
 /*Profile Card 3*/
 .profile-card-3 {
-    font-family: 'Russo One', sans-serif;
+    font-family: 'Mulish', sans-serif;
     position: relative;
     float: left;
     overflow: hidden;
@@ -6804,7 +6804,7 @@ table.grid td {
     td:before {
         content: attr(data-label);
         display: inline-block;
-        font-family: 'Orbitron', sans-serif;
+        font-family: 'Mulish', sans-serif;
         padding-left: 4px;
         line-height: 2.5;
         margin-left: -100%;

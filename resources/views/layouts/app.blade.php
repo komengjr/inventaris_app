@@ -20,7 +20,8 @@
     <link href="{{ asset('online/all.min.css', []) }}" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
     <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
@@ -35,7 +36,7 @@
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.min.js') }}"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4154628728879232"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     @if ($message = Session::get('success'))
         <script>
             $(document).ready(function() {
@@ -98,14 +99,18 @@
                     </li>
                 </ul>
                 @php
-                    $orderdata = DB::table('tbl_pemnijaman_req')->where('cabang_req',Auth::user()->cabang)->where('status_req',0)->count();
+                    $orderdata = DB::table('tbl_pemnijaman_req')
+                        ->where('cabang_req', Auth::user()->cabang)
+                        ->where('status_req', 0)
+                        ->count();
                 @endphp
                 <ul class="navbar-nav align-items-center right-nav-link">
 
                     <li class="nav-item dropdown-lg">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
                             href="javascript:void();">
-                            <i class="fa fa-bell-o"></i><span class="badge badge-info badge-up">{{$orderdata}}</span></a>
+                            <i class="fa fa-bell-o"></i><span
+                                class="badge badge-info badge-up">{{ $orderdata }}</span></a>
                         <div class="">
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -113,23 +118,26 @@
                                     <span class="badge badge-info">0</span>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="javaScript:void();" data-toggle="modal" data-target="#modal-nav" id="button-nav-login-user" data-url="{{ url('nav/user-login', []) }}">
+                                    <a href="javaScript:void();" data-toggle="modal" data-target="#modal-nav"
+                                        id="button-nav-login-user" data-url="{{ url('nav/user-login', []) }}">
                                         <div class="media">
                                             <i class="zmdi zmdi-accounts fa-2x mr-3 text-info"></i>
                                             <div class="media-body">
                                                 <h6 class="mt-0 msg-title">History Login User</h6>
-                                                <p class="msg-info">{{Auth::user()->name}}</p>
+                                                <p class="msg-info">{{ Auth::user()->name }}</p>
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="javaScript:void();" data-toggle="modal" data-target="#modal-nav" id="button-nav-login-user" data-url="{{ url('nav/user-order', []) }}">
+                                    <a href="javaScript:void();" data-toggle="modal" data-target="#modal-nav"
+                                        id="button-nav-login-user" data-url="{{ url('nav/user-order', []) }}">
                                         <div class="media">
                                             <i class="zmdi zmdi-coffee fa-2x mr-3 text-warning"></i>
                                             <div class="media-body">
                                                 <h6 class="mt-0 msg-title">Order Terbaru</h6>
-                                                <p class="msg-info"><span class="badge badge-info">{{$orderdata}} Order</span></p>
+                                                <p class="msg-info"><span
+                                                        class="badge badge-info">{{ $orderdata }} Order</span></p>
                                             </div>
                                         </div>
                                     </a>
