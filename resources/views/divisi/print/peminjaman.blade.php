@@ -95,7 +95,7 @@
         <br>
         <table style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);" border="0">
             <tr>
-                <td colspan="3" class="text-right"><strong>SDM.33-FRM-PP-07.2/02 </strong></td>
+                <td colspan="3" class="text-right"><strong>SDM.{{$no->no_cabang}}-FRM-PP-07.2/02 </strong></td>
             </tr>
             <tr>
                 <td colspan="3">

@@ -176,9 +176,10 @@ class PdfController extends Controller
         ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_peminjaman.id_inventaris')
         ->where('tbl_peminjaman.tiket_peminjaman',$id)
         ->get();
+        $no = DB::table('tbl_setting_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
         $ttd = DB::table('tbl_ttd')->where('kd_cabang',auth::user()->cabang)->get();
         $datapinjam = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$id)->get();
-        $pdf = PDF::loadview('divisi.print.peminjaman',['databrg'=>$databrg, 'datapinjam'=>$datapinjam, 'ttd'=>$ttd])->setPaper('A4','potrait');
+        $pdf = PDF::loadview('divisi.print.peminjaman',['databrg'=>$databrg, 'datapinjam'=>$datapinjam, 'ttd'=>$ttd, 'no'=>$no])->setPaper('A4','potrait');
         return base64_encode($pdf->stream());
     }
     public function printdatamutasi($id)
