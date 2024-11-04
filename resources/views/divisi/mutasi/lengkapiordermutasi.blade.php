@@ -70,6 +70,7 @@
                     <thead>
                         <tr>
                             <th>Nama Barang</th>
+                            <th>No Inventaris</th>
                             <th>Merek</th>
                             <th>Type</th>
                         </tr>
@@ -84,6 +85,7 @@
                         @foreach ($databarang as $databarang)
                             <tr>
                                 <td>{{$databarang->nama_barang}}</td>
+                                <td>{{$databarang->no_inventaris}}</td>
                                 <td>{{$databarang->merk}}</td>
                                 <td>{{$databarang->type}}</td>
                             </tr>

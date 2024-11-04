@@ -107,7 +107,7 @@ class DivisiController extends Controller
             ->select('sub_tbl_inventory.*')
             ->where('id_nomor_ruangan_cbaang', $id)
             ->where('kd_cabang', auth::user()->cabang)
-            ->where('status_barang','<','5')
+            ->where('status_barang', '<', '5')
             ->orderBy('id', 'DESC')
             ->get();
         // dd($id);
@@ -147,10 +147,10 @@ class DivisiController extends Controller
 
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
         $lokasi = DB::table('tbl_nomor_ruangan_cabang')
-        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','tbl_nomor_ruangan_cabang.kd_lokasi')
-        ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang',$request->lokasi)->first();
+            ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', $request->lokasi)->first();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->get();
-        $pdf = PDF::loadview('divisi.report.laporanstockopname-ruangan', ['databrg' => $databrg, 'dataverif' => $dataverif, 'ttd' => $ttd,'data'=>$data,'lokasi'=>$lokasi])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
+        $pdf = PDF::loadview('divisi.report.laporanstockopname-ruangan', ['databrg' => $databrg, 'dataverif' => $dataverif, 'ttd' => $ttd, 'data' => $data, 'lokasi' => $lokasi])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
         $pdf->output();
 
         $dompdf = $pdf->getDomPDF();
@@ -189,7 +189,7 @@ class DivisiController extends Controller
         // }
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->get();
-        $pdf = PDF::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif, 'ttd' => $ttd,'data'=>$data])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
+        $pdf = PDF::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif, 'ttd' => $ttd, 'data' => $data])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
         $pdf->output();
 
         $dompdf = $pdf->getDomPDF();
@@ -651,7 +651,7 @@ class DivisiController extends Controller
         $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->orderBy('nomor_ruangan', 'ASC')->get();
         // $databarang = DB::table('sub_tbl_inventory')->where('kode_verif',$id)->get();
         // $databarang = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$id)->get();
-        return view('divisi.stockopname.lengkapi_verifikasi', ['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan, 'id'=>$id]);
+        return view('divisi.stockopname.lengkapi_verifikasi', ['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan, 'id' => $id]);
     }
     public function verifikasikondisibarang($status, $id)
     {
@@ -1116,6 +1116,14 @@ class DivisiController extends Controller
     }
     public function postpenerimadatamutasi(Request $request)
     {
+        $jumlahbarang = DB::table('sub_tbl_inventory')->where('kd_cabang')->count();
+        $nomor = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->first();
+        $entitas = DB::table('tbl_entitas_cabang')
+        ->join('tbl_cabang','tbl_cabang.kd_entitas_cabang','=','tbl_entitas_cabang.kd_entitas_cabang')
+        ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
+        $barang = DB::table('tbl_sub_mutasi')
+            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_mutasi.id_inventaris')
+            ->where('kd_mutasi', $request->kd_mutasi)->get();
         DB::table('tbl_mutasi')
             ->where('kd_mutasi', $request->kd_mutasi)
             ->update([
@@ -1123,6 +1131,33 @@ class DivisiController extends Controller
                 'tgl_terima' => $request->tgl_terima,
                 'ket_penerima' => $request->deskripsi_penerima,
             ]);
+        foreach ($barang as $fix) {
+            $tahun = date('Y', strtotime($fix->tgl_beli));
+            DB::table('sub_tbl_inventory')->insert(
+                [
+                    'id_inventaris' => auth::user()->cabang . '' . mt_rand(100000, 9999999),
+                    'no_inventaris' => ($jumlahbarang + 1) . '/' . $fix->kd_inventaris . '/' . $fix->kd_lokasi . '/' . $entitas->simbol_entitas . "." . $nomor->no_cabang . '/' . $tahun,
+                    'nama_barang' => $fix->nama_barang,
+                    'gambar' => $fix->gambar,
+                    'kd_inventaris' => $fix->kd_inventaris,
+                    'kd_lokasi' => $fix->kd_lokasi,
+                    'id_nomor_ruangan_cbaang' => $request->input('no_ruangan'),
+                    'kd_cabang' => auth::user()->cabang,
+                    'th_perolehan' => $tahun,
+                    'tgl_beli' => $fix->tgl_beli,
+                    'merk' => $fix->merk,
+                    'type' => $fix->type,
+                    'no_seri' => $fix->no_seri,
+                    'suplier' => $fix->suplier,
+                    'kd_jenis' => $fix->kd_jenis,
+                    'harga_perolehan' => $fix->harga_perolehan,
+                    'kondisi_barang' => $fix->kondisi_barang,
+                    'status_barang' => 0,
+                    'no' => ($jumlahbarang + 1),
+                    'jam_input' => date("h:i:sa"),
+                ]
+            );
+        }
         Session::flash('sukses', 'Berhasil Menerima Order Mutasi');
         return redirect()->back();
     }
@@ -1535,14 +1570,14 @@ class DivisiController extends Controller
     }
     public function postverifikasialldatasimpandatascanner(Request $request)
     {
-        $databarang = DB::table('sub_tbl_inventory')->where('kd_cabang',Auth::user()->cabang)->get();
+        $databarang = DB::table('sub_tbl_inventory')->where('kd_cabang', Auth::user()->cabang)->get();
         foreach ($databarang as $value) {
             DB::table('tbl_sub_verifdatainventaris')->insert([
-                'kode_verif'=> $request->kode,
-                'id_inventaris'=> $value->id_inventaris,
-                'status_data_inventaris'=> 0,
-                'keterangan_data_inventaris'=> 'BAIK',
-                'created_at'=> date('Y-m-d H:i:s'),
+                'kode_verif' => $request->kode,
+                'id_inventaris' => $value->id_inventaris,
+                'status_data_inventaris' => 0,
+                'keterangan_data_inventaris' => 'BAIK',
+                'created_at' => date('Y-m-d H:i:s'),
             ]);
         }
     }

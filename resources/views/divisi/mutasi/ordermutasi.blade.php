@@ -13,7 +13,7 @@
                 <tr style="font-size: 12px;">
                     <th style="width: 1px; height: 1px;;">No</th>
                     <th>Tiket Order</th>
-                    <th>Penanggung Jawab</th>
+                    <th>Penanggung Jawabs</th>
                     <th>Tanggal Order</th>
                     <th>Penerima</th>
                     <th>Menyetujui</th>
