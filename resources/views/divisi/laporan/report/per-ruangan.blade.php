@@ -142,13 +142,13 @@
                     <td style="width: 4%;" rowspan="2">Tgl Beli</td>
                     <td rowspan="2">Nomor Inventaris</td>
                     <td>Nama Barang</td>
-                    <td colspan="3">Spesifikasi Teknik</td>
+                    <td colspan="2">Spesifikasi Teknik</td>
                     <td colspan="12">Kondisi / Keterangan Setiap Bulan</td>
                 </tr>
                 <tr>
                     <td>Sarana Fisik</td>
                     <td>Merek</td>
-                    <td>Harga</td>
+                    {{-- <td>Harga</td> --}}
                     <td>Keterangan</td>
                     <td>1</td>
                     <td>2</td>
@@ -175,7 +175,7 @@
                         <td>{{ $data->no_inventaris }}</td>
                         <td>{{ $data->nama_barang }}</td>
                         <td>{{ $data->merk }} / {{ $data->type }}</td>
-                        <td style="text-align: right;">@currency($data->harga_perolehan)</td>
+                        {{-- <td style="text-align: right;">@currency($data->harga_perolehan)</td> --}}
                         <td></td>
 
                         <td></td>
