@@ -62,7 +62,7 @@ class BigDataController extends Controller
                 if ($record->status_barang == 5) {
                     $status_barang = '<span class="badge badge-danger p-2" style="font-size: 11px;">Musnah</span>';
                     $button = "";
-                } elseif($record->status_barang == 4){
+                } else if($record->status_barang == 4){
                     $status_barang = '<span class="badge badge-warning p-2" style="font-size: 11px;">Mutasi</span>';
                     $button = "";
                 } else {
@@ -75,6 +75,9 @@ class BigDataController extends Controller
                 $dataruangan = '<span class="badge badge-danger p-2" style="font-size: 11px;">Tidak di temukan</span>';
                 if ($record->status_barang == 5) {
                     $status_barang = '<span class="badge badge-danger p-2" style="font-size: 11px;">Musnah</span>';
+                    $button = "";
+                }else if($record->status_barang == 4){
+                    $status_barang = '<span class="badge badge-warning p-2" style="font-size: 11px;">Mutasi</span>';
                     $button = "";
                 } else {
                     $status_barang = '<span class="badge badge-success p-2" style="font-size: 11px;">Baik</span>';
