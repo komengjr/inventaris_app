@@ -58,7 +58,7 @@
         }
     </style>
     <div class="row mt-3">
-        <div class="col-12 col-lg-4 col-xl-4">
+        <div class="col-12 col-lg-3 col-xl-3">
             <div class="card gradient-warning rounded-0">
                 <div class="card-body p-1">
                     <div class="media align-items-center bg-white p-4">
@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-4 col-xl-4">
+        <div class="col-12 col-lg-3 col-xl-3">
             <div class="card gradient-danger rounded-0">
                 <div class="card-body p-1">
                     <div class="media align-items-center bg-white p-4">
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-4 col-xl-4">
+        <div class="col-12 col-lg-3 col-xl-3">
             <div class="card gradient-secondary rounded-0">
                 <div class="card-body p-1">
                     <div class="media align-items-center bg-white p-4">
@@ -107,6 +107,22 @@
                         <div class="w-icon" style="cursor: pointer" id="ubahtombolaset" data-toggle="modal"
                             data-target="#lihat-detail-data" data-url="{{ url('admin/formdataaset', []) }}">
                             <i class="fa fa-eye text-gradient-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 col-xl-3">
+            <div class="card gradient-primary rounded-0">
+                <div class="card-body p-1">
+                    <div class="media align-items-center bg-white p-4">
+                        <div class="media-body">
+                            <h5 class="mb-0 text-dark">@currency(0)</h5>
+                            <p class="mb-0 text-dark">Total Data KSO : 0</p>
+                        </div>
+                        <div class="w-icon" style="cursor: pointer" id="button-data-kso" data-toggle="modal"
+                            data-target="#lihat-detail-data" data-url="{{ url('admin/formdataaset', []) }}">
+                            <i class="fa fa-tasks text-gradient-danger"></i>
                         </div>
                     </div>
                 </div>
