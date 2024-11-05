@@ -32,6 +32,14 @@
             border-radius: 10%;
             border: 3px solid #14bbd1;
         }
+        #button-data-kso:hover {
+            display: flex;
+            color: rgb(14, 243, 255);
+            padding: 2px;
+            /* background-color: #dd57e0; */
+            border-radius: 10%;
+            border: 3px solid #14bbd1;
+        }
 
         #tambahdatainevntaris:hover {
             display: flex;

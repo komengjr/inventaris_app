@@ -62,6 +62,9 @@ class BigDataController extends Controller
                 if ($record->status_barang == 5) {
                     $status_barang = '<span class="badge badge-danger p-2" style="font-size: 11px;">Musnah</span>';
                     $button = "";
+                } elseif($record->status_barang == 4){
+                    $status_barang = '<span class="badge badge-danger p-2" style="font-size: 11px;">Musnah</span>';
+                    $button = "";
                 } else {
                     $status_barang = '<span class="badge badge-success p-2" style="font-size: 11px;">Baik</span>';
                     $button =  "<button class='btn-warning m-1' data-toggle='modal' data-target='#editmasterbarang' id='editbarangmaster' data-url=" . url('divisi/masterbarang/showedit', ['id' => $id_inventaris]) . "><i class='bx bx-pencil'></i> edit</button>
