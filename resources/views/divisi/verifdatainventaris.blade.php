@@ -61,100 +61,118 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                            <div class="float-right m-3 m-3">
-                                <div class="btn-group m-0" style="float: right;">
-                                    <button type="button" class="btn-info waves-effect waves-light"> <i class="fa fa-cog"></i>
-                                        <span>Menu Option</span> </button>
-                                    <button type="button"
-                                        class="btn-primary split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
-                                        data-toggle="dropdown" aria-expanded="false">
-                                        <span class="caret"></span>
-                                    </button>
-                                    <div class="dropdown-menu" x-placement="bottom-start"
-                                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
-                                        <a href="javaScript:void();" class="dropdown-item" data-toggle="modal"
+                        <div class="float-right m-3 m-3">
+                            <div class="btn-group m-0" style="float: right;">
+                                <button type="button" class="btn-info waves-effect waves-light"> <i class="fa fa-cog"></i>
+                                    <span>Menu Option</span> </button>
+                                <button type="button"
+                                    class="btn-primary split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu" x-placement="bottom-start"
+                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal"
                                         data-target="#tambahdatabaru" id="tombolbarupeminjaman"
-                                        data-url="{{ url('divisi/tambahdataverifikasiinventaris', []) }}"><i class="fa fa-plus mr-1"></i> Tambah Data Stockopname</a>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
+                                        data-url="{{ url('divisi/tambahdataverifikasiinventaris', []) }}"><i
+                                            class="fa fa-plus mr-1"></i> Tambah Data Stockopname</a>
+                                    <div class="dropdown-divider"></div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="table-responsive pb-3" id="showdatamutasi">
-                                <table id="default-datatable" class="table styled-table table-bordered">
-                                    <thead>
+                        <div class="table-responsive pb-3" id="showdatamutasi">
+                            <table id="default-datatable" class="table styled-table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Kode Verifikasi</th>
+                                        <th>Tanggal Mulai Verifikasi</th>
+                                        <th>Tanggal Selesai Verifikasi</th>
+                                        <th>Jumlah Inventaris</th>
+                                        <th>Jumlah Terverifikasi</th>
+                                        <th>Kondisi Barang</th>
+                                        <th>Status Verifikasi</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($dataverif as $item)
                                         <tr>
-                                            <th>No</th>
-                                            <th>Kode Verifikasi</th>
-                                            <th>Tanggal Verifikasi</th>
-                                            <th>Jumlah Inventaris</th>
-                                            <th>Jumlah Terverifikasi</th>
-                                            <th>Kondisi Barang</th>
-                                            <th>Status Verifikasi</th>
-                                            <th class="text-center">Action</th>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $item->kode_verif }}</td>
+                                            <td>{{ $item->tgl_verif }}</td>
+                                            <td>{{ $item->end_date_verif }}</td>
+                                            <td>
+                                                @php
+                                                    $jumlahi = DB::table('sub_tbl_inventory')
+                                                        ->where('kd_cabang', Auth::user()->cabang)
+                                                        ->where('status_barang', '!=', 5)
+                                                        ->count();
+                                                @endphp
+                                                {{ $jumlahi }}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $jumlah = DB::table('tbl_sub_verifdatainventaris')
+                                                        ->where('kode_verif', $item->kode_verif)
+                                                        ->count();
+                                                @endphp
+                                                {{ $jumlah }}
+                                            </td>
+                                            <td>
+                                                <button class="btn-success" data-toggle="modal"
+                                                    data-target="#lengkapipeminjaman"
+                                                    id="button-verifikasi-kondisi-barang-baik"
+                                                    data-id="{{ $item->kode_verif }}" data-status="0"><i
+                                                        class="fa fa-tasks"> B</i></button>
+                                                <button class="btn-warning" data-toggle="modal"
+                                                    data-target="#lengkapipeminjaman"
+                                                    id="button-verifikasi-kondisi-barang-baik"
+                                                    data-id="{{ $item->kode_verif }}" data-status="1"><i
+                                                        class="fa fa-tasks"> M</i></button>
+                                                <button class="btn-danger" data-toggle="modal"
+                                                    data-target="#lengkapipeminjaman"
+                                                    id="button-verifikasi-kondisi-barang-baik"
+                                                    data-id="{{ $item->kode_verif }}" data-status="2"><i
+                                                        class="fa fa-tasks"> R</i></button> |
+                                                <button class="btn-primary">Status</button>
+                                            </td>
+                                            <td>
+                                                @if ($item->status_verif == 0)
+                                                    <span class="badge badge-danger m-1">Belum Selesai</span>
+                                                @else
+                                                    <span class="badge badge-success m-1">Selesai</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn-warning" data-toggle="modal"
+                                                    data-target="#tambahdatabaru" id="tomboleditdataverifikasidata" data-url="{{ url('divisi/editdataverifikasiinventaris', ['id'=>$item->id_verifdatainventaris ]) }}"><i class="fa fa-pencil"></i> Edit</button>
+                                                @if ($item->status_verif == 0)
+                                                    <button class="btn-primary" data-toggle="modal"
+                                                        data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
+                                                        data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $item->kode_verif]) }}"><i
+                                                            class="fa fa-shield"></i> Lengkapi
+                                                        data</button>
+                                                @else
+                                                    <button class="btn-info" data-toggle="modal"
+                                                        data-target="#modal-data-verifikasi"
+                                                        id="button-cetak-stock-opname"
+                                                        data-id="{{ $item->kode_verif }}"><i class="fa fa-print"></i>
+                                                        Cetak</button>
+                                                @endif
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $no = 1;
-                                        @endphp
-                                        @foreach ($dataverif as $item)
-                                            <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $item->kode_verif }}</td>
-                                                <td>{{ $item->tgl_verif }}</td>
-                                                <td>
-                                                    @php
-                                                        $jumlahi = DB::table('sub_tbl_inventory')
-                                                            ->where('kd_cabang', Auth::user()->cabang)
-                                                            ->where('status_barang','!=',5)
-                                                            ->count();
-                                                    @endphp
-                                                    {{ $jumlahi }}
-                                                </td>
-                                                <td>
-                                                    @php
-                                                        $jumlah = DB::table('tbl_sub_verifdatainventaris')
-                                                            ->where('kode_verif', $item->kode_verif)
-                                                            ->count();
-                                                    @endphp
-                                                    {{ $jumlah }}
-                                                </td>
-                                                <td>
-                                                    <button class="btn-success" data-toggle="modal" data-target="#lengkapipeminjaman" id="button-verifikasi-kondisi-barang-baik" data-id="{{ $item->kode_verif }}" data-status="0"><i class="fa fa-tasks"> B</i></button>
-                                                    <button class="btn-warning" data-toggle="modal" data-target="#lengkapipeminjaman" id="button-verifikasi-kondisi-barang-baik" data-id="{{ $item->kode_verif }}" data-status="1"><i class="fa fa-tasks"> M</i></button>
-                                                    <button class="btn-danger" data-toggle="modal" data-target="#lengkapipeminjaman" id="button-verifikasi-kondisi-barang-baik" data-id="{{ $item->kode_verif }}" data-status="2"><i class="fa fa-tasks"> R</i></button>
-                                                </td>
-                                                <td>
-                                                    @if ($item->status_verif == 0)
-                                                        <span class="badge badge-danger m-1">Belum Selesai</span>
-                                                    @else
-                                                        <span class="badge badge-success m-1">Selesai</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    @if ($item->status_verif == 0)
-                                                        <button class="btn-primary" data-toggle="modal"
-                                                            data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
-                                                            data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $item->kode_verif]) }}"><i
-                                                                class="fa fa-shield"></i> Lengkapi
-                                                            data</button>
-                                                    @else
-                                                        <button class="btn-info" data-toggle="modal"
-                                                            data-target="#modal-data-verifikasi"
-                                                            id="button-cetak-stock-opname"
-                                                            data-id="{{ $item->kode_verif }}"><i class="fa fa-print"></i>
-                                                            Cetak</button>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
 
-                                    </tfoot>
-                                </table>
-                            </div>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -382,6 +400,24 @@
                         icon: "fa fa-info",
                         msg: "Gagal",
                     });
+                });
+        });
+        $(document).on("click", "#tomboleditdataverifikasidata", function(e) {
+            e.preventDefault();
+            var url = $(this).data("url");
+
+            $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "html",
+                })
+                .done(function(data) {
+                    $("#showdatasdm").html(data);
+                })
+                .fail(function() {
+                    $("#showdatasdm").html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
                 });
         });
     </script>

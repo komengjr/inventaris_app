@@ -148,46 +148,54 @@
 
                     <div class="col-md-4">
                         @php
-                            $kode_lokasi = DB::table('tbl_inventory')->where('kd_inventaris',$data->kd_inventaris)->first();
+                            $kode_lokasi = DB::table('tbl_inventory')
+                                ->where('kd_inventaris', $data->kd_inventaris)
+                                ->first();
                         @endphp
                         <label for="inputEmail4" class="form-label">Kode Barang</label>
                         {{-- <input type="text" class="form-control" value="{{ $data->kd_inventaris }}" disabled> --}}
                         <select class="form-control single-select" name="kd_inventaris">
                             @if ($kode_lokasi)
-                            <option value="{{ $data->kd_inventaris }}">{{ $data->kd_inventaris }} {{ $kode_lokasi->nama_klasifikasi_barang }}</option>
+                                <option value="{{ $data->kd_inventaris }}">{{ $data->kd_inventaris }}
+                                    {{ $kode_lokasi->nama_klasifikasi_barang }}</option>
                             @else
-                            <option value="{{ $data->kd_inventaris }}">{{ $data->kd_inventaris }} Tidak Ditemukan</option>
+                                <option value="{{ $data->kd_inventaris }}">{{ $data->kd_inventaris }} Tidak Ditemukan
+                                </option>
                             @endif
                             @foreach ($kode as $kode)
-                                <option value="{{ $kode->kd_inventaris }}"> {{ $kode->kd_inventaris }} - {{ $kode->nama_klasifikasi_barang }}</option>
+                                <option value="{{ $kode->kd_inventaris }}"> {{ $kode->kd_inventaris }} -
+                                    {{ $kode->nama_klasifikasi_barang }}</option>
                             @endforeach
 
                         </select>
                         <label for="inputEmail4" class="form-label">Lokasi</label>
                         <?php
                         $nama_lokasi = DB::table('tbl_nomor_ruangan_cabang')
-                        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
-                        ->where('tbl_nomor_ruangan_cabang.kd_lokasi', $data->kd_lokasi)
-                        ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)
-                        ->first();
+                            ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+                            ->where('tbl_nomor_ruangan_cabang.kd_lokasi', $data->kd_lokasi)
+                            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)
+                            ->first();
                         $lokasi_all = DB::table('tbl_nomor_ruangan_cabang')
-                        ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
-                        ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)
-                        ->get();
+                            ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+                            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)
+                            ->get();
                         ?>
                         <select class="form-control single-select" name="kd_lokasi">
-                            <option value="{{ $data->kd_lokasi }}">{{ $nama_lokasi->nomor_ruangan}} - {{ $nama_lokasi->nama_lokasi }}</option>
+                            <option value="{{ $data->kd_lokasi }}">{{ $nama_lokasi->nomor_ruangan }} -
+                                {{ $nama_lokasi->nama_lokasi }}</option>
                             @foreach ($lokasi_all as $lokasi_all)
-                                <option value="{{ $lokasi_all->kd_lokasi }}"> {{ $lokasi_all->nomor_ruangan }} - {{ $lokasi_all->nama_lokasi }}</option>
+                                <option value="{{ $lokasi_all->kd_lokasi }}"> {{ $lokasi_all->nomor_ruangan }} -
+                                    {{ $lokasi_all->nama_lokasi }}</option>
                             @endforeach
 
                         </select>
                         {{-- <input type="text" class="form-control" value="{{$nama_lokasi[0]->nama_lokasi}}" disabled> --}}
 
                         <label for="inputEmail4" class="form-label">Tanggal Pembelian</label>
-                        <input type="date" name="tgl_beli" class="form-control"  value="{{ $data->tgl_beli }}">
+                        <input type="date" name="tgl_beli" class="form-control" value="{{ $data->tgl_beli }}">
                         <input id="link" type="text" name="link" class="form-control" value="" hidden>
-                        <input id="urut" type="text" name="urut" class="form-control" value="{{ $id }}" hidden>
+                        <input id="urut" type="text" name="urut" class="form-control"
+                            value="{{ $id }}" hidden>
                         {{-- <input type="text" name="kd_inventaris" class="form-control" value="{{$data[0]->kd_inventaris}}"> --}}
 
                         <label for="inputPassword4" class="form-label">Nomor Serial</label>
@@ -208,9 +216,19 @@
                         {{-- <label for="inputEmail4" class="form-label">Otlet</label>
                     <input type="text" name="outlet" class="form-control" value="{{$data[0]->outlet}}"> --}}
 
-                        <label for="inputPassword4" class="form-label">Tahun Perolehan</label>
-                        <input type="text" name="th_perolehan" class="form-control"
-                            value="{{ $data->th_perolehan }}">
+                        <label for="inputPassword4" class="form-label">Kategori</label>
+                        <select class="form-control kategori_barang" name="kategori" required>
+                            @if ($data->kd_jenis == 0)
+                                <option value="0">Inventaris</option>
+                                <option value="1">Aset</option>
+                            @else
+                                <option value="1">Aset</option>
+                                <option value="0">Inventaris</option>
+                            @endif
+
+
+
+                        </select>
                         <label for="inputPassword4" class="form-label">Merek</label>
                         <input type="text" name="merk" class="form-control" value="{{ $data->merk }}">
                         <label for="inputPassword4" class="form-label">Type Barang</label>
@@ -234,7 +252,7 @@
                     <hr>
                     <div class="col-md-12">
 
-                        <table class="styled-table" >
+                        <table class="styled-table">
                             <thead>
                                 <tr>
                                     <td>Nomor Surat</td>
@@ -256,24 +274,30 @@
                                     <tr>
                                         <td>{{ $datapinjam->tiket_peminjaman }}</td>
                                         <td>{{ $datapinjam->nama_kegiatan }}</td>
-                                            @php
-                                                $cabang = DB::table('tbl_cabang')->where('kd_cabang',$datapinjam->kd_cabang)->first();
-                                            @endphp
+                                        @php
+                                            $cabang = DB::table('tbl_cabang')
+                                                ->where('kd_cabang', $datapinjam->kd_cabang)
+                                                ->first();
+                                        @endphp
                                         <td>-</td>
-                                            @php
-                                                $cabang1 = DB::table('tbl_cabang')->where('kd_cabang',$datapinjam->tujuan_cabang)->first();
-                                            @endphp
+                                        @php
+                                            $cabang1 = DB::table('tbl_cabang')
+                                                ->where('kd_cabang', $datapinjam->tujuan_cabang)
+                                                ->first();
+                                        @endphp
                                         <td>-</td>
-                                            @php
-                                                $pj = DB::table('tbl_staff')->where('nip',$datapinjam->pj_pinjam)->first();
-                                            @endphp
+                                        @php
+                                            $pj = DB::table('tbl_staff')
+                                                ->where('nip', $datapinjam->pj_pinjam)
+                                                ->first();
+                                        @endphp
                                         <td>{{ $pj->nama_staff }}</td>
 
                                         <td>
                                             @if ($datapinjam->status_sub_peminjaman == 0)
-                                            <button class="btn-warning" disabled>Proses</button>
+                                                <button class="btn-warning" disabled>Proses</button>
                                             @else
-                                            <button class="btn-succes" disabled>Done</button>
+                                                <button class="btn-succes" disabled>Done</button>
                                             @endif
 
                                         </td>
@@ -292,7 +316,7 @@
 
         <div class="modal-footer">
             {{-- <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button> --}}
-            <button type="submit" class="btn-primary" id="updatedatainventori"><i class="fa fa-save"></i> Update s
+            <button type="submit" class="btn-primary" id="updatedatainventori"><i class="fa fa-save"></i> Update
                 Data</button>
             {{-- <button type="submit" class="btn btn-primary" id="updatedatabarang" data-url="{{ route('updatedatabarang1',['id' => $data[0]->id])}}"><i class="fa fa-save" ></i> Update Data</button> --}}
         </div>
@@ -309,7 +333,6 @@
 </script>
 
 <script type="text/javascript">
-
     var browseFile<?php echo $id; ?> = $('#browseFile<?php echo $id; ?>');
     var resumable<?php echo $id; ?> = new Resumable({
         target: '{{ route('files.upload.large', ['id' => $id]) }}',
@@ -365,5 +388,4 @@
     function hideProgress() {
         // progress<?php echo $id; ?>.hide();
     }
-
 </script>

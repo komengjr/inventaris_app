@@ -201,7 +201,9 @@ Route::get('divisi/pemusnahan/caridatabarang/{id}','DivisiController@caridatabar
 Route::get('divisi/pemusnahan/pilihdatabarang/{id}','DivisiController@pilihdatabarangpemusnahan');
 // STOCK OPNAME
 Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
+Route::get('divisi/editdataverifikasiinventaris/{id}',['as'=>'divisi/editdataverifikasiinventaris','uses'=> 'DivisiController@editdataverifikasiinventaris']);
 Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
+Route::post('divisi/verifikasi/edit','DivisiController@posteditverifikasi');
 Route::get('divisi/verifikasi/lengkapi/{id}',['as'=>'master/verifikasi/lengkapi','uses'=> 'DivisiController@verifikasilengkapi']);
 Route::get('divisi/verifikasi/kondisi/{status}/{id}',['as'=>'divisi/verifikasi/kondisi','uses'=> 'DivisiController@verifikasikondisibarang']);
 Route::get('divisi/verifikasi/lokasi/{tiket}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);

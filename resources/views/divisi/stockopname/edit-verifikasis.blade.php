@@ -12,27 +12,26 @@
 
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header">
-         <h6>Form Verifikasi Data Inventaris <span style="color: royalblue;"> Nomor tiket : {{$tiket}}</span> </h6>
+         <h6>Form Edit Verifikasi Data Inventaris <span style="color: royalblue;"></span> </h6>
          <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
          <i class="fa fa-close"></i>
          </button>
      </div>
 {{-- <form  method="POST" action="" enctype="multipart/form-data" id="form-update"> --}}
-<form  method="POST" action="{{ url('divisi/verifikasi/tambah', []) }}" enctype="multipart/form-data" >
+<form  method="POST" action="{{ url('divisi/verifikasi/edit', []) }}" enctype="multipart/form-data" >
     @csrf
     <div class="modal-body">
         <div class="row">
 
-            <div class="col-md-6">
-                <label for="">Waktu Mulai Verifikasi</label>
-                <input type="date" class="form-control" name="waktu" required>
-                <input type="text" name="tiket_verif" id="" value="{{$tiket}}" hidden>
+            <div class="col-12">
+                <label for="">Waktu Verifikasi</label>
+                <input type="date" class="form-control" name="waktu" value="{{$data->tgl_verif}}" required>
+                <input type="text" name="id"  value="{{$id}}" hidden>
             </div>
-            <div class="col-md-6">
-                <label for="">Waktu  Selesai Verifikasi</label>
-                <input type="date" class="form-control" name="waktuselesai" required>
+            <div class="col-12">
+                <label for="">Waktu Verifikasi</label>
+                <input type="date" class="form-control" name="waktuselesai" value="{{$data->end_date_verif}}" required>
             </div>
-
         </div>
     </div>
 

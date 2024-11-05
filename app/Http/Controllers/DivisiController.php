@@ -50,7 +50,7 @@ class DivisiController extends Controller
                     'nama_barang' => $request->input('nama_barang'),
                     'kd_inventaris' => $request->input('kd_inventaris'),
                     'kd_lokasi' => $request->input('kd_lokasi'),
-                    'th_perolehan' => $request->input('th_perolehan'),
+                    'kd_jenis' => $request->kategori,
                     'merk' => $request->input('merk'),
                     'no_seri' => $request->input('no_seri'),
                     'tgl_beli' => $request->input('tgl_beli'),
@@ -66,7 +66,7 @@ class DivisiController extends Controller
                 ->where('id_inventaris', $request->input('kode_kode'))
                 ->update([
                     'nama_barang' => $request->input('nama_barang'),
-                    'th_perolehan' => $request->input('th_perolehan'),
+                    'kd_jenis' => $request->kategori,
                     'merk' => $request->input('merk'),
                     'no_seri' => $request->input('no_seri'),
                     'suplier' => $request->input('suplier'),
@@ -165,13 +165,14 @@ class DivisiController extends Controller
             ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
             ->where('tbl_sub_verifdatainventaris.kode_verif', $id)
             ->get();
+        $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif',$id)->first();
         $data = DB::table('sub_tbl_inventory')
             ->whereNotExists(function ($query) use ($id) {
                 $query->select(DB::raw(1))
                     ->from('tbl_sub_verifdatainventaris')
                     ->where('kode_verif', $id)
                     ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
-            })->where('kd_cabang', Auth::user()->cabang)->get();
+            })->where('kd_cabang', Auth::user()->cabang)->where('tgl_beli','<=',$dataverif->end_date_verif." 23:59:59")->get();
         // $data_arr = array();
         // foreach ($data as $record) {
         //     $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $id)->where('id_inventaris', $record->id_inventaris)->first();
@@ -242,6 +243,10 @@ class DivisiController extends Controller
 
 
         return view('divisi.formverivikasi', ['tiket' => $jadi]);
+    }
+    public function editdataverifikasiinventaris($id){
+        $data = DB::table('tbl_verifdatainventaris')->where('id_verifdatainventaris',$id)->first();
+        return view('divisi.stockopname.edit-verifikasis',['id'=>$id,'data'=>$data]);
     }
     public function divisipostpenyelesaianstockopname($id)
     {
@@ -632,13 +637,23 @@ class DivisiController extends Controller
             [
                 'kode_verif' => $request->input('tiket_verif'),
                 'tgl_verif' => $request->input('waktu'),
+                'end_date_verif' => $request->input('waktuselesai'),
                 'tahun' => "-",
                 'kd_cabang' => auth::user()->cabang,
                 'status_verif' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
             ]
         );
-        Session::flash('sukses', 'Berhasil Membuat Tiket Tugas User' . $request->input('tiket_verif'));
+        Session::flash('sukses', 'Berhasil Membuat Data Verifikasi' . $request->input('tiket_verif'));
+        return redirect()->back();
+    }
+    public function posteditverifikasi(Request $request)
+    {
+        DB::table('tbl_verifdatainventaris')->where('id_verifdatainventaris',$request->id)->update([
+            'tgl_verif' => $request->input('waktu'),
+            'end_date_verif' => $request->input('waktuselesai'),
+        ]);
+        Session::flash('sukses', 'Berhasil Update Data' . $request->input('tiket_verif'));
         return redirect()->back();
     }
     public function verifikasilengkapi($id)
