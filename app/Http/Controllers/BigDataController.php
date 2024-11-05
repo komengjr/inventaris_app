@@ -63,7 +63,7 @@ class BigDataController extends Controller
                     $status_barang = '<span class="badge badge-danger p-2" style="font-size: 11px;">Musnah</span>';
                     $button = "";
                 } elseif($record->status_barang == 4){
-                    $status_barang = '<span class="badge badge-danger p-2" style="font-size: 11px;">Musnah</span>';
+                    $status_barang = '<span class="badge badge-warning p-2" style="font-size: 11px;">Mutasi</span>';
                     $button = "";
                 } else {
                     $status_barang = '<span class="badge badge-success p-2" style="font-size: 11px;">Baik</span>';
