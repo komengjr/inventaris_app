@@ -139,7 +139,8 @@
                                                     id="button-verifikasi-kondisi-barang-baik"
                                                     data-id="{{ $item->kode_verif }}" data-status="2"><i
                                                         class="fa fa-tasks"> R</i></button> |
-                                                <button class="btn-primary">Status</button>
+                                                <button class="btn-primary" data-toggle="modal" data-target="#modal-data-verifikasi" id="button-status-data-verifikasi"
+                                                    data-id="{{ $item->kode_verif }}">Status</button>
                                             </td>
                                             <td>
                                                 @if ($item->status_verif == 0)
@@ -150,7 +151,9 @@
                                             </td>
                                             <td class="text-center">
                                                 <button class="btn-warning" data-toggle="modal"
-                                                    data-target="#tambahdatabaru" id="tomboleditdataverifikasidata" data-url="{{ url('divisi/editdataverifikasiinventaris', ['id'=>$item->id_verifdatainventaris ]) }}"><i class="fa fa-pencil"></i> Edit</button>
+                                                    data-target="#tambahdatabaru" id="tomboleditdataverifikasidata"
+                                                    data-url="{{ url('divisi/editdataverifikasiinventaris', ['id' => $item->id_verifdatainventaris]) }}"><i
+                                                        class="fa fa-pencil"></i> Edit</button>
                                                 @if ($item->status_verif == 0)
                                                     <button class="btn-primary" data-toggle="modal"
                                                         data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
@@ -203,7 +206,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Report</h5>
+                    <h5 class="modal-title">Modal</h5>
                     <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -418,6 +421,33 @@
                     $("#showdatasdm").html(
                         '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                     );
+                });
+        });
+        $(document).on("click", "#button-status-data-verifikasi", function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $("#show-menu-report-stockopname").html(
+                '<div style="text-align: center; padding:2%;"><div class="spinner-border text-warning" role="status" > <span class="sr-only"></span> </div></div>'
+            );
+            $.ajax({
+                    url: "{{route('poststatusdatainevntarissverifikasi')}}",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                    },
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        "id": id,
+                        // "pilihan": pilihan,
+                    },
+                    dataType: "html",
+                })
+                .done(function(datapdf) {
+                    $("#show-menu-report-stockopname").html(datapdf);
+                })
+                .fail(function() {
+                    // console.log(data);
+                    $("#show-menu-report-stockopname").html("Gagal Baca");
                 });
         });
     </script>

@@ -204,6 +204,7 @@ Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataveri
 Route::get('divisi/editdataverifikasiinventaris/{id}',['as'=>'divisi/editdataverifikasiinventaris','uses'=> 'DivisiController@editdataverifikasiinventaris']);
 Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
 Route::post('divisi/verifikasi/edit','DivisiController@posteditverifikasi');
+Route::post('divisi/verifikasi/statusdatainevntariss','DivisiController@poststatusdatainevntarissverifikasi')->name('poststatusdatainevntarissverifikasi');
 Route::get('divisi/verifikasi/lengkapi/{id}',['as'=>'master/verifikasi/lengkapi','uses'=> 'DivisiController@verifikasilengkapi']);
 Route::get('divisi/verifikasi/kondisi/{status}/{id}',['as'=>'divisi/verifikasi/kondisi','uses'=> 'DivisiController@verifikasikondisibarang']);
 Route::get('divisi/verifikasi/lokasi/{tiket}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);

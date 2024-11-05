@@ -677,6 +677,19 @@ class DivisiController extends Controller
             ->get();
         return view('divisi.pemusnahan.daftarlistkondisibarang', ['databarang' => $databarang]);
     }
+    public function poststatusdatainevntarissverifikasi(Request $request){
+        $id = $request->id;
+        $databarang = DB::table('sub_tbl_inventory')
+            ->whereNotExists(function ($query) use ($id) {
+                $query->select(DB::raw(1))
+                    ->from('tbl_sub_verifdatainventaris')
+                    ->where('kode_verif', $id)
+                    ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
+            })->where('kd_cabang', Auth::user()->cabang)
+            // ->where('tgl_beli','<=',$dataverif->end_date_verif." 23:59:59")
+            ->get();
+            return view('divisi.stockopname.status-barang-verifikasi',['databarang' => $databarang,'id'=>$id]);
+    }
     public function verifikasilengkapilokasi($tiket)
     {
         return view('divisi.stockopname.scandata', ['tiket' => $tiket]);
