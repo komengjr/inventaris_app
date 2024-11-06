@@ -60,6 +60,15 @@ class DivisiController extends Controller
                     'id_nomor_ruangan_cbaang' => $no_ruangan->id_nomor_ruangan_cbaang,
                     'gambar' => $gambar
                 ]);
+            Db::table('log_history_inventaris')->insert([
+                'no_log'=>'LOG'.Auth::user()->cabang.date('Ymd-His'),
+                'id_inventaris'=> $request->kode_kode,
+                'kategori_inventaris'=> 0,
+                'type_history'=> 'P',
+                'before_history'=> $cekdata->kd_lokasi,
+                'after_history'=> $request->kd_lokasi,
+                'created_at'=> now(),
+            ]);
         } else {
             $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
             DB::table('sub_tbl_inventory')

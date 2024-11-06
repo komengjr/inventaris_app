@@ -14,7 +14,7 @@
             <div class="col-md-12">
                 <div class="input-group">
                     <select class="custom-select" name="page" id="page" style="width:100px;height:30px;font-size: 12px;">
-                        <option value="-">Pilih Option Print</option>
+                        <option value="-">Pilih Option Print ss</option>
                         @php
                             $cetak = $data->count();
                         @endphp
