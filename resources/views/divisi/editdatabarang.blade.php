@@ -243,15 +243,52 @@
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-9">
-                        <label for="inputPassword4" class="form-label">Recent Peminjaman</label>
+
                     </div>
                     {{-- <div class="col-md-3 text-right">
                     <Button class="btn btn-warning btn-sm" id="mutasidatabarang" data-url="{{ route('mutasidatabarang',['id' => $data[0]->id])}}"><i class="fa fa-recycle"> Mutasi</i></Button>
                     <Button class="btn btn-danger btn-sm"><i class="fa fa-trash"> Pemusnahan</i></Button>
                 </div> --}}
                     <hr>
-                    <div class="col-md-12">
-
+                    <div class="col-md-6">
+                        <h3 for="inputPassword4" class="form-label"><span class="badge badge-dark">History
+                                Perpindahan</span></h3>
+                        <table class="table styled-table">
+                            <thead>
+                                <tr>
+                                    <td>No</td>
+                                    <td>Awal barang</td>
+                                    <td>Pindah Barang</td>
+                                    <td>Tanggal Pindah</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                $datapindah = DB::table('log_history_inventaris')
+                                    ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'log_history_inventaris.before_history')
+                                    ->where('log_history_inventaris.id_inventaris', $data->id_inventaris)
+                                    ->get();
+                                ?>
+                                @foreach ($datapindah as $datapindah)
+                                    <tr>
+                                        <td data-label="No">{{ $no++ }}</td>
+                                        <td>{{ $datapindah->nama_lokasi }}</td>
+                                        <td>
+                                            @php
+                                                $pindah = DB::table('tbl_lokasi')->where('kd_lokasi',$datapindah->after_history)->first();
+                                            @endphp
+                                                {{$pindah->nama_lokasi}}
+                                        </td>
+                                        <td>{{ $datapindah->created_at }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 for="inputPassword4" class="form-label"><span class="badge badge-dark">History
+                                Peminjaman</span></h3>
                         <table class="styled-table">
                             <thead>
                                 <tr>
@@ -307,7 +344,6 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
 
             </div>
