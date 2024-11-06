@@ -300,6 +300,7 @@
                                         class="zmdi zmdi-dot-circle-alt"></i> Master Cabang</a></li>
                             <li><a href="{{ asset('masterlogactifity', []) }}"><i class="zmdi zmdi-airplay"></i> Log
                                     Aktifitas</a></li>
+                            <li><a href="{{ route('masteradmintelegram') }}"><i class="zmdi zmdi-airplay"></i> Master Telegram</a></li>
                         @endif
 
 

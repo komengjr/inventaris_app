@@ -504,4 +504,14 @@ class MasterController extends Controller
         }
 
     }
+
+    public function masteradmintelegram()
+    {
+        if (auth::user()->akses == 'admin') {
+            $data = DB::table('t_no_telegram')
+            ->join('tbl_cabang','tbl_cabang.kd_cabang','=','t_no_telegram.kd_cabang')
+            ->get();
+            return view('masteradmin.data-telegram',['data'=>$data]);
+        }
+    }
 }

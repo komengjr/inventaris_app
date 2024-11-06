@@ -38,6 +38,9 @@ Route::get('masteradmindetail', 'MasterController@masteradmindetail');
 Route::get('masterlogactifity', 'MasterController@masterlogactifity');
 Route::get('masterlogactifity/detail/{id}', 'MasterController@findmymasterlogactifity');
 Route::get('masterinjekupdate/{id}', 'MasterController@masterinjekupdate');
+
+// Master Admin Telegram
+Route::get('masteradmintelegram', 'MasterController@masteradmintelegram')->name('masteradmintelegram');
 // Master Admin GET User
 Route::get('master/datauser/{id}',['as'=>'master/datauser','uses'=> 'MasterController@datauser']);
 // Master Data Excel
