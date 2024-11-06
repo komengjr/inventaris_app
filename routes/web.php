@@ -369,3 +369,8 @@ Route::prefix('log_sdm')->group(function () {
     Route::get('setup/telegram',  'LogPuController@telegram')->name('telegram');
     Route::post('setup/show-laporan-user',  'LogPuController@show_laporan_user')->name('show_laporan_user');
 });
+
+Route::prefix('telegram')->group(function () {
+    Route::get('notification',  'TelegramController@notificationtelegram')->name('notificationtelegram');
+
+});

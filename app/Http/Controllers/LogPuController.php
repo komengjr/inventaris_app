@@ -82,4 +82,5 @@ class LogPuController extends Controller
         dd($updates);
     }
 
+
 }
