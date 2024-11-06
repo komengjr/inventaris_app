@@ -13,7 +13,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="input-group">
-                    <select class="custom-select" name="page" id="page" style="width:100px;height:30px;font-size: 12px;">
+                    <select class="custom-select" name="page" id="page"
+                        style="width:100px;height:30px;font-size: 12px;">
                         <option value="-">Pilih Option Print ss</option>
                         @php
                             $cetak = $data->count();
@@ -52,6 +53,7 @@
     </div>
     <div class="body" id="show-menu-data-lokasi-barang">
         <div class="row">
+
             <div class="col-lg-12">
 
                 <div class="card-body">
@@ -67,6 +69,56 @@
                         </div>
                     @endif
                     <div class="table-responsive" style="letter-spacing: .0px;">
+                        <h5><span class="badge badge-primary mx-3">Barang KSO</span></h5>
+                        <table id="default-datatablesubbarangkso" class="styled-table" style="font-size: 10px">
+                            <thead>
+                                <tr style="background: red;">
+                                    <th>Gambar</th>
+                                    <th>ID Inventaris</th>
+                                    <th>Nomor Inventaris</th>
+                                    <th>Nomor KSO</th>
+                                    <th>Nomor MOU</th>
+                                    <th>Nama Barang</th>
+                                    <th>Merek / Type</th>
+                                    {{-- <th>Action</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $no = 1; ?>
+                                @foreach ($datakso as $datakso)
+                                    <tr>
+                                        <td style="width: 10%;">
+                                            @if ($datakso->gambar == '')
+                                                <a href="https://via.placeholder.com/1020x780" data-fancybox="images"
+                                                    data-caption="{{ $datakso->nama_barang }}">
+                                                    <img src="https://via.placeholder.com/50x30" alt="lightbox"
+                                                        class="lightbox-thumb img-thumbnail" id="videoPreview"
+                                                        width="50" height="50">
+                                                </a>
+                                            @else
+                                                <a href="{{ url($datakso->gambar, []) }}" data-fancybox="images"
+                                                    data-caption="{{ $datakso->nama_barang }}" style="width: 50px;">
+                                                    <img src="{{ url($datakso->gambar, []) }}" alt="lightbox"
+                                                        class="lightbox-thumb img-thumbnail" id="videoPreview"
+                                                        width="50" height="50" style="width: 100px;">
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>{{ $datakso->id_inventaris }}</td>
+                                        <td>{{ $datakso->no_inventaris }}</td>
+                                        <td>{{ $datakso->no_kso_alat }}</td>
+                                        <td>{{ $datakso->no_mou_id }}</td>
+                                        <td>{{ $datakso->nama_barang }}</td>
+                                        <td>{{ $datakso->merk }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <hr>
+                    <div class="table-responsive" style="letter-spacing: .0px;">
+                        <h5><span class="badge badge-primary mx-3">Inventaris & Aset</span></h5>
                         <table id="default-datatablesubbarang" class="styled-table" style="font-size: 10px">
                             <thead>
                                 <tr>
@@ -97,7 +149,7 @@
                                         ->get();
                                     ?>
                                     <tr>
-                                        <td>
+                                        <td style="width: 10%;">
                                             @if ($data->gambar == '')
                                                 <a href="https://via.placeholder.com/1020x780" data-fancybox="images"
                                                     data-caption="{{ $data->nama_barang }}">
@@ -218,6 +270,7 @@
     $(document).ready(function() {
         //Default data table
         $('#default-datatablesubbarang').DataTable();
+        $('#default-datatablesubbarangkso').DataTable();
 
 
         var table = $('#example').DataTable({

@@ -332,6 +332,7 @@ Route::get('file-upload', [FileUploadController::class, 'index'])->name('files.i
 Route::post('file-upload/upload-large-files/{id}', [FileUploadController::class, 'uploadLargeFiles'])->name('files.upload.large');
 Route::post('file-upload/upload-large-files', [FileUploadController::class, 'uploadLargeFiles1'])->name('files.upload.large1');
 Route::post('file-upload/uploadgambarbarang', [FileUploadController::class, 'uploadgambarbarang'])->name('file-upload.uploadgambarbarang');
+Route::post('file-upload/uploadgambarbarangkso', [FileUploadController::class, 'uploadgambarbarangkso'])->name('file-upload.uploadgambarbarangkso');
 Route::post('file-upload/uploaddatamaintenance', [FileUploadController::class, 'uploaddatamaintenancebarang'])->name('file-upload.uploaddatamaintenance');
 
 
@@ -355,6 +356,11 @@ Route::get('nav/user-order/pindah-cabang/{id}',['as'=>'nav/user-order/pindah-cab
 Route::post('nav/user-order/post-pindah-cabang',['as'=>'nav/user-order/post-pindah-cabang','uses'=> 'NavController@postpindahcabangrecentuserorder']);
 Route::post('nav/user-order/post-terima-order',['as'=>'nav/user-order/post-terima-order','uses'=> 'NavController@postterimaordercabangrecentuserorder']);
 
+Route::prefix('kso')->group(function () {
+    Route::get('data-barang',  'KsoController@view');
+    Route::get('tambah-data-barang',  'KsoController@tambahbarang');
+    Route::post('simpan-data-barang',  'KsoController@simpanbarang');
+});
 Route::prefix('log_sdm')->group(function () {
     Route::get('setup',  'LogPuController@log_sdm');
     Route::post('setup/daftar_log',  'LogPuController@daftar_log')->name('daftar_log');

@@ -18,11 +18,12 @@ class CreateSubTblInventoryKsoTable extends Migration
             $table->string('id_inventaris')->unique();
             $table->string('no_inventaris')->nullable();
             $table->string('no_mou_id')->nullable();
+            $table->string('no_kso_alat')->nullable();
             $table->string('kd_inventaris')->index();
             $table->string('kd_lokasi')->index();
             $table->string('nama_barang');
             $table->string('kd_cabang')->nullable();
-            $table->string('th_perolehan')->nullable();
+            $table->string('tgl_kso')->nullable();
             $table->string('merk')->nullable();
             $table->string('type')->nullable();
             $table->string('no_seri')->nullable();

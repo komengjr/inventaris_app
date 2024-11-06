@@ -119,8 +119,15 @@ class DivisiController extends Controller
             ->where('status_barang', '<', '4')
             ->orderBy('id', 'DESC')
             ->get();
+        $datakso = DB::table('sub_tbl_inventory_kso')
+            ->select('sub_tbl_inventory_kso.*')
+            ->where('id_nomor_ruangan_cbaang', $id)
+            ->where('kd_cabang', auth::user()->cabang)
+            ->where('status_barang', '<', '4')
+            ->orderBy('id', 'DESC')
+            ->get();
         // dd($id);
-        return view('divisi.dashboard.listbarang', ['data' => $data, 'id' => $id]);
+        return view('divisi.dashboard.listbarang', ['data' => $data, 'id' => $id,'datakso'=>$datakso]);
     }
     public function menupemusnahan()
     {

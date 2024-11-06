@@ -32,6 +32,7 @@
             border-radius: 10%;
             border: 3px solid #14bbd1;
         }
+
         #button-data-kso:hover {
             display: flex;
             color: rgb(14, 243, 255);
@@ -125,11 +126,11 @@
                 <div class="card-body p-1">
                     <div class="media align-items-center bg-white p-4">
                         <div class="media-body">
-                            <h5 class="mb-0 text-dark">@currency(0)</h5>
-                            <p class="mb-0 text-dark">Total Data KSO : 0</p>
+                            <h5 class="mb-0 text-dark">MOU Alat KSO</h5>
+                            <p class="mb-0 text-dark">Total Alat KSO : {{$totalbrgkso}}</p>
                         </div>
                         <div class="w-icon" style="cursor: pointer" id="button-data-kso" data-toggle="modal"
-                            data-target="#lihat-detail-data" data-url="{{ url('admin/formdataaset', []) }}">
+                            data-target="#lihat-detail-data" data-url="{{ url('kso/data-barang', []) }}">
                             <i class="fa fa-tasks text-gradient-danger"></i>
                         </div>
                     </div>
@@ -250,7 +251,7 @@
             $ceklokasix = DB::table('sub_tbl_inventory')
                 ->select('sub_tbl_inventory.*')
                 ->where('kd_cabang', auth::user()->cabang)
-                ->where('status_barang','!=',5)
+                ->where('status_barang', '!=', 5)
                 ->where('id_nomor_ruangan_cbaang', $itemx->id_nomor_ruangan_cbaang)
                 ->count();
             ?>
@@ -325,8 +326,8 @@
 <div class="modal fade" id="lihat-detail-data">
     <div class="modal-dialog modal-dialog-centered modal-full" style="margin-top: 2%;">
         <div class="modal-content">
-            <div  id="showdatabarang">
-                <div class="modal-body" style="font-size: 9px;" >
+            <div id="showdatabarang">
+                <div class="modal-body" style="font-size: 9px;">
                 </div>
             </div>
         </div>
@@ -350,6 +351,37 @@
         window.open("", "myActionWin", "width=1000,height=700,toolbar=0");
         document.form2.submit();
     }
+    $(document).on("click", "#button-data-kso", function(e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        }).done(function(data) {
+            $("#showdatabarang").html(data);
+        }).fail(function() {
+            $("#showdatabarang").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+    });
+    $(document).on("click", "#button-tambah-barang-kso", function(e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        console.log(url);
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+        }).done(function(data) {
+            $("#menu-modal-kso").html(data);
+        }).fail(function() {
+            $("#menu-modal-kso").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+    });
 </script>
 @php
     $browser = Agent::browser();
@@ -358,8 +390,8 @@
         'ip_addres' => \Request::getClientIp(true),
         'user' => Auth::user()->email,
         'cabang' => Auth::user()->cabang,
-        'device' => $device = Agent::device(),
-        'os' => Agent::platform().' '.Agent::version($platform),
+        'device' => ($device = Agent::device()),
+        'os' => Agent::platform() . ' ' . Agent::version($platform),
         'browser' => Agent::browser() . ' Version ' . Agent::version($browser),
         'created_at' => date('Y-m-d H:i:s'),
     ]);
@@ -371,9 +403,7 @@
 @endphp
 @if ($cekiklan->isEmpty())
     @php
-        $iklan = DB::table('q_iklan')
-            ->where('status_iklan', 1)
-            ->get();
+        $iklan = DB::table('q_iklan')->where('status_iklan', 1)->get();
     @endphp
     <div class="modal fade" id="cardmodal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
