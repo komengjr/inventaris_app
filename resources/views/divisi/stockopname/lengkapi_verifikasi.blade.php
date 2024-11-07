@@ -58,7 +58,7 @@
             <!-- Table row -->
             <div class="row">
                 <div class="col-12 table-responsive" >
-                    <table class="table table-striped">
+                    <table id="default-datatable-unverified" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -358,6 +358,11 @@
 <div class="modal-footer">
     <button type="button" class="btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#default-datatable-unverified').DataTable();
+    });
+</script>
 <script src="{{ asset('assets/plugins/alerts-boxes/js/sweetalert.min.js') }}"></script>
 <script>
     $("#button-penyelesaian-stockopname").click(function() {
