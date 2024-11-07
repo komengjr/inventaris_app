@@ -20,18 +20,19 @@
     @csrf
     <div class="modal-body">
         <div class="row">
-            <div class="col-5">
+            <div class="col-6">
                 <label for="">Nomor Induk Pegawai</label>
                 <input type="text" class="form-control" name="nip" value="" required >
             </div>
-            <div class="col-5">
+            <div class="col-6">
                 <label for="">Nama Staff</label>
                 <input type="text" class="form-control" name="nama" value="" required>
+                <input type="text" class="form-control" name="class" value="0" hidden>
             </div>
-            <div class="col-2">
+            {{-- <div class="col-2">
                 <label for="">Class Staff</label>
-                <input type="text" class="form-control" name="class" value="" required>
-            </div>
+
+            </div> --}}
 
         </div>
     </div>
