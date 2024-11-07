@@ -71,6 +71,7 @@
                         <th>Alamat</th>
                         <th>Data Excel</th>
                         <th>Data Master</th>
+                        <th>Telegram</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -94,7 +95,16 @@
                             @endphp
                             {{$datainventaris}}
                         </td>
-
+                        <td>
+                            @php
+                                $telegram = DB::table('t_no_telegram')->where('kd_cabang',$data->kd_cabang)->first();
+                            @endphp
+                            @if ($telegram)
+                                <span class="badge badge-success">Terdaftar</span>
+                            @else
+                                <span class="badge badge-danger">Belum Terdaftar</span>
+                            @endif
+                        </td>
                         <td class="text-center">
                             <div class="btn-group float-sm-right">
 
