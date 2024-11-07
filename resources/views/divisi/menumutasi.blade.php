@@ -48,10 +48,11 @@
                                     <h4 class="text-primary mb-0">0 Record</h4>
                                     <span class="small-font">Notifikasi Order</span>
                                 </div>
-                                <div class="w-circle-icon rounded bg-primary" style="cursor: pointer;" data-toggle="modal"
-                                    data-target="#modalmutasirecord" id="buttonshownotiforder">
-                                    <i class="fa fa-clock-o text-white"></i>
-                                </div>
+                                <button class="btn btn-info" style="cursor: pointer;" data-toggle="modal"
+                                data-target="#modalmutasirecord" id="buttonshownotiforder"><i class="fa fa-clock-o text-white"></i> Lihat Order Mutasi</button>
+                                {{-- <div class="w-circle-icon rounded bg-primary" >
+                                     Lihat Order
+                                </div> --}}
                             </div>
                         </div>
                     </div>
