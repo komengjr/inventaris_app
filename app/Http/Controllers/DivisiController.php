@@ -726,7 +726,7 @@ class DivisiController extends Controller
                     ->from('tbl_sub_verifdatainventaris')
                     ->where('kode_verif', $id)
                     ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
-            })->where('kd_cabang', Auth::user()->cabang)
+            })->where('kd_cabang', Auth::user()->cabang)->where('status_barang','<','4')
             // ->where('tgl_beli','<=',$dataverif->end_date_verif." 23:59:59")
             ->get();
         return view('divisi.stockopname.status-barang-verifikasi', ['databarang' => $databarang, 'id' => $id]);
