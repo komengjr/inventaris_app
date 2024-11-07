@@ -12,6 +12,7 @@ use App\Imports\LogInventarisImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Jenssegers\Agent\Facades\Agent;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Telegram;
 use PDF;
 
 // use Exception;
@@ -61,13 +62,13 @@ class DivisiController extends Controller
                     'gambar' => $gambar
                 ]);
             Db::table('log_history_inventaris')->insert([
-                'no_log'=>'LOG'.Auth::user()->cabang.date('Ymd-His'),
-                'id_inventaris'=> $request->kode_kode,
-                'kategori_inventaris'=> 0,
-                'type_history'=> 'P',
-                'before_history'=> $cekdata->kd_lokasi,
-                'after_history'=> $request->kd_lokasi,
-                'created_at'=> now(),
+                'no_log' => 'LOG' . Auth::user()->cabang . date('Ymd-His'),
+                'id_inventaris' => $request->kode_kode,
+                'kategori_inventaris' => 0,
+                'type_history' => 'P',
+                'before_history' => $cekdata->kd_lokasi,
+                'after_history' => $request->kd_lokasi,
+                'created_at' => now(),
             ]);
         } else {
             $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
@@ -127,7 +128,7 @@ class DivisiController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
         // dd($id);
-        return view('divisi.dashboard.listbarang', ['data' => $data, 'id' => $id,'datakso'=>$datakso]);
+        return view('divisi.dashboard.listbarang', ['data' => $data, 'id' => $id, 'datakso' => $datakso]);
     }
     public function menupemusnahan()
     {
@@ -181,14 +182,14 @@ class DivisiController extends Controller
             ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
             ->where('tbl_sub_verifdatainventaris.kode_verif', $id)
             ->get();
-        $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif',$id)->first();
+        $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->first();
         $data = DB::table('sub_tbl_inventory')
             ->whereNotExists(function ($query) use ($id) {
                 $query->select(DB::raw(1))
                     ->from('tbl_sub_verifdatainventaris')
                     ->where('kode_verif', $id)
                     ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
-            })->where('kd_cabang', Auth::user()->cabang)->where('tgl_beli','<=',$dataverif->end_date_verif." 23:59:59")->get();
+            })->where('kd_cabang', Auth::user()->cabang)->where('tgl_beli', '<=', $dataverif->end_date_verif . " 23:59:59")->get();
         // $data_arr = array();
         // foreach ($data as $record) {
         //     $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $id)->where('id_inventaris', $record->id_inventaris)->first();
@@ -248,6 +249,28 @@ class DivisiController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
             ]
         );
+        $pengirim = DB::table('t_no_telegram')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 't_no_telegram.kd_cabang')
+            ->where('t_no_telegram.kd_cabang', auth::user()->cabang)->first();
+        if ($pengirim) {
+            Telegram::sendMessage([
+                'chat_id' => $pengirim->chat_id,
+                'parse_mode' => 'HTML',
+                'text' => "Halo $pengirim->nama_cabang \nLaporan Peminjaman Dengan No Tiket  $request->tiket_peminjaman \nTelah Dibuat\nTerima Kasih
+                ",
+            ]);
+        }
+        $penerima = DB::table('t_no_telegram')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 't_no_telegram.kd_cabang')
+            ->where('t_no_telegram.kd_cabang', $request->cabang)->first();
+        if ($penerima) {
+            Telegram::sendMessage([
+                'chat_id' => $penerima->chat_id,
+                'parse_mode' => 'HTML',
+                'text' => "Halo $penerima->nama_cabang \nAda Request Peminjaman Dengan No Tiket  $request->tiket_peminjaman \nTelah Dibuat \nKeterangan : $request->deskripsi \nTerima Kasih
+                ",
+            ]);
+        }
         Session::flash('sukses', 'Berhasil Membuat Tiket Request Peminjaman');
         return redirect()->back();
     }
@@ -260,9 +283,10 @@ class DivisiController extends Controller
 
         return view('divisi.formverivikasi', ['tiket' => $jadi]);
     }
-    public function editdataverifikasiinventaris($id){
-        $data = DB::table('tbl_verifdatainventaris')->where('id_verifdatainventaris',$id)->first();
-        return view('divisi.stockopname.edit-verifikasis',['id'=>$id,'data'=>$data]);
+    public function editdataverifikasiinventaris($id)
+    {
+        $data = DB::table('tbl_verifdatainventaris')->where('id_verifdatainventaris', $id)->first();
+        return view('divisi.stockopname.edit-verifikasis', ['id' => $id, 'data' => $data]);
     }
     public function divisipostpenyelesaianstockopname($id)
     {
@@ -665,7 +689,7 @@ class DivisiController extends Controller
     }
     public function posteditverifikasi(Request $request)
     {
-        DB::table('tbl_verifdatainventaris')->where('id_verifdatainventaris',$request->id)->update([
+        DB::table('tbl_verifdatainventaris')->where('id_verifdatainventaris', $request->id)->update([
             'tgl_verif' => $request->input('waktu'),
             'end_date_verif' => $request->input('waktuselesai'),
         ]);
@@ -693,7 +717,8 @@ class DivisiController extends Controller
             ->get();
         return view('divisi.pemusnahan.daftarlistkondisibarang', ['databarang' => $databarang]);
     }
-    public function poststatusdatainevntarissverifikasi(Request $request){
+    public function poststatusdatainevntarissverifikasi(Request $request)
+    {
         $id = $request->id;
         $databarang = DB::table('sub_tbl_inventory')
             ->whereNotExists(function ($query) use ($id) {
@@ -704,7 +729,7 @@ class DivisiController extends Controller
             })->where('kd_cabang', Auth::user()->cabang)
             // ->where('tgl_beli','<=',$dataverif->end_date_verif." 23:59:59")
             ->get();
-            return view('divisi.stockopname.status-barang-verifikasi',['databarang' => $databarang,'id'=>$id]);
+        return view('divisi.stockopname.status-barang-verifikasi', ['databarang' => $databarang, 'id' => $id]);
     }
     public function verifikasilengkapilokasi($tiket)
     {
@@ -1130,7 +1155,7 @@ class DivisiController extends Controller
     }
     public function mutasidatainventaris()
     {
-        $data = DB::table('tbl_mutasi')->where('kd_cabang', auth::user()->cabang)->get();
+        $data = DB::table('tbl_mutasi')->where('kd_cabang', auth::user()->cabang)->orderBy('id_mutasi', 'DESC')->get();
         $datakategori = DB::table('no_urut_barang')->get();
         return view('divisi.menumutasi', ['datakategori' => $datakategori, 'data' => $data]);
     }
@@ -1161,10 +1186,10 @@ class DivisiController extends Controller
     public function postpenerimadatamutasi(Request $request)
     {
         $jumlahbarang = DB::table('sub_tbl_inventory')->where('kd_cabang')->count();
-        $nomor = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->first();
+        $nomor = DB::table('tbl_setting_cabang')->where('kd_cabang', auth::user()->cabang)->first();
         $entitas = DB::table('tbl_entitas_cabang')
-        ->join('tbl_cabang','tbl_cabang.kd_entitas_cabang','=','tbl_entitas_cabang.kd_entitas_cabang')
-        ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
+            ->join('tbl_cabang', 'tbl_cabang.kd_entitas_cabang', '=', 'tbl_entitas_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
         $barang = DB::table('tbl_sub_mutasi')
             ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_mutasi.id_inventaris')
             ->where('kd_mutasi', $request->kd_mutasi)->get();
@@ -1201,15 +1226,42 @@ class DivisiController extends Controller
                     'jam_input' => date("h:i:sa"),
                 ]
             );
+            DB::table('sub_tbl_inventory')->where('id_inventaris', $fix->id_inventaris)->update([
+                'status_barang' => 4
+            ]);
+        }
+        $mutasi = DB::table('tbl_mutasi')->where('kd_mutasi', $request->kd_mutasi)->first();
+        $pengirim = DB::table('t_no_telegram')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 't_no_telegram.kd_cabang')
+            ->where('t_no_telegram.kd_cabang', auth::user()->cabang)->first();
+        if ($pengirim) {
+            Telegram::sendMessage([
+                'chat_id' => $pengirim->chat_id,
+                'parse_mode' => 'HTML',
+                'text' => "Halo $pengirim->nama_cabang \nAda Laporan Mutasi Dengan No Tiket  $request->kd_mutasi \nTelah Diterima Dengan Baik \nTerima Kasih
+                ",
+            ]);
+        }
+        $penerima = DB::table('t_no_telegram')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 't_no_telegram.kd_cabang')
+            ->where('t_no_telegram.kd_cabang', $mutasi->asal_mutasi)->first();
+        if ($penerima) {
+            Telegram::sendMessage([
+                'chat_id' => $penerima->chat_id,
+                'parse_mode' => 'HTML',
+                'text' => "Halo $penerima->nama_cabang \nAda Laporan Mutasi Dengan No Tiket  $request->kd_mutasi \nTelah Diterima Dengan Baik \nTerima Kasih
+                ",
+            ]);
         }
         Session::flash('sukses', 'Berhasil Menerima Order Mutasi');
         return redirect()->back();
     }
     public function posttambahdatamutasi(Request $request)
     {
+        $tiket = 'M-' . date('Y-m-d') . mt_rand(1000000, 99999999);
         DB::table('tbl_mutasi')->insert(
             [
-                'kd_mutasi' => 'mutasi-' . mt_rand(1000000, 99999999),
+                'kd_mutasi' => $tiket,
                 'jenis_mutasi' => 1,
                 'kd_cabang' => auth::user()->cabang,
                 'asal_mutasi' => auth::user()->cabang,
@@ -1225,6 +1277,28 @@ class DivisiController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
             ]
         );
+        $pengirim = DB::table('t_no_telegram')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 't_no_telegram.kd_cabang')
+            ->where('t_no_telegram.kd_cabang', auth::user()->cabang)->first();
+        if ($pengirim) {
+            Telegram::sendMessage([
+                'chat_id' => $pengirim->chat_id,
+                'parse_mode' => 'HTML',
+                'text' => "Halo $pengirim->nama_cabang \nAda Laporan Mutasi Dengan No Tiket  $tiket \nTelah dibuat Silahkan Menunggu Konfirmasi dari cabang tujuan \nTerima Kasih
+                ",
+            ]);
+        }
+        $penerima = DB::table('t_no_telegram')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 't_no_telegram.kd_cabang')
+            ->where('t_no_telegram.kd_cabang', $request->tujuan_cabang)->first();
+        if ($penerima) {
+            Telegram::sendMessage([
+                'chat_id' => $penerima->chat_id,
+                'parse_mode' => 'HTML',
+                'text' => "Halo $penerima->nama_cabang \nAda Laporan Mutasi Dengan No Tiket  $tiket \nSilahkan Untuk Mengkonfirmasi laporan mutasi nya \nTerima Kasih
+                ",
+            ]);
+        }
         Session::flash('sukses', 'Berhasil Membuat Order Mutasi');
         return redirect()->back();
     }

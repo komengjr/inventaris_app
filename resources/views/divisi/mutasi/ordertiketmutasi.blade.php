@@ -1,7 +1,7 @@
 <div class="modal-content" id="showdatabarang">
     <div class="modal-header bg-success">
         <h5 class="text-white">
-            Form Mutasi
+            <span class="badge badge-primary">Form Mutasi Antar Cabang</span>
         </h5>
         <button type="button" class="btn-danger text-white" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fa fa-close"></i></span>

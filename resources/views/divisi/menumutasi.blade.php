@@ -158,7 +158,6 @@
                                                         data-id="{{ $item->kd_mutasi }}"><i class="fa fa-print"></i>
                                                         Cetak / Print</button>
                                                 @endif
-
                                             </td>
                                         </tr>
                                     @endforeach
@@ -170,7 +169,6 @@
             </div>
         </div>
         <!-- End container-fluid-->
-
     </div>
     <div class="modal fade" id="modalmutasi">
         <div class="modal-dialog modal-dialog-centered modal-xl">
