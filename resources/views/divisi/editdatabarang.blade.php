@@ -266,6 +266,7 @@
                                 <?php
                                 $no = 1;
                                 $datapindah = DB::table('log_history_inventaris')
+                                    ->select('log_history_inventaris.created_at','log_history_inventaris.after_history','tbl_lokasi.nama_lokasi')
                                     ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'log_history_inventaris.before_history')
                                     ->where('log_history_inventaris.id_inventaris', $data->id_inventaris)
                                     ->get();
