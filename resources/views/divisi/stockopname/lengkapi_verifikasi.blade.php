@@ -80,6 +80,7 @@
                                     ->select('sub_tbl_inventory.*')
                                     ->where('kd_cabang',Auth::user()->cabang)
                                     ->where('id_nomor_ruangan_cbaang', $no_ruangan->id_nomor_ruangan_cbaang)
+                                    ->where('status_barang','<','4')
                                     ->count();
                                 ?>
                                 @if ($ceklokasix == 0)
