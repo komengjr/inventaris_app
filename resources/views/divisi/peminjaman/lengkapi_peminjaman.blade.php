@@ -143,6 +143,9 @@
         @if ($cekdata[0]->status_pinjam == 0 || $cekdata[0]->status_pinjam == 10)
             {{-- <a href="{{ url('divisi/verifikasi/peminjaman/pemyelesaian', ['id'=>$cekdata[0]->tiket_peminjaman]) }}"><button type="submit" class="btn-success" style="float: left;"><i class="fa fa-save"></i> Penyelesaian</button></a> --}}
         @endif
+        @if ($cekdata[0]->batas_tgl_pinjam <= date('Y-m-d'))
+            <a href="{{ url('divisi/verifikasi/peminjaman/pemyelesaian', ['id'=>$cekdata[0]->tiket_peminjaman]) }}"><button type="submit" class="btn-success" style="float: left;"><i class="fa fa-save"></i> Penyelesaian</button></a>
+        @endif
 
 </div>
 <script>
