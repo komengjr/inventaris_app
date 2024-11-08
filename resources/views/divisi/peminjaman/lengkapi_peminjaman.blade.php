@@ -20,19 +20,33 @@
 
     <div class="modal-body">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-6">
                 <label for="">Kegiatan</label>
                 <input type="text" class="form-control" name="nama_kegiatan" value="{{ $cekdata[0]->nama_kegiatan }}"
                     disabled>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <label for="">Penanggung Jawab Peminjam</label>
-                <input type="text" class="form-control" name="pj_pinjam" value="{{ $cekdata[0]->pj_pinjam }}"
-                    required>
+                @php
+                    $staff = DB::table('tbl_staff')->where('nip',$cekdata[0]->pj_pinjam)->first();
+                @endphp
+                @if ($staff)
+                <input type="text" class="form-control" name="pj_pinjam" value="{{ $staff->nama_staff }}"
+                required>
+                @else
+                <input type="text" class="form-control" name="pj_pinjam" value="Staff Tidak ditemukan"
+                required>
+                @endif
+
             </div>
             <div class="col-6">
                 <label for="">Tanggal Peminjam</label>
                 <input type="date" class="form-control" name="tgl_pinjam" value="{{ $cekdata[0]->tgl_pinjam }}"
+                    required>
+            </div>
+            <div class="col-6">
+                <label for="">Tanggal Batas Peminjam</label>
+                <input type="date" class="form-control" name="batas_tgl_pinjam" value="{{ $cekdata[0]->batas_tgl_pinjam }}"
                     required>
             </div>
             <div class="col-12">
