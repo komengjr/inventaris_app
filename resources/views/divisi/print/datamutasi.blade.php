@@ -86,7 +86,7 @@
 
         <div class="absolute">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::eyeColor(0, 0, 111, 115, 255, 114, 232)->style('dot')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($datamutasi->kd_mutasi),
+                QrCode::style('round')->eye('circle')->format('svg')->size(101)->errorCorrection('H')->generate($datamutasi->kd_mutasi),
             ) !!}">
         </div>
     </div>
