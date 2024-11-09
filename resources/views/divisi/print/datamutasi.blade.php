@@ -199,12 +199,12 @@
                 </td>
                 <td class="text-center" style="width: 33%;">
                     <br><br><br><br><br>
-                     {{$datamutasi->menyetujui}}
+                    {{$datamutasi->yang_menyerahkan}}
 
                 </td>
                 <td class="text-center" style="width: 33%;">
                     <br><br><br><br><br>
-                    {{$datamutasi->yang_menyerahkan}}
+                    {{$datamutasi->menyetujui}}
                 </td>
             </tr>
 
