@@ -409,7 +409,9 @@ class HomeController extends Controller
     {
         $dataaset = DB::table('sub_tbl_inventory')
         ->where('kd_cabang',auth::user()->cabang)
-        ->where('kd_jenis',1)->get();
+        ->where('kd_jenis',1)
+        ->where('status_barang','<',4)
+        ->get();
 
         return view('admin.formdataaset',[
             'dataaset'=> $dataaset,
