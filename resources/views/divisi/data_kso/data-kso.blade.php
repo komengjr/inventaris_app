@@ -159,7 +159,9 @@
                                         <td>{{ $data->no_mou_id }}</td>
                                         <td>{{ $data->no_kso_alat }}</td>
                                         <td>{{ $data->merk }}</td>
-                                        <td></td>
+                                        <td class="text-center">
+                                            <button class="btn-primary" id="button-detail-barang-kso" data-id="{{$data->id_inventaris}}"><i class="fa fa-pencil"></i> Detail</button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

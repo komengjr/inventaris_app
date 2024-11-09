@@ -52,6 +52,7 @@ class HomeController extends Controller
             ->select('sub_tbl_inventory.*')
             ->where('kd_cabang', auth::user()->cabang)
             ->where('kd_jenis',1)
+            ->where('status_barang','<',4)
             ->get();
             foreach ($totalharga as $totalharga) {
                 $totaljumlahaset = $totalharga->harga_perolehan + $totaljumlahaset;
@@ -81,7 +82,7 @@ class HomeController extends Controller
             if ($datainventariscabang == 0) {
                 $datainventariscabang = 0;
             }
-            $dataasetcabang = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('kd_cabang',auth::user()->cabang)->count();
+            $dataasetcabang = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('status_barang','<',4)->where('kd_cabang',auth::user()->cabang)->count();
             return view('home',[
                 'datakategori'=>$datakategori,'ruangan'=>$ruangan,
                 'totalinventaris'=>$datainventariscabang,'totaljumlahaset'=>$totaljumlahaset,
