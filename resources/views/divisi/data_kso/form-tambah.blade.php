@@ -36,14 +36,14 @@
 
                     </div>
                     <div class="col-md-5">
-                        <label for="inputPassword4" class="form-label">Nama Barangs</label>
+                        <label for="inputPassword4" class="form-label">Nama Barang</label>
                         <input type="text" name="nama_barang" class="form-control" id="inputPassword4" required>
 
-                        <label for="inputEmail4" class="form-label">No MOU Dokumen</label>
+                        <label for="inputEmail4" class="form-label">No MOU Dokumen </label>
                         <input type="text" name="no_mou" class="form-control" id="inputPassword4" required>
 
                         <label for="inputEmail4" class="form-label">No KSO Alat</label>
-                        <input type="text" name="no_kso" class="form-control" id="inputPassword4" required>
+                        <input type="text" name="no_kso" class="form-control" id="inputPassword4" >
 
                         <label for="inputEmail4" class="form-label">Tanggal KSO</label>
                         <input type="date" name="tgl_kso" class="form-control" required>

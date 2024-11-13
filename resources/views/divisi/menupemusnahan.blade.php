@@ -144,7 +144,7 @@
                                                     <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item" href="javascript:void();">Another action</a> --}}
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Batal</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data><i class="fa fa-trash"></i> Batal</a>
 
                                             </div>
                                         </td>
