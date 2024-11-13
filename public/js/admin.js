@@ -442,6 +442,42 @@ $(document).on("click", "#updatedatainventori", function (e) {
             );
         });
 });
+$(document).on("click", "#update-data-kso-barang", function (e) {
+    var data = $("#form-update-data-kso").serialize();
+    e.preventDefault();
+    $("#showdatabarang").html("");
+    $.ajax({
+        url: "kso/simpan-detail-data-barang",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+        },
+
+        type: "POST",
+        data: data,
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#showdatabarang").html("");
+            Lobibox.notify("success", {
+                pauseDelayOnHover: true,
+                icon: "fa fa-info-circle",
+                continueDelayOnInactiveTab: false,
+                position: "center top",
+                showClass: "bounceIn",
+                hideClass: "bounceOut",
+                width: 600,
+                msg: "Berhasil Update data",
+            });
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        })
+        .fail(function () {
+            $("#showdatabarang").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 $(document).on("click", "#mutasidatabarang", function (e) {
     e.preventDefault();
     var url = $(this).data("url");

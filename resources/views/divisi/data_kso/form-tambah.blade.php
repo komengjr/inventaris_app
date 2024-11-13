@@ -48,7 +48,6 @@
                         <label for="inputEmail4" class="form-label">Tanggal KSO</label>
                         <input type="date" name="tgl_kso" class="form-control" required>
 
-
                         <input id="link" type="text" name="link" class="form-control" hidden>
 
                     </div>

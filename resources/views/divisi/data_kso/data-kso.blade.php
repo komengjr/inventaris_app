@@ -160,7 +160,9 @@
                                         <td>{{ $data->no_kso_alat }}</td>
                                         <td>{{ $data->merk }}</td>
                                         <td class="text-center">
-                                            <button class="btn-primary" id="button-detail-barang-kso" data-id="{{$data->id_inventaris}}"><i class="fa fa-pencil"></i> Detail</button>
+                                            <button class="btn-primary" id="button-detail-barang-kso"
+                                                data-id="{{ $data->id_inventaris }}"><i class="fa fa-pencil"></i>
+                                                Detail</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -191,6 +193,37 @@
 
         table.buttons().container()
             .appendTo('#example_wrapper .col-md-6:eq(0)');
+
+    });
+</script>
+<script>
+    $(document).on("click", "#button-detail-barang-kso", function(e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+                url: "{{ route('detailbarangkso') }}",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                },
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                },
+                dataType: "html",
+            })
+            .done(function(data) {
+                $("#menu-modal-kso").html(data);
+            })
+            .fail(function() {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    icon: "fa fa-x",
+                    msg: "Silahkan Hubungi Admin",
+                });
+            });
 
     });
 </script>

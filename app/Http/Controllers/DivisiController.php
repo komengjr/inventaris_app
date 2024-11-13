@@ -61,7 +61,7 @@ class DivisiController extends Controller
                     'id_nomor_ruangan_cbaang' => $no_ruangan->id_nomor_ruangan_cbaang,
                     'gambar' => $gambar
                 ]);
-            Db::table('log_history_inventaris')->insert([
+            DB::table('log_history_inventaris')->insert([
                 'no_log' => 'LOG' . Auth::user()->cabang . date('Ymd-His'),
                 'id_inventaris' => $request->kode_kode,
                 'kategori_inventaris' => 0,

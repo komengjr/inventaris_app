@@ -336,6 +336,7 @@ Route::post('file-upload/upload-large-files/{id}', [FileUploadController::class,
 Route::post('file-upload/upload-large-files', [FileUploadController::class, 'uploadLargeFiles1'])->name('files.upload.large1');
 Route::post('file-upload/uploadgambarbarang', [FileUploadController::class, 'uploadgambarbarang'])->name('file-upload.uploadgambarbarang');
 Route::post('file-upload/uploadgambarbarangkso', [FileUploadController::class, 'uploadgambarbarangkso'])->name('file-upload.uploadgambarbarangkso');
+Route::post('file-upload/uploadgambarbarangkso/{id}', [FileUploadController::class, 'uploadgambarbarangkso1'])->name('file-upload.uploadgambarbarangkso1');
 Route::post('file-upload/uploaddatamaintenance', [FileUploadController::class, 'uploaddatamaintenancebarang'])->name('file-upload.uploaddatamaintenance');
 
 
@@ -363,6 +364,8 @@ Route::prefix('kso')->group(function () {
     Route::get('data-barang',  'KsoController@view');
     Route::get('tambah-data-barang',  'KsoController@tambahbarang');
     Route::post('simpan-data-barang',  'KsoController@simpanbarang');
+    Route::post('detail-data-barang',  'KsoController@detailbarangkso')->name('detailbarangkso');
+    Route::post('simpan-detail-data-barang',  'KsoController@simpandetailbarangkso')->name('simpandetailbarangkso');
 });
 Route::prefix('log_sdm')->group(function () {
     Route::get('setup',  'LogPuController@log_sdm');
