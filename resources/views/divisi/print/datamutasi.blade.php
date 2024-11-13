@@ -119,7 +119,13 @@
                 <td>Lokasi Penempatan</td>
                 <td>:</td>
                 <td>
-                    {{$datamutasi->target_mutasi}}
+                    @php
+                        $cabangpenempata = DB::table('tbl_cabang')->where('kd_cabang',$datamutasi->target_mutasi)->first();
+                    @endphp
+                    @if ($cabangpenempata)
+                        {{$cabangpenempata->nama_cabang}}
+                    @endif
+                    {{-- ( {{$datamutasi->target_mutasi}} ) --}}
                 </td>
             </tr>
 
