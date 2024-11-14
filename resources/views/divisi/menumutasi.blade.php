@@ -45,7 +45,7 @@
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body text-left">
-                                    <h4 class="text-primary mb-0">0 Record</h4>
+                                    <h4 class="text-primary mb-0">{{$order}} Order</h4>
                                     <span class="small-font">Notifikasi Order</span>
                                 </div>
                                 <button class="btn btn-info" style="cursor: pointer;" data-toggle="modal"
@@ -62,13 +62,11 @@
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body text-left">
-                                    <h4 class="text-secondary mb-0">0</h4>
-                                    <span class="small-font">History Record</span>
+                                    <h4 class="text-secondary mb-0">{{$rekap}}</h4>
+                                    <span class="small-font">Data Rekap Mutasi</span>
                                 </div>
-                                <div class="w-circle-icon rounded bg-secondary" style="cursor: pointer;" data-toggle="modal"
-                                    data-target="#modalmutasirecord">
-                                    <i class="fa fa-history text-white"></i>
-                                </div>
+                                <button class="btn btn-info" style="cursor: pointer;" data-toggle="modal"
+                                data-target="#modalmutasirecord" id="button-rekap-mutasi-cabang"><i class="fa fa-clock-o text-white"></i> Lihat Rekap Mutasi</button>
                             </div>
                         </div>
                     </div>

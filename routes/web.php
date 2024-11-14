@@ -179,6 +179,7 @@ Route::get('divisi/datamutasi/editdatamutasi/{id}',['as'=>'divisi/datamutasi/edi
 Route::get('divisi/datamutasi/inserttable/{ids}/{id}/{data}',['as'=>'divisi/datamutasi/inserttable','uses'=> 'DivisiController@inserttablepencarian']);
 Route::get('divisi/datamutasi/hapusdetaildatamutasi/{id}/{kode}',['as'=>'divisi/datamutasi/hapusdetaildatamutasi','uses'=> 'DivisiController@hapusdetaildatamutasi']);
 Route::get('divisi/datamutasi/showdataorder',['as'=>'divisi/datamutasi/showdataorder','uses'=> 'DivisiController@showdataordermutasi']);
+Route::get('divisi/datamutasi/showdatarekaporder',['as'=>'divisi/datamutasi/showdatarekaporder','uses'=> 'DivisiController@showdatarekaporder']);
 Route::get('divisi/datamutasi/lengkapimutasi/{id}',['as'=>'divisi/datamutasi/lengkapimutasi','uses'=> 'DivisiController@lengkapidataordermutasi']);
 Route::post('divisi/datamutasi/post/datamutasi',['as'=>'divisi/datamutasi/post/datamutasi','uses'=> 'DivisiController@penyelesaianpostdatamutasi']);
 Route::post('divisi/datamutasi/postpenerimamutasi',['as'=>'divisi/datamutasi/postpenerimamutasi','uses'=> 'DivisiController@postpenerimadatamutasi']);

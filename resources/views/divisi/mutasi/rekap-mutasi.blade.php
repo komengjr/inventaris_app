@@ -13,6 +13,8 @@
                 <tr style="font-size: 12px;">
                     <th style="width: 1px; height: 1px;;">No</th>
                     <th>Tiket Order</th>
+                    <th>Asal Cabang</th>
+                    <th>Tujuan Cabang</th>
                     <th>Penanggung Jawabs</th>
                     <th>Tanggal Order</th>
                     <th>Penerima</th>
@@ -27,9 +29,14 @@
                     $no = 1;
                 @endphp
                 @foreach ($data as $item)
+                    @php
+                        $tujuan = DB::table('tbl_cabang')->where('kd_cabang',$item->target_mutasi)->first();
+                    @endphp
                     <tr>
                         <td>{{$no++}}</td>
                         <td>{{$item->kd_mutasi}}</td>
+                        <td>{{$item->nama_cabang}}</td>
+                        <td>{{$tujuan->nama_cabang}}</td>
                         <td>{{$item->penanggung_jawab}}</td>
                         <td>{{$item->tanggal_buat}}</td>
                         <td>{{$item->penerima}}</td>

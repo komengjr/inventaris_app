@@ -1068,10 +1068,24 @@ $(document).on("click", "#buttonhapusdatabarangmutasi", function (e) {
 });
 $(document).on("click", "#buttonshownotiforder", function (e) {
     e.preventDefault();
-    var id = $(this).data("id");
-    var kode = $(this).data("kode");
     $.ajax({
         url: "../divisi/datamutasi/showdataorder/",
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#bodymodalmutasirecord").html(data);
+        })
+        .fail(function () {
+            $("#bodymodalmutasirecord").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
+$(document).on("click", "#button-rekap-mutasi-cabang", function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: "../divisi/datamutasi/showdatarekaporder/",
         type: "GET",
         dataType: "html",
     })

@@ -1156,8 +1156,10 @@ class DivisiController extends Controller
     public function mutasidatainventaris()
     {
         $data = DB::table('tbl_mutasi')->where('kd_cabang', auth::user()->cabang)->orderBy('id_mutasi', 'DESC')->get();
+        $order = DB::table('tbl_mutasi')->where('target_mutasi',Auth::user()->cabang)->where('status_mutasi',0)->count();
+        $rekap = DB::table('tbl_mutasi')->where('target_mutasi',Auth::user()->cabang)->where('status_mutasi',1)->count();
         $datakategori = DB::table('no_urut_barang')->get();
-        return view('divisi.menumutasi', ['datakategori' => $datakategori, 'data' => $data]);
+        return view('divisi.menumutasi', ['datakategori' => $datakategori, 'data' => $data,'order'=>$order,'rekap'=>$rekap]);
     }
     public function ordertiketmutasi()
     {
@@ -1169,6 +1171,14 @@ class DivisiController extends Controller
         $cabang = DB::table('tbl_cabang')->get();
         $dataorder = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->where('tgl_terima', NULl)->get();
         return view('divisi.mutasi.ordermutasi', ['cabang' => $cabang, 'data' => $dataorder]);
+    }
+    public function showdatarekaporder()
+    {
+        $cabang = DB::table('tbl_cabang')->get();
+        $dataorder = DB::table('tbl_mutasi')
+        ->join('tbl_cabang','tbl_cabang.kd_cabang','=','tbl_mutasi.kd_cabang')
+        ->get();
+        return view('divisi.mutasi.rekap-mutasi', ['cabang' => $cabang, 'data' => $dataorder]);
     }
     public function lengkapidataordermutasi($id)
     {
