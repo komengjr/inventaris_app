@@ -36,7 +36,13 @@
                         <td>{{$no++}}</td>
                         <td>{{$item->kd_mutasi}}</td>
                         <td>{{$item->nama_cabang}}</td>
-                        <td>{{$tujuan->nama_cabang}}</td>
+                        <td>
+                            @if ($tujuan)
+                            {{$tujuan->nama_cabang}}
+                            @else
+
+                            @endif
+                        </td>
                         <td>{{$item->penanggung_jawab}}</td>
                         <td>{{$item->tanggal_buat}}</td>
                         <td>{{$item->penerima}}</td>
