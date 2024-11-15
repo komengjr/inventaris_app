@@ -147,4 +147,34 @@ class KsoController extends Controller
                 ]);
         }
     }
+    public function uploaddokumentbarangkso(Request $request)
+    {
+        $data = DB::table('sub_tbl_inventory_kso')
+            ->select('sub_tbl_inventory_kso.*')
+            ->where('id_inventaris', $request->id)
+            ->first();
+        $datalokasi = DB::table('tbl_lokasi')
+            ->select('tbl_lokasi.*')
+            ->get();
+        $kode = DB::table('tbl_inventory')
+            ->select('tbl_inventory.*')
+            ->get();
+        $document = DB::table('document_kso')->where('id_inventaris',$request->id)->get();
+        // dd($id);
+        return view('divisi.data_kso.upload-dokumen', ['data' => $data, 'datalokasi' => $datalokasi, 'kode' => $kode, 'id' => $data->id , 'document'=>$document]);
+    }
+    public function simpandokumentbarangkso(Request $request){
+        DB::table('document_kso')->insert([
+            'id_inventaris'=>$request->id_inventaris,
+            'periode_kso'=>$request->periode,
+            'file_kso'=> 'public/document/kso/'.Auth::user()->cabang.'/'.$request->link,
+            'created_at'=>now(),
+        ]);
+        Session::flash('sukses', 'Berhasil Upload Dokument Barang KSO');
+            return redirect()->back();
+    }
+    public function showdokumentbarangkso(Request $request){
+        $link = DB::table('document_kso')->where('id_document_kso',$request->id)->first();
+        return view('divisi.data_kso.show-document-kso',['link'=>$link]);
+    }
 }

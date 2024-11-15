@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogNotificationErorTable extends Migration
+class CreateDocumentKsoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateLogNotificationErorTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_notification_eror', function (Blueprint $table) {
-            $table->id('log_notification_eror');
-            $table->longText('desc_log');
-            $table->string('status_log');
+        Schema::create('document_kso', function (Blueprint $table) {
+            $table->id('id_document_kso');
+            $table->string('id_inventaris');
+            $table->string('periode_kso');
+            $table->text('file_kso');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateLogNotificationErorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log_notification_eror');
+        Schema::dropIfExists('document_kso');
     }
 }

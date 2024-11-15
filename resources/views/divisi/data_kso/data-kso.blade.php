@@ -127,6 +127,7 @@
                                     <th>No MOU </th>
                                     <th>No KSO Alat</th>
                                     <th>Merek / Type</th>
+                                    <th>Document</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -159,6 +160,9 @@
                                         <td>{{ $data->no_mou_id }}</td>
                                         <td>{{ $data->no_kso_alat }}</td>
                                         <td>{{ $data->merk }}</td>
+                                        <td class="text-center">
+                                            <button class="btn-info" id="button-upload-dokumen-kso" data-id="{{ $data->id_inventaris }}"><i class="fa fa-file"></i> Document KSO</button>
+                                        </td>
                                         <td class="text-center">
                                             <button class="btn-primary" id="button-detail-barang-kso"
                                                 data-id="{{ $data->id_inventaris }}"><i class="fa fa-pencil"></i>
@@ -214,6 +218,64 @@
             })
             .done(function(data) {
                 $("#menu-modal-kso").html(data);
+            })
+            .fail(function() {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    icon: "fa fa-x",
+                    msg: "Silahkan Hubungi Admin",
+                });
+            });
+
+    });
+    $(document).on("click", "#button-upload-dokumen-kso", function(e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+                url: "{{ route('uploaddokumentbarangkso') }}",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                },
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                },
+                dataType: "html",
+            })
+            .done(function(data) {
+                $("#menu-modal-kso").html(data);
+            })
+            .fail(function() {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    icon: "fa fa-x",
+                    msg: "Silahkan Hubungi Admin",
+                });
+            });
+
+    });
+    $(document).on("click", "#button-show-document-kso", function(e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+                url: "{{ route('showdokumentbarangkso') }}",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                },
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                },
+                dataType: "html",
+            })
+            .done(function(data) {
+                $("#show-document-kso").html(data);
             })
             .fail(function() {
                 Lobibox.notify("error", {
