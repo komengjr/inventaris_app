@@ -53,12 +53,12 @@
                             <td>{{ $item->tgl_terima }}</td>
                             <td>
                                 @if ($item->penerima == null)
-                                    @if ($item->asal_mutasi == Auth::user()->cabang)
+                                    @if ($item->kd_cabang == Auth::user()->cabang)
+                                        <span class="badge badge-warning">Menunggu Konfirmasi Penerimaan</span>
+                                    @else
                                         <button class="btn-warning" id="button-lengkapi-data-mutasi"
                                             data-id='{{ $item->kd_mutasi }}'><i class="fa fa-cogs"></i> Lengkapi
                                             Data</button>
-                                    @else
-                                        <span class="badge badge-warning">Menunggu Konfirmasi Penerimaan</span>
                                     @endif
                                 @else
                                     <button class="btn-info"><i class="fa fa-print"></i></button>
