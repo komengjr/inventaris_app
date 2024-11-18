@@ -62,7 +62,7 @@
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body text-left">
-                                    <h4 class="text-secondary mb-0">{{$rekap}}</h4>
+                                    <h4 class="text-secondary mb-0">{{$jumlah}}</h4>
                                     <span class="small-font">Data Rekap Mutasi</span>
                                 </div>
                                 <button class="btn btn-info" style="cursor: pointer;" data-toggle="modal"
