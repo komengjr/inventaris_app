@@ -53,7 +53,7 @@
                             <td>{{ $item->tgl_terima }}</td>
                             <td>
                                 @if ($item->penerima == null)
-                                    @if ($item->target_mutasi != Auth::user()->cabang)
+                                    @if ($item->asal_mutasi == Auth::user()->cabang)
                                         <button class="btn-warning" id="button-lengkapi-data-mutasi"
                                             data-id='{{ $item->kd_mutasi }}'><i class="fa fa-cogs"></i> Lengkapi
                                             Data</button>
