@@ -166,7 +166,8 @@
                                         <td class="text-center">
                                             <button class="btn-primary" id="button-detail-barang-kso"
                                                 data-id="{{ $data->id_inventaris }}"><i class="fa fa-pencil"></i>
-                                                Detail</button>
+                                                Detail</button><br><br>
+                                                <button class="btn-dark" onclick="window.open('printbarcodeksobyid/{{ $data->id }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i class="fa fa-print"></i> Print Barcode</button>
                                         </td>
                                     </tr>
                                 @endforeach
