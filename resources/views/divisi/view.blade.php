@@ -126,7 +126,7 @@
                 <div class="card-body p-1">
                     <div class="media align-items-center bg-white p-4">
                         <div class="media-body">
-                            <h5 class="mb-0 text-dark">MOU Alat KSO</h5>
+                            <h5 class="mb-0 text-dark">MOU Alat KSO : {{$totaldocument}}</h5>
                             <p class="mb-0 text-dark">Total Alat KSO : {{$totalbrgkso}}</p>
                         </div>
                         <div class="w-icon" style="cursor: pointer" id="button-data-kso" data-toggle="modal"

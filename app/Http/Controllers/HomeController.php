@@ -48,6 +48,7 @@ class HomeController extends Controller
             $totaljumlahaset = 0;
             $totaljumlahinventaris = 0;
             $totalbrgkso = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->count();
+            $totaldocument = DB::table('sub_tbl_inventory_kso')->join('document_kso','document_kso.id_inventaris','=','sub_tbl_inventory_kso.id_inventaris')->where('sub_tbl_inventory_kso.kd_cabang',Auth::user()->cabang)->count();
             $totalharga = DB::table('sub_tbl_inventory')
             ->select('sub_tbl_inventory.*')
             ->where('kd_cabang', auth::user()->cabang)
@@ -83,10 +84,11 @@ class HomeController extends Controller
                 $datainventariscabang = 0;
             }
             $dataasetcabang = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('status_barang','<',4)->where('kd_cabang',auth::user()->cabang)->count();
+
             return view('home',[
                 'datakategori'=>$datakategori,'ruangan'=>$ruangan,
                 'totalinventaris'=>$datainventariscabang,'totaljumlahaset'=>$totaljumlahaset,
-                'dataasetcabang'=>$dataasetcabang, 'totaljumlahinventaris'=>$totaljumlahinventaris,'totalbrgkso'=>$totalbrgkso
+                'dataasetcabang'=>$dataasetcabang, 'totaljumlahinventaris'=>$totaljumlahinventaris,'totalbrgkso'=>$totalbrgkso,'totaldocument'=> $totaldocument
             ]);
         }
 
