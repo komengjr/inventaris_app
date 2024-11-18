@@ -353,6 +353,9 @@
     }
     $(document).on("click", "#button-data-kso", function(e) {
         e.preventDefault();
+        $("#showdatabarang").html(
+            '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+        );
         var url = $(this).data("url");
         $.ajax({
             url: url,
