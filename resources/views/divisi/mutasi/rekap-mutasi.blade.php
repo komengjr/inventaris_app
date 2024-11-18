@@ -30,47 +30,52 @@
                 @endphp
                 @foreach ($data as $item)
                     @php
-                        $tujuan = DB::table('tbl_cabang')->where('kd_cabang',$item->target_mutasi)->first();
+                        $tujuan = DB::table('tbl_cabang')
+                            ->where('kd_cabang', $item->target_mutasi)
+                            ->first();
                     @endphp
-                    <tr>
-                        <td>{{$no++}}</td>
-                        <td>{{$item->kd_mutasi}}</td>
-                        <td>{{$item->nama_cabang}}</td>
-                        <td>
-                            @if ($tujuan)
-                            {{$tujuan->nama_cabang}}
-                            @else
+                    @if ($item->asal_mutasi == Auth::user()->cabang || $item->target_mutasi == Auth::user()->cabang)
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $item->kd_mutasi }}</td>
+                            <td>{{ $item->nama_cabang }}</td>
+                            <td>
+                                @if ($tujuan)
+                                    {{ $tujuan->nama_cabang }}
+                                @else
+                                @endif
+                            </td>
+                            <td>{{ $item->penanggung_jawab }}</td>
+                            <td>{{ $item->tanggal_buat }}</td>
+                            <td>{{ $item->penerima }}</td>
+                            <td>{{ $item->menyetujui }}</td>
+                            <td>{{ $item->yang_menyerahkan }}</td>
+                            <td>{{ $item->tgl_terima }}</td>
+                            <td>
+                                @if ($item->penerima == null)
+                                    <button class="btn-warning" id="button-lengkapi-data-mutasi"
+                                        data-id='{{ $item->kd_mutasi }}'><i class="fa fa-cogs"></i> Lengkapi
+                                        Data</button>
+                                @else
+                                    <button class="btn-info"><i class="fa fa-print"></i></button>
+                                @endif
 
-                            @endif
-                        </td>
-                        <td>{{$item->penanggung_jawab}}</td>
-                        <td>{{$item->tanggal_buat}}</td>
-                        <td>{{$item->penerima}}</td>
-                        <td>{{$item->menyetujui}}</td>
-                        <td>{{$item->yang_menyerahkan}}</td>
-                        <td>{{$item->tgl_terima}}</td>
-                        <td>
-                            @if ($item->penerima == NULL)
-                            <button class="btn-warning" id="button-lengkapi-data-mutasi" data-id='{{$item->kd_mutasi}}'><i class="fa fa-cogs" ></i> Lengkapi Data</button>
-                            @else
-                                <button class="btn-info"><i class="fa fa-print"></i></button>
-                            @endif
-
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>
 
     </div>
 </div>
-    <div class="modal-footer" style="float: left;">
+<div class="modal-footer" style="float: left;">
 
-    </div>
-    <script>
-        $(document).ready(function() {
-            //Default data table
-            $('#default-datatablelog').DataTable();
+</div>
+<script>
+    $(document).ready(function() {
+        //Default data table
+        $('#default-datatablelog').DataTable();
 
-        });
-    </script>
+    });
+</script>
