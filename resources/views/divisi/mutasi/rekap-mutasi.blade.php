@@ -1,6 +1,6 @@
 <div class="modal-header bg-success">
     <p class="modal-title text-white">
-        Order Mutasi
+        Data Rekap Mutasi
     </p>
     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
