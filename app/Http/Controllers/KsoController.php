@@ -46,7 +46,7 @@ class KsoController extends Controller
             DB::table('sub_tbl_inventory_kso')->insert(
                 [
                     'id_inventaris' => auth::user()->cabang . '-KSO-' . mt_rand(100000, 9999999),
-                    'no_inventaris' => ($jumlahbarang + 1) . '/KSO/' . $request->input('kd_inventaris') . '/' . $cekruangan->kd_lokasi . '/' . $entitas->simbol_entitas . "." . $nomor->no_cabang . '/' . date('Y'),
+                    'no_inventaris' => ($jumlahbarang + 1) . '/KSO/' . $request->input('kd_inventaris') . '/' . $cekruangan->kd_lokasi . '/' . $entitas->simbol_entitas . "." . $nomor->no_cabang . '/' . $tahun,
                     'nama_barang' => $request->input('nama_barang'),
                     'no_mou_id' => $request->input('no_mou'),
                     'no_kso_alat' => $request->input('no_kso'),
