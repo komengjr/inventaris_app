@@ -161,6 +161,12 @@
                                         <td>{{ $data->no_kso_alat }}</td>
                                         <td>{{ $data->merk }}</td>
                                         <td class="text-center">
+                                            @php
+                                                $doc = DB::table('document_kso')->where('id_inventaris',$data->id_inventaris)->get();
+                                            @endphp
+                                            @foreach ($doc as $doc)
+                                                    <h6>- <span class="badge badge-dark">{{$doc->periode_kso}}</span></h6>
+                                            @endforeach
                                             <button class="btn-info" id="button-upload-dokumen-kso" data-id="{{ $data->id_inventaris }}"><i class="fa fa-file"></i> Document KSO</button>
                                         </td>
                                         <td class="text-center">
