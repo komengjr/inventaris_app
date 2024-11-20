@@ -31,6 +31,7 @@ class DivisiController extends Controller
             ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
             ->where('tbl_setting_cabang.kd_cabang', Auth::user()->cabang)->first();
         $cekdata = DB::table('sub_tbl_inventory')->where('id_inventaris', $request->input('kode_kode'))->first();
+        $tahun = date('Y', strtotime($request->input('tgl_beli')));
         if ($request->link != "") {
             $gambar = 'public/databrg/sdm/' . $request->input('urut') . '/' . $request->input('link');
         } else {
@@ -47,7 +48,7 @@ class DivisiController extends Controller
             DB::table('sub_tbl_inventory')
                 ->where('id_inventaris', $request->input('kode_kode'))
                 ->update([
-                    'no_inventaris' => $cekdata->no . '/' . $request->input('kd_inventaris') . '/' . $request->input('kd_lokasi') . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . $request->input('th_perolehan'),
+                    'no_inventaris' => $cekdata->no . '/' . $request->input('kd_inventaris') . '/' . $request->input('kd_lokasi') . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . $tahun,
                     'nama_barang' => $request->input('nama_barang'),
                     'kd_inventaris' => $request->input('kd_inventaris'),
                     'kd_lokasi' => $request->input('kd_lokasi'),
