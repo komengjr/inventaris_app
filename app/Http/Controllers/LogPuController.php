@@ -77,6 +77,30 @@ class LogPuController extends Controller
         // $dompdf->get_canvas()->page_text(33, 570, $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
+    public function form_peminjaman_barang(Request $request){
+        return view('publc_sdm.menu.form_peminjaman_barang',['user'=>$request->user,'cabang'=>$request->cabang]);
+    }
+    public function simpan_peminjaman_barang_user(Request $request){
+        $randomString = mt_rand(100, 999);
+        $tgl = date('d-m-Y');
+        $jadi = 'PJ-SDM-' . $request->nip . '-' . $tgl . '-' . $randomString;
+        DB::table('tbl_peminjaman_user')->insert([
+            'tiket_peminjaman_user'=>$jadi,
+            'cabang'=> $request->cabang,
+            'user'=> $request->nip,
+            'tgl_req' => now(),
+            'kategori_req' => $request->kategori_req,
+            'deskripsi_req' => $request->deskripsi_req,
+            'status_req' => 0,
+            'created_at' => now(),
+        ]);
+        Session::flash('success', 'Berhasl Membuat Tiket Peminjaman');
+        return redirect()->back();
+    }
+    public function daftar_peminjaman_user(Request $request){
+        $data = DB::table('tbl_peminjaman_user')->where('user',$request->user)->get();
+        return view('publc_sdm.menu.data_peminjaman_user',['data'=>$data]);
+    }
     public function telegram(): never{
         $updates = Telegram::getUpdates();
         dd($updates);

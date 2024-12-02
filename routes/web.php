@@ -376,7 +376,10 @@ Route::prefix('kso')->group(function () {
 Route::prefix('log_sdm')->group(function () {
     Route::get('setup',  'LogPuController@log_sdm');
     Route::post('setup/daftar_log',  'LogPuController@daftar_log')->name('daftar_log');
+    Route::post('setup/daftar_peminjaman_user',  'LogPuController@daftar_peminjaman_user')->name('daftar_peminjaman_user');
     Route::post('setup/form_log',  'LogPuController@form_log')->name('form_log');
+    Route::post('setup/form_peminjaman_barang',  'LogPuController@form_peminjaman_barang')->name('form_peminjaman_barang');
+    Route::post('setup/simpan_peminjaman_barang_user',  'LogPuController@simpan_peminjaman_barang_user')->name('simpan_peminjaman_barang_user');
     Route::post('setup/simpan',  'LogPuController@simpan_form_log')->name('simpan_form_log');
     Route::get('setup/telegram',  'LogPuController@telegram')->name('telegram');
     Route::post('setup/show-laporan-user',  'LogPuController@show_laporan_user')->name('show_laporan_user');

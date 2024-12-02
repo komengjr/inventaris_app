@@ -2,7 +2,7 @@
     <div class="col-12">
         <nav class="navbar navbar-expand-xl navbar-light bg-light">
             <a class="navbar-brand" href="#">
-                <i class="fas fa-1x fa-tachometer-alt tm-site-icon"></i>
+                <img src="{{ asset('vendor/icon/2.png') }}" alt="" width="50">
                 <h3 class="tm-site-title mb-0">{{ $cabang->nama_cabang }}</h3>
             </a>
             <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
@@ -36,6 +36,15 @@
 <div class="row tm-content-row tm-mt-big">
     <div class="tm-col tm-col-big">
         <div class="bg-white tm-block">
+
+            <div class="row">
+                <div class="col-12">
+                    <button class="btn btn-success form-control" id="button-form-peminjaman-sdm"
+                        data-user="{{ $staff->nip }}" data-cabang="{{ $staff->kd_cabang }}"><i class="fa fa-book"></i>
+                        Form Peminjaman</button>
+                </div>
+            </div>
+            <br>
             <div class="row">
                 <div class="col-12">
                     <h2 class="tm-block-title d-inline-block">DAFTAR LOG</h2>
@@ -78,9 +87,14 @@
     <div class="tm-col tm-col-small">
         <div class="bg-white tm-block">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 pb-3">
                     <button class="btn btn-info form-control" data-toggle="modal"
-                        data-target=".bd-example-modal-lg">Report</button>
+                        data-target=".bd-list-peminjaman-modal-lg" id="button-list-peminjaman" data-user="{{ $staff->nip }}">List Pinjam</button>
+                </div>
+                <hr>
+                <div class="col-12">
+                    <button class="btn btn-info form-control" data-toggle="modal" data-target=".bd-example-modal-lg"><i
+                            class="fa fa-file"></i> Report</button>
                 </div>
                 {{-- <div class="col-12">
                     <button class="btn btn-info form-control">info</button>
@@ -132,6 +146,25 @@
                         class="fa fa-eye"></i> Show Data</button>
                 <button type="button" class="btn btn-primary btn-small" id="button-laporan-maintenance-sdm"><i
                         class="fa fa-print"></i> Show PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-list-peminjaman-modal-lg" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content" style="height:100%; width: 100%;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Data Peminjaman</h5>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="display-list-peminjaman"></div>
+            </div>
+            <div class="modal-footer">
+
             </div>
         </div>
     </div>
@@ -189,5 +222,66 @@
 
                 });
         }
+    });
+
+    $(document).on("click", "#button-form-peminjaman-sdm", function(e) {
+        e.preventDefault();
+        var user = $(this).data("user");
+        var cabang = $(this).data("cabang");
+        $("#menu-form-log-sdm").html(
+            '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
+        );
+        $.ajax({
+                url: "{{ route('form_peminjaman_barang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "user": user,
+                    "cabang": cabang,
+                },
+                dataType: 'html',
+            })
+            .done(function(data) {
+                $("#menu-form-log-sdm").html(data);
+            })
+            .fail(function() {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    icon: "fa fa-info",
+                    msg: "Gagal",
+                });
+            });
+    });
+    $(document).on("click", "#button-list-peminjaman", function(e) {
+        e.preventDefault();
+        var user = $(this).data("user");
+        $("#display-list-peminjaman").html(
+            '<div class="card"><div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only"></span> </div></div></div>'
+        );
+        $.ajax({
+                url: "{{ route('daftar_peminjaman_user') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "user": user,
+                },
+                dataType: 'html',
+            })
+            .done(function(data) {
+                $("#display-list-peminjaman").html(data);
+            })
+            .fail(function() {
+                Lobibox.notify("error", {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    icon: "fa fa-info",
+                    msg: "Gagal",
+                });
+            });
     });
 </script>
