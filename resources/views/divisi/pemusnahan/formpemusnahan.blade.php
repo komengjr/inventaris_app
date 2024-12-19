@@ -27,7 +27,8 @@
                 <option value="">Pilih</option>
                 <option value="Kondisi Barang Rusak">Kondisi Barang Rusak</option>
                 <option value="Tidak Layak Pakai">Tidak Layak Pakai</option>
-                <option value="Spare Part Discontinu">Kondisi Barang Rusak</option>
+                <option value="Spare Part Discontinu">Spare Part Discontinu</option>
+                <option value="Dan lain-lain">Dan lain-lain</option>
             </select>
         </div>
         <div class="col-6">
