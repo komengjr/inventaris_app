@@ -36,7 +36,7 @@
             <select name="persetujuan" class="form-control" id="" required>
                 <option value="">Pilih</option>
                 <option value="Setuju">Setuju</option>
-                <option value="Tidak Setuju">Tidak Setuju</option>
+                {{-- <option value="Tidak Setuju">Tidak Setuju</option> --}}
             </select>
         </div>
         <div class="col-6">

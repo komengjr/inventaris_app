@@ -53,7 +53,7 @@ class BigDataController extends Controller
             $no_inventaris = $record->no_inventaris;
             $harga_perolehan = $record->harga_perolehan;
             $kd_inventaris = $record->kd_inventaris;
-            $merk = $record->merk;
+            $merk = $record->merk.' / '.$record->type.' / '.$record->no_seri;
             $tglbeli = $record->tgl_beli;
             $thperolehan = $record->th_perolehan;
             $ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $record->id_nomor_ruangan_cbaang)->first();
