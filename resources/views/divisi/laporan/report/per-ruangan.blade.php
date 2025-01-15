@@ -139,7 +139,7 @@
             <thead style="font-weight: bold; text-align: center;">
                 <tr>
                     <td style="width: 2%;" rowspan="2">No</td>
-                    <td style="width: 4%;" rowspan="2">Tgl Beli</td>
+                    <td style="width: 4%;" rowspan="2">Th Beli</td>
                     <td rowspan="2">Nomor Inventaris</td>
                     <td>Nama Barang</td>
                     <td colspan="2">Spesifikasi Teknik</td>
