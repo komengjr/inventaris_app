@@ -68,10 +68,11 @@ class PdfController extends Controller
         ->select('sub_tbl_inventory.*')
         ->where('id',$id)
         ->where('kd_cabang',auth::user()->cabang)
-        ->get();
+        ->first();
         // dd($data);
+        $customPaper = array(0,0,95.00,177);
         $qrcode = base64_encode(QrCode::format('png')->size(500)->errorCorrection('H')->generate('string'));
-        $pdf = PDF::loadview('index',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
+        $pdf = PDF::loadview('format-barcode',['data'=>$data],compact('qrcode'))->setPaper($customPaper,'landscape');
         return base64_encode($pdf->stream());
     }
     public function printdataalllokasi($id,$page)
