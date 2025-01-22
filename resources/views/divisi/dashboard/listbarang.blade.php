@@ -87,13 +87,13 @@
                                 <?php $no = 1; ?>
                                 @foreach ($datakso as $datakso)
                                     <tr>
-                                        <td style="width: 10%;">
+                                        <td style="width: 5%;">
                                             @if ($datakso->gambar == '')
-                                                <a href="https://via.placeholder.com/1020x780" data-fancybox="images"
+                                                <a href="{{ asset('no_pict.png') }}" data-fancybox="images"
                                                     data-caption="{{ $datakso->nama_barang }}">
-                                                    <img src="https://via.placeholder.com/50x30" alt="lightbox"
-                                                        class="lightbox-thumb img-thumbnail" id="videoPreview"
-                                                        width="50" height="50">
+                                                    <img src="{{ asset('no_pict.png') }}" alt="lightbox"
+                                                        class="img-thumbnail" id="videoPreview" width="100"
+                                                        height="100">
                                                 </a>
                                             @else
                                                 <a href="{{ url($datakso->gambar, []) }}" data-fancybox="images"
@@ -149,13 +149,13 @@
                                         ->get();
                                     ?>
                                     <tr>
-                                        <td style="width: 10%;">
+                                        <td style="width: 5%;">
                                             @if ($data->gambar == '')
-                                                <a href="https://via.placeholder.com/1020x780" data-fancybox="images"
+                                                <a href="{{ asset('no_pict.png') }}" data-fancybox="images"
                                                     data-caption="{{ $data->nama_barang }}">
-                                                    <img src="https://via.placeholder.com/50x30" alt="lightbox"
-                                                        class="lightbox-thumb img-thumbnail" id="videoPreview"
-                                                        width="50" height="50">
+                                                    <img src="{{ asset('no_pict.png') }}" alt="lightbox"
+                                                        class="img-thumbnail" id="videoPreview" width="100"
+                                                        height="100">
                                                 </a>
                                             @else
                                                 <a href="{{ url($data->gambar, []) }}" data-fancybox="images"
