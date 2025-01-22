@@ -4,7 +4,7 @@
 <head>
 
     <title>Print Barcode</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/barcode.css') }}">
 </head>
 <style>
     @page {
