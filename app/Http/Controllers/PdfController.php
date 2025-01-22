@@ -141,8 +141,9 @@ class PdfController extends Controller
         }
 
         // dd($data);
+        $customPaper = array(0,0,95.00,177);
         $qrcode = base64_encode(QrCode::format('png')->size(500)->errorCorrection('H')->generate('string'));
-        $pdf = PDF::loadview('divisi.report.lokasi',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
+        $pdf = PDF::loadview('divisi.report.lokasi',['data'=>$data],compact('qrcode'))->setPaper($customPaper,'landscape');
         return base64_encode($pdf->stream());
     }
     public function printpeserta()
