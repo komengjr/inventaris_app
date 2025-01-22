@@ -621,6 +621,19 @@ class DivisiController extends Controller
         $data = DB::table('sub_tbl_inventory')->where('id_inventaris', $id)->first();
         return view('divisi.pemusnahan.formpemusnahan', ['data' => $data]);
     }
+    public function reportpemusnahan(Request $request) {
+        $data = DB::table('tbl_pemusnahan')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_pemusnahan.id_inventaris')
+        ->where('tbl_pemusnahan.kd_pemusnahan', $request->id)->first();
+        // $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->get();
+        $pdf = PDF::loadview('divisi.report.report-pemusnahan', ['data' => $data])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
+        $pdf->output();
+
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
+    }
     public function posttambah(Request $request)
     {
         // dd($request->all());

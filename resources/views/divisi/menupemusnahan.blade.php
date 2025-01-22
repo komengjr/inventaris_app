@@ -2,18 +2,18 @@
 @section('content')
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-           <div class="card mt-3 mr-2">
-            <div class="row pl-4 pt-3">
-                <div class="col-sm-9">
-                    <h4 class="page-title">Menu Pemusnahan</h4>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Menu Pemusnahan</li>
-                    </ol>
+            <div class="card mt-3 mr-2">
+                <div class="row pl-4 pt-3">
+                    <div class="col-sm-9">
+                        <h4 class="page-title">Menu Pemusnahan</h4>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Menu Pemusnahan</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
-           </div>
 
             {{-- <div class="row">
                 <div class="col-12 col-lg-6 col-xl-6">
@@ -94,7 +94,9 @@
                                 </button>
                                 <div class="dropdown-menu" x-placement="bottom-start"
                                     style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
-                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#modalpemusnahan" id="tombolbarupemusnahan" style="float: right;"><i class="fa fa-plus mr-1"></i> Tambah Data Pemusnahan</a>
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal"
+                                        data-target="#modalpemusnahan" id="tombolbarupemusnahan" style="float: right;"><i
+                                            class="fa fa-plus mr-1"></i> Tambah Data Pemusnahan</a>
                                     <div class="dropdown-divider"></div>
                                 </div>
                             </div>
@@ -104,7 +106,7 @@
                             <table class="table styled-table align-items-center table-flush pb-2" id="default-datatable">
                                 <thead>
                                     <tr>
-                                        <th>Gambar</th>
+                                        <th>Foto</th>
                                         <th>Nomor Inventaris</th>
                                         <th>Nama Barang</th>
                                         <th>Type</th>
@@ -116,39 +118,44 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($data as $data)
-                                    <tr>
-                                        <td>
-                                            <img alt="Image placeholder" src="https://via.placeholder.com/110x110"
-                                                class="product-img" />
-                                        </td>
-                                        <td>{{$data->no_inventaris}}</td>
-                                        <td>{{$data->nama_barang}}</td>
-                                        <td>{{$data->type}}</td>
-                                        <td>{{$data->merk}}</td>
-                                        <td>{{$data->eksekusi}}</td>
+                                        <tr>
+                                            <td style="width: 5%;">
+                                                <img alt="Image placeholder" src="{{ asset('no_gam.png') }}"
+                                                    class="product-img" />
+                                            </td>
+                                            <td>{{ $data->no_inventaris }}</td>
+                                            <td>{{ $data->nama_barang }}</td>
+                                            <td>{{ $data->type }}</td>
+                                            <td>{{ $data->merk }}</td>
+                                            <td>{{ $data->eksekusi }}</td>
 
-                                        <td>
-                                            <span class="badge-dot">
-                                                <i class="bg-danger"></i> {{$data->persetujuan}}
-                                            </span>
-                                        </td>
+                                            <td>
+                                                <span class="badge-dot">
+                                                    <i class="bg-danger"></i> {{ $data->persetujuan }}
+                                                </span>
+                                            </td>
 
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button class="dropdown-toggle dropdown-toggle-nocaret btn-primary"
-                                                    data-toggle="dropdown">
-                                                    <i class="icon-options"></i>
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    {{-- <a class="dropdown-item" href="javascript:void();">Action</a>
-                                                    <div class="dropdown-divider"></div>
+                                            <td class="text-center">
+                                                <div class="dropdown">
+                                                    <button class="dropdown-toggle dropdown-toggle-nocaret btn-danger"
+                                                        data-toggle="dropdown">
+                                                        <i class="icon-options"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="javascript:void();"
+                                                            data-toggle="modal" data-target="#modalpemusnahan"
+                                                            id="button-report-pemusnahan"
+                                                            data-id="{{ $data->kd_pemusnahan }}"><i class="fa fa-file"></i>
+                                                            Report</a>
+                                                        {{-- <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item" href="javascript:void();">Another action</a> --}}
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#" data-toggle="modal" data><i class="fa fa-trash"></i> Batal</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="#" data-toggle="modal" data><i
+                                                                class="fa fa-trash"></i> Batal</a>
 
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                    </div>
+                                            </td>
+                                        </tr>
                                     @endforeach
 
 
@@ -234,7 +241,7 @@
                 data: {
                     labels: [
                         @foreach ($datakategori as $datakategori)
-                        "{{$datakategori->kategori_barang}}",
+                            "{{ $datakategori->kategori_barang }}",
                         @endforeach
                     ],
                     datasets: [{
@@ -246,7 +253,7 @@
                             "#Z13adf",
                             "#fba540"
                         ],
-                        data: [0,0, 10, 40, 40,200],
+                        data: [0, 0, 10, 40, 40, 200],
                         borderWidth: [0, 0, 0, 0]
                     }]
                 },
@@ -270,6 +277,41 @@
         $(document).ready(function() {
 
             $('#default-datatable').DataTable();
+
+        });
+    </script>
+    <script>
+        $(document).on("click", "#button-report-pemusnahan", function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $.ajax({
+                    url: "{{ route('reportpemusnahan') }}",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                    },
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id
+                    },
+                    dataType: "html",
+                })
+                .done(function(data) {
+                    $("#showdatasdm").html(
+                        '<iframe src="data:application/pdf;base64, ' +
+                        data +
+                        '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                    );
+                })
+                .fail(function() {
+                    Lobibox.notify("error", {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: "top right",
+                        icon: "fa fa-x",
+                        msg: "Silahkan Hubungi Admin",
+                    });
+                });
 
         });
     </script>

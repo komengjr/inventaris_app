@@ -203,6 +203,8 @@ Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','u
 Route::post('divisi/posttambahdatapemusnahan',['as'=>'master/posttambahdatapemusnahan','uses'=> 'DivisiController@posttambahdatapemusnahan']);
 Route::get('divisi/pemusnahan/caridatabarang/{id}','DivisiController@caridatabarangpemusnahan');
 Route::get('divisi/pemusnahan/pilihdatabarang/{id}','DivisiController@pilihdatabarangpemusnahan');
+
+Route::post('divisi/pemusnahan/report',['as'=>'reportpemusnahan','uses'=> 'DivisiController@reportpemusnahan']);
 // STOCK OPNAME
 Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
 Route::get('divisi/editdataverifikasiinventaris/{id}',['as'=>'divisi/editdataverifikasiinventaris','uses'=> 'DivisiController@editdataverifikasiinventaris']);
