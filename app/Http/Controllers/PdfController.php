@@ -43,10 +43,10 @@ class PdfController extends Controller
         ->select('sub_tbl_inventory.*')
         ->where('id',$id)
         ->where('kd_cabang',auth::user()->cabang)
-        ->get();
+        ->first();
         // dd($data);
         $qrcode = base64_encode(QrCode::format('png')->size(500)->errorCorrection('H')->generate('string'));
-        $pdf = PDF::loadview('index',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
+        $pdf = PDF::loadview('format-barcode',['data'=>$data],compact('qrcode'))->setPaper('A8','landscape');
         return $pdf->stream();
     }
     public function printbarcodeksobyid($id)
