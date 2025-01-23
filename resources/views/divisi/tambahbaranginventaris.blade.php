@@ -28,8 +28,8 @@
 
 
 
-                <a href="https://via.placeholder.com/1920x1080"  data-fancybox="images" data-caption="" >
-                    <img src="https://via.placeholder.com/800x500" alt="lightbox" class="lightbox-thumb img-thumbnail" id="videoPreview"  width="50" height="50">
+                <a href="{{ asset('no_img.jpg') }}"  data-fancybox="images" data-caption="" >
+                    <img src="{{ asset('no_img.jpg') }}" alt="lightbox" class="lightbox-thumb img-thumbnail" id="videoPreview"  width="50" height="50">
                 </a>
 
 
