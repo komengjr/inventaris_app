@@ -341,10 +341,12 @@
                 </div>
                 <div class="col-lg-9">
                     <div class="float-sm-right">
+
                         {{-- @if (54 == $jumlah) --}}
                         @if (($barangbaik+$barangmaintenance+$barangrusak) == $jumlah)
                         <button class="btn-success" id="button-penyelesaian-stockopname" data-id="{{$cekdata->kode_verif}}"><i class="fa fa-save"></i> Penyelesaian & Simpan</button>
                         @else
+                        <button class="btn-success" id="button-fix-data-stockopname" data-id="{{$id}}"><i class="fa fa-shield"></i> Fix Data</button>
                         <button class="btn-danger" disabled><i class="fa fa-info"></i> Belum Selesai</button>
                         @endif
 

@@ -80,9 +80,9 @@
             <!--start overlay-->
             <div class="overlay toggle-menu"></div>
             <!--end overlay-->
-            <div class="row">
+            <div class="card mr-2">
                 <div class="col-12 col-lg-12">
-                    <div class="card">
+                    <div class="">
                         <div class="float-right m-3 m-3">
                             <div class="btn-group m-0" style="float: right;">
                                 <button type="button" class="btn-info waves-effect waves-light"> <i class="fa fa-cog"></i>

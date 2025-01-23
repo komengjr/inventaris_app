@@ -139,7 +139,8 @@
                                                     id="button-verifikasi-kondisi-barang-baik"
                                                     data-id="{{ $item->kode_verif }}" data-status="2"><i
                                                         class="fa fa-tasks"> R</i></button> |
-                                                <button class="btn-primary" data-toggle="modal" data-target="#modal-data-verifikasi" id="button-status-data-verifikasi"
+                                                <button class="btn-primary" data-toggle="modal"
+                                                    data-target="#modal-data-verifikasi" id="button-status-data-verifikasi"
                                                     data-id="{{ $item->kode_verif }}">Status</button>
                                             </td>
                                             <td>
@@ -430,7 +431,7 @@
                 '<div style="text-align: center; padding:2%;"><div class="spinner-border text-warning" role="status" > <span class="sr-only"></span> </div></div>'
             );
             $.ajax({
-                    url: "{{route('poststatusdatainevntarissverifikasi')}}",
+                    url: "{{ route('poststatusdatainevntarissverifikasi') }}",
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
                     },
@@ -448,6 +449,38 @@
                 .fail(function() {
                     // console.log(data);
                     $("#show-menu-report-stockopname").html("Gagal Baca");
+                });
+        });
+        $(document).on("click", "#button-fix-data-stockopname", function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $("#menuverifikasi").html(
+                '<div style="text-align: center; padding:2%;"><div class="spinner-border text-warning" role="status" > <span class="sr-only"></span> </div></div>'
+            );
+            $.ajax({
+                    url: "{{ route('divisi/postverifikasiall/datasemua/fixdata') }}",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                    },
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        "id": id,
+                        // "pilihan": pilihan,
+                    },
+                    dataType: "html",
+                })
+                .done(function(data) {
+                    $("#menuverifikasi").html(
+                        '<div style="text-align: center; padding:2%;"><span class="badge bg-success text-white">Berhasil Fix Data : Mohon Tunggu</span></div>'
+                    );
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                })
+                .fail(function() {
+                    // console.log(data);
+                    $("#menuverifikasi").html("Gagal Baca");
                 });
         });
     </script>

@@ -1727,4 +1727,19 @@ class DivisiController extends Controller
             ]);
         }
     }
+    public function postverifikasialldatasimpanfixdata(Request $request)
+    {
+        $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->id)->get();
+        foreach ($cekdata as $value) {
+            $fix = DB::table('sub_tbl_inventory')->where('id_inventaris',$value->id_inventaris)->where('status_barang','>',4)->first();
+            if ($fix) {
+                DB::table('tbl_sub_verifdatainventaris')->where('id_sub_verifdatainventaris',$value->id_sub_verifdatainventaris)->delete();
+            }
+            $fix1 = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->id)->where('id_inventaris',$value->id_inventaris)->count();
+            if ($fix1 > 1) {
+                DB::table('tbl_sub_verifdatainventaris')->where('id_sub_verifdatainventaris',$value->id_sub_verifdatainventaris)->delete();
+            }
+        }
+        return 123;
+    }
 }
