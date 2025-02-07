@@ -1115,6 +1115,23 @@ $(document).on("click", "#button-lengkapi-data-mutasi", function (e) {
             );
         });
 });
+$(document).on("click", "#button-show-data-mutasi", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $.ajax({
+        url: "../divisi/datamutasi/lihatdatamutasi/" + id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#bodymodalmutasirecord").html(data);
+        })
+        .fail(function () {
+            $("#bodymodalmutasirecord").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+});
 
 $(document).on("click", "#buttontambahmaintenance", function (e) {
     e.preventDefault();

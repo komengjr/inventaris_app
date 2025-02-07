@@ -88,10 +88,10 @@
                             Master Barang
                             <div class="card-action">
                                 <div class="dropdown">
-                                    <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
+                                    <button class="dropdown-toggle dropdown-toggle-nocaret"
                                         data-toggle="dropdown">
-                                        <i class="icon-options"></i>
-                                    </a>
+                                        Option
+                                </button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         {{-- <a class="dropdown-item" href="javascript:void();">Action</a>
                                         <a class="dropdown-item" href="javascript:void();">Another action</a> --}}
@@ -99,6 +99,8 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ url('divisi/masterbarang/fixdata', []) }}">Fix Data</a>
                                         <a class="dropdown-item" href="{{ url('divisi/masterbarang/fixnourutdata', []) }}">Fix Nmor Urut</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Penghapusan Barang</a>
                                     </div>
                                 </div>
                             </div>

@@ -1204,6 +1204,12 @@ class DivisiController extends Controller
         $dataorder = DB::table('tbl_mutasi')->where('kd_mutasi', $id)->first();
         return view('divisi.mutasi.lengkapiordermutasi', ['cabang' => $cabang, 'data' => $dataorder]);
     }
+    public function lihatdataordermutasi($id)
+    {
+        $cabang = DB::table('tbl_cabang')->get();
+        $dataorder = DB::table('tbl_mutasi')->where('kd_mutasi', $id)->first();
+        return view('divisi.mutasi.dataordermutasi', ['cabang' => $cabang, 'data' => $dataorder]);
+    }
     public function caridatabarangmutasi($id, $ids)
     {
         $data = DB::table('sub_tbl_inventory')

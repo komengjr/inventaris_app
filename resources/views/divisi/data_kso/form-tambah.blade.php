@@ -19,15 +19,10 @@
                             <input type="file" id="browseFile" class="form-control" />
                             <i class="fa fa-upload "> Upload Gambar</i>
                         </label>
-
-
-
                         <a href="{{ asset('no_img.jpg') }}" data-fancybox="images" data-caption="">
                             <img src="{{ asset('no_img.jpg') }}" alt="lightbox"
                                 class="lightbox-thumb img-thumbnail" id="videoPreview" width="50" height="50">
                         </a>
-
-
                         <div class="progress  mt-3" style="height: 20px">
                             <div class="progress-bar progress-bar-striped progress-bar-animated loading"
                                 role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"

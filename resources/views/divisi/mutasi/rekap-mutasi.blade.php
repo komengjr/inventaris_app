@@ -61,7 +61,8 @@
                                             Data</button>
                                     @endif
                                 @else
-                                    <button class="btn-info"><i class="fa fa-print"></i></button>
+                                    <button class="btn-info" ><i class="fa fa-print"></i></button>
+                                    <button class="btn-info" id="button-show-data-mutasi" data-id='{{ $item->kd_mutasi }}'><i class="fa fa-eye"></i> Show</button>
                                 @endif
 
                             </td>

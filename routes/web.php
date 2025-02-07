@@ -181,6 +181,7 @@ Route::get('divisi/datamutasi/hapusdetaildatamutasi/{id}/{kode}',['as'=>'divisi/
 Route::get('divisi/datamutasi/showdataorder',['as'=>'divisi/datamutasi/showdataorder','uses'=> 'DivisiController@showdataordermutasi']);
 Route::get('divisi/datamutasi/showdatarekaporder',['as'=>'divisi/datamutasi/showdatarekaporder','uses'=> 'DivisiController@showdatarekaporder']);
 Route::get('divisi/datamutasi/lengkapimutasi/{id}',['as'=>'divisi/datamutasi/lengkapimutasi','uses'=> 'DivisiController@lengkapidataordermutasi']);
+Route::get('divisi/datamutasi/lihatdatamutasi/{id}',['as'=>'divisi/datamutasi/lihatdatamutasi','uses'=> 'DivisiController@lihatdataordermutasi']);
 Route::post('divisi/datamutasi/post/datamutasi',['as'=>'divisi/datamutasi/post/datamutasi','uses'=> 'DivisiController@penyelesaianpostdatamutasi']);
 Route::post('divisi/datamutasi/postpenerimamutasi',['as'=>'divisi/datamutasi/postpenerimamutasi','uses'=> 'DivisiController@postpenerimadatamutasi']);
 
