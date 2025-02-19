@@ -220,6 +220,7 @@ Route::post('divisi/postverifikasi/scanner/',['as'=>'divisi/postverifikasi/scann
 Route::post('divisi/postverifikasi/scanner/simpandata',['as'=>'divisi/postverifikasi/scanner/simpandata','uses'=> 'DivisiController@postverifikasisimpandatascanner']);
 Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}/{ket}',['as'=>'master/verifikasi/update','uses'=> 'DivisiController@verifikasilengkapiupdatebaranglokasi']);
 Route::get('menu/verifdatainventaris/cetak/detail/{id}',['as'=>'menu/verifdatainventaris/cetak/detail','uses'=> 'DivisiController@cetakreportstockopname']);
+Route::get('menu/verifdatainventaris/cetak/ruangan/{id}',['as'=>'menu/verifdatainventaris/cetak/ruangan','uses'=> 'DivisiController@cetakreportruangstockopname']);
 Route::get('divisi/verifikasi/print/verif/{id}','PdfController@printverifikasi');
 Route::get('divisi/verifikasi/print/peminjaman/{id}','PdfController@printpeminjaman');
 Route::get('divisi/verifikasi/print/pemusnahan/{id}','PdfController@printpemusnahan');

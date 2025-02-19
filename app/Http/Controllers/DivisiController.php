@@ -191,21 +191,7 @@ class DivisiController extends Controller
                     ->where('kode_verif', $id)
                     ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
             })->where('kd_cabang', Auth::user()->cabang)->where('tgl_beli', '<=', $dataverif->end_date_verif . " 23:59:59")->get();
-        // $data_arr = array();
-        // foreach ($data as $record) {
-        //     $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $id)->where('id_inventaris', $record->id_inventaris)->first();
-        //     if ($cekdata) {
 
-        //     } else {
-        //         $data_arr[] = array(
-        //             // "id_inventaris" =>$record->id_inventaris,
-        //             "no_inventaris" => $record->no_inventaris,
-        //             "nama_barang" => $record->nama_barang,
-        //             "merk" => $record->merk,
-        //             "type" => $record->type,
-        //         );
-        //     }
-        // }
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
         $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->get();
         $pdf = PDF::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif, 'ttd' => $ttd, 'data' => $data])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
@@ -217,6 +203,9 @@ class DivisiController extends Controller
         return base64_encode($pdf->stream());
         // return $pdf->stream();
         // return Pdf::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif,  'ttd' => $ttd])->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
+    }
+    public function cetakreportruangstockopname($id){
+        return view('divisi.stockopname.option-stock-ruangan');
     }
 
     public function tambahdatapeminjaman()

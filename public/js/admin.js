@@ -1562,6 +1562,26 @@ $(document).on("click", "#button-cetak-stock-opname", function (e) {
             );
         });
 });
+$(document).on("click", "#button-cetak-ruangan-stock-opname", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $("#show-menu-report-stockopname").html(
+        '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+    );
+    $.ajax({
+        url: "../menu/verifdatainventaris/cetak/ruangan/" + id,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#show-menu-report-stockopname").html(data);
+        })
+        .fail(function () {
+            $("#show-menu-report-stockopname").html(
+                '<span class="badge badge-danger m-1">Gagal Baca Dokumen..</span>'
+            );
+        });
+});
 $(document).on("click", "#button-print-all", function (e) {
     e.preventDefault();
     var id = $(this).data("id");

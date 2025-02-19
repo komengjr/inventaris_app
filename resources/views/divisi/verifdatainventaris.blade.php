@@ -159,14 +159,19 @@
                                                     <button class="btn-primary" data-toggle="modal"
                                                         data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
                                                         data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $item->kode_verif]) }}"><i
-                                                            class="fa fa-shield"></i> Lengkapi
-                                                        data</button>
+                                                            class="fa fa-shield"></i> Proses
+                                                        Verifikasi</button>
                                                 @else
                                                     <button class="btn-info" data-toggle="modal"
                                                         data-target="#modal-data-verifikasi"
                                                         id="button-cetak-stock-opname"
                                                         data-id="{{ $item->kode_verif }}"><i class="fa fa-print"></i>
-                                                        Cetak</button>
+                                                        Full Report</button>
+                                                    <button class="btn-dark" data-toggle="modal"
+                                                        data-target="#modal-data-verifikasi"
+                                                        id="button-cetak-ruangan-stock-opname"
+                                                        data-id="{{ $item->kode_verif }}"> <i class="fa fa-tasks"></i>
+                                                        Print Ruang</button>
                                                 @endif
                                             </td>
                                         </tr>
@@ -207,7 +212,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal</h5>
+                    <h5 class="modal-title">Report</h5>
                     <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -284,10 +289,7 @@
                         data: [
                             @foreach ($dataverif as $data)
                                 @php
-                                    $totalbaik = DB::table('tbl_sub_verifdatainventaris')
-                                        ->where('kode_verif', $data->kode_verif)
-                                        ->where('status_data_inventaris', 0)
-                                        ->count();
+                                    $totalbaik = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $data->kode_verif)->where('status_data_inventaris', 0)->count();
                                 @endphp
                                     "{{ $totalbaik }}",
                             @endforeach
@@ -299,10 +301,7 @@
                         data: [
                             @foreach ($dataverif as $dataverif3)
                                 @php
-                                    $totalmaintenance = DB::table('tbl_sub_verifdatainventaris')
-                                        ->where('kode_verif', $dataverif3->kode_verif)
-                                        ->where('status_data_inventaris', 1)
-                                        ->count();
+                                    $totalmaintenance = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $dataverif3->kode_verif)->where('status_data_inventaris', 1)->count();
                                 @endphp
                                     "{{ $totalmaintenance }}",
                             @endforeach
@@ -314,10 +313,7 @@
                         data: [
                             @foreach ($dataverif as $dataverif4)
                                 @php
-                                    $totalrusak = DB::table('tbl_sub_verifdatainventaris')
-                                        ->where('kode_verif', $dataverif4->kode_verif)
-                                        ->where('status_data_inventaris', 2)
-                                        ->count();
+                                    $totalrusak = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $dataverif4->kode_verif)->where('status_data_inventaris', 2)->count();
                                 @endphp
                                     "{{ $totalrusak }}",
                             @endforeach
@@ -411,18 +407,16 @@
             var url = $(this).data("url");
 
             $.ajax({
-                    url: url,
-                    type: "GET",
-                    dataType: "html",
-                })
-                .done(function(data) {
-                    $("#showdatasdm").html(data);
-                })
-                .fail(function() {
-                    $("#showdatasdm").html(
-                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-                    );
-                });
+                url: url,
+                type: "GET",
+                dataType: "html",
+            }).done(function(data) {
+                $("#showdatasdm").html(data);
+            }).fail(function() {
+                $("#showdatasdm").html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
         });
         $(document).on("click", "#button-status-data-verifikasi", function(e) {
             e.preventDefault();
@@ -431,25 +425,23 @@
                 '<div style="text-align: center; padding:2%;"><div class="spinner-border text-warning" role="status" > <span class="sr-only"></span> </div></div>'
             );
             $.ajax({
-                    url: "{{ route('poststatusdatainevntarissverifikasi') }}",
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
-                    },
-                    type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        "id": id,
-                        // "pilihan": pilihan,
-                    },
-                    dataType: "html",
-                })
-                .done(function(datapdf) {
-                    $("#show-menu-report-stockopname").html(datapdf);
-                })
-                .fail(function() {
-                    // console.log(data);
-                    $("#show-menu-report-stockopname").html("Gagal Baca");
-                });
+                url: "{{ route('poststatusdatainevntarissverifikasi') }}",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                },
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    "id": id,
+                    // "pilihan": pilihan,
+                },
+                dataType: "html",
+            }).done(function(datapdf) {
+                $("#show-menu-report-stockopname").html(datapdf);
+            }).fail(function() {
+                // console.log(data);
+                $("#show-menu-report-stockopname").html("Gagal Baca");
+            });
         });
         $(document).on("click", "#button-fix-data-stockopname", function(e) {
             e.preventDefault();
@@ -458,30 +450,28 @@
                 '<div style="text-align: center; padding:2%;"><div class="spinner-border text-warning" role="status" > <span class="sr-only"></span> </div></div>'
             );
             $.ajax({
-                    url: "{{ route('divisi/postverifikasiall/datasemua/fixdata') }}",
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
-                    },
-                    type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        "id": id,
-                        // "pilihan": pilihan,
-                    },
-                    dataType: "html",
-                })
-                .done(function(data) {
-                    $("#menuverifikasi").html(
-                        '<div style="text-align: center; padding:2%;"><span class="badge bg-success text-white">Berhasil Fix Data : Mohon Tunggu</span></div>'
-                    );
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
-                })
-                .fail(function() {
-                    // console.log(data);
-                    $("#menuverifikasi").html("Gagal Baca");
-                });
+                url: "{{ route('divisi/postverifikasiall/datasemua/fixdata') }}",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                },
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    "id": id,
+                    // "pilihan": pilihan,
+                },
+                dataType: "html",
+            }).done(function(data) {
+                $("#menuverifikasi").html(
+                    '<div style="text-align: center; padding:2%;"><span class="badge bg-success text-white">Berhasil Fix Data : Mohon Tunggu</span></div>'
+                );
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }).fail(function() {
+                // console.log(data);
+                $("#menuverifikasi").html("Gagal Baca");
+            });
         });
     </script>
 @endsection
