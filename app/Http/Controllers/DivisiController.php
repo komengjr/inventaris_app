@@ -161,7 +161,7 @@ class DivisiController extends Controller
                     ->from('tbl_sub_verifdatainventaris')
                     ->where('kode_verif', $id)
                     ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
-            })->where('kd_cabang', Auth::user()->cabang)->get();
+            })->where('id_nomor_ruangan_cbaang',$request->lokasi)->where('kd_cabang', Auth::user()->cabang)->get();
 
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
         $lokasi = DB::table('tbl_nomor_ruangan_cabang')

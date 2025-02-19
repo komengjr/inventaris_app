@@ -178,6 +178,7 @@
                         <td>Nama Barang</td>
                         <td>Merek</td>
                         <td>Type</td>
+                        <td>Status</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -191,6 +192,16 @@
                             <td>{{ $data->nama_barang }}</td>
                             <td>{{ $data->merk }}</td>
                             <td>{{ $data->type }}</td>
+                            <td>
+                                @if ($data->status_barang == 5)
+                                    Musnah
+                                @elseif ($data->status_barang == 4)
+                                    Mutasi
+                                @else
+                                    Belum Verifikasi
+                                @endif
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
