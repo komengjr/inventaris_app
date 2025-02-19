@@ -1,12 +1,19 @@
-<form action="">
-
-    <div class="row">
-        <div class="col-md-12">
-            <label for="">Cari Ruangan</label>
-            <select name="" id="" class="form-control">
-                <option value=""></option>
-            </select>
-        </div>
+<div class="row">
+    <div class="col-md-12">
+        <label for="">Cari Ruangan</label>
+        <select name="" id="" class="form-control">
+            <option value=""></option>
+            @foreach ($ruangan as $data)
+                <option value="{{ $data->id_nomor_ruangan_cbaang }}">{{ $data->nomor_ruangan }} -
+                    {{ $data->nama_lokasi }}</option>
+            @endforeach
+        </select>
     </div>
 
-</form>
+    <div class="col-md-12 pt-4">
+        <button class="btn-info" id="button-report-stockopname-ruangan">Cetak Report</button>
+    </div>
+    <div class="col-md-12">
+        <div></div>
+    </div>
+</div>

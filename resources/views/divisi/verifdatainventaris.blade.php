@@ -81,8 +81,8 @@
                             </div>
                         </div>
 
-                        <div class="table-responsive pb-3" id="showdatamutasi">
-                            <table id="default-datatable" class="table styled-table table-bordered">
+                        <div class="pb-3" id="showdatamutasi">
+                            <table id="default-datatable" class="styled-table table-bordered ">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -124,22 +124,22 @@
                                                 {{ $jumlah }}
                                             </td>
                                             <td>
-                                                <button class="btn-success" data-toggle="modal"
+                                                <button class="btn-success m-1" data-toggle="modal"
                                                     data-target="#lengkapipeminjaman"
                                                     id="button-verifikasi-kondisi-barang-baik"
                                                     data-id="{{ $item->kode_verif }}" data-status="0"><i
                                                         class="fa fa-tasks"> B</i></button>
-                                                <button class="btn-warning" data-toggle="modal"
+                                                <button class="btn-warning m-1" data-toggle="modal"
                                                     data-target="#lengkapipeminjaman"
                                                     id="button-verifikasi-kondisi-barang-baik"
                                                     data-id="{{ $item->kode_verif }}" data-status="1"><i
-                                                        class="fa fa-tasks"> M</i></button>
-                                                <button class="btn-danger" data-toggle="modal"
+                                                        class="fa fa-tasks "> M</i></button>
+                                                <button class="btn-danger m-1" data-toggle="modal"
                                                     data-target="#lengkapipeminjaman"
                                                     id="button-verifikasi-kondisi-barang-baik"
                                                     data-id="{{ $item->kode_verif }}" data-status="2"><i
                                                         class="fa fa-tasks"> R</i></button> |
-                                                <button class="btn-primary" data-toggle="modal"
+                                                <button class="btn-primary m-1" data-toggle="modal"
                                                     data-target="#modal-data-verifikasi" id="button-status-data-verifikasi"
                                                     data-id="{{ $item->kode_verif }}">Status</button>
                                             </td>
@@ -150,28 +150,29 @@
                                                     <span class="badge badge-success m-1">Selesai</span>
                                                 @endif
                                             </td>
-                                            <td class="text-center">
-                                                <button class="btn-warning" data-toggle="modal"
+                                            <td class="text-center ">
+                                                <button class="btn-warning m-1" data-toggle="modal"
                                                     data-target="#tambahdatabaru" id="tomboleditdataverifikasidata"
                                                     data-url="{{ url('divisi/editdataverifikasiinventaris', ['id' => $item->id_verifdatainventaris]) }}"><i
                                                         class="fa fa-pencil"></i> Edit</button>
                                                 @if ($item->status_verif == 0)
-                                                    <button class="btn-primary" data-toggle="modal"
+                                                    <button class="btn-primary m-1" data-toggle="modal"
                                                         data-target="#lengkapipeminjaman" id="tombollengkapipeminjaman"
                                                         data-url="{{ url('divisi/verifikasi/lengkapi', ['id' => $item->kode_verif]) }}"><i
                                                             class="fa fa-shield"></i> Proses
                                                         Verifikasi</button>
                                                 @else
-                                                    <button class="btn-info" data-toggle="modal"
+                                                    <button class="btn-info m-1" data-toggle="modal"
                                                         data-target="#modal-data-verifikasi"
                                                         id="button-cetak-stock-opname"
                                                         data-id="{{ $item->kode_verif }}"><i class="fa fa-print"></i>
                                                         Full Report</button>
-                                                    <button class="btn-dark" data-toggle="modal"
+                                                    <button class="btn-dark m-1" data-toggle="modal"
                                                         data-target="#modal-data-verifikasi"
                                                         id="button-cetak-ruangan-stock-opname"
                                                         data-id="{{ $item->kode_verif }}"> <i class="fa fa-tasks"></i>
-                                                        Print Ruang</button>
+                                                        Print Ruang
+                                                    </button>
                                                 @endif
                                             </td>
                                         </tr>

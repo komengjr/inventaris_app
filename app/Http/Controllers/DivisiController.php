@@ -205,7 +205,9 @@ class DivisiController extends Controller
         // return Pdf::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif,  'ttd' => $ttd])->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
     }
     public function cetakreportruangstockopname($id){
-        return view('divisi.stockopname.option-stock-ruangan');
+        $ruangan = DB::table('tbl_nomor_ruangan_cabang')->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+        ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->get();
+        return view('divisi.stockopname.option-stock-ruangan',['ruangan'=>$ruangan]);
     }
 
     public function tambahdatapeminjaman()
