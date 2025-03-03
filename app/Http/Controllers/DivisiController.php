@@ -149,6 +149,7 @@ class DivisiController extends Controller
     public function verifdatastokopnameruangan(Request $request)
     {
         $id = $request->kode;
+        $enddate = DB::table('tbl_verifdatainventaris')->where('kode_verif',$id)->first();
         $databrg = DB::table('tbl_sub_verifdatainventaris')
             ->select('sub_tbl_inventory.no_inventaris', 'sub_tbl_inventory.nama_barang', 'sub_tbl_inventory.merk', 'sub_tbl_inventory.type', 'sub_tbl_inventory.no_seri', 'tbl_sub_verifdatainventaris.status_data_inventaris')
             ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
@@ -161,7 +162,9 @@ class DivisiController extends Controller
                     ->from('tbl_sub_verifdatainventaris')
                     ->where('kode_verif', $id)
                     ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
-            })->where('id_nomor_ruangan_cbaang',$request->lokasi)->where('kd_cabang', Auth::user()->cabang)->get();
+            })->where('id_nomor_ruangan_cbaang',$request->lokasi)
+            ->where('tgl_beli','>',$enddate->end_date_verif)
+            ->where('kd_cabang', Auth::user()->cabang)->get();
 
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
         $lokasi = DB::table('tbl_nomor_ruangan_cabang')
@@ -1728,7 +1731,7 @@ class DivisiController extends Controller
     {
         $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->id)->get();
         foreach ($cekdata as $value) {
-            $fix = DB::table('sub_tbl_inventory')->where('id_inventaris',$value->id_inventaris)->where('status_barang','>',4)->first();
+            $fix = DB::table('sub_tbl_inventory')->where('id_inventaris',$value->id_inventaris)->where('status_barang','>=',4)->first();
             if ($fix) {
                 DB::table('tbl_sub_verifdatainventaris')->where('id_sub_verifdatainventaris',$value->id_sub_verifdatainventaris)->delete();
             }
