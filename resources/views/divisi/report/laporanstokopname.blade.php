@@ -98,6 +98,7 @@
             <tr>
                 <td colspan="3">
                     <p style="text-decoration: underline;">FORM STOCK OPNAME INVENTARIS DAN ASET</p>
+                    <p>Periode : {{ $dataverif[0]->tgl_verif }} Sampai {{ $dataverif[0]->end_date_verif }}</p>
                 </td>
 
             </tr>
