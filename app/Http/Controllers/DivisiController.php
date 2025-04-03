@@ -210,7 +210,39 @@ class DivisiController extends Controller
     public function cetakreportruangstockopname($id){
         $ruangan = DB::table('tbl_nomor_ruangan_cabang')->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
         ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->get();
-        return view('divisi.stockopname.option-stock-ruangan',['ruangan'=>$ruangan]);
+        return view('divisi.stockopname.option-stock-ruangan',['ruangan'=>$ruangan,'id'=>$id]);
+    }
+    public function cetakreportruangstockopnameprint($id,$code){
+
+        $enddate = DB::table('tbl_verifdatainventaris')->where('kode_verif',$code)->first();
+        $databrg = DB::table('tbl_sub_verifdatainventaris')
+            ->select('sub_tbl_inventory.no_inventaris', 'sub_tbl_inventory.nama_barang', 'sub_tbl_inventory.merk', 'sub_tbl_inventory.type', 'sub_tbl_inventory.no_seri', 'tbl_sub_verifdatainventaris.status_data_inventaris')
+            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->where('tbl_sub_verifdatainventaris.kode_verif', $code)
+            ->where('sub_tbl_inventory.id_nomor_ruangan_cbaang', $id)
+            ->get();
+        $data = DB::table('sub_tbl_inventory')
+            ->whereNotExists(function ($query) use ($id) {
+                $query->select(DB::raw(1))
+                    ->from('tbl_sub_verifdatainventaris')
+                    ->where('kode_verif', $id)
+                    ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
+            })->where('id_nomor_ruangan_cbaang',$id)
+            ->where('tgl_beli','>',$enddate->end_date_verif)
+            ->where('kd_cabang', Auth::user()->cabang)->get();
+
+        $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', $id)->first();
+        $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $code)->get();
+        $pdf = PDF::loadview('divisi.report.laporanstockopname-ruangan', ['databrg' => $databrg, 'dataverif' => $dataverif, 'ttd' => $ttd, 'data' => $data, 'lokasi' => $lokasi])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
+        $pdf->output();
+
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
     }
 
     public function tambahdatapeminjaman()

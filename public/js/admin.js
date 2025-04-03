@@ -1582,6 +1582,31 @@ $(document).on("click", "#button-cetak-ruangan-stock-opname", function (e) {
             );
         });
 });
+$(document).on("click", "#button-cetak-ruangan-stock-opname-print", function (e) {
+    e.preventDefault();
+    var page = document.getElementById("nomor_ruangan").value;
+    var code = $(this).data("code");
+    $("#menu-cetak-ruangan-stock-opname-print").html(
+        '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+    );
+    $.ajax({
+        url: "../menu/verifdatainventaris/cetak/ruangan/print/" + page +"/"+ code,
+        type: "GET",
+        dataType: "html",
+    })
+        .done(function (data) {
+            $("#menu-cetak-ruangan-stock-opname-print").html(
+                '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+            );
+        })
+        .fail(function () {
+            $("#menu-cetak-ruangan-stock-opname-print").html(
+                '<span class="badge badge-danger m-1">Gagal Baca Dokumen..</span>'
+            );
+        });
+});
 $(document).on("click", "#button-print-all", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
