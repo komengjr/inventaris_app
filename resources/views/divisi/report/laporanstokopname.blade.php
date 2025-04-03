@@ -150,7 +150,7 @@
             </tbody>
         </table>
         <hr>
-        <h5>Data Belum Di Verif</h5>
+        <h5>Data Unverified</h5>
         <table
             style="font-size: 8px; margin: 0px; padding: 0px; width: 710px; font-size: 11px; font-family: Calibri (Body);"
             border="1">
@@ -161,6 +161,7 @@
                     <td>Nama Barang</td>
                     <td>Merek</td>
                     <td>Type</td>
+                    <td>Status Barang</td>
                 </tr>
             </thead>
             <tbody>
@@ -174,6 +175,15 @@
                         <td>{{ $data->nama_barang }}</td>
                         <td>{{ $data->merk }}</td>
                         <td>{{ $data->type }}</td>
+                        <td>
+                        @if ($data->status_barang == 5)
+                            Musnah
+                        @elseif ($data->status_barang == 4)
+                            Mutasi
+                        @else
+                            Unverified
+                        @endif
+                    </td>
                 @endforeach
             </tbody>
         </table>
@@ -183,9 +193,9 @@
     <div class="body-after">
         <table style="display: none;">
             <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
 
         </table>
