@@ -8,7 +8,7 @@
 </head>
 <style>
     @page {
-        margin-left: 2px;
+        margin-left: 8px;
         margin-top: 0px;
     }
 
@@ -22,19 +22,19 @@
 <style>
     div.relative {
         position: absolute;
-        top: 15px;
+        top: 30px;
         left: 0px;
-        width: 123px;
-        height: 55px;
+        width: 220px;
+        height: 95px;
     }
 
     div.absolute {
         position: absolute;
-        top: -12.8px;
+        top: -21px;
         right: 0;
-        width: 56px;
-        height: 61px;
-        border: 1px solid #000000;
+        width: 106px;
+        height: 100px;
+        border: 3px solid #000000;
     }
 
     table tr td p {
@@ -54,13 +54,14 @@
 
     <div class="relative">
         {{-- <img style="padding-top: 11px;" src="data:image/png;base64, {!! base64_encode( QrCode::eyeColor(0, 255, 0, 0, 0, 0, 0)->style('round')->eye('circle')->format('svg')->size(107)->errorCorrection('H')->generate($data->id_inventaris), ) !!}"> --}}
-        <img style="padding-top: 0px; width: 63px; height: 63px;"
+        <img style="padding-top: 0px; width: 107px; height: 107px;"
             src="data:image/png;base64, {!! base64_encode( QrCode::format('png')->backgroundColor(255, 255, 255)->size(507)->style('round')->eye('circle')
                     ->generate($data->no_inventaris),
             ) !!} ">
         <div class="absolute">
-            <table style="font-size: 4px; margin: 0px; padding: 0px;  color: #000000; border-width: thin; " >
+            <table style="font-size: 8px; margin: 0px; padding: 0px;  color: #000000; " border="1" >
                 <tr>
+
                     <td colspan="3"><strong style="color: #000000">{{ $data->nama_barang }}</strong></td>
                 </tr>
                 <tr>
@@ -82,7 +83,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-center" style="font-size: 4px">
+                    <td colspan="3" class="text-center" style="font-size: 7px">
                         <strong style="color: #000000">{{ $data->no_inventaris }}</strong>
                     </td>
                 </tr>

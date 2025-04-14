@@ -45,7 +45,7 @@ class PdfController extends Controller
         ->where('kd_cabang',auth::user()->cabang)
         ->first();
         // dd($data);
-        $customPaper = array(0,0,95.00,177);
+        $customPaper = array(0,0,50.80,95.20);
         $qrcode = base64_encode(QrCode::format('png')->size(500)->errorCorrection('H')->generate('string'));
         $pdf = PDF::loadview('format-barcode',['data'=>$data],compact('qrcode'))->setPaper($customPaper,'landscape');
         return $pdf->stream();
