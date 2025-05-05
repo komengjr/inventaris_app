@@ -10,6 +10,9 @@
     @page {
         margin-left: 2px;
         margin-top: 0px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: normal;
     }
 
     /* @media print {
@@ -44,8 +47,13 @@
         font-weight: bold;
     }
     table {
-        border-collapse: collapse;
+        /* border-collapse: collapse; */
         width: 100%;
+    }
+    tr,
+    td {
+        border: 0.2px solid black;
+        border-radius: 1px;
     }
 </style>
 </head>
@@ -59,7 +67,7 @@
                     ->generate($data->no_inventaris),
             ) !!} ">
         <div class="absolute">
-            <table style="font-size: 4px; margin: 0px; padding: 0px;  color: #000000; border-width: thin; " >
+            <table style="font-size: 4px; margin: 0px; padding: 0px;  color: #000000; border-width: thin;" >
                 <tr>
                     <td colspan="3"><strong style="color: #000000">{{ $data->nama_barang }}</strong></td>
                 </tr>
@@ -82,7 +90,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-center" style="font-size: 4px">
+                    <td colspan="3" class="text-center" style="font-size: 3.5px">
                         <strong style="color: #000000">{{ $data->no_inventaris }}</strong>
                     </td>
                 </tr>

@@ -47,7 +47,7 @@ class PdfController extends Controller
         // dd($data);
         $customPaper = array(0,0,50.80,95.20);
         $qrcode = base64_encode(QrCode::format('png')->size(500)->errorCorrection('H')->generate('string'));
-        $pdf = PDF::loadview('format-barcode',['data'=>$data],compact('qrcode'))->setPaper($customPaper,'landscape');
+        $pdf = PDF::loadview('format-barcode',['data'=>$data],compact('qrcode'))->setPaper($customPaper,'landscape')->setOptions(['defaultFont' => 'Helvetica']);
         return $pdf->stream();
     }
     public function printbarcodeksobyid($id)
