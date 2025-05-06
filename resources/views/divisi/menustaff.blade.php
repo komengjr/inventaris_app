@@ -2,18 +2,18 @@
 @section('content')
     <div class="content-wrapper gradient-forest">
         <div class="container-fluid">
-          <div class="card mt-3">
-            <div class="row pl-4 pt-3">
-                <div class="col-sm-9">
-                    <h4 class="page-title">Master Staff</h4>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Menu Staff</li>
-                    </ol>
+            <div class="card mt-3">
+                <div class="row pl-4 pt-3">
+                    <div class="col-sm-9">
+                        <h4 class="page-title">Master Staff</h4>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+                            <li class="breadcrumb-item"><a href="javaScript:void();">Master Data</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Menu Staff</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
-          </div>
 
             <div class="row">
                 <div class="col-12 col-lg-12 col-xl-12">
@@ -21,7 +21,7 @@
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body text-left">
-                                    <h4 class="text-secondary mb-0">{{count($data)}} Staff</h4>
+                                    <h4 class="text-secondary mb-0">{{ count($data) }} Staff</h4>
                                     <span class="small-font">Total Staff</span>
                                 </div>
                                 <div class="w-circle-icon rounded bg-secondary">
@@ -43,8 +43,8 @@
                     <div class="card">
                         <div class="float-sm-right m-3 m-3">
                             <div class="btn-group m-0" style="float: right;">
-                                <button type="button" class="btn-info waves-effect waves-light"> <i
-                                        class="fa fa-cog"></i> <span>Menu Option</span> </button>
+                                <button type="button" class="btn-info waves-effect waves-light"> <i class="fa fa-cog"></i>
+                                    <span>Menu Option</span> </button>
                                 <button type="button"
                                     class="btn-info split-btn-info dropdown-toggle dropdown-toggle-split waves-effect waves-light"
                                     data-toggle="dropdown" aria-expanded="false">
@@ -52,9 +52,13 @@
                                 </button>
                                 <div class="dropdown-menu" x-placement="bottom-start"
                                     style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(102px, 37px, 0px);">
-                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#modaldatastaff" id="buttontambahstaff"><i class="fa fa-plus mr-1"></i> Tambah Staff Baru</a>
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal"
+                                        data-target="#modaldatastaff" id="buttontambahstaff"><i class="fa fa-plus mr-1"></i>
+                                        Tambah Staff Baru</a>
                                     <div class="dropdown-divider"></div>
-                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal" data-target="#modaldatastaff" id="button-upload-excel-staff"><i class="fa fa-upload mr-1"></i> Upload Excel Staff</a>
+                                    <a href="javaScript:void();" class="dropdown-item" data-toggle="modal"
+                                        data-target="#modaldatastaff" id="button-upload-excel-staff"><i
+                                            class="fa fa-upload mr-1"></i> Upload Excel Staff</a>
                                 </div>
                             </div>
 
@@ -78,18 +82,20 @@
                                     @endphp
                                     @foreach ($data as $item)
                                         <tr>
-                                            <td>{{$no++}}</td>
-                                            <td>{{$item->nama_staff}}</td>
-                                            <td>{{$item->nip}}</td>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $item->nama_staff }}</td>
+                                            <td>{{ $item->nip }}</td>
                                             {{-- <td>{{$item->class}}</td> --}}
                                             <td class="text-center">
                                                 @if ($item->status_staff == 1)
-                                                <span class="badge badge-success p-2">Aktif</span>
+                                                    <span class="badge badge-success p-2">Aktif</span>
                                                 @else
-                                                <span class="badge badge-danger p-2">Tidak Aktif</span>
+                                                    <span class="badge badge-danger p-2">Tidak Aktif</span>
                                                 @endif
                                             </td>
-                                            <td class="text-center"><button class="btn-warning"><i class="fa fa-pencil"></i></button></td>
+                                            <td class="text-center"><button class="btn-warning" data-toggle="modal"
+                                                    data-target="#modaldatastaff" id="button-edit-staff" data-code="{{$item->id_staff}}"><i
+                                                        class="fa fa-pencil"></i></button></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -128,6 +134,30 @@
         $(document).ready(function() {
 
             $('#default-datatable').DataTable();
+
+        });
+    </script>
+    <script>
+        $(document).on("click", "#button-edit-staff", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#showdatastaff').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('post-edit-data-staff') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#showdatastaff').html(data);
+            }).fail(function() {
+                $('#showdatastaff').html('eror');
+            });
 
         });
     </script>

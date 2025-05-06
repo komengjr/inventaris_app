@@ -179,7 +179,7 @@
                     <td>Mrek / Type / No Seri</td>
                     <td>Harga</td>
                     <td>Tahun</td>
-                    <td class="text-center">Nilai Buku</td>
+                    <td class="text-center">Tanggal Pembelian</td>
                 </tr>
             </thead>
             <tbody>
@@ -195,7 +195,7 @@
                         <td>{{ $databrg->merk }}</td>
                         <td>@currency($databrg->harga_perolehan)</td>
                         <td>{{ $databrg->th_perolehan }}</td>
-                        <td>123</td>
+                        <td>{{$databrg->tgl_beli}}</td>
                     </tr>
                 @endforeach
             </tbody>

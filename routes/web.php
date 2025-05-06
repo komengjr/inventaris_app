@@ -163,6 +163,8 @@ Route::get('divisi/masterstaff/uploadexcel',['as'=>'divisi/masterstaff/uploadexc
 Route::get('divisi/masterbarang/fixdata','DivisiController@fixdatamasterbarang');
 Route::get('divisi/masterbarang/fixnourutdata','DivisiController@fixnourutmasterbarang');
 Route::post('divisi/masterstaff/tambah','DivisiController@posttambahdatastaff');
+Route::post('divisi/masterstaff/edit','DivisiController@posteditdatastaff')->name('post-edit-data-staff');
+Route::post('divisi/masterstaff/save-edit-staff','DivisiController@save_edit_staff');
 Route::post('divisi/setting/system','DivisiController@settingsystem');
 Route::post('divisi/masterbarang/editbarang','DivisiController@posteditbarang');
 

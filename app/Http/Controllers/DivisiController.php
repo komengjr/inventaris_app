@@ -1548,7 +1548,17 @@ class DivisiController extends Controller
         Session::flash('sukses', 'Berhasil Membuat Staff : ' . $request->nama);
         return redirect()->back();
     }
-
+    public function posteditdatastaff(Request $request){
+        $data = DB::table('tbl_staff')->where('id_staff',$request->code)->first();
+        return view('divisi.menustaff.form-edit',['data'=>$data]);
+    }
+    public function save_edit_staff(Request $request){
+        DB::table('tbl_staff')->where('id_staff',$request->code)->update([
+            'nama_staff'=>$request->nama
+        ]);
+        Session::flash('sukses', 'Berhasil Update Staff');
+        return redirect()->back();
+    }
     // Master Lokasi
     public function masterlokasi()
     {
