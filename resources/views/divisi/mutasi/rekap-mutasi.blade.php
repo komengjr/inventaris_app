@@ -30,9 +30,7 @@
                 @endphp
                 @foreach ($data as $item)
                     @php
-                        $tujuan = DB::table('tbl_cabang')
-                            ->where('kd_cabang', $item->target_mutasi)
-                            ->first();
+                        $tujuan = DB::table('tbl_cabang')->where('kd_cabang', $item->target_mutasi)->first();
                     @endphp
                     @if ($item->asal_mutasi == Auth::user()->cabang || $item->target_mutasi == Auth::user()->cabang)
                         <tr>
@@ -61,8 +59,10 @@
                                             Data</button>
                                     @endif
                                 @else
-                                    <button class="btn-info" ><i class="fa fa-print"></i></button>
-                                    <button class="btn-info" id="button-show-data-mutasi" data-id='{{ $item->kd_mutasi }}'><i class="fa fa-eye"></i> Show</button>
+                                    <button class="btn-info m-1" id="button-print-mutasi"
+                                        data-id="{{ $item->kd_mutasi }}"><i class="fa fa-print"></i> Print</button>
+                                    <button class="btn-info m-1" id="button-show-data-mutasi"
+                                        data-id='{{ $item->kd_mutasi }}'><i class="fa fa-eye"></i> Show</button>
                                 @endif
 
                             </td>
@@ -73,6 +73,7 @@
         </table>
 
     </div>
+    <div id="menu-print-mutasi"></div>
 </div>
 <div class="modal-footer" style="float: left;">
 
@@ -82,5 +83,37 @@
         //Default data table
         $('#default-datatablelog').DataTable();
 
+    });
+    $(document).on("click", "#button-print-mutasi", function(e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $("#menu-print-mutasi").html(
+            '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+        );
+        $.ajax({
+                url: "../divisi/datamutasi/print/datamutasi/" + id,
+                type: "GET",
+                dataType: "html",
+            })
+            .done(function(data) {
+                $("#menu-print-mutasi").html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                );
+            })
+            .fail(function() {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    icon: 'fa fa-info-circle',
+                    continueDelayOnInactiveTab: false,
+                    position: 'center top',
+                    showClass: 'bounceIn',
+                    hideClass: 'bounceOut',
+                    width: 500,
+                    msg: 'Hubungi Administrator Jika terjadi Eror'
+                });
+
+            });
     });
 </script>

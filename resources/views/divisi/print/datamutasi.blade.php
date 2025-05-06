@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <title>Cetak</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -10,10 +8,7 @@
 </head>
 <style>
     /* @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap'); */
-
     /* General */
-
-
     @page {
         margin-left: 25px;
         margin-top: 5px;
@@ -28,7 +23,6 @@
         height: 106px;
         border: 0.2px solid #000000;
     }
-
     div.body {
         position: relative;
         left: 20px;
@@ -37,7 +31,6 @@
         border: 0px solid #302a2a;
         font-size: 15px;
     }
-
     div.absolute {
         position: absolute;
         top: 0px;
@@ -54,9 +47,7 @@
         height: 104px;
         border: 1px solid #252424;
     }
-
     table tr td p {
-
         padding: 0px;
         margin: 0px;
         font-weight: bold;
