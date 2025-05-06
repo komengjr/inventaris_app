@@ -193,7 +193,7 @@
                         <td>{{ $databrg->nama_barang }}</td>
                         <td>{{ $databrg->no_inventaris }}</td>
                         <td>{{ $databrg->merk }}</td>
-                        <td>{{ $databrg->harga_perolehan }}</td>
+                        <td>@currency($databrg->harga_perolehan)</td>
                         <td>{{ $databrg->th_perolehan }}</td>
                         <td>123</td>
                     </tr>
