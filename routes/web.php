@@ -1,6 +1,9 @@
 <?php
+use App\Http\Controllers\AppController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\MasterAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('scan', 'DataController@scandata');
@@ -396,4 +399,22 @@ Route::prefix('log_sdm')->group(function () {
 Route::prefix('telegram')->group(function () {
     Route::get('notification',  'TelegramController@notificationtelegram')->name('notificationtelegram');
 
+});
+
+
+
+Route::prefix('{akses}/app')->group(function () {
+    Route::get('dashboard', [AppController::class, 'dashboard'])->name('dashboard');
+    Route::get('peminjaman', [AppController::class, 'peminjaman'])->name('peminjaman');
+});
+
+
+Route::prefix('masteradmin')->group(function () {
+    Route::get('user', [MasterAdminController::class, 'masteradmin_user'])->name('masteradmin_user');
+    Route::get('cabang', [MasterAdminController::class, 'masteradmin_cabang'])->name('masteradmin_cabang');
+    Route::get('menu', [MasterAdminController::class, 'masteradmin_menu'])->name('masteradmin_menu');
+    Route::post('menu-add', [MasterAdminController::class, 'masteradmin_menu_add'])->name('masteradmin_menu_add');
+    Route::post('menu-save', [MasterAdminController::class, 'masteradmin_menu_save'])->name('masteradmin_menu_save');
+    Route::get('access', [MasterAdminController::class, 'masteradmin_access'])->name('masteradmin_access');
+    Route::get('setting', [MasterAdminController::class, 'master_setting'])->name('master_setting');
 });

@@ -108,7 +108,6 @@ class DivisiController extends Controller
             $datapinjam = DB::table('tbl_peminjaman')
                 ->join('tbl_staff', 'tbl_staff.nip', '=', 'tbl_peminjaman.pj_pinjam')->orderBy('id_pinjam', 'DESC')->get();
             return view('divisi.menupeminjaman', ['datapinjam' => $datapinjam, 'jumlahdata' => $jumlahdata, 'jumlahdataselesai' => $jumlahdataselesai]);
-
         }
     }
     public function lihatdatabarang1($id)
