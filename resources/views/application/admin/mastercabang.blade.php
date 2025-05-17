@@ -51,6 +51,7 @@
                         <th>Entitas Cabang</th>
                         <th>Kota</th>
                         <th>No Handphone</th>
+                        <th>Jumlah Barang</th>
                         <th>Notifikasi</th>
                         <th>Action</th>
                     </tr>
@@ -68,6 +69,12 @@
                             <td>{{ $datas->nama_entitas_cabang }}</td>
                             <td>{{ $datas->city }}</td>
                             <td>{{ $datas->phone }}</td>
+                            <td>
+                                 @php
+                                    $total = DB::table('sub_tbl_inventory')->where('kd_cabang', $datas->kd_cabang)->count();
+                                @endphp
+                                {{$total}}
+                            </td>
                             <td>
                                 @php
                                     $notif = DB::table('t_no_telegram')->where('kd_cabang', $datas->kd_cabang)->first();
