@@ -407,6 +407,9 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('dashboard', [AppController::class, 'dashboard'])->name('dashboard');
     Route::get('peminjaman', [AppController::class, 'peminjaman'])->name('peminjaman');
 });
+Route::prefix('app')->group(function () {
+    Route::post('dashboard/add', [AppController::class, 'dashboard_add'])->name('dashboard_add');
+});
 
 
 Route::prefix('masteradmin')->group(function () {

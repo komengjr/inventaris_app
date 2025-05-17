@@ -32,12 +32,18 @@ class AppController extends Controller
     }
     public function dashboard($akses){
           if ($this->url_akses($akses) == true) {
-            $klasifikasi = DB::table('no_urut_barang')->get();
-            return view('application.dashboard.home',['klasifikasi'=>$klasifikasi]);
+            $klasifikasi = DB::table('inventaris_cat')->get();
+            $cabang = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
+            return view('application.dashboard.home',['klasifikasi'=>$klasifikasi,'cabang'=>$cabang]);
         } else {
             return Redirect::to('dashboard');
         }
 
+    }
+    public function dashboard_add(){
+        $lokasi = DB::table('master_lokasi')->get();
+        $klasifikasi = DB::table('inventaris_klasifikasi')->get();
+        return view('application.dashboard.form.form-add-non-aset',['lokasi'=>$lokasi,'klasifikasi'=>$klasifikasi]);
     }
     public function peminjaman($akses){
           if ($this->url_akses($akses) == true) {

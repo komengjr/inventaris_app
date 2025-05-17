@@ -95,7 +95,7 @@
                     </div><a class="navbar-brand" href="#">
                         <div class="d-flex align-items-center py-3"><img class="me-2"
                                 src="{{ asset('asset/img/icons/spot-illustrations/falcon.png') }}" alt=""
-                                width="25" /><span class="font-sans-serif">Inventaris</span>
+                                width="25" /><span class="font-sans-serif fs-2">Inventaris</span>
                         </div>
                     </a>
                 </div>
@@ -128,35 +128,42 @@
                                     ->join('z_menu', 'z_menu.menu_code', '=', 'z_menu_sub.menu_code')
                                     ->where('z_menu_user.access_code', Auth::user()->akses)
                                     // ->orderBy('z_menu.id_menu', 'ASC')
-                                    ->get()->unique('menu_code');
+                                    ->get()
+                                    ->unique('menu_code');
                             @endphp
                             @foreach ($menu as $menus)
                                 <li class="nav-item">
                                     <!-- label-->
                                     <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                                        <div class="col-auto navbar-vertical-label">{{$menus->menu_name}}
+                                        <div class="col-auto navbar-vertical-label">{{ $menus->menu_name }}
                                         </div>
                                         <div class="col ps-0">
                                             <hr class="mb-0 navbar-vertical-divider" />
                                         </div>
                                     </div>
                                     @php
-                                    $sub_menu = DB::table('z_menu_user')
-                                        ->join('z_menu_sub', 'z_menu_sub.menu_sub_code', '=', 'z_menu_user.menu_sub_code')
-                                        ->where('z_menu_user.access_code', Auth::user()->akses)
-                                        ->where('z_menu_sub.menu_code',$menus->menu_code)
-                                        ->orderBy('z_menu_sub.id_menu_sub', 'ASC')
-                                        ->get();
-                                @endphp
-                                @foreach ($sub_menu as $sub_menus)
-                                    <a class="nav-link" href="{{ url($sub_menus->menu_sub_code.'/'.$sub_menus->menu_sub_link) }}" role="button"
-                                        aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="{{$sub_menus->menu_sub_icon}}"></span></span><span
-                                                class="nav-link-text ps-1">{{ $sub_menus->menu_sub_name }}</span>
-                                        </div>
-                                    </a>
-                                @endforeach
+                                        $sub_menu = DB::table('z_menu_user')
+                                            ->join(
+                                                'z_menu_sub',
+                                                'z_menu_sub.menu_sub_code',
+                                                '=',
+                                                'z_menu_user.menu_sub_code',
+                                            )
+                                            ->where('z_menu_user.access_code', Auth::user()->akses)
+                                            ->where('z_menu_sub.menu_code', $menus->menu_code)
+                                            ->orderBy('z_menu_sub.id_menu_sub', 'ASC')
+                                            ->get();
+                                    @endphp
+                                    @foreach ($sub_menu as $sub_menus)
+                                        <a class="nav-link"
+                                            href="{{ url($sub_menus->menu_sub_code . '/' . $sub_menus->menu_sub_link) }}"
+                                            role="button" aria-expanded="false">
+                                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                        class="{{ $sub_menus->menu_sub_icon }}"></span></span><span
+                                                    class="nav-link-text ps-1">{{ $sub_menus->menu_sub_name }}</span>
+                                            </div>
+                                        </a>
+                                    @endforeach
                                     <!-- parent pages-->
 
 
@@ -339,17 +346,18 @@
                                     <a class="dropdown-item" href="#!">Set status</a>
                                     <a class="dropdown-item" href="#">Profile &amp;
                                         account</a>
-                                    <a class="dropdown-item" href="#!">Feedback</a>
-
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Settings</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                                    <a class="dropdown-item" href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </nav>
-
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
 
                 @yield('content')
 
