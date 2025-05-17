@@ -1,9 +1,9 @@
 <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-        <h4 class="mb-1" id="staticBackdropLabel">Update Data Cabang</h4>
+        <h4 class="mb-1" id="staticBackdropLabel">Data Barang {{$cabang->nama_cabang}}</h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Resto</a></p>
     </div>
-    <div class="p-3">
+    <div class="p-3" id="form-data-barang">
         <table id="exampledata" class="table table-striped nowrap" style="width:100%">
             <thead class="bg-200 text-700">
                 <tr>
@@ -25,7 +25,7 @@
                     <tr>
                         <td>
                             @if ($datas->gambar == '')
-                                <img src="{{ asset('no_pict.png') }}" alt="lightbox" class="img-thumbnail"
+                                <img src="{{ asset('no_img.jpg') }}" alt="lightbox" class="img-thumbnail"
                                     id="videoPreview" width="70" height="70">
                             @else
                                 <img src="{{ asset($datas->gambar) }}" alt="" width="80" />
@@ -47,7 +47,7 @@
 
                         <td>@currency($datas->harga_perolehan)</td>
                         <td class="text-center">
-                            <button class="btn btn-falcon-warning" id="editdatabarang" data-code="{{$datas->id_inventaris}}"><i class="fa fa-edit">
+                            <button class="btn btn-falcon-warning" id="button-update-data-barang-cabang" data-code="{{$datas->id_inventaris}}"><i class="fa fa-edit">
                                 </i> Detail & Edit</button><br><br>
                         </td>
                     </tr>

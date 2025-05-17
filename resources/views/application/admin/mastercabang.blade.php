@@ -2,6 +2,7 @@
 @section('base.css')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
+    <link href="{{ asset('vendors/choices/choices.min.css') }}" rel="stylesheet" />
 @endsection
 @section('content')
     <div class="row mb-3">
@@ -85,17 +86,17 @@
                                             data-fa-transform="shrink-3"></span>Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang" id="button-edit-data-cabang" data-code="{{$datas->kd_cabang}}"><span
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
+                                            id="button-edit-data-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="far fa-edit"></span>
                                             Edit Cabang</button>
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang" id="button-data-barang-cabang"
-                                            data-code="{{$datas->kd_cabang}}"><span class="far fa-folder-open"></span> Data Barang
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
+                                            id="button-data-barang-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                class="far fa-folder-open"></span> Data Barang
                                             Cabang</button>
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang" id="button-data-lokasi"
-                                            data-code="{{$datas->kd_cabang}}"><span class="fas fa-map-marked-alt"></span> Data Lokasi
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
+                                            id="button-data-lokasi-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                class="fas fa-map-marked-alt"></span> Data Lokasi
                                             Cabang</button>
 
 
@@ -126,6 +127,7 @@
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
+    <script src="{{ asset('vendors/choices/choices.min.js') }}"></script>
     <script>
         new DataTable('#example', {
             responsive: true
@@ -175,6 +177,49 @@
                 $('#menu-cabang').html('eror');
             });
 
+        });
+        $(document).on("click", "#button-update-data-barang-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#form-data-barang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_update_data_barang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#form-data-barang').html(data);
+            }).fail(function() {
+                $('#form-data-barang').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-data-lokasi-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_data_lokasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang').html(data);
+            }).fail(function() {
+                $('#menu-cabang').html('eror');
+            });
         });
     </script>
 @endsection
