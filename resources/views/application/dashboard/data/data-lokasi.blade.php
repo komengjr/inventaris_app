@@ -30,17 +30,18 @@
                     <tr>
                         <td>
                             @if ($datas->gambar == '')
-                                <a href="{{ asset('no_pict.png') }}" data-fancybox="images"
-                                    data-caption="{{ $datas->nama_barang }}">
-                                    <img src="{{ asset('no_pict.png') }}" alt="lightbox" class="img-thumbnail"
-                                        id="videoPreview" width="50" height="50">
+                                <a href="{{ asset('no_pict.png') }}" data-gallery="gallery-1" class="lightbox" >
+                                    <img class="img-fluid rounded" src="{{ asset('no_pict.png') }}"  width="50" height="50">
                                 </a>
                             @else
-                                <a href="{{ url($datas->gambar, []) }}" data-fancybox="images"
+                                {{-- <a href="{{ url($datas->gambar, []) }}" data-fancybox="images"
                                     data-caption="{{ $datas->nama_barang }}" style="width: 50px;">
                                     <img src="{{ url($datas->gambar, []) }}" alt="lightbox"
                                         class="lightbox-thumb img-thumbnail" id="videoPreview" width="50"
                                         height="50" style="width: 100px;">
+                                </a> --}}
+                                <a class="glightbox" href="{{ url($datas->gambar) }}" data-gallery="gallery-1">
+                                    <img class="img-fluid rounded" src="{{ url($datas->gambar) }}" alt="" />
                                 </a>
                             @endif
                         </td>
@@ -60,8 +61,7 @@
 
                         <td>@currency($datas->harga_perolehan)</td>
                         <td class="text-center">
-                            <button class="btn-dark" id="editdatabarang"
-                                data-url="123"><i class="fa fa-eye">
+                            <button class="btn-dark" id="editdatabarang" data-url="123"><i class="fa fa-eye">
                                 </i> Detail & Edit</button><br><br>
                             <button class="btn-info"
                                 onclick="window.open('printbarcodebyid/{{ $datas->id }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i
@@ -79,8 +79,19 @@
         });
     </script>
 </div>
-<script src="{{ url('js/rupiah.js', []) }}"></script>
 <script>
-    new window.Choices(document.querySelector(".choices-single-jenis"));
-    new window.Choices(document.querySelector(".choices-single-lokasi"));
+    const glightbox = GLightbox({
+        openEffect: 'zoom',
+        closeEffect: 'fade',
+        cssEfects: {
+            fade: {
+                in: 'fadeIn',
+                out: 'fadeOut'
+            },
+            zoom: {
+                in: 'zoomIn',
+                out: 'zoomOut'
+            }
+        }
+    });
 </script>
