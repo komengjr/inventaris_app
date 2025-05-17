@@ -31,8 +31,13 @@ class MasterAdminController extends Controller
         }
     }
     public function masteradmin_cabang_edit(Request $request){
-        return view('application.admin.cabang.form-edit');
+        $data = DB::table('tbl_cabang')->where('kd_cabang',$request->code)->first();
+        return view('application.admin.cabang.form-edit-cabang',['data'=>$data]);
     }
+    public function masteradmin_cabang_migrasi_data_cabang(Request $request){
+        return view('application.admin.cabang.form-migrasi-kode-cabang',['id'=>$request->code]);
+    }
+    // MASTER BARANG
     public function masteradmin_cabang_data_barang(Request $request){
         $data =  DB::table('sub_tbl_inventory')->where('kd_cabang',$request->code)->get();
         $cabang = DB::table('tbl_cabang')->where('kd_cabang',$request->code)->first();

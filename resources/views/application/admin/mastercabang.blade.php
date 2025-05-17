@@ -93,7 +93,7 @@
                                             data-fa-transform="shrink-3"></span>Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
-                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
                                             id="button-edit-data-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="far fa-edit"></span>
                                             Edit Cabang</button>
@@ -105,6 +105,9 @@
                                             id="button-data-lokasi-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="fas fa-map-marked-alt"></span> Data Lokasi
                                             Cabang</button>
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
+                                            id="button-migrasi-kode-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                class="fas fa-code-branch"></span> Migrasi Kode Cabang</button>
 
 
                                     </div>
@@ -156,7 +159,7 @@
         $(document).on("click", "#button-edit-data-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-cabang').html(
+            $('#menu-cabang-lg').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
@@ -169,9 +172,9 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-cabang').html(data);
+                $('#menu-cabang-lg').html(data);
             }).fail(function() {
-                $('#menu-cabang').html('eror');
+                $('#menu-cabang-lg').html('eror');
             });
 
         });
@@ -280,6 +283,27 @@
                 $('#menu-cabang').html(data);
             }).fail(function() {
                 $('#menu-cabang').html('eror');
+            });
+        });
+        $(document).on("click", "#button-migrasi-kode-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_migrasi_data_cabang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang-lg').html(data);
+            }).fail(function() {
+                $('#menu-cabang-lg').html('eror');
             });
         });
     </script>

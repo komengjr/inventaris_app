@@ -56,7 +56,6 @@ class AppController extends Controller
     {
         $lokasi = DB::table('master_lokasi')->get();
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
-
         return view('application.dashboard.form.form-add-non-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
     }
     public function dashboard_lokasi_data_barang(Request $request){
