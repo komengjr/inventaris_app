@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-xl-auto p-3">
                         <h6 class="text-primary fs--1 mb-0">Menu : </h6>
-                        <h4 class="text-primary fw-bold mb-0">Master <span class="text-info fw-medium">User</span></h4>
+                        <h4 class="text-primary fw-bold mb-0">Master <span class="text-info fw-medium">Cabang</span></h4>
                     </div>
                 </div>
             </div>
@@ -41,14 +41,16 @@
         </div>
         <div class="card-body border-top p-3">
             <table id="example" class="table table-striped nowrap" style="width:100%">
-                <thead class="bg-200 text-700">
+                <thead class="bg-200 text-700 fs--2">
                     <tr>
                         <th>No</th>
                         <th>Nama Cabang</th>
                         <th>Kode Cabang</th>
+                        <th>Nomor Cabang</th>
+                        <th>Entitas Cabang</th>
                         <th>Kota</th>
-                        <th>Alamat</th>
                         <th>No Handphone</th>
+                        <th>Notifikasi</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -61,9 +63,20 @@
                             <td>{{ $no++ }}</td>
                             <td>{{ $datas->nama_cabang }}</td>
                             <td>{{ $datas->kd_cabang }}</td>
+                            <td>{{ $datas->no_cabang }}</td>
+                            <td>{{ $datas->nama_entitas_cabang }}</td>
                             <td>{{ $datas->city }}</td>
-                            <td>{{ $datas->alamat }}</td>
                             <td>{{ $datas->phone }}</td>
+                            <td>
+                                @php
+                                    $notif = DB::table('t_no_telegram')->where('kd_cabang', $datas->kd_cabang)->first();
+                                @endphp
+                                @if ($notif)
+                                    <span class="badge bg-success">Aktif</span>
+                                @else
+                                    <span class="badge bg-danger">Tidak Aktif</span>
+                                @endif
+                            </td>
                             <td class="text-center">
                                 <div class="btn-group" role="group">
                                     <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
@@ -73,16 +86,16 @@
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-category" id="button-edit-category" data-code="123"><span
+                                            data-bs-target="#modal-cabang" id="button-edit-data-cabang" data-code="{{$datas->kd_cabang}}"><span
                                                 class="far fa-edit"></span>
                                             Edit Cabang</button>
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-category-xl" id="button-product-category"
-                                            data-code="123}"><span class="far fa-folder-open"></span> Data Barang
+                                            data-bs-target="#modal-cabang" id="button-data-barang-cabang"
+                                            data-code="{{$datas->kd_cabang}}"><span class="far fa-folder-open"></span> Data Barang
                                             Cabang</button>
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-category-xl" id="button-product-category"
-                                            data-code="123}"><span class="fas fa-map-marked-alt"></span> Data Lokasi
+                                            data-bs-target="#modal-cabang" id="button-data-lokasi"
+                                            data-code="{{$datas->kd_cabang}}"><span class="fas fa-map-marked-alt"></span> Data Lokasi
                                             Cabang</button>
 
 
@@ -97,6 +110,18 @@
     </div>
 @endsection
 @section('base.js')
+    <div class="modal fade" id="modal-cabang" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 95%;">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-cabang"></div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
@@ -104,6 +129,52 @@
     <script>
         new DataTable('#example', {
             responsive: true
+        });
+    </script>
+    <script>
+        $(document).on("click", "#button-edit-data-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_edit') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang').html(data);
+            }).fail(function() {
+                $('#menu-cabang').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-data-barang-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_data_barang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang').html(data);
+            }).fail(function() {
+                $('#menu-cabang').html('eror');
+            });
+
         });
     </script>
 @endsection

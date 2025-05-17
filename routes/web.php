@@ -416,6 +416,8 @@ Route::prefix('app')->group(function () {
 Route::prefix('masteradmin')->group(function () {
     Route::get('user', [MasterAdminController::class, 'masteradmin_user'])->name('masteradmin_user');
     Route::get('cabang', [MasterAdminController::class, 'masteradmin_cabang'])->name('masteradmin_cabang');
+    Route::post('cabang/edit', [MasterAdminController::class, 'masteradmin_cabang_edit'])->name('masteradmin_cabang_edit');
+    Route::post('cabang/data-barang', [MasterAdminController::class, 'masteradmin_cabang_data_barang'])->name('masteradmin_cabang_data_barang');
     Route::get('menu', [MasterAdminController::class, 'masteradmin_menu'])->name('masteradmin_menu');
     Route::post('menu-add', [MasterAdminController::class, 'masteradmin_menu_add'])->name('masteradmin_menu_add');
     Route::post('menu-save', [MasterAdminController::class, 'masteradmin_menu_save'])->name('masteradmin_menu_save');

@@ -8,6 +8,10 @@ use Illuminate\Support\Str;
 use DB;
 class MasterAdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function masteradmin_user(){
         if (Auth::user()->akses == 'admin') {
             return view('application.admin.masteruser');
@@ -17,11 +21,21 @@ class MasterAdminController extends Controller
     }
     public function masteradmin_cabang(){
         if (Auth::user()->akses == 'admin') {
-            $data = DB::table('tbl_cabang')->get();
+            $data = DB::table('tbl_cabang')
+            ->join('tbl_setting_cabang','tbl_cabang.kd_cabang','=','tbl_setting_cabang.kd_cabang')
+            ->join('tbl_entitas_cabang','tbl_entitas_cabang.kd_entitas_cabang','=','tbl_cabang.kd_entitas_cabang')
+            ->get();
             return view('application.admin.mastercabang',['data'=>$data]);
         } else {
             return view('application.error.404');
         }
+    }
+    public function masteradmin_cabang_edit(Request $request){
+        return view('application.admin.cabang.form-edit');
+    }
+    public function masteradmin_cabang_data_barang(Request $request){
+        $data =  DB::table('sub_tbl_inventory')->where('kd_cabang',$request->code)->get();
+        return view('application.admin.cabang.data-barang',['data'=>$data]);
     }
     public function masteradmin_menu(){
         if (Auth::user()->akses == 'admin') {
