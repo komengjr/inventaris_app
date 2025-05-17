@@ -30,25 +30,40 @@ class AppController extends Controller
             return false;
         }
     }
-    public function dashboard($akses){
-          if ($this->url_akses($akses) == true) {
+    public function dashboard($akses)
+    {
+        if ($this->url_akses($akses) == true) {
             $klasifikasi = DB::table('inventaris_cat')->get();
-            $cabang = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
-            return view('application.dashboard.home',['klasifikasi'=>$klasifikasi,'cabang'=>$cabang]);
+            $cabang = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
+            $nonaset = DB::table('inventaris_data')->where('inventaris_data_jenis', 0)->where('inventaris_data_cabang', Auth::user()->cabang)->sum('inventaris_data_harga');
+            $aset = DB::table('inventaris_data')->where('inventaris_data_jenis', 1)->where('inventaris_data_cabang', Auth::user()->cabang)->sum('inventaris_data_harga');
+            $ruangan = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi','tbl_nomor_ruangan_cabang.kd_lokasi','=','master_lokasi.master_lokasi_code')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->get();
+            return view('application.dashboard.home', [
+                'klasifikasi' => $klasifikasi,
+                'cabang' => $cabang,
+                'nonaset' => $nonaset,
+                'aset' => $aset,
+                'ruangan' => $ruangan,
+            ]);
         } else {
             return Redirect::to('dashboard');
         }
 
     }
-    public function dashboard_add(){
+    public function dashboard_add()
+    {
         $lokasi = DB::table('master_lokasi')->get();
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
-        return view('application.dashboard.form.form-add-non-aset',['lokasi'=>$lokasi,'klasifikasi'=>$klasifikasi]);
+
+        return view('application.dashboard.form.form-add-non-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
     }
-    public function peminjaman($akses){
-          if ($this->url_akses($akses) == true) {
-            $data = DB::table('tbl_peminjaman')->where('kd_cabang',Auth::user()->cabang)->get();
-            return view('application.peminjaman.menupeminjaman',['data'=>$data]);
+    public function peminjaman($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('tbl_peminjaman')->where('kd_cabang', Auth::user()->cabang)->get();
+            return view('application.peminjaman.menupeminjaman', ['data' => $data]);
         } else {
             return Redirect::to('dashboard');
         }

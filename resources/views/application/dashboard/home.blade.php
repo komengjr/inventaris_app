@@ -12,7 +12,7 @@
                             src="{{ asset('asset/img/illustrations/crm-bar-chart.png') }}" alt="" width="90" />
                         <div>
                             <h6 class="text-primary fs--1 mb-0 pt-2">Welcome {{ $cabang->nama_cabang }} </h6>
-                            <h4 class="text-primary fw-bold mb-0">Inventaris <span class="text-info fw-medium">Managemen
+                            <h4 class="text-primary fw-bold mb-0">Inventaris <span class="text-info fw-medium">Management
                                     System</span></h4>
                         </div><img class="ms-n4 d-md-none d-lg-block"
                             src="{{ asset('asset/img/illustrations/crm-line-chart.png') }}" alt="" width="150" />
@@ -47,7 +47,8 @@
                                     <div class="dropdown-menu dropdown-menu-end border py-2"
                                         aria-labelledby="dropdown-new-users">
                                         <a class="dropdown-item" href="#!" data-bs-toggle="modal"
-                                            data-bs-target="#modal-dashboard" id="button-add-barang-non-aset">Tambah Barang Non Aset</a>
+                                            data-bs-target="#modal-dashboard" id="button-add-barang-non-aset">Tambah Barang
+                                            Non Aset</a>
                                         <a class="dropdown-item" href="#!">View Barang Non Aset</a>
                                         <div class="dropdown-divider"></div><a class="dropdown-item text-primary"
                                             href="#!">Print</a>
@@ -65,7 +66,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-money-check-alt text-info"></span></div>
-                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2">@currency(4030092029) </p>
+                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2">@currency($nonaset) </p>
                                 </div>
                             </div>
 
@@ -104,7 +105,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-money-check-alt text-info"></span></div>
-                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2">@currency(4030092029) </p>
+                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2">@currency($aset) </p>
                                 </div>
                             </div>
 
@@ -329,22 +330,26 @@
         </div>
         <div class="card-body bg-light px-1 py-0">
             <div class="row g-0 text-center fs--1">
-                @for ($i = 0; $i < 10; $i++)
+                @foreach ($ruangan as $ruangans)
                     <div class="col-6 col-md-3 col-lg-2 col-xxl-1 mb-1">
                         <div class="card-body border h-100 ">
 
                             <div class="bg-white dark__bg-1100 border p-3 h-100 border-primary"><a href="#"><img
                                         class="img-thumbnail img-fluid rounded-circle mb-3 shadow-sm"
                                         src="{{ asset('ruangan.png') }}" alt="" width="100" /></a>
-                                <h6 class="mb-1"><a href="#">Ruang {{ $i }}</a>
+                                <h6 class="mb-1"><a href="#">{{$ruangans->master_lokasi_name}}</a>
                                 </h6>
-                                <p class="fs--2 mb-1"><a class="text-700" href="#!">Harvard Korea Society</a>
-                                </p>
+                                <p class="fs--2 mb-0">Nomor Ruangan : <span class="badge bg-primary m-1">{{$ruangans->nomor_ruangan}}</span></p>
+                                @php
+                                    $total = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang',$ruangans->id_nomor_ruangan_cbaang)->count();
+                                @endphp
+                                <p class="fs--2 mb-0">Total Barang : {{$total}}</p>
+
                             </div>
 
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
         </div>
     </div>
