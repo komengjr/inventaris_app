@@ -1,7 +1,13 @@
 @extends('layouts.template')
 @section('base.css')
+    <style>
+        #button-view-data-lokasi {
+            cursor: pointer;
+        }
+    </style>
     <link href="{{ asset('vendors/choices/choices.min.css') }}" rel="stylesheet" />
-    {{-- <script src="{{ asset('vendors/lottie/lottie.min.js') }}"></script> --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
 @endsection
 @section('content')
     <div class="row mb-3">
@@ -332,18 +338,23 @@
             <div class="row g-0 text-center fs--1">
                 @foreach ($ruangan as $ruangans)
                     <div class="col-6 col-md-3 col-lg-2 col-xxl-1 mb-1">
-                        <div class="card-body border h-100 ">
+                        <div class="card-body border h-100 " id="button-view-data-lokasi"
+                            data-code="{{ $ruangans->id_nomor_ruangan_cbaang }}" data-bs-toggle="modal"
+                            data-bs-target="#modal-dashboard">
 
                             <div class="bg-white dark__bg-1100 border p-3 h-100 border-primary"><a href="#"><img
                                         class="img-thumbnail img-fluid rounded-circle mb-3 shadow-sm"
                                         src="{{ asset('ruangan.png') }}" alt="" width="100" /></a>
-                                <h6 class="mb-1"><a href="#">{{$ruangans->master_lokasi_name}}</a>
+                                <h6 class="mb-1"><a href="#">{{ $ruangans->master_lokasi_name }}</a>
                                 </h6>
-                                <p class="fs--2 mb-0">Nomor Ruangan : <span class="badge bg-primary m-1">{{$ruangans->nomor_ruangan}}</span></p>
+                                <p class="fs--2 mb-0">Nomor Ruangan : <span
+                                        class="badge bg-primary m-1">{{ $ruangans->nomor_ruangan }}</span></p>
                                 @php
-                                    $total = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang',$ruangans->id_nomor_ruangan_cbaang)->count();
+                                    $total = DB::table('inventaris_data')
+                                        ->where('id_nomor_ruangan_cbaang', $ruangans->id_nomor_ruangan_cbaang)
+                                        ->count();
                                 @endphp
-                                <p class="fs--2 mb-0">Total Barang : {{$total}}</p>
+                                <p class="fs--2 mb-0">Total Barang : {{ $total }}</p>
 
                             </div>
 
@@ -357,7 +368,7 @@
 @section('base.js')
     <div class="modal fade" id="modal-dashboard" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="max-width: 95%;">
             <div class="modal-content border-0">
                 <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
@@ -367,7 +378,10 @@
             </div>
         </div>
     </div>
-    {{-- <script src="{{ asset('vendors/chart/chart.min.js') }}"></script> --}}
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
     <script src="{{ asset('vendors/echarts/echarts.min.js') }}"></script>
     <script src="{{ asset('vendors/choices/choices.min.js') }}"></script>
     <script>
@@ -384,6 +398,28 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard').html(data);
+            }).fail(function() {
+                $('#menu-dashboard').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-view-data-lokasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-dashboard').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_lokasi_data_barang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
                 },
                 dataType: 'html',
             }).done(function(data) {

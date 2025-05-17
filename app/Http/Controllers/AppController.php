@@ -59,6 +59,10 @@ class AppController extends Controller
 
         return view('application.dashboard.form.form-add-non-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
     }
+    public function dashboard_lokasi_data_barang(Request $request){
+        $data = DB::table('sub_tbl_inventory')->where('id_nomor_ruangan_cbaang',$request->code)->get();
+        return view('application.dashboard.data.data-lokasi',['data'=>$data]);
+    }
     public function peminjaman($akses)
     {
         if ($this->url_akses($akses) == true) {

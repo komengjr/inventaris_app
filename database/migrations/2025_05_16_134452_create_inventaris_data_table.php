@@ -32,6 +32,7 @@ class CreateInventarisDataTable extends Migration
             $table->string('inventaris_data_cabang');
             $table->integer('inventaris_data_urut');
             $table->text('inventaris_data_file');
+            $table->string('id_nomor_ruangan_cbaang');
             $table->timestamps();
         });
     }
