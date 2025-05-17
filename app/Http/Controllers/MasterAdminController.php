@@ -17,7 +17,8 @@ class MasterAdminController extends Controller
     }
     public function masteradmin_cabang(){
         if (Auth::user()->akses == 'admin') {
-            return view('application.admin.mastercabang');
+            $data = DB::table('tbl_cabang')->get();
+            return view('application.admin.mastercabang',['data'=>$data]);
         } else {
             return view('application.error.404');
         }
