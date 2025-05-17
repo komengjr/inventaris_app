@@ -8,7 +8,7 @@
     <link href="{{ asset('vendors/choices/choices.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
-    <link href="{{ asset('vendors/glightbox/glightbox.min.css') }}" rel="stylesheet" />
+
 @endsection
 @section('content')
     <div class="row mb-3">
@@ -365,12 +365,11 @@
             </div>
         </div>
     </div>
-
 @endsection
 @section('base.js')
     <div class="modal fade" id="modal-dashboard" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="max-width: 95%;">
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 95%;">
             <div class="modal-content border-0">
                 <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
@@ -386,7 +385,7 @@
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
     <script src="{{ asset('vendors/echarts/echarts.min.js') }}"></script>
     <script src="{{ asset('vendors/choices/choices.min.js') }}"></script>
-    <script src="{{ asset('vendors/glightbox/glightbox.min.js') }}"></script>
+
     <script>
         $(document).on("click", "#button-add-barang-non-aset", function(e) {
             e.preventDefault();

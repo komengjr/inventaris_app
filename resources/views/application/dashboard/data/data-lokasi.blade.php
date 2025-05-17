@@ -1,8 +1,3 @@
-<style>
-    input[type="file"] {
-        display: none;
-    }
-</style>
 <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
         <h4 class="mb-1" id="staticBackdropLabel">Data Barang Lokasi</h4>
@@ -30,19 +25,10 @@
                     <tr>
                         <td>
                             @if ($datas->gambar == '')
-                                <a href="{{ asset('no_pict.png') }}" data-gallery="gallery-1" class="lightbox" >
-                                    <img class="img-fluid rounded" src="{{ asset('no_pict.png') }}"  width="50" height="50">
-                                </a>
+                                <img src="{{ asset('no_pict.png') }}" alt="lightbox" class="img-thumbnail"
+                                    id="videoPreview" width="70" height="70">
                             @else
-                                {{-- <a href="{{ url($datas->gambar, []) }}" data-fancybox="images"
-                                    data-caption="{{ $datas->nama_barang }}" style="width: 50px;">
-                                    <img src="{{ url($datas->gambar, []) }}" alt="lightbox"
-                                        class="lightbox-thumb img-thumbnail" id="videoPreview" width="50"
-                                        height="50" style="width: 100px;">
-                                </a> --}}
-                                <a class="glightbox" href="{{ url($datas->gambar) }}" data-gallery="gallery-1">
-                                    <img class="img-fluid rounded" src="{{ url($datas->gambar) }}" alt="" />
-                                </a>
+                                <img src="{{ asset($datas->gambar) }}" alt="" width="80" />
                             @endif
                         </td>
                         <td>{{ $datas->nama_barang }}</td>
@@ -79,19 +65,4 @@
         });
     </script>
 </div>
-<script>
-    const glightbox = GLightbox({
-        openEffect: 'zoom',
-        closeEffect: 'fade',
-        cssEfects: {
-            fade: {
-                in: 'fadeIn',
-                out: 'fadeOut'
-            },
-            zoom: {
-                in: 'zoomIn',
-                out: 'zoomOut'
-            }
-        }
-    });
-</script>
+<script src="{{ asset('vendors/glightbox/glightbox.min.js') }}"></script>
