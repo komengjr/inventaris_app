@@ -47,6 +47,13 @@ class MasterAdminController extends Controller
         $cabang = DB::table('tbl_cabang')->where('kd_cabang',$request->code)->first();
         return view('application.admin.cabang.data-lokasi',['data'=>$data,'cabang'=>$cabang]);
     }
+    public function masteradmin_cabang_update_data_lokasi(Request $request){
+        return view('application.admin.cabang.form-edit-lokasi');
+    }
+    public function masteradmin_cabang_data_barang_lokasi(Request $request){
+        $data = DB::table('sub_tbl_inventory')->where('id_nomor_ruangan_cbaang',$request->code)->get();
+        return view('application.admin.cabang.data-barang-lokasi',['data'=>$data]);
+    }
     public function masteradmin_menu(){
         if (Auth::user()->akses == 'admin') {
             $data = DB::table('z_menu_sub')->get();

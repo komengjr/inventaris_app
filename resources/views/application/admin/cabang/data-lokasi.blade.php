@@ -1,10 +1,10 @@
 <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-        <h4 class="mb-1" id="staticBackdropLabel">Data Barang {{ $cabang->nama_cabang }}</h4>
+        <h4 class="mb-1" id="staticBackdropLabel">Data Lokasi {{ $cabang->nama_cabang }}</h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Resto</a></p>
     </div>
-    <div class="p-3" id="form-data-barang">
-        <table id="exampledata" class="table table-striped nowrap" style="width:100%">
+    <div class="p-3" id="form-data-lokasi">
+        <table id="exampledata-lokasi" class="table table-striped nowrap" style="width:100%">
             <thead class="bg-200 text-700">
                 <tr>
                     <th>No</th>
@@ -38,21 +38,13 @@
                                     aria-expanded="false"><span class="fas fa-align-left me-1"
                                         data-fa-transform="shrink-3"></span>Option</button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-
-                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
-                                        id="button-edit-data-cabang" data-code="123"><span
+                                    <button class="dropdown-item" id="button-edit-data-lokasi"
+                                        data-code="{{ $datas->id_nomor_ruangan_cbaang }}"><span
                                             class="far fa-edit"></span>
-                                        Edit Cabang</button>
+                                        Edit Lokasi</button>
                                     <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
-                                        id="button-data-barang-cabang" data-code="123"><span
-                                            class="far fa-folder-open"></span> Data Barang
-                                        Cabang</button>
-                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
-                                        id="button-data-lokasi-cabang" data-code="123"><span
-                                            class="fas fa-map-marked-alt"></span> Data Lokasi
-                                        Cabang</button>
-
-
+                                        id="button-data-barang-lokasi" data-code="{{ $datas->id_nomor_ruangan_cbaang }}"><span
+                                            class="far fa-folder-open"></span> Data Barang Ruangan</button>
                                 </div>
                             </div>
                         </td>
@@ -62,7 +54,7 @@
         </table>
     </div>
     <script>
-        new DataTable('#exampledata', {
+        new DataTable('#exampledata-lokasi', {
             responsive: true
         });
     </script>

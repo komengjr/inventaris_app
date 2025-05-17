@@ -94,7 +94,7 @@
                                             id="button-data-barang-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="far fa-folder-open"></span> Data Barang
                                             Cabang</button>
-                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
                                             id="button-data-lokasi-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="fas fa-map-marked-alt"></span> Data Lokasi
                                             Cabang</button>
@@ -120,6 +120,18 @@
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="menu-cabang"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-cabang-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-cabang-lg"></div>
             </div>
         </div>
     </div>
@@ -203,11 +215,53 @@
         $(document).on("click", "#button-data-lokasi-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-cabang').html(
+            $('#menu-cabang-lg').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
                 url: "{{ route('masteradmin_cabang_data_lokasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang-lg').html(data);
+            }).fail(function() {
+                $('#menu-cabang-lg').html('eror');
+            });
+        });
+        $(document).on("click", "#button-edit-data-lokasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#form-data-lokasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_update_data_lokasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#form-data-lokasi').html(data);
+            }).fail(function() {
+                $('#form-data-lokasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-data-barang-lokasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_data_barang_lokasi') }}",
                 type: "POST",
                 cache: false,
                 data: {
