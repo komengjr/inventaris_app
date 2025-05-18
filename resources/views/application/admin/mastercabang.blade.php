@@ -106,8 +106,8 @@
                                                 class="fas fa-map-marked-alt"></span> Data Lokasi
                                             Cabang</button>
                                         <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
-                                            id="button-migrasi-kode-cabang" data-code="{{ $datas->kd_cabang }}"><span
-                                                class="fas fa-code-branch"></span> Migrasi Kode Cabang</button>
+                                            id="button-migrasi-data-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                class="fas fa-code-branch"></span> Migrasi Data Cabang</button>
 
 
                                     </div>
@@ -285,7 +285,7 @@
                 $('#menu-cabang').html('eror');
             });
         });
-        $(document).on("click", "#button-migrasi-kode-cabang", function(e) {
+        $(document).on("click", "#button-migrasi-data-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-cabang-lg').html(
@@ -304,6 +304,27 @@
                 $('#menu-cabang-lg').html(data);
             }).fail(function() {
                 $('#menu-cabang-lg').html('eror');
+            });
+        });
+        $(document).on("click", "#button-clone-data-master-barang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#button-clone-data-master-barang').html(
+                '<div class="spinner-border" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_clone_data_master_barang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#table-master-barang').html(data);
+            }).fail(function() {
+                $('#table-master-barang').html('eror');
             });
         });
     </script>

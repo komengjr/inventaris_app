@@ -199,6 +199,20 @@
                                         role="button" aria-expanded="false">
                                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                                     class="fas fa-building"></span></span><span
+                                                class="nav-link-text ps-1">Master Category</span>
+                                        </div>
+                                    </a>
+                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_cabang') }}"
+                                        role="button" aria-expanded="false">
+                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                    class="fas fa-building"></span></span><span
+                                                class="nav-link-text ps-1">Master Klasifikasi</span>
+                                        </div>
+                                    </a>
+                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_cabang') }}"
+                                        role="button" aria-expanded="false">
+                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                    class="fas fa-building"></span></span><span
                                                 class="nav-link-text ps-1">Master Cabang</span>
                                         </div>
                                     </a>
