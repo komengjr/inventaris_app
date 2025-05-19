@@ -97,6 +97,7 @@
                                             id="button-edit-data-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="far fa-edit"></span>
                                             Edit Cabang</button>
+                                        <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
                                             id="button-data-barang-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="far fa-folder-open"></span> Data Barang
@@ -105,6 +106,15 @@
                                             id="button-data-lokasi-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="fas fa-map-marked-alt"></span> Data Lokasi
                                             Cabang</button>
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
+                                            id="button-data-peminjaman-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                class="fas fa-book-medical"></span> Data Peminjaman
+                                            Cabang</button>
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
+                                            id="button-data-lokasi-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                class="fas fa-book-open"></span> Data Stock Opname
+                                            Cabang</button>
+                                        <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
                                             id="button-migrasi-data-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="fas fa-code-branch"></span> Migrasi Data Cabang</button>
@@ -272,6 +282,27 @@
             );
             $.ajax({
                 url: "{{ route('masteradmin_cabang_data_barang_lokasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang').html(data);
+            }).fail(function() {
+                $('#menu-cabang').html('eror');
+            });
+        });
+        $(document).on("click", "#button-data-peminjaman-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_data_peminjaman') }}",
                 type: "POST",
                 cache: false,
                 data: {

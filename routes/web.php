@@ -431,6 +431,7 @@ Route::prefix('masteradmin')->group(function () {
     Route::post('cabang/data-lokasi', [MasterAdminController::class, 'masteradmin_cabang_data_lokasi'])->name('masteradmin_cabang_data_lokasi');
     Route::post('cabang/update-data-lokasi', [MasterAdminController::class, 'masteradmin_cabang_update_data_lokasi'])->name('masteradmin_cabang_update_data_lokasi');
     Route::post('cabang/data-barang-lokasi', [MasterAdminController::class, 'masteradmin_cabang_data_barang_lokasi'])->name('masteradmin_cabang_data_barang_lokasi');
+    Route::post('cabang/data-peminjaman-cabang', [MasterAdminController::class, 'masteradmin_cabang_data_peminjaman'])->name('masteradmin_cabang_data_peminjaman');
     Route::post('cabang/migrasi-data-cabang', [MasterAdminController::class, 'masteradmin_cabang_migrasi_data_cabang'])->name('masteradmin_cabang_migrasi_data_cabang');
     Route::post('cabang/clone-data-master-barang', [MasterAdminController::class, 'masteradmin_cabang_clone_data_master_barang'])->name('masteradmin_cabang_clone_data_master_barang');
     Route::get('menu', [MasterAdminController::class, 'masteradmin_menu'])->name('masteradmin_menu');

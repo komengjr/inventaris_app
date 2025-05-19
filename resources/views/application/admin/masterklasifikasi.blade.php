@@ -34,7 +34,7 @@
                     <div class="row flex-between-center">
                         <div class="col-sm-auto mb-2 mb-sm-0 ">
                             <h5 class="mb-0" data-anchor="data-anchor">
-                                Data V.2
+                                Data Klasifikasi V.2
                             </h5>
                         </div>
                         <div class="col-sm-auto">
@@ -89,7 +89,7 @@
                     <div class="row flex-between-center">
                         <div class="col-sm-auto mb-sm-0 ">
                             <h5 class="mb-0" data-anchor="data-anchor">
-                                Data V.3
+                                Data Klasifikasi V.3
                             </h5>
                         </div>
                         <div class="col-sm-auto">

@@ -16,72 +16,81 @@ class MasterAdminController extends Controller
     public function masteradmin_user()
     {
         if (Auth::user()->akses == 'admin') {
-            $data = DB::table('users')->join('tbl_cabang','tbl_cabang.kd_cabang','=','users.cabang')->get();
-            return view('application.admin.masteruser',['data'=>$data]);
+            $data = DB::table('users')->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'users.cabang')->get();
+            return view('application.admin.masteruser', ['data' => $data]);
         } else {
             return view('application.error.404');
         }
     }
-    public function masteradmin_user_add(){
+    public function masteradmin_user_add()
+    {
         $cabang = DB::table('tbl_cabang')->get();
-        return view('application.admin.user.form-add',['cabang'=>$cabang]);
+        return view('application.admin.user.form-add', ['cabang' => $cabang]);
     }
-    public function masteradmin_user_save(Request $request){
+    public function masteradmin_user_save(Request $request)
+    {
         DB::table('users')->insert([
-            'name'=>$request->name,
-            'email'=>$request->username,
-            'email_'=>'-',
-            'password'=>Hash::make($request->input('pwd')),
-            'akses'=>$request->akses,
-            'cabang'=>$request->cabang,
-            'created_at'=>now(),
+            'name' => $request->name,
+            'email' => $request->username,
+            'email_' => '-',
+            'password' => Hash::make($request->input('pwd')),
+            'akses' => $request->akses,
+            'cabang' => $request->cabang,
+            'created_at' => now(),
         ]);
         return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data User Cabang');
     }
-    public function masteradmin_klasifikasi(){
+    public function masteradmin_klasifikasi()
+    {
         $data_v2 = DB::table('tbl_inventory')->get();
         $data_v3 = DB::table('inventaris_klasifikasi')->get();
-        return view('application.admin.masterklasifikasi',['data_v2'=>$data_v2,'data_v3'=>$data_v3]);
+        return view('application.admin.masterklasifikasi', ['data_v2' => $data_v2, 'data_v3' => $data_v3]);
     }
-    public function masteradmin_klasifikasi_clone_data(Request $request){
+    public function masteradmin_klasifikasi_clone_data(Request $request)
+    {
         $data = DB::table('tbl_inventory')->get();
         foreach ($data as $value) {
-            $check = DB::table('inventaris_klasifikasi')->where('inventaris_klasifikasi_code',$value->kd_inventaris)->first();
+            $check = DB::table('inventaris_klasifikasi')->where('inventaris_klasifikasi_code', $value->kd_inventaris)->first();
             if (!$check) {
                 DB::table('inventaris_klasifikasi')->insert([
-                    'inventaris_klasifikasi_code'=>$value->kd_inventaris,
-                    'inventaris_cat_code'=>$value->no_urut_barang,
-                    'inventaris_klasifikasi_name'=>$value->nama_klasifikasi_barang,
-                    'inventaris_klasifikasi_file'=>'far fa-image',
-                    'created_at'=>now(),
+                    'inventaris_klasifikasi_code' => $value->kd_inventaris,
+                    'inventaris_cat_code' => $value->no_urut_barang,
+                    'inventaris_klasifikasi_name' => $value->nama_klasifikasi_barang,
+                    'inventaris_klasifikasi_file' => 'far fa-image',
+                    'created_at' => now(),
                 ]);
             }
         }
         $data_v3 = DB::table('inventaris_klasifikasi')->get();
-        return view('application.admin.klasifikasi.clone-v3',['data_v3'=>$data_v3]);
+        return view('application.admin.klasifikasi.clone-v3', ['data_v3' => $data_v3]);
     }
-    public function masteradmin_klasifikasi_add_data_v2(){
+    public function masteradmin_klasifikasi_add_data_v2()
+    {
         $cat = DB::table('no_urut_barang')->get();
-        return view('application.admin.klasifikasi.form-add-v2',['cat'=>$cat]);
+        return view('application.admin.klasifikasi.form-add-v2', ['cat' => $cat]);
     }
-    public function masteradmin_klasifikasi_add_data_v2_save(Request $request){
-        $check = DB::table('tbl_inventory')->where('kd_inventaris',$request->kd_klasifikasi)->first();
+    public function masteradmin_klasifikasi_add_data_v2_save(Request $request)
+    {
+        $check = DB::table('tbl_inventory')->where('kd_inventaris', $request->kd_klasifikasi)->first();
         if ($check) {
             return redirect()->back()->withSuccess('Warning! Kode Klasifikasi Sudah Ada');
         } else {
             DB::table('tbl_inventory')->insert([
-                'kd_inventaris'=>$request->kd_klasifikasi,
-                'no_urut_barang'=>$request->no_urut,
-                'nama_klasifikasi_barang'=>$request->nama_klasifikasi,
-                'kd_cabang'=>'-',
-                'created_at'=>now()
+                'kd_inventaris' => $request->kd_klasifikasi,
+                'no_urut_barang' => $request->no_urut,
+                'nama_klasifikasi_barang' => $request->nama_klasifikasi,
+                'kd_cabang' => '-',
+                'created_at' => now()
             ]);
             return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data klasifikasi Ver. 2');
         }
 
     }
-    public function masteradmin_category(){
-        return view('application.admin.mastercategory');
+    public function masteradmin_category()
+    {
+        $data_v2 = DB::table('no_urut_barang')->get();
+        $data_v3 = DB::table('inventaris_cat')->get();
+        return view('application.admin.mastercategory',['data_v2'=>$data_v2,'data_v3'=>$data_v3]);
     }
     public function masteradmin_cabang()
     {
@@ -143,7 +152,7 @@ class MasterAdminController extends Controller
         }
         $old_brg = DB::table('sub_tbl_inventory')->where('kd_cabang', $request->code)->count();
         $new_brg = DB::table('inventaris_data')->where('inventaris_data_cabang', $request->code)->count();
-        return view('application.admin.cabang.migrasi.master-barang',[
+        return view('application.admin.cabang.migrasi.master-barang', [
             'old_brg' => $old_brg,
             'new_brg' => $new_brg
         ]);
@@ -155,19 +164,20 @@ class MasterAdminController extends Controller
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
         return view('application.admin.cabang.data-barang', ['data' => $data, 'cabang' => $cabang]);
     }
-    public function masteradmin_cabang_option_data_barang(Request $request){
+    public function masteradmin_cabang_option_data_barang(Request $request)
+    {
         if ($request->id == 'v02') {
-            $data = DB::table('sub_tbl_inventory')->where('kd_cabang',$request->code)->get();
-            return view('application.admin.cabang.barang.data-version-02',['data'=>$data]);
-        } elseif($request->id == 'v03') {
-            $data = DB::table('inventaris_data')->where('inventaris_data_cabang',$request->code)->get();
-            return view('application.admin.cabang.barang.data-version-03',['data'=>$data]);
+            $data = DB::table('sub_tbl_inventory')->where('kd_cabang', $request->code)->get();
+            return view('application.admin.cabang.barang.data-version-02', ['data' => $data]);
+        } elseif ($request->id == 'v03') {
+            $data = DB::table('inventaris_data')->where('inventaris_data_cabang', $request->code)->get();
+            return view('application.admin.cabang.barang.data-version-03', ['data' => $data]);
         }
     }
     public function masteradmin_cabang_update_data_barang(Request $request)
     {
-        $data = DB::table('sub_tbl_inventory')->where('id_inventaris',$request->code)->first();
-        return view('application.admin.cabang.form-edit-barang',['data'=>$data]);
+        $data = DB::table('sub_tbl_inventory')->where('id_inventaris', $request->code)->first();
+        return view('application.admin.cabang.form-edit-barang', ['data' => $data]);
     }
     public function masteradmin_cabang_data_lokasi(Request $request)
     {
@@ -184,6 +194,10 @@ class MasterAdminController extends Controller
     {
         $data = DB::table('sub_tbl_inventory')->where('id_nomor_ruangan_cbaang', $request->code)->get();
         return view('application.admin.cabang.data-barang-lokasi', ['data' => $data]);
+    }
+    public function masteradmin_cabang_data_peminjaman(Request $request){
+        $data = DB::table('tbl_peminjaman')->where('kd_cabang',$request->code)->get();
+        return view('application.admin.cabang.data-peminjaman-cabang',['data'=>$data]);
     }
     public function masteradmin_menu()
     {
@@ -216,6 +230,23 @@ class MasterAdminController extends Controller
                 'created_at' => now(),
             ]);
             return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
+        } else {
+            return view('application.error.404');
+        }
+    }
+    // MENU AKSES
+    public function masteradmin_access()
+    {
+        if (Auth::user()->akses == 'admin') {
+            return view('application.admin.masterakses');
+        } else {
+            return view('application.error.404');
+        }
+    }
+    public function master_setting()
+    {
+        if (Auth::user()->akses == 'admin') {
+            return view('application.admin.mastersetting');
         } else {
             return view('application.error.404');
         }

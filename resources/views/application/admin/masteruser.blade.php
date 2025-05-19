@@ -72,6 +72,7 @@
                                             id="button-edit-data-user" data-code="{{ $datas->email }}"><span
                                                 class="far fa-edit"></span>
                                             Edit User</button>
+                                        <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
                                             id="button-data-barang-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="far fa-folder-open"></span> History</button>
