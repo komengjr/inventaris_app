@@ -1,6 +1,6 @@
 <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-        <h4 class="mb-1" id="staticBackdropLabel">Data Barang Lokasi</h4>
+        <h4 class="mb-1" id="staticBackdropLabel">Data Barang Lokasi : <span class="fw-bold text-primary">{{$lokasi->nama_lokasi}}</span> No.{{$lokasi->nomor_ruangan }} </h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-2">
@@ -20,37 +20,37 @@
             <tbody style="font-size: 13px;">
                 @foreach ($data as $datas)
                     <?php
-                    $nama_lokasi = DB::table('tbl_lokasi')->select('tbl_lokasi.nama_lokasi')->where('kd_lokasi', $datas->kd_lokasi)->get();
+                    $nama_lokasi = DB::table('tbl_lokasi')->select('tbl_lokasi.nama_lokasi')->where('kd_lokasi', $datas->inventaris_data_location)->get();
                     ?>
                     <tr>
                         <td>
-                            @if ($datas->gambar == '')
+                            @if ($datas->inventaris_data_file == '')
                                 <img src="{{ asset('no_pict.png') }}" alt="lightbox" class="img-thumbnail"
                                     id="videoPreview" width="70" height="70">
                             @else
-                                <img src="{{ asset($datas->gambar) }}" alt="" width="80" />
+                                <img src="{{ asset($datas->inventaris_data_file) }}" alt="" width="80" />
                             @endif
                         </td>
-                        <td>{{ $datas->nama_barang }}</td>
-                        <td>{{ $datas->id_inventaris }}</td>
-                        <td>{{ $datas->no_inventaris }}</td>
+                        <td>{{ $datas->inventaris_data_name }}</td>
+                        <td>{{ $datas->inventaris_klasifikasi_code }}</td>
+                        <td>{{ $datas->inventaris_data_number }}</td>
                         @if ($nama_lokasi->isEmpty())
-                            <td>{{ $datas->kd_lokasi }}</td>
+                            <td>{{ $datas->inventaris_data_location }}</td>
                         @else
-                            <td>{{ $datas->kd_lokasi }} ( {{ $nama_lokasi[0]->nama_lokasi }} )</td>
+                            <td>{{ $datas->inventaris_data_location }} ( {{ $nama_lokasi[0]->nama_lokasi }} )</td>
                         @endif
 
 
                         <td>
-                            {{ $datas->merk }} / {{ $datas->type }}
+                            {{ $datas->inventaris_data_merk }} / {{ $datas->inventaris_data_type }}
                         </td>
 
-                        <td>@currency($datas->harga_perolehan)</td>
+                        <td>@currency($datas->inventaris_data_harga)</td>
                         <td class="text-center">
                             <button class="btn-dark" id="editdatabarang" data-url="123"><i class="fa fa-eye">
                                 </i> Detail & Edit</button><br><br>
                             <button class="btn-info"
-                                onclick="window.open('printbarcodebyid/{{ $datas->id }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i
+                                onclick="window.open('../../printbarcodebyid/{{ $datas->id_inventaris_data }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i
                                     class="fa fa-print"></i> Print barcode</button>
 
                         </td>

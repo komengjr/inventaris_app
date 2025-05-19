@@ -4,40 +4,47 @@
         #button-view-data-lokasi {
             cursor: pointer;
         }
+        #button-view-data-lokasi:hover {
+            background: blanchedalmond;
+        }
     </style>
     <link href="{{ asset('vendors/choices/choices.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
-
 @endsection
 @section('content')
     <div class="row mb-3">
         <div class="col">
-            <div class="card bg-100 shadow-none border">
+            <div class="card bg-100 shadow-none border border-primary">
                 <div class="row gx-0 flex-between-center">
-                    <div class="col-sm-auto d-flex align-items-center mb-2"><img class="ms-n2"
-                            src="{{ asset('asset/img/illustrations/crm-bar-chart.png') }}" alt="" width="90" />
+                    <div class="col-sm-auto d-flex align-items-center border-bottom">
+                        <img class="ms-3 mx-3" src="{{ asset('img/icon/icon.png') }}" alt="" width="50" />
                         <div>
-                            <h6 class="text-primary fs--1 mb-0 pt-2">Welcome {{ $cabang->nama_cabang }} </h6>
-                            <h4 class="text-primary fw-bold mb-0">Inventaris <span class="text-info fw-medium">Management
+                            <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to {{ $cabang->nama_cabang }}</h6>
+                            <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management
                                     System</span></h4>
-                        </div><img class="ms-n4 d-md-none d-lg-block"
+                        </div><img class="ms-n4 d-none d-lg-block"
                             src="{{ asset('asset/img/illustrations/crm-line-chart.png') }}" alt="" width="150" />
                     </div>
-                    {{-- <div class="col-md-auto p-3">
-
-                    </div> --}}
+                    <div class="col-xl-auto px-3 py-2">
+                        <h6 class="text-primary fs--1 mb-1">Support By : </h6>
+                        <h4 class="text-primary fw-bold mb-0">
+                            <img class="" src="{{ asset('vendor/pramita.png') }}" alt="" width="90" />
+                            <img class="ms-1" src="{{ asset('vendor/sima.jpeg') }}" alt="" width="80" />
+                            <img class="ms-1" src="{{ asset('vendor/prospek.png') }}" alt="" width="80" />
+                        </h4>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="row mb-3 g-3">
         <div class="col-lg-12 col-xxl-9">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body py-0 py-lg-2">
                     <div class="row">
-
-                        <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-0">
+                        <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-2">
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
                                     {{-- <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
@@ -64,9 +71,9 @@
                             </div>
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
-                                    <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
-                                            class="fs--2 far fa-folder text-info"></span></div>
-                                    <h6 class="mb-0">122 Barang</h6>
+                                    <div class="icon-item icon-item-sm bg-soft-warning shadow-none me-2 bg-soft-info"><span
+                                            class="fs--2 fas fa-shipping-fast text-info"></span></div>
+                                    <h6 class="mb-0">{{ $datanonaset }} Barang</h6>
                                 </div>
                             </div>
                             <div class="d-flex flex-between-center mb-1">
@@ -76,9 +83,8 @@
                                     <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2">@currency($nonaset) </p>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-0">
+                        <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-2">
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
                                     {{-- <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
@@ -103,9 +109,9 @@
                             </div>
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
-                                    <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
-                                            class="fs--2 far fa-folder text-info"></span></div>
-                                    <h6 class="mb-0">122 Barang</h6>
+                                    <div class="icon-item icon-item-sm bg-soft-warning shadow-none me-2 bg-soft-info"><span
+                                            class="fs--1 fab fa-wpforms text-info"></span></div>
+                                    <h6 class="mb-0">{{ $dataaset }} Barang</h6>
                                 </div>
                             </div>
                             <div class="d-flex flex-between-center mb-1">
@@ -117,7 +123,7 @@
                             </div>
 
                         </div>
-                        <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-0">
+                        <div class="col-lg-4 border-lg-0 py-3 py-lg-2">
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
                                     {{-- <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
@@ -142,9 +148,9 @@
                             </div>
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
-                                    <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
+                                    <div class="icon-item icon-item-sm bg-soft-warning shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 far fa-folder text-info"></span></div>
-                                    <h6 class="mb-0">122 Barang</h6>
+                                    <h6 class="mb-0">0 Barang</h6>
                                 </div>
                             </div>
                             <div class="d-flex flex-between-center mb-1">
@@ -296,11 +302,20 @@
                             <hr class="mx-ncard mb-0 d-md-none d-xxl-block" />
                             @foreach ($klasifikasi as $klasifikasis)
                                 <div class="d-flex flex-between-center border-bottom py-1 pt-md-0 pt-xxl-3">
-                                    <div class="d-flex"><img class="me-2" src="{{ asset('asset/img/crm/other.svg') }}"
+                                    <div class="d-flex"><img class="me-2" src="{{ asset('img/icon/icon.png') }}"
                                             width="16" height="16" alt="..." />
                                         <h6 class="text-700 mb-0">{{ $klasifikasis->inventaris_cat_name }} </h6>
                                     </div>
-                                    <h6 class="text-700 mb-3">@currency(4539000)</h6>
+                                    @php
+                                        $jumlah = 0;
+                                        $jumlah = DB::table('inventaris_data')
+                                        ->join('inventaris_klasifikasi','inventaris_klasifikasi.inventaris_klasifikasi_code','=','inventaris_data.inventaris_klasifikasi_code')
+                                        ->join('inventaris_cat','inventaris_cat.inventaris_cat_code','=','inventaris_klasifikasi.inventaris_cat_code')
+                                        ->where('inventaris_cat.inventaris_cat_code',$klasifikasis->inventaris_cat_code)
+                                        ->where('inventaris_data.inventaris_data_cabang',Auth::user()->cabang)
+                                        ->sum('inventaris_data.inventaris_data_harga');
+                                    @endphp
+                                    <h6 class="text-700 mb-3">@currency($jumlah)</h6>
                                 </div>
                             @endforeach
 

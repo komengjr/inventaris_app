@@ -196,8 +196,9 @@ class MasterAdminController extends Controller
         return view('application.admin.cabang.data-barang-lokasi', ['data' => $data]);
     }
     public function masteradmin_cabang_data_peminjaman(Request $request){
+        $cabang = DB::table('tbl_cabang')->where('kd_cabang',$request->code)->first();
         $data = DB::table('tbl_peminjaman')->where('kd_cabang',$request->code)->get();
-        return view('application.admin.cabang.data-peminjaman-cabang',['data'=>$data]);
+        return view('application.admin.cabang.data-peminjaman-cabang',['data'=>$data,'cabang'=>$cabang]);
     }
     public function masteradmin_menu()
     {

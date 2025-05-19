@@ -37,6 +37,8 @@ class AppController extends Controller
             $cabang = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
             $nonaset = DB::table('inventaris_data')->where('inventaris_data_jenis', 0)->where('inventaris_data_cabang', Auth::user()->cabang)->sum('inventaris_data_harga');
             $aset = DB::table('inventaris_data')->where('inventaris_data_jenis', 1)->where('inventaris_data_cabang', Auth::user()->cabang)->sum('inventaris_data_harga');
+            $datanonaset = DB::table('inventaris_data')->where('inventaris_data_jenis', 0)->where('inventaris_data_cabang', Auth::user()->cabang)->count();
+            $dataaset = DB::table('inventaris_data')->where('inventaris_data_jenis', 1)->where('inventaris_data_cabang', Auth::user()->cabang)->count();
             $ruangan = DB::table('tbl_nomor_ruangan_cabang')
             ->join('master_lokasi','tbl_nomor_ruangan_cabang.kd_lokasi','=','master_lokasi.master_lokasi_code')
             ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->get();
@@ -45,6 +47,8 @@ class AppController extends Controller
                 'cabang' => $cabang,
                 'nonaset' => $nonaset,
                 'aset' => $aset,
+                'datanonaset' => $datanonaset,
+                'dataaset' => $dataaset,
                 'ruangan' => $ruangan,
             ]);
         } else {
@@ -59,8 +63,10 @@ class AppController extends Controller
         return view('application.dashboard.form.form-add-non-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
     }
     public function dashboard_lokasi_data_barang(Request $request){
-        $data = DB::table('sub_tbl_inventory')->where('id_nomor_ruangan_cbaang',$request->code)->get();
-        return view('application.dashboard.data.data-lokasi',['data'=>$data]);
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+        ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang',$request->code)->first();
+        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang',$request->code)->get();
+        return view('application.dashboard.data.data-lokasi',['data'=>$data,'lokasi'=>$lokasi]);
     }
     public function peminjaman($akses)
     {

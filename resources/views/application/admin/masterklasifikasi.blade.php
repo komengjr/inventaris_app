@@ -9,16 +9,16 @@
         <div class="col">
             <div class="card bg-100 shadow-none border">
                 <div class="row gx-0 flex-between-center">
-                    <div class="col-sm-auto d-flex align-items-center"><img class="ms-n2"
-                            src="{{ asset('asset/img/illustrations/crm-bar-chart.png') }}" alt="" width="90" />
+                    <div class="col-sm-auto d-flex align-items-center border-bottom">
+                        <img class="ms-3 mx-3" src="{{ asset('img/icon/icon.png') }}" alt="" width="50" />
                         <div>
-                            <h6 class="text-primary fs--1 mb-0">Welcome to </h6>
-                            <h4 class="text-primary fw-bold mb-0">Inventaris <span class="text-info fw-medium">Management
+                            <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to </h6>
+                            <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management
                                     System</span></h4>
-                        </div><img class="ms-n4 d-md-none d-lg-block"
+                        </div><img class="ms-n4 d-none d-lg-block"
                             src="{{ asset('asset/img/illustrations/crm-line-chart.png') }}" alt="" width="150" />
                     </div>
-                    <div class="col-xl-auto p-3">
+                    <div class="col-xl-auto px-3 py-2">
                         <h6 class="text-primary fs--1 mb-0">Menu : </h6>
                         <h4 class="text-primary fw-bold mb-0">Master <span class="text-info fw-medium">Klasifikasi</span>
                         </h4>
@@ -87,7 +87,7 @@
             <div class="card">
                 <div class="card-header pb-0">
                     <div class="row flex-between-center">
-                        <div class="col-sm-auto mb-sm-0 ">
+                        <div class="col-sm-auto mb-sm-0 mb-2">
                             <h5 class="mb-0" data-anchor="data-anchor">
                                 Data Klasifikasi V.3
                             </h5>

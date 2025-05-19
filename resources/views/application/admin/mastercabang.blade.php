@@ -9,16 +9,16 @@
         <div class="col">
             <div class="card bg-100 shadow-none border">
                 <div class="row gx-0 flex-between-center">
-                    <div class="col-sm-auto d-flex align-items-center"><img class="ms-n2"
-                            src="{{ asset('asset/img/illustrations/crm-bar-chart.png') }}" alt="" width="90" />
+                    <div class="col-sm-auto d-flex align-items-center border-bottom">
+                        <img class="ms-3 mx-3" src="{{ asset('img/icon/icon.png') }}" alt="" width="50" />
                         <div>
-                            <h6 class="text-primary fs--1 mb-0">Welcome to </h6>
-                            <h4 class="text-primary fw-bold mb-0">Inventaris <span class="text-info fw-medium">Management
+                            <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to </h6>
+                            <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management
                                     System</span></h4>
-                        </div><img class="ms-n4 d-md-none d-lg-block"
+                        </div><img class="ms-n4 d-none d-lg-block"
                             src="{{ asset('asset/img/illustrations/crm-line-chart.png') }}" alt="" width="150" />
                     </div>
-                    <div class="col-xl-auto p-3">
+                    <div class="col-xl-auto px-3 py-2">
                         <h6 class="text-primary fs--1 mb-0">Menu : </h6>
                         <h4 class="text-primary fw-bold mb-0">Master <span class="text-info fw-medium">Cabang</span></h4>
                     </div>
@@ -30,7 +30,7 @@
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h5 class="mb-0">Master Cabang</h5>
+                    <h5 class="mb-1 text-primary fw-bold">Master Cabang</h5>
                 </div>
                 <div class="col-auto">
 
@@ -70,10 +70,12 @@
                             <td>{{ $datas->city }}</td>
                             <td>{{ $datas->phone }}</td>
                             <td>
-                                 @php
-                                    $total = DB::table('sub_tbl_inventory')->where('kd_cabang', $datas->kd_cabang)->count();
+                                @php
+                                    $total = DB::table('sub_tbl_inventory')
+                                        ->where('kd_cabang', $datas->kd_cabang)
+                                        ->count();
                                 @endphp
-                                {{$total}}
+                                {{ $total }}
                             </td>
                             <td>
                                 @php
@@ -93,31 +95,34 @@
                                             data-fa-transform="shrink-3"></span>Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
-                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
-                                            id="button-edit-data-cabang" data-code="{{ $datas->kd_cabang }}"><span
-                                                class="far fa-edit"></span>
+                                        <button class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#modal-cabang-lg" id="button-edit-data-cabang"
+                                            data-code="{{ $datas->kd_cabang }}"><span class="far fa-edit"></span>
                                             Edit Cabang</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
                                             id="button-data-barang-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="far fa-folder-open"></span> Data Barang
                                             Cabang</button>
-                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
-                                            id="button-data-lokasi-cabang" data-code="{{ $datas->kd_cabang }}"><span
-                                                class="fas fa-map-marked-alt"></span> Data Lokasi
+                                        <button class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#modal-cabang-lg" id="button-data-lokasi-cabang"
+                                            data-code="{{ $datas->kd_cabang }}"><span class="fas fa-map-marked-alt"></span>
+                                            Data Lokasi
                                             Cabang</button>
                                         <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
                                             id="button-data-peminjaman-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                 class="fas fa-book-medical"></span> Data Peminjaman
                                             Cabang</button>
-                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
-                                            id="button-data-lokasi-cabang" data-code="{{ $datas->kd_cabang }}"><span
-                                                class="fas fa-book-open"></span> Data Stock Opname
+                                        <button class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#modal-cabang-lg" id="button-data-lokasi-cabang"
+                                            data-code="{{ $datas->kd_cabang }}"><span class="fas fa-book-open"></span> Data
+                                            Stock Opname
                                             Cabang</button>
                                         <div class="dropdown-divider"></div>
-                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang-lg"
-                                            id="button-migrasi-data-cabang" data-code="{{ $datas->kd_cabang }}"><span
-                                                class="fas fa-code-branch"></span> Migrasi Data Cabang</button>
+                                        <button class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#modal-cabang-lg" id="button-migrasi-data-cabang"
+                                            data-code="{{ $datas->kd_cabang }}"><span class="fas fa-code-branch"></span>
+                                            Migrasi Data Cabang</button>
 
 
                                     </div>
