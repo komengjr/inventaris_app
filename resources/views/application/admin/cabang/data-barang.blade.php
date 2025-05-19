@@ -8,7 +8,7 @@
             <div class="card-body">
                 <div class="row flex-between-center">
                     <div class="col-sm-auto mb-2 mb-sm-0 ">
-                        <h6 class="mb-0 text-white">Total Barang : {{ $data->count() }}</h6>
+                        <h6 class="mb-0 text-white">Total Barang : <span id="jumlah barang">{{ $data->count() }}</span></h6>
                     </div>
                     <div class="col-sm-auto">
                         <div class="row gx-2 align-items-center">

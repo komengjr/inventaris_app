@@ -415,6 +415,9 @@ Route::prefix('app')->group(function () {
 
 Route::prefix('masteradmin')->group(function () {
     Route::get('user', [MasterAdminController::class, 'masteradmin_user'])->name('masteradmin_user');
+    Route::post('user/add', [MasterAdminController::class, 'masteradmin_user_add'])->name('masteradmin_user_add');
+    Route::post('user/edit', [MasterAdminController::class, 'masteradmin_user_edit'])->name('masteradmin_user_edit');
+    Route::post('user/save', [MasterAdminController::class, 'masteradmin_user_save'])->name('masteradmin_user_save');
     Route::get('category', [MasterAdminController::class, 'masteradmin_category'])->name('masteradmin_category');
     Route::get('klasifikasi', [MasterAdminController::class, 'masteradmin_klasifikasi'])->name('masteradmin_klasifikasi');
     Route::post('klasifikasi/clone-data', [MasterAdminController::class, 'masteradmin_klasifikasi_clone_data'])->name('masteradmin_klasifikasi_clone_data');

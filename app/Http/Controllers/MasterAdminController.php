@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use DB;
 class MasterAdminController extends Controller
@@ -15,10 +16,27 @@ class MasterAdminController extends Controller
     public function masteradmin_user()
     {
         if (Auth::user()->akses == 'admin') {
-            return view('application.admin.masteruser');
+            $data = DB::table('users')->join('tbl_cabang','tbl_cabang.kd_cabang','=','users.cabang')->get();
+            return view('application.admin.masteruser',['data'=>$data]);
         } else {
             return view('application.error.404');
         }
+    }
+    public function masteradmin_user_add(){
+        $cabang = DB::table('tbl_cabang')->get();
+        return view('application.admin.user.form-add',['cabang'=>$cabang]);
+    }
+    public function masteradmin_user_save(Request $request){
+        DB::table('users')->insert([
+            'name'=>$request->name,
+            'email'=>$request->username,
+            'email_'=>'-',
+            'password'=>Hash::make($request->input('pwd')),
+            'akses'=>$request->akses,
+            'cabang'=>$request->cabang,
+            'created_at'=>now(),
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data User Cabang');
     }
     public function masteradmin_klasifikasi(){
         $data_v2 = DB::table('tbl_inventory')->get();
