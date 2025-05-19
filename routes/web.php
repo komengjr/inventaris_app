@@ -415,9 +415,15 @@ Route::prefix('app')->group(function () {
 
 Route::prefix('masteradmin')->group(function () {
     Route::get('user', [MasterAdminController::class, 'masteradmin_user'])->name('masteradmin_user');
+    Route::get('category', [MasterAdminController::class, 'masteradmin_category'])->name('masteradmin_category');
+    Route::get('klasifikasi', [MasterAdminController::class, 'masteradmin_klasifikasi'])->name('masteradmin_klasifikasi');
+    Route::post('klasifikasi/clone-data', [MasterAdminController::class, 'masteradmin_klasifikasi_clone_data'])->name('masteradmin_klasifikasi_clone_data');
+    Route::post('klasifikasi/add-data-v2', [MasterAdminController::class, 'masteradmin_klasifikasi_add_data_v2'])->name('masteradmin_klasifikasi_add_data_v2');
+    Route::post('klasifikasi/add-data-v2/save', [MasterAdminController::class, 'masteradmin_klasifikasi_add_data_v2_save'])->name('masteradmin_klasifikasi_add_data_v2_save');
     Route::get('cabang', [MasterAdminController::class, 'masteradmin_cabang'])->name('masteradmin_cabang');
     Route::post('cabang/edit', [MasterAdminController::class, 'masteradmin_cabang_edit'])->name('masteradmin_cabang_edit');
     Route::post('cabang/data-barang', [MasterAdminController::class, 'masteradmin_cabang_data_barang'])->name('masteradmin_cabang_data_barang');
+    Route::post('cabang/option-data-barang', [MasterAdminController::class, 'masteradmin_cabang_option_data_barang'])->name('masteradmin_cabang_option_data_barang');
     Route::post('cabang/update-data-barang', [MasterAdminController::class, 'masteradmin_cabang_update_data_barang'])->name('masteradmin_cabang_update_data_barang');
     Route::post('cabang/data-lokasi', [MasterAdminController::class, 'masteradmin_cabang_data_lokasi'])->name('masteradmin_cabang_data_lokasi');
     Route::post('cabang/update-data-lokasi', [MasterAdminController::class, 'masteradmin_cabang_update_data_lokasi'])->name('masteradmin_cabang_update_data_lokasi');

@@ -29,8 +29,8 @@
                         <tr>
                             <td class="name">Master Stock Opname</td>
                             <td class="email">
-                                <p class="text-danger mb-0">{{$old_brg}} Data</p>
-                                <p class="text-success mb-0">{{$old_brg}} Data</p>
+                                <p class="text-danger mb-0">0 Data</p>
+                                <p class="text-success mb-0">0 Data</p>
                             </td>
                             <td class="text-center">
                                 <button class="btn btn-sm btn-primary fs--1" type="button"

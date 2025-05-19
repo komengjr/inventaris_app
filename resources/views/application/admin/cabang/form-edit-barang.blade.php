@@ -12,7 +12,7 @@
                     {{-- <input type="file" accept="image/*" onchange="loadFile(event)"> --}}
                     <label class="custom-file-upload form-control" id="upload-container">
                         <input type="file" id="browseFile" class="form-control" />
-                        <span class="fas fa-cloud-upload-alt"></span> Upload Gambar
+                        <span class="fas fa-cloud-upload-alt"></span> Upload Gambars
                     </label>
                     <a href="#" data-fancybox="images" data-caption="">
                         <img src="{{ asset('no_img.jpg') }}" alt="lightbox" class="lightbox-thumb img-thumbnail"
@@ -26,41 +26,42 @@
                 </div>
                 <div class="col-md-4">
                     <label for="inputPassword4" class="form-label">Nama Barangs</label>
-                    <input type="text" name="nama_barang" class="form-control form-control-lg" id="inputPassword4"
+                    <input type="text" name="nama_barang" class="form-control form-control-lg" value="{{$data->nama_barang}}"
                         required>
                     <label for="inputEmail4" class="form-label">Jenis Inventaris</label>
-                    <select class="form-control choices-single-jenis" name="kd_inventaris" required>
-                        <option value="">Pilih Jenis Inventaris</option>
+                    <select class="form-control choices-single-jenis" name="kd_inventaris" value="{{$data->kd_inventaris}}">
+                        <option value="{{$data->kd_inventaris}}">{{$data->kd_inventaris}}</option>
 
                     </select>
 
                     <label for="inputPassword4" class="form-label">Kategori</label>
                     <select class="form-control form-control-lg kategori_barang" name="kategori" required>
-                        <option value="">Pilih Kategori</option>
+
+                        <option value="{{$data->kd_jenis}}">{{$data->kd_jenis}}</option>
                         <option value="0">Inventaris</option>
                         <option value="1">Aset</option>
                     </select>
                     <label for="inputEmail4" class="form-label">Tanggal Pembelian</label>
-                    <input type="date" name="tgl_beli" class="form-control form-control-lg" required>
+                    <input type="date" name="tgl_beli" class="form-control form-control-lg" value="{{$data->tgl_beli}}">
                     <label for="inputPassword4" class="form-label">Harga Perolehan</label>
-                    <input type="text" name="harga_perolehan" class="form-control form-control-lg" id="dengan-rupiah"
+                    <input type="text" name="harga_perolehan" class="form-control form-control-lg" id="dengan-rupiah" value="{{$data->harga_perolehan}}"
                         required>
                     <input id="link" type="text" name="link" class="form-control " hidden>
                 </div>
                 <div class="col-md-4">
                     <label for="inputPassword4" class="form-label">Supplier</label>
-                    <input type="text" name="suplier" class="form-control form-control-lg" required>
+                    <input type="text" name="suplier" class="form-control form-control-lg" {{$data->suplier}}>
                     <label for="inputEmail4" class="form-label">Lokasi</label>
                     <select class="form-control choices-single-lokasi " name="no_ruangan" required>
-                        <option value="">Pilih Ruangan</option>
+                        <option value="{{$data->kd_lokasi}}">{{$data->kd_lokasi}}</option>
 
                     </select>
                     <label for="inputPassword4" class="form-label">Merek</label>
-                    <input type="text" name="merk" class="form-control form-control-lg" value="">
+                    <input type="text" name="merk" class="form-control form-control-lg" value="{{$data->merk}}">
                     <label for="inputPassword4" class="form-label">Type Barang</label>
-                    <input type="text" name="type" class="form-control form-control-lg" value="">
+                    <input type="text" name="type" class="form-control form-control-lg" value="{{$data->type}}">
                     <label for="inputPassword4" class="form-label">Nomor Serial</label>
-                    <input type="text" name="no_seri" class="form-control form-control-lg" value="">
+                    <input type="text" name="no_seri" class="form-control form-control-lg" value="{{$data->no_seri}}">
                 </div>
 
             </div>
