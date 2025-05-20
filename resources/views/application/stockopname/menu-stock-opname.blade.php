@@ -125,9 +125,9 @@
                                             data-fa-transform="shrink-3"></span>Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang"
-                                            data-code="{{$item->kode_verif}}"><span class="far fa-edit"></span>
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock"
+                                            id="button-proses-stock-opname-cabang"
+                                            data-code="{{ $item->kode_verif }}"><span class="far fa-edit"></span>
                                             Proses Stock Opname</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal"
@@ -232,6 +232,24 @@
             }).fail(function() {
                 $('#form-data-stock').html('eror');
             });
+        });
+        $(document).on("click", "#button-simpan-hasil-verifikasi", function(e) {
+            var data = $("#form-verifikasi-data-inevntaris").serialize();
+            e.preventDefault();
+            $.ajax({
+                    url: "../../../divisi/postverifikasi/scanner/simpandata",
+                    type: "POST",
+                    data: data,
+                    dataType: "html",
+                })
+                .done(function(data) {
+                    $("#hasil-pencarian").html(data);
+                })
+                .fail(function() {
+                    $("#hasil-pencarian").html(
+                        '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    );
+                });
         });
         // $(document).on("click", "#button-data-stock-opname-cabang", function(e) {
         //     e.preventDefault();

@@ -88,10 +88,7 @@
     function CallAjaxLoginQr(code) {
         var tiket = document.getElementById("tiket").value;
         $.ajax({
-                url: "../postdata/inventaris/" + tiket,
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
-                },
+                url: "{{ route('menu_stock_opname_scan_data_with_kamera') }}",
                 type: "POST",
                 cache: false,
                 data: {

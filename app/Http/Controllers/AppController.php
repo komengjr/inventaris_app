@@ -100,16 +100,25 @@ class AppController extends Controller
             ->get();
         return view('application.stockopname.menu-stock-opname', ['data' => $data]);
     }
-    public function menu_stock_opname_proses_data(Request $request){
+    public function menu_stock_opname_proses_data(Request $request)
+    {
         $cekdata = DB::table('tbl_verifdatainventaris')
             ->where('kode_verif', $request->code)
             ->first();
         $tbl_cabang = DB::table('tbl_cabang')->where('kd_cabang', auth::user()->cabang)->get();
         $lokasi = DB::table('tbl_lokasi')->get();
         $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->orderBy('nomor_ruangan', 'ASC')->get();
-        return view('application.admin.cabang.stockopname.proses-stock-opname',['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan, 'id' => $request->code]);
+        return view('application.admin.cabang.stockopname.proses-stock-opname', ['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan, 'id' => $request->code]);
     }
-    public function menu_stock_opname_proses_data_with_kamera(Request $request){
-        return view('application.admin.cabang.stockopname.kamera-stock-opname',['tiket' => $request->code]);
+    public function menu_stock_opname_proses_data_with_kamera(Request $request)
+    {
+        return view('application.admin.cabang.stockopname.kamera-stock-opname', ['tiket' => $request->code]);
+    }
+    public function menu_stock_opname_scan_data_with_kamera(Request $request)
+    {
+        $data = DB::table('sub_tbl_inventory')
+            ->where('kd_cabang', Auth::user()->cabang)
+            ->where('no_inventaris', $request->data)->first();
+        return view('application.admin.cabang.stockopname.result-kamera-stock', ['data' => $data, 'kode' => $request->tiket]);
     }
 }
