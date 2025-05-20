@@ -106,11 +106,12 @@
     right: 0;
     border-bottom: solid red 5px;
     border-right: solid red 5px;
-    JS
+
 }
 
 #webcodecam-canvas {
     background-color: #272822;
+    width: 670px;
 }
 #scanned-QR{
     word-break: break-word;
