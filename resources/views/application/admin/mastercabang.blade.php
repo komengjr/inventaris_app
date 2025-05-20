@@ -114,7 +114,7 @@
                                                 class="fas fa-book-medical"></span> Data Peminjaman
                                             Cabang</button>
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang-lg" id="button-data-lokasi-cabang"
+                                            data-bs-target="#modal-cabang" id="button-data-stock-opname-cabang"
                                             data-code="{{ $datas->kd_cabang }}"><span class="fas fa-book-open"></span> Data
                                             Stock Opname
                                             Cabang</button>
@@ -308,6 +308,27 @@
             );
             $.ajax({
                 url: "{{ route('masteradmin_cabang_data_peminjaman') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang').html(data);
+            }).fail(function() {
+                $('#menu-cabang').html('eror');
+            });
+        });
+        $(document).on("click", "#button-data-stock-opname-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_data_stock_opname') }}",
                 type: "POST",
                 cache: false,
                 data: {

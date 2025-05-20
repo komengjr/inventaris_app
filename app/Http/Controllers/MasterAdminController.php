@@ -43,9 +43,13 @@ class MasterAdminController extends Controller
     }
     public function masteradmin_klasifikasi()
     {
-        $data_v2 = DB::table('tbl_inventory')->get();
-        $data_v3 = DB::table('inventaris_klasifikasi')->get();
-        return view('application.admin.masterklasifikasi', ['data_v2' => $data_v2, 'data_v3' => $data_v3]);
+        if (Auth::user()->akses == 'admin') {
+            $data_v2 = DB::table('tbl_inventory')->get();
+            $data_v3 = DB::table('inventaris_klasifikasi')->get();
+            return view('application.admin.masterklasifikasi', ['data_v2' => $data_v2, 'data_v3' => $data_v3]);
+        } else {
+            return view('application.error.404');
+        }
     }
     public function masteradmin_klasifikasi_clone_data(Request $request)
     {
@@ -128,9 +132,9 @@ class MasterAdminController extends Controller
         foreach ($data as $value) {
             $check = DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->where('inventaris_data_cabang', $value->kd_cabang)->first();
             if ($value->tgl_beli == "") {
-                $tgl = $value->th_perolehan."-01-02";
+                $tgl = $value->th_perolehan . "-01-02";
             } elseif ($value->tgl_beli == null) {
-                $tgl = $value->th_perolehan."-01-02";
+                $tgl = $value->th_perolehan . "-01-02";
             } else {
                 $tgl = $value->tgl_beli;
             }
@@ -233,6 +237,11 @@ class MasterAdminController extends Controller
         //     $pdf->image("qr.png", 80, 180, 255, 220);
         //     ');
         return base64_encode($pdf->stream());
+    }
+    public function masteradmin_cabang_data_stock_opname(Request $request)
+    {
+        $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang', $request->code)->get();
+        return view('application.admin.cabang.data-stock-opname-cabang', ['data' => $data]);
     }
     public function masteradmin_menu()
     {

@@ -69,8 +69,6 @@
                             @else
                                 <td>{{ $datas->kd_lokasi }} ( {{ $nama_lokasi[0]->nama_lokasi }} )</td>
                             @endif
-
-
                             <td>
                                 {{ $datas->merk }} / {{ $datas->type }}
                             </td>
