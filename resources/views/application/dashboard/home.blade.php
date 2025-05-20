@@ -464,8 +464,6 @@
             e.preventDefault();
             var id = $(this).data("id");
             var page = document.getElementById("page").value;
-            console.log(id);
-            console.log(page);
             if (page == "-") {
                 alert('eror');
             } else {

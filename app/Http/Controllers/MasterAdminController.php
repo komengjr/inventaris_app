@@ -91,7 +91,7 @@ class MasterAdminController extends Controller
     {
         $data_v2 = DB::table('no_urut_barang')->get();
         $data_v3 = DB::table('inventaris_cat')->get();
-        return view('application.admin.mastercategory',['data_v2'=>$data_v2,'data_v3'=>$data_v3]);
+        return view('application.admin.mastercategory', ['data_v2' => $data_v2, 'data_v3' => $data_v3]);
     }
     public function masteradmin_cabang()
     {
@@ -128,7 +128,9 @@ class MasterAdminController extends Controller
         foreach ($data as $value) {
             $check = DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->where('inventaris_data_cabang', $value->kd_cabang)->first();
             if ($value->tgl_beli == "") {
-                $tgl = $value->th_perolehan."-1-2";
+                $tgl = "01-02-".$value->th_perolehan;
+            } elseif ($value->tgl_beli == null) {
+                $tgl = "01-02-".$value->th_perolehan;
             } else {
                 $tgl = $value->tgl_beli;
             }
@@ -148,7 +150,7 @@ class MasterAdminController extends Controller
                     'inventaris_data_suplier' => $value->suplier,
                     'inventaris_data_kondisi' => $value->kondisi_barang,
                     'inventaris_data_status' => $value->status_barang,
-                    'inventaris_data_tgl_beli' => $newdate,
+                    'inventaris_data_tgl_beli' => $tgl,
                     'inventaris_data_cabang' => $value->kd_cabang,
                     'inventaris_data_urut' => $value->no,
                     'inventaris_data_file' => $value->gambar,
@@ -202,17 +204,20 @@ class MasterAdminController extends Controller
         $data = DB::table('sub_tbl_inventory')->where('id_nomor_ruangan_cbaang', $request->code)->get();
         return view('application.admin.cabang.data-barang-lokasi', ['data' => $data]);
     }
-    public function masteradmin_cabang_data_peminjaman(Request $request){
-        $cabang = DB::table('tbl_cabang')->where('kd_cabang',$request->code)->first();
-        $data = DB::table('tbl_peminjaman')->where('kd_cabang',$request->code)->get();
-        return view('application.admin.cabang.data-peminjaman-cabang',['data'=>$data,'cabang'=>$cabang]);
+    public function masteradmin_cabang_data_peminjaman(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
+        $data = DB::table('tbl_peminjaman')->where('kd_cabang', $request->code)->get();
+        return view('application.admin.cabang.data-peminjaman-cabang', ['data' => $data, 'cabang' => $cabang]);
     }
-    public function masteradmin_cabang_preview_data_peminjaman(Request $request){
-        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->code)->first();
-        return view('application.admin.cabang.peminjaman.preview-peminjaman',['data'=>$data]);
+    public function masteradmin_cabang_preview_data_peminjaman(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
+        return view('application.admin.cabang.peminjaman.preview-peminjaman', ['data' => $data]);
     }
-    public function masteradmin_cabang_print_data_peminjaman(Request $request){
-        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->code)->first();
+    public function masteradmin_cabang_print_data_peminjaman(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
         $image = base64_encode(file_get_contents(public_path('qr.png')));
         $customPaper = array(0, 0, 50.80, 95.20);
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.admin.cabang.peminjaman.report.print-peminjaman', ['data' => $data], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
