@@ -86,7 +86,7 @@
                             <hr />
                             <p>Make sure the address is correct and that the page hasn't moved. If you think this is a
                                 mistake, <a href="mailto:info@exmaple.com">contact us</a>.</p><a
-                                class="btn btn-primary btn-sm mt-3" href="../../index.html"><span
+                                class="btn btn-primary btn-sm mt-3" href="{{ url('/', []) }}"><span
                                     class="fas fa-home me-2"></span>Take me home</a>
                         </div>
                     </div>
