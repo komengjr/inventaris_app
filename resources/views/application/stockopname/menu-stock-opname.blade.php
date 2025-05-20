@@ -92,14 +92,17 @@
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang-lg" id="button-edit-data-cabang"
-                                            data-code="123"><span class="fas fa-check-square"></span> Baik</button>
-                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-cabang"
-                                            id="button-data-barang-cabang" data-code="123"><span
+                                            data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang"
+                                            data-code="{{ $item->kode_verif }}" data-status="0"><span
+                                                class="fas fa-check-square"></span> Baik</button>
+                                        <button class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang"
+                                            data-code="{{ $item->kode_verif }}" data-status="1"><span
                                                 class="fas fa-exclamation-triangle"></span> Maintenance</button>
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang-lg" id="button-data-lokasi-cabang"
-                                            data-code="123"><span class="fas fa-trash-alt"></span> Rusak</button>
+                                            data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang"
+                                            data-code="{{ $item->kode_verif }}" data-status="2"><span
+                                                class="fas fa-trash-alt"></span> Rusak</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#modal-cabang-lg" id="button-migrasi-data-cabang"
@@ -125,8 +128,8 @@
                                             data-fa-transform="shrink-3"></span>Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
-                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock"
-                                            id="button-proses-stock-opname-cabang"
+                                        <button class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang"
                                             data-code="{{ $item->kode_verif }}"><span class="far fa-edit"></span>
                                             Proses Stock Opname</button>
                                         <div class="dropdown-divider"></div>
@@ -140,11 +143,9 @@
                                             Rusak</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item text-danger" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang-lg" id="button-migrasi-data-cabang"
-                                            data-code="123"><span class="fas fa-trash"></span>
+                                            data-bs-target="#modal-stock-sm" id="button-remove-full-stock-opname"
+                                            data-code="{{ $item->kode_verif }}"><span class="fas fa-trash"></span>
                                             Remove Full</button>
-
-
                                     </div>
                                 </div>
                             </td>
@@ -168,7 +169,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-cabang-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-stock-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="false">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content border-0">
@@ -176,7 +177,19 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-cabang-lg"></div>
+                <div id="menu-stock-lg"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-stock-sm" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-stock-sm"></div>
             </div>
         </div>
     </div>
@@ -191,6 +204,73 @@
         });
     </script>
     <script>
+        $(document).on("click", "#button-kondisi-data-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var status = $(this).data("status");
+            $('#menu-stock-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_kondisi_data') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "status": status,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-stock-lg').html(data);
+            }).fail(function() {
+                $('#menu-stock-lg').html('eror');
+            });
+        });
+        $(document).on("click", "#button-remove-full-stock-opname", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-stock-sm').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_remove_full_data') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "status": status,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-stock-sm').html(data);
+            }).fail(function() {
+                $('#menu-stock-sm').html('eror');
+            });
+        });
+        $(document).on("click", "#button-remove-full-data-stock", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#remove-data-stock').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_proses_remove_full_data') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "status": status,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                location.reload();
+            }).fail(function() {
+                $('#remove-data-stock').html('eror');
+            });
+        });
         $(document).on("click", "#button-proses-stock-opname-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");

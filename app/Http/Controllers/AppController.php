@@ -93,6 +93,7 @@ class AppController extends Controller
         }
 
     }
+    // STOK OPNAME
     public function menu_stock_opname($akses)
     {
         $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang', auth::user()->cabang)
@@ -100,15 +101,39 @@ class AppController extends Controller
             ->get();
         return view('application.stockopname.menu-stock-opname', ['data' => $data]);
     }
+    public function menu_stock_opname_kondisi_data(Request $request)
+    {
+        $data = DB::table('tbl_sub_verifdatainventaris')
+            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->where('kode_verif', $request->code)->where('status_data_inventaris', $request->status)->get();
+        return view('application.admin.cabang.stockopname.data-kondisi', ['data' => $data]);
+    }
+    public function menu_stock_opname_remove_full_data(Request $request)
+    {
+        return view('application.admin.cabang.stockopname.remove-data-full-stock', ['id' => $request->code]);
+    }
+    public function menu_stock_opname_proses_remove_full_data(Request $request)
+    {
+        DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->code)->delete();
+        return 123;
+    }
     public function menu_stock_opname_proses_data(Request $request)
     {
         $cekdata = DB::table('tbl_verifdatainventaris')
             ->where('kode_verif', $request->code)
             ->first();
+        $data = DB::table('sub_tbl_inventory')->where('kd_cabang', Auth::user()->cabang)->where('status_barang', '>=', 4)->get();
         $tbl_cabang = DB::table('tbl_cabang')->where('kd_cabang', auth::user()->cabang)->get();
         $lokasi = DB::table('tbl_lokasi')->get();
         $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->orderBy('nomor_ruangan', 'ASC')->get();
-        return view('application.admin.cabang.stockopname.proses-stock-opname', ['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan, 'id' => $request->code]);
+        return view('application.admin.cabang.stockopname.proses-stock-opname', [
+            'cekdata' => $cekdata,
+            'cabang' => $tbl_cabang,
+            'lokasi' => $lokasi,
+            'no_ruangan' => $no_ruangan,
+            'data' => $data,
+            'id' => $request->code,
+        ]);
     }
     public function menu_stock_opname_proses_data_with_kamera(Request $request)
     {

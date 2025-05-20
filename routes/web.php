@@ -412,9 +412,12 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/add', [AppController::class, 'dashboard_add'])->name('dashboard_add');
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');
     Route::post('dashboard/data-lokasi-print-barcode', [AppController::class, 'masteradmin_cabang_data_lokasi_print_barcode'])->name('masteradmin_cabang_data_lokasi_print_barcode');
+    Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
     Route::post('menu-stock-opname/proses-data', [AppController::class, 'menu_stock_opname_proses_data'])->name('menu_stock_opname_proses_data');
     Route::post('menu-stock-opname/proses-data-with-kamera', [AppController::class, 'menu_stock_opname_proses_data_with_kamera'])->name('menu_stock_opname_proses_data_with_kamera');
     Route::post('menu-stock-opname/scan-data-with-kamera', [AppController::class, 'menu_stock_opname_scan_data_with_kamera'])->name('menu_stock_opname_scan_data_with_kamera');
+    Route::post('menu-stock-opname/remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_remove_full_data'])->name('menu_stock_opname_remove_full_data');
+    Route::post('menu-stock-opname/proses-remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_proses_remove_full_data'])->name('menu_stock_opname_proses_remove_full_data');
 });
 
 

@@ -59,7 +59,7 @@
             <div id="view-report-stokopname-ruangan"></div>
 
 
-            <table id="exampledata" class="table table-striped nowrap" style="width:100%"
+            <table id="exampledata" class="table table-striped nowrap border border-primary" style="width:100%"
                 style="border: 1px solid black;">
                 <thead class="bg-200 text-800">
                     <tr>
@@ -188,75 +188,34 @@
                 <div class="col-lg-8">
                     <div class="card h-100">
                         <div class="card-header bg-primary">
-                            <h5 class="mb-0 text-white">Stockopname Detail</h5>
+                            <h5 class="mb-0 text-white">Keterangan Barang Yang Sudah Mutasi / Musnah</h5>
                         </div>
                         <div class="card-body bg-light">
-                            <p class="bg-light rounded">
-                                @if (Auth::user()->cabang == 'PA')
-                                    <form action="{{ url('divisi/postverifikasiall/datasemua/simpandata', []) }}"
-                                        method="post">
-                                        @csrf
-                                        <input type="text" name="kode" id=""
-                                            value="{{ $cekdata->kode_verif }}">
-                                        <button type="submit" class="btn-success">Eksekusi</button>
-                                    </form>
-                                @endif
-                                <button class="btn-success mt-3">C</button> : Baik <br>
-                                <button class="btn-warning mt-3">C</button> : kurang Baik <br>
-                                <button class="btn-danger mt-3">C</button> : Rusak <br>
-                            </p>
-                            {{-- <div class="row gx-3 mb-3">
-                                <div class="col">
-                                    <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1"
-                                        for="cardNumber">Card Number</label>
-                                    <input class="form-control" id="cardNumber" placeholder="XXXX XXXX XXXX XXXX"
-                                        type="text">
-                                </div>
-                                <div class="col">
-                                    <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1"
-                                        for="cardName">Name of Card</label>
-                                    <input class="form-control" id="cardName" placeholder="John Doe" type="text">
-                                </div>
-                            </div>
-                            <div class="row gx-3">
-                                <div class="col-6 col-sm-3">
-                                    <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1"
-                                        for="inputCountry">Country</label>
-                                    <input class="form-select mb-3" id="inputCountry" aria-label="customSelectCountry"
-                                        list="country-list" placeholder="Country">
-                                    <datalist class="scrollbar" id="country-list">
-                                        <option>Afghanistan</option>
-
-                                    </datalist>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1"
-                                        for="zipCode">Zip Code</label>
-                                    <input class="form-control" id="zipCode" placeholder="1234" type="text">
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1"
-                                        for="expDate">Exp Date</label>
-                                    <input class="form-control" id="expDate" placeholder="15/2024" type="text">
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1"
-                                        for="cvv">CVV<span class="ms-1" data-bs-toggle="tooltip"
-                                            data-bs-placement="top" title=""
-                                            data-bs-original-title="Card verification value"
-                                            aria-label="Card verification value"><svg
-                                                class="svg-inline--fa fa-question-circle fa-w-16" aria-hidden="true"
-                                                focusable="false" data-prefix="fa" data-icon="question-circle"
-                                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                    d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z">
-                                                </path>
-                                            </svg><!-- <span class="fa fa-question-circle"></span> Font Awesome fontawesome.com --></span></label>
-                                    <input class="form-control" id="cvv" placeholder="123" maxlength="3"
-                                        pattern="[0-9]{3}" type="text">
-                                </div>
-                            </div> --}}
+                            <table id="exampledetail" class="table table-striped nowrap" style="width:100%">
+                                <thead class="bg-200 text-700">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Barang</th>
+                                        <th>Nomor Inventaris</th>
+                                        <th>Merek</th>
+                                        <th>Harga Barang</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 13px;">
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($data as $datas)
+                                        <tr>
+                                            <td>{{$no++}}</td>
+                                            <td>{{$datas->nama_barang}}</td>
+                                            <td>{{$datas->no_inventaris}}</td>
+                                            <td>{{$datas->merk}}</td>
+                                            <td>@currency($datas->harga_perolehan)</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -339,6 +298,9 @@
     </div>
     <script>
         new DataTable('#exampledata', {
+            responsive: true
+        });
+        new DataTable('#exampledetail', {
             responsive: true
         });
     </script>
