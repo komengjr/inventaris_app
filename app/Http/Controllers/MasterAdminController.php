@@ -128,9 +128,9 @@ class MasterAdminController extends Controller
         foreach ($data as $value) {
             $check = DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->where('inventaris_data_cabang', $value->kd_cabang)->first();
             if ($value->tgl_beli == "") {
-                $tgl = $value->th_perolehan+"-01-02";
+                $tgl = $value->th_perolehan."-01-02";
             } elseif ($value->tgl_beli == null) {
-                $tgl = $value->th_perolehan+"-01-02";
+                $tgl = $value->th_perolehan."-01-02";
             } else {
                 $tgl = $value->tgl_beli;
             }
