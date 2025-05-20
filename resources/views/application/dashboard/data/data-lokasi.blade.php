@@ -62,7 +62,7 @@
                         <th>Nama Barang</th>
                         <th>ID Inventaris</th>
                         <th>Nomor Inventaris</th>
-                        <th>Lokasi</th>
+                        <th>Tanggal Pembelian</th>
                         <th>Merek / Type</th>
                         <th>Harga</th>
                         <th>Action</th>
@@ -86,12 +86,7 @@
                             <td>{{ $datas->inventaris_data_name }}</td>
                             <td>{{ $datas->inventaris_klasifikasi_code }}</td>
                             <td>{{ $datas->inventaris_data_number }}</td>
-                            @if ($nama_lokasi->isEmpty())
-                                <td>{{ $datas->inventaris_data_location }}</td>
-                            @else
-                                <td>{{ $datas->inventaris_data_location }} ( {{ $nama_lokasi[0]->nama_lokasi }} )</td>
-                            @endif
-
+                            <td>{{date("d-m-Y", strtotime($datas->inventaris_data_tgl_beli))}}</td>
 
                             <td>
                                 {{ $datas->inventaris_data_merk }} / {{ $datas->inventaris_data_type }}
@@ -99,9 +94,9 @@
 
                             <td>@currency($datas->inventaris_data_harga)</td>
                             <td class="text-center">
-                                <button class="btn-dark" id="editdatabarang" data-url="123"><i class="fa fa-eye">
+                                <button class="btn btn-falcon-warning btn-sm" id="editdatabarang" data-url="123"><i class="fa fa-eye">
                                     </i> Detail & Edit</button><br><br>
-                                <button class="btn-info"
+                                <button class="btn btn-falcon-info btn-sm"
                                     onclick="window.open('../../printbarcodebyid/{{ $datas->id_inventaris_data }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i
                                         class="fa fa-print"></i> Print barcode</button>
 

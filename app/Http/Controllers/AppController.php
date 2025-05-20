@@ -67,7 +67,7 @@ class AppController extends Controller
     {
         $lokasi = DB::table('tbl_nomor_ruangan_cabang')->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
             ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', $request->code)->first();
-        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->code)->get();
+        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->code)->where('inventaris_data_status','<',4)->get();
         return view('application.dashboard.data.data-lokasi', ['data' => $data, 'lokasi' => $lokasi, 'id' => $request->code]);
     }
     public function masteradmin_cabang_data_lokasi_print_barcode(Request $request)
