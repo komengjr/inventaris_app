@@ -5,7 +5,7 @@
         <div class="col-md-4" id="kamera">
             <div class="well" style="position: relative;display: inline-block;">
                 <div class="card bg-dark">
-                    <canvas id="webcodecam-canvas" style="width: 100%; height: 400px;"></canvas>
+                    <canvas id="webcodecam-canvas" style="width: 100%; height: 600px;"></canvas>
                 </div>
                 <div class="scanner-laser laser-rightBottom" style="opacity: 0.5;"></div>
                 <div class="scanner-laser laser-rightTop" style="opacity: 0.5;"></div>
