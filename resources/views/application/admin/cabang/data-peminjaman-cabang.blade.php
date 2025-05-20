@@ -1,11 +1,10 @@
 <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-        <h4 class="mb-1" id="staticBackdropLabel">Data Peminjaman {{$cabang->nama_cabang}}</h4>
+        <h4 class="mb-1" id="staticBackdropLabel">Data Peminjaman {{ $cabang->nama_cabang }}</h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-3" id="form-data-barang">
-
-        <div id="table-data-version">
+        <div id="table-data-peminjaman">
             <table id="exampledata" class="table table-striped nowrap" style="width:100%">
                 <thead class="bg-200 text-700">
                     <tr>
@@ -25,7 +24,7 @@
                     @endphp
                     @foreach ($data as $datas)
                         <tr>
-                            <td>{{$no++}}</td>
+                            <td>{{ $no++ }}</td>
                             <td>{{ $datas->tiket_peminjaman }}</td>
                             <td>{{ $datas->nama_kegiatan }}</td>
                             <td>{{ $datas->tgl_pinjam }}</td>
@@ -44,13 +43,13 @@
                                             data-code="{{ $datas->kd_cabang }}"><span class="far fa-edit"></span>
                                             Edit Peminjaman Cabang</button>
                                         <div class="dropdown-divider"></div>
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang-lg" id="button-edit-data-cabang"
-                                            data-code="{{ $datas->kd_cabang }}"><span class="fab fa-chromecast"></span>
+                                        <button class="dropdown-item" id="button-preview-data-peminjaman"
+                                            data-code="{{ $datas->tiket_peminjaman }}"><span
+                                                class="fab fa-chromecast"></span>
                                             Preview Peminjaman Cabang</button>
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang-lg" id="button-edit-data-cabang"
-                                            data-code="{{ $datas->kd_cabang }}"><span class="fas fa-print"></span>
+                                        <button class="dropdown-item" id="button-print-data-peminjaman"
+                                            data-code="{{ $datas->tiket_peminjaman }}"><span
+                                                class="fas fa-print"></span>
                                             Print Peminjaman Cabang</button>
                                     </div>
                                 </div>
@@ -68,31 +67,26 @@
     </script>
 </div>
 <script>
-    $('#organizerSingle').on("change", function() {
-        var dataid = $("#organizerSingle option:selected").attr('data-id');
-        var datacode = $("#organizerSingle option:selected").attr('data-code');
-        $('#table-data-version').html(
-            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+    $(document).on("click", "#button-preview-data-peminjaman", function(e) {
+        e.preventDefault();
+        var code = $(this).data("code");
+        $('#table-data-peminjaman').html(
+            '<div class="spinner-border" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
         );
-        if (dataid == "") {
-            location.reload();
-        } else {
-            $.ajax({
-                url: "{{ route('masteradmin_cabang_option_data_barang') }}",
-                type: "POST",
-                cache: false,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "code": datacode,
-                    "id": dataid,
-                },
-                dataType: 'html',
-            }).done(function(data) {
-                $("#table-data-version").html(data);
-            }).fail(function() {
-                console.log('eror');
-            });
-        }
-
+        $.ajax({
+            url: "{{ route('masteradmin_cabang_preview_data_peminjaman') }}",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "code": code
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#table-data-peminjaman').html(data);
+        }).fail(function() {
+            $('#table-data-peminjaman').html('eror');
+        });
     });
+
 </script>

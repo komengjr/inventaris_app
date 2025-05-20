@@ -363,5 +363,30 @@
                 $('#table-master-barang').html('eror');
             });
         });
+        $(document).on("click", "#button-print-data-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#table-data-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_print_data_peminjaman') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#table-data-peminjaman').html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+            }).fail(function() {
+                $('#table-data-peminjaman').html('eror');
+            });
+
+        });
     </script>
 @endsection

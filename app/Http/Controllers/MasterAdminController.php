@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use DB;
+use PDF;
 class MasterAdminController extends Controller
 {
     public function __construct()
@@ -126,6 +127,7 @@ class MasterAdminController extends Controller
         $data = DB::table('sub_tbl_inventory')->where('kd_cabang', $request->code)->get();
         foreach ($data as $value) {
             $check = DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->where('inventaris_data_cabang', $value->kd_cabang)->first();
+            $newdate = date('Y-m-d', strtotime($value->tgl_beli));
             if (!$check) {
                 DB::table('inventaris_data')->insert([
                     'inventaris_data_code' => $value->id_inventaris,
@@ -141,7 +143,7 @@ class MasterAdminController extends Controller
                     'inventaris_data_suplier' => $value->suplier,
                     'inventaris_data_kondisi' => $value->kondisi_barang,
                     'inventaris_data_status' => $value->status_barang,
-                    'inventaris_data_tgl_beli' => $value->tgl_beli,
+                    'inventaris_data_tgl_beli' => $newdate,
                     'inventaris_data_cabang' => $value->kd_cabang,
                     'inventaris_data_urut' => $value->no,
                     'inventaris_data_file' => $value->gambar,
@@ -199,6 +201,28 @@ class MasterAdminController extends Controller
         $cabang = DB::table('tbl_cabang')->where('kd_cabang',$request->code)->first();
         $data = DB::table('tbl_peminjaman')->where('kd_cabang',$request->code)->get();
         return view('application.admin.cabang.data-peminjaman-cabang',['data'=>$data,'cabang'=>$cabang]);
+    }
+    public function masteradmin_cabang_preview_data_peminjaman(Request $request){
+        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->code)->first();
+        return view('application.admin.cabang.peminjaman.preview-peminjaman',['data'=>$data]);
+    }
+    public function masteradmin_cabang_print_data_peminjaman(Request $request){
+        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->code)->first();
+        $image = base64_encode(file_get_contents(public_path('qr.png')));
+        $customPaper = array(0, 0, 50.80, 95.20);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.admin.cabang.peminjaman.report.print-peminjaman', ['data' => $data], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->set_opacity(.2, "Multiply");
+        $canvas->set_opacity(.1);
+        // $canvas->page_text($width/5, $height/2, 'Lunas', '123', 30, array(22,0,0),1,2,0);
+        // $canvas->page_script('
+        //     $pdf->set_opacity(.1);
+        //     $pdf->image("qr.png", 80, 180, 255, 220);
+        //     ');
+        return base64_encode($pdf->stream());
     }
     public function masteradmin_menu()
     {
