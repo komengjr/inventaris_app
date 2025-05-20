@@ -30,7 +30,7 @@
                     ->first();
             @endphp
             @if ($cekdata)
-                <span class="badge badge-info shadow-warning m-1">Barang Sudah di Verif</span>
+                <span class="badge bg-info shadow-warning m-1">Barang Sudah di Verif</span>
             @else
                 <form method="post" id="form-verifikasi-data-inevntaris">
                     @csrf
@@ -73,7 +73,7 @@
                 </form>
             @endif
         @else
-            <span class="badge badge-warning shadow-warning m-1">Barang Tidak DItemukan{{$kode}}</span>
+            <span class="badge bg-warning shadow-warning m-1">Barang Tidak DItemukan</span>
         @endif
 
     </div>
