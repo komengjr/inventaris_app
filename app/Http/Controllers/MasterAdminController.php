@@ -128,13 +128,13 @@ class MasterAdminController extends Controller
         foreach ($data as $value) {
             $check = DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->where('inventaris_data_cabang', $value->kd_cabang)->first();
             if ($value->tgl_beli == "") {
-                $tgl = "01-02-".$value->th_perolehan;
+                $tgl = $value->th_perolehan+"-01-02";
             } elseif ($value->tgl_beli == null) {
-                $tgl = "01-02-".$value->th_perolehan;
+                $tgl = $value->th_perolehan+"-01-02";
             } else {
-                $newdate = $value->tgl_beli;
-                $tgl = date('Y-m-d', strtotime($newdate));
+                $tgl = $value->tgl_beli;
             }
+            $newdate = date('Y-m-d', strtotime($tgl));
             if (!$check) {
                 DB::table('inventaris_data')->insert([
                     'inventaris_data_code' => $value->id_inventaris,
