@@ -132,9 +132,9 @@ class MasterAdminController extends Controller
             } elseif ($value->tgl_beli == null) {
                 $tgl = "01-02-".$value->th_perolehan;
             } else {
-                $tgl = $value->tgl_beli;
+                $newdate = $value->tgl_beli;
+                $tgl = date('Y-m-d', strtotime($newdate));
             }
-            $newdate = date('Y-m-d', strtotime($tgl));
             if (!$check) {
                 DB::table('inventaris_data')->insert([
                     'inventaris_data_code' => $value->id_inventaris,
@@ -150,7 +150,7 @@ class MasterAdminController extends Controller
                     'inventaris_data_suplier' => $value->suplier,
                     'inventaris_data_kondisi' => $value->kondisi_barang,
                     'inventaris_data_status' => $value->status_barang,
-                    'inventaris_data_tgl_beli' => $tgl,
+                    'inventaris_data_tgl_beli' => $newdate,
                     'inventaris_data_cabang' => $value->kd_cabang,
                     'inventaris_data_urut' => $value->no,
                     'inventaris_data_file' => $value->gambar,
