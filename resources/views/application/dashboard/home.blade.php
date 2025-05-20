@@ -4,6 +4,7 @@
         #button-view-data-lokasi {
             cursor: pointer;
         }
+
         #button-view-data-lokasi:hover {
             background: blanchedalmond;
         }
@@ -309,11 +310,24 @@
                                     @php
                                         $jumlah = 0;
                                         $jumlah = DB::table('inventaris_data')
-                                        ->join('inventaris_klasifikasi','inventaris_klasifikasi.inventaris_klasifikasi_code','=','inventaris_data.inventaris_klasifikasi_code')
-                                        ->join('inventaris_cat','inventaris_cat.inventaris_cat_code','=','inventaris_klasifikasi.inventaris_cat_code')
-                                        ->where('inventaris_cat.inventaris_cat_code',$klasifikasis->inventaris_cat_code)
-                                        ->where('inventaris_data.inventaris_data_cabang',Auth::user()->cabang)
-                                        ->sum('inventaris_data.inventaris_data_harga');
+                                            ->join(
+                                                'inventaris_klasifikasi',
+                                                'inventaris_klasifikasi.inventaris_klasifikasi_code',
+                                                '=',
+                                                'inventaris_data.inventaris_klasifikasi_code',
+                                            )
+                                            ->join(
+                                                'inventaris_cat',
+                                                'inventaris_cat.inventaris_cat_code',
+                                                '=',
+                                                'inventaris_klasifikasi.inventaris_cat_code',
+                                            )
+                                            ->where(
+                                                'inventaris_cat.inventaris_cat_code',
+                                                $klasifikasis->inventaris_cat_code,
+                                            )
+                                            ->where('inventaris_data.inventaris_data_cabang', Auth::user()->cabang)
+                                            ->sum('inventaris_data.inventaris_data_harga');
                                     @endphp
                                     <h6 class="text-700 mb-3">@currency($jumlah)</h6>
                                 </div>
@@ -445,6 +459,41 @@
                 $('#menu-dashboard').html('eror');
             });
 
+        });
+        $(document).on("click", "#button-print-barcode-page", function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            var page = document.getElementById("page").value;
+            console.log(id);
+            console.log(page);
+            if (page == "-") {
+                alert('eror');
+            } else {
+                $("#menu-data-lokasi-barang").html(
+                    '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+                );
+                $.ajax({
+                        url: "{{ route('masteradmin_cabang_data_lokasi_print_barcode') }}",
+                        type: "POST",
+                        cache: false,
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "id": id,
+                            "page": page,
+                        },
+                        dataType: 'html',
+                    })
+                    .done(function(data) {
+                        $("#menu-data-lokasi-barang").html(
+                            '<iframe src="data:application/pdf;base64, ' +
+                            data +
+                            '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                        );
+                    })
+                    .fail(function() {
+                        alert('sasdads');
+                    });
+            }
         });
     </script>
 @endsection
