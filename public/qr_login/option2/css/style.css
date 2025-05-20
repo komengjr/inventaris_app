@@ -9,7 +9,7 @@
 
 #camera-select {
     display: inline-block;
-    width: auto;
+    /* width: auto; */
 }
 
 .btn {
@@ -29,10 +29,10 @@
     margin-bottom: 5px;
 }
 
-.controls {
+/* .controls {
     float: right;
     display: inline-block;
-}
+} */
 
 .well {
     position: relative;

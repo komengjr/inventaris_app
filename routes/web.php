@@ -406,11 +406,14 @@ Route::prefix('telegram')->group(function () {
 Route::prefix('{akses}/app')->group(function () {
     Route::get('dashboard', [AppController::class, 'dashboard'])->name('dashboard');
     Route::get('peminjaman', [AppController::class, 'peminjaman'])->name('peminjaman');
+    Route::get('menu-stock-opname', [AppController::class, 'menu_stock_opname'])->name('menu_stock_opname');
 });
 Route::prefix('app')->group(function () {
     Route::post('dashboard/add', [AppController::class, 'dashboard_add'])->name('dashboard_add');
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');
     Route::post('dashboard/data-lokasi-print-barcode', [AppController::class, 'masteradmin_cabang_data_lokasi_print_barcode'])->name('masteradmin_cabang_data_lokasi_print_barcode');
+    Route::post('menu-stock-opname/proses-data', [AppController::class, 'menu_stock_opname_proses_data'])->name('menu_stock_opname_proses_data');
+    Route::post('menu-stock-opname/proses-data-with-kamera', [AppController::class, 'menu_stock_opname_proses_data_with_kamera'])->name('menu_stock_opname_proses_data_with_kamera');
 });
 
 

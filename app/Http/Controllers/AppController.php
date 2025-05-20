@@ -67,18 +67,18 @@ class AppController extends Controller
     {
         $lokasi = DB::table('tbl_nomor_ruangan_cabang')->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
             ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', $request->code)->first();
-        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->code)->where('inventaris_data_status','<',4)->get();
+        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->code)->where('inventaris_data_status', '<', 4)->get();
         return view('application.dashboard.data.data-lokasi', ['data' => $data, 'lokasi' => $lokasi, 'id' => $request->code]);
     }
     public function masteradmin_cabang_data_lokasi_print_barcode(Request $request)
     {
 
-        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang',$request->id)
-        ->where('inventaris_data_cabang',auth::user()->cabang)
-        ->get();
+        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+            ->where('inventaris_data_cabang', auth::user()->cabang)
+            ->get();
         // dd($data);
-        $customPaper = array(0,0,50.80,98.00);
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.report.barcode-lokasi',['data'=>$data])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
+        $customPaper = array(0, 0, 50.80, 98.00);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.report.barcode-lokasi', ['data' => $data])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
 
         return base64_encode($pdf->stream());
@@ -92,5 +92,24 @@ class AppController extends Controller
             return Redirect::to('dashboard');
         }
 
+    }
+    public function menu_stock_opname($akses)
+    {
+        $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang', auth::user()->cabang)
+            ->orderBy('id_verifdatainventaris', 'desc')
+            ->get();
+        return view('application.stockopname.menu-stock-opname', ['data' => $data]);
+    }
+    public function menu_stock_opname_proses_data(Request $request){
+        $cekdata = DB::table('tbl_verifdatainventaris')
+            ->where('kode_verif', $request->code)
+            ->first();
+        $tbl_cabang = DB::table('tbl_cabang')->where('kd_cabang', auth::user()->cabang)->get();
+        $lokasi = DB::table('tbl_lokasi')->get();
+        $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->orderBy('nomor_ruangan', 'ASC')->get();
+        return view('application.admin.cabang.stockopname.proses-stock-opname',['cekdata' => $cekdata, 'cabang' => $tbl_cabang, 'lokasi' => $lokasi, 'no_ruangan' => $no_ruangan, 'id' => $request->code]);
+    }
+    public function menu_stock_opname_proses_data_with_kamera(Request $request){
+        return view('application.admin.cabang.stockopname.kamera-stock-opname',['tiket' => $request->code]);
     }
 }
