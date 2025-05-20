@@ -243,6 +243,15 @@ class MasterAdminController extends Controller
         $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang', $request->code)->get();
         return view('application.admin.cabang.data-stock-opname-cabang', ['data' => $data]);
     }
+    public function masteradmin_cabang_preview_data_stock_opname(Request $request){
+        $data = DB::table('tbl_sub_verifdatainventaris')
+        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
+        ->where('tbl_sub_verifdatainventaris.kode_verif',$request->code)->get();
+        return view('application.admin.cabang.stockopname.data-stock-opname',['data'=>$data]);
+    }
+    public function masteradmin_cabang_remove_data_stock_opname(Request $request){
+        DB::table('tbl_sub_verifdatainventaris')->where('id_sub_verifdatainventaris',$request->code)->delete();
+    }
     public function masteradmin_menu()
     {
         if (Auth::user()->akses == 'admin') {

@@ -47,14 +47,14 @@
                                             data-code="{{ $datas->kode_verif }}"><span class="far fa-edit"></span>
                                             Edit Stock Opname</button>
                                         <div class="dropdown-divider"></div>
-                                        <button class="dropdown-item" id="button-preview-data-peminjaman"
+                                        <button class="dropdown-item" id="button-preview-data-stock-opname"
                                             data-code="{{ $datas->kode_verif }}"><span
                                                 class="fab fa-chromecast"></span>
-                                            Preview Peminjaman Cabang</button>
+                                            Preview Data Stockopname</button>
                                         <button class="dropdown-item" id="button-print-data-peminjaman"
                                             data-code="{{ $datas->kode_verif }}"><span
                                                 class="fas fa-print"></span>
-                                            Print Peminjaman Cabang</button>
+                                            Print Data Stockopname</button>
                                     </div>
                                 </div>
                             </td>
