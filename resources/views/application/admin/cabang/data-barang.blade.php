@@ -42,6 +42,7 @@
                         <th>Nomor Inventaris</th>
                         <th>Lokasi</th>
                         <th>Merek / Type</th>
+                        <th>Tanggal Beli</th>
                         <th>Harga</th>
                         <th>Action</th>
                     </tr>
@@ -73,7 +74,7 @@
                             <td>
                                 {{ $datas->merk }} / {{ $datas->type }}
                             </td>
-
+                            <td>{{$datas->tgl_beli}}</td>
                             <td>@currency($datas->harga_perolehan)</td>
                             <td class="text-center">
                                 <button class="btn btn-falcon-warning" id="button-update-data-barang-cabang"
