@@ -135,7 +135,8 @@
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#modal-stock-lg" id="button-edit-data-stock-opname"
-                                            data-code="{{$item->kode_verif}}"><span class="far fa-edit"></span> Edit Data Tanggal</button>
+                                            data-code="{{ $item->kode_verif }}"><span class="far fa-edit"></span> Edit
+                                            Data Tanggal</button>
                                         <button class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#modal-cabang-lg" id="button-data-lokasi-cabang"
                                             data-code="123"><span class="fas fa-sync"></span>
@@ -479,6 +480,35 @@
                 $('#menu-stock-lg').html(data);
             }).fail(function() {
                 $('#menu-stock-lg').html('eror');
+            });
+        });
+        $(document).on("click", "#button-fix-data-stockopname", function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $("#button-fix-data-stockopname").html(
+                '<div style="text-align: center; padding:2%;"><div class="spinner-border spinner-sm text-warning" role="status" > <span class="sr-only"></span> </div></div>'
+            );
+            $.ajax({
+                url: "{{ route('divisi/postverifikasiall/datasemua/fixdata') }}",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                },
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    "id": id,
+                    // "pilihan": pilihan,
+                },
+                dataType: "html",
+            }).done(function(data) {
+                $("#button-fix-data-stockopname").html(
+                    'Berhasil Fix Data'
+                );
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }).fail(function() {
+                $("#button-fix-data-stockopname").html("Gagal Baca");
             });
         });
     </script>
