@@ -189,7 +189,7 @@
                                     data-target="#settingmodal"><i class="icon-settings mr-2"></i>
                                     Setting</li>
                                 <li class="dropdown-item" style="cursor: pointer;"><i class="fa fa-telegram mr-2"></i> <a href="{{ route('notificationtelegram') }}">Test Notification</a></li>
-                                <li class="dropdown-item" style="cursor: pointer;"><i class="fa fa-cog mr-2"></i> <a href="{{ route('dashboard') }}">Try Version 3</a></li>
+                                <li class="dropdown-item" style="cursor: pointer;"><i class="fa fa-cog mr-2"></i> <a href="{{ route('dashboard_home') }}">Try Version 3</a></li>
                                 <li class="dropdown-divider"></li>
                                 <li class="dropdown-item"><i class="icon-power mr-2"></i><a href="http://"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
