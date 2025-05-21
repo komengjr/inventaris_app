@@ -130,17 +130,16 @@
 
                                         <button class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang"
-                                            data-code="{{ $item->kode_verif }}"><span class="far fa-edit"></span>
+                                            data-code="{{ $item->kode_verif }}"><span class="fas fa-swatchbook"></span>
                                             Proses Stock Opname</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang" id="button-data-barang-cabang"
-                                            data-code="123"><span class="far fa-folder-open"></span> Data Barang
-                                            Maintenance</button>
+                                            data-bs-target="#modal-stock-lg" id="button-edit-data-stock-opname"
+                                            data-code="{{$item->kode_verif}}"><span class="far fa-edit"></span> Edit Data Tanggal</button>
                                         <button class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#modal-cabang-lg" id="button-data-lokasi-cabang"
-                                            data-code="123"><span class="fas fa-map-marked-alt"></span>
-                                            Rusak</button>
+                                            data-code="123"><span class="fas fa-sync"></span>
+                                            Sinkronisasi Data</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item text-danger" data-bs-toggle="modal"
                                             data-bs-target="#modal-stock-sm" id="button-remove-full-stock-opname"
@@ -461,26 +460,26 @@
         //     });
 
         // });
-        // $(document).on("click", "#button-remove-data-stock-opname", function(e) {
-        //     e.preventDefault();
-        //     var code = $(this).data("code");
-        //     $('#menu-cabang').html(
-        //         '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-        //     );
-        //     $.ajax({
-        //         url: "{{ route('masteradmin_cabang_remove_data_stock_opname') }}",
-        //         type: "POST",
-        //         cache: false,
-        //         data: {
-        //             "_token": "{{ csrf_token() }}",
-        //             "code": code
-        //         },
-        //         dataType: 'html',
-        //     }).done(function(data) {
-        //         location.reload();
-        //     }).fail(function() {
-        //         $('#menu-cabang').html('eror');
-        //     });
-        // });
+        $(document).on("click", "#button-edit-data-stock-opname", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-stock-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_edit_data_tanggal') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-stock-lg').html(data);
+            }).fail(function() {
+                $('#menu-stock-lg').html('eror');
+            });
+        });
     </script>
 @endsection

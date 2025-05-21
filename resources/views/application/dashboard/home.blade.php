@@ -64,9 +64,11 @@
                                         <a class="dropdown-item" href="#!" data-bs-toggle="modal"
                                             data-bs-target="#modal-dashboard" id="button-add-barang-non-aset">Tambah Barang
                                             Non Aset</a>
-                                        <a class="dropdown-item" href="#!">View Barang Non Aset</a>
+                                        <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                            data-bs-target="#modal-dashboard" id="button-data-barang-non-aset">View Barang
+                                            Non Aset</a>
                                         <div class="dropdown-divider"></div><a class="dropdown-item text-primary"
-                                            href="#!">Print</a>
+                                            href="#!"><span class="fas fa-file-export"></span> Export Data Non Aset</a>
                                     </div>
                                 </div>
                             </div>
@@ -88,8 +90,6 @@
                         <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-2">
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
-                                    {{-- <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
-                                            class="fs--2 fas fas fa-city text-info"></span></div> --}}
                                     <h6 class="mb-0"><span class="badge bg-primary">Total Aset Cabang</span></h6>
                                 </div>
 
@@ -102,9 +102,12 @@
                                     <div class="dropdown-menu dropdown-menu-end border py-2"
                                         aria-labelledby="dropdown-new-users">
                                         <a class="dropdown-item" href="#!">Tambah Barang Aset</a>
-                                        <a class="dropdown-item" href="#!">View Barang Aset</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item text-danger"
-                                            href="#!">Remove</a>
+                                        <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                            data-bs-target="#modal-dashboard" id="button-data-barang-aset">View Barang
+                                            Aset</a>
+                                        <a class="dropdown-item" href="#!">Data Depresiasi</a>
+                                        <div class="dropdown-divider"></div><a class="dropdown-item text-primary"
+                                            href="#!"><span class="fas fa-file-export"></span> Export Data Aset</a>
                                     </div>
                                 </div>
                             </div>
@@ -140,10 +143,12 @@
                                             class="fas fa-ellipsis-h fs--2"></span></button>
                                     <div class="dropdown-menu dropdown-menu-end border py-2"
                                         aria-labelledby="dropdown-new-users">
-                                        <a class="dropdown-item" href="#!">Tambah Barang Aset</a>
-                                        <a class="dropdown-item" href="#!">Export</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item text-danger"
-                                            href="#!">Remove</a>
+                                        <a class="dropdown-item" href="#!">Tambah Barang KSO</a>
+                                        <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                            data-bs-target="#modal-dashboard" id="button-data-barang-kso">View Data
+                                            KSO</a>
+                                        <div class="dropdown-divider"></div><a class="dropdown-item text-primary"
+                                            href="#!"><span class="fas fa-file-export"></span> Export Data KSO</a>
                                     </div>
                                 </div>
                             </div>
@@ -151,14 +156,14 @@
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-warning shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 far fa-folder text-info"></span></div>
-                                    <h6 class="mb-0">0 Barang</h6>
+                                    <h6 class="mb-0">{{ $datakso }} Barang</h6>
                                 </div>
                             </div>
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-book text-info"></span></div>
-                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2">0 Dokumen</p>
+                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2">{{ $documentkso }} Dokumen</p>
                                 </div>
                             </div>
 
@@ -290,17 +295,19 @@
                     <div class="row align-items-center">
                         <div class="col-md-5 col-xxl-12 mb-xxl-1">
                             <div class="position-relative">
-                                <!-- Find the JS file for the following chart at: src/js/charts/echarts/most-leads.js-->
-                                <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
                                 <div class="echart-most-leads my-2" data-echart-responsive="true"></div>
                                 <div class="position-absolute top-50 start-50 translate-middle text-center">
                                     <p class="fs--1 mb-0 text-400 font-sans-serif fw-medium">Total</p>
-                                    <p class="fs-3 mb-0 font-sans-serif fw-medium mt-n2">15.6k</p>
+                                    <p class="fs-3 mb-0 font-sans-serif fw-medium mt-n2">
+                                        {{ $datanonaset + $dataaset + $datakso }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xxl-12 col-md-7">
                             <hr class="mx-ncard mb-0 d-md-none d-xxl-block" />
+                            @php
+                                $no = 0;
+                            @endphp
                             @foreach ($klasifikasi as $klasifikasis)
                                 <div class="d-flex flex-between-center border-bottom py-1 pt-md-0 pt-xxl-3">
                                     <div class="d-flex"><img class="me-2" src="{{ asset('img/icon/icon.png') }}"
@@ -438,6 +445,72 @@
             });
 
         });
+        $(document).on("click", "#button-data-barang-non-aset", function(e) {
+            e.preventDefault();
+            // var code = $(this).data("code");
+            $('#menu-dashboard').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_data_non_aset') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard').html(data);
+            }).fail(function() {
+                $('#menu-dashboard').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-data-barang-aset", function(e) {
+            e.preventDefault();
+            // var code = $(this).data("code");
+            $('#menu-dashboard').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_data_aset') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard').html(data);
+            }).fail(function() {
+                $('#menu-dashboard').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-data-barang-kso", function(e) {
+            e.preventDefault();
+            // var code = $(this).data("code");
+            $('#menu-dashboard').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_data_kso') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard').html(data);
+            }).fail(function() {
+                $('#menu-dashboard').html('eror');
+            });
+
+        });
         $(document).on("click", "#button-view-data-lokasi", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
@@ -493,5 +566,92 @@
                     });
             }
         });
+    </script>
+    <script>
+        var mostLeadsInit = function mostLeadsInit() {
+            var ECHART_MOST_LEADS = ".echart-most-leads";
+            var $echartMostLeads = document.querySelector(ECHART_MOST_LEADS);
+            if ($echartMostLeads) {
+                var userOptions = utils.getData($echartMostLeads, "options");
+                var chart = window.echarts.init($echartMostLeads);
+                var getDefaultOptions = function getDefaultOptions() {
+                    return {
+                        color: [
+                            utils.getColors().primary,
+                            utils.getColors().info,
+                            utils.getColors().warning,
+                            utils.getColors().info, //
+                            utils.getGrays()[300],
+                        ],
+                        tooltip: {
+                            trigger: "item",
+                            padding: [7, 10],
+                            backgroundColor: utils.getGrays()["100"],
+                            borderColor: utils.getGrays()["300"],
+                            textStyle: {
+                                color: utils.getColors().dark,
+                            },
+                            borderWidth: 1,
+                            transitionDuration: 0,
+                            formatter: function formatter(params) {
+                                return "<strong>"
+                                    .concat(params.data.name, ":</strong> ")
+                                    .concat(params.percent, "%");
+                            },
+                        },
+                        position: function position(pos, params, dom, rect, size) {
+                            return getPosition(pos, params, dom, rect, size);
+                        },
+                        legend: {
+                            show: false,
+                        },
+                        series: [{
+                            type: "pie",
+                            radius: ["100%", "67%"],
+                            avoidLabelOverlap: false,
+                            hoverAnimation: false,
+                            itemStyle: {
+                                borderWidth: 2,
+                                borderColor: utils.getColor("card-bg"),
+                            },
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: "center",
+                                    textStyle: {
+                                        fontSize: "20",
+                                        fontWeight: "500",
+                                        color: utils.getGrays()["700"],
+                                    },
+                                },
+                                emphasis: {
+                                    show: false,
+                                },
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false,
+                                },
+                            },
+                            data: [
+                                @foreach ($klasifikasi as $klasifikasis)
+                                @php
+                                $data = DB::table('inventaris_data')
+                                ->join('inventaris_klasifikasi','inventaris_klasifikasi.inventaris_klasifikasi_code','=','inventaris_data.inventaris_klasifikasi_code')
+                                ->where('inventaris_klasifikasi.inventaris_cat_code',$klasifikasis->inventaris_cat_code)->count();
+                                @endphp
+                                {
+                                    value: {{$data}},
+                                    name: '{{$klasifikasis->inventaris_cat_name}}',
+                                },
+                                @endforeach
+                            ],
+                        }, ],
+                    };
+                };
+                echartSetOption(chart, userOptions, getDefaultOptions);
+            }
+        };
+        docReady(mostLeadsInit);
     </script>
 @endsection

@@ -46,6 +46,10 @@ class AppController extends Controller
             $ruangan = DB::table('tbl_nomor_ruangan_cabang')
                 ->join('master_lokasi', 'tbl_nomor_ruangan_cabang.kd_lokasi', '=', 'master_lokasi.master_lokasi_code')
                 ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+            $datakso = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->count();
+            $documentkso = DB::table('document_kso')
+            ->join('sub_tbl_inventory_kso','sub_tbl_inventory_kso.id_inventaris','=','document_kso.id_inventaris')
+            ->where('sub_tbl_inventory_kso.kd_cabang',Auth::user()->cabang)->count();
             return view('application.dashboard.home', [
                 'klasifikasi' => $klasifikasi,
                 'cabang' => $cabang,
@@ -54,6 +58,8 @@ class AppController extends Controller
                 'datanonaset' => $datanonaset,
                 'dataaset' => $dataaset,
                 'ruangan' => $ruangan,
+                'datakso' => $datakso,
+                'documentkso' => $documentkso,
             ]);
         } else {
             return Redirect::to('dashboard');
@@ -65,6 +71,18 @@ class AppController extends Controller
         $lokasi = DB::table('master_lokasi')->get();
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
         return view('application.dashboard.form.form-add-non-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
+    }
+    public function dashboard_data_non_aset(Request $request){
+        $data = DB::table('inventaris_data')->where('inventaris_data_jenis',0)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
+        return view('application.dashboard.data.data-non-aset',['data'=>$data]);
+    }
+    public function dashboard_data_aset(Request $request){
+        $data = DB::table('inventaris_data')->where('inventaris_data_jenis',1)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
+        return view('application.dashboard.data.data-aset',['data'=>$data]);
+    }
+    public function dashboard_data_kso(Request $request){
+        $data = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->get();
+        return view('application.dashboard.data.data-kso',['data'=>$data]);
     }
     public function dashboard_lokasi_data_barang(Request $request)
     {
@@ -160,7 +178,10 @@ class AppController extends Controller
             ->where('no_inventaris', $request->nama)->first();
         return view('application.stockopname.hasil-scanner', ['data' => $data, 'kode' => $request->tiket]);
     }
-
+    public function menu_stock_opname_edit_data_tanggal(Request $request){
+        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif',$request->code)->first();
+        return view('application.stockopname.form-edit-tgl',['data'=>$data]);
+    }
 
     // MENU MUTASI
     public function menu_mutasi($akses)

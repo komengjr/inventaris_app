@@ -10520,99 +10520,7 @@ var marketShareInit = function marketShareInit() {
 
 /* -------------------------------------------------------------------------- */
 
-var mostLeadsInit = function mostLeadsInit() {
-    var ECHART_MOST_LEADS = ".echart-most-leads";
-    var $echartMostLeads = document.querySelector(ECHART_MOST_LEADS);
 
-    if ($echartMostLeads) {
-        var userOptions = utils.getData($echartMostLeads, "options");
-        var chart = window.echarts.init($echartMostLeads);
-
-        var getDefaultOptions = function getDefaultOptions() {
-            return {
-                color: [
-                    utils.getColors().primary,
-                    utils.getColors().info,
-                    utils.getColors().warning,
-                    utils.getColors().info, // utils.getGrays()[300],
-                ],
-                tooltip: {
-                    trigger: "item",
-                    padding: [7, 10],
-                    backgroundColor: utils.getGrays()["100"],
-                    borderColor: utils.getGrays()["300"],
-                    textStyle: {
-                        color: utils.getColors().dark,
-                    },
-                    borderWidth: 1,
-                    transitionDuration: 0,
-                    formatter: function formatter(params) {
-                        return "<strong>"
-                            .concat(params.data.name, ":</strong> ")
-                            .concat(params.percent, "%");
-                    },
-                },
-                position: function position(pos, params, dom, rect, size) {
-                    return getPosition(pos, params, dom, rect, size);
-                },
-                legend: {
-                    show: false,
-                },
-                series: [
-                    {
-                        type: "pie",
-                        radius: ["100%", "67%"],
-                        avoidLabelOverlap: false,
-                        hoverAnimation: false,
-                        itemStyle: {
-                            borderWidth: 2,
-                            borderColor: utils.getColor("card-bg"),
-                        },
-                        label: {
-                            normal: {
-                                show: false,
-                                position: "center",
-                                textStyle: {
-                                    fontSize: "20",
-                                    fontWeight: "500",
-                                    color: utils.getGrays()["700"],
-                                },
-                            },
-                            emphasis: {
-                                show: false,
-                            },
-                        },
-                        labelLine: {
-                            normal: {
-                                show: false,
-                            },
-                        },
-                        data: [
-                            {
-                                value: 60,
-                                name: "Email",
-                            },
-                            {
-                                value: 30,
-                                name: "Social",
-                            },
-                            {
-                                value: 10,
-                                name: "Call",
-                            },
-                            {
-                                value: 120,
-                                name: "Other",
-                            },
-                        ],
-                    },
-                ],
-            };
-        };
-
-        echartSetOption(chart, userOptions, getDefaultOptions);
-    }
-};
 /* -------------------------------------------------------------------------- */
 
 /*                             Echarts Real Time Users                        */
@@ -13741,7 +13649,7 @@ docReady(trafficChannelChartInit);
 docReady(bounceRateChartInit);
 docReady(usersByTimeChartInit);
 docReady(sessionByCountryMapInit);
-docReady(mostLeadsInit);
+
 docReady(closedVsGoalInit);
 docReady(leadConversionInit);
 docReady(dealStorageFunnelInit);
