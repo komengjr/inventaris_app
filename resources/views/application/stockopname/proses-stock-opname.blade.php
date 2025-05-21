@@ -49,7 +49,8 @@
                             <button class="btn btn-falcon-warning me-2" role="button" id="button-stock-opname-kamera"
                                 data-code="{{ $id }}"><span class="fas fa-camera-retro"></span>
                                 Kamera</button>
-                            <button class="btn btn-falcon-primary" role="button"><span class="fas fa-barcode"></span>
+                            <button class="btn btn-falcon-primary" role="button" id="button-stock-opname-scanner"
+                                data-code="{{ $id }}"><span class="fas fa-barcode"></span>
                                 Scanner</button>
                         </div>
                     </div>
@@ -57,7 +58,6 @@
             </div>
 
             <div id="view-report-stokopname-ruangan"></div>
-
 
             <table id="exampledata" class="table table-striped nowrap border border-primary" style="width:100%"
                 style="border: 1px solid black;">

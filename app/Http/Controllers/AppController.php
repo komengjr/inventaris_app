@@ -22,6 +22,9 @@ class AppController extends Controller
     {
         $this->middleware('auth');
     }
+    public function dashboard_home(){
+        return view('application.dashboard');
+    }
     public function url_akses($akses)
     {
         $data = DB::table('z_menu_user')->where('menu_sub_code', $akses)->where('access_code', Auth::user()->akses)->first();
@@ -106,11 +109,11 @@ class AppController extends Controller
         $data = DB::table('tbl_sub_verifdatainventaris')
             ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
             ->where('kode_verif', $request->code)->where('status_data_inventaris', $request->status)->get();
-        return view('application.admin.cabang.stockopname.data-kondisi', ['data' => $data]);
+        return view('application.stockopname.data-kondisi', ['data' => $data]);
     }
     public function menu_stock_opname_remove_full_data(Request $request)
     {
-        return view('application.admin.cabang.stockopname.remove-data-full-stock', ['id' => $request->code]);
+        return view('application.stockopname.remove-data-full-stock', ['id' => $request->code]);
     }
     public function menu_stock_opname_proses_remove_full_data(Request $request)
     {
@@ -126,7 +129,7 @@ class AppController extends Controller
         $tbl_cabang = DB::table('tbl_cabang')->where('kd_cabang', auth::user()->cabang)->get();
         $lokasi = DB::table('tbl_lokasi')->get();
         $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->orderBy('nomor_ruangan', 'ASC')->get();
-        return view('application.admin.cabang.stockopname.proses-stock-opname', [
+        return view('application.stockopname.proses-stock-opname', [
             'cekdata' => $cekdata,
             'cabang' => $tbl_cabang,
             'lokasi' => $lokasi,
@@ -137,13 +140,51 @@ class AppController extends Controller
     }
     public function menu_stock_opname_proses_data_with_kamera(Request $request)
     {
-        return view('application.admin.cabang.stockopname.kamera-stock-opname', ['tiket' => $request->code]);
+        return view('application.stockopname.kamera-stock-opname', ['tiket' => $request->code]);
     }
     public function menu_stock_opname_scan_data_with_kamera(Request $request)
     {
         $data = DB::table('sub_tbl_inventory')
             ->where('kd_cabang', Auth::user()->cabang)
             ->where('no_inventaris', $request->data)->first();
-        return view('application.admin.cabang.stockopname.result-kamera-stock', ['data' => $data, 'kode' => $request->tiket]);
+        return view('application.stockopname.result-kamera-stock', ['data' => $data, 'kode' => $request->tiket]);
+    }
+    public function menu_stock_opname_proses_data_with_scanner(Request $request)
+    {
+        return view('application.stockopname.scanner-stock-opname', ['tiket' => $request->code]);
+    }
+    public function menu_stock_opname_scan_data_with_scanner(Request $request)
+    {
+        $data = DB::table('sub_tbl_inventory')
+            ->where('kd_cabang', Auth::user()->cabang)
+            ->where('no_inventaris', $request->nama)->first();
+        return view('application.stockopname.hasil-scanner', ['data' => $data, 'kode' => $request->tiket]);
+    }
+
+
+    // MENU MUTASI
+    public function menu_mutasi($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('tbl_mutasi')->where('kd_cabang', auth::user()->cabang)->orderBy('id_mutasi', 'DESC')->get();
+            $order = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->where('status_mutasi', 0)->count();
+            $rekap = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->where('status_mutasi', 1)->count();
+            $asal = DB::table('tbl_mutasi')->where('asal_mutasi', Auth::user()->cabang)->count();
+            $target = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->count();
+            $jumlah = $asal + $target;
+            $datakategori = DB::table('no_urut_barang')->get();
+            return view('application.mutasi.menumutasi', ['datakategori' => $datakategori, 'data' => $data, 'order' => $order, 'rekap' => $rekap, 'jumlah' => $jumlah]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+    // MENU PEMUSNAHAN
+    public function menu_pemusnahan($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            return view('application.pemusnahan.menupemusnahan');
+        } else {
+            return Redirect::to('dashboard');
+        }
     }
 }

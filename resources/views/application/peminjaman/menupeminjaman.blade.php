@@ -10,16 +10,20 @@
         <div class="col">
             <div class="card bg-100 shadow-none border">
                 <div class="row gx-0 flex-between-center">
-                    <div class="col-sm-auto d-flex align-items-center"><img class="ms-n2"
-                            src="{{ asset('asset/img/illustrations/crm-bar-chart.png') }}" alt="" width="90" />
+                    <div class="col-sm-auto d-flex align-items-center border-bottom">
+                        <img class="ms-3 mx-3" src="{{ asset('img/icon/icon.png') }}" alt="" width="50" />
                         <div>
-                            <h6 class="text-primary fs--1 mb-0">Welcome to </h6>
-                            <h4 class="text-primary fw-bold mb-0">Inventaris <span class="text-info fw-medium">Menu Peminjaman</span></h4>
-                        </div><img class="ms-n4 d-md-none d-lg-block"
+                            <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to </h6>
+                            <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management
+                                    System</span></h4>
+                        </div><img class="ms-n4 d-none d-lg-block"
                             src="{{ asset('asset/img/illustrations/crm-line-chart.png') }}" alt="" width="150" />
                     </div>
-                    <div class="col-md-auto p-3">
-
+                    <div class="col-xl-auto px-3 py-2">
+                        <h6 class="text-primary fs--1 mb-0">Menu : </h6>
+                        <h4 class="text-primary fw-bold mb-0">Peminjaman Barang <span
+                                class="text-info fw-medium">Cabang</span>
+                        </h4>
                     </div>
                 </div>
             </div>
@@ -36,7 +40,7 @@
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-primary">
                                         <span class="fs--2 fas fa-table text-primary"></span>
                                     </div>
-                                    <h6 class="mb-0">Data Cabang</h6>
+                                    <h6 class="mb-0">Total Peminjaman</h6>
                                 </div>
                                 <div class="dropdown font-sans-serif btn-reveal-trigger">
                                     <button
@@ -69,8 +73,8 @@
                             <div class="d-flex flex-between-center mb-3">
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
-                                            class="fs--2 fas fa-user text-info"></span></div>
-                                    <h6 class="mb-0">Cabang Aktif</h6>
+                                            class="fs--2 fas fa-cog text-info"></span></div>
+                                    <h6 class="mb-0">Selesai Peminjaman</h6>
                                 </div>
                                 <div class="dropdown font-sans-serif btn-reveal-trigger">
                                     <button
@@ -105,7 +109,7 @@
                                     <div class="icon-item icon-item-sm bg-soft-danger shadow-none me-2 bg-soft-success">
                                         <span class="fs--2 fas fa-bolt text-danger"></span>
                                     </div>
-                                    <h6 class="mb-0">Cabang Non Aktif</h6>
+                                    <h6 class="mb-0">Proses Peminjaman</h6>
                                 </div>
                                 <div class="dropdown font-sans-serif btn-reveal-trigger">
                                     <button
@@ -141,12 +145,24 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h5 class="mb-0">Data Menu</h5>
+                            <h5 class="mb-1 text-primary fw-bold">Data Menu Peminjaman</h5>
                         </div>
                         <div class="col-auto">
-                            <a class="btn btn-falcon-primary btn-sm" href="#!" data-bs-toggle="modal"
-                                data-bs-target="#modal-menu" id="button-add-menu">
-                                <span class="fas fa-book fs--2 me-1"></span>Add Menu</a>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-sm btn-falcon-primary dropdown-toggle" id="btnGroupVerticalDrop2"
+                                    type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"><span class="fas fa-align-left me-1"
+                                        data-fa-transform="shrink-3"></span>Menu</button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock"
+                                        id="button-proses-stock-opname-cabang" data-code="123"><span
+                                            class="far fa-edit"></span>
+                                        Tambah Peminjaman</button>
+                                    <div class="dropdown-divider"></div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -169,13 +185,30 @@
                             @endphp
                             @foreach ($data as $datas)
                                 <tr>
-                                    <td>{{$no++}}</td>
-                                    <td>{{$datas->tiket_peminjaman}}</td>
-                                    <td>{{$datas->nama_kegiatan}}</td>
-                                    <td>{{$datas->tgl_pinjam}}</td>
-                                    <td>{{$datas->batas_tgl_pinjam}}</td>
-                                    <td>{{$datas->status_pinjam}}</td>
-                                    <td></td>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $datas->tiket_peminjaman }}</td>
+                                    <td>{{ $datas->nama_kegiatan }}</td>
+                                    <td>{{ $datas->tgl_pinjam }}</td>
+                                    <td>{{ $datas->batas_tgl_pinjam }}</td>
+                                    <td>{{ $datas->status_pinjam }}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-primary dropdown-toggle"
+                                                id="btnGroupVerticalDrop2" type="button" data-bs-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false"><span
+                                                    class="fas fa-align-left me-1"
+                                                    data-fa-transform="shrink-3"></span>Option</button>
+                                            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+
+                                                <button class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang"
+                                                    data-code="123"><span class="far fa-edit"></span>
+                                                    Proses Peminjaman</button>
+                                                <div class="dropdown-divider"></div>
+
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

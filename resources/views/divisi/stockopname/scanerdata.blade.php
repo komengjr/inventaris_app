@@ -1,6 +1,5 @@
 <div class="modal-body bg-danger">
     <div class="row">
-
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header text-uppercase">Pencarian Data</div>
