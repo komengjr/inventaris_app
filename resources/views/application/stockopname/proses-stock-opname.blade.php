@@ -186,7 +186,7 @@
 
             <div class="row g-3 mb-3 pt-2">
                 <div class="col-lg-8">
-                    <div class="card h-100">
+                    <div class="card">
                         <div class="card-header bg-primary">
                             <h5 class="mb-0 text-white">Keterangan Barang Yang Sudah Mutasi / Musnah</h5>
                         </div>
@@ -220,7 +220,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card h-100">
+                    <div class="card">
                         <div class="card-header bg-primary">
                             <h5 class="mb-0 text-white">Status Jumlah Barang</h5>
                         </div>

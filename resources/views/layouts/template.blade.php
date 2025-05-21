@@ -462,8 +462,6 @@
     <!-- ===============================================-->
     <!--    End of Main Content-->
     <!-- ===============================================-->
-
-
     <div class="offcanvas offcanvas-end settings-panel border-0" id="settings-offcanvas" tabindex="-1"
         aria-labelledby="settings-offcanvas">
         <div class="offcanvas-header settings-panel-header bg-shape">

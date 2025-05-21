@@ -596,7 +596,7 @@
                             formatter: function formatter(params) {
                                 return "<strong>"
                                     .concat(params.data.name, ":</strong> ")
-                                    .concat(params.percent, "%");
+                                    .concat(params.percent, " %");
                             },
                         },
                         position: function position(pos, params, dom, rect, size) {
