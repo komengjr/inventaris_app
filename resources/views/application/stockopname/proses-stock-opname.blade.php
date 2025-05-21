@@ -194,7 +194,7 @@
                             <table id="exampledetail" class="table table-striped nowrap" style="width:100%">
                                 <thead class="bg-200 text-700">
                                     <tr>
-                                        <th>No</th>
+
                                         <th>Nama Barang</th>
                                         <th>Nomor Inventaris</th>
                                         <th>Merek</th>
@@ -207,10 +207,10 @@
                                     @endphp
                                     @foreach ($data as $datas)
                                         <tr>
-                                            <td>{{$no++}}</td>
-                                            <td>{{$datas->nama_barang}}</td>
-                                            <td>{{$datas->no_inventaris}}</td>
-                                            <td>{{$datas->merk}}</td>
+
+                                            <td>{{ $datas->nama_barang }}</td>
+                                            <td>{{ $datas->no_inventaris }}</td>
+                                            <td>{{ $datas->merk }}</td>
                                             <td>@currency($datas->harga_perolehan)</td>
                                         </tr>
                                     @endforeach
