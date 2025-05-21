@@ -16,9 +16,11 @@ class CreateTblDepresiasiTable extends Migration
         Schema::create('tbl_depresiasi', function (Blueprint $table) {
             $table->id('id_depresisasi');
             $table->string('kd_depresiasi')->unique();
+            $table->string('depresiasi_code');
             $table->string('klasifikasi_aset');
             $table->string('harga_perolhean');
             $table->string('masa_depresiasi');
+            $table->string('masa');
             $table->timestamps();
         });
     }

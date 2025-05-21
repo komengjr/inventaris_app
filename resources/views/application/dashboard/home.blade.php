@@ -105,7 +105,8 @@
                                         <a class="dropdown-item" href="#!" data-bs-toggle="modal"
                                             data-bs-target="#modal-dashboard" id="button-data-barang-aset">View Barang
                                             Aset</a>
-                                        <a class="dropdown-item" href="#!">Data Depresiasi</a>
+                                        <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                            data-bs-target="#modal-dashboard" id="button-data-doc-depresiasi">Data Depresiasi</a>
                                         <div class="dropdown-divider"></div><a class="dropdown-item text-primary"
                                             href="#!"><span class="fas fa-file-export"></span> Export Data Aset</a>
                                     </div>
@@ -497,6 +498,28 @@
             );
             $.ajax({
                 url: "{{ route('dashboard_data_kso') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard').html(data);
+            }).fail(function() {
+                $('#menu-dashboard').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-data-doc-depresiasi", function(e) {
+            e.preventDefault();
+            // var code = $(this).data("code");
+            $('#menu-dashboard').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_data_depresiasi_aset') }}",
                 type: "POST",
                 cache: false,
                 data: {

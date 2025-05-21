@@ -80,6 +80,10 @@ class AppController extends Controller
         $data = DB::table('inventaris_data')->where('inventaris_data_jenis',1)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
         return view('application.dashboard.data.data-aset',['data'=>$data]);
     }
+    public function dashboard_data_depresiasi_aset(Request $request){
+        $data = DB::table('tbl_depresiasi')->get();
+        return view('application.dashboard.data.data-depresiasi-aset',['data'=>$data]);
+    }
     public function dashboard_data_kso(Request $request){
         $data = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->get();
         return view('application.dashboard.data.data-kso',['data'=>$data]);

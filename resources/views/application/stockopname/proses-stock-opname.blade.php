@@ -201,7 +201,7 @@
                                         <th>Harga Barang</th>
                                     </tr>
                                 </thead>
-                                <tbody style="font-size: 13px;">
+                                <tbody style="font-size: 12px;">
                                     @php
                                         $no = 1;
                                     @endphp
@@ -226,7 +226,7 @@
                         </div>
                         <div class="card-body bg-light">
                             <div class="d-flex justify-content-between fs--1 mb-1">
-                                <h6 class="mb-0">Keadaan Baik</h6>
+                                <h6 class="mb-0 text-success">Keadaan Baik</h6>
                                 <span>
                                     @php
                                         $barangbaik = DB::table('tbl_sub_verifdatainventaris')
@@ -238,7 +238,7 @@
                                 </span>
                             </div>
                             <div class="d-flex justify-content-between fs--1 mb-1">
-                                <h6 class="mb-0">Keadaan Maintenance</h6>
+                                <h6 class="mb-0 text-success">Keadaan Maintenance</h6>
                                 <span>
                                     @php
                                         $barangmaintenance = DB::table('tbl_sub_verifdatainventaris')
@@ -250,7 +250,7 @@
                                 </span>
                             </div>
                             <div class="d-flex justify-content-between fs--1 mb-1">
-                                <h6 class="mb-0">Keadaan Maintenance</h6>
+                                <h6 class="mb-0 text-success">Keadaan Maintenance</h6>
                                 <span>
                                     @php
                                         $barangrusak = DB::table('tbl_sub_verifdatainventaris')
@@ -264,7 +264,7 @@
 
 
                             <div class="d-flex justify-content-between fs--1 mb-1 text-success">
-                                <p class="mb-0">Total Belum Verifikasi :</p>
+                                <p class="mb-0 text-danger">Total Belum Verifikasi :</p>
                                 <span>
                                     <h5 style="cursor: pointer; color: rgb(255, 0, 0);" id="btn-show-data-belum-verif"
                                         data-id="{{ $cekdata->kode_verif }}">

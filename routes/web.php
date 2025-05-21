@@ -415,6 +415,7 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/add', [AppController::class, 'dashboard_add'])->name('dashboard_add');
     Route::post('dashboard/data-non-aset', [AppController::class, 'dashboard_data_non_aset'])->name('dashboard_data_non_aset');
     Route::post('dashboard/data-aset', [AppController::class, 'dashboard_data_aset'])->name('dashboard_data_aset');
+    Route::post('dashboard/data-depresiasi-aset', [AppController::class, 'dashboard_data_depresiasi_aset'])->name('dashboard_data_depresiasi_aset');
     Route::post('dashboard/data-kso', [AppController::class, 'dashboard_data_kso'])->name('dashboard_data_kso');
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');
     Route::post('dashboard/data-lokasi-print-barcode', [AppController::class, 'masteradmin_cabang_data_lokasi_print_barcode'])->name('masteradmin_cabang_data_lokasi_print_barcode');

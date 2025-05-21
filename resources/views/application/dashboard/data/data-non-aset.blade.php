@@ -58,7 +58,7 @@
                     <tr>
                         <th>Gambar</th>
                         <th>Nama Barang</th>
-                        <th>ID Inventaris</th>
+                        <th>Klasifikasi</th>
                         <th>Nomor Inventaris</th>
                         <th>Tanggal Pembelian</th>
                         <th>Merek / Type</th>
