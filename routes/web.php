@@ -414,7 +414,13 @@ Route::prefix('app')->group(function () {
     Route::get('dashboard_home', [AppController::class, 'dashboard_home'])->name('dashboard_home');
     Route::post('dashboard/add', [AppController::class, 'dashboard_add'])->name('dashboard_add');
     Route::post('dashboard/data-non-aset', [AppController::class, 'dashboard_data_non_aset'])->name('dashboard_data_non_aset');
+    Route::post('dashboard/export-data-non-aset', [AppController::class, 'dashboard_export_data_non_aset'])->name('dashboard_export_data_non_aset');
+    Route::post('dashboard/export-data-non-aset/data', [AppController::class, 'dashboard_export_data_non_aset_data'])->name('dashboard_export_data_non_aset_data');
+    Route::get('dashboard/export-data-non-aset/excel', [AppController::class, 'dashboard_export_data_non_aset_excel'])->name('dashboard_export_data_non_aset_excel');
     Route::post('dashboard/data-aset', [AppController::class, 'dashboard_data_aset'])->name('dashboard_data_aset');
+    Route::post('dashboard/export-data-aset', [AppController::class, 'dashboard_export_data_aset'])->name('dashboard_export_data_aset');
+    Route::post('dashboard/export-data-aset/data', [AppController::class, 'dashboard_export_data_aset_data'])->name('dashboard_export_data_aset_data');
+    Route::get('dashboard/export-data-aset/excel', [AppController::class, 'dashboard_export_data_aset_excel'])->name('dashboard_export_data_aset_excel');
     Route::post('dashboard/data-depresiasi-aset', [AppController::class, 'dashboard_data_depresiasi_aset'])->name('dashboard_data_depresiasi_aset');
     Route::post('dashboard/data-kso', [AppController::class, 'dashboard_data_kso'])->name('dashboard_data_kso');
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');

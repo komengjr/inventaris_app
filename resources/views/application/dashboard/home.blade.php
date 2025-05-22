@@ -67,8 +67,11 @@
                                         <a class="dropdown-item" href="#!" data-bs-toggle="modal"
                                             data-bs-target="#modal-dashboard" id="button-data-barang-non-aset">View Barang
                                             Non Aset</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item text-primary"
-                                            href="#!"><span class="fas fa-file-export"></span> Export Data Non Aset</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-primary" href="#!" data-bs-toggle="modal"
+                                            data-bs-target="#modal-dashboard-lg" id="button-export-data-non-aset"><span
+                                                class="fas fa-file-export"></span>
+                                            Export Data Non Aset</a>
                                     </div>
                                 </div>
                             </div>
@@ -106,9 +109,12 @@
                                             data-bs-target="#modal-dashboard" id="button-data-barang-aset">View Barang
                                             Aset</a>
                                         <a class="dropdown-item" href="#!" data-bs-toggle="modal"
-                                            data-bs-target="#modal-dashboard" id="button-data-doc-depresiasi">Data Depresiasi</a>
+                                            data-bs-target="#modal-dashboard" id="button-data-doc-depresiasi">Data
+                                            Depresiasi</a>
                                         <div class="dropdown-divider"></div><a class="dropdown-item text-primary"
-                                            href="#!"><span class="fas fa-file-export"></span> Export Data Aset</a>
+                                            data-bs-toggle="modal" data-bs-target="#modal-dashboard-lg" href="#!"
+                                            id="button-export-data-aset"><span class="fas fa-file-export"></span> Export
+                                            Data Aset</a>
                                     </div>
                                 </div>
                             </div>
@@ -416,6 +422,18 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-dashboard-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-dashboard-lg"></div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
@@ -465,6 +483,50 @@
                 $('#menu-dashboard').html(data);
             }).fail(function() {
                 $('#menu-dashboard').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-export-data-non-aset", function(e) {
+            e.preventDefault();
+            // var code = $(this).data("code");
+            $('#menu-dashboard-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_export_data_non_aset') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard-lg').html(data);
+            }).fail(function() {
+                $('#menu-dashboard-lg').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-export-data-aset", function(e) {
+            e.preventDefault();
+            // var code = $(this).data("code");
+            $('#menu-dashboard-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_export_data_aset') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard-lg').html(data);
+            }).fail(function() {
+                $('#menu-dashboard-lg').html('eror');
             });
 
         });
@@ -589,6 +651,134 @@
                     });
             }
         });
+        $(document).on("click", "#button-metode-export-data", function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            var option = document.getElementById("option").value;
+            $("#menu-data-export-barang-non-aset").html(
+                '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+            );
+            if (option == "-") {
+                alert('eror');
+            } else if (option == "data") {
+                $.ajax({
+                    url: "{{ route('dashboard_export_data_non_aset_data') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                        "option": option,
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    $("#menu-data-export-barang-non-aset").html(data);
+                }).fail(function() {
+                    alert('sasdads');
+                });
+            } else if (option == "excel") {
+                $.ajax({
+                    url: "{{ route('dashboard_export_data_non_aset_excel') }}",
+                    type: "GET",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                        "option": option,
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    window.location.replace("{{ route('dashboard_export_data_non_aset_excel') }}");
+                    $("#menu-data-export-barang-non-aset").html('done');
+                }).fail(function() {
+                    alert('error');
+                });
+            } else {
+                $.ajax({
+                    url: "{{ route('masteradmin_cabang_data_lokasi_print_barcode') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                        "option": option,
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    $("#menu-data-export-barang-non-aset").html(
+                        '<iframe src="data:application/pdf;base64, ' +
+                        data +
+                        '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                    );
+                }).fail(function() {
+                    alert('error');
+                });
+            }
+        });
+        $(document).on("click", "#button-metode-export-data-aset", function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            var option = document.getElementById("option").value;
+            $("#menu-data-export-barang-non-aset").html(
+                '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+            );
+            if (option == "-") {
+                alert('eror');
+            } else if (option == "data") {
+                $.ajax({
+                    url: "{{ route('dashboard_export_data_aset_data') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                        "option": option,
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    $("#menu-data-export-barang-non-aset").html(data);
+                }).fail(function() {
+                    alert('sasdads');
+                });
+            } else if (option == "excel") {
+                $.ajax({
+                    url: "{{ route('dashboard_export_data_aset_excel') }}",
+                    type: "GET",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                        "option": option,
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    window.location.replace("{{ route('dashboard_export_data_aset_excel') }}");
+                    $("#menu-data-export-barang-non-aset").html('done');
+                }).fail(function() {
+                    alert('error');
+                });
+            } else {
+                $.ajax({
+                    url: "{{ route('masteradmin_cabang_data_lokasi_print_barcode') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                        "option": option,
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    $("#menu-data-export-barang-non-aset").html(
+                        '<iframe src="data:application/pdf;base64, ' +
+                        data +
+                        '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                    );
+                }).fail(function() {
+                    alert('error');
+                });
+            }
+        });
     </script>
     <script>
         var mostLeadsInit = function mostLeadsInit() {
@@ -658,15 +848,12 @@
                             },
                             data: [
                                 @foreach ($klasifikasi as $klasifikasis)
-                                @php
-                                $data = DB::table('inventaris_data')
-                                ->join('inventaris_klasifikasi','inventaris_klasifikasi.inventaris_klasifikasi_code','=','inventaris_data.inventaris_klasifikasi_code')
-                                ->where('inventaris_klasifikasi.inventaris_cat_code',$klasifikasis->inventaris_cat_code)->count();
-                                @endphp
-                                {
-                                    value: {{$data}},
-                                    name: '{{$klasifikasis->inventaris_cat_name}}',
-                                },
+                                    @php
+                                        $data = DB::table('inventaris_data')->join('inventaris_klasifikasi', 'inventaris_klasifikasi.inventaris_klasifikasi_code', '=', 'inventaris_data.inventaris_klasifikasi_code')->where('inventaris_klasifikasi.inventaris_cat_code', $klasifikasis->inventaris_cat_code)->count();
+                                    @endphp {
+                                        value: {{ $data }},
+                                        name: '{{ $klasifikasis->inventaris_cat_name }}',
+                                    },
                                 @endforeach
                             ],
                         }, ],

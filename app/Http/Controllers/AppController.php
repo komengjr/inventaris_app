@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DataBarangAsetExport;
+use App\Exports\DataBarangNonAset;
+use App\Exports\DataBarangNonAsetExport;
 use Faker\Provider\Uuid;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -15,7 +18,8 @@ use Session;
 use DB;
 use PDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use App\Exports\DataInventarisExport;
+use App\Exports\DataInventarisExportRuangan;
 class AppController extends Controller
 {
     public function __construct()
@@ -76,6 +80,26 @@ class AppController extends Controller
         $data = DB::table('inventaris_data')->where('inventaris_data_jenis',0)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
         return view('application.dashboard.data.data-non-aset',['data'=>$data]);
     }
+    public function dashboard_export_data_non_aset(Request $request){
+        return view('application.dashboard.data.export-data-non-aset');
+    }
+    public function dashboard_export_data_non_aset_data(Request $request){
+        return 132;
+    }
+    public function dashboard_export_data_non_aset_excel(Request $request){
+        $data = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
+        return Excel::download(new DataBarangNonAsetExport(Auth::user()->cabang), 'inventaris_non_aset'.$data->nama_cabang.'.xlsx');
+    }
+    public function dashboard_export_data_aset(Request $request){
+        return view('application.dashboard.data.export-data-aset');
+    }
+    public function dashboard_export_data_aset_data(Request $request){
+        return 123132132;
+    }
+    public function dashboard_export_data_aset_excel(){
+        $data = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
+        return Excel::download(new DataBarangAsetExport(Auth::user()->cabang), 'inventaris_aset'.$data->nama_cabang.'.xlsx');
+    }
     public function dashboard_data_aset(Request $request){
         $data = DB::table('inventaris_data')->where('inventaris_data_jenis',1)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
         return view('application.dashboard.data.data-aset',['data'=>$data]);
@@ -97,7 +121,6 @@ class AppController extends Controller
     }
     public function masteradmin_cabang_data_lokasi_print_barcode(Request $request)
     {
-
         $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
             ->where('inventaris_data_cabang', auth::user()->cabang)
             ->get();
@@ -105,7 +128,6 @@ class AppController extends Controller
         $customPaper = array(0, 0, 50.80, 98.00);
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.report.barcode-lokasi', ['data' => $data])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
-
         return base64_encode($pdf->stream());
     }
     public function peminjaman($akses)
