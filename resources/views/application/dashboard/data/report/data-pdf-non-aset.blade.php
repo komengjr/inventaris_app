@@ -56,7 +56,7 @@
 
 
     #details {
-        margin-bottom: 50px;
+        margin-bottom: 10px;
     }
 
     #client {
@@ -131,7 +131,7 @@
 
     table .no {
         color: #FFFFFF;
-        font-size: 1.6em;
+        /* font-size: 1.6em; */
         text-align: center;
         background: #db3311;
     }
@@ -154,21 +154,16 @@
         color: #161e18;
     }
 
-    table td.unit,
-    table td.qty,
-    table td.total {
-        font-size: 1.2em;
-    }
 
     table tbody tr:last-child td {
         border: none;
     }
 
     table tfoot td {
-        padding: 10px 20px;
+        /* padding: 10px 20px; */
         background: #FFFFFF;
         border-bottom: none;
-        font-size: 1.2em;
+        /* font-size: 1.2em; */
         white-space: nowrap;
         border-top: 1px solid #AAAAAA;
     }
@@ -179,7 +174,7 @@
 
     table tfoot tr:last-child td {
         color: #db3311;
-        font-size: 1.4em;
+        /* font-size: 1.4em; */
         border-top: 1px solid #db3311;
 
     }
