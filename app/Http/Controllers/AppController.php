@@ -100,7 +100,7 @@ class AppController extends Controller
         $data = DB::table('tbl_cabang')
         ->join('tbl_entitas_cabang','tbl_entitas_cabang.kd_entitas_cabang','=','tbl_cabang.kd_entitas_cabang')
         ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
-        $barang = DB::table('inventaris_data')->where('inventaris_data_jenis',1)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
+        $barang = DB::table('inventaris_data')->where('inventaris_data_jenis',0)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
         $image = base64_encode(file_get_contents(public_path('icon.png')));
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.data.report.data-pdf-non-aset',['data'=>$data,'brg'=>$barang], compact('image'))->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
