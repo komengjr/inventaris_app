@@ -138,6 +138,7 @@
 
     table .desc {
         text-align: left;
+        color: #161e18;
     }
 
     table .unit {
@@ -150,7 +151,7 @@
 
     table .total {
         background: #eaebe3;
-        color: #ff0404;
+        color: #161e18;
     }
 
     table td.unit,
@@ -216,22 +217,31 @@
 
     table .barang {
         text-align: center;
-        background: #cfd1c7;
+        background: #f1f3eb;
+        color: #161e18;
     }
 
     table .lokasi {
         text-align: center;
+        color: #161e18;
     }
     table .merek {
         text-align: center;
-        background: #cfd1c7;
+        background: #f1f3eb;
+        color: #161e18;
     }
     table .type {
         text-align: center;
+        color: #161e18;
     }
     table .ket {
         text-align: center;
-        background: #cfd1c7;
+        background: #f1f3eb;
+        color: #161e18;
+    }
+    table thead tr th{
+        background: #302f2f;
+        color: #f8f8f8;
     }
 </style>
 
@@ -267,13 +277,13 @@
             <thead>
                 <tr>
                     <th class="no">#</th>
-                    <th class="desc">NO INVENTARIS</th>
-                    <th class="barang">NAMA BARANG</th>
-                    <th class="lokasi">LOKASI</th>
-                    <th class="merek">MEREK</th>
-                    <th class="type">TYPE</th>
-                    <th class="ket">SERI</th>
-                    <th class="total">HARGA PEROLEHAN</th>
+                    <th>NO INVENTARIS</th>
+                    <th>NAMA BARANG</th>
+                    <th>LOKASI</th>
+                    <th>MEREK</th>
+                    <th>TYPE</th>
+                    <th>SERI</th>
+                    <th>HARGA PEROLEHAN</th>
                 </tr>
             </thead>
             <tbody id="invoiceItems">
@@ -299,7 +309,7 @@
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
             <div>NOTICE:</div>
-            <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+            <div class="notice">File Ini Sudah di Sah kan Secara Elektronik</div>
         </div>
     </main>
 </body>
