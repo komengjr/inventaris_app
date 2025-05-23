@@ -213,6 +213,26 @@
         padding: 8px 0;
         text-align: center;
     }
+
+    table .barang {
+        text-align: center;
+        background: #cfd1c7;
+    }
+
+    table .lokasi {
+        text-align: center;
+    }
+    table .merek {
+        text-align: center;
+        background: #cfd1c7;
+    }
+    table .type {
+        text-align: center;
+    }
+    table .ket {
+        text-align: center;
+        background: #cfd1c7;
+    }
 </style>
 
 <body>
@@ -221,10 +241,10 @@
             <img src="data:image/png;base64, {{ $image }}">
         </div>
         <div id="company">
-            <h2 class="name">{{$data->nama_cabang}}</h2>
-            <div>{{$data->alamat}}</div>
-            <div>Phone : {{$data->phone}}</div>
-            <div>{{$data->city}}</div>
+            <h2 class="name">{{ $data->nama_cabang }}</h2>
+            <div>{{ $data->alamat }}</div>
+            <div>Phone : {{ $data->phone }}</div>
+            <div>{{ $data->city }}</div>
         </div>
         </div>
     </header>
@@ -248,11 +268,11 @@
                 <tr>
                     <th class="no">#</th>
                     <th class="desc">NO INVENTARIS</th>
-                    <th class="desc">NAMA BARANG</th>
-                    <th class="qty">LOKASI</th>
-                    <th class="desc">MEREK</th>
-                    <th class="qty">TYPE</th>
-                    <th class="unit">desc</th>
+                    <th class="barang">NAMA BARANG</th>
+                    <th class="lokasi">LOKASI</th>
+                    <th class="merek">MEREK</th>
+                    <th class="type">TYPE</th>
+                    <th class="ket">SERI</th>
                     <th class="total">HARGA PEROLEHAN</th>
                 </tr>
             </thead>
@@ -263,13 +283,13 @@
                 @endphp
                 @foreach ($brg as $brgs)
                     <tr>
-                        <td class="no">{{$no++}}</td>
-                        <td class="desc">{{$brgs->inventaris_data_number}}</td>
-                        <td class="desc">{{$brgs->inventaris_data_name}}</td>
-                        <td class="qty">{{$brgs->inventaris_data_location}}</td>
-                        <td class="desc">{{$brgs->inventaris_data_merk}}</td>
-                        <td class="qty">{{$brgs->inventaris_data_type}}</td>
-                        <td class="desc">{{$brgs->inventaris_data_no_seri}}</td>
+                        <td class="no">{{ $no++ }}</td>
+                        <td class="desc">{{ $brgs->inventaris_data_number }}</td>
+                        <td class="barang">{{ $brgs->inventaris_data_name }}</td>
+                        <td class="lokasi">{{ $brgs->inventaris_data_location }}</td>
+                        <td class="merek">{{ $brgs->inventaris_data_merk }}</td>
+                        <td class="type">{{ $brgs->inventaris_data_type }}</td>
+                        <td class="ket">{{ $brgs->inventaris_data_no_seri }}</td>
                         <td class="total">@currency($brgs->inventaris_data_harga)</td>
                     </tr>
                 @endforeach
