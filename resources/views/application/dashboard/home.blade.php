@@ -695,7 +695,7 @@
                 });
             } else {
                 $.ajax({
-                    url: "{{ route('masteradmin_cabang_data_lokasi_print_barcode') }}",
+                    url: "{{ route('dashboard_export_data_non_aset_pdf') }}",
                     type: "POST",
                     cache: false,
                     data: {

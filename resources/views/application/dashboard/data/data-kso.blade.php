@@ -14,6 +14,7 @@
                         <th>Nomor Inventaris</th>
                         <th>Merek / Type</th>
                         <th>Harga</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody style="font-size: 13px;">
@@ -37,8 +38,10 @@
                             <td>
                                 {{ $datas->merk }} / {{ $datas->type }}
                             </td>
-
                             <td>@currency($datas->harga_perolehan)</td>
+                            <td>
+                                <button class="btn btn-falcon-primary btn-sm"><span class="fas fa-eye"></span></button>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -417,6 +417,7 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/export-data-non-aset', [AppController::class, 'dashboard_export_data_non_aset'])->name('dashboard_export_data_non_aset');
     Route::post('dashboard/export-data-non-aset/data', [AppController::class, 'dashboard_export_data_non_aset_data'])->name('dashboard_export_data_non_aset_data');
     Route::get('dashboard/export-data-non-aset/excel', [AppController::class, 'dashboard_export_data_non_aset_excel'])->name('dashboard_export_data_non_aset_excel');
+    Route::post('dashboard/export-data-non-aset/pdf', [AppController::class, 'dashboard_export_data_non_aset_pdf'])->name('dashboard_export_data_non_aset_pdf');
     Route::post('dashboard/data-aset', [AppController::class, 'dashboard_data_aset'])->name('dashboard_data_aset');
     Route::post('dashboard/export-data-aset', [AppController::class, 'dashboard_export_data_aset'])->name('dashboard_export_data_aset');
     Route::post('dashboard/export-data-aset/data', [AppController::class, 'dashboard_export_data_aset_data'])->name('dashboard_export_data_aset_data');
