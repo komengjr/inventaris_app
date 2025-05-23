@@ -26,7 +26,8 @@ class AppController extends Controller
     {
         $this->middleware('auth');
     }
-    public function dashboard_home(){
+    public function dashboard_home()
+    {
         return view('application.dashboard');
     }
     public function url_akses($akses)
@@ -50,10 +51,10 @@ class AppController extends Controller
             $ruangan = DB::table('tbl_nomor_ruangan_cabang')
                 ->join('master_lokasi', 'tbl_nomor_ruangan_cabang.kd_lokasi', '=', 'master_lokasi.master_lokasi_code')
                 ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
-            $datakso = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->count();
+            $datakso = DB::table('sub_tbl_inventory_kso')->where('kd_cabang', Auth::user()->cabang)->count();
             $documentkso = DB::table('document_kso')
-            ->join('sub_tbl_inventory_kso','sub_tbl_inventory_kso.id_inventaris','=','document_kso.id_inventaris')
-            ->where('sub_tbl_inventory_kso.kd_cabang',Auth::user()->cabang)->count();
+                ->join('sub_tbl_inventory_kso', 'sub_tbl_inventory_kso.id_inventaris', '=', 'document_kso.id_inventaris')
+                ->where('sub_tbl_inventory_kso.kd_cabang', Auth::user()->cabang)->count();
             return view('application.dashboard.home', [
                 'klasifikasi' => $klasifikasi,
                 'cabang' => $cabang,
@@ -76,41 +77,62 @@ class AppController extends Controller
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
         return view('application.dashboard.form.form-add-non-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
     }
-    public function dashboard_data_non_aset(Request $request){
-        $data = DB::table('inventaris_data')->where('inventaris_data_jenis',0)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
-        return view('application.dashboard.data.data-non-aset',['data'=>$data]);
+    public function dashboard_data_non_aset(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data_jenis', 0)->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        return view('application.dashboard.data.data-non-aset', ['data' => $data]);
     }
-    public function dashboard_export_data_non_aset(Request $request){
+    public function dashboard_export_data_non_aset(Request $request)
+    {
         return view('application.dashboard.data.export-data-non-aset');
     }
-    public function dashboard_export_data_non_aset_data(Request $request){
+    public function dashboard_export_data_non_aset_data(Request $request)
+    {
         return 132;
     }
-    public function dashboard_export_data_non_aset_excel(Request $request){
-        $data = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
-        return Excel::download(new DataBarangNonAsetExport(Auth::user()->cabang), 'inventaris_non_aset'.$data->nama_cabang.'.xlsx');
+    public function dashboard_export_data_non_aset_excel(Request $request)
+    {
+        $data = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
+        return Excel::download(new DataBarangNonAsetExport(Auth::user()->cabang), 'inventaris_non_aset' . $data->nama_cabang . '.xlsx');
     }
-    public function dashboard_export_data_aset(Request $request){
+    public function dashboard_export_data_aset(Request $request)
+    {
         return view('application.dashboard.data.export-data-aset');
     }
-    public function dashboard_export_data_aset_data(Request $request){
+    public function dashboard_export_data_aset_data(Request $request)
+    {
         return 123132132;
     }
-    public function dashboard_export_data_aset_excel(){
-        $data = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
-        return Excel::download(new DataBarangAsetExport(Auth::user()->cabang), 'inventaris_aset'.$data->nama_cabang.'.xlsx');
+    public function dashboard_export_data_aset_excel()
+    {
+        $data = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
+        return Excel::download(new DataBarangAsetExport(Auth::user()->cabang), 'inventaris_aset' . $data->nama_cabang . '.xlsx');
     }
-    public function dashboard_data_aset(Request $request){
-        $data = DB::table('inventaris_data')->where('inventaris_data_jenis',1)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
-        return view('application.dashboard.data.data-aset',['data'=>$data]);
+    public function dashboard_export_data_aset_pdf()
+    {
+        $data = DB::table('tbl_cabang')
+        ->join('tbl_entitas_cabang','tbl_entitas_cabang.kd_entitas_cabang','=','tbl_cabang.kd_entitas_cabang')
+        ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
+        $barang = DB::table('inventaris_data')->where('inventaris_data_jenis',1)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
+        $image = base64_encode(file_get_contents(public_path('icon.png')));
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.data.report.data-pdf-aset',['data'=>$data,'brg'=>$barang], compact('image'))->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        return base64_encode($pdf->stream());
     }
-    public function dashboard_data_depresiasi_aset(Request $request){
+    public function dashboard_data_aset(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data_jenis', 1)->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        return view('application.dashboard.data.data-aset', ['data' => $data]);
+    }
+    public function dashboard_data_depresiasi_aset(Request $request)
+    {
         $data = DB::table('tbl_depresiasi')->get();
-        return view('application.dashboard.data.data-depresiasi-aset',['data'=>$data]);
+        return view('application.dashboard.data.data-depresiasi-aset', ['data' => $data]);
     }
-    public function dashboard_data_kso(Request $request){
-        $data = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->get();
-        return view('application.dashboard.data.data-kso',['data'=>$data]);
+    public function dashboard_data_kso(Request $request)
+    {
+        $data = DB::table('sub_tbl_inventory_kso')->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('application.dashboard.data.data-kso', ['data' => $data]);
     }
     public function dashboard_lokasi_data_barang(Request $request)
     {
@@ -204,9 +226,10 @@ class AppController extends Controller
             ->where('no_inventaris', $request->nama)->first();
         return view('application.stockopname.hasil-scanner', ['data' => $data, 'kode' => $request->tiket]);
     }
-    public function menu_stock_opname_edit_data_tanggal(Request $request){
-        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif',$request->code)->first();
-        return view('application.stockopname.form-edit-tgl',['data'=>$data]);
+    public function menu_stock_opname_edit_data_tanggal(Request $request)
+    {
+        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
+        return view('application.stockopname.form-edit-tgl', ['data' => $data]);
     }
 
     // MENU MUTASI

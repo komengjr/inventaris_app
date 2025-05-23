@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="col-auto">
                                         <button class="btn btn-falcon-primary btn-sm float-end"
-                                            id="button-metode-export-data-aset" data-id="0"><span
+                                            id="button-metode-export-data-aset" data-id="1"><span
                                                 class="fas fa-qrcode"></span> Submit</button>
                                     </div>
                                 </form>

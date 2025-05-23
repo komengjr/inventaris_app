@@ -46,10 +46,6 @@
 
         </div>
     </div>
-    <script>
-        new DataTable('#exampledata', {
-            responsive: true
-        });
-    </script>
+
 </div>
 <script src="{{ asset('vendors/glightbox/glightbox.min.js') }}"></script>
