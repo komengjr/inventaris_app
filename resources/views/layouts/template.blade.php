@@ -593,6 +593,7 @@
     <script src="{{ asset('vendors/lodash/lodash.min.js') }}"></script>
     <script src="{{ asset('vendors/list.js/list.min.js') }}"></script>
     <script src="{{ asset('asset/js/theme.js') }}"></script>
+    <script src="{{ asset('online/resumable.min.js') }}"></script>
     @yield('base.js')
 
 

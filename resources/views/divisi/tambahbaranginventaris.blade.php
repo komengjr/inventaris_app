@@ -111,14 +111,11 @@
 </div>
 <script src="{{ url('js/rupiah.js', []) }}"></script>
 <script>
-
     $(document).ready(function() {
         $('.jenis_inventaris').select2();
         $('.lokasi_barang').select2();
         $('.kategori_barang').select2();
-
       });
-
 </script>
 
 <script type="text/javascript">

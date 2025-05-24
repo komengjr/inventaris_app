@@ -306,7 +306,7 @@
                                 <div class="position-absolute top-50 start-50 translate-middle text-center">
                                     <p class="fs--1 mb-0 text-400 font-sans-serif fw-medium">Total</p>
                                     <p class="fs-3 mb-0 font-sans-serif fw-medium mt-n2">
-                                        {{ $datanonaset + $dataaset + $datakso }}</p>
+                                        {{ $datanonaset + $dataaset }}</p>
                                 </div>
                             </div>
                         </div>
@@ -776,6 +776,67 @@
                     );
                 }).fail(function() {
                     alert('error');
+                });
+            }
+        });
+        $(document).on("click", "#button-document-data-kso", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-data-barang-kso').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_data_kso_document') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-data-barang-kso').html(data);
+            }).fail(function() {
+                $('#menu-data-barang-kso').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-simpan-data-non-aset", function(e) {
+            e.preventDefault();
+            var data = $("#form-add-data-non-aset").serialize();
+            var nama = document.getElementById("nama_barang").value;
+            var klasifikasi = document.getElementById("klasifikasi").value;
+            var tgl_beli = document.getElementById("tgl_beli").value;
+            var harga_perolehan = document.getElementById("dengan-rupiah").value;
+            var suplier = document.getElementById("suplier").value;
+            var lokasi = document.getElementById("lokasi").value;
+            // var merk = document.getElementById("merk").value;
+            // var type = document.getElementById("type").value;
+            // var seri = document.getElementById("seri").value;
+            $('#menu-simpan-data-non-aset').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            if (nama == "" || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || suplier == "" ||
+                lokasi == "") {
+                alert('eror');
+                $('#menu-simpan-data-non-aset').html(
+                    '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><iclass="fa fa-save"></i> Simpan Data</button>'
+                    );
+            } else {
+                $.ajax({
+                    url: "{{ route('dashboard_add_data_non_aset') }}",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                    },
+                    type: "POST",
+                    cache: false,
+                    data: data,
+                    dataType: 'html',
+                }).done(function(data) {
+                    $('#menu-simpan-data-non-aset').html(data);
+                    location.reload();
+                }).fail(function() {
+                    $('#menu-simpan-data-non-aset').html('eror');
                 });
             }
         });

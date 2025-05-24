@@ -4,8 +4,8 @@
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-3">
-        <div id="menu-data-lokasi-barang">
-            <table id="exampledata" class="table table-striped nowrap" style="width:100%" border="1">
+        <div id="menu-data-barang-kso">
+            <table id="exampledatakso" class="table table-striped nowrap" style="width:100%" border="1">
                 <thead class="bg-200 text-700">
                     <tr>
                         <th>Gambar</th>
@@ -14,6 +14,7 @@
                         <th>Nomor Inventaris</th>
                         <th>Merek / Type</th>
                         <th>Harga</th>
+                        <th>Document</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -40,7 +41,13 @@
                             </td>
                             <td>@currency($datas->harga_perolehan)</td>
                             <td>
-                                <button class="btn btn-falcon-primary btn-sm"><span class="fas fa-eye"></span></button>
+                                @php
+                                    $doc = DB::table('document_kso')->where('id_inventaris',$datas->id_inventaris)->count();
+                                @endphp
+                                {{$doc}} Document
+                            </td>
+                            <td>
+                                <button class="btn btn-falcon-primary btn-sm" id="button-document-data-kso" data-code="{{$datas->id_inventaris}}"><span class="fas fa-edit"></span> Preview</button>
                             </td>
                         </tr>
                     @endforeach
@@ -49,7 +56,7 @@
         </div>
     </div>
     <script>
-        new DataTable('#exampledata', {
+        new DataTable('#exampledatakso', {
             responsive: true
         });
     </script>

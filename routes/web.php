@@ -352,6 +352,7 @@ Route::post('file-upload/uploadgambarbarangkso', [FileUploadController::class, '
 Route::post('file-upload/uploadgambarbarangkso/{id}', [FileUploadController::class, 'uploadgambarbarangkso1'])->name('file-upload.uploadgambarbarangkso1');
 Route::post('file-upload/uploaddatamaintenance', [FileUploadController::class, 'uploaddatamaintenancebarang'])->name('file-upload.uploaddatamaintenance');
 Route::post('file-upload/uploaddatakso', [FileUploadController::class, 'uploaddatakso'])->name('file-upload.uploaddatakso');
+Route::post('file-upload/uploadgambarinventaris', [FileUploadController::class, 'uploadgambarinventaris'])->name('file-upload.gambarinventaris');
 
 
 
@@ -413,6 +414,7 @@ Route::prefix('{akses}/app')->group(function () {
 Route::prefix('app')->group(function () {
     Route::get('dashboard_home', [AppController::class, 'dashboard_home'])->name('dashboard_home');
     Route::post('dashboard/add', [AppController::class, 'dashboard_add'])->name('dashboard_add');
+    Route::post('dashboard/add-data-non-aset', [AppController::class, 'dashboard_add_data_non_aset'])->name('dashboard_add_data_non_aset');
     Route::post('dashboard/data-non-aset', [AppController::class, 'dashboard_data_non_aset'])->name('dashboard_data_non_aset');
     Route::post('dashboard/export-data-non-aset', [AppController::class, 'dashboard_export_data_non_aset'])->name('dashboard_export_data_non_aset');
     Route::post('dashboard/export-data-non-aset/data', [AppController::class, 'dashboard_export_data_non_aset_data'])->name('dashboard_export_data_non_aset_data');
@@ -425,8 +427,12 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/export-data-aset/pdf', [AppController::class, 'dashboard_export_data_aset_pdf'])->name('dashboard_export_data_aset_pdf');
     Route::post('dashboard/data-depresiasi-aset', [AppController::class, 'dashboard_data_depresiasi_aset'])->name('dashboard_data_depresiasi_aset');
     Route::post('dashboard/data-kso', [AppController::class, 'dashboard_data_kso'])->name('dashboard_data_kso');
+    Route::post('dashboard/data-kso/document', [AppController::class, 'dashboard_data_kso_document'])->name('dashboard_data_kso_document');
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');
     Route::post('dashboard/data-lokasi-print-barcode', [AppController::class, 'masteradmin_cabang_data_lokasi_print_barcode'])->name('masteradmin_cabang_data_lokasi_print_barcode');
+
+
+
     Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
     Route::post('menu-stock-opname/proses-data', [AppController::class, 'menu_stock_opname_proses_data'])->name('menu_stock_opname_proses_data');
     Route::post('menu-stock-opname/proses-data-with-kamera', [AppController::class, 'menu_stock_opname_proses_data_with_kamera'])->name('menu_stock_opname_proses_data_with_kamera');

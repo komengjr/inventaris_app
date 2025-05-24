@@ -28,7 +28,8 @@ class AppController extends Controller
     }
     public function dashboard_home()
     {
-        return view('application.dashboard');
+        $cabang = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
+        return view('application.dashboard',['cabang'=>$cabang]);
     }
     public function url_akses($akses)
     {
@@ -73,9 +74,50 @@ class AppController extends Controller
     }
     public function dashboard_add()
     {
-        $lokasi = DB::table('master_lokasi')->get();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)
+            ->get();
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
         return view('application.dashboard.form.form-add-non-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
+    }
+    public function dashboard_add_data_non_aset(Request $request)
+    {
+        $entitas = DB::table('tbl_entitas_cabang')
+            ->join('tbl_cabang', 'tbl_cabang.kd_entitas_cabang', '=', 'tbl_entitas_cabang.kd_entitas_cabang')
+            ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
+            ->where('tbl_setting_cabang.kd_cabang', Auth::user()->cabang)->first();
+        $total = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$request->lokasi)->first();
+        $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
+        if ($request->link == null) {
+            $link = null;
+        } else {
+            $link = 'public/databrg/new/' . Auth::user()->cabang . '/' . $request->link;
+        }
+        DB::table('inventaris_data')->insert([
+            'inventaris_data_code' => Auth::user()->cabang . '' . date('Ymdhis'),
+            'inventaris_klasifikasi_code' => $request->klasifikasi,
+            'inventaris_data_number' => ($total + 1).'/'.$request->klasifikasi.'/'.$lokasi->kd_lokasi.'/'.$entitas->simbol_entitas.'.'.$entitas->no_cabang.'/'.date('Y', strtotime($request->tgl_beli)),
+            'inventaris_data_name' => $request->nama_barang,
+            'inventaris_data_location' => $lokasi->kd_lokasi,
+            'inventaris_data_jenis' => $request->jenis,
+            'inventaris_data_harga' => $nilai,
+            'inventaris_data_merk' => $request->merk,
+            'inventaris_data_type' => $request->type,
+            'inventaris_data_no_seri' => $request->seri,
+            'inventaris_data_suplier' => $request->suplier,
+            'inventaris_data_kondisi' => $request->kondisi,
+            'inventaris_data_status' => 0,
+            'inventaris_data_tgl_beli' => $request->tgl_beli,
+            'inventaris_data_cabang' => Auth::user()->cabang,
+            'inventaris_data_urut' => $total + 1,
+            'inventaris_data_file' => $link,
+            'id_nomor_ruangan_cbaang' => $request->lokasi,
+            'created_at' => now(),
+        ]);
+        return '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><i
+                        class="fa fa-save"></i> Simpan Data</button>';
     }
     public function dashboard_data_non_aset(Request $request)
     {
@@ -98,11 +140,11 @@ class AppController extends Controller
     public function dashboard_export_data_non_aset_pdf()
     {
         $data = DB::table('tbl_cabang')
-        ->join('tbl_entitas_cabang','tbl_entitas_cabang.kd_entitas_cabang','=','tbl_cabang.kd_entitas_cabang')
-        ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
-        $barang = DB::table('inventaris_data')->where('inventaris_data_jenis',0)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
+            ->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        $barang = DB::table('inventaris_data')->where('inventaris_data_jenis', 0)->where('inventaris_data_cabang', Auth::user()->cabang)->get();
         $image = base64_encode(file_get_contents(public_path('icon.png')));
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.data.report.data-pdf-non-aset',['data'=>$data,'brg'=>$barang], compact('image'))->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.data.report.data-pdf-non-aset', ['data' => $data, 'brg' => $barang], compact('image'))->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         return base64_encode($pdf->stream());
     }
@@ -122,11 +164,11 @@ class AppController extends Controller
     public function dashboard_export_data_aset_pdf()
     {
         $data = DB::table('tbl_cabang')
-        ->join('tbl_entitas_cabang','tbl_entitas_cabang.kd_entitas_cabang','=','tbl_cabang.kd_entitas_cabang')
-        ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
-        $barang = DB::table('inventaris_data')->where('inventaris_data_jenis',1)->where('inventaris_data_cabang',Auth::user()->cabang)->get();
+            ->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        $barang = DB::table('inventaris_data')->where('inventaris_data_jenis', 1)->where('inventaris_data_cabang', Auth::user()->cabang)->get();
         $image = base64_encode(file_get_contents(public_path('icon.png')));
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.data.report.data-pdf-aset',['data'=>$data,'brg'=>$barang], compact('image'))->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.data.report.data-pdf-aset', ['data' => $data, 'brg' => $barang], compact('image'))->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         return base64_encode($pdf->stream());
     }
@@ -144,6 +186,11 @@ class AppController extends Controller
     {
         $data = DB::table('sub_tbl_inventory_kso')->where('kd_cabang', Auth::user()->cabang)->get();
         return view('application.dashboard.data.data-kso', ['data' => $data]);
+    }
+    public function dashboard_data_kso_document(Request $request)
+    {
+        $data = DB::table('document_kso')->where('id_inventaris', $request->code)->get();
+        return view('application.dashboard.data.data-kso.document-kso', ['data' => $data]);
     }
     public function dashboard_lokasi_data_barang(Request $request)
     {
