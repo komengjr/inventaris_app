@@ -4,7 +4,7 @@
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="row g-3 p-3">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card border border-warning">
                 <div class="card-header pb-0">
                     <div class="row flex-between-center">
@@ -23,22 +23,22 @@
                     <form class="row g-3" action="{{ route('peminjaman_save') }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Tiket Peminjaman</label>
                             <input class="form-control" type="text" value="{{ $data->tiket_peminjaman }}" disabled />
                             <input class="form-control" type="text" id="code" value="{{ $data->id_pinjam }}"
                                 hidden />
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Tujuan Peminjaman</label>
                             <input class="form-control" type="text" value="{{ $data->nama_kegiatan }}" disabled />
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Tanggal Peminjaman</label>
                             <input class="form-control" type="text"
                                 value="{{ $data->tgl_pinjam }} Sampai {{ $data->batas_tgl_pinjam }}" disabled />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Penanggung Jawab Peminjaman</label>
                             <input class="form-control" type="text" value="{{ $data->pj_pinjam }}" disabled />
                         </div>
@@ -51,8 +51,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row g-3 p-3">
         <div class="col-md-6">
             <div class="card border border-primary mb-3">
                 <div class="card-header pb-0">
@@ -94,13 +92,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+    </div>
+    <div id="menu-check-barang-peminjaman"></div>
+    <div class="row g-3 p-3">
+        <div class="col-md-12">
             <div class="card border border-primary">
                 <div class="card-header pb-0">
                     <div class="row flex-between-center">
                         <div class="col-sm-auto mb-sm-0 mb-2">
                             <h5 class="mb-0" data-anchor="data-anchor">
-                                Data Barang Yang Dipinjam
+                                Proses Data Barang Yang Dipinjam
                             </h5>
                         </div>
                         <div class="col-auto">
@@ -118,7 +119,10 @@
                                     <th>Nama Barang</th>
                                     <th>No Inventaris</th>
                                     <th>Merek / Type</th>
-                                    <th>Tanggal Pembelian</th>
+                                    <th>Tanggal Peminjaman</th>
+                                    <th>Kondisi Peminjaman</th>
+                                    <th>Tanggal Pengembalian</th>
+                                    <th>Kondisi Pengembalian</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -132,8 +136,32 @@
                                         <td>{{ $brgs->inventaris_data_name }}</td>
                                         <td>{{ $brgs->inventaris_data_number }}</td>
                                         <td>{{ $brgs->inventaris_data_merk }}</td>
-                                        <td>{{ $brgs->inventaris_data_tgl_beli }}</td>
-                                        <td></td>
+                                        <td>{{ $brgs->tgl_pinjam_barang }}</td>
+                                        <td>{{ $brgs->kondisi_pinjam }}</td>
+                                        <td>{{ $brgs->tgl_kembali_barang }}</td>
+                                        <td>{{ $brgs->kondisi_kembali }}</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-sm btn-primary dropdown-toggle"
+                                                    id="btnGroupVerticalDrop2" type="button"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false"><span class="fas fa-align-left me-1"
+                                                        data-fa-transform="shrink-3"></span>Option</button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+                                                    <button class="dropdown-item"id="button-proses-check-barang-peminjaman"
+                                                        data-code="{{ $brgs->id_sub_peminjaman }}">
+                                                        <span class="fas fa-swatchbook"></span>
+                                                        Pengembalian Barang</button>
+                                                    <div class="dropdown-divider"></div>
+                                                    <button class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-stock-lg"
+                                                        id="button-edit-data-stock-opname" data-code="{123"><span
+                                                            class="far fa-edit"></span> Edit
+                                                        Data Kondisi</button>
+
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -147,39 +175,12 @@
 <div class="modal-footer">
     <div id="menu-verifikasi-data-peminjaman">
         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary" type="button" id="button-verifikasi-data-peminjaman"
-            data-code="{{ $data->tiket_peminjaman }}">Verifikasi</button>
+        <button class="btn btn-primary" type="button" id="button-proses-verifikasi-data-peminjaman"
+            data-code="{{ $data->tiket_peminjaman }}">Penyelesaian Peminjaman</button>
     </div>
 </div>
 <script>
     new DataTable('#data-table-pinjam', {
         responsive: true
     });
-</script>
-<script>
-    function caridata(ele) {
-        if (event.key === 'Enter') {
-            var code = document.getElementById('code').value;
-            var name = document.getElementById('nama_inventaris').value;
-            $.ajax({
-                url: "{{ route('peminjaman_find_data') }}",
-                type: "POST",
-                cache: false,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "code": code,
-                    "name": name,
-                },
-                dataType: 'html',
-            }).done(function(data) {
-                document.getElementById('nama_inventaris').value = "";
-                $('#hasil-pencarian-barang').html(data);
-            }).fail(function() {
-                $('#hasil-pencarian-barang').html(
-                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-                );
-            });
-
-        }
-    }
 </script>

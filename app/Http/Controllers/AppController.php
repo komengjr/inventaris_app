@@ -246,20 +246,125 @@ class AppController extends Controller
     public function peminjaman_proses(Request $request)
     {
         $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
-        return view('application.peminjaman.form-prosess-peminjaman', ['data' => $data]);
+        $brg = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->where('tbl_sub_peminjaman.id_pinjam', $data->id_pinjam)->get();
+        return view('application.peminjaman.form-prosess-peminjaman', ['data' => $data, 'brg' => $brg]);
     }
     public function peminjaman_find_data(Request $request)
     {
         $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_name', 'like', '%' . $request->name . '%')->get();
-        return view('application.peminjaman.hasil-pencarian-barang', ['data' => $data]);
+        return view('application.peminjaman.hasil-pencarian-barang', ['data' => $data, 'tiket' => $request->code]);
+    }
+    public function peminjaman_pilih_data(Request $request)
+    {
+        DB::table('tbl_sub_peminjaman')->insert([
+            'id_pinjam' => $request->code,
+            'id_inventaris' => $request->id,
+            'kd_cabang' => Auth::user()->cabang,
+            'kondisi_pinjam' => 'BAIK',
+            'tgl_pinjam_barang' => now(),
+            'status_sub_peminjaman' => 0,
+            'created_at' => now()
+        ]);
+        $brg = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->where('tbl_sub_peminjaman.id_pinjam', $request->code)->get();
+        return view('application.peminjaman.table-fix-peminjaman', ['brg' => $brg]);
+    }
+    public function peminjaman_proses_verifikasi(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
+        $brg = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->get();
+        return view('application.peminjaman.form-verifikasi-peminjaman', ['data' => $data, 'brg' => $brg]);
+    }
+    public function verifikasi_data_peminjaman(Request $request)
+    {
+        $check = DB::table('tbl_sub_peminjaman')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->first();
+        if ($check) {
+            DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->update([
+                'status_pinjam' => 10
+            ]);
+            return '1';
+        } else {
+            return '0';
+        }
+    }
+    public function proses_check_data_barang_peminjaman(Request $request)
+    {
+        $data = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_sub_peminjaman.id_sub_peminjaman', $request->code)->first();
+        return view('application.peminjaman.check-barang-peminjaman', ['data' => $data]);
+    }
+    public function proses_save_check_data_barang_peminjaman(Request $request)
+    {
+        DB::table('tbl_sub_peminjaman')->where('id_sub_peminjaman', $request->id_pinjam)->update([
+            'tgl_kembali_barang' => now(),
+            'kondisi_kembali' => $request->catatan,
+        ]);
+        $brg = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->get();
+        return view('application.peminjaman.table-check-peminjaman', ['brg' => $brg]);
+    }
+    public function proses_verifikasi_data_peminjaman(Request $request)
+    {
+        $check = DB::table('tbl_sub_peminjaman')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_sub_peminjaman.tgl_kembali_barang', '=', null)
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->first();
+        if (!$check) {
+            DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->update([
+                'status_pinjam' => 1
+            ]);
+            return '1';
+        } else {
+            return '0';
+        }
+    }
+    public function print_report_data_peminjaman(Request $request)
+    {
+        return view('application.peminjaman.print-data-peminjaman');
+    }
+    public function print_report_data_peminjaman_show(Request $request)
+    {
+
+        $image = base64_encode(file_get_contents(public_path('qr.png')));
+        $customPaper = array(0, 0, 50.80, 95.20);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->set_opacity(.2, "Multiply");
+        $canvas->set_opacity(.1);
+        // $canvas->page_text($width/5, $height/2, 'Lunas', '123', 30, array(22,0,0),1,2,0);
+        // $canvas->page_script('
+        //     $pdf->set_opacity(.1);
+        //     $pdf->image("qr.png", 80, 180, 255, 220);
+        //     ');
+        return base64_encode($pdf->stream());
     }
     // STOK OPNAME
     public function menu_stock_opname($akses)
     {
-        $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang', auth::user()->cabang)
-            ->orderBy('id_verifdatainventaris', 'desc')
-            ->get();
-        return view('application.stockopname.menu-stock-opname', ['data' => $data]);
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang', auth::user()->cabang)
+                ->orderBy('id_verifdatainventaris', 'desc')
+                ->get();
+            return view('application.stockopname.menu-stock-opname', ['data' => $data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+
     }
     public function menu_stock_opname_kondisi_data(Request $request)
     {
@@ -354,7 +459,7 @@ class AppController extends Controller
     {
         if ($this->url_akses($akses) == true) {
             $data = DB::table('master_doocument')->get();
-            return view('application.master-data.master-barang',['data'=>$data]);
+            return view('application.master-data.master-barang', ['data' => $data]);
         } else {
             return Redirect::to('dashboard');
         }
@@ -364,7 +469,7 @@ class AppController extends Controller
     {
         if ($this->url_akses($akses) == true) {
             $data = DB::table('master_doocument')->get();
-            return view('application.master-data.master-no-document',['data'=>$data]);
+            return view('application.master-data.master-no-document', ['data' => $data]);
         } else {
             return Redirect::to('dashboard');
         }

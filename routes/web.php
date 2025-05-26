@@ -16,25 +16,25 @@ Route::get('barcode_qr_reader', 'ImageUploadController@page');
 Route::post('/barcode_qr_reader/upload', 'ImageUploadController@upload')->name('image.upload');
 
 // Master Cabang GET
-Route::get('master/datacabang',['as'=>'master/datacabang','uses'=> 'MasterController@datacabang']);
-Route::get('master/datalokasi',['as'=>'master/datalokasi','uses'=> 'MasterController@masterdatalokasi']);
-Route::get('master/datalokasi/tambah',['as'=>'master/datalokasi/tambah','uses'=> 'MasterController@mastertambahdatalokasi']);
-Route::get('master/datalokasi/edit/{id}',['as'=>'master/datalokasi/edit/','uses'=> 'MasterController@mastereditdatalokasi']);
-Route::get('master/dataklasifikasi',['as'=>'master/dataklasifikasi','uses'=> 'MasterController@dataklasifikasi']);
-Route::get('master/dataklasifikasi/tambah',['as'=>'master/dataklasifikasi/tambah','uses'=> 'MasterController@tambahdataklasifikasi']);
-Route::get('master/dataklasifikasi/edit/{id}',['as'=>'master/dataklasifikasi/edit','uses'=> 'MasterController@editdataklasifikasi']);
+Route::get('master/datacabang', ['as' => 'master/datacabang', 'uses' => 'MasterController@datacabang']);
+Route::get('master/datalokasi', ['as' => 'master/datalokasi', 'uses' => 'MasterController@masterdatalokasi']);
+Route::get('master/datalokasi/tambah', ['as' => 'master/datalokasi/tambah', 'uses' => 'MasterController@mastertambahdatalokasi']);
+Route::get('master/datalokasi/edit/{id}', ['as' => 'master/datalokasi/edit/', 'uses' => 'MasterController@mastereditdatalokasi']);
+Route::get('master/dataklasifikasi', ['as' => 'master/dataklasifikasi', 'uses' => 'MasterController@dataklasifikasi']);
+Route::get('master/dataklasifikasi/tambah', ['as' => 'master/dataklasifikasi/tambah', 'uses' => 'MasterController@tambahdataklasifikasi']);
+Route::get('master/dataklasifikasi/edit/{id}', ['as' => 'master/dataklasifikasi/edit', 'uses' => 'MasterController@editdataklasifikasi']);
 // Master Cabang POST
 Route::post('master/datacabang/simpandatacabang', 'MasterController@simpandatacabang');
 Route::post('master/datacabang/deletedatacabang', 'MasterController@deletedatacabang');
-Route::post('master/datacabang/lokasi/tambah',['as'=>'master/datacabang/lokasi/tambah','uses'=> 'MasterController@tambahlokasibaru']);
-Route::post('master/datacabang/lokasi/update',['as'=>'master/datacabang/lokasi/update','uses'=> 'MasterController@updatelokasibaru']);
-Route::post('master/datacabang/lokasi/delete',['as'=>'master/datacabang/lokasi/delete','uses'=> 'MasterController@deletelokasibaru']);
+Route::post('master/datacabang/lokasi/tambah', ['as' => 'master/datacabang/lokasi/tambah', 'uses' => 'MasterController@tambahlokasibaru']);
+Route::post('master/datacabang/lokasi/update', ['as' => 'master/datacabang/lokasi/update', 'uses' => 'MasterController@updatelokasibaru']);
+Route::post('master/datacabang/lokasi/delete', ['as' => 'master/datacabang/lokasi/delete', 'uses' => 'MasterController@deletelokasibaru']);
 
 // Master Admin POST
-Route::post('master/datauser/proses/tambah/{id}',['as'=>'master/datauser/proses/tambah/','uses'=> 'MasterController@tambahdatauser']);
-Route::post('master/datauser/proses/edit',['as'=>'master/datauser/proses/edit','uses'=> 'MasterController@editdatauser']);
-Route::post('master/datauser/proses/reset',['as'=>'master/datauser/proses/reset','uses'=> 'MasterController@resetdatauser']);
-Route::post('master/datauser/proses/hapus',['as'=>'master/datauser/proses/hapus','uses'=> 'MasterController@hapusdatauser']);
+Route::post('master/datauser/proses/tambah/{id}', ['as' => 'master/datauser/proses/tambah/', 'uses' => 'MasterController@tambahdatauser']);
+Route::post('master/datauser/proses/edit', ['as' => 'master/datauser/proses/edit', 'uses' => 'MasterController@editdatauser']);
+Route::post('master/datauser/proses/reset', ['as' => 'master/datauser/proses/reset', 'uses' => 'MasterController@resetdatauser']);
+Route::post('master/datauser/proses/hapus', ['as' => 'master/datauser/proses/hapus', 'uses' => 'MasterController@hapusdatauser']);
 // Master Admin GET
 Route::get('masteradmin', 'MasterController@index')->name('index');
 Route::get('masteradmindetail', 'MasterController@masteradmindetail');
@@ -45,20 +45,20 @@ Route::get('masterinjekupdate/{id}', 'MasterController@masterinjekupdate');
 // Master Admin Telegram
 Route::get('masteradmintelegram', 'MasterController@masteradmintelegram')->name('masteradmintelegram');
 // Master Admin GET User
-Route::get('master/datauser/{id}',['as'=>'master/datauser','uses'=> 'MasterController@datauser']);
+Route::get('master/datauser/{id}', ['as' => 'master/datauser', 'uses' => 'MasterController@datauser']);
 // Master Data Excel
-Route::get('master/dataexcel/{id}',['as'=>'master/dataexcel','uses'=> 'MasterController@dataexcelcabang']);
-Route::get('master/dataexcel/detail/data/{id}',['as'=>'master/dataexcel/detail/data','uses'=> 'MasterController@editdataexcelcabang']);
-Route::post('master/dataexcel/detail/postdata',['as'=>'master/dataexcel/detail/postdata','uses'=> 'MasterController@editpostdataexcelcabang']);
-Route::get('master/masterdatainventaris/{id}',['as'=>'master/masterdatainventaris','uses'=> 'MasterController@masterdatainventaris']);
-Route::get('master/masterdatalokasicabang/{id}',['as'=>'master/masterdatalokasicabang','uses'=> 'MasterController@masterdatalokasicabang']);
+Route::get('master/dataexcel/{id}', ['as' => 'master/dataexcel', 'uses' => 'MasterController@dataexcelcabang']);
+Route::get('master/dataexcel/detail/data/{id}', ['as' => 'master/dataexcel/detail/data', 'uses' => 'MasterController@editdataexcelcabang']);
+Route::post('master/dataexcel/detail/postdata', ['as' => 'master/dataexcel/detail/postdata', 'uses' => 'MasterController@editpostdataexcelcabang']);
+Route::get('master/masterdatainventaris/{id}', ['as' => 'master/masterdatainventaris', 'uses' => 'MasterController@masterdatainventaris']);
+Route::get('master/masterdatalokasicabang/{id}', ['as' => 'master/masterdatalokasicabang', 'uses' => 'MasterController@masterdatalokasicabang']);
 
 // Master Admin Get Inventaris
-Route::get('master/datainventaris/{id}',['as'=>'master/datainventaris','uses'=> 'MasterController@datainventaris']);
-Route::get('master/datainventaris/lihatdatabarang/{id}/{kd}',['as'=>'master/datainventaris/lihatdatabarang','uses'=> 'MasterController@lihatdatabarang']);
-Route::get('master/datainventaris/tambahdatabarang/{id}/{kd}',['as'=>'master/datainventaris/tambahdatabarang','uses'=> 'MasterController@tambahdatabarang']);
-Route::get('master/data-inventaris/update/{id}',['as'=>'master/data-inventaris/update','uses'=> 'MasterController@updatedatainevntaris']);
-Route::get('masteradmin/data-inventaris/updatedata/{id}',['as'=>'masteradmin/data-inventaris/updatedata','uses'=> 'MasterController@getupdatedatainevntaris']);
+Route::get('master/datainventaris/{id}', ['as' => 'master/datainventaris', 'uses' => 'MasterController@datainventaris']);
+Route::get('master/datainventaris/lihatdatabarang/{id}/{kd}', ['as' => 'master/datainventaris/lihatdatabarang', 'uses' => 'MasterController@lihatdatabarang']);
+Route::get('master/datainventaris/tambahdatabarang/{id}/{kd}', ['as' => 'master/datainventaris/tambahdatabarang', 'uses' => 'MasterController@tambahdatabarang']);
+Route::get('master/data-inventaris/update/{id}', ['as' => 'master/data-inventaris/update', 'uses' => 'MasterController@updatedatainevntaris']);
+Route::get('masteradmin/data-inventaris/updatedata/{id}', ['as' => 'masteradmin/data-inventaris/updatedata', 'uses' => 'MasterController@getupdatedatainevntaris']);
 // Master Admin Post Inventaris
 Route::post('master/datainventaris/simpandetailbarang', 'MasterController@simpandetailbarang');
 Route::post('master/datainventaris/createnomorinventariscabang', 'MasterController@createnomorinventariscabang');
@@ -66,187 +66,187 @@ Route::post('master/datainventaris/createnomorinventariscabang', 'MasterControll
 Route::post('master/datainventaris/simpanupdateinventaris', 'MasterController@simpanupdateinventaris');
 Route::get('master/datainventaris/simpanupdateinventaris/{id}', 'MasterController@simpanupdateinventariscabang');
 // Master Admin Get Lokasi
-Route::get('master/datalokasi/{id}',['as'=>'master/datalokasiid','uses'=> 'MasterController@datalokasi']);
-Route::get('master/data-inventaris/detail/{id}',['as'=>'master/data-inventaris/detail','uses'=> 'MasterController@detaildatainventaris']);
-Route::post('masteradmin/post-data-inventaris/',['as'=>'masteradmin/post-data-inventaris/','uses'=> 'MasterController@postdetaildatainventaris']);
+Route::get('master/datalokasi/{id}', ['as' => 'master/datalokasiid', 'uses' => 'MasterController@datalokasi']);
+Route::get('master/data-inventaris/detail/{id}', ['as' => 'master/data-inventaris/detail', 'uses' => 'MasterController@detaildatainventaris']);
+Route::post('masteradmin/post-data-inventaris/', ['as' => 'masteradmin/post-data-inventaris/', 'uses' => 'MasterController@postdetaildatainventaris']);
 // Master Admin Get Data Peminjaman
-Route::get('master/datapeminjaman/{id}',['as'=>'master/datapeminjaman','uses'=> 'MasterController@datapeminjaman']);
+Route::get('master/datapeminjaman/{id}', ['as' => 'master/datapeminjaman', 'uses' => 'MasterController@datapeminjaman']);
 // Master Admin Get Data Mutasi
-Route::get('master/datamutasi/{id}',['as'=>'master/datamutasi','uses'=> 'MasterController@datamutasi']);
-Route::get('master/datamutasi/tampilformmuitasi/{id}',['as'=>'master/datamutasi/tampilformmuitasi','uses'=> 'MasterController@tampilformmuitasi']);
+Route::get('master/datamutasi/{id}', ['as' => 'master/datamutasi', 'uses' => 'MasterController@datamutasi']);
+Route::get('master/datamutasi/tampilformmuitasi/{id}', ['as' => 'master/datamutasi/tampilformmuitasi', 'uses' => 'MasterController@tampilformmuitasi']);
 // Master Admin Get Data Pemusnahan
-Route::get('master/datapemusnahan/{id}',['as'=>'master/datapemusnahan','uses'=> 'MasterController@datapemusnahan']);
+Route::get('master/datapemusnahan/{id}', ['as' => 'master/datapemusnahan', 'uses' => 'MasterController@datapemusnahan']);
 
 // Divisi Controller
-Route::get('lihatdatabarang1/{id}',['as'=>'lihatdatabarang1','uses'=> 'DivisiController@lihatdatabarang1']);
-Route::get('divisi/printall/ruangan/{id}/{page}',['as'=>'divisi/printall/ruangan/','uses'=> 'PdfController@printdataalllokasi']);
-Route::get('menu/formpinjam','DivisiController@menu');
-Route::get('menu/formdepresiasi','DivisiController@depresiasisemuaaset');
-Route::get('menu/formmutasi','DivisiController@mutasidatainventaris');
-Route::get('menu/formpemusnahan','DivisiController@menupemusnahan');
-Route::get('menu/verifdatainventaris','DivisiController@verifdatainventaris');
-Route::post('menu/verifdatainventaris/stockopname-ruangan','DivisiController@verifdatastokopnameruangan');
+Route::get('lihatdatabarang1/{id}', ['as' => 'lihatdatabarang1', 'uses' => 'DivisiController@lihatdatabarang1']);
+Route::get('divisi/printall/ruangan/{id}/{page}', ['as' => 'divisi/printall/ruangan/', 'uses' => 'PdfController@printdataalllokasi']);
+Route::get('menu/formpinjam', 'DivisiController@menu');
+Route::get('menu/formdepresiasi', 'DivisiController@depresiasisemuaaset');
+Route::get('menu/formmutasi', 'DivisiController@mutasidatainventaris');
+Route::get('menu/formpemusnahan', 'DivisiController@menupemusnahan');
+Route::get('menu/verifdatainventaris', 'DivisiController@verifdatainventaris');
+Route::post('menu/verifdatainventaris/stockopname-ruangan', 'DivisiController@verifdatastokopnameruangan');
 //PEMINJAMAN
-Route::post('divisi/peminjaman/tambah','DivisiController@posttambah');
-Route::post('divisi/requestpeminjaman/tambah','DivisiController@postrequestpeminjaman');
-Route::post('divisi/peminjaman/editdata','DivisiController@editdatapeminjamanpost');
-Route::get('divisi/tambahdatapeminjaman',['as'=>'master/tambahdatapeminjaman','uses'=> 'DivisiController@tambahdatapeminjaman']);
-Route::get('divisi/requestdatapeminjaman',['as'=>'master/requestdatapeminjaman','uses'=> 'DivisiController@requestdatapeminjaman']);
-Route::get('divisi/peminjaman/lengkapi/{id}',['as'=>'master/peminjaman/lengkapi','uses'=> 'DivisiController@lengkapipeminjaman']);
-Route::get('divisi/peminjaman/verifikasidata/{id}',['as'=>'master/peminjaman/verifikasidata','uses'=> 'DivisiController@lengkapiverifikasidatapeminjaman']);
-Route::post('divisi/peminjaman/postverifikasidata/',['as'=>'master/peminjaman/postverifikasidata','uses'=> 'DivisiController@lengkapipostverifikasidatadatapeminjaman']);
-Route::get('divisi/peminjaman/inputdatabarang/{id}',['as'=>'divisi/peminjaman/inputdatabarang','uses'=> 'DivisiController@inputdatabarangpinjam']);
-Route::get('divisi/peminjaman/caridatabarang/{id}',['as'=>'divisi/peminjaman/caridatabarang','uses'=> 'DivisiController@caridatabarang']);
-Route::get('divisi/peminjaman/pengembaliandatabarang/{id}',['as'=>'divisi/peminjaman/pengembaliandatabarang','uses'=> 'DivisiController@pengembaliandatabarang']);
-Route::get('divisi/peminjaman/caribarang/{id}/{datax}',['as'=>'divisi/peminjaman/caribarang','uses'=> 'DivisiController@tablecaripeminjaman']);
-Route::get('divisi/peminjaman/inserttable/{id}/{ids}/{datax}',['as'=>'divisi/peminjaman/inserttable','uses'=> 'DivisiController@inserttablepeminjaman']);
-Route::get('divisi/peminjaman/tablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/tablepeminjaman','uses'=> 'DivisiController@tablepeminjaman']);
-Route::get('divisi/peminjaman/refreshtablepeminjaman/{id}',['as'=>'divisi/peminjaman/refreshtablepeminjaman','uses'=> 'DivisiController@refreshtablepeminjaman']);
-Route::get('divisi/peminjaman/editdatatablepeminjaman/{id}',['as'=>'divisi/peminjaman/editdatatablepeminjaman','uses'=> 'DivisiController@editdatatablepeminjaman']);
-Route::get('divisi/peminjaman/editdatapeminjaman/{id}',['as'=>'divisi/peminjaman/editdatapeminjaman','uses'=> 'DivisiController@editdatapeminjaman']);
-Route::get('divisi/peminjaman/balikdatapeminjaman/{id}',['as'=>'divisi/peminjaman/balikdatapeminjaman','uses'=> 'DivisiController@balikdatapeminjaman']);
-Route::get('divisi/peminjaman/hapusdetaildatapeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/hapusdetaildatapeminjaman','uses'=> 'DivisiController@hapusdetaildatapeminjaman']);
-Route::post('divisi/peminjaman/posteditdatapeminjaman',['as'=>'divisi/peminjaman/posteditdatapeminjaman','uses'=> 'DivisiController@posteditdatapeminjaman']);
-Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}',['as'=>'divisi/peminjaman/pengembaliantablepeminjaman','uses'=> 'DivisiController@pengembaliantablepeminjaman']);
+Route::post('divisi/peminjaman/tambah', 'DivisiController@posttambah');
+Route::post('divisi/requestpeminjaman/tambah', 'DivisiController@postrequestpeminjaman');
+Route::post('divisi/peminjaman/editdata', 'DivisiController@editdatapeminjamanpost');
+Route::get('divisi/tambahdatapeminjaman', ['as' => 'master/tambahdatapeminjaman', 'uses' => 'DivisiController@tambahdatapeminjaman']);
+Route::get('divisi/requestdatapeminjaman', ['as' => 'master/requestdatapeminjaman', 'uses' => 'DivisiController@requestdatapeminjaman']);
+Route::get('divisi/peminjaman/lengkapi/{id}', ['as' => 'master/peminjaman/lengkapi', 'uses' => 'DivisiController@lengkapipeminjaman']);
+Route::get('divisi/peminjaman/verifikasidata/{id}', ['as' => 'master/peminjaman/verifikasidata', 'uses' => 'DivisiController@lengkapiverifikasidatapeminjaman']);
+Route::post('divisi/peminjaman/postverifikasidata/', ['as' => 'master/peminjaman/postverifikasidata', 'uses' => 'DivisiController@lengkapipostverifikasidatadatapeminjaman']);
+Route::get('divisi/peminjaman/inputdatabarang/{id}', ['as' => 'divisi/peminjaman/inputdatabarang', 'uses' => 'DivisiController@inputdatabarangpinjam']);
+Route::get('divisi/peminjaman/caridatabarang/{id}', ['as' => 'divisi/peminjaman/caridatabarang', 'uses' => 'DivisiController@caridatabarang']);
+Route::get('divisi/peminjaman/pengembaliandatabarang/{id}', ['as' => 'divisi/peminjaman/pengembaliandatabarang', 'uses' => 'DivisiController@pengembaliandatabarang']);
+Route::get('divisi/peminjaman/caribarang/{id}/{datax}', ['as' => 'divisi/peminjaman/caribarang', 'uses' => 'DivisiController@tablecaripeminjaman']);
+Route::get('divisi/peminjaman/inserttable/{id}/{ids}/{datax}', ['as' => 'divisi/peminjaman/inserttable', 'uses' => 'DivisiController@inserttablepeminjaman']);
+Route::get('divisi/peminjaman/tablepeminjaman/{id}/{ids}', ['as' => 'divisi/peminjaman/tablepeminjaman', 'uses' => 'DivisiController@tablepeminjaman']);
+Route::get('divisi/peminjaman/refreshtablepeminjaman/{id}', ['as' => 'divisi/peminjaman/refreshtablepeminjaman', 'uses' => 'DivisiController@refreshtablepeminjaman']);
+Route::get('divisi/peminjaman/editdatatablepeminjaman/{id}', ['as' => 'divisi/peminjaman/editdatatablepeminjaman', 'uses' => 'DivisiController@editdatatablepeminjaman']);
+Route::get('divisi/peminjaman/editdatapeminjaman/{id}', ['as' => 'divisi/peminjaman/editdatapeminjaman', 'uses' => 'DivisiController@editdatapeminjaman']);
+Route::get('divisi/peminjaman/balikdatapeminjaman/{id}', ['as' => 'divisi/peminjaman/balikdatapeminjaman', 'uses' => 'DivisiController@balikdatapeminjaman']);
+Route::get('divisi/peminjaman/hapusdetaildatapeminjaman/{id}/{ids}', ['as' => 'divisi/peminjaman/hapusdetaildatapeminjaman', 'uses' => 'DivisiController@hapusdetaildatapeminjaman']);
+Route::post('divisi/peminjaman/posteditdatapeminjaman', ['as' => 'divisi/peminjaman/posteditdatapeminjaman', 'uses' => 'DivisiController@posteditdatapeminjaman']);
+Route::get('divisi/peminjaman/pengembaliantablepeminjaman/{id}/{ids}', ['as' => 'divisi/peminjaman/pengembaliantablepeminjaman', 'uses' => 'DivisiController@pengembaliantablepeminjaman']);
 // MAINTENANCE
-Route::get('menu/formmaintenance','MaintenanceController@menumaintenance');
-Route::get('divisi/tambahdatamaintenance',['as'=>'divisi/tambahdatamaintenance','uses'=> 'MaintenanceController@tambahdatamaintenance']);
-Route::post('divisi/tambahdatamaintenance','MaintenanceController@posttambahdatamaintenance');
-Route::get('divisi/maintenance/caridatabarang/{id}','MaintenanceController@caridatabarangmaintenance');
-Route::get('divisi/maintenance/pilihdatabarang/{id}','MaintenanceController@pilihdatabarangmaintenance');
-Route::get('divisi/maintenance/showfilemaintenance/{id}','MaintenanceController@showfilemaintenance');
-Route::get('divisi/maintenance/tindakan/{id}','MaintenanceController@tindakanmaintenance');
-Route::post('divisi/maintenance/tindakan','MaintenanceController@posttindakanmaintenance');
-Route::get('divisi/maintenance/printmaintenance/{id}','MaintenanceController@printmaintenance');
+Route::get('menu/formmaintenance', 'MaintenanceController@menumaintenance');
+Route::get('divisi/tambahdatamaintenance', ['as' => 'divisi/tambahdatamaintenance', 'uses' => 'MaintenanceController@tambahdatamaintenance']);
+Route::post('divisi/tambahdatamaintenance', 'MaintenanceController@posttambahdatamaintenance');
+Route::get('divisi/maintenance/caridatabarang/{id}', 'MaintenanceController@caridatabarangmaintenance');
+Route::get('divisi/maintenance/pilihdatabarang/{id}', 'MaintenanceController@pilihdatabarangmaintenance');
+Route::get('divisi/maintenance/showfilemaintenance/{id}', 'MaintenanceController@showfilemaintenance');
+Route::get('divisi/maintenance/tindakan/{id}', 'MaintenanceController@tindakanmaintenance');
+Route::post('divisi/maintenance/tindakan', 'MaintenanceController@posttindakanmaintenance');
+Route::get('divisi/maintenance/printmaintenance/{id}', 'MaintenanceController@printmaintenance');
 
 
-Route::get('divisi/masterbarang/dataloginventaris',['as'=>'divisi/masterbarang/dataloginventaris','uses'=> 'DivisiController@masterbarangloginventaris']);
-Route::get('divisi/masterbarang/dataloginventaris/cekeror',['as'=>'divisi/masterbarang/dataloginventaris/cekeror','uses'=> 'DivisiController@cekerorloginventaris']);
-Route::get('divisi/masterbarang/dataloginventaris/cekerorklasifikasi',['as'=>'divisi/masterbarang/dataloginventaris/cekerorklasifikasi','uses'=> 'DivisiController@cekerorklasifikasiloginventaris']);
-Route::get('divisi/masterbarang/dataloginventaris/editdata/{id}',['as'=>'divisi/masterbarang/dataloginventaris/editdata','uses'=> 'DivisiController@masterbarangeditloginventaris']);
-Route::get('divisi/masterbarang/dataloginventaris/editdataklasifikasi/{id}',['as'=>'divisi/masterbarang/dataloginventaris/editdataklasifikasi','uses'=> 'DivisiController@masterbarangeditloginventarisklasifikasi']);
-Route::get('divisi/masterbarang/showedit/{id}',['as'=>'divisi/masterbarang/showedit','uses'=> 'DivisiController@masterbarangshowedit']);
-Route::post('divisi/masterbarang/postedit/{id}',['as'=>'divisi/masterbarang/postedit','uses'=> 'DivisiController@posteditdataloginventory']);
-Route::get('divisi/masterbarang/dataloginventaris/downloaddataloginventory',['as'=>'divisi/masterbarang/dataloginventaris/downloaddataloginventory','uses'=> 'DivisiController@downloaddataloginventory']);
-Route::get('divisi/masterbarang/dataloginventaris/resetdataloginventory',['as'=>'divisi/masterbarang/dataloginventaris/resetdataloginventory','uses'=> 'DivisiController@resetdataloginventory']);
-Route::get('divisi/masterbarang/dataloginventaris/fixtanggaldataloginventory',['as'=>'divisi/masterbarang/dataloginventaris/fixtanggaldataloginventory','uses'=> 'DivisiController@fixtanggaldataloginventory']);
+Route::get('divisi/masterbarang/dataloginventaris', ['as' => 'divisi/masterbarang/dataloginventaris', 'uses' => 'DivisiController@masterbarangloginventaris']);
+Route::get('divisi/masterbarang/dataloginventaris/cekeror', ['as' => 'divisi/masterbarang/dataloginventaris/cekeror', 'uses' => 'DivisiController@cekerorloginventaris']);
+Route::get('divisi/masterbarang/dataloginventaris/cekerorklasifikasi', ['as' => 'divisi/masterbarang/dataloginventaris/cekerorklasifikasi', 'uses' => 'DivisiController@cekerorklasifikasiloginventaris']);
+Route::get('divisi/masterbarang/dataloginventaris/editdata/{id}', ['as' => 'divisi/masterbarang/dataloginventaris/editdata', 'uses' => 'DivisiController@masterbarangeditloginventaris']);
+Route::get('divisi/masterbarang/dataloginventaris/editdataklasifikasi/{id}', ['as' => 'divisi/masterbarang/dataloginventaris/editdataklasifikasi', 'uses' => 'DivisiController@masterbarangeditloginventarisklasifikasi']);
+Route::get('divisi/masterbarang/showedit/{id}', ['as' => 'divisi/masterbarang/showedit', 'uses' => 'DivisiController@masterbarangshowedit']);
+Route::post('divisi/masterbarang/postedit/{id}', ['as' => 'divisi/masterbarang/postedit', 'uses' => 'DivisiController@posteditdataloginventory']);
+Route::get('divisi/masterbarang/dataloginventaris/downloaddataloginventory', ['as' => 'divisi/masterbarang/dataloginventaris/downloaddataloginventory', 'uses' => 'DivisiController@downloaddataloginventory']);
+Route::get('divisi/masterbarang/dataloginventaris/resetdataloginventory', ['as' => 'divisi/masterbarang/dataloginventaris/resetdataloginventory', 'uses' => 'DivisiController@resetdataloginventory']);
+Route::get('divisi/masterbarang/dataloginventaris/fixtanggaldataloginventory', ['as' => 'divisi/masterbarang/dataloginventaris/fixtanggaldataloginventory', 'uses' => 'DivisiController@fixtanggaldataloginventory']);
 
-Route::get('divisi/dataaset/tabledataaset',['as'=>'divisi/dataaset/tabledataaset','uses'=> 'DivisiController@tabledataaset']);
-Route::get('divisi/dataaset/tambah',['as'=>'divisi/dataaset/tambah','uses'=> 'DivisiController@tambahdataaset']);
-Route::get('divisi/dataaset/pilihdata',['as'=>'divisi/dataaset/pilihdata','uses'=> 'DivisiController@pilihdata']);
-Route::get('divisi/dataaset/datadepresiasi',['as'=>'divisi/dataaset/datadepresiasi','uses'=> 'DivisiController@datadepresiasi']);
-Route::get('divisi/dataaset/datadepresiasi/table',['as'=>'divisi/dataaset/datadepresiasi/table','uses'=> 'DivisiController@datadtableepresiasi']);
-Route::get('divisi/dataaset/datadepresiasi/penambahandata',['as'=>'divisi/dataaset/datadepresiasi/penambahandata','uses'=> 'DivisiController@penambahandatadepresiasi']);
-Route::post('divisi/dataaset/datadepresiasi/postpenambahandata',['as'=>'divisi/dataaset/datadepresiasi/postpenambahandata','uses'=> 'DivisiController@postpenambahandatadepresiasi']);
-Route::get('divisi/data-aset/detaildataaset/{id}',['as'=>'divisi/data-aset/detaildataaset','uses'=> 'DivisiController@datadetailasetcabang']);
-Route::get('divisi/dataaset/detaildataaset/{id}',['as'=>'divisi/dataaset/detaildataaset','uses'=> 'DivisiController@detaildataaset']);
-Route::get('divisi/dataaset/editdetaildataaset/{id}',['as'=>'divisi/dataaset/editdetaildataaset','uses'=> 'DivisiController@editdetaildataaset']);
-Route::get('divisi/dataaset/getdataoption/{id}/{tgl}/{harga}',['as'=>'divisi/dataaset/getdataoption/','uses'=> 'DivisiController@getdatadepresiasiaset']);
-Route::post('divisi/dataaset/posttambahdatamaintenance','DivisiController@tambahdatamaintance');
-Route::post('divisi/dataaset/postupdatedatamaintenance','DivisiController@updatedatamaintance');
-Route::post('divisi/dataaset/posttambahdatainvoiceaset','DivisiController@tambahdatainvoice');
-Route::post('divisi/dataaset/posttambahdatadepresiasi','DivisiController@tambahdatadepresiasiaset');
+Route::get('divisi/dataaset/tabledataaset', ['as' => 'divisi/dataaset/tabledataaset', 'uses' => 'DivisiController@tabledataaset']);
+Route::get('divisi/dataaset/tambah', ['as' => 'divisi/dataaset/tambah', 'uses' => 'DivisiController@tambahdataaset']);
+Route::get('divisi/dataaset/pilihdata', ['as' => 'divisi/dataaset/pilihdata', 'uses' => 'DivisiController@pilihdata']);
+Route::get('divisi/dataaset/datadepresiasi', ['as' => 'divisi/dataaset/datadepresiasi', 'uses' => 'DivisiController@datadepresiasi']);
+Route::get('divisi/dataaset/datadepresiasi/table', ['as' => 'divisi/dataaset/datadepresiasi/table', 'uses' => 'DivisiController@datadtableepresiasi']);
+Route::get('divisi/dataaset/datadepresiasi/penambahandata', ['as' => 'divisi/dataaset/datadepresiasi/penambahandata', 'uses' => 'DivisiController@penambahandatadepresiasi']);
+Route::post('divisi/dataaset/datadepresiasi/postpenambahandata', ['as' => 'divisi/dataaset/datadepresiasi/postpenambahandata', 'uses' => 'DivisiController@postpenambahandatadepresiasi']);
+Route::get('divisi/data-aset/detaildataaset/{id}', ['as' => 'divisi/data-aset/detaildataaset', 'uses' => 'DivisiController@datadetailasetcabang']);
+Route::get('divisi/dataaset/detaildataaset/{id}', ['as' => 'divisi/dataaset/detaildataaset', 'uses' => 'DivisiController@detaildataaset']);
+Route::get('divisi/dataaset/editdetaildataaset/{id}', ['as' => 'divisi/dataaset/editdetaildataaset', 'uses' => 'DivisiController@editdetaildataaset']);
+Route::get('divisi/dataaset/getdataoption/{id}/{tgl}/{harga}', ['as' => 'divisi/dataaset/getdataoption/', 'uses' => 'DivisiController@getdatadepresiasiaset']);
+Route::post('divisi/dataaset/posttambahdatamaintenance', 'DivisiController@tambahdatamaintance');
+Route::post('divisi/dataaset/postupdatedatamaintenance', 'DivisiController@updatedatamaintance');
+Route::post('divisi/dataaset/posttambahdatainvoiceaset', 'DivisiController@tambahdatainvoice');
+Route::post('divisi/dataaset/posttambahdatadepresiasi', 'DivisiController@tambahdatadepresiasiaset');
 Route::post('divisi/dataaset/tambahdatamaintenance/{id}', [FileUploadController::class, 'uploaddatamaintenance'])->name('uploaddatamaintenance');
 Route::post('divisi/dataaset/tambahdatainvoice/{id}', [FileUploadController::class, 'uploaddatainvoice'])->name('uploaddatainvoice');
-Route::get('divisi/dataaset/depresiasi/detaildatainvoice/{id}',['as'=>'divisi/dataaset/depresiasi/detaildatainvoice','uses'=> 'DivisiController@detaildatainvoice']);
-Route::get('divisi/dataaset/depresiasi/detaildatamaintenance/{id}',['as'=>'divisi/dataaset/depresiasi/detaildatamaintenance','uses'=> 'DivisiController@detaildatamaintenance']);
-Route::get('divisi/dataaset/depresiasi/tambahmaintenance/{id}',['as'=>'divisi/dataaset/depresiasi/tambahmaintenance','uses'=> 'DivisiController@formtambahdatamaintenance']);
-Route::get('divisi/dataaset/depresiasi/tambahinvoiceaset/{id}',['as'=>'divisi/dataaset/depresiasi/tambahinvoiceaset','uses'=> 'DivisiController@formtambahdatainvoiceaset']);
-Route::get('divisi/dataaset/depresiasi/pilihdatadepresiasi/{id}',['as'=>'divisi/dataaset/depresiasi/pilihdatadepresiasi','uses'=> 'DivisiController@pilihdatadepresiasi']);
+Route::get('divisi/dataaset/depresiasi/detaildatainvoice/{id}', ['as' => 'divisi/dataaset/depresiasi/detaildatainvoice', 'uses' => 'DivisiController@detaildatainvoice']);
+Route::get('divisi/dataaset/depresiasi/detaildatamaintenance/{id}', ['as' => 'divisi/dataaset/depresiasi/detaildatamaintenance', 'uses' => 'DivisiController@detaildatamaintenance']);
+Route::get('divisi/dataaset/depresiasi/tambahmaintenance/{id}', ['as' => 'divisi/dataaset/depresiasi/tambahmaintenance', 'uses' => 'DivisiController@formtambahdatamaintenance']);
+Route::get('divisi/dataaset/depresiasi/tambahinvoiceaset/{id}', ['as' => 'divisi/dataaset/depresiasi/tambahinvoiceaset', 'uses' => 'DivisiController@formtambahdatainvoiceaset']);
+Route::get('divisi/dataaset/depresiasi/pilihdatadepresiasi/{id}', ['as' => 'divisi/dataaset/depresiasi/pilihdatadepresiasi', 'uses' => 'DivisiController@pilihdatadepresiasi']);
 
-Route::get('menu/masterbarang','DivisiController@masterbarang');
-Route::get('menu/masterbarang/table','BigDataController@masterbarang')->name('master.barang');
-Route::get('divisi/masterbarang/dataloginventaris/table','BigDataController@masterbaranglog')->name('master.barang.upload.data');
-Route::get('divisi/masterbarang/dataloginventaris/erordata','BigDataController@erorbaranglog')->name('master.barang.eror.data');
-Route::get('divisi/masterbarang/dataloginventaris/erorklasifikasi','BigDataController@erorklasifikasi')->name('master.barang.erorklasifikasi.data');
-Route::get('menu/masterstaff','DivisiController@masterstaff');
+Route::get('menu/masterbarang', 'DivisiController@masterbarang');
+Route::get('menu/masterbarang/table', 'BigDataController@masterbarang')->name('master.barang');
+Route::get('divisi/masterbarang/dataloginventaris/table', 'BigDataController@masterbaranglog')->name('master.barang.upload.data');
+Route::get('divisi/masterbarang/dataloginventaris/erordata', 'BigDataController@erorbaranglog')->name('master.barang.eror.data');
+Route::get('divisi/masterbarang/dataloginventaris/erorklasifikasi', 'BigDataController@erorklasifikasi')->name('master.barang.erorklasifikasi.data');
+Route::get('menu/masterstaff', 'DivisiController@masterstaff');
 
-Route::get('divisi/masterstaff/tambah',['as'=>'divisi/masterstaff/tambah','uses'=> 'DivisiController@tambahdatastaffkaryawan']);
-Route::get('divisi/masterstaff/uploadexcel',['as'=>'divisi/masterstaff/uploadexcel','uses'=> 'DivisiController@uploaddatastaffkaryawan']);
-Route::get('divisi/masterbarang/fixdata','DivisiController@fixdatamasterbarang');
-Route::get('divisi/masterbarang/fixnourutdata','DivisiController@fixnourutmasterbarang');
-Route::post('divisi/masterstaff/tambah','DivisiController@posttambahdatastaff');
-Route::post('divisi/masterstaff/edit','DivisiController@posteditdatastaff')->name('post-edit-data-staff');
-Route::post('divisi/masterstaff/save-edit-staff','DivisiController@save_edit_staff');
-Route::post('divisi/setting/system','DivisiController@settingsystem');
-Route::post('divisi/masterbarang/editbarang','DivisiController@posteditbarang');
+Route::get('divisi/masterstaff/tambah', ['as' => 'divisi/masterstaff/tambah', 'uses' => 'DivisiController@tambahdatastaffkaryawan']);
+Route::get('divisi/masterstaff/uploadexcel', ['as' => 'divisi/masterstaff/uploadexcel', 'uses' => 'DivisiController@uploaddatastaffkaryawan']);
+Route::get('divisi/masterbarang/fixdata', 'DivisiController@fixdatamasterbarang');
+Route::get('divisi/masterbarang/fixnourutdata', 'DivisiController@fixnourutmasterbarang');
+Route::post('divisi/masterstaff/tambah', 'DivisiController@posttambahdatastaff');
+Route::post('divisi/masterstaff/edit', 'DivisiController@posteditdatastaff')->name('post-edit-data-staff');
+Route::post('divisi/masterstaff/save-edit-staff', 'DivisiController@save_edit_staff');
+Route::post('divisi/setting/system', 'DivisiController@settingsystem');
+Route::post('divisi/masterbarang/editbarang', 'DivisiController@posteditbarang');
 
-Route::post('divisi/inventori/updatedatainventori',['as'=>'divisi/inventori/updatedatainventori','uses'=> 'DivisiController@updatedatainventori']);
+Route::post('divisi/inventori/updatedatainventori', ['as' => 'divisi/inventori/updatedatainventori', 'uses' => 'DivisiController@updatedatainventori']);
 Route::post('admin/datainventaris/uploaddatabaranginventaris', 'DivisiController@simpandetailbarang');
 
 
-Route::get('divisi/datamutasi/datatable/{id}',['as'=>'divisi/datamutasi/datatable','uses'=> 'DivisiController@datatablemutasi']);
-Route::get('divisi/datamutasi/tambahdata',['as'=>'divisi/datamutasi/tambahdata','uses'=> 'DivisiController@ordertiketmutasi']);
-Route::get('divisi/datamutasi/caridata/{id}/{ids}',['as'=>'divisi/datamutasi/caridata','uses'=> 'DivisiController@caridatabarangmutasi']);
-Route::get('divisi/tambahdatamutasi',['as'=>'master/tambahdatamutasi','uses'=> 'DivisiController@tambahdatamutasi']);
-Route::get('divisi/datamutasi/detaildatamutasi/{id}',['as'=>'divisi/datamutasi/detaildatamutasi','uses'=> 'DivisiController@detaildatamutasi']);
-Route::get('divisi/datamutasi/editdatamutasi/{id}',['as'=>'divisi/datamutasi/editdatamutasi','uses'=> 'DivisiController@editdetailbarangmutasi']);
-Route::get('divisi/datamutasi/inserttable/{ids}/{id}/{data}',['as'=>'divisi/datamutasi/inserttable','uses'=> 'DivisiController@inserttablepencarian']);
-Route::get('divisi/datamutasi/hapusdetaildatamutasi/{id}/{kode}',['as'=>'divisi/datamutasi/hapusdetaildatamutasi','uses'=> 'DivisiController@hapusdetaildatamutasi']);
-Route::get('divisi/datamutasi/showdataorder',['as'=>'divisi/datamutasi/showdataorder','uses'=> 'DivisiController@showdataordermutasi']);
-Route::get('divisi/datamutasi/showdatarekaporder',['as'=>'divisi/datamutasi/showdatarekaporder','uses'=> 'DivisiController@showdatarekaporder']);
-Route::get('divisi/datamutasi/lengkapimutasi/{id}',['as'=>'divisi/datamutasi/lengkapimutasi','uses'=> 'DivisiController@lengkapidataordermutasi']);
-Route::get('divisi/datamutasi/lihatdatamutasi/{id}',['as'=>'divisi/datamutasi/lihatdatamutasi','uses'=> 'DivisiController@lihatdataordermutasi']);
-Route::post('divisi/datamutasi/post/datamutasi',['as'=>'divisi/datamutasi/post/datamutasi','uses'=> 'DivisiController@penyelesaianpostdatamutasi']);
-Route::post('divisi/datamutasi/postpenerimamutasi',['as'=>'divisi/datamutasi/postpenerimamutasi','uses'=> 'DivisiController@postpenerimadatamutasi']);
+Route::get('divisi/datamutasi/datatable/{id}', ['as' => 'divisi/datamutasi/datatable', 'uses' => 'DivisiController@datatablemutasi']);
+Route::get('divisi/datamutasi/tambahdata', ['as' => 'divisi/datamutasi/tambahdata', 'uses' => 'DivisiController@ordertiketmutasi']);
+Route::get('divisi/datamutasi/caridata/{id}/{ids}', ['as' => 'divisi/datamutasi/caridata', 'uses' => 'DivisiController@caridatabarangmutasi']);
+Route::get('divisi/tambahdatamutasi', ['as' => 'master/tambahdatamutasi', 'uses' => 'DivisiController@tambahdatamutasi']);
+Route::get('divisi/datamutasi/detaildatamutasi/{id}', ['as' => 'divisi/datamutasi/detaildatamutasi', 'uses' => 'DivisiController@detaildatamutasi']);
+Route::get('divisi/datamutasi/editdatamutasi/{id}', ['as' => 'divisi/datamutasi/editdatamutasi', 'uses' => 'DivisiController@editdetailbarangmutasi']);
+Route::get('divisi/datamutasi/inserttable/{ids}/{id}/{data}', ['as' => 'divisi/datamutasi/inserttable', 'uses' => 'DivisiController@inserttablepencarian']);
+Route::get('divisi/datamutasi/hapusdetaildatamutasi/{id}/{kode}', ['as' => 'divisi/datamutasi/hapusdetaildatamutasi', 'uses' => 'DivisiController@hapusdetaildatamutasi']);
+Route::get('divisi/datamutasi/showdataorder', ['as' => 'divisi/datamutasi/showdataorder', 'uses' => 'DivisiController@showdataordermutasi']);
+Route::get('divisi/datamutasi/showdatarekaporder', ['as' => 'divisi/datamutasi/showdatarekaporder', 'uses' => 'DivisiController@showdatarekaporder']);
+Route::get('divisi/datamutasi/lengkapimutasi/{id}', ['as' => 'divisi/datamutasi/lengkapimutasi', 'uses' => 'DivisiController@lengkapidataordermutasi']);
+Route::get('divisi/datamutasi/lihatdatamutasi/{id}', ['as' => 'divisi/datamutasi/lihatdatamutasi', 'uses' => 'DivisiController@lihatdataordermutasi']);
+Route::post('divisi/datamutasi/post/datamutasi', ['as' => 'divisi/datamutasi/post/datamutasi', 'uses' => 'DivisiController@penyelesaianpostdatamutasi']);
+Route::post('divisi/datamutasi/postpenerimamutasi', ['as' => 'divisi/datamutasi/postpenerimamutasi', 'uses' => 'DivisiController@postpenerimadatamutasi']);
 
 // DATA LOKASI
-Route::get('menu/masterlokasi','DivisiController@masterlokasi');
-Route::get('divisi/masterlokasi/tambah',['as'=>'divisi/masterlokasi/tambah','uses'=> 'DivisiController@formtambahnomoruangan']);
-Route::get('divisi/masterlokasi/lihatdata',['as'=>'divisi/masterlokasi/lihatdata','uses'=> 'DivisiController@masterlihatdatalokasi']);
-Route::get('divisi/masterlokasi/lihatdatacabang',['as'=>'divisi/masterlokasi/lihatdatacabang','uses'=> 'DivisiController@masterlihatdatalokasicabang']);
-Route::get('divisi/masterlokasi/datasetup/{id}',['as'=>'divisi/masterlokasi/datasetup','uses'=> 'DivisiController@datasetuplokasiruangan']);
-Route::get('divisi/masterlokasi/datasetup/inputdatamaster/{no}/{id}',['as'=>'divisi/masterlokasi/datasetup/inputdatamaster/','uses'=> 'DivisiController@inputdatamasterlokasibarang']);
-Route::get('divisi/masterlokasi/datasetup/resetdatamaster/{no}/{id}',['as'=>'divisi/masterlokasi/datasetup/resetdatamaster/','uses'=> 'DivisiController@resetdatamasterlokasibarang']);
-Route::get('divisi/masterlokasi/datasetup/tablemasterlokasibarang/{id}',['as'=>'divisi/masterlokasi/datasetup/tablemasterlokasibarang/','uses'=> 'DivisiController@tabledatamasterlokasibarang']);
-Route::get('divisipost/datalokasi/delete/detail/{id}',['as'=>'divisipost/datalokasi/delete/detail/','uses'=> 'DivisiController@deletemasterlokasicabang']);
-Route::get('divisi/masterlokasi/dataedit/masterlokasibarang/{id}',['as'=>'divisi/masterlokasi/dataedit/masterlokasibarang/','uses'=> 'DivisiController@editmasterlokasicabang']);
+Route::get('menu/masterlokasi', 'DivisiController@masterlokasi');
+Route::get('divisi/masterlokasi/tambah', ['as' => 'divisi/masterlokasi/tambah', 'uses' => 'DivisiController@formtambahnomoruangan']);
+Route::get('divisi/masterlokasi/lihatdata', ['as' => 'divisi/masterlokasi/lihatdata', 'uses' => 'DivisiController@masterlihatdatalokasi']);
+Route::get('divisi/masterlokasi/lihatdatacabang', ['as' => 'divisi/masterlokasi/lihatdatacabang', 'uses' => 'DivisiController@masterlihatdatalokasicabang']);
+Route::get('divisi/masterlokasi/datasetup/{id}', ['as' => 'divisi/masterlokasi/datasetup', 'uses' => 'DivisiController@datasetuplokasiruangan']);
+Route::get('divisi/masterlokasi/datasetup/inputdatamaster/{no}/{id}', ['as' => 'divisi/masterlokasi/datasetup/inputdatamaster/', 'uses' => 'DivisiController@inputdatamasterlokasibarang']);
+Route::get('divisi/masterlokasi/datasetup/resetdatamaster/{no}/{id}', ['as' => 'divisi/masterlokasi/datasetup/resetdatamaster/', 'uses' => 'DivisiController@resetdatamasterlokasibarang']);
+Route::get('divisi/masterlokasi/datasetup/tablemasterlokasibarang/{id}', ['as' => 'divisi/masterlokasi/datasetup/tablemasterlokasibarang/', 'uses' => 'DivisiController@tabledatamasterlokasibarang']);
+Route::get('divisipost/datalokasi/delete/detail/{id}', ['as' => 'divisipost/datalokasi/delete/detail/', 'uses' => 'DivisiController@deletemasterlokasicabang']);
+Route::get('divisi/masterlokasi/dataedit/masterlokasibarang/{id}', ['as' => 'divisi/masterlokasi/dataedit/masterlokasibarang/', 'uses' => 'DivisiController@editmasterlokasicabang']);
 Route::post('divisi/masterlokasi/posttambah', 'DivisiController@posttambahdatanomorruangan');
 Route::post('divisi/masterlokasi/postedit', 'DivisiController@posteditdatanomorruangan');
-Route::post('divisi/postmasterlokasi/datasetup/postdataall',['as'=>'divisi/postmasterlokasi/datasetup/postdataall','uses'=> 'DivisiController@postdatasetuplokasiruangan']);
+Route::post('divisi/postmasterlokasi/datasetup/postdataall', ['as' => 'divisi/postmasterlokasi/datasetup/postdataall', 'uses' => 'DivisiController@postdatasetuplokasiruangan']);
 // PEMUSNAHAN
-Route::get('divisi/tambahdatapemusnahan',['as'=>'master/tambahdatapemusnahan','uses'=> 'DivisiController@tambahdatapemusnahan']);
-Route::post('divisi/posttambahdatapemusnahan',['as'=>'master/posttambahdatapemusnahan','uses'=> 'DivisiController@posttambahdatapemusnahan']);
-Route::get('divisi/pemusnahan/caridatabarang/{id}','DivisiController@caridatabarangpemusnahan');
-Route::get('divisi/pemusnahan/pilihdatabarang/{id}','DivisiController@pilihdatabarangpemusnahan');
+Route::get('divisi/tambahdatapemusnahan', ['as' => 'master/tambahdatapemusnahan', 'uses' => 'DivisiController@tambahdatapemusnahan']);
+Route::post('divisi/posttambahdatapemusnahan', ['as' => 'master/posttambahdatapemusnahan', 'uses' => 'DivisiController@posttambahdatapemusnahan']);
+Route::get('divisi/pemusnahan/caridatabarang/{id}', 'DivisiController@caridatabarangpemusnahan');
+Route::get('divisi/pemusnahan/pilihdatabarang/{id}', 'DivisiController@pilihdatabarangpemusnahan');
 
-Route::post('divisi/pemusnahan/report',['as'=>'reportpemusnahan','uses'=> 'DivisiController@reportpemusnahan']);
+Route::post('divisi/pemusnahan/report', ['as' => 'reportpemusnahan', 'uses' => 'DivisiController@reportpemusnahan']);
 // STOCK OPNAME
-Route::get('divisi/tambahdataverifikasiinventaris',['as'=>'divisi/tambahdataverifikasiinventaris','uses'=> 'DivisiController@tambahdataverifikasiinventaris']);
-Route::get('divisi/editdataverifikasiinventaris/{id}',['as'=>'divisi/editdataverifikasiinventaris','uses'=> 'DivisiController@editdataverifikasiinventaris']);
-Route::post('divisi/verifikasi/tambah','DivisiController@posttambahverifikasi');
-Route::post('divisi/verifikasi/edit','DivisiController@posteditverifikasi');
-Route::post('divisi/verifikasi/statusdatainevntariss','DivisiController@poststatusdatainevntarissverifikasi')->name('poststatusdatainevntarissverifikasi');
-Route::get('divisi/verifikasi/lengkapi/{id}',['as'=>'master/verifikasi/lengkapi','uses'=> 'DivisiController@verifikasilengkapi']);
-Route::get('divisi/verifikasi/kondisi/{status}/{id}',['as'=>'divisi/verifikasi/kondisi','uses'=> 'DivisiController@verifikasikondisibarang']);
-Route::get('divisi/verifikasi/lokasi/{tiket}',['as'=>'master/verifikasi/lokasi','uses'=> 'DivisiController@verifikasilengkapilokasi']);
-Route::get('divisi/verifikasi/scanner/{tiket}',['as'=>'divisi/verifikasi/scanner','uses'=> 'DivisiController@verifikasidatascanner']);
-Route::post('divisi/postverifikasi/scanner/',['as'=>'divisi/postverifikasi/scanner','uses'=> 'DivisiController@postverifikasidatascanner']);
-Route::post('divisi/postverifikasi/scanner/simpandata',['as'=>'divisi/postverifikasi/scanner/simpandata','uses'=> 'DivisiController@postverifikasisimpandatascanner']);
-Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}/{ket}',['as'=>'master/verifikasi/update','uses'=> 'DivisiController@verifikasilengkapiupdatebaranglokasi']);
-Route::get('menu/verifdatainventaris/cetak/detail/{id}',['as'=>'menu/verifdatainventaris/cetak/detail','uses'=> 'DivisiController@cetakreportstockopname']);
-Route::get('menu/verifdatainventaris/cetak/ruangan/{id}',['as'=>'menu/verifdatainventaris/cetak/ruangan','uses'=> 'DivisiController@cetakreportruangstockopname']);
-Route::get('menu/verifdatainventaris/cetak/ruangan/print/{id}/{code}',['as'=>'menu/verifdatainventaris/cetak/ruangan/print','uses'=> 'DivisiController@cetakreportruangstockopnameprint']);
-Route::get('divisi/verifikasi/print/verif/{id}','PdfController@printverifikasi');
-Route::get('divisi/verifikasi/print/peminjaman/{id}','PdfController@printpeminjaman');
-Route::get('divisi/verifikasi/print/pemusnahan/{id}','PdfController@printpemusnahan');
-Route::get('divisi/datamutasi/print/datamutasi/{id}','PdfController@printdatamutasi');
-Route::get('divisi/verifikasi/peminjaman/pemyelesaian/{id}','PdfController@penyelesaianpeminjaman');
-Route::get('divisipostpenyelesaian/data/stockopname/{id}','DivisiController@divisipostpenyelesaianstockopname');
-Route::get('menu/verifdatainventaris/unverified/data/{id}','StockopnameController@unverifieddatastockopname');
-Route::post('divisi/postverifikasiall/datasemua/simpandata',['as'=>'divisi/postverifikasiall/datasemua/simpandata','uses'=> 'DivisiController@postverifikasialldatasimpandatascanner']);
-Route::post('divisi/postverifikasiall/datasemua/fixdata',['as'=>'divisi/postverifikasiall/datasemua/fixdata','uses'=> 'DivisiController@postverifikasialldatasimpanfixdata']);
+Route::get('divisi/tambahdataverifikasiinventaris', ['as' => 'divisi/tambahdataverifikasiinventaris', 'uses' => 'DivisiController@tambahdataverifikasiinventaris']);
+Route::get('divisi/editdataverifikasiinventaris/{id}', ['as' => 'divisi/editdataverifikasiinventaris', 'uses' => 'DivisiController@editdataverifikasiinventaris']);
+Route::post('divisi/verifikasi/tambah', 'DivisiController@posttambahverifikasi');
+Route::post('divisi/verifikasi/edit', 'DivisiController@posteditverifikasi');
+Route::post('divisi/verifikasi/statusdatainevntariss', 'DivisiController@poststatusdatainevntarissverifikasi')->name('poststatusdatainevntarissverifikasi');
+Route::get('divisi/verifikasi/lengkapi/{id}', ['as' => 'master/verifikasi/lengkapi', 'uses' => 'DivisiController@verifikasilengkapi']);
+Route::get('divisi/verifikasi/kondisi/{status}/{id}', ['as' => 'divisi/verifikasi/kondisi', 'uses' => 'DivisiController@verifikasikondisibarang']);
+Route::get('divisi/verifikasi/lokasi/{tiket}', ['as' => 'master/verifikasi/lokasi', 'uses' => 'DivisiController@verifikasilengkapilokasi']);
+Route::get('divisi/verifikasi/scanner/{tiket}', ['as' => 'divisi/verifikasi/scanner', 'uses' => 'DivisiController@verifikasidatascanner']);
+Route::post('divisi/postverifikasi/scanner/', ['as' => 'divisi/postverifikasi/scanner', 'uses' => 'DivisiController@postverifikasidatascanner']);
+Route::post('divisi/postverifikasi/scanner/simpandata', ['as' => 'divisi/postverifikasi/scanner/simpandata', 'uses' => 'DivisiController@postverifikasisimpandatascanner']);
+Route::get('menu/verifdatainventaris/lokasi/update/{id}/{tiket}/{id_inventaris}/{ket}', ['as' => 'master/verifikasi/update', 'uses' => 'DivisiController@verifikasilengkapiupdatebaranglokasi']);
+Route::get('menu/verifdatainventaris/cetak/detail/{id}', ['as' => 'menu/verifdatainventaris/cetak/detail', 'uses' => 'DivisiController@cetakreportstockopname']);
+Route::get('menu/verifdatainventaris/cetak/ruangan/{id}', ['as' => 'menu/verifdatainventaris/cetak/ruangan', 'uses' => 'DivisiController@cetakreportruangstockopname']);
+Route::get('menu/verifdatainventaris/cetak/ruangan/print/{id}/{code}', ['as' => 'menu/verifdatainventaris/cetak/ruangan/print', 'uses' => 'DivisiController@cetakreportruangstockopnameprint']);
+Route::get('divisi/verifikasi/print/verif/{id}', 'PdfController@printverifikasi');
+Route::get('divisi/verifikasi/print/peminjaman/{id}', 'PdfController@printpeminjaman');
+Route::get('divisi/verifikasi/print/pemusnahan/{id}', 'PdfController@printpemusnahan');
+Route::get('divisi/datamutasi/print/datamutasi/{id}', 'PdfController@printdatamutasi');
+Route::get('divisi/verifikasi/peminjaman/pemyelesaian/{id}', 'PdfController@penyelesaianpeminjaman');
+Route::get('divisipostpenyelesaian/data/stockopname/{id}', 'DivisiController@divisipostpenyelesaianstockopname');
+Route::get('menu/verifdatainventaris/unverified/data/{id}', 'StockopnameController@unverifieddatastockopname');
+Route::post('divisi/postverifikasiall/datasemua/simpandata', ['as' => 'divisi/postverifikasiall/datasemua/simpandata', 'uses' => 'DivisiController@postverifikasialldatasimpandatascanner']);
+Route::post('divisi/postverifikasiall/datasemua/fixdata', ['as' => 'divisi/postverifikasiall/datasemua/fixdata', 'uses' => 'DivisiController@postverifikasialldatasimpanfixdata']);
 // Admin Controller
 //Mutasi
 Route::post('divisi/datamutasi/posttambahdata', 'DivisiController@posttambahdatamutasi');
 Route::get('/datamutasi', 'AdminController@formmutasi');
-Route::get('tampilformmuitasi/{id}',['as'=>'tampilformmuitasi','uses'=> 'AdminController@tampilformmuitasi']);
-Route::get('tambahsubdatamutasibarangx/{id}',['as'=>'tambahsubdatamutasibarangx','uses'=> 'AdminController@tambahsubdatamutasibarangx']);
-Route::get('selectlokasi/{id}/{kd}',['as'=>'selectlokasi','uses'=> 'AdminController@selectlokasi']);
-Route::post('inputdatamutasibaru',['as'=>'inputdatamutasibaru','uses'=> 'AdminController@inputdatamutasibaru']);
-Route::post('kliktambahbrgmutasi/{id}',['as'=>'kliktambahbrgmutasi','uses'=> 'AdminController@kliktambahbrgmutasi']);
-Route::get('hapussubtablemutasi/{id}/{no}',['as'=>'hapussubtablemutasi','uses'=> 'AdminController@hapussubtablemutasi']);
-Route::get('jenis_mutasi/{id}',['as'=>'jenis_mutasi','uses'=> 'AdminController@jenis_mutasi']);
+Route::get('tampilformmuitasi/{id}', ['as' => 'tampilformmuitasi', 'uses' => 'AdminController@tampilformmuitasi']);
+Route::get('tambahsubdatamutasibarangx/{id}', ['as' => 'tambahsubdatamutasibarangx', 'uses' => 'AdminController@tambahsubdatamutasibarangx']);
+Route::get('selectlokasi/{id}/{kd}', ['as' => 'selectlokasi', 'uses' => 'AdminController@selectlokasi']);
+Route::post('inputdatamutasibaru', ['as' => 'inputdatamutasibaru', 'uses' => 'AdminController@inputdatamutasibaru']);
+Route::post('kliktambahbrgmutasi/{id}', ['as' => 'kliktambahbrgmutasi', 'uses' => 'AdminController@kliktambahbrgmutasi']);
+Route::get('hapussubtablemutasi/{id}/{no}', ['as' => 'hapussubtablemutasi', 'uses' => 'AdminController@hapussubtablemutasi']);
+Route::get('jenis_mutasi/{id}', ['as' => 'jenis_mutasi', 'uses' => 'AdminController@jenis_mutasi']);
 
 Route::get('printdokumenmutasi/{id}', 'PdfController@printdokumenmutasi');
 Route::get('printdokumenmutasi', 'PdfController@printdokumenmutasi1');
@@ -254,31 +254,31 @@ Route::get('printdokumenmutasi', 'PdfController@printdokumenmutasi1');
 Route::post('file-upload-dokumenmutasi/{id}', [FileUploadController::class, 'uploadDokumenMutasi'])->name('files.upload.dokumenmutasi');
 //Musnah
 Route::get('/datapemusnahan', 'AdminController@formmusnah');
-Route::get('xxshowdatamusnah/{id}',['as'=>'xxshowdatamusnah','uses'=> 'AdminController@xxshowdatamusnah']);
-Route::get('addpemusnahanbarang/{id}',['as'=>'addpemusnahanbarang','uses'=> 'AdminController@addpemusnahanbarang']);
-Route::post('inputdatamusnahbaru',['as'=>'inputdatamusnahbaru','uses'=> 'AdminController@inputdatamusnahbaru']);
-Route::get('selectlokasi1/{id}/{kd}',['as'=>'selectlokasi1','uses'=> 'AdminController@selectlokasi1']);
-Route::post('kliktambahbrgmusnah/{id}',['as'=>'kliktambahbrgmusnah','uses'=> 'AdminController@kliktambahbrgmusnah']);
-Route::get('hapussubtablemusnah/{id}/{no}',['as'=>'hapussubtablemusnah','uses'=> 'AdminController@hapussubtablemusnah']);
-Route::post('data-pemusnahan-inventaris',['as'=>'data-pemusnahan-inventaris','uses'=> 'AdminController@datapemusnahaninventaris']);
-Route::post('data-peminjaman-inventaris',['as'=>'data-peminjaman-inventaris','uses'=> 'AdminController@datapeminjamaninventaris']);
-Route::post('data-peminjaman-inventaris/detail/{id}',['as'=>'data-peminjaman-inventaris/detail/','uses'=> 'AdminController@datapeminjamaninventarisdetail']);
-Route::post('data-pemusnahan-inventaris/send',['as'=>'data-pemusnahan-inventaris/send','uses'=> 'AdminController@senddatapemusnahaninventaris']);
+Route::get('xxshowdatamusnah/{id}', ['as' => 'xxshowdatamusnah', 'uses' => 'AdminController@xxshowdatamusnah']);
+Route::get('addpemusnahanbarang/{id}', ['as' => 'addpemusnahanbarang', 'uses' => 'AdminController@addpemusnahanbarang']);
+Route::post('inputdatamusnahbaru', ['as' => 'inputdatamusnahbaru', 'uses' => 'AdminController@inputdatamusnahbaru']);
+Route::get('selectlokasi1/{id}/{kd}', ['as' => 'selectlokasi1', 'uses' => 'AdminController@selectlokasi1']);
+Route::post('kliktambahbrgmusnah/{id}', ['as' => 'kliktambahbrgmusnah', 'uses' => 'AdminController@kliktambahbrgmusnah']);
+Route::get('hapussubtablemusnah/{id}/{no}', ['as' => 'hapussubtablemusnah', 'uses' => 'AdminController@hapussubtablemusnah']);
+Route::post('data-pemusnahan-inventaris', ['as' => 'data-pemusnahan-inventaris', 'uses' => 'AdminController@datapemusnahaninventaris']);
+Route::post('data-peminjaman-inventaris', ['as' => 'data-peminjaman-inventaris', 'uses' => 'AdminController@datapeminjamaninventaris']);
+Route::post('data-peminjaman-inventaris/detail/{id}', ['as' => 'data-peminjaman-inventaris/detail/', 'uses' => 'AdminController@datapeminjamaninventarisdetail']);
+Route::post('data-pemusnahan-inventaris/send', ['as' => 'data-pemusnahan-inventaris/send', 'uses' => 'AdminController@senddatapemusnahaninventaris']);
 
 
 // Laporan
-Route::get('menu/masterlaporan','LaporanController@laporan');
-Route::get('menu/masterlaporan/all-barang-cabang',['as'=>'menu/masterlaporan/all-barang-cabang','uses'=> 'LaporanController@allbarangcabang']);
-Route::get('menu/masterlaporan/lokasi-barang-cabang',['as'=>'menu/masterlaporan/lokasi-barang-cabang','uses'=> 'LaporanController@reportlokasibarangcabang']);
-Route::get('menu/masterlaporan/klasifikasi-barang-cabang',['as'=>'menu/masterlaporan/klasifikasi-barang-cabang','uses'=> 'LaporanController@reportklasifikasibarangcabang']);
-Route::get('menureport/masterlaporan/cetak-all-barang-cabang',['as'=>'menureport/masterlaporan/cetak-all-barang-cabang','uses'=> 'LaporanController@cetakallbarangcabang']);
-Route::post('menu/postmasterlaporan/lokasi-barang-cabang-ruangan',['as'=>'menu/postmasterlaporan/lokasi-barang-cabang-ruangan','uses'=> 'LaporanController@cetakbarangperuanganpdf']);
-Route::post('menu/postmasterlaporan/lokasi-barcode-barang-cabang-ruangan',['as'=>'menu/postmasterlaporan/lokasi-barcode-barang-cabang-ruangan','uses'=> 'LaporanController@cetakbarcodebarangperuanganpdf']);
-Route::get('menu/masterlaporan/report-peminjaman/',['as'=>'menu/masterlaporan/report-peminjaman/','uses'=> 'LaporanController@reportpeminjaman']);
-Route::get('menu/masterlaporan/report-stokopname/',['as'=>'menu/masterlaporan/report-stokopname/','uses'=> 'LaporanController@reportstokopname']);
-Route::post('menu/postmasterlaporan/laporanpeminjaman',['as'=>'menu/postmasterlaporan/laporanpeminjaman','uses'=> 'LaporanController@postreportpeminjaman']);
-Route::post('menu/postmasterlaporan/laporanstokopname',['as'=>'menu/postmasterlaporan/laporanstokopname','uses'=> 'LaporanController@postreportstokopname']);
-Route::post('menu/postmasterlaporan/filterdataklasifikasi',['as'=>'menu/postmasterlaporan/filterdataklasifikasi','uses'=> 'LaporanController@filterdataklasifikasi']);
+Route::get('menu/masterlaporan', 'LaporanController@laporan');
+Route::get('menu/masterlaporan/all-barang-cabang', ['as' => 'menu/masterlaporan/all-barang-cabang', 'uses' => 'LaporanController@allbarangcabang']);
+Route::get('menu/masterlaporan/lokasi-barang-cabang', ['as' => 'menu/masterlaporan/lokasi-barang-cabang', 'uses' => 'LaporanController@reportlokasibarangcabang']);
+Route::get('menu/masterlaporan/klasifikasi-barang-cabang', ['as' => 'menu/masterlaporan/klasifikasi-barang-cabang', 'uses' => 'LaporanController@reportklasifikasibarangcabang']);
+Route::get('menureport/masterlaporan/cetak-all-barang-cabang', ['as' => 'menureport/masterlaporan/cetak-all-barang-cabang', 'uses' => 'LaporanController@cetakallbarangcabang']);
+Route::post('menu/postmasterlaporan/lokasi-barang-cabang-ruangan', ['as' => 'menu/postmasterlaporan/lokasi-barang-cabang-ruangan', 'uses' => 'LaporanController@cetakbarangperuanganpdf']);
+Route::post('menu/postmasterlaporan/lokasi-barcode-barang-cabang-ruangan', ['as' => 'menu/postmasterlaporan/lokasi-barcode-barang-cabang-ruangan', 'uses' => 'LaporanController@cetakbarcodebarangperuanganpdf']);
+Route::get('menu/masterlaporan/report-peminjaman/', ['as' => 'menu/masterlaporan/report-peminjaman/', 'uses' => 'LaporanController@reportpeminjaman']);
+Route::get('menu/masterlaporan/report-stokopname/', ['as' => 'menu/masterlaporan/report-stokopname/', 'uses' => 'LaporanController@reportstokopname']);
+Route::post('menu/postmasterlaporan/laporanpeminjaman', ['as' => 'menu/postmasterlaporan/laporanpeminjaman', 'uses' => 'LaporanController@postreportpeminjaman']);
+Route::post('menu/postmasterlaporan/laporanstokopname', ['as' => 'menu/postmasterlaporan/laporanstokopname', 'uses' => 'LaporanController@postreportstokopname']);
+Route::post('menu/postmasterlaporan/filterdataklasifikasi', ['as' => 'menu/postmasterlaporan/filterdataklasifikasi', 'uses' => 'LaporanController@filterdataklasifikasi']);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -289,13 +289,13 @@ Route::post('menu/postmasterlaporan/filterdataklasifikasi',['as'=>'menu/postmast
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('faq','DivisiController@faq');
-Route::get('divisi/case/databaru/',['as'=>'divisi/case/databaru/','uses'=> 'DivisiController@tambahdatacase']);
-Route::get('divisi/case/datacase/detail/{id}',['as'=>'divisi/case/datacase/detail/','uses'=> 'DivisiController@detaildatacaseid']);
-Route::get('divisi/case/datalokasi/',['as'=>'divisi/case/datalokasi/','uses'=> 'DivisiController@casedatalokasi']);
-Route::get('divisi/case/dataklasifikasi/',['as'=>'divisi/case/dataklasifikasi/','uses'=> 'DivisiController@casedataklasifikasi']);
-Route::get('/divisi/iklan/update/{id}',['as'=>'/divisi/iklan/update','uses'=> 'DivisiController@updatedataiklan']);
-Route::post('divisi/case/databaru/','DivisiController@posttambahdatacase');
+Route::get('faq', 'DivisiController@faq');
+Route::get('divisi/case/databaru/', ['as' => 'divisi/case/databaru/', 'uses' => 'DivisiController@tambahdatacase']);
+Route::get('divisi/case/datacase/detail/{id}', ['as' => 'divisi/case/datacase/detail/', 'uses' => 'DivisiController@detaildatacaseid']);
+Route::get('divisi/case/datalokasi/', ['as' => 'divisi/case/datalokasi/', 'uses' => 'DivisiController@casedatalokasi']);
+Route::get('divisi/case/dataklasifikasi/', ['as' => 'divisi/case/dataklasifikasi/', 'uses' => 'DivisiController@casedataklasifikasi']);
+Route::get('/divisi/iklan/update/{id}', ['as' => '/divisi/iklan/update', 'uses' => 'DivisiController@updatedataiklan']);
+Route::post('divisi/case/databaru/', 'DivisiController@posttambahdatacase');
 
 
 
@@ -315,11 +315,11 @@ Route::post('simpannourutbarang', 'DataTableController@simpannourutbarang');
 Route::post('simpanpeserta', 'DataTableController@simpanpeserta');
 Route::post('simpandatapeserta', 'DataTableController@simpandatapeserta');
 
-Route::post('updatedatabarang/{id}',['as'=>'updatedatabarang','uses'=> 'HomeController@updatedatabarang']);
-Route::post('updatedatabarang1/{id}',['as'=>'updatedatabarang1','uses'=> 'HomeController@updatedatabarang1']);
+Route::post('updatedatabarang/{id}', ['as' => 'updatedatabarang', 'uses' => 'HomeController@updatedatabarang']);
+Route::post('updatedatabarang1/{id}', ['as' => 'updatedatabarang1', 'uses' => 'HomeController@updatedatabarang1']);
 
-Route::post('simpandatasubbarang/{id}',['as'=>'simpandatasubbarang','uses'=> 'HomeController@simpandatasubbarang']);
-Route::post('simpandatasubbarang1/{id}',['as'=>'simpandatasubbarang1','uses'=> 'HomeController@simpandatasubbarang1']);
+Route::post('simpandatasubbarang/{id}', ['as' => 'simpandatasubbarang', 'uses' => 'HomeController@simpandatasubbarang']);
+Route::post('simpandatasubbarang1/{id}', ['as' => 'simpandatasubbarang1', 'uses' => 'HomeController@simpandatasubbarang1']);
 
 Route::get('import', 'DataTableController@importData');
 Route::post('import', 'DataTableController@import');
@@ -327,19 +327,19 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('base');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('lihatdatabarang/{id}',['as'=>'lihatdatabarang','uses'=> 'HomeController@lihatdatabarang']);
+Route::get('lihatdatabarang/{id}', ['as' => 'lihatdatabarang', 'uses' => 'HomeController@lihatdatabarang']);
 
-Route::get('editdatabarang/{id}',['as'=>'editdatabarang','uses'=> 'HomeController@editdatabarang']);
-Route::get('editdatabarang1/{id}',['as'=>'editdatabarang1','uses'=> 'HomeController@editdatabarang1']);
+Route::get('editdatabarang/{id}', ['as' => 'editdatabarang', 'uses' => 'HomeController@editdatabarang']);
+Route::get('editdatabarang1/{id}', ['as' => 'editdatabarang1', 'uses' => 'HomeController@editdatabarang1']);
 // Route::get('hapusdatabarang/{kode}/{id}',['as'=>'hapusdatabarang','uses'=> 'HomeController@hapusdatabarang']);
-Route::get('tambahdatabarang/{id}',['as'=>'tambahdatabarang','uses'=> 'HomeController@tambahdatabarang']);
-Route::get('admin/formdataaset/',['as'=>'admin/formdataaset','uses'=> 'HomeController@formdataaset']);
-Route::get('admin/formdatainventaris/tambadata',['as'=>'admin/formdatainventaris/tambadata','uses'=> 'HomeController@tambahdatainventaris']);
+Route::get('tambahdatabarang/{id}', ['as' => 'tambahdatabarang', 'uses' => 'HomeController@tambahdatabarang']);
+Route::get('admin/formdataaset/', ['as' => 'admin/formdataaset', 'uses' => 'HomeController@formdataaset']);
+Route::get('admin/formdatainventaris/tambadata', ['as' => 'admin/formdatainventaris/tambadata', 'uses' => 'HomeController@tambahdatainventaris']);
 Route::post('admin/datainventaris/simpandata', 'HomeController@simpandatainventaris');
 
 
-Route::get('mutasidatabarang/{id}',['as'=>'mutasidatabarang','uses'=> 'HomeController@mutasidatabarang']);
-Route::get('admin/dataklasifikasi/seluruhcabang',['as'=>'admin/dataklasifikasi/seluruhcabang','uses'=> 'AdminController@dataklasifikasiseluruhcabang']);
+Route::get('mutasidatabarang/{id}', ['as' => 'mutasidatabarang', 'uses' => 'HomeController@mutasidatabarang']);
+Route::get('admin/dataklasifikasi/seluruhcabang', ['as' => 'admin/dataklasifikasi/seluruhcabang', 'uses' => 'AdminController@dataklasifikasiseluruhcabang']);
 
 
 
@@ -360,7 +360,7 @@ Route::get('view/{no}/{cb}/{kd}/{id}', 'DataController@showdata');
 
 
 Route::get('viewregistrasi/{id}', 'DataTableController@viewdatapasien');
-Route::post('simpandataregsiter',['as'=>'simpandataregsiter','uses'=> 'DataController@simpandataregsiter']);
+Route::post('simpandataregsiter', ['as' => 'simpandataregsiter', 'uses' => 'DataController@simpandataregsiter']);
 Route::get('log-eror-inventaris', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::get('log-eror-aplikasi', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'indexx']);
 Route::get('export-data', [\App\Http\Controllers\ExcelController::class, 'index']);
@@ -368,37 +368,37 @@ Route::get('export-data-ruangan/{id}', [\App\Http\Controllers\ExcelController::c
 // Route::get('log-eror-aplikasi', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 // Route::get('log-eror-aplikasi',['as'=>'log-eror-aplikasi','uses'=> 'ErorController@eroraplikasi']);
 
-Route::get('nav/user-login',['as'=>'nav/user-login','uses'=> 'NavController@recentuserlogin']);
-Route::get('nav/user-order',['as'=>'nav/user-order','uses'=> 'NavController@recentuserorder']);
-Route::get('nav/user-order/detail/{id}',['as'=>'nav/user-order/detail','uses'=> 'NavController@detailrecentuserorder']);
-Route::get('nav/user-order/pindah-cabang/{id}',['as'=>'nav/user-order/pindah-cabang','uses'=> 'NavController@detailpindahcabangrecentuserorder']);
-Route::post('nav/user-order/post-pindah-cabang',['as'=>'nav/user-order/post-pindah-cabang','uses'=> 'NavController@postpindahcabangrecentuserorder']);
-Route::post('nav/user-order/post-terima-order',['as'=>'nav/user-order/post-terima-order','uses'=> 'NavController@postterimaordercabangrecentuserorder']);
+Route::get('nav/user-login', ['as' => 'nav/user-login', 'uses' => 'NavController@recentuserlogin']);
+Route::get('nav/user-order', ['as' => 'nav/user-order', 'uses' => 'NavController@recentuserorder']);
+Route::get('nav/user-order/detail/{id}', ['as' => 'nav/user-order/detail', 'uses' => 'NavController@detailrecentuserorder']);
+Route::get('nav/user-order/pindah-cabang/{id}', ['as' => 'nav/user-order/pindah-cabang', 'uses' => 'NavController@detailpindahcabangrecentuserorder']);
+Route::post('nav/user-order/post-pindah-cabang', ['as' => 'nav/user-order/post-pindah-cabang', 'uses' => 'NavController@postpindahcabangrecentuserorder']);
+Route::post('nav/user-order/post-terima-order', ['as' => 'nav/user-order/post-terima-order', 'uses' => 'NavController@postterimaordercabangrecentuserorder']);
 
 Route::prefix('kso')->group(function () {
-    Route::get('data-barang',  'KsoController@view');
-    Route::get('tambah-data-barang',  'KsoController@tambahbarang');
-    Route::post('simpan-data-barang',  'KsoController@simpanbarang');
-    Route::post('detail-data-barang',  'KsoController@detailbarangkso')->name('detailbarangkso');
-    Route::post('upload-dokument-barang-kso',  'KsoController@uploaddokumentbarangkso')->name('uploaddokumentbarangkso');
-    Route::post('simpan-detail-data-barang',  'KsoController@simpandetailbarangkso')->name('simpandetailbarangkso');
-    Route::post('simpan-dokument-barang-kso',  'KsoController@simpandokumentbarangkso')->name('simpandokumentbarangkso');
-    Route::post('show-dokument-barang-kso',  'KsoController@showdokumentbarangkso')->name('showdokumentbarangkso');
+    Route::get('data-barang', 'KsoController@view');
+    Route::get('tambah-data-barang', 'KsoController@tambahbarang');
+    Route::post('simpan-data-barang', 'KsoController@simpanbarang');
+    Route::post('detail-data-barang', 'KsoController@detailbarangkso')->name('detailbarangkso');
+    Route::post('upload-dokument-barang-kso', 'KsoController@uploaddokumentbarangkso')->name('uploaddokumentbarangkso');
+    Route::post('simpan-detail-data-barang', 'KsoController@simpandetailbarangkso')->name('simpandetailbarangkso');
+    Route::post('simpan-dokument-barang-kso', 'KsoController@simpandokumentbarangkso')->name('simpandokumentbarangkso');
+    Route::post('show-dokument-barang-kso', 'KsoController@showdokumentbarangkso')->name('showdokumentbarangkso');
 });
 Route::prefix('log_sdm')->group(function () {
-    Route::get('setup',  'LogPuController@log_sdm');
-    Route::post('setup/daftar_log',  'LogPuController@daftar_log')->name('daftar_log');
-    Route::post('setup/daftar_peminjaman_user',  'LogPuController@daftar_peminjaman_user')->name('daftar_peminjaman_user');
-    Route::post('setup/form_log',  'LogPuController@form_log')->name('form_log');
-    Route::post('setup/form_peminjaman_barang',  'LogPuController@form_peminjaman_barang')->name('form_peminjaman_barang');
-    Route::post('setup/simpan_peminjaman_barang_user',  'LogPuController@simpan_peminjaman_barang_user')->name('simpan_peminjaman_barang_user');
-    Route::post('setup/simpan',  'LogPuController@simpan_form_log')->name('simpan_form_log');
-    Route::get('setup/telegram',  'LogPuController@telegram')->name('telegram');
-    Route::post('setup/show-laporan-user',  'LogPuController@show_laporan_user')->name('show_laporan_user');
+    Route::get('setup', 'LogPuController@log_sdm');
+    Route::post('setup/daftar_log', 'LogPuController@daftar_log')->name('daftar_log');
+    Route::post('setup/daftar_peminjaman_user', 'LogPuController@daftar_peminjaman_user')->name('daftar_peminjaman_user');
+    Route::post('setup/form_log', 'LogPuController@form_log')->name('form_log');
+    Route::post('setup/form_peminjaman_barang', 'LogPuController@form_peminjaman_barang')->name('form_peminjaman_barang');
+    Route::post('setup/simpan_peminjaman_barang_user', 'LogPuController@simpan_peminjaman_barang_user')->name('simpan_peminjaman_barang_user');
+    Route::post('setup/simpan', 'LogPuController@simpan_form_log')->name('simpan_form_log');
+    Route::get('setup/telegram', 'LogPuController@telegram')->name('telegram');
+    Route::post('setup/show-laporan-user', 'LogPuController@show_laporan_user')->name('show_laporan_user');
 });
 
 Route::prefix('telegram')->group(function () {
-    Route::get('notification',  'TelegramController@notificationtelegram')->name('notificationtelegram');
+    Route::get('notification', 'TelegramController@notificationtelegram')->name('notificationtelegram');
 
 });
 
@@ -437,6 +437,14 @@ Route::prefix('app')->group(function () {
     Route::post('peminjaman/save', [AppController::class, 'peminjaman_save'])->name('peminjaman_save');
     Route::post('peminjaman/proses', [AppController::class, 'peminjaman_proses'])->name('peminjaman_proses');
     Route::post('peminjaman/find-data', [AppController::class, 'peminjaman_find_data'])->name('peminjaman_find_data');
+    Route::post('peminjaman/chose-data', [AppController::class, 'peminjaman_pilih_data'])->name('peminjaman_pilih_data');
+    Route::post('peminjaman/proses-verifikasi', [AppController::class, 'peminjaman_proses_verifikasi'])->name('peminjaman_proses_verifikasi');
+    Route::post('peminjaman/proses-verifikasi-fix', [AppController::class, 'proses_verifikasi_data_peminjaman'])->name('proses_verifikasi_data_peminjaman');
+    Route::post('peminjaman/check-barang-peminjaman', [AppController::class, 'proses_check_data_barang_peminjaman'])->name('proses_check_data_barang_peminjaman');
+    Route::post('peminjaman/save-check-barang-peminjaman', [AppController::class, 'proses_save_check_data_barang_peminjaman'])->name('proses_save_check_data_barang_peminjaman');
+    Route::post('peminjaman/verifikasi-data-peminjaman', [AppController::class, 'verifikasi_data_peminjaman'])->name('verifikasi_data_peminjaman');
+    Route::post('peminjaman/print-report-data-peminjaman', [AppController::class, 'print_report_data_peminjaman'])->name('print_report_data_peminjaman');
+    Route::post('peminjaman/print-report-data-peminjaman-show', [AppController::class, 'print_report_data_peminjaman_show'])->name('print_report_data_peminjaman_show');
 
     Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
     Route::post('menu-stock-opname/proses-data', [AppController::class, 'menu_stock_opname_proses_data'])->name('menu_stock_opname_proses_data');

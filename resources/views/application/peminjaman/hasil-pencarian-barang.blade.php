@@ -20,7 +20,7 @@
                 <td>{{$datas->inventaris_data_number}}</td>
                 <td>{{$datas->inventaris_data_merk}}</td>
                 <td>{{$datas->inventaris_data_tgl_beli}}</td>
-                <td><button class="btn btn-falcon-warning btn-sm">Pilih</button></td>
+                <td><button class="btn btn-falcon-warning btn-sm" id="button-pilih-barang-peminjaman" data-id="{{$datas->inventaris_data_code}}" data-code="{{$tiket}}">Pilih</button></td>
             </tr>
         @endforeach
     </tbody>
