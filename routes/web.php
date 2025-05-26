@@ -410,6 +410,8 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('menu-mutasi', [AppController::class, 'menu_mutasi'])->name('menu_mutasi');
     Route::get('menu-pemusnahan', [AppController::class, 'menu_pemusnahan'])->name('menu_pemusnahan');
     Route::get('menu-stock-opname', [AppController::class, 'menu_stock_opname'])->name('menu_stock_opname');
+    Route::get('master-barang', [AppController::class, 'master_barang'])->name('master_barang');
+    Route::get('master-no-document', [AppController::class, 'master_no_document'])->name('master_no_document');
 });
 Route::prefix('app')->group(function () {
     Route::get('dashboard_home', [AppController::class, 'dashboard_home'])->name('dashboard_home');

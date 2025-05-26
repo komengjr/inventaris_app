@@ -28,8 +28,8 @@ class AppController extends Controller
     }
     public function dashboard_home()
     {
-        $cabang = DB::table('tbl_cabang')->where('kd_cabang',Auth::user()->cabang)->first();
-        return view('application.dashboard',['cabang'=>$cabang]);
+        $cabang = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
+        return view('application.dashboard', ['cabang' => $cabang]);
     }
     public function url_akses($akses)
     {
@@ -88,7 +88,7 @@ class AppController extends Controller
             ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
             ->where('tbl_setting_cabang.kd_cabang', Auth::user()->cabang)->first();
         $total = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
-        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang',$request->lokasi)->first();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->lokasi)->first();
         $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
         if ($request->link == null) {
             $link = null;
@@ -98,7 +98,7 @@ class AppController extends Controller
         DB::table('inventaris_data')->insert([
             'inventaris_data_code' => Auth::user()->cabang . '' . date('Ymdhis'),
             'inventaris_klasifikasi_code' => $request->klasifikasi,
-            'inventaris_data_number' => ($total + 1).'/'.$request->klasifikasi.'/'.$lokasi->kd_lokasi.'/'.$entitas->simbol_entitas.'.'.$entitas->no_cabang.'/'.date('Y', strtotime($request->tgl_beli)),
+            'inventaris_data_number' => ($total + 1) . '/' . $request->klasifikasi . '/' . $lokasi->kd_lokasi . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . date('Y', strtotime($request->tgl_beli)),
             'inventaris_data_name' => $request->nama_barang,
             'inventaris_data_location' => $lokasi->kd_lokasi,
             'inventaris_data_jenis' => $request->jenis,
@@ -221,33 +221,37 @@ class AppController extends Controller
         }
 
     }
-    public function peminjaman_add(Request $request){
+    public function peminjaman_add(Request $request)
+    {
         $cabang = DB::table('tbl_cabang')->get();
-        $staff = DB::table('tbl_staff')->where('kd_cabang',Auth::user()->cabang)->get();
-        return view('application.peminjaman.form-add-peminjaman',['cabang'=>$cabang,'staff'=>$staff]);
+        $staff = DB::table('tbl_staff')->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('application.peminjaman.form-add-peminjaman', ['cabang' => $cabang, 'staff' => $staff]);
     }
-    public function peminjaman_save(Request $request){
+    public function peminjaman_save(Request $request)
+    {
         DB::table('tbl_peminjaman')->insert([
-            'tiket_peminjaman'=> 'PJ-SDM-'.Auth::user()->cabang.'-'.date('Ymdhis'),
-            'nama_kegiatan'=>$request->tujuan,
-            'tujuan_cabang'=>$request->cabang,
-            'tgl_pinjam'=>$request->tgl_pinjam,
-            'batas_tgl_pinjam'=>$request->batas_pinjam,
-            'pj_pinjam'=>$request->pj,
-            'status_pinjam'=>0,
-            'kd_cabang'=>Auth::user()->cabang,
-            'deskripsi'=>$request->deskripsi,
-            'created_at'=>now(),
+            'tiket_peminjaman' => 'PJ-SDM-' . Auth::user()->cabang . '-' . date('Ymdhis'),
+            'nama_kegiatan' => $request->tujuan,
+            'tujuan_cabang' => $request->cabang,
+            'tgl_pinjam' => $request->tgl_pinjam,
+            'batas_tgl_pinjam' => $request->batas_pinjam,
+            'pj_pinjam' => $request->pj,
+            'status_pinjam' => 0,
+            'kd_cabang' => Auth::user()->cabang,
+            'deskripsi' => $request->deskripsi,
+            'created_at' => now(),
         ]);
         return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
     }
-    public function peminjaman_proses(Request $request){
-        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->code)->first();
-        return view('application.peminjaman.form-prosess-peminjaman',['data'=>$data]);
+    public function peminjaman_proses(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
+        return view('application.peminjaman.form-prosess-peminjaman', ['data' => $data]);
     }
-    public function peminjaman_find_data(Request $request){
-        $data = DB::table('inventaris_data')->where('inventaris_data_cabang',Auth::user()->cabang)->where('inventaris_data_name','like', '%' . $request->name . '%')->get();
-        return view('application.peminjaman.hasil-pencarian-barang',['data'=>$data]);
+    public function peminjaman_find_data(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_name', 'like', '%' . $request->name . '%')->get();
+        return view('application.peminjaman.hasil-pencarian-barang', ['data' => $data]);
     }
     // STOK OPNAME
     public function menu_stock_opname($akses)
@@ -340,6 +344,27 @@ class AppController extends Controller
     {
         if ($this->url_akses($akses) == true) {
             return view('application.pemusnahan.menupemusnahan');
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+
+    // MASTER BARANG
+    public function master_barang($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('master_doocument')->get();
+            return view('application.master-data.master-barang',['data'=>$data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+    // MASTER NO DOCUMENT
+    public function master_no_document($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('master_doocument')->get();
+            return view('application.master-data.master-no-document',['data'=>$data]);
         } else {
             return Redirect::to('dashboard');
         }
