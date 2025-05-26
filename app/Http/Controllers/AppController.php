@@ -210,6 +210,7 @@ class AppController extends Controller
         $pdf->output();
         return base64_encode($pdf->stream());
     }
+    // PEMINJAMAN
     public function peminjaman($akses)
     {
         if ($this->url_akses($akses) == true) {
@@ -219,6 +220,34 @@ class AppController extends Controller
             return Redirect::to('dashboard');
         }
 
+    }
+    public function peminjaman_add(Request $request){
+        $cabang = DB::table('tbl_cabang')->get();
+        $staff = DB::table('tbl_staff')->where('kd_cabang',Auth::user()->cabang)->get();
+        return view('application.peminjaman.form-add-peminjaman',['cabang'=>$cabang,'staff'=>$staff]);
+    }
+    public function peminjaman_save(Request $request){
+        DB::table('tbl_peminjaman')->insert([
+            'tiket_peminjaman'=> 'PJ-SDM-'.Auth::user()->cabang.'-'.date('Ymdhis'),
+            'nama_kegiatan'=>$request->tujuan,
+            'tujuan_cabang'=>$request->cabang,
+            'tgl_pinjam'=>$request->tgl_pinjam,
+            'batas_tgl_pinjam'=>$request->batas_pinjam,
+            'pj_pinjam'=>$request->pj,
+            'status_pinjam'=>0,
+            'kd_cabang'=>Auth::user()->cabang,
+            'deskripsi'=>$request->deskripsi,
+            'created_at'=>now(),
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
+    }
+    public function peminjaman_proses(Request $request){
+        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->code)->first();
+        return view('application.peminjaman.form-prosess-peminjaman',['data'=>$data]);
+    }
+    public function peminjaman_find_data(Request $request){
+        $data = DB::table('inventaris_data')->where('inventaris_data_cabang',Auth::user()->cabang)->where('inventaris_data_name','like', '%' . $request->name . '%')->get();
+        return view('application.peminjaman.hasil-pencarian-barang',['data'=>$data]);
     }
     // STOK OPNAME
     public function menu_stock_opname($akses)

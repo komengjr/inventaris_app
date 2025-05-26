@@ -58,8 +58,7 @@
                                 <div class="accordion-body">
 
                                     <div class="list-group">
-                                        <a
-                                            class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
+                                        <a class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
                                             <div
                                                 class="d-flex flex-column flex-sm-row justify-content-between mb-1 mb-md-0">
                                                 <h5 class="mb-1">Step 1</h5><small class="text-muted">Menu
@@ -67,8 +66,7 @@
                                             </div>
                                             <p class="mb-1">Membuat atau Menambahkan data / tiket Peminjaman.</p>
                                         </a>
-                                        <a
-                                            class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
+                                        <a class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
                                             <div
                                                 class="d-flex flex-column flex-sm-row justify-content-between mb-1 mb-md-0">
                                                 <h5 class="mb-1">Step 2</h5><small class="text-muted">Menu
@@ -77,8 +75,7 @@
                                             <p class="mb-1">Pastikan Field yang diisi sudah benar dan menyesuaikan
                                                 keterangan yang ada.</p>
                                         </a>
-                                        <a
-                                            class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
+                                        <a class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
                                             <div
                                                 class="d-flex flex-column flex-sm-row justify-content-between mb-1 mb-md-0">
                                                 <h5 class="mb-1">Step 3</h5><small class="text-muted">Menu
@@ -89,7 +86,6 @@
                                                 barang yang akan di pinjam.</p>
                                         </a>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

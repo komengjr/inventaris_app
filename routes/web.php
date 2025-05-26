@@ -431,7 +431,10 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');
     Route::post('dashboard/data-lokasi-print-barcode', [AppController::class, 'masteradmin_cabang_data_lokasi_print_barcode'])->name('masteradmin_cabang_data_lokasi_print_barcode');
 
-
+    Route::post('peminjaman/add', [AppController::class, 'peminjaman_add'])->name('peminjaman_add');
+    Route::post('peminjaman/save', [AppController::class, 'peminjaman_save'])->name('peminjaman_save');
+    Route::post('peminjaman/proses', [AppController::class, 'peminjaman_proses'])->name('peminjaman_proses');
+    Route::post('peminjaman/find-data', [AppController::class, 'peminjaman_find_data'])->name('peminjaman_find_data');
 
     Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
     Route::post('menu-stock-opname/proses-data', [AppController::class, 'menu_stock_opname_proses_data'])->name('menu_stock_opname_proses_data');

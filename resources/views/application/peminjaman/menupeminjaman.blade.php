@@ -2,6 +2,7 @@
 @section('base.css')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
+    <link href="{{ asset('vendors/choices/choices.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('vendors/lottie/lottie.min.js') }}"></script>
     <script src="{{ asset('vendors/typed.js/typed.js') }}"></script>
 @endsection
@@ -31,7 +32,7 @@
     </div>
     <div class="row mb-3 g-3">
         <div class="col-xl-12">
-            <div class="card mb-3">
+            {{-- <div class="card mb-3">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-4 border-lg-end border-bottom border-lg-0 pb-3 pb-lg-0">
@@ -140,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="card mb-3">
                 <div class="card-header">
                     <div class="row align-items-center">
@@ -155,8 +156,8 @@
                                         data-fa-transform="shrink-3"></span>Menu</button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
-                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock"
-                                        id="button-proses-stock-opname-cabang" data-code="123"><span
+                                    <button class="dropdown-item" data-bs-toggle="modal"
+                                        data-bs-target="#modal-peminjaman-xl" id="button-add-peminjaman"><span
                                             class="far fa-edit"></span>
                                         Tambah Peminjaman</button>
                                     <div class="dropdown-divider"></div>
@@ -173,8 +174,8 @@
                                 <th>No</th>
                                 <th>Kode Peminjaman</th>
                                 <th>Kebutuhan</th>
+                                <th>Penanggung Jawab</th>
                                 <th>Tanggal Peminjaman</th>
-                                <th>Batas Tanggal Peminjaman</th>
                                 <th>Status Peminjaman</th>
                                 <th>Action</th>
                             </tr>
@@ -186,11 +187,35 @@
                             @foreach ($data as $datas)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $datas->tiket_peminjaman }}</td>
+                                    <td>
+                                        {{ $datas->tiket_peminjaman }}<br>
+                                        @if ($datas->kd_cabang == $datas->tujuan_cabang)
+                                            <span class="badge bg-primary">Antar Divisi</span> <br>
+                                        @else
+                                            <span class="badge bg-warning">Antar Cabang</span> <br>
+                                        @endif
+                                    </td>
                                     <td>{{ $datas->nama_kegiatan }}</td>
-                                    <td>{{ $datas->tgl_pinjam }}</td>
-                                    <td>{{ $datas->batas_tgl_pinjam }}</td>
-                                    <td>{{ $datas->status_pinjam }}</td>
+                                    <td>
+                                        @php
+                                            $staff = DB::table('tbl_staff')->where('nip', $datas->pj_pinjam)->first();
+                                        @endphp
+                                        @if ($staff)
+                                            {{ $staff->nama_staff }}
+                                        @else
+                                            <span class="badge bg-danger">Staff Tidak diTemukan</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{ $datas->tgl_pinjam }} <br> Sampai <br> {{ $datas->batas_tgl_pinjam }}
+                                    </td>
+                                    <td class="text-center">
+                                        @if ($datas->status_pinjam == 0)
+                                            <span class="badge bg-warning m-2">Proses</span>
+                                        @elseif ($datas->status_pinjam == 1)
+                                            <span class="badge bg-success m-2">Done</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <button class="btn btn-sm btn-primary dropdown-toggle"
@@ -199,12 +224,21 @@
                                                     class="fas fa-align-left me-1"
                                                     data-fa-transform="shrink-3"></span>Option</button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-
-                                                <button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang"
-                                                    data-code="123"><span class="far fa-edit"></span>
-                                                    Proses Peminjaman</button>
-                                                <div class="dropdown-divider"></div>
+                                                @if ($datas->status_pinjam == 0)
+                                                    <button class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-peminjaman"
+                                                        id="button-proses-peminjaman-cabang"
+                                                        data-code="{{ $datas->tiket_peminjaman }}"><span
+                                                            class="far fa-edit"></span>
+                                                        Lengkapi Data Peminjaman</button>
+                                                @elseif ($datas->status_pinjam == 10)
+                                                    <div class="dropdown-divider"></div>
+                                                @elseif ($datas->status_pinjam == 1)
+                                                    <button class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang"
+                                                        data-code="123"><span class="fas fa-print"></span>
+                                                        Print Form Peminjaman</button>
+                                                @endif
 
                                             </div>
                                         </div>
@@ -253,19 +287,19 @@
     </div>
 @endsection
 @section('base.js')
-    <div class="modal fade" id="modal-menu" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-peminjaman" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 95%;">
             <div class="modal-content border-0">
                 <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-menu"></div>
+                <div id="menu-peminjaman"></div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-master" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-peminjaman-xl" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content border-0">
@@ -273,7 +307,7 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-master"></div>
+                <div id="menu-peminjaman-xl"></div>
             </div>
         </div>
     </div>
@@ -284,7 +318,7 @@
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
     <script src="{{ asset('vendors/echarts/echarts.min.js') }}"></script>
-
+    <script src="{{ asset('vendors/choices/choices.min.js') }}"></script>
 
     {{-- <script src="{{ asset('assets/img/animated-icons/loading.json') }}"></script> --}}
     <script>
@@ -293,14 +327,13 @@
         });
     </script>
     <script>
-        $(document).on("click", "#button-add-menu", function(e) {
+        $(document).on("click", "#button-add-peminjaman", function(e) {
             e.preventDefault();
-            // var code = $(this).data("code");
-            $('#menu-menu').html(
+            $('#menu-peminjaman-xl').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('masteradmin_menu_add') }}",
+                url: "{{ route('peminjaman_add') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -309,20 +342,20 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-menu').html(data);
+                $('#menu-peminjaman-xl').html(data);
             }).fail(function() {
-                $('#menu-menu').html('eror');
+                $('#menu-peminjaman-xl').html('eror');
             });
 
         });
-        $(document).on("click", "#button-master-staff", function(e) {
+        $(document).on("click", "#button-proses-peminjaman-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-master').html(
+            $('#menu-peminjaman').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('masteradmin_cabang') }}",
+                url: "{{ route('peminjaman_proses') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -331,9 +364,9 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-master').html(data);
+                $('#menu-peminjaman').html(data);
             }).fail(function() {
-                $('#menu-master').html('eror');
+                $('#menu-peminjaman').html('eror');
             });
 
         });
