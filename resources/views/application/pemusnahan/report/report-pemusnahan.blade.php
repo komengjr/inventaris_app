@@ -260,12 +260,17 @@
                         <td>:</td>
                         <td>{{$data->kd_pemusnahan}}</td>
                     </tr>
+                    <tr>
+                        <td>Tanggal</td>
+                        <td>:</td>
+                        <td>{{date("d-m-Y", strtotime($data->tgl_pemusnahan))}}</td>
+                    </tr>
 
                 </table>
             </div>
             <div id="invoice">
                 <span>Form Pemusnahan Barang</span>
-                <div class="date" style="color: red;">Print By : {{ Auth::user()->name }}</div>
+                <div class="date" style="color: red; font-size: 12px;;">Print By : {{ Auth::user()->name }}</div>
                 {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
             </div>
         </div>
