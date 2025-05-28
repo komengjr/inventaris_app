@@ -7,7 +7,7 @@
 </div>
 
 <script>
-    $('#table-data-peminjaman').html(
+    $('#menu-print-data-peminjaman').html(
         '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
     );
     $.ajax({
