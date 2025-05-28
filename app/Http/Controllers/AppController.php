@@ -353,14 +353,14 @@ class AppController extends Controller
             $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
             # code...
         }
-
+        $peminjaman = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->code)->first();
         $data = DB::table('tbl_sub_peminjaman')
             ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
             ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
             ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->get();
 
         $customPaper = array(0, 0, 50.80, 95.20);
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', ['data' => $data, 'cabang' => $cabang], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', ['data' => $data, 'cabang' => $cabang ,'peminjaman'=>$peminjaman], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         $canvas = $pdf->getDomPDF()->getCanvas();
         $height = $canvas->get_height();

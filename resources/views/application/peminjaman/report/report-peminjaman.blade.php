@@ -56,7 +56,10 @@
 
 
     #details {
-        margin-bottom: 50px;
+        padding: 10px;
+        border: 2px solid #0b0909;
+        border-style: solid solid dashed double;
+        margin-bottom: 10px;
     }
 
     #client {
@@ -256,28 +259,48 @@
                     <tr>
                         <td>Tujuan Peminjaman</td>
                         <td>:</td>
-                        <td>asd</td>
+                        <td>{{ $peminjaman->nama_kegiatan }}</td>
                     </tr>
                     <tr>
                         <td>Penanggung Jawab</td>
                         <td>:</td>
-                        <td>asd</td>
+                        <td>
+                            @php
+                                $staff = DB::table('tbl_staff')->where('nip', $peminjaman->pj_pinjam)->first();
+                            @endphp
+                            @if ($staff)
+                                {{ $staff->nama_staff }}
+                            @else
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td>Asal Cabang</td>
                         <td>:</td>
-                        <td>Cabang</td>
+                        <td>
+                            @php
+                                $cabang = DB::table('tbl_cabang')->where('kd_cabang', $peminjaman->kd_cabang)->first();
+                            @endphp
+                            {{ $cabang->nama_cabang }}
+                        </td>
                     </tr>
                     <tr>
                         <td>Tujuan Cabang</td>
                         <td>:</td>
-                        <td>Cabang</td>
+                        <td>
+                            @php
+                                $cabang = DB::table('tbl_cabang')
+                                    ->where('kd_cabang', $peminjaman->tujuan_cabang)
+                                    ->first();
+                            @endphp
+                            {{ $cabang->nama_cabang }}
+                        </td>
                     </tr>
                 </table>
             </div>
             <div id="invoice">
                 <span>Form Peminjaman Barang</span>
-                <div class="date" style="color: red;">Print By : {{Auth::user()->name}}</div>
+                <div class="date" style="color: red;">Print By : {{ Auth::user()->name }}</div>
                 {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
             </div>
         </div>
@@ -326,8 +349,10 @@
         </table>
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
-            <div>NOTICE:</div>
-            <div class="notice">Dokumen Ini Sangat Valid digunakan tanpa Tanda Tangan.</div>
+            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
+                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
+            ) !!}">
+            <div class="notice">Dokumen Ini Sah tanpa Tanda Tangan.</div>
         </div>
     </main>
 </body>
