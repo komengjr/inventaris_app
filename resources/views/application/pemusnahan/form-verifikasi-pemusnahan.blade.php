@@ -1,14 +1,14 @@
 <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-        <h4 class="mb-1" id="staticBackdropLabel">Form Add Data Pemusnahan</h4>
+        <h4 class="mb-1" id="staticBackdropLabel">Form Verifikasi Data Pemusnahan</h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-3">
-        <div class="card border border-primary">
+        <div class="card border border-primary" id="menu-verifikasi-data-pemusnahan">
             <div class="card-body">
                 <div class="containera p-0" id="QR-Code">
                     {{-- <input type="text" name="tiket" id="tiket" value="{{ $tiket }}" hidden> --}}
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <select class="form-control" id="camera-select"></select>
                         <div class="form-group " style="padding-top: 20px; display: none;">
                             <button title="Decode Image" class="btn btn-default btn-sm" id="decode-img" type="button"
@@ -23,7 +23,6 @@
                             <button title="Stop streams" class="btn btn-danger btn-sm" id="stop" type="button"
                                 data-toggle="tooltip"><span class="glyphicon glyphicon-stop"></span></button>
                         </div>
-
                         <div class="thumbnail p-0" id="result">
                             <div class="well p-0 m-0">
                                 <img id="scanned-img" src="" style="width: 100%; height: auto;">
@@ -33,7 +32,6 @@
                                 <p id="scanned-QR" style="display: none;"></p>
                             </div>
                         </div>
-
                     </div>
                     <div class="col-md-12" id="kamera">
                         <div class="well" style="position: relative;display: inline-block;">
@@ -68,14 +66,12 @@
                             <label id="flipHorizontal-value" width="100">Flip Horizontal: off</label>
                             <input id="flipHorizontal" onchange="Page.changeHorizontal();" type="checkbox">
                         </div>
-                    </div>
-
+                    </div> --}}
                     <div class="col-12 text-center">
                         <label for="" class="text-center">Masukan Kode Verifikasi</label>
-                        <input type="text" class="form-control form-control-lg text-center" name="name"
-                            required>
+                        <input type="text" class="form-control form-control-lg text-center" name="code_name" id="code_name" onkeydown="caridata(this)" required>
+                        <input type="text" name="" id="tiket" value="{{$code}}" hidden>
                     </div>
-
                     <div class="col-md-12">
                         @if ($message = Session::get('sukses'))
                             <div class="alert alert-danger alert-block">
@@ -88,12 +84,37 @@
             </div>
         </div>
     </div>
-    <div class="p-3" id="menu-data-table-pemusnahan"></div>
 </div>
 <script type="text/javascript" src='{{ asset('qr_login/option2/js/filereader.js') }}'></script>
 <script type="text/javascript" src="{{ asset('qr_login/option2/js/qrcodelib.js') }}"></script>
 <script type="text/javascript" src="{{ asset('qr_login/option2/js/webcodecamjs.js') }}"></script>
+<script>
+    function caridata(ele) {
+        if (event.key === 'Enter') {
+            var code = document.getElementById('code_name').value;
+            var tiket = document.getElementById('tiket').value;
+            $.ajax({
+                url: "{{ route('menu_pemusnahan_pilih_data_barang_verifikasi_code') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "tiket": tiket,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                document.getElementById('code_name').value = "";
+                $('#menu-verifikasi-data-pemusnahan').html(data);
+            }).fail(function() {
+                $('#menu-verifikasi-data-pemusnahan').html(
+                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                );
+            });
 
+        }
+    }
+</script>
 <script>
     function CallAjaxLoginQr(code) {
         var tiket = document.getElementById("tiket").value;

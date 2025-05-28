@@ -66,7 +66,16 @@
                             <td>{{ $datas->inventaris_data_name }}</td>
                             <td>{{ $datas->inventaris_data_type }}</td>
                             <td>{{ $datas->inventaris_data_merk }}</td>
-                            <td>{{ $datas->pj_pemusnahan }}</td>
+                            <td>
+                                @php
+                                    $nama = DB::table('wa_number_cabang')->where('id_wa_number',$datas->pj_pemusnahan)->first();
+                                @endphp
+                                @if ($nama)
+                                    {{$nama->wa_number_name}}
+                                @else
+
+                                @endif
+                            </td>
                             <td>{{ $datas->eksekusi }}</td>
                             <td>
                                 @if ($datas->status_pemusnahan == 0)
@@ -85,12 +94,12 @@
                                         @if ($datas->status_pemusnahan == 0)
                                             <button class="dropdown-item" data-bs-toggle="modal"
                                                 data-bs-target="#modal-pemusnahan-md" id="button-verifikasi-data-pemusnahan-cabang"
-                                                data-code="123"><span class="fas fa-swatchbook"></span>
+                                                data-code="{{$datas->id_pemusnahan}}"><span class="fas fa-swatchbook"></span>
                                                 Verifikasi Pemusnahan</button>
                                         @elseif($datas->status_pemusnahan == 1)
                                             <button class="dropdown-item" data-bs-toggle="modal"
                                                 data-bs-target="#modal-pemusnahan-lg" id="button-cetak-data-pemusnahan-cabang"
-                                                data-code="123"><span class="fas fa-print"></span> Cetak Data</button>
+                                                data-code="{{$datas->id_pemusnahan}}"><span class="fas fa-print"></span> Cetak Data</button>
                                         @endif
                                     </div>
                                 </div>
@@ -228,6 +237,27 @@
                 $('#menu-pemusnahan-md').html(data);
             }).fail(function() {
                 $('#menu-pemusnahan-md').html('eror');
+            });
+        });
+        $(document).on("click", "#button-cetak-data-pemusnahan-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-pemusnahan-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_pemusnahan_pilih_data_barang_print') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-pemusnahan-lg').html(data);
+            }).fail(function() {
+                $('#menu-pemusnahan-lg').html('eror');
             });
         });
     </script>

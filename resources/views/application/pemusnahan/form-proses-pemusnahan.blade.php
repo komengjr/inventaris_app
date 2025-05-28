@@ -45,7 +45,7 @@
             <select name="pj" class="form-control choices-single-user" required>
                 <option value="">Pilih Penanggung Jawab</option>
                 @foreach ($wa as $was)
-                    <option value="{{$was->wa_number_no}}">{{$was->wa_number_name}}</option>
+                    <option value="{{$was->id_wa_number}}">{{$was->wa_number_name}}</option>
                 @endforeach
             </select>
         </div>

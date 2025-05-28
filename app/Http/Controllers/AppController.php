@@ -376,7 +376,7 @@ class AppController extends Controller
         if ($this->url_akses($akses) == true) {
             $data = DB::table('tbl_pemusnahan')
                 ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_pemusnahan.id_inventaris')
-                ->where('tbl_pemusnahan.kd_cabang', Auth::user()->cabang)->orderBy('id_pemusnahan','DESC')->get();
+                ->where('tbl_pemusnahan.kd_cabang', Auth::user()->cabang)->orderBy('id_pemusnahan', 'DESC')->get();
             return view('application.pemusnahan.menupemusnahan', ['data' => $data]);
         } else {
             return Redirect::to('dashboard');
@@ -405,14 +405,9 @@ class AppController extends Controller
     {
         $token = mt_rand(1000000, 9999999);
         $code = str::uuid();
-        $check = DB::table('tbl_pemusnahan')->where('id_inventaris',$request->id_inventaris)->first();
-        if (substr($request->pj, 0, 1) == 0) {
-            $nomor = "+62" . substr(trim($request->pj), 1);
-        } elseif (substr($request->pj, 0, 2) == '62') {
-            $nomor = "+" . $request->pj;
-        } else {
-            $nomor = $request->pj;
-        }
+        $check = DB::table('tbl_pemusnahan')->where('id_inventaris', $request->id_inventaris)->first();
+        $no = DB::table('wa_number_cabang')->where('id_wa_number', $request->pj)->first();
+
         if ($check) {
             return redirect()->back()->withError('Fail ! Data Barang Sudah tidak Ada');
         } else {
@@ -425,7 +420,7 @@ class AppController extends Controller
                 ->margin(2)
                 ->generate($token));
             $text = "Hai \n\nToken Pemusnahan Anda : *" . $token .
-                    "*\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma Digital*";
+                "*\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma Digital*";
             DB::table('tbl_pemusnahan')->insert([
                 'kd_pemusnahan' => $code,
                 'id_inventaris' => $request->id_inventaris,
@@ -437,12 +432,12 @@ class AppController extends Controller
                 'status_pemusnahan' => 0,
                 'tgl_pemusnahan' => $request->tgl_pemusnahan,
                 'token_pemusnahan' => $token,
-                'pj_pemusnahan' => $nomor,
+                'pj_pemusnahan' => $request->pj,
                 'created_at' => now()
             ]);
             DB::table('message')->insert([
                 'token_code' => $code,
-                'number' => $nomor,
+                'number' => $no->wa_number_no,
                 'pesan' => $text,
                 'file' => $qrcode,
                 'status' => 0,
@@ -452,8 +447,47 @@ class AppController extends Controller
             return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data Pemusnahan');
         }
     }
-    public function menu_pemusnahan_pilih_data_barang_verifikasi(Request $request){
-        return view('application.pemusnahan.form-verifikasi-pemusnahan');
+    public function menu_pemusnahan_pilih_data_barang_verifikasi(Request $request)
+    {
+        return view('application.pemusnahan.form-verifikasi-pemusnahan', ['code' => $request->code]);
+    }
+    public function menu_pemusnahan_pilih_data_barang_verifikasi_code(Request $request)
+    {
+        $check = DB::table('tbl_pemusnahan')->where('id_pemusnahan', $request->tiket)->where('token_pemusnahan', $request->code)->first();
+        if ($check) {
+            $id = 1;
+            DB::table('tbl_pemusnahan')->where('id_pemusnahan',$request->tiket)->update([
+                'status_pemusnahan'=>1
+            ]);
+        } else {
+            $id = 0;
+        }
+        return view('application.pemusnahan.notif-verifikasi', ['id' => $id]);
+    }
+    public function menu_pemusnahan_pilih_data_barang_print(Request $request)
+    {
+        return view('application.pemusnahan.form-print-pemusnahan', ['code' => $request->code]);
+    }
+    public function menu_pemusnahan_pilih_data_barang_print_report(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+            # code...
+        }
+        $data = DB::table('tbl_pemusnahan')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_pemusnahan.id_inventaris')
+            ->where('tbl_pemusnahan.id_pemusnahan', $request->code)->first();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.pemusnahan.report.report-pemusnahan', ['cabang' => $cabang, 'data' => $data], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->set_opacity(.2, "Multiply");
+        $canvas->set_opacity(.1);
+        return base64_encode($pdf->stream());
     }
     // STOK OPNAME
     public function menu_stock_opname($akses)
@@ -585,10 +619,17 @@ class AppController extends Controller
     }
     public function master_no_whatsapp_save(Request $request)
     {
+        if (substr($request->nomor, 0, 1) == 0) {
+            $nomor = "+62" . substr(trim($request->nomor), 1);
+        } elseif (substr($request->nomor, 0, 2) == '62') {
+            $nomor = "+" . $request->nomor;
+        } else {
+            $nomor = $request->pj;
+        }
         DB::table('wa_number_cabang')->insert([
             'wa_number_code' => str::uuid(),
             'wa_number_name' => $request->name,
-            'wa_number_no' => $request->nomor,
+            'wa_number_no' => $nomor,
             'kd_cabang' => Auth::user()->cabang,
             'wa_number_akses' => $request->akses,
             'created_at' => now()

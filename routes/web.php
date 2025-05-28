@@ -455,6 +455,9 @@ Route::prefix('app')->group(function () {
     Route::post('menu-pemusnahan/pilih-data-barang', [AppController::class, 'menu_pemusnahan_pilih_data_barang'])->name('menu_pemusnahan_pilih_data_barang');
     Route::post('menu-pemusnahan/pilih-data-barang/save', [AppController::class, 'menu_pemusnahan_pilih_data_barang_save'])->name('menu_pemusnahan_pilih_data_barang_save');
     Route::post('menu-pemusnahan/pilih-data-barang/verifikasi', [AppController::class, 'menu_pemusnahan_pilih_data_barang_verifikasi'])->name('menu_pemusnahan_pilih_data_barang_verifikasi');
+    Route::post('menu-pemusnahan/pilih-data-barang/verifikasi_code', [AppController::class, 'menu_pemusnahan_pilih_data_barang_verifikasi_code'])->name('menu_pemusnahan_pilih_data_barang_verifikasi_code');
+    Route::post('menu-pemusnahan/pilih-data-barang/print', [AppController::class, 'menu_pemusnahan_pilih_data_barang_print'])->name('menu_pemusnahan_pilih_data_barang_print');
+    Route::post('menu-pemusnahan/pilih-data-barang/print-report', [AppController::class, 'menu_pemusnahan_pilih_data_barang_print_report'])->name('menu_pemusnahan_pilih_data_barang_print_report');
 
     // MENU STOCKOPNAME
     Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
