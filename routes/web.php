@@ -412,6 +412,7 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('menu-stock-opname', [AppController::class, 'menu_stock_opname'])->name('menu_stock_opname');
     Route::get('master-barang', [AppController::class, 'master_barang'])->name('master_barang');
     Route::get('master-no-document', [AppController::class, 'master_no_document'])->name('master_no_document');
+    Route::get('master-no-whatsapp', [AppController::class, 'master_no_whatsapp'])->name('master_no_whatsapp');
 });
 Route::prefix('app')->group(function () {
     Route::get('dashboard_home', [AppController::class, 'dashboard_home'])->name('dashboard_home');
@@ -433,11 +434,13 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');
     Route::post('dashboard/data-lokasi-print-barcode', [AppController::class, 'masteradmin_cabang_data_lokasi_print_barcode'])->name('masteradmin_cabang_data_lokasi_print_barcode');
 
+    // PEMINJAMAN
     Route::post('peminjaman/add', [AppController::class, 'peminjaman_add'])->name('peminjaman_add');
     Route::post('peminjaman/save', [AppController::class, 'peminjaman_save'])->name('peminjaman_save');
     Route::post('peminjaman/proses', [AppController::class, 'peminjaman_proses'])->name('peminjaman_proses');
     Route::post('peminjaman/find-data', [AppController::class, 'peminjaman_find_data'])->name('peminjaman_find_data');
     Route::post('peminjaman/chose-data', [AppController::class, 'peminjaman_pilih_data'])->name('peminjaman_pilih_data');
+    Route::post('peminjaman/batal-chose-data', [AppController::class, 'peminjaman_batal_pilih_data'])->name('peminjaman_batal_pilih_data');
     Route::post('peminjaman/proses-verifikasi', [AppController::class, 'peminjaman_proses_verifikasi'])->name('peminjaman_proses_verifikasi');
     Route::post('peminjaman/proses-verifikasi-fix', [AppController::class, 'proses_verifikasi_data_peminjaman'])->name('proses_verifikasi_data_peminjaman');
     Route::post('peminjaman/check-barang-peminjaman', [AppController::class, 'proses_check_data_barang_peminjaman'])->name('proses_check_data_barang_peminjaman');
@@ -446,6 +449,14 @@ Route::prefix('app')->group(function () {
     Route::post('peminjaman/print-report-data-peminjaman', [AppController::class, 'print_report_data_peminjaman'])->name('print_report_data_peminjaman');
     Route::post('peminjaman/print-report-data-peminjaman-show', [AppController::class, 'print_report_data_peminjaman_show'])->name('print_report_data_peminjaman_show');
 
+    // PEMUSNAHAN
+    Route::post('menu-pemusnahan/add', [AppController::class, 'menu_pemusnahan_add'])->name('menu_pemusnahan_add');
+    Route::post('menu-pemusnahan/find-data-barang', [AppController::class, 'menu_pemusnahan_find_data_barang'])->name('menu_pemusnahan_find_data_barang');
+    Route::post('menu-pemusnahan/pilih-data-barang', [AppController::class, 'menu_pemusnahan_pilih_data_barang'])->name('menu_pemusnahan_pilih_data_barang');
+    Route::post('menu-pemusnahan/pilih-data-barang/save', [AppController::class, 'menu_pemusnahan_pilih_data_barang_save'])->name('menu_pemusnahan_pilih_data_barang_save');
+    Route::post('menu-pemusnahan/pilih-data-barang/verifikasi', [AppController::class, 'menu_pemusnahan_pilih_data_barang_verifikasi'])->name('menu_pemusnahan_pilih_data_barang_verifikasi');
+
+    // MENU STOCKOPNAME
     Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
     Route::post('menu-stock-opname/proses-data', [AppController::class, 'menu_stock_opname_proses_data'])->name('menu_stock_opname_proses_data');
     Route::post('menu-stock-opname/proses-data-with-kamera', [AppController::class, 'menu_stock_opname_proses_data_with_kamera'])->name('menu_stock_opname_proses_data_with_kamera');
@@ -455,6 +466,10 @@ Route::prefix('app')->group(function () {
     Route::post('menu-stock-opname/remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_remove_full_data'])->name('menu_stock_opname_remove_full_data');
     Route::post('menu-stock-opname/proses-remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_proses_remove_full_data'])->name('menu_stock_opname_proses_remove_full_data');
     Route::post('menu-stock-opname/edit-data-tanggal-stock', [AppController::class, 'menu_stock_opname_edit_data_tanggal'])->name('menu_stock_opname_edit_data_tanggal');
+
+    // WHATSAPP
+    Route::post('master-no-whatsapp/add', [AppController::class, 'master_no_whatsapp_add'])->name('master_no_whatsapp_add');
+    Route::post('master-no-whatsapp/save', [AppController::class, 'master_no_whatsapp_save'])->name('master_no_whatsapp_save');
 });
 
 

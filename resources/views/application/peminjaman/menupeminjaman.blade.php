@@ -424,6 +424,30 @@
             });
 
         });
+        $(document).on("click", "#button-batal-data-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var id = $(this).data("id");
+            $('#menu-table-pilih-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_batal_pilih_data') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "id": id,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-table-pilih-peminjaman').html(data);
+            }).fail(function() {
+                $('#menu-table-pilih-peminjaman').html('eror');
+            });
+
+        });
         $(document).on("click", "#button-verifikasi-data-peminjaman", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
@@ -494,7 +518,7 @@
                 if (data == '1') {
                     location.reload();
                 } else {
-                    alert('data');
+                    alert('Pastikasn Semua Barang Sudah Kembali');
                     location.reload();
                 }
             }).fail(function() {

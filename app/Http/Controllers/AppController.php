@@ -214,7 +214,7 @@ class AppController extends Controller
     public function peminjaman($akses)
     {
         if ($this->url_akses($akses) == true) {
-            $data = DB::table('tbl_peminjaman')->where('kd_cabang', Auth::user()->cabang)->get();
+            $data = DB::table('tbl_peminjaman')->where('kd_cabang', Auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
             return view('application.peminjaman.menupeminjaman', ['data' => $data]);
         } else {
             return Redirect::to('dashboard');
@@ -272,6 +272,14 @@ class AppController extends Controller
             ->where('tbl_sub_peminjaman.id_pinjam', $request->code)->get();
         return view('application.peminjaman.table-fix-peminjaman', ['brg' => $brg]);
     }
+    public function peminjaman_batal_pilih_data(Request $request)
+    {
+        DB::table('tbl_sub_peminjaman')->where('id_sub_peminjaman', $request->code)->delete();
+        $brg = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->where('tbl_sub_peminjaman.id_pinjam', $request->id)->get();
+        return view('application.peminjaman.table-fix-peminjaman', ['brg' => $brg]);
+    }
     public function peminjaman_proses_verifikasi(Request $request)
     {
         $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
@@ -308,6 +316,7 @@ class AppController extends Controller
         DB::table('tbl_sub_peminjaman')->where('id_sub_peminjaman', $request->id_pinjam)->update([
             'tgl_kembali_barang' => now(),
             'kondisi_kembali' => $request->catatan,
+            'status_sub_peminjaman' => 1,
         ]);
         $brg = DB::table('tbl_sub_peminjaman')
             ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
@@ -332,26 +341,119 @@ class AppController extends Controller
     }
     public function print_report_data_peminjaman(Request $request)
     {
-        return view('application.peminjaman.print-data-peminjaman');
+        return view('application.peminjaman.print-data-peminjaman', ['code' => $request->code]);
     }
     public function print_report_data_peminjaman_show(Request $request)
     {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+            # code...
+        }
 
-        $image = base64_encode(file_get_contents(public_path('qr.png')));
+        $data = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->get();
+
         $customPaper = array(0, 0, 50.80, 95.20);
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', ['data' => $data, 'cabang' => $cabang], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         $canvas = $pdf->getDomPDF()->getCanvas();
         $height = $canvas->get_height();
         $width = $canvas->get_width();
         $canvas->set_opacity(.2, "Multiply");
         $canvas->set_opacity(.1);
-        // $canvas->page_text($width/5, $height/2, 'Lunas', '123', 30, array(22,0,0),1,2,0);
-        // $canvas->page_script('
-        //     $pdf->set_opacity(.1);
-        //     $pdf->image("qr.png", 80, 180, 255, 220);
-        //     ');
         return base64_encode($pdf->stream());
+    }
+
+    // MENU PEMUSNAHAN
+    public function menu_pemusnahan($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('tbl_pemusnahan')
+                ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_pemusnahan.id_inventaris')
+                ->where('tbl_pemusnahan.kd_cabang', Auth::user()->cabang)->orderBy('id_pemusnahan','DESC')->get();
+            return view('application.pemusnahan.menupemusnahan', ['data' => $data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+    public function menu_pemusnahan_add(Request $request)
+    {
+        return view('application.pemusnahan.form-add');
+    }
+    public function menu_pemusnahan_find_data_barang(Request $request)
+    {
+        if ($request->option == 'name') {
+            $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_name', 'like', '%' . $request->name . '%')->get();
+        } elseif ($request->option == 'no_inventaris') {
+            $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_number', 'like', '%' . $request->name . '%')->get();
+        }
+        return view('application.pemusnahan.data-table-pemusnahan', ['data' => $data]);
+    }
+    public function menu_pemusnahan_pilih_data_barang(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data_code', $request->code)->first();
+        $wa = DB::table('wa_number_cabang')->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('application.pemusnahan.form-proses-pemusnahan', ['data' => $data, 'wa' => $wa]);
+    }
+    public function menu_pemusnahan_pilih_data_barang_save(Request $request)
+    {
+        $token = mt_rand(1000000, 9999999);
+        $code = str::uuid();
+        $check = DB::table('tbl_pemusnahan')->where('id_inventaris',$request->id_inventaris)->first();
+        if (substr($request->pj, 0, 1) == 0) {
+            $nomor = "+62" . substr(trim($request->pj), 1);
+        } elseif (substr($request->pj, 0, 2) == '62') {
+            $nomor = "+" . $request->pj;
+        } else {
+            $nomor = $request->pj;
+        }
+        if ($check) {
+            return redirect()->back()->withError('Fail ! Data Barang Sudah tidak Ada');
+        } else {
+            $qrcode = base64_encode(QrCode::format('png')
+                ->size(500)
+                ->merge('/storage/app/public/logo.png')
+                ->errorCorrection('H')
+                ->eyeColor(2, 100, 100, 255, 0, 0, 0)
+                ->style('dot')
+                ->margin(2)
+                ->generate($token));
+            $text = "Hai \n\nToken Pemusnahan Anda : *" . $token .
+                    "*\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma Digital*";
+            DB::table('tbl_pemusnahan')->insert([
+                'kd_pemusnahan' => $code,
+                'id_inventaris' => $request->id_inventaris,
+                'kd_cabang' => Auth::user()->cabang,
+                'dasar_pengajuan' => $request->dasar_pengajuan,
+                'verifikasi' => $request->verifikasi,
+                'persetujuan' => 'setuju',
+                'eksekusi' => $request->eksekusi,
+                'status_pemusnahan' => 0,
+                'tgl_pemusnahan' => $request->tgl_pemusnahan,
+                'token_pemusnahan' => $token,
+                'pj_pemusnahan' => $nomor,
+                'created_at' => now()
+            ]);
+            DB::table('message')->insert([
+                'token_code' => $code,
+                'number' => $nomor,
+                'pesan' => $text,
+                'file' => $qrcode,
+                'status' => 0,
+                'time' => now(),
+                'created_at' => now(),
+            ]);
+            return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data Pemusnahan');
+        }
+    }
+    public function menu_pemusnahan_pilih_data_barang_verifikasi(Request $request){
+        return view('application.pemusnahan.form-verifikasi-pemusnahan');
     }
     // STOK OPNAME
     public function menu_stock_opname($akses)
@@ -444,15 +546,7 @@ class AppController extends Controller
             return Redirect::to('dashboard');
         }
     }
-    // MENU PEMUSNAHAN
-    public function menu_pemusnahan($akses)
-    {
-        if ($this->url_akses($akses) == true) {
-            return view('application.pemusnahan.menupemusnahan');
-        } else {
-            return Redirect::to('dashboard');
-        }
-    }
+
 
     // MASTER BARANG
     public function master_barang($akses)
@@ -473,5 +567,32 @@ class AppController extends Controller
         } else {
             return Redirect::to('dashboard');
         }
+    }
+    // MASTER NO WHATSAPP
+    public function master_no_whatsapp($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('wa_number_cabang')->where('kd_cabang', Auth::user()->cabang)->get();
+            return view('application.master-data.master-no-whatsapp', ['data' => $data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+    public function master_no_whatsapp_add(Request $request)
+    {
+
+        return view('application.master-data.whatsapp.form-add');
+    }
+    public function master_no_whatsapp_save(Request $request)
+    {
+        DB::table('wa_number_cabang')->insert([
+            'wa_number_code' => str::uuid(),
+            'wa_number_name' => $request->name,
+            'wa_number_no' => $request->nomor,
+            'kd_cabang' => Auth::user()->cabang,
+            'wa_number_akses' => $request->akses,
+            'created_at' => now()
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
     }
 }

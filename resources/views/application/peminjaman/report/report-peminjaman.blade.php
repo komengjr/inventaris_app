@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Invoice</title>
+    <title>DOcument Peminjaman</title>
     <link rel="stylesheet" href="style.css" media="all" />
 </head>
 <style>
@@ -37,7 +37,7 @@
     header {
         padding: 10px 0;
         margin-bottom: 20px;
-        border-bottom: 1px solid #AAAAAA;
+        border-bottom: 1px solid #0b0909;
     }
 
     #logo {
@@ -82,7 +82,7 @@
     }
 
     #invoice span {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     #invoice h1 {
@@ -102,24 +102,26 @@
         width: 100%;
         border-collapse: collapse;
         border-spacing: 0;
-        margin-bottom: 20px;
+        /* margin-bottom: 20px; */
     }
 
     table th,
     table td {
         padding: 5px;
-        background: #EEEEEE;
+        /* background: #EEEEEE; */
         text-align: center;
-        border-bottom: 1px solid #FFFFFF;
+        /* border-bottom: 1px solid #000000; */
     }
 
     table th {
         white-space: nowrap;
         font-weight: normal;
+        background: #373332;
+        color: white;
     }
 
     table td {
-        text-align: right;
+        text-align: left;
     }
 
     table td h3 {
@@ -159,22 +161,22 @@
         font-size: 1.2em;
     }
 
-    table tbody tr:last-child td {
+    /* table tbody tr:last-child td {
         border: none;
-    }
+    } */
 
     table tfoot td {
         padding: 10px 20px;
         background: #FFFFFF;
-        border-bottom: none;
+        /* border-bottom: none; */
         font-size: 1.2em;
         white-space: nowrap;
-        border-top: 1px solid #AAAAAA;
+        /* border-top: 1px solid #AAAAAA; */
     }
 
-    table tfoot tr:first-child td {
+    /* table tfoot tr:first-child td {
         border-top: none;
-    }
+    } */
 
     table tfoot tr:last-child td {
         color: #db3311;
@@ -183,9 +185,9 @@
 
     }
 
-    table tfoot tr td:first-child {
+    /* table tfoot tr td:first-child {
         border: none;
-    }
+    } */
 
     #thanks {
         font-size: 2em;
@@ -214,6 +216,21 @@
         text-align: center;
     }
 </style>
+@php
+    $no_doc = DB::table('master_doocument_cab')
+        ->where('master_document_code', '=', 'DOC00920')
+        ->where('kd_cabang', Auth::user()->cabang)
+        ->first();
+@endphp
+@if ($no_doc)
+    @php
+        $no = $no_doc->master_document_no;
+    @endphp
+@else
+    @php
+        $no = 'Nomor Dokumen Belum Di isi';
+    @endphp
+@endif
 
 <body>
     <header class="clearfix">
@@ -221,49 +238,91 @@
             <img src="data:image/png;base64, {{ $image }}">
         </div>
         <div id="company">
-            <h2 class="name">PT Pramita</h2>
-            <div>Lorem ipsum dolor sit amet consectetur </div>
-            <div>0561 982 0029</div>
-            <div>lorem@ipsum.com</div>
+            <h2 class="name">{{ $cabang->nama_cabang }}</h2>
+            <div>{{ $cabang->alamat }}</div>
+            <div>{{ $cabang->phone }}</div>
+            <div>{{ $no }}</div>
         </div>
         </div>
     </header>
     <main>
         <div id="details" class="clearfix">
             <div id="client">
-                <div class="to">No Dokumen : 123/22PC/20293/P/2025</div>
-                <h2 class="name">
+                {{-- <h2 class="name">
                 </h2>
-                <div class="address"></div>
-                <div class="email">Create By : {{ Auth::user()->name }}</div>
+                <div class="address"></div> --}}
+
+                <table style="margin: 0px; padding: 0px;">
+                    <tr>
+                        <td>Tujuan Peminjaman</td>
+                        <td>:</td>
+                        <td>asd</td>
+                    </tr>
+                    <tr>
+                        <td>Penanggung Jawab</td>
+                        <td>:</td>
+                        <td>asd</td>
+                    </tr>
+                    <tr>
+                        <td>Asal Cabang</td>
+                        <td>:</td>
+                        <td>Cabang</td>
+                    </tr>
+                    <tr>
+                        <td>Tujuan Cabang</td>
+                        <td>:</td>
+                        <td>Cabang</td>
+                    </tr>
+                </table>
             </div>
             <div id="invoice">
-                <span>Laporan Peminjaman Barang</span>
-                <div class="date" style="color: red;">Report Peminjaman</div>
-                <div class="date">{{ date('d-m-Y') }}</div>
+                <span>Form Peminjaman Barang</span>
+                <div class="date" style="color: red;">Print By : {{Auth::user()->name}}</div>
+                {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
             </div>
         </div>
-        <table border="0" cellspacing="0" cellpadding="0">
-            <thead>
+        <table border="1" cellspacing="0" cellpadding="0">
+            <thead style="font-size: 11px;">
                 <tr>
-                    <th class="no">#</th>
-                    <th class="desc">NO NOTA</th>
-                    <th class="qty">BAHAN</th>
-                    <th class="unit">JUMLAH</th>
-                    <th class="total">TOTAL</th>
+                    <th class="no" rowspan="2">#</th>
+                    <th class="qty" colspan="2">TANGGAL</th>
+                    <th rowspan="2">NAMA BARANG</th>
+                    <th rowspan="2">DETAIL</th>
+                    <th colspan="2">KONDISI BARANG</th>
+                    <th rowspan="2">KETERANGAN</th>
+                </tr>
+                <tr>
+                    <th>PEMINJAMAN</th>
+                    <th>PENGEMBALIAN</th>
+                    <th>KELUAR</th>
+                    <th>KEMBALI</th>
                 </tr>
             </thead>
-            <tbody id="invoiceItems">
+            <tbody id="invoiceItems" style="font-size: 10px;">
                 @php
                     $no = 1;
                     $hasil = 0;
                 @endphp
-
+                @foreach ($data as $datas)
+                    <tr>
+                        <td class="no">{{ $no++ }}</td>
+                        <td class="desc">{{ $datas->tgl_pinjam_barang }}</td>
+                        <td class="desc">{{ $datas->tgl_kembali_barang }}</td>
+                        <td class="desc">{{ $datas->inventaris_data_name }}</td>
+                        <td class="desc">{{ $datas->inventaris_data_merk }}</td>
+                        <td class="desc">{{ $datas->kondisi_pinjam }}</td>
+                        <td class="desc">{{ $datas->kondisi_kembali }}</td>
+                        <td>
+                            @if ($datas->status_sub_peminjaman == 0)
+                                <strong style="color: red;">Belum diverifikasi</strong>
+                            @else
+                                <strong style="color: rgb(2, 63, 3);">Sudah diverifikasi</strong>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
 
             </tbody>
-            <tfoot>
-
-            </tfoot>
         </table>
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">

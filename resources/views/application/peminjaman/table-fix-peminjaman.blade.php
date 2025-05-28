@@ -20,7 +20,7 @@
                 <td>{{ $brgs->inventaris_data_number }}</td>
                 <td>{{ $brgs->inventaris_data_merk }}</td>
                 <td>{{ $brgs->inventaris_data_tgl_beli }}</td>
-                <td></td>
+                <td><button class="btn btn-falcon-danger btn-sm" id="button-batal-data-peminjaman" data-code="{{$brgs->id_sub_peminjaman}}" data-id="{{$brgs->id_pinjam}}">Batal</button></td>
             </tr>
         @endforeach
     </tbody>

@@ -610,7 +610,7 @@
             </div>
         </div>
     @elseif (session('error'))
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 99999">
             <div class="toast show" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true"
                 data-options='{"autoShow":true,"showOnce":true,"cookieExpireTime":720}' data-autohide="false">
                 <div class="toast-header bg-danger text-white"><strong class="me-auto">Notice</strong><small>1 sec

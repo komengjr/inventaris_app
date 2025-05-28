@@ -152,12 +152,12 @@
                                                         data-code="{{ $brgs->id_sub_peminjaman }}">
                                                         <span class="fas fa-swatchbook"></span>
                                                         Pengembalian Barang</button>
-                                                    <div class="dropdown-divider"></div>
+                                                    {{-- <div class="dropdown-divider"></div>
                                                     <button class="dropdown-item" data-bs-toggle="modal"
                                                         data-bs-target="#modal-stock-lg"
                                                         id="button-edit-data-stock-opname" data-code="{123"><span
                                                             class="far fa-edit"></span> Edit
-                                                        Data Kondisi</button>
+                                                        Data Kondisi</button> --}}
 
                                                 </div>
                                             </div>
