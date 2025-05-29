@@ -470,6 +470,13 @@ Route::prefix('app')->group(function () {
     Route::post('menu-stock-opname/proses-remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_proses_remove_full_data'])->name('menu_stock_opname_proses_remove_full_data');
     Route::post('menu-stock-opname/edit-data-tanggal-stock', [AppController::class, 'menu_stock_opname_edit_data_tanggal'])->name('menu_stock_opname_edit_data_tanggal');
 
+    // MASTER BARANG
+    Route::get('master-barang-data', [AppController::class, 'master_barang_data'])->name('master_barang_data');
+    Route::post('master-barang-data/edit', [AppController::class, 'master_barang_data_edit'])->name('master_barang_data_edit');
+    Route::post('master-barang-data/save', [AppController::class, 'master_barang_data_save'])->name('master_barang_data_save');
+    Route::post('master-barang-data/cetak-barcode', [AppController::class, 'master_barang_data_cetak_barcode'])->name('master_barang_data_cetak_barcode');
+    Route::post('master-barang-data/sinkronisasi-data-barang-cabang', [AppController::class, 'master_barang_sinkronisasi_data_cabang'])->name('master_barang_sinkronisasi_data_cabang');
+
     // WHATSAPP
     Route::post('master-no-whatsapp/add', [AppController::class, 'master_no_whatsapp_add'])->name('master_no_whatsapp_add');
     Route::post('master-no-whatsapp/save', [AppController::class, 'master_no_whatsapp_save'])->name('master_no_whatsapp_save');

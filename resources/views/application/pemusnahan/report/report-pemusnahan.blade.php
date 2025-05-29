@@ -270,7 +270,7 @@
             </div>
             <div id="invoice">
                 <span>Form Pemusnahan Barang</span>
-                <div class="date" style="color: red; font-size: 12px;;">Print By : {{ Auth::user()->name }}</div>
+                <div class="date" style="color: red; font-size: 12px;">Print By : {{ Auth::user()->name }}</div>
                 {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
             </div>
         </div>

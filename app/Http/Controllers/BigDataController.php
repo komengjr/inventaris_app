@@ -60,27 +60,27 @@ class BigDataController extends Controller
             if ($ruangan) {
                 $dataruangan = $ruangan->nomor_ruangan;
                 if ($record->status_barang == 5) {
-                    $status_barang = '<span class="badge badge-danger p-2" style="font-size: 11px;">Musnah</span>';
+                    $status_barang = '<span class="badge bg-danger p-2" style="font-size: 11px;">Musnah</span>';
                     $button = "";
                 } else if($record->status_barang == 4){
-                    $status_barang = '<span class="badge badge-warning p-2" style="font-size: 11px;">Mutasi</span>';
+                    $status_barang = '<span class="badge bg-warning p-2" style="font-size: 11px;">Mutasi</span>';
                     $button = "";
                 } else {
-                    $status_barang = '<span class="badge badge-success p-2" style="font-size: 11px;">Baik</span>';
+                    $status_barang = '<span class="badge bg-success p-2" style="font-size: 11px;">Baik</span>';
                     $button =  "<button class='btn-warning m-1' data-toggle='modal' data-target='#editmasterbarang' id='editbarangmaster' data-url=" . url('divisi/masterbarang/showedit', ['id' => $id_inventaris]) . "><i class='bx bx-pencil'></i> edit</button>
                     <button class='btn-dark m-1' data-toggle='modal' data-target='#editmasterbarang' id='print-barcode-master-barang' data-url=" . url('printbarcodebyidinventaris', ['id' => $record->id]) . "><i class='bx bx-print'></i> Cetak Barcode</button>";
                 };
 
             } else {
-                $dataruangan = '<span class="badge badge-danger p-2" style="font-size: 11px;">Tidak di temukan</span>';
+                $dataruangan = '<span class="badge bg-danger p-2" style="font-size: 11px;">Tidak di temukan</span>';
                 if ($record->status_barang == 5) {
-                    $status_barang = '<span class="badge badge-danger p-2" style="font-size: 11px;">Musnah</span>';
+                    $status_barang = '<span class="badge bg-danger p-2" style="font-size: 11px;">Musnah</span>';
                     $button = "";
                 } else if($record->status_barang == 4){
-                    $status_barang = '<span class="badge badge-warning p-2" style="font-size: 11px;">Mutasi</span>';
+                    $status_barang = '<span class="badge bg-warning p-2" style="font-size: 11px;">Mutasi</span>';
                     $button = "";
                 } else {
-                    $status_barang = '<span class="badge badge-success p-2" style="font-size: 11px;">Baik</span>';
+                    $status_barang = '<span class="badge bg-success p-2" style="font-size: 11px;">Baik</span>';
                     $button = "<button class='btn-warning m-1' data-toggle='modal' data-target='#editmasterbarang' id='editbarangmaster' data-url=" . url('divisi/masterbarang/showedit', ['id' => $id_inventaris]) . "><i class='bx bx-pencil'></i> edit</button>";
                 };
 

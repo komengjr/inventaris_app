@@ -20,6 +20,8 @@ use PDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Exports\DataInventarisExport;
 use App\Exports\DataInventarisExportRuangan;
+use App\sub_tbl_inventory;
+use App\DataInventaris;
 class AppController extends Controller
 {
     public function __construct()
@@ -353,14 +355,14 @@ class AppController extends Controller
             $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
             # code...
         }
-        $peminjaman = DB::table('tbl_peminjaman')->where('tiket_peminjaman',$request->code)->first();
+        $peminjaman = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
         $data = DB::table('tbl_sub_peminjaman')
             ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
             ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
             ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->get();
 
         $customPaper = array(0, 0, 50.80, 95.20);
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', ['data' => $data, 'cabang' => $cabang ,'peminjaman'=>$peminjaman], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', ['data' => $data, 'cabang' => $cabang, 'peminjaman' => $peminjaman], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         $canvas = $pdf->getDomPDF()->getCanvas();
         $height = $canvas->get_height();
@@ -456,8 +458,8 @@ class AppController extends Controller
         $check = DB::table('tbl_pemusnahan')->where('id_pemusnahan', $request->tiket)->where('token_pemusnahan', $request->code)->first();
         if ($check) {
             $id = 1;
-            DB::table('tbl_pemusnahan')->where('id_pemusnahan',$request->tiket)->update([
-                'status_pemusnahan'=>1
+            DB::table('tbl_pemusnahan')->where('id_pemusnahan', $request->tiket)->update([
+                'status_pemusnahan' => 1
             ]);
         } else {
             $id = 0;
@@ -586,11 +588,191 @@ class AppController extends Controller
     public function master_barang($akses)
     {
         if ($this->url_akses($akses) == true) {
-            $data = DB::table('master_doocument')->get();
+            $data = DB::table('inventaris_data')->limit(20)->get();
             return view('application.master-data.master-barang', ['data' => $data]);
         } else {
             return Redirect::to('dashboard');
         }
+    }
+    public function master_barang_data(Request $request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // Rows display per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = DataInventaris::select('count(*) as allcount')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
+        $totalRecordswithFilter = DataInventaris::select('count(*) as allcount')->where('inventaris_data_name', 'like', '%' . $searchValue . '%')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
+
+        // Fetch records
+        $records = DataInventaris::orderBy('id_inventaris_data', $columnSortOrder)
+            // ->join('tbl_pemeriksaan','tbl_pemeriksaan.kd_pemeriksaan','=','tbl_perusahaan_paket_log.kd_pemeriksaan')
+            ->where('inventaris_data.inventaris_data_name', 'like', '%' . $searchValue . '%')
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->select('inventaris_data.*')
+            ->skip($start)
+            ->take($rowperpage)
+            ->get();
+
+        $data_arr = array();
+        // $no = 1;
+        foreach ($records as $record) {
+            $id = $record->inventaris_data_urut;
+            $nama_barang = $record->inventaris_data_name;
+            $kd_lokasi = $record->inventaris_data_location;
+            $no_inventaris = $record->inventaris_data_number;
+            $harga_perolehan = $record->inventaris_data_harga;
+            $kd_inventaris = $record->inventaris_klasifikasi_code;
+            $merk = $record->inventaris_data_merk . ' <br> ' . $record->inventaris_data_type . ' <br> ' . $record->inventaris_data_no_seri;
+            $tglbeli = date('d-m-Y', strtotime($record->inventaris_data_tgl_beli));
+            $button = "<div class='btn-group' role='group'>
+                                    <button class='btn btn-sm btn-primary dropdown-toggle' id='btnGroupVerticalDrop2'
+                                        type='button' data-bs-toggle='dropdown' aria-haspopup='true'
+                                        aria-expanded='false'><span class='fas fa-align-left'
+                                            data-fa-transform='shrink-3'></span></button>
+                                    <div class='dropdown-menu' aria-labelledby='btnGroupVerticalDrop2'>
+                                        <button class='dropdown-item' data-bs-toggle='modal'
+                                            data-bs-target='#modal-master-barang' id='button-edit-master-cabang'
+                                            data-code='$record->inventaris_data_code'><span class='far fa-edit'></span>
+                                            Edit Data Master</button>
+                                        <button class='dropdown-item' data-bs-toggle='modal'
+                                            data-bs-target='#modal-master-barang-lg' id='button-cetak-barcode-master-cabang'
+                                            data-code='$record->inventaris_data_code'><span class='fas fa-qrcode'></span>
+                                            Print Barcode</button>
+                                    </div>
+                                </div>";
+            $ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $record->id_nomor_ruangan_cbaang)->first();
+            if ($ruangan) {
+                $dataruangan = $ruangan->nomor_ruangan;
+                if ($record->inventaris_data_status == 5) {
+                    $status_barang = '<span class="badge bg-danger" style="font-size: 11px;">Musnah</span>';
+                    $button = "";
+                } else if ($record->inventaris_data_status == 4) {
+                    $status_barang = '<span class="badge bg-warning " style="font-size: 11px;">Mutasi</span>';
+                    $button = "";
+                } else {
+                    $status_barang = '<span class="badge bg-success " style="font-size: 11px;">Baik</span>';
+                }
+                ;
+            } else {
+                $dataruangan = '<span class="badge bg-danger" style="font-size: 9px;">Tidak di temukan</span>';
+                if ($record->inventaris_data_status == 5) {
+                    $status_barang = '<span class="badge bg-danger " style="font-size: 11px;">Musnah</span>';
+                    $button = "";
+                } else if ($record->inventaris_data_status == 4) {
+                    $status_barang = '<span class="badge bg-warning " style="font-size: 11px;">Mutasi</span>';
+                    $button = "";
+                } else {
+                    $status_barang = '<span class="badge bg-success " style="font-size: 11px;">Baik</span>';
+
+                }
+            }
+            $data_arr[] = array(
+                "id" => $id,
+                "nama_barang" => $nama_barang,
+                "no_inventaris" => $no_inventaris,
+                "harga_perolehan" => number_format($harga_perolehan, 0, ",", "."),
+                "kd_inventaris" => $kd_inventaris,
+                "kd_lokasi" => $kd_lokasi,
+                "dataruangan" => $dataruangan,
+                "merk" => $merk,
+                "tglbeli" => $tglbeli,
+                "status_barang" => $status_barang,
+                "btn" => $button
+            );
+        }
+
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr
+        );
+
+        echo json_encode($response);
+        exit;
+
+    }
+    public function master_barang_data_edit(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data.inventaris_data_code', $request->code)->first();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+        $klasifikasi = DB::table('inventaris_klasifikasi')->get();
+        return view('application.master-data.master-barang.form-edit-master-barang', ['data' => $data, 'lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
+    }
+    public function master_barang_data_save(Request $request)
+    {
+        if ($request->lokasi == "") {
+            $loc = $request->location;
+        } else {
+            $x = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->lokasi)->first();
+            $loc = $x->kd_lokasi;
+        }
+
+        DB::table('inventaris_data')->where('inventaris_data_code', $request->code)->update([
+            'inventaris_data_name' => $request->nama_barang,
+            'inventaris_data_number' => $request->no_inventaris,
+            'inventaris_data_location' => $loc,
+            'inventaris_data_jenis' => $request->jenis,
+            'inventaris_data_harga' => $request->harga,
+            'inventaris_data_merk' => $request->merk,
+            'inventaris_data_type' => $request->type,
+            'inventaris_data_no_seri' => $request->no_seri,
+            'inventaris_data_suplier' => $request->suplier,
+            'inventaris_data_tgl_beli' => $request->tgl_beli,
+            'id_nomor_ruangan_cbaang' => $request->lokasi,
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data Pemusnahan');
+    }
+    public function master_barang_data_cetak_barcode(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+            # code...
+        }
+        $customPaper = array(0, 0, 50.80, 95.20);
+        $data = DB::table('inventaris_data')
+            ->where('inventaris_data_code', $request->code)->first();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.master-data.master-barang.report.report-barcode', ['data' => $data])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->set_opacity(.2, "Multiply");
+        $canvas->set_opacity(.1);
+        return base64_encode($pdf->stream());
+    }
+    public function master_barang_sinkronisasi_data_cabang(Request $request){
+        $cabang = DB::table('tbl_cabang')
+        ->join('tbl_setting_cabang','tbl_setting_cabang.kd_cabang','=','tbl_cabang.kd_cabang')
+        ->join('tbl_entitas_cabang','tbl_entitas_cabang.kd_entitas_cabang','=','tbl_cabang.kd_entitas_cabang')
+        ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
+        $no = 1;
+        $urut = 1;
+        $data = DB::table('inventaris_data')->where('inventaris_data_cabang',Auth::user()->cabang)->orderBy('id_inventaris_data','ASC')->get();
+        foreach ($data as $value) {
+            DB::table('inventaris_data')->where('inventaris_data_code',$value->inventaris_data_code)->update([
+                'inventaris_data_number'=> $no++.'/'.$value->inventaris_klasifikasi_code.'/'.$value->inventaris_data_location.'/'.$cabang->simbol_entitas.'.'.$cabang->no_cabang.'/'.date('Y', strtotime($value->inventaris_data_tgl_beli)),
+                'inventaris_data_urut'=>$urut++
+            ]);
+        }
+        return 123;
     }
     // MASTER NO DOCUMENT
     public function master_no_document($akses)
