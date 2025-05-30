@@ -27,7 +27,14 @@
                     @foreach ($data as $datas)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $datas->tiket_peminjaman }}</td>
+                            <td>
+                                {{ $datas->tiket_peminjaman }} <br>
+                                @if ($datas->tujuan_cabang == Auth::user()->cabang)
+                                    <span class="badge bg-primary">Antar Divisi</span>
+                                @else
+                                    <span class="badge bg-warning">Antar Cabang</span>
+                                @endif
+                            </td>
                             <td>{{ $datas->nama_kegiatan }}</td>
                             <td>
                                 {{ $cabang->nama_cabang }} <br>
