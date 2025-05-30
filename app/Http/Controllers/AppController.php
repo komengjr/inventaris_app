@@ -663,6 +663,15 @@ class AppController extends Controller
             return Redirect::to('dashboard');
         }
     }
+    public function menu_cabang_find_cabang(Request $request)
+    {
+        $data = DB::table('tbl_cabang')
+            ->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
+            ->where('tbl_cabang.nama_cabang','like', '%' . $request->code . '%')
+            ->get();
+        return view('application.menu-cabang.pencarian-cabang', [ 'data' => $data]);
+    }
     public function menu_cabang_data_barang(Request $request)
     {
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();

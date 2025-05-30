@@ -37,14 +37,22 @@
                     <div class="row gx-2 align-items-center">
                         <div class="col-auto">
                             <div class="row gx-2">
-                                <div class="col-auto"><small>Search by Name:</small></div>
-                                <div class="col-auto">
-                                    <input type="text" class="form-control" name="" id="">
+                                <div class="col-auto mb-1">
+                                    <small>Search</small>
+                                </div>
+                                <div class="col-auto mb-1">
+                                    <select name="" class="form-select" id="">
+                                        <option value="">By Name</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto mb-1">
+                                    <input type="text" class="form-control" name="cabang" id="cabang">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-auto pe-0">
-                            <button class="btn btn-falcon-primary"><span class="fas fa-search-location"></span></button>
+                        <div class="col-auto pe-0 mb-2">
+                            <button class="btn btn-falcon-primary" id="button-cari-data-nama-cabang"><span
+                                    class="fas fa-search-location"></span></button>
                         </div>
                     </div>
                 </div>
@@ -53,7 +61,7 @@
     </div>
     <div class="card mb-3">
         <div class="card-body">
-            <div class="row">
+            <div class="row" id="hasil-pencarian-cabang">
                 @foreach ($data as $datas)
                     <div class="mb-4 col-md-6 col-lg-4 ">
                         <div class="border border-primary rounded-1 h-100 d-flex flex-column justify-content-between pb-3">
@@ -104,7 +112,8 @@
                                                 Data Mutasi Cabang</button>
                                             <button class="dropdown-item" data-bs-toggle="modal"
                                                 data-bs-target="#modal-menu-cabang" id="button-data-srockopname-cabang"
-                                                data-code="{{ $datas->kd_cabang }}"><span class="fab fa-elementor"></span>
+                                                data-code="{{ $datas->kd_cabang }}"><span
+                                                    class="fab fa-elementor"></span>
                                                 Data Stockopname Cabang</button>
                                         </div>
                                     </div>
@@ -177,6 +186,30 @@
     <script src="{{ asset('vendors/choices/choices.min.js') }}"></script>
 
     <script>
+        $(document).on("click", "#button-cari-data-nama-cabang", function(e) {
+            e.preventDefault();
+            var code = document.getElementById("cabang").value;
+            $('#hasil-pencarian-cabang').html(
+                // '<div class="spinner-border" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden"></span></div>'
+                '<div class="spinner-grow" role="status" style="display: block; margin-left: auto; margin-right: auto;"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_cabang_find_cabang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                setTimeout(() => {
+                    $('#hasil-pencarian-cabang').html(data);
+                }, 2000);
+            }).fail(function() {
+                $('#hasil-pencarian-cabang').html('eror');
+            });
+        });
         $(document).on("click", "#button-data-barang-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
