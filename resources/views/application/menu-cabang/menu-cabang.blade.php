@@ -203,9 +203,7 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                setTimeout(() => {
-                    $('#hasil-pencarian-cabang').html(data);
-                }, 2000);
+                $('#hasil-pencarian-cabang').html(data);
             }).fail(function() {
                 $('#hasil-pencarian-cabang').html('eror');
             });
