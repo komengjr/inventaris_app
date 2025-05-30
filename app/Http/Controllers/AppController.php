@@ -673,22 +673,48 @@ class AppController extends Controller
     {
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
         $data = DB::table('tbl_peminjaman')
-        ->join('tbl_cabang','tbl_cabang.kd_cabang','=','tbl_peminjaman.tujuan_cabang')
-        ->join('tbl_staff','tbl_staff.nip','=','tbl_peminjaman.pj_pinjam')
-        ->where('tbl_peminjaman.kd_cabang',$request->code)->get();
-        return view('application.menu-cabang.data-peminjaman',['cabang'=>$cabang,'data'=>$data]);
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_peminjaman.tujuan_cabang')
+            ->join('tbl_staff', 'tbl_staff.nip', '=', 'tbl_peminjaman.pj_pinjam')
+            ->where('tbl_peminjaman.kd_cabang', $request->code)->get();
+        return view('application.menu-cabang.data-peminjaman', ['cabang' => $cabang, 'data' => $data]);
+    }
+    public function menu_cabang_data_peminjaman_print(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', $request->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+            # code...
+        }
+        $peminjaman = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
+        $data = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->get();
+
+        $customPaper = array(0, 0, 50.80, 95.20);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.menu-cabang.report.report-peminjaman', ['data' => $data, 'cabang' => $cabang, 'peminjaman' => $peminjaman], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->set_opacity(.2, "Multiply");
+        $canvas->set_opacity(.1);
+        return base64_encode($pdf->stream());
     }
     public function menu_cabang_data_mutasi(Request $request)
     {
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
-        $data = DB::table('tbl_mutasi')->where('kd_cabang',$request->code)->get();
-        return view('application.menu-cabang.data-mutasi',['cabang'=>$cabang,'data'=>$data]);
+        $data = DB::table('tbl_mutasi')->where('kd_cabang', $request->code)->get();
+        return view('application.menu-cabang.data-mutasi', ['cabang' => $cabang, 'data' => $data]);
     }
     public function menu_cabang_data_stockopname(Request $request)
     {
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
-        $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang',$request->code)->orderBy('id_verifdatainventaris','DESC')->get();
-        return view('application.menu-cabang.data-stockopname',['cabang'=>$cabang,'data'=>$data]);
+        $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang', $request->code)->orderBy('id_verifdatainventaris', 'DESC')->get();
+        return view('application.menu-cabang.data-stockopname', ['cabang' => $cabang, 'data' => $data]);
     }
 
     // MASTER BARANG

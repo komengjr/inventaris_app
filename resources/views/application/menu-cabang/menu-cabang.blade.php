@@ -20,8 +20,7 @@
                     </div>
                     <div class="col-xl-auto px-3 py-2">
                         <h6 class="text-primary fs--1 mb-0">Menu : </h6>
-                        <h4 class="text-primary fw-bold mb-0">Data <span
-                                class="text-info fw-medium">Cabang</span>
+                        <h4 class="text-primary fw-bold mb-0">Data <span class="text-info fw-medium">Cabang</span>
                         </h4>
                     </div>
                 </div>
@@ -32,7 +31,7 @@
         <div class="card-body">
             <div class="row flex-between-center">
                 <div class="col-sm-auto mb-2 mb-sm-0">
-                    <h6 class="mb-0">Totoal Cabang : {{$data->count()}}</h6>
+                    <h6 class="mb-0">Totoal Cabang : {{ $data->count() }}</h6>
                 </div>
                 <div class="col-sm-auto">
                     <div class="row gx-2 align-items-center">
@@ -40,12 +39,12 @@
                             <div class="row gx-2">
                                 <div class="col-auto"><small>Search by Name:</small></div>
                                 <div class="col-auto">
-                                   <input type="text" class="form-control" name="" id="">
+                                    <input type="text" class="form-control" name="" id="">
                                 </div>
                             </div>
                         </div>
                         <div class="col-auto pe-0">
-                           <button class="btn btn-falcon-primary"><span class="fas fa-search-location"></span></button>
+                            <button class="btn btn-falcon-primary"><span class="fas fa-search-location"></span></button>
                         </div>
                     </div>
                 </div>
@@ -105,8 +104,7 @@
                                                 Data Mutasi Cabang</button>
                                             <button class="dropdown-item" data-bs-toggle="modal"
                                                 data-bs-target="#modal-menu-cabang" id="button-data-srockopname-cabang"
-                                                data-code="{{ $datas->kd_cabang }}"><span
-                                                    class="fab fa-elementor"></span>
+                                                data-code="{{ $datas->kd_cabang }}"><span class="fab fa-elementor"></span>
                                                 Data Stockopname Cabang</button>
                                         </div>
                                     </div>
@@ -261,6 +259,35 @@
                 $('#menu-cabang').html(data);
             }).fail(function() {
                 $('#menu-cabang').html('eror');
+            });
+        });
+    </script>
+    {{-- REPORT --}}
+    <script>
+        $(document).on("click", "#button-report-peminjaman-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var cabang = $(this).data("cabang");
+            $('#table-data-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_cabang_data_peminjaman_print') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "cabang": cabang,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#table-data-peminjaman').html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+            }).fail(function() {
+                $('#table-data-peminjaman').html('eror');
             });
         });
     </script>
