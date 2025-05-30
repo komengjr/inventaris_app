@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DOcument Peminjaman</title>
+    <title>Document Stockopname</title>
     <link rel="stylesheet" href="style.css" media="all" />
 </head>
 <style>
@@ -257,42 +257,29 @@
 
                 <table style="margin: 0px; padding: 0px;">
                     <tr>
-                        <td>Asal Lokasi Barang</td>
+                        <td>Kode Stockopname</td>
                         <td>:</td>
-                        <td>{{$cabang->nama_cabang}}</td>
+                        <td>{{ $data->kode_verif }}</td>
                     </tr>
                     <tr>
-                        <td>Lokasi Penempatan</td>
+                        <td>Tanggal Mulai</td>
                         <td>:</td>
                         <td>
-                            {{$mutasi->nama_cabang}}
+                            {{ $data->tgl_verif }}
                         </td>
                     </tr>
                     <tr>
-                        <td>Penanggung Jawab</td>
+                        <td>Tanggal Selesai</td>
                         <td>:</td>
                         <td>
-                          {{$mutasi->penanggung_jawab}}
+                            {{ $data->end_date_verif }}
                         </td>
                     </tr>
-                    <tr>
-                        <td>Tanggal Order</td>
-                        <td>:</td>
-                        <td>
-                          {{$mutasi->tanggal_buat}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tanggal Terima Barang</td>
-                        <td>:</td>
-                        <td>
-                          {{$mutasi->tgl_terima}}
-                        </td>
-                    </tr>
+
                 </table>
             </div>
             <div id="invoice">
-                <span>Form Mutasi Barang</span>
+                <span>Form Stockopname Barang Inventaris</span>
                 <div class="date" style="color: red; font-size: 12px;">Print By : {{ Auth::user()->name }}</div>
                 {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
             </div>
@@ -301,26 +288,44 @@
             <thead style="font-size: 11px;">
                 <tr>
                     <th class="no">#</th>
-                    <th>NAMA BARANG</th>
                     <th>NO INVENTARIS</th>
+                    <th>NAMA BARANG</th>
                     <th>MERK / TYPE</th>
                     <th>HARGA PEROLEHAN</th>
                     <th>TANGGAL PEMBELIAN</th>
+                    <th>KETERANGAN</th>
                 </tr>
-
             </thead>
             <tbody id="invoiceItems" style="font-size: 10px;">
                 @php
                     $no = 1;
                     $hasil = 0;
                 @endphp
-
+                @foreach ($brg as $brgs)
+                    <tr>
+                        <td>{{$no++}}</td>
+                        <td>{{$brgs->inventaris_data_number}}</td>
+                        <td>{{$brgs->inventaris_data_name}}</td>
+                        <td>{{$brgs->inventaris_data_merk}}</td>
+                        <td style="text-align: right;">@currency($brgs->inventaris_data_harga)</td>
+                        <td>{{$brgs->inventaris_data_tgl_beli}}</td>
+                        <td>
+                            @if ($brgs->status_data_inventaris == 0)
+                                BAIK
+                            @elseif($brgs->status_data_inventaris == 1)
+                                MAINTENANCE
+                            @elseif($brgs->status_data_inventaris == 2)
+                                RUSAK
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($mutasi->kd_mutasi),
+                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($data->kode_verif),
             ) !!}">
             <div class="notice">Dokumen Ini Sah tanpa Tanda Tangan.</div>
         </div>

@@ -5,7 +5,7 @@
     </div>
     <div class="p-3" id="form-data-barang">
 
-        <div id="table-data-version">
+        <div id="table-data-stockopname">
             <table id="exampledata" class="table table-striped nowrap" style="width:100%">
                 <thead class="bg-200 text-700 fs--2">
                     <tr>
@@ -47,9 +47,8 @@
                                             class="fas fa-align-left" data-fa-transform="shrink-3"></span>
                                         Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-menu-cabang" id="button-data-barang-cabang"
-                                            data-code="{{ $datas->kode_verif }}"><span
+                                        <button class="dropdown-item" id="button-report-stockopname-cabang"
+                                            data-code="{{ $datas->kode_verif }}" data-cabang="{{$cabang->kd_cabang}}"><span
                                                 class="fas fa-file-invoice"></span>
                                             Report Stockopname</button>
                                     </div>

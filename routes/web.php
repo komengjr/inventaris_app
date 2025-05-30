@@ -486,7 +486,9 @@ Route::prefix('app')->group(function () {
     Route::post('menu-cabang/data-peminjaman', [AppController::class, 'menu_cabang_data_peminjaman'])->name('menu_cabang_data_peminjaman');
     Route::post('menu-cabang/data-peminjaman/print', [AppController::class, 'menu_cabang_data_peminjaman_print'])->name('menu_cabang_data_peminjaman_print');
     Route::post('menu-cabang/data-mutasi', [AppController::class, 'menu_cabang_data_mutasi'])->name('menu_cabang_data_mutasi');
+    Route::post('menu-cabang/data-mutasi/print', [AppController::class, 'menu_cabang_data_mutasi_print'])->name('menu_cabang_data_mutasi_print');
     Route::post('menu-cabang/data-stockopname', [AppController::class, 'menu_cabang_data_stockopname'])->name('menu_cabang_data_stockopname');
+    Route::post('menu-cabang/data-stockopname/print', [AppController::class, 'menu_cabang_data_stockopname_print'])->name('menu_cabang_data_stockopname_print');
 
     // MASTER BARANG
     Route::get('master-barang-data', [AppController::class, 'master_barang_data'])->name('master_barang_data');

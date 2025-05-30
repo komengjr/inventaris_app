@@ -321,5 +321,57 @@
                 $('#table-data-peminjaman').html('eror');
             });
         });
+        $(document).on("click", "#button-report-mutasi-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var cabang = $(this).data("cabang");
+            $('#table-data-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_cabang_data_mutasi_print') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "cabang": cabang,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#table-data-mutasi').html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+            }).fail(function() {
+                $('#table-data-mutasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-report-stockopname-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var cabang = $(this).data("cabang");
+            $('#table-data-stockopname').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_cabang_data_stockopname_print') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "cabang": cabang,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#table-data-stockopname').html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+            }).fail(function() {
+                $('#table-data-stockopname').html('eror');
+            });
+        });
     </script>
 @endsection
