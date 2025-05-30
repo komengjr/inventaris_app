@@ -293,7 +293,7 @@
                     <th>MERK / TYPE</th>
                     <th>HARGA PEROLEHAN</th>
                     <th>TANGGAL PEMBELIAN</th>
-                    <th>KETERANGAN</th>
+                    <th>KET</th>
                 </tr>
             </thead>
             <tbody id="invoiceItems" style="font-size: 10px;">
