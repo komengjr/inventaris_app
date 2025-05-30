@@ -83,9 +83,13 @@
                             @php
                                 $namalokasi = DB::table('tbl_lokasi')
                                     ->where('kd_lokasi', $data->inventaris_data_location)
-                                    ->get();
+                                    ->first();
                             @endphp
-                            {{ $namalokasi[0]->nama_lokasi }}
+                            @if ($namalokasi)
+                                {{ $namalokasi->nama_lokasi }}
+                            @else
+                                null
+                            @endif
                         </p>
                     </td>
                 </tr>
@@ -105,9 +109,9 @@
                             @php
                                 $namacabang = DB::table('tbl_cabang')
                                     ->where('kd_cabang', $data->inventaris_data_cabang)
-                                    ->get();
+                                    ->first();
                             @endphp
-                            {{ $namacabang[0]->nama_cabang }}
+                            {{ $namacabang->nama_cabang }}
                         </p>
                     </td>
                 </tr>

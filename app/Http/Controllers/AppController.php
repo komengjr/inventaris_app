@@ -566,23 +566,118 @@ class AppController extends Controller
         return view('application.stockopname.form-edit-tgl', ['data' => $data]);
     }
 
+
     // MENU MUTASI
     public function menu_mutasi($akses)
     {
         if ($this->url_akses($akses) == true) {
-            $data = DB::table('tbl_mutasi')->where('kd_cabang', auth::user()->cabang)->orderBy('id_mutasi', 'DESC')->get();
-            $order = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->where('status_mutasi', 0)->count();
-            $rekap = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->where('status_mutasi', 1)->count();
-            $asal = DB::table('tbl_mutasi')->where('asal_mutasi', Auth::user()->cabang)->count();
-            $target = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->count();
-            $jumlah = $asal + $target;
-            $datakategori = DB::table('no_urut_barang')->get();
-            return view('application.mutasi.menumutasi', ['datakategori' => $datakategori, 'data' => $data, 'order' => $order, 'rekap' => $rekap, 'jumlah' => $jumlah]);
+            $data = DB::table('tbl_mutasi')
+                ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_mutasi.target_mutasi')
+                ->where('tbl_mutasi.kd_cabang', auth::user()->cabang)->orderBy('tbl_mutasi.id_mutasi', 'DESC')->get();
+            $cabang = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
+            return view('application.mutasi.menumutasi', ['cabang' => $cabang, 'data' => $data]);
         } else {
             return Redirect::to('dashboard');
         }
     }
+    public function menu_mutasi_add(Request $request)
+    {
 
+        $cabang = DB::table('tbl_cabang')->where('kd_cabang', '!=', Auth::user()->cabang)->get();
+        return view('application.mutasi.form-add-mutasi', ['cabang' => $cabang]);
+    }
+    public function menu_mutasi_save(Request $request)
+    {
+        $jadi = 'MT-' . date('Ymd') . '-' . Str::random(4);
+        DB::table('tbl_mutasi')->insert([
+            'kd_mutasi' => $jadi,
+            'jenis_mutasi' => 1,
+            'kd_cabang' => auth::user()->cabang,
+            'asal_mutasi' => auth::user()->cabang,
+            'target_mutasi' => $request->cabang,
+            'departemen' => 0,
+            'divisi' => 0,
+            'penanggung_jawab' => $request->pj_alat,
+            'tanggal_buat' => $request->tgl_order,
+            'menyetujui' => $request->menyetujui,
+            'yang_menyerahkan' => $request->menyerahkan,
+            'ket' => $request->deskripsi,
+            'status_mutasi' => 0,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data Pemusnahan');
+    }
+    public function menu_mutasi_add_barang(Request $request)
+    {
+        $data = DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->first();
+        $brg = DB::table('tbl_sub_mutasi')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
+            ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
+        return view('application.mutasi.form-proses-data-barang', ['data' => $data, 'brg' => $brg]);
+    }
+    public function menu_mutasi_find_data(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_name', 'like', '%' . $request->name . '%')->get();
+        return view('application.mutasi.hasil-pencarian-barang', ['data' => $data, 'tiket' => $request->code]);
+    }
+    public function menu_mutasi_pilih_data(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
+        DB::table('tbl_sub_mutasi')->insert([
+            'kd_mutasi' => $request->code,
+            'id_inventaris' => $request->id,
+            'kd_lokasi_awal' => $data->id_nomor_ruangan_cbaang,
+            'created_at' => now()
+        ]);
+        $brg = DB::table('tbl_sub_mutasi')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
+            ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
+        return view('application.mutasi.table-check-mutasi', ['brg' => $brg]);
+    }
+    public function menu_mutasi_verifikasi_data_mutasi(Request $request)
+    {
+        $check = DB::table('tbl_sub_mutasi')->where('kd_mutasi', $request->code)->first();
+        if ($check) {
+            DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->update([
+                'status_mutasi' => 1
+            ]);
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    public function menu_mutasi_proses_verifikasi_data_mutasi(Request $request)
+    {
+        $data = DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->first();
+        return view('application.mutasi.form-proses-verifikasi-mutasi', ['data' => $data]);
+    }
+
+    // MENU CABANG
+    public function menu_cabang($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('tbl_cabang')
+                ->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+                ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
+                ->get();
+            return view('application.menu-cabang.menu-cabang', ['data' => $data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+    public function menu_cabang_data_barang(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
+        $data = DB::table('inventaris_data')->where('inventaris_Data_cabang', $request->code)->get();
+        return view('application.menu-cabang.data-barang', ['cabang' => $cabang, 'data' => $data]);
+    }
+    public function menu_cabang_data_peminjaman(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
+        $data = DB::table('tbl_peminjaman')
+        ->join('tbl_cabang','tbl_cabang.kd_cabang','=','tbl_peminjaman.tujuan_cabang')
+        ->join('tbl_staff','tbl_staff.nip','=','tbl_peminjaman.pj_pinjam')
+        ->where('tbl_peminjaman.kd_cabang',$request->code)->get();
+        return view('application.menu-cabang.data-peminjaman',['cabang'=>$cabang,'data'=>$data]);
+    }
 
     // MASTER BARANG
     public function master_barang($akses)
@@ -758,21 +853,21 @@ class AppController extends Controller
         $canvas->set_opacity(.1);
         return base64_encode($pdf->stream());
     }
-    public function master_barang_sinkronisasi_data_cabang(Request $request){
+    public function master_barang_sinkronisasi_data_cabang(Request $request)
+    {
         $cabang = DB::table('tbl_cabang')
-        ->join('tbl_setting_cabang','tbl_setting_cabang.kd_cabang','=','tbl_cabang.kd_cabang')
-        ->join('tbl_entitas_cabang','tbl_entitas_cabang.kd_entitas_cabang','=','tbl_cabang.kd_entitas_cabang')
-        ->where('tbl_cabang.kd_cabang',Auth::user()->cabang)->first();
+            ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
+            ->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
         $no = 1;
         $urut = 1;
-        $data = DB::table('inventaris_data')->where('inventaris_data_cabang',Auth::user()->cabang)->orderBy('id_inventaris_data','ASC')->get();
+        $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->orderBy('id_inventaris_data', 'ASC')->get();
         foreach ($data as $value) {
-            DB::table('inventaris_data')->where('inventaris_data_code',$value->inventaris_data_code)->update([
-                'inventaris_data_number'=> $no++.'/'.$value->inventaris_klasifikasi_code.'/'.$value->inventaris_data_location.'/'.$cabang->simbol_entitas.'.'.$cabang->no_cabang.'/'.date('Y', strtotime($value->inventaris_data_tgl_beli)),
-                'inventaris_data_urut'=>$urut++
+            DB::table('inventaris_data')->where('inventaris_data_code', $value->inventaris_data_code)->update([
+                'inventaris_data_number' => $no++ . '/' . $value->inventaris_klasifikasi_code . '/' . $value->inventaris_data_location . '/' . $cabang->simbol_entitas . '.' . $cabang->no_cabang . '/' . date('Y', strtotime($value->inventaris_data_tgl_beli)),
+                'inventaris_data_urut' => $urut++
             ]);
         }
-        return 123;
     }
     // MASTER NO DOCUMENT
     public function master_no_document($akses)

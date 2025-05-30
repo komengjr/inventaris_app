@@ -34,20 +34,32 @@
                     <h5 class="mb-1 text-primary fw-bold">Data Mutasi</h5>
                 </div>
                 <div class="col-auto">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2" type="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span>Option Mutasi</button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
-                    <a class="btn btn-falcon-primary btn-sm" href="#!" data-bs-toggle="modal"
-                        data-bs-target="#modal-category" id="button-add-category">
-                        <span class="far fa-file-alt fs--2 me-1"></span>Tambah Mutasi</a>
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-mutasi-lg"
+                                id="button-add-data-mutasi-cabang" data-code="123"><span class="fas fa-swatchbook"></span>
+                                Tambah Mutasi Barang</button>
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-pemusnahan-md"
+                                id="button-verifikasi-data-pemusnahan-cabang" data-code="123"><span
+                                    class="fas fa-truck-moving"></span>
+                                Permintaan Mutasi Barang</button>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card-body border-top p-3">
+        <div class="card-body border-top p-2">
             <table id="example" class="table table-striped nowrap" style="width:100%">
                 <thead class="bg-200 text-700 fs--2">
                     <tr>
                         <th>No</th>
                         <th>Tiket Order</th>
-                        <th>Jenis Mutasi</th>
+                        <th>Tujuan Cabang</th>
                         <th>Penanggung Jawab</th>
                         <th>Menyetujui</th>
                         <th>Yang Menyerahkan</th>
@@ -67,9 +79,9 @@
                             </td>
                             <td>{{ $item->kd_mutasi }}</td>
                             <td>
-                                @if ($item->jenis_mutasi == 1)
-                                    Mutasi Antar Cabang
-                                @endif
+                                {{ $cabang->nama_cabang }}<br>
+                                <span class="fas fa-arrow-circle-down text-primary"></span><br>
+                                {{ $item->nama_cabang }}
                             </td>
                             <td>
                                 {{ $item->penanggung_jawab }}
@@ -87,17 +99,32 @@
                                 {{ $item->tgl_terima }}
                             </td>
                             <td>
-                                @if ($item->status_mutasi == 0)
-                                    <button class="btn btn-falcon-warning btn-sm" data-toggle="modal" data-target="#modalmutasi"
-                                        id="buttondetailmutasibarang" data-id="{{ $item->kd_mutasi }}"><i
-                                            class="fa fa-pencil"></i>
-                                        Lengkapi Data</button>
-                                @else
-                                    <button class="btn btn-falcon-info btn-sm" id="button-report-mutasi-cabang" data-toggle="modal"
-                                        data-target="#modal-report-mutasi" data-id="{{ $item->kd_mutasi }}"><i
-                                            class="fa fa-print"></i>
-                                        Cetak / Print</button>
-                                @endif
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
+                                        type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><span class="fas fa-align-left me-1"
+                                            data-fa-transform="shrink-3"></span>Option</button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+                                        @if ($item->status_mutasi == 0)
+                                            <button class="dropdown-item text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#modal-mutasi" id="button-input-data-barang-mutasi"
+                                                data-code="{{ $item->kd_mutasi }}"><span class="fas fa-swatchbook"></span>
+                                                Input Data Barang</button>
+                                        @elseif($item->status_mutasi == 1)
+                                            <button class="dropdown-item text-warning" data-bs-toggle="modal"
+                                                data-bs-target="#modal-mutasi-lg"
+                                                id="button-proses-verifikasi-data-mutasi-cabang" data-code="{{ $item->kd_mutasi }}"><span
+                                                    class="fas fa-swatchbook"></span>
+                                                Verifikasi Mutasi Barang</button>
+                                        @elseif($item->status_mutasi == 2)
+                                            <button class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#modal-pemusnahan-lg"
+                                                id="button-cetak-data-pemusnahan-cabang" data-code="123"><span
+                                                    class="fas fa-print"></span>
+                                                Cetak Laporan Mutasi</button>
+                                        @endif
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -107,7 +134,7 @@
     </div>
 @endsection
 @section('base.js')
-    <div class="modal fade" id="modal-stock" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-mutasi" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="false">
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 95%;">
             <div class="modal-content border-0">
@@ -115,11 +142,11 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-stock"></div>
+                <div id="menu-mutasi"></div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-stock-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-mutasi-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="false">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content border-0">
@@ -127,7 +154,19 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-stock-lg"></div>
+                <div id="menu-mutasi-lg"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-mutasi-xl" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-mutasi-xl"></div>
             </div>
         </div>
     </div>
@@ -154,27 +193,118 @@
         });
     </script>
     <script>
-        $(document).on("click", "#button-kondisi-data-cabang", function(e) {
+        $(document).on("click", "#button-add-data-mutasi-cabang", function(e) {
             e.preventDefault();
-            var code = $(this).data("code");
-            var status = $(this).data("status");
-            $('#menu-stock-lg').html(
+            // var code = $(this).data("code");
+            $('#menu-mutasi-lg').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('menu_stock_opname_kondisi_data') }}",
+                url: "{{ route('menu_mutasi_add') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-mutasi-lg').html(data);
+            }).fail(function() {
+                $('#menu-mutasi-lg').html('eror');
+            });
+        });
+        $(document).on("click", "#button-input-data-barang-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_add_barang') }}",
                 type: "POST",
                 cache: false,
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "code": code,
-                    "status": status,
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-stock-lg').html(data);
+                $('#menu-mutasi').html(data);
             }).fail(function() {
-                $('#menu-stock-lg').html('eror');
+                $('#menu-mutasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-pilih-barang-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var id = $(this).data("id");
+            $('#menu-table-pilih-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_pilih_data') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "id": id,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#hasil-pencarian-barang').html("");
+                $('#menu-table-pilih-mutasi').html(data);
+            }).fail(function() {
+                $('#menu-table-pilih-mutasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-verifikasi-data-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-verifikasi-data-mutasi').html(
+                '<div class="spinner-border" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_verifikasi_data_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                if (data == '1') {
+                    location.reload();
+                } else {
+                    alert('Pastikasn Barang Sudah di Pilih');
+                    location.reload();
+                }
+            }).fail(function() {
+                $('#menu-verifikasi-data-mutasi').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-proses-verifikasi-data-mutasi-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-mutasi-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_proses_verifikasi_data_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-mutasi-lg').html(data);
+            }).fail(function() {
+                $('#menu-mutasi-lg').html('eror');
             });
         });
     </script>

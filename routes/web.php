@@ -410,6 +410,7 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('menu-mutasi', [AppController::class, 'menu_mutasi'])->name('menu_mutasi');
     Route::get('menu-pemusnahan', [AppController::class, 'menu_pemusnahan'])->name('menu_pemusnahan');
     Route::get('menu-stock-opname', [AppController::class, 'menu_stock_opname'])->name('menu_stock_opname');
+    Route::get('menu-cabang', [AppController::class, 'menu_cabang'])->name('menu_cabang');
     Route::get('master-barang', [AppController::class, 'master_barang'])->name('master_barang');
     Route::get('master-no-document', [AppController::class, 'master_no_document'])->name('master_no_document');
     Route::get('master-no-whatsapp', [AppController::class, 'master_no_whatsapp'])->name('master_no_whatsapp');
@@ -459,6 +460,15 @@ Route::prefix('app')->group(function () {
     Route::post('menu-pemusnahan/pilih-data-barang/print', [AppController::class, 'menu_pemusnahan_pilih_data_barang_print'])->name('menu_pemusnahan_pilih_data_barang_print');
     Route::post('menu-pemusnahan/pilih-data-barang/print-report', [AppController::class, 'menu_pemusnahan_pilih_data_barang_print_report'])->name('menu_pemusnahan_pilih_data_barang_print_report');
 
+    // MENU MUTASI
+    Route::post('menu-mutasi/add', [AppController::class, 'menu_mutasi_add'])->name('menu_mutasi_add');
+    Route::post('menu-mutasi/save', [AppController::class, 'menu_mutasi_save'])->name('menu_mutasi_save');
+    Route::post('menu-mutasi/add-barang', [AppController::class, 'menu_mutasi_add_barang'])->name('menu_mutasi_add_barang');
+    Route::post('menu-mutasi/find-data', [AppController::class, 'menu_mutasi_find_data'])->name('menu_mutasi_find_data');
+    Route::post('menu-mutasi/chose-data', [AppController::class, 'menu_mutasi_pilih_data'])->name('menu_mutasi_pilih_data');
+    Route::post('menu-mutasi/verifikasi-data-mutasi', [AppController::class, 'menu_mutasi_verifikasi_data_mutasi'])->name('menu_mutasi_verifikasi_data_mutasi');
+    Route::post('menu-mutasi/proses-verifikasi-data-mutasi', [AppController::class, 'menu_mutasi_proses_verifikasi_data_mutasi'])->name('menu_mutasi_proses_verifikasi_data_mutasi');
+
     // MENU STOCKOPNAME
     Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
     Route::post('menu-stock-opname/proses-data', [AppController::class, 'menu_stock_opname_proses_data'])->name('menu_stock_opname_proses_data');
@@ -469,6 +479,10 @@ Route::prefix('app')->group(function () {
     Route::post('menu-stock-opname/remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_remove_full_data'])->name('menu_stock_opname_remove_full_data');
     Route::post('menu-stock-opname/proses-remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_proses_remove_full_data'])->name('menu_stock_opname_proses_remove_full_data');
     Route::post('menu-stock-opname/edit-data-tanggal-stock', [AppController::class, 'menu_stock_opname_edit_data_tanggal'])->name('menu_stock_opname_edit_data_tanggal');
+
+    // MENU BARANG
+    Route::post('menu-cabang/data-barang', [AppController::class, 'menu_cabang_data_barang'])->name('menu_cabang_data_barang');
+    Route::post('menu-cabang/data-peminjaman', [AppController::class, 'menu_cabang_data_peminjaman'])->name('menu_cabang_data_peminjaman');
 
     // MASTER BARANG
     Route::get('master-barang-data', [AppController::class, 'master_barang_data'])->name('master_barang_data');

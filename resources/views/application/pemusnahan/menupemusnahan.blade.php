@@ -99,7 +99,7 @@
                                         @elseif($datas->status_pemusnahan == 1)
                                             <button class="dropdown-item" data-bs-toggle="modal"
                                                 data-bs-target="#modal-pemusnahan-lg" id="button-cetak-data-pemusnahan-cabang"
-                                                data-code="{{$datas->id_pemusnahan}}"><span class="fas fa-print"></span> Cetak Data</button>
+                                                data-code="{{$datas->id_pemusnahan}}"><span class="fas fa-print"></span> Cetak Laporan Pemusnahan</button>
                                         @endif
                                     </div>
                                 </div>
