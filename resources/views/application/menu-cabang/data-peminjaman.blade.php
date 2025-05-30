@@ -58,12 +58,11 @@
                                             class="fas fa-align-left" data-fa-transform="shrink-3"></span>
                                         Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-
-                                        {{-- <button class="dropdown-item" data-bs-toggle="modal"
+                                        <button class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#modal-menu-cabang" id="button-data-barang-cabang"
-                                            data-code="{{ $datas->kd_cabang }}"><span class="fas fa-swatchbook"></span>
-                                            Data Barang Cabang</button> --}}
-
+                                            data-code="{{ $datas->tiket_peminjaman }}"><span
+                                                class="fas fa-file-invoice"></span>
+                                            Report Peminjaman</button>
                                     </div>
                                 </div>
                             </td>

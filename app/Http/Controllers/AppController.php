@@ -678,6 +678,18 @@ class AppController extends Controller
         ->where('tbl_peminjaman.kd_cabang',$request->code)->get();
         return view('application.menu-cabang.data-peminjaman',['cabang'=>$cabang,'data'=>$data]);
     }
+    public function menu_cabang_data_mutasi(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
+        $data = DB::table('tbl_mutasi')->where('kd_cabang',$request->code)->get();
+        return view('application.menu-cabang.data-mutasi',['cabang'=>$cabang,'data'=>$data]);
+    }
+    public function menu_cabang_data_stockopname(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
+        $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang',$request->code)->get();
+        return view('application.menu-cabang.data-stockopname',['cabang'=>$cabang,'data'=>$data]);
+    }
 
     // MASTER BARANG
     public function master_barang($akses)

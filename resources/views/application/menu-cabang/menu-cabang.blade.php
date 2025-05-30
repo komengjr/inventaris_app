@@ -82,13 +82,13 @@
                                                     class="far fa-address-card"></span>
                                                 Data Peminjaman Cabang</button>
                                             <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-pemusnahan-md"
-                                                id="button-verifikasi-data-pemusnahan-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                data-bs-target="#modal-menu-cabang"
+                                                id="button-data-mutasi-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                     class="fab fa-expeditedssl"></span>
                                                 Data Mutasi Cabang</button>
                                             <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-pemusnahan-md"
-                                                id="button-verifikasi-data-pemusnahan-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                data-bs-target="#modal-menu-cabang"
+                                                id="button-data-srockopname-cabang" data-code="{{ $datas->kd_cabang }}"><span
                                                     class="fab fa-elementor"></span>
                                                 Data Stockopname Cabang</button>
                                         </div>
@@ -191,6 +191,48 @@
             );
             $.ajax({
                 url: "{{ route('menu_cabang_data_peminjaman') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang').html(data);
+            }).fail(function() {
+                $('#menu-cabang').html('eror');
+            });
+        });
+        $(document).on("click", "#button-data-mutasi-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_cabang_data_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang').html(data);
+            }).fail(function() {
+                $('#menu-cabang').html('eror');
+            });
+        });
+        $(document).on("click", "#button-data-srockopname-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_cabang_data_stockopname') }}",
                 type: "POST",
                 cache: false,
                 data: {
