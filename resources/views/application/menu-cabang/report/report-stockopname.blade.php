@@ -284,7 +284,7 @@
                 {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
             </div>
         </div>
-        <table border="1" cellspacing="0" cellpadding="0">
+        <table border="1" cellspacing="0" cellpadding="0" style="width: 100%;">
             <thead style="font-size: 11px;">
                 <tr>
                     <th class="no">#</th>
