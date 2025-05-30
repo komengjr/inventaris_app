@@ -5,30 +5,47 @@
     <link href="{{ asset('vendors/choices/choices.min.css') }}" rel="stylesheet" />
 @endsection
 @section('content')
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card bg-100 shadow-none border">
+                <div class="row gx-0 flex-between-center">
+                    <div class="col-sm-auto d-flex align-items-center border-bottom">
+                        <img class="ms-3 mx-3" src="{{ asset('img/icon/icon.png') }}" alt="" width="50" />
+                        <div>
+                            <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to </h6>
+                            <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management
+                                    System</span></h4>
+                        </div><img class="ms-n4 d-none d-lg-block"
+                            src="{{ asset('asset/img/illustrations/crm-line-chart.png') }}" alt="" width="150" />
+                    </div>
+                    <div class="col-xl-auto px-3 py-2">
+                        <h6 class="text-primary fs--1 mb-0">Menu : </h6>
+                        <h4 class="text-primary fw-bold mb-0">Data <span
+                                class="text-info fw-medium">Cabang</span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="card mb-3">
         <div class="card-body">
             <div class="row flex-between-center">
                 <div class="col-sm-auto mb-2 mb-sm-0">
-                    <h6 class="mb-0">Showing 1-24 of 205 Products</h6>
+                    <h6 class="mb-0">Totoal Cabang : {{$data->count()}}</h6>
                 </div>
                 <div class="col-sm-auto">
                     <div class="row gx-2 align-items-center">
                         <div class="col-auto">
-                            <form class="row gx-2">
-                                <div class="col-auto"><small>Sort by:</small></div>
+                            <div class="row gx-2">
+                                <div class="col-auto"><small>Search by Name:</small></div>
                                 <div class="col-auto">
-                                    <select class="form-select form-select-sm" aria-label="Bulk actions">
-                                        <option selected="">Best Match</option>
-                                        <option value="Refund">Newest</option>
-                                        <option value="Delete">Price</option>
-                                    </select>
+                                   <input type="text" class="form-control" name="" id="">
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="col-auto pe-0">
-                            <a class="text-600 px-1" href="../../../app/e-commerce/product/product-list.html"
-                                data-bs-toggle="tooltip" data-bs-placement="top" title="Product List"><span
-                                    class="fas fa-list-ul"></span></a>
+                           <button class="btn btn-falcon-primary"><span class="fas fa-search-location"></span></button>
                         </div>
                     </div>
                 </div>
@@ -77,18 +94,18 @@
                                                 data-code="{{ $datas->kd_cabang }}"><span class="fas fa-swatchbook"></span>
                                                 Data Barang Cabang</button>
                                             <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-menu-cabang"
-                                                id="button-data-peminjaman-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                data-bs-target="#modal-menu-cabang" id="button-data-peminjaman-cabang"
+                                                data-code="{{ $datas->kd_cabang }}"><span
                                                     class="far fa-address-card"></span>
                                                 Data Peminjaman Cabang</button>
                                             <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-menu-cabang"
-                                                id="button-data-mutasi-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                data-bs-target="#modal-menu-cabang" id="button-data-mutasi-cabang"
+                                                data-code="{{ $datas->kd_cabang }}"><span
                                                     class="fab fa-expeditedssl"></span>
                                                 Data Mutasi Cabang</button>
                                             <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-menu-cabang"
-                                                id="button-data-srockopname-cabang" data-code="{{ $datas->kd_cabang }}"><span
+                                                data-bs-target="#modal-menu-cabang" id="button-data-srockopname-cabang"
+                                                data-code="{{ $datas->kd_cabang }}"><span
                                                     class="fab fa-elementor"></span>
                                                 Data Stockopname Cabang</button>
                                         </div>
