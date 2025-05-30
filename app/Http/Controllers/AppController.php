@@ -684,7 +684,7 @@ class AppController extends Controller
         $data = DB::table('tbl_peminjaman')
             ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_peminjaman.tujuan_cabang')
             ->join('tbl_staff', 'tbl_staff.nip', '=', 'tbl_peminjaman.pj_pinjam')
-            ->where('tbl_peminjaman.kd_cabang', $request->code)->get();
+            ->where('tbl_peminjaman.kd_cabang', $request->code)->orderBy('id_pinjam','DESC')->get();
         return view('application.menu-cabang.data-peminjaman', ['cabang' => $cabang, 'data' => $data]);
     }
     public function menu_cabang_data_peminjaman_print(Request $request)
