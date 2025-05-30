@@ -687,7 +687,7 @@ class AppController extends Controller
     public function menu_cabang_data_stockopname(Request $request)
     {
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
-        $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang',$request->code)->get();
+        $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang',$request->code)->orderBy('id_verifdatainventaris','DESC')->get();
         return view('application.menu-cabang.data-stockopname',['cabang'=>$cabang,'data'=>$data]);
     }
 
