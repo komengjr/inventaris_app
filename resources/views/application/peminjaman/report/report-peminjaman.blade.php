@@ -370,7 +370,14 @@
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
                 QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
             ) !!}">
-            <div class="notice">Dokumen Ini Sah tanpa Tanda Tangan.</div>
+            @php
+                $ttd = DB::table('wa_number_cabang')->where('wa_number_code', $peminjaman->pj_cabang)->first();
+            @endphp
+            @if ($ttd)
+                <div class="notice">{{ $ttd->wa_number_name }}</div>
+            @else
+                <div class="notice">Dokumen Tidak Bisa di Ubah</div>
+            @endif
         </div>
     </main>
 </body>
