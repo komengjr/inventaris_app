@@ -16,11 +16,11 @@
         </div>
         <div class="col-md-6">
             <label class="form-label" for="inputAddress">Nama Lengkap</label>
-            <input class="form-control" id="inputAddress" type="text" name="name" placeholder="Usman" required />
+            <input class="form-control" id="inputAddress" type="text" name="name" placeholder="Muhammad Usman S.T M.T" required />
         </div>
         <div class="col-md-6">
             <label class="form-label" for="inputAddress">Nomor Whatsapp</label>
-            <input class="form-control" id="inputAddress" type="text" name="nomor" placeholder="dashboard"
+            <input class="form-control" id="inputAddress" type="text" name="nomor" placeholder="08XXXXXXXXX"
                 required />
         </div>
 

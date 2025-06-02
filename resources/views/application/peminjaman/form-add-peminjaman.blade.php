@@ -32,6 +32,7 @@
                 @endforeach
             </select>
         </div>
+
         <div class="col-md-6">
             <label class="form-label" for="inputAddress">Tanggal Peminjaman</label>
             <input class="form-control form-control-lg" id="inputAddress" type="date" name="tgl_pinjam"
@@ -62,4 +63,5 @@
     new window.Choices(document.querySelector(".choices-single-peminjaman"));
     new window.Choices(document.querySelector(".choices-single-cabang"));
     new window.Choices(document.querySelector(".choices-single-user"));
+    new window.Choices(document.querySelector(".choices-doble-user"));
 </script>

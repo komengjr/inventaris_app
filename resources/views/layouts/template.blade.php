@@ -195,15 +195,17 @@
                                                 class="nav-link-text ps-1">Master User</span>
                                         </div>
                                     </a>
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_category') }}"
-                                        role="button" aria-expanded="false">
+                                    <!-- parent pages--><a class="nav-link"
+                                        href="{{ route('masteradmin_category') }}" role="button"
+                                        aria-expanded="false">
                                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                                     class="far fa-calendar-check"></span></span><span
                                                 class="nav-link-text ps-1">Master Category</span>
                                         </div>
                                     </a>
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_klasifikasi') }}"
-                                        role="button" aria-expanded="false">
+                                    <!-- parent pages--><a class="nav-link"
+                                        href="{{ route('masteradmin_klasifikasi') }}" role="button"
+                                        aria-expanded="false">
                                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                                     class="far fa-chart-bar"></span></span><span
                                                 class="nav-link-text ps-1">Master Klasifikasi</span>
@@ -355,15 +357,15 @@
                                 <div class="bg-white dark__bg-1000 rounded-2 py-2">
                                     {{-- <a class="dropdown-item fw-bold text-warning" href="#!"><span
                                             class="fas fa-crown me-1"></span><span>Go Pro</span></a> --}}
-
+                                    <a class="dropdown-item text-primary text-center">{{Auth::user()->name}}</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#!">Set status</a>
-                                    <a class="dropdown-item" href="#">Profile &amp;
+                                    <a class="dropdown-item" href="#!" id="button-setup-notification" data-bs-toggle="modal" data-bs-target="#modal-template-sm"><span class="fas fa-volume-down"></span> Set Notification</a>
+                                    <a class="dropdown-item" href="#" id="button-setup-profil" data-bs-toggle="modal" data-bs-target="#modal-template-xl"><span class="fas fa-user-cog"></span> Profile &amp;
                                         account</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Settings</a>
+                                    {{-- <a class="dropdown-item" href="#">Settings</a> --}}
                                     <a class="dropdown-item" href="#"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="fab fa-keycdn"></span> Logout</a>
                                 </div>
                             </div>
                         </li>
@@ -502,7 +504,9 @@
                         alt="" />
                     <div class="flex-1">
                         <h5 class="fs-0">RTL Mode</h5>
-                        <p class="fs--1 mb-0">Pariatur labore dolorem laboriosam eum at ratione, nesciunt, tenetur fugiat eligendi minima ducimus iusto animi inventore facilis soluta error repellat amet reprehenderit?</p>
+                        <p class="fs--1 mb-0">Pariatur labore dolorem laboriosam eum at ratione, nesciunt, tenetur
+                            fugiat eligendi minima ducimus iusto animi inventore facilis soluta error repellat amet
+                            reprehenderit?</p>
                     </div>
                 </div>
                 <div class="form-check form-switch">
@@ -581,7 +585,44 @@
         </div>
     </a>
 
-
+    {{-- START MODAL --}}
+    <div class="modal fade" id="modal-template" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 95%;">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-template"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-template-xl" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-template-xl"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-template-sm" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-template-sm"></div>
+            </div>
+        </div>
+    </div>
+    {{-- END MODAL --}}
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
@@ -660,6 +701,49 @@
 
         });
     </script> --}}
+
+    <script>
+        $(document).on("click", "#button-setup-profil", function(e) {
+            e.preventDefault();
+            $('#menu-template-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_setup_profile') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-template-xl').html(data);
+            }).fail(function() {
+                $('#menu-template-xl').html('eror');
+            });
+        });
+        $(document).on("click", "#button-setup-notification", function(e) {
+            e.preventDefault();
+            $('#menu-template-sm').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_setup_notification') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-template-sm').html(data);
+            }).fail(function() {
+                $('#menu-template-sm').html('eror');
+            });
+        });
+    </script>
 </body>
 
 </html>

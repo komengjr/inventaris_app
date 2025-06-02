@@ -34,6 +34,7 @@
                     <h5 class="mb-1 text-primary fw-bold">Data Mutasi</h5>
                 </div>
                 <div class="col-auto">
+
                     <div class="btn-group" role="group">
                         <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2" type="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
@@ -43,10 +44,17 @@
                             <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-mutasi-lg"
                                 id="button-add-data-mutasi-cabang" data-code="123"><span class="fas fa-swatchbook"></span>
                                 Tambah Mutasi Barang</button>
-                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-pemusnahan-md"
+                            {{-- <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-pemusnahan-md"
                                 id="button-verifikasi-data-pemusnahan-cabang" data-code="123"><span
                                     class="fas fa-truck-moving"></span>
-                                Permintaan Mutasi Barang</button>
+                                Permintaan Mutasi Barang</button> --}}
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item text-warning" data-bs-toggle="modal" data-bs-target="#modal-mutasi"
+                                id="button-show-order-mutasi-cabang" data-code="123"><span class="fas fa-mail-bulk"></span>
+                                Cek Order Masuk</button>
+                            <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#modal-mutasi"
+                                id="button-rekap-order-mutasi-cabang"><span class="fas fa-envelope-open-text"></span>
+                                Data Order</button>
 
                         </div>
                     </div>
@@ -110,17 +118,28 @@
                                                 data-bs-target="#modal-mutasi" id="button-input-data-barang-mutasi"
                                                 data-code="{{ $item->kd_mutasi }}"><span class="fas fa-swatchbook"></span>
                                                 Input Data Barang</button>
+                                            <button class="dropdown-item text-danger" data-bs-toggle="modal"
+                                                data-bs-target="#modal-mutasi-lg" id="button-remove-data-mutasi"
+                                                data-code="{{ $item->kd_mutasi }}"><span class="fas fa-trash"></span>
+                                                Hapus Data Mutasi</button>
                                         @elseif($item->status_mutasi == 1)
                                             <button class="dropdown-item text-warning" data-bs-toggle="modal"
-                                                data-bs-target="#modal-mutasi-lg"
-                                                id="button-proses-verifikasi-data-mutasi-cabang" data-code="{{ $item->kd_mutasi }}"><span
-                                                    class="fas fa-swatchbook"></span>
+                                                data-bs-target="#modal-mutasi-xl"
+                                                id="button-proses-verifikasi-data-mutasi-cabang"
+                                                data-code="{{ $item->kd_mutasi }}"><span class="fas fa-swatchbook"></span>
                                                 Verifikasi Mutasi Barang</button>
                                         @elseif($item->status_mutasi == 2)
+                                            {{-- <button class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#modal-mutasi-lg" id="button-print-data-mutasi-cabang"
+                                                data-code="{{ $item->kd_mutasi }}"><span class="fas fa-print"></span>
+                                                Cetak Laporan Mutasi</button> --}}
+                                            <button class="dropdown-item text-warning" disabled><span
+                                                    class="fas fa-swatchbook"></span>
+                                                Menunggu Verifikasi Cabang Tujuan</button>
+                                        @elseif($item->status_mutasi == 3)
                                             <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-pemusnahan-lg"
-                                                id="button-cetak-data-pemusnahan-cabang" data-code="123"><span
-                                                    class="fas fa-print"></span>
+                                                data-bs-target="#modal-mutasi-lg" id="button-print-data-mutasi-cabang"
+                                                data-code="{{ $item->kd_mutasi }}"><span class="fas fa-print"></span>
                                                 Cetak Laporan Mutasi</button>
                                         @endif
                                     </div>
@@ -160,7 +179,7 @@
     </div>
     <div class="modal fade" id="modal-mutasi-xl" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="false">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content border-0">
                 <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
@@ -214,6 +233,142 @@
                 $('#menu-mutasi-lg').html('eror');
             });
         });
+        $(document).on("click", "#button-show-order-mutasi-cabang", function(e) {
+            e.preventDefault();
+            // var code = $(this).data("code");
+            $('#menu-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_show_data_order_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-mutasi').html(data);
+            }).fail(function() {
+                $('#menu-mutasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-rekap-order-mutasi-cabang", function(e) {
+            e.preventDefault();
+            // var code = $(this).data("code");
+            $('#menu-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_rekap_data_order_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-mutasi').html(data);
+            }).fail(function() {
+                $('#menu-mutasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-terima-order-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-terima-order-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_terima_data_order_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-terima-order-mutasi').html(data);
+            }).fail(function() {
+                $('#menu-terima-order-mutasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-pilih-lokasi-barang-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-setup-lokasi-barang-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_pilih_lokasi_data_order_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-setup-lokasi-barang-mutasi').html(data);
+            }).fail(function() {
+                $('#menu-setup-lokasi-barang-mutasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-form-pilih-lokasi-barang", function(e) {
+            e.preventDefault();
+            var data = $("#form-pilih-lokasi-barang").serialize();
+            var code = $(this).data("code");
+            $('#menu-setup-lokasi-barang-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_proses_lokasi_data_order_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: data,
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-setup-lokasi-barang-mutasi').html('');
+                $('#menu-table-pilih-mutasi').html(data);
+            }).fail(function() {
+                $('#menu-setup-lokasi-barang-mutasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-poroses-terima-verifikasi-data-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var penerima = document.getElementById("penerima").value;
+            if (penerima == '') {
+                alert('Pastikasn Penerima Sudah diisi');
+            } else {
+                $('#menu-poroses-terima-verifikasi-data-mutasi').html(
+                    '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+                );
+                $.ajax({
+                    url: "{{ route('menu_mutasi_proses_terima_lokasi_data_order_mutasi') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "code": code,
+                        "penerima": penerima,
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    if (data == 0) {
+                        alert('Pastikasn Barang Sudah Sesuai Tujuan Lokasi');
+                        location.reload();
+                    } else {
+                        location.reload();
+                    }
+                }).fail(function() {
+                    $('#menu-poroses-terima-verifikasi-data-mutasi').html('eror');
+                });
+            }
+        });
         $(document).on("click", "#button-input-data-barang-mutasi", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
@@ -233,6 +388,27 @@
                 $('#menu-mutasi').html(data);
             }).fail(function() {
                 $('#menu-mutasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-remove-data-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-mutasi-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_remove_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-mutasi-lg').html(data);
+            }).fail(function() {
+                $('#menu-mutasi-lg').html('eror');
             });
         });
         $(document).on("click", "#button-pilih-barang-mutasi", function(e) {
@@ -286,10 +462,42 @@
             });
 
         });
+        $(document).on("click", "#button-verifikasi-code-data-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var verifikasi_code = document.getElementById("verifikasi_code").value;
+            if (verifikasi_code == '') {
+                alert('Kode Verifikasi Tidak Boleh Kosong')
+            } else {
+                $('#menu-verifikasi-data-mutasi').html(
+                    '<div class="spinner-border" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+                );
+                $.ajax({
+                    url: "{{ route('menu_mutasi_verifikasi_code_data_mutasi') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "code": code,
+                        "verifikasi_code": verifikasi_code,
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    if (data == '1') {
+                        location.reload();
+                    } else {
+                        alert('Kode Verifikasi Salah');
+                        location.reload();
+                    }
+                }).fail(function() {
+                    $('#menu-verifikasi-data-mutasi').html('eror');
+                });
+            }
+        });
         $(document).on("click", "#button-proses-verifikasi-data-mutasi-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-mutasi-lg').html(
+            $('#menu-mutasi-xl').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
@@ -302,9 +510,56 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
+                $('#menu-mutasi-xl').html(data);
+            }).fail(function() {
+                $('#menu-mutasi-xl').html('eror');
+            });
+        });
+        $(document).on("click", "#button-print-data-mutasi-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-mutasi-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_print_data_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
                 $('#menu-mutasi-lg').html(data);
             }).fail(function() {
                 $('#menu-mutasi-lg').html('eror');
+            });
+        });
+    </script>
+    <script>
+        $(document).on("click", "#button-print-rekap-order-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-print-rekap-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_proses_print_data_mutasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-print-rekap-mutasi').html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+            }).fail(function() {
+                $('#menu-print-rekap-mutasi').html('eror');
             });
         });
     </script>

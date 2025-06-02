@@ -7,7 +7,7 @@
         @csrf
         <div class="col-md-12">
             <label class="form-label" for="inputAddress">Tujuan Cabang</label>
-            <select name="cabang" class="form-control choices-single-cabang" id="">
+            <select name="cabang" class="form-control choices-single-cabang" required>
                 <option value="">Pilih Cabang</option>
                 @foreach ($cabang as $cabangs)
                     <option value="{{$cabangs->kd_cabang}}">{{$cabangs->nama_cabang}}</option>
@@ -25,9 +25,13 @@
                 required />
         </div>
         <div class="col-md-6">
-            <label class="form-label" for="inputAddress">Menyetujui</label>
-            <input class="form-control form-control-lg" id="inputAddress" type="text" name="menyetujui"
-                required />
+            <label class="form-label" for="inputAddress">Pimpinan Cabang</label>
+            <select name="menyetujui" class="form-select form-select-lg" required>
+                <option value="">Pilih Yang Menyetujui</option>
+                @foreach ($wa as $was)
+                    <option value="{{$was->wa_number_code}}">{{$was->wa_number_name}} - {{$was->wa_number_akses}}</option>
+                @endforeach
+            </select>
         </div>
         <div class="col-md-6">
             <label class="form-label" for="inputAddress">Yang Menyerahkan</label>

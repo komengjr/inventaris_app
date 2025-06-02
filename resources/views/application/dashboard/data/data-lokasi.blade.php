@@ -84,7 +84,7 @@
                                 @endif
                             </td>
                             <td>{{ $datas->inventaris_data_name }}</td>
-                            <td>{{ $datas->inventaris_klasifikasi_code }}</td>
+                            <td>{{ $datas->inventaris_data_code }}</td>
                             <td>{{ $datas->inventaris_data_number }}</td>
                             <td>{{date("d-m-Y", strtotime($datas->inventaris_data_tgl_beli))}}</td>
 

@@ -4,7 +4,7 @@
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="row g-3 p-3">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card border border-warning">
                 <div class="card-header pb-0">
                     <div class="row flex-between-center">
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        {{-- <div class="col-md-6">
             <div class="card border border-primary mb-3">
                 <div class="card-header pb-0">
                     <div class="row flex-between-center">
@@ -75,23 +75,11 @@
                 </div>
                 <div class="card-body pt-0">
                     <div class="tab-content" id="hasil-pencarian-barang">
-                        {{-- <table id="data-table-search" class="table table-striped nowrap" style="width:100%">
-                            <thead class="bg-200 text-700">
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Barang</th>
-                                    <th>No Inventaris</th>
-                                    <th>Merek / Type</th>
-                                    <th>Tanggal Pembelian</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
 
-                        </table> --}}
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <div id="menu-check-barang-peminjaman"></div>
     <div class="row g-3 p-3">
@@ -120,9 +108,10 @@
                                     <th>No Inventaris</th>
                                     <th>Merek / Type</th>
                                     <th>Tanggal Peminjaman</th>
-                                    <th>Kondisi Peminjaman</th>
+                                    <th>Kondisi Awal</th>
                                     <th>Tanggal Pengembalian</th>
-                                    <th>Kondisi Pengembalian</th>
+                                    <th>Kondisi Balik</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -141,24 +130,43 @@
                                         <td>{{ $brgs->tgl_kembali_barang }}</td>
                                         <td>{{ $brgs->kondisi_kembali }}</td>
                                         <td>
+                                            @if ($brgs->status_sub_peminjaman == 0)
+                                                @if ($data->kd_cabang == $data->tujuan_cabang)
+                                                    <span class="badge bg-success">Verified</span>
+                                                @else
+                                                    <span class="badge bg-danger">Unverified</span>
+                                                @endif
+                                            @else
+                                                <span class="badge bg-success">Verified</span>
+                                            @endif
+                                        </td>
+                                        <td>
                                             <div class="btn-group" role="group">
                                                 <button class="btn btn-sm btn-primary dropdown-toggle"
-                                                    id="btnGroupVerticalDrop2" type="button"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false"><span class="fas fa-align-left me-1"
+                                                    id="btnGroupVerticalDrop2" type="button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false"><span
+                                                        class="fas fa-align-left me-1"
                                                         data-fa-transform="shrink-3"></span>Option</button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                                                    <button class="dropdown-item"id="button-proses-check-barang-peminjaman"
-                                                        data-code="{{ $brgs->id_sub_peminjaman }}">
-                                                        <span class="fas fa-swatchbook"></span>
-                                                        Pengembalian Barang</button>
-                                                    {{-- <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-stock-lg"
-                                                        id="button-edit-data-stock-opname" data-code="{123"><span
-                                                            class="far fa-edit"></span> Edit
-                                                        Data Kondisi</button> --}}
 
+                                                    @if ($brgs->status_sub_peminjaman == 0)
+                                                        @if ($data->kd_cabang == $data->tujuan_cabang)
+                                                            <button
+                                                                class="dropdown-item"id="button-proses-check-barang-peminjaman"
+                                                                data-code="{{ $brgs->id_sub_peminjaman }}">
+                                                                <span class="fas fa-swatchbook"></span>
+                                                                Pengembalian Barang</button>
+                                                        @else
+                                                            <span class="badge bg-warning m-2">Menunggu Cabang
+                                                                Menerima</span>
+                                                        @endif
+                                                    @else
+                                                        <button
+                                                            class="dropdown-item"id="button-proses-check-barang-peminjaman"
+                                                            data-code="{{ $brgs->id_sub_peminjaman }}">
+                                                            <span class="fas fa-swatchbook"></span>
+                                                            Pengembalian Barang</button>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>

@@ -402,7 +402,11 @@ Route::prefix('telegram')->group(function () {
 
 });
 
+Route::prefix('dashboard')->group(function () {
+    Route::post('setup-profil', [DashboardController::class, 'dashboard_setup_profile'])->name('dashboard_setup_profile');
+    Route::post('setup-notification', [DashboardController::class, 'dashboard_setup_notification'])->name('dashboard_setup_notification');
 
+});
 
 Route::prefix('{akses}/app')->group(function () {
     Route::get('dashboard', [AppController::class, 'dashboard'])->name('dashboard');
@@ -437,11 +441,17 @@ Route::prefix('app')->group(function () {
 
     // PEMINJAMAN
     Route::post('peminjaman/add', [AppController::class, 'peminjaman_add'])->name('peminjaman_add');
+    Route::post('peminjaman/data-order', [AppController::class, 'peminjaman_data_order'])->name('peminjaman_data_order');
+    Route::post('peminjaman/terima-data-order-peminjaman', [AppController::class, 'peminjaman_terima_data_order'])->name('peminjaman_terima_data_order');
+    Route::post('peminjaman/terima-data-barang-peminjaman', [AppController::class, 'peminjaman_terima_data_barang'])->name('peminjaman_terima_data_barang');
+    Route::post('peminjaman/verifikasi-data-barang-peminjaman', [AppController::class, 'verifikasi_peminjaman_terima_data_barang'])->name('verifikasi_peminjaman_terima_data_barang');
     Route::post('peminjaman/save', [AppController::class, 'peminjaman_save'])->name('peminjaman_save');
     Route::post('peminjaman/proses', [AppController::class, 'peminjaman_proses'])->name('peminjaman_proses');
     Route::post('peminjaman/find-data', [AppController::class, 'peminjaman_find_data'])->name('peminjaman_find_data');
     Route::post('peminjaman/chose-data', [AppController::class, 'peminjaman_pilih_data'])->name('peminjaman_pilih_data');
     Route::post('peminjaman/batal-chose-data', [AppController::class, 'peminjaman_batal_pilih_data'])->name('peminjaman_batal_pilih_data');
+    Route::post('peminjaman/data-verifikasi', [AppController::class, 'peminjaman_data_verifikasi'])->name('peminjaman_data_verifikasi');
+    Route::post('peminjaman/data-verifikasi-user', [AppController::class, 'peminjaman_data_verifikasi_user'])->name('peminjaman_data_verifikasi_user');
     Route::post('peminjaman/proses-verifikasi', [AppController::class, 'peminjaman_proses_verifikasi'])->name('peminjaman_proses_verifikasi');
     Route::post('peminjaman/proses-verifikasi-fix', [AppController::class, 'proses_verifikasi_data_peminjaman'])->name('proses_verifikasi_data_peminjaman');
     Route::post('peminjaman/check-barang-peminjaman', [AppController::class, 'proses_check_data_barang_peminjaman'])->name('proses_check_data_barang_peminjaman');
@@ -463,11 +473,22 @@ Route::prefix('app')->group(function () {
     // MENU MUTASI
     Route::post('menu-mutasi/add', [AppController::class, 'menu_mutasi_add'])->name('menu_mutasi_add');
     Route::post('menu-mutasi/save', [AppController::class, 'menu_mutasi_save'])->name('menu_mutasi_save');
+    Route::post('menu-mutasi/rekap-data-order-mutasi', [AppController::class, 'menu_mutasi_rekap_data_order_mutasi'])->name('menu_mutasi_rekap_data_order_mutasi');
+    Route::post('menu-mutasi/show-data-order-mutasi', [AppController::class, 'menu_mutasi_show_data_order_mutasi'])->name('menu_mutasi_show_data_order_mutasi');
+    Route::post('menu-mutasi/terima-data-order-mutasi', [AppController::class, 'menu_mutasi_terima_data_order_mutasi'])->name('menu_mutasi_terima_data_order_mutasi');
+    Route::post('menu-mutasi/pilih-lokasi-data-order-mutasi', [AppController::class, 'menu_mutasi_pilih_lokasi_data_order_mutasi'])->name('menu_mutasi_pilih_lokasi_data_order_mutasi');
+    Route::post('menu-mutasi/proses-lokasi-data-order-mutasi', [AppController::class, 'menu_mutasi_proses_lokasi_data_order_mutasi'])->name('menu_mutasi_proses_lokasi_data_order_mutasi');
+    Route::post('menu-mutasi/proses-terima-lokasi-data-order-mutasi', [AppController::class, 'menu_mutasi_proses_terima_lokasi_data_order_mutasi'])->name('menu_mutasi_proses_terima_lokasi_data_order_mutasi');
     Route::post('menu-mutasi/add-barang', [AppController::class, 'menu_mutasi_add_barang'])->name('menu_mutasi_add_barang');
+    Route::post('menu-mutasi/remove-mutasi', [AppController::class, 'menu_mutasi_remove_mutasi'])->name('menu_mutasi_remove_mutasi');
+    Route::post('menu-mutasi/proses-remove-mutasi', [AppController::class, 'menu_mutasi_proses_remove_mutasi'])->name('menu_mutasi_proses_remove_mutasi');
     Route::post('menu-mutasi/find-data', [AppController::class, 'menu_mutasi_find_data'])->name('menu_mutasi_find_data');
     Route::post('menu-mutasi/chose-data', [AppController::class, 'menu_mutasi_pilih_data'])->name('menu_mutasi_pilih_data');
     Route::post('menu-mutasi/verifikasi-data-mutasi', [AppController::class, 'menu_mutasi_verifikasi_data_mutasi'])->name('menu_mutasi_verifikasi_data_mutasi');
+    Route::post('menu-mutasi/verifikasi-code-data-mutasi', [AppController::class, 'menu_mutasi_verifikasi_code_data_mutasi'])->name('menu_mutasi_verifikasi_code_data_mutasi');
     Route::post('menu-mutasi/proses-verifikasi-data-mutasi', [AppController::class, 'menu_mutasi_proses_verifikasi_data_mutasi'])->name('menu_mutasi_proses_verifikasi_data_mutasi');
+    Route::post('menu-mutasi/print-data-mutasi', [AppController::class, 'menu_mutasi_print_data_mutasi'])->name('menu_mutasi_print_data_mutasi');
+    Route::post('menu-mutasi/proses-print-data-mutasi', [AppController::class, 'menu_mutasi_proses_print_data_mutasi'])->name('menu_mutasi_proses_print_data_mutasi');
 
     // MENU STOCKOPNAME
     Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
@@ -500,6 +521,8 @@ Route::prefix('app')->group(function () {
     // WHATSAPP
     Route::post('master-no-whatsapp/add', [AppController::class, 'master_no_whatsapp_add'])->name('master_no_whatsapp_add');
     Route::post('master-no-whatsapp/save', [AppController::class, 'master_no_whatsapp_save'])->name('master_no_whatsapp_save');
+    Route::post('master-no-whatsapp/update', [AppController::class, 'master_no_whatsapp_update'])->name('master_no_whatsapp_update');
+    Route::post('master-no-whatsapp/update_save', [AppController::class, 'master_no_whatsapp_update_save'])->name('master_no_whatsapp_update_save');
 });
 
 

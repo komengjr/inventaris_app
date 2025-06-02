@@ -291,7 +291,8 @@ class MasterAdminController extends Controller
     public function masteradmin_access()
     {
         if (Auth::user()->akses == 'admin') {
-            return view('application.admin.masterakses');
+            $menu = DB::table('z_menu')->get();
+            return view('application.admin.masterakses',['menu'=>$menu]);
         } else {
             return view('application.error.404');
         }

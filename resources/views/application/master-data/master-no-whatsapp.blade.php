@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-xl-auto px-3 py-2">
                         <h6 class="text-primary fs--1 mb-0">Menu : </h6>
-                        <h4 class="text-primary fw-bold mb-0">Master <span class="text-info fw-medium">No Whatsapp</span>
+                        <h4 class="text-primary fw-bold mb-0">Master <span class="text-info fw-medium">Verifikasi WA</span>
                         </h4>
                     </div>
                 </div>
@@ -62,7 +62,9 @@
                             <td>{{$datas->wa_number_name}}</td>
                             <td>{{$datas->wa_number_no}}</td>
                             <td>{{$datas->wa_number_akses}}</td>
-                            <td></td>
+                            <td>
+                                <button class="btn btn-falcon-warning btn-sm" id="button-edit-data-verifikasi" data-code="{{$datas->wa_number_code}}" data-bs-toggle="modal" data-bs-target="#modal-whatsapp-lg"><span class="fas fa-edit"></span> Edit</button>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -114,14 +116,14 @@
                 $('#menu-whatsapp-lg').html('eror');
             });
         });
-        $(document).on("click", "#button-edit-data-user", function(e) {
+        $(document).on("click", "#button-edit-data-verifikasi", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-user').html(
+            $('#menu-whatsapp-lg').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('masteradmin_user_edit') }}",
+                url: "{{ route('master_no_whatsapp_update') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -130,9 +132,9 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-user').html(data);
+                $('#menu-whatsapp-lg').html(data);
             }).fail(function() {
-                $('#menu-user').html('eror');
+                $('#menu-whatsapp-lg').html('eror');
             });
 
         });

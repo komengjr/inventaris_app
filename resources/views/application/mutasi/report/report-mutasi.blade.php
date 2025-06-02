@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DOcument Peminjaman</title>
+    <title>Document Mutasi</title>
     <link rel="stylesheet" href="style.css" media="all" />
 </head>
 <style>
@@ -222,8 +222,9 @@
 @php
     $no_doc = DB::table('master_doocument_cab')
         ->where('master_document_code', '=', 'DOC00920')
-        ->where('kd_cabang', Auth::user()->cabang)
+        ->where('kd_cabang', $cabang->kd_cabang)
         ->first();
+    $asal = DB::table('tbl_cabang')->select('nama_cabang')->where('kd_cabang', $mutasi->asal_mutasi)->first();
 @endphp
 @if ($no_doc)
     @php
@@ -257,120 +258,99 @@
 
                 <table style="margin: 0px; padding: 0px;">
                     <tr>
-                        <td>Tujuan Peminjaman</td>
+                        <td>Asal Lokasi Barang</td>
                         <td>:</td>
-                        <td>{{ $peminjaman->nama_kegiatan }}</td>
+                        <td>{{ $asal->nama_cabang }}</td>
                     </tr>
                     <tr>
-                        <td>PJ Barang Cabang</td>
+                        <td>Lokasi Penempatan</td>
                         <td>:</td>
                         <td>
-                            @php
-                                $staff1 = DB::table('tbl_staff')->where('nip', $peminjaman->pj_pinjam)->first();
-                            @endphp
-                            @if ($staff1)
-                                {{ $staff1->nama_staff }}
-                            @else
-                            @endif
+                            {{ $mutasi->nama_cabang }}
                         </td>
                     </tr>
                     <tr>
-                        <td>PJ Peminjam Barang</td>
+                        <td>PJ Asal Cabang</td>
                         <td>:</td>
                         <td>
-                            @php
-                                $staff2 = DB::table('tbl_staff')->where('nip', $peminjaman->pj_pinjam_cabang)->first();
-                            @endphp
-                            @if ($staff2)
-                                {{ $staff2->nama_staff }}
-                            @else
-                                {{ $staff1->nama_staff }}
-                            @endif
+                            {{ $mutasi->penanggung_jawab }}
                         </td>
                     </tr>
                     <tr>
-                        <td>Asal Cabang</td>
+                        <td>PJ Tujuan Cabang</td>
                         <td>:</td>
                         <td>
-                            @php
-                                $cabang = DB::table('tbl_cabang')->where('kd_cabang', $peminjaman->kd_cabang)->first();
-                            @endphp
-                            {{ $cabang->nama_cabang }}
+                            {{ $mutasi->penerima }}
                         </td>
                     </tr>
                     <tr>
-                        <td>Tujuan Cabang</td>
+                        <td>Tanggal Order</td>
                         <td>:</td>
                         <td>
-                            @php
-                                $cabang = DB::table('tbl_cabang')
-                                    ->where('kd_cabang', $peminjaman->tujuan_cabang)
-                                    ->first();
-                            @endphp
-                            {{ $cabang->nama_cabang }}
+                            {{ $mutasi->tanggal_buat }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal Terima Barang</td>
+                        <td>:</td>
+                        <td>
+                            {{ $mutasi->tgl_terima }}
                         </td>
                     </tr>
                 </table>
             </div>
             <div id="invoice">
-                <span>Form Peminjaman Barang</span>
+                <span>Form Mutasi Barang</span>
                 <div class="date" style="color: red; font-size: 12px;">Print date : {{ date('d-m-Y H-i-s') }}</div>
-                <span> <img style="padding-top: 1px; left: 10px;"
-                        src="data:image/png;base64, {!! base64_encode(
-                            QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
-                        ) !!}"></span><br>
-                <span style=" font-size: 14px;">{{ $peminjaman->tiket_peminjaman }}</span>
+
+                <span><img src="data:image/png;base64, {!! base64_encode(
+                    QrCode::style('round')->eye('circle')->format('svg')->size(100)->errorCorrection('H')->generate($mutasi->kd_mutasi),
+                ) !!}"></span> <br>
+                <span>{{$mutasi->kd_mutasi}}</span>
             </div>
         </div>
         <table border="1" cellspacing="0" cellpadding="0">
             <thead style="font-size: 11px;">
                 <tr>
-                    <th class="no" rowspan="2">#</th>
-                    <th class="qty" colspan="2">TANGGAL</th>
-                    <th rowspan="2">NAMA BARANG</th>
-                    <th rowspan="2">DETAIL</th>
-                    <th colspan="2">KONDISI BARANG</th>
-                    <th rowspan="2">KETERANGAN</th>
+                    <th class="no">#</th>
+                    <th>NAMA BARANG</th>
+                    <th>NO INVENTARIS</th>
+                    <th>MERK / TYPE</th>
+                    <th>HARGA PEROLEHAN</th>
+                    <th>TANGGAL PEMBELIAN</th>
                 </tr>
-                <tr>
-                    <th>PEMINJAMAN</th>
-                    <th>PENGEMBALIAN</th>
-                    <th>KELUAR</th>
-                    <th>KEMBALI</th>
-                </tr>
+
             </thead>
             <tbody id="invoiceItems" style="font-size: 10px;">
                 @php
                     $no = 1;
                     $hasil = 0;
                 @endphp
-                @foreach ($data as $datas)
+                @foreach ($brg as $item)
                     <tr>
-                        <td class="no">{{ $no++ }}</td>
-                        <td class="desc">{{ $datas->tgl_pinjam_barang }}</td>
-                        <td class="desc">{{ $datas->tgl_kembali_barang }}</td>
-                        <td class="desc">{{ $datas->inventaris_data_name }}</td>
-                        <td class="desc">{{ $datas->inventaris_data_merk }}</td>
-                        <td class="desc">{{ $datas->kondisi_pinjam }}</td>
-                        <td class="desc">{{ $datas->kondisi_kembali }}</td>
-                        <td>
-                            @if ($datas->status_sub_peminjaman == 0)
-                                <strong style="color: red;">Belum diverifikasi</strong>
-                            @else
-                                <strong style="color: rgb(2, 63, 3);">Sudah diverifikasi</strong>
-                            @endif
-                        </td>
+                        <td>{{ $no++ }}</td>
+                        <td>{{ $item->inventaris_data_name }}</td>
+                        <td>{{ $item->inventaris_data_number }}</td>
+                        <td>{{ $item->inventaris_data_merk }} / {{ $item->inventaris_data_type }}</td>
+                        <td style="text-align: right;">@currency($item->inventaris_data_harga)</td>
+                        <td>{{ $item->inventaris_data_tgl_beli }}</td>
                     </tr>
                 @endforeach
-
             </tbody>
         </table>
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
+                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($mutasi->menyetujui),
             ) !!}">
-            <div class="notice">Dokumen Ini Sah tanpa Tanda Tangan.</div>
+            @php
+                $ttd = DB::table('wa_number_cabang')->where('wa_number_code', $mutasi->menyetujui)->first();
+            @endphp
+            @if ($ttd)
+                <div class="notice">{{$ttd->wa_number_name}}</div>
+            @else
+                <div class="notice">{{$mutasi->menyetujui}}</div>
+            @endif
         </div>
     </main>
 </body>

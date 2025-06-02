@@ -1,7 +1,6 @@
 @if ($id == 0)
     <div class="card-body">
-        <p class="text-danger font-sans-serif fw-semi-bold w-md-75 w-xl-100 mx-auto">Kode Verifikasi Sudah Tidak
-            berlaku Lagi</p>
+        <p class="text-danger font-sans-serif fw-semi-bold w-md-75 w-xl-100 mx-auto">Kode Verifikasi Tidak ditemukan</p>
         <hr>
         <p>Make sure the Code is correct and that the page hasn't moved. If you think this is a mistake, <a
                 href="#">contact us</a>.</p>

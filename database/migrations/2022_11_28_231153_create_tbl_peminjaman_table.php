@@ -21,7 +21,9 @@ class CreateTblPeminjamanTable extends Migration
             $table->string('tgl_pinjam');
             $table->string('batas_tgl_pinjam')->nullable();
             $table->string('pj_pinjam');
+            $table->string('pj_cabang')->nullable();
             $table->string('status_pinjam');
+            $table->string('token_pinjam')->nullable();
             $table->string('kd_cabang');
             $table->string('pj_pinjam_cabang')->nullable();
             $table->string('tgl_selesai')->nullable();

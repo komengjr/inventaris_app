@@ -30,6 +30,7 @@ class CreateTblMutasiTable extends Migration
             $table->longText('ket')->nullable();
             $table->string('tgl_terima')->nullable();
             $table->string('status_mutasi')->nullable();
+            $table->string('token_mutasi')->nullable();
             $table->longText('ket_penerima')->nullable();
             $table->timestamps();
         });

@@ -41,7 +41,7 @@
     </div>
 
     <div class="row mb-3 g-3">
-        <div class="col-lg-12 col-xxl-9">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body py-0 py-lg-2">
                     <div class="row">
@@ -281,7 +281,7 @@
                 </div>
             </div> --}}
         </div>
-        <div class="col-xxl-3">
+        <div class="col-xxl-12">
             <div class="card">
                 <div class="card-header d-flex flex-between-center py-2 border-bottom">
                     <h6 class="mb-0">Klasifikasi Data Inventaris</h6>
@@ -300,7 +300,7 @@
                 </div>
                 <div class="card-body d-flex flex-column justify-content-between">
                     <div class="row align-items-center">
-                        <div class="col-md-5 col-xxl-12 mb-xxl-1">
+                        <div class="col-md-5 ">
                             <div class="position-relative">
                                 <div class="echart-most-leads my-2" data-echart-responsive="true"></div>
                                 <div class="position-absolute top-50 start-50 translate-middle text-center">
@@ -310,7 +310,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xxl-12 col-md-7">
+                        <div class="col-md-7">
                             <hr class="mx-ncard mb-0 d-md-none d-xxl-block" />
                             @php
                                 $no = 0;
@@ -381,7 +381,7 @@
         <div class="card-body bg-light px-1 py-0">
             <div class="row g-0 text-center fs--1">
                 @foreach ($ruangan as $ruangans)
-                    <div class="col-6 col-md-3 col-lg-2 col-xxl-1 mb-1">
+                    <div class="col-6 col-md-3 col-lg-2 mb-1">
                         <div class="card-body border h-100 " id="button-view-data-lokasi"
                             data-code="{{ $ruangans->id_nomor_ruangan_cbaang }}" data-bs-toggle="modal"
                             data-bs-target="#modal-dashboard">

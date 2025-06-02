@@ -38,4 +38,10 @@ class DashboardController extends Controller
         }
 
     }
+    public function dashboard_setup_profile(){
+        return view('dashboard.setup-profile');
+    }
+    public function dashboard_setup_notification(){
+        return view('dashboard.setup-notification');
+    }
 }

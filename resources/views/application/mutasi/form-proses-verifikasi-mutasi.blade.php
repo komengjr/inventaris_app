@@ -23,30 +23,33 @@
                     <form class="row g-3" method="post"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Kode Mutasi</label>
                             <input class="form-control" type="text" value="{{ $data->kd_mutasi }}" disabled />
                             <input class="form-control" type="text" id="code" value="{{ $data->kd_mutasi }}"
                                 hidden />
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Tujuan Cabang</label>
                             <input class="form-control" type="text" value="{{ $data->target_mutasi }}" disabled />
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Tanggal Order</label>
                             <input class="form-control" type="text"
                                 value="{{ $data->tanggal_buat }}" disabled />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Penanggung Jawab Mutasi</label>
                             <input class="form-control" type="text" value="{{ $data->penanggung_jawab }}" disabled />
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Deskripsi Peminjaman</label>
                             <textarea name="" class="form-control" id="" disabled>{{ $data->ket }}</textarea>
                         </div>
-
+                        <div class="col-md-6">
+                            <label class="form-label" for="inputAddress">Kode Verifikasi</label>
+                            <input class="form-control" type="text" id="verifikasi_code" />
+                        </div>
                     </form>
                 </div>
             </div>
@@ -54,7 +57,7 @@
     </div>
     <div class="row g-3 px-3 pb-3">
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card border border-primary">
                 <div class="card-header pb-0">
                     <div class="row flex-between-center">
@@ -76,28 +79,30 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Barang</th>
+                                    <th>Id Inventaris</th>
                                     <th>No Inventaris</th>
                                     <th>Merek / Type</th>
                                     <th>Tanggal Pembelian</th>
-                                    <th>Action</th>
+                                    <th>Harga Perolehan</th>
+                                    <th>Lokasi</th>
                                 </tr>
                             </thead>
                             <tbody class="fs--1">
                                 @php
                                     $no = 1;
                                 @endphp
-                                {{-- @foreach ($brg as $brgs)
+                                @foreach ($brg as $brgs)
                                     <tr>
                                         <td>{{$no++}}</td>
                                         <td>{{$brgs->inventaris_data_name}}</td>
                                         <td>{{$brgs->inventaris_data_code}}</td>
+                                        <td>{{$brgs->inventaris_data_number}}</td>
                                         <td>{{$brgs->inventaris_data_merk}}</td>
                                         <td>{{$brgs->inventaris_data_tgl_beli}}</td>
-                                        <td>
-                                            <button class="btn btn-falcon-danger"><span class="fas fa-trash"></span></button>
-                                        </td>
+                                        <td>@currency($brgs->inventaris_data_harga)</td>
+                                        <td>{{$brgs->inventaris_data_location}}</td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -108,9 +113,8 @@
 </div>
 <div class="modal-footer">
     <div id="menu-verifikasi-data-mutasi">
-        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary" type="button" id="button-verifikasi-data-mutasi"
-            data-code="{{$data->kd_mutasi}}">Verifikasi</button>
+        <button class="btn btn-primary" type="button" id="button-verifikasi-code-data-mutasi"
+            data-code="{{$data->kd_mutasi}}">Verifikasi Kode</button>
     </div>
 </div>
 <script>

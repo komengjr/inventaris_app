@@ -229,6 +229,52 @@ class AppController extends Controller
         $staff = DB::table('tbl_staff')->where('kd_cabang', Auth::user()->cabang)->get();
         return view('application.peminjaman.form-add-peminjaman', ['cabang' => $cabang, 'staff' => $staff]);
     }
+    public function peminjaman_data_order(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_peminjaman.kd_cabang')
+            ->where('tbl_peminjaman.tujuan_cabang', Auth::user()->cabang)
+            ->where('tbl_peminjaman.kd_cabang','!=' ,Auth::user()->cabang)
+            ->where('status_pinjam', 2)->get();
+        return view('application.peminjaman.data-order-peminjaman', ['data' => $data]);
+    }
+    public function peminjaman_terima_data_order(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')->where('id_pinjam', $request->code)->first();
+        $brg = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->where('tbl_sub_peminjaman.id_pinjam', $request->code)->get();
+        return view('application.peminjaman.form-terima-order-peminjaman', ['data' => $data, 'brg' => $brg]);
+    }
+    public function peminjaman_terima_data_barang(Request $request)
+    {
+        $data = DB::table('tbl_sub_peminjaman')->where('id_sub_peminjaman', $request->code)->first();
+        DB::table('tbl_sub_peminjaman')->where('id_sub_peminjaman', $request->code)->update(['status_sub_peminjaman' => 1]);
+        $brg = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->where('tbl_sub_peminjaman.id_pinjam', $data->id_pinjam)->get();
+        return view('application.peminjaman.table-terima-order-peminjaman', ['brg' => $brg]);
+    }
+    public function verifikasi_peminjaman_terima_data_barang(Request $request)
+    {
+        $data = DB::table('tbl_sub_peminjaman')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)
+            ->where('tbl_sub_peminjaman.status_sub_peminjaman', 0)->first();
+        if ($data) {
+            return 0;
+            # code...
+        } else {
+            DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->update([
+                'status_pinjam' => 3,
+                'pj_pinjam_cabang' => $request->penerima,
+                'deskripsi_tujuan' => $request->deskripsi,
+            ]);
+            return 1;
+            # code...
+        }
+
+    }
     public function peminjaman_save(Request $request)
     {
         DB::table('tbl_peminjaman')->insert([
@@ -251,7 +297,8 @@ class AppController extends Controller
         $brg = DB::table('tbl_sub_peminjaman')
             ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
             ->where('tbl_sub_peminjaman.id_pinjam', $data->id_pinjam)->get();
-        return view('application.peminjaman.form-prosess-peminjaman', ['data' => $data, 'brg' => $brg]);
+        $user = DB::table('wa_number_cabang')->where('kd_cabang', Auth::user()->cabang)->where('wa_number_akses', 'MGR')->get();
+        return view('application.peminjaman.form-prosess-peminjaman', ['data' => $data, 'brg' => $brg, 'user' => $user]);
     }
     public function peminjaman_find_data(Request $request)
     {
@@ -282,6 +329,29 @@ class AppController extends Controller
             ->where('tbl_sub_peminjaman.id_pinjam', $request->id)->get();
         return view('application.peminjaman.table-fix-peminjaman', ['brg' => $brg]);
     }
+    public function peminjaman_data_verifikasi(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
+        $brg = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->get();
+        return view('application.peminjaman.form-verifikasi-user', ['data' => $data, 'brg' => $brg]);
+    }
+    public function peminjaman_data_verifikasi_user(Request $request)
+    {
+        $check = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->where('token_pinjam', $request->token)->first();
+        if ($check) {
+            if ($check->kd_cabang == $check->tujuan_cabang) {
+                DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->update(['status_pinjam' => 3]);
+            } else {
+                DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->update(['status_pinjam' => 2]);
+            }
+            return 1;
+        } else {
+            return 0;
+        }
+    }
     public function peminjaman_proses_verifikasi(Request $request)
     {
         $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
@@ -297,8 +367,40 @@ class AppController extends Controller
             ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
             ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->first();
         if ($check) {
+            $token = mt_rand(1000000, 9999999);
+            $qrcode = base64_encode(QrCode::format('png')
+                ->size(500)
+                ->merge('/storage/app/public/logo.png')
+                ->errorCorrection('H')
+                ->eyeColor(2, 100, 100, 255, 0, 0, 0)
+                ->style('round')
+                ->margin(2)
+                ->generate($token));
+
             DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->update([
-                'status_pinjam' => 10
+                'status_pinjam' => 1,
+                'token_pinjam' => $token,
+                'pj_cabang' => $request->mengetahui,
+            ]);
+            $number = DB::table('wa_number_cabang')->where('wa_number_code', $request->mengetahui)->first();
+            $pesan = "";
+            $no = 1;
+            $data = DB::table('tbl_sub_peminjaman')
+                ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+                ->where('tbl_sub_peminjaman.id_pinjam', $check->id_pinjam)->get();
+            foreach ($data as $value) {
+                $texts = $no++ . '. ' . $value->inventaris_data_name . "\n";
+                $pesan = $pesan . $texts;
+            }
+            $text = "Hai \n\nToken Peminjaman Anda : *" . $token .
+                "*\n\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Transforma Digital*";
+            DB::table('message')->insert([
+                'token_code' => str::uuid(),
+                'number' => $number->wa_number_no,
+                'pesan' => $text,
+                'file' => $qrcode,
+                'status' => 0,
+                'time' => now(),
             ]);
             return '1';
         } else {
@@ -334,7 +436,7 @@ class AppController extends Controller
             ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->first();
         if (!$check) {
             DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->update([
-                'status_pinjam' => 1
+                'status_pinjam' => 4
             ]);
             return '1';
         } else {
@@ -364,11 +466,9 @@ class AppController extends Controller
         $customPaper = array(0, 0, 50.80, 95.20);
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', ['data' => $data, 'cabang' => $cabang, 'peminjaman' => $peminjaman], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
-        $canvas = $pdf->getDomPDF()->getCanvas();
-        $height = $canvas->get_height();
-        $width = $canvas->get_width();
-        $canvas->set_opacity(.2, "Multiply");
-        $canvas->set_opacity(.1);
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
 
@@ -582,9 +682,9 @@ class AppController extends Controller
     }
     public function menu_mutasi_add(Request $request)
     {
-
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', '!=', Auth::user()->cabang)->get();
-        return view('application.mutasi.form-add-mutasi', ['cabang' => $cabang]);
+        $wa = DB::table('wa_number_cabang')->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('application.mutasi.form-add-mutasi', ['cabang' => $cabang, 'wa' => $wa]);
     }
     public function menu_mutasi_save(Request $request)
     {
@@ -607,12 +707,108 @@ class AppController extends Controller
         ]);
         return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data Pemusnahan');
     }
+    public function menu_mutasi_rekap_data_order_mutasi()
+    {
+        $data = DB::table('tbl_mutasi')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_mutasi.asal_mutasi')
+            ->where('tbl_mutasi.target_mutasi', Auth::user()->cabang)
+            ->where('tbl_mutasi.status_mutasi', 3)->get();
+        return view('application.mutasi.data-order-mutasi', ['data' => $data]);
+    }
+    public function menu_mutasi_show_data_order_mutasi()
+    {
+        $data = DB::table('tbl_mutasi')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_mutasi.asal_mutasi')
+            ->where('tbl_mutasi.target_mutasi', Auth::user()->cabang)
+            ->where('tbl_mutasi.status_mutasi', 2)->get();
+        return view('application.mutasi.data-order-mutasi', ['data' => $data]);
+    }
+    public function menu_mutasi_terima_data_order_mutasi(Request $request)
+    {
+        $data = DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->first();
+        $brg = DB::table('tbl_sub_mutasi')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
+            ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
+        return view('application.mutasi.form-terima-order', ['data' => $data, 'brg' => $brg]);
+    }
+    public function menu_mutasi_pilih_lokasi_data_order_mutasi(Request $request)
+    {
+        $data = DB::table('tbl_sub_mutasi')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
+            ->where('tbl_sub_mutasi.id_sub_mutasi', $request->code)->first();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+        return view('application.mutasi.form-pilih-lokasi-barang', ['data' => $data, 'lokasi' => $lokasi]);
+    }
+    public function menu_mutasi_proses_lokasi_data_order_mutasi(Request $request)
+    {
+        DB::table('tbl_sub_mutasi')->where('id_sub_mutasi', $request->id_mutasi)->update([
+            'kd_lokasi_tujuan' => $request->lokasi
+        ]);
+        $data = DB::table('tbl_sub_mutasi')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
+            ->where('tbl_sub_mutasi.kd_mutasi', $request->kd_mutasi)->get();
+        return view('application.mutasi.table-data-barang-mutasi', ['data' => $data]);
+    }
+    public function menu_mutasi_proses_terima_lokasi_data_order_mutasi(Request $request)
+    {
+        $check = DB::table('tbl_sub_mutasi')->where('kd_mutasi', $request->code)->where('kd_lokasi_tujuan', null)->first();
+        if ($check) {
+            return 0;
+        } else {
+            $jumlah = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
+            $data = DB::table('tbl_sub_mutasi')
+                ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
+                ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
+            foreach ($data as $value) {
+                $lokasi = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $value->kd_lokasi_tujuan)->first();
+                DB::table('inventaris_data')->insert([
+                    'inventaris_data_code' => Auth::user()->cabang . '' . date('ymdhis') . '' . mt_rand(100, 999),
+                    'inventaris_klasifikasi_code' => $value->inventaris_klasifikasi_code,
+                    'inventaris_data_number' => 'not created',
+                    'inventaris_data_name' => $value->inventaris_data_name,
+                    'inventaris_data_location' => $lokasi->kd_lokasi,
+                    'inventaris_data_jenis' => $value->inventaris_data_jenis,
+                    'inventaris_data_harga' => $value->inventaris_data_harga,
+                    'inventaris_data_merk' => $value->inventaris_data_merk,
+                    'inventaris_data_type' => $value->inventaris_data_type,
+                    'inventaris_data_no_seri' => $value->inventaris_data_no_seri,
+                    'inventaris_data_suplier' => $value->inventaris_data_suplier,
+                    'inventaris_data_kondisi' => 'BAIK',
+                    'inventaris_data_status' => 0,
+                    'inventaris_data_tgl_beli' => now(),
+                    'inventaris_data_cabang' => Auth::user()->cabang,
+                    'inventaris_data_urut' => ($jumlah + 1),
+                    'inventaris_data_file' => $value->inventaris_data_file,
+                    'id_nomor_ruangan_cbaang' => $value->kd_lokasi_tujuan,
+                    'created_at' => now(),
+                ]);
+            }
+            DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->update([
+                'tgl_terima' => now(),
+                'penerima' => $request->penerima,
+                'status_mutasi' => 3
+            ]);
+            return 1;
+        }
+    }
     public function menu_mutasi_add_barang(Request $request)
     {
         $data = DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->first();
         $brg = DB::table('tbl_sub_mutasi')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
             ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
+
         return view('application.mutasi.form-proses-data-barang', ['data' => $data, 'brg' => $brg]);
+    }
+    public function menu_mutasi_remove_mutasi(Request $request)
+    {
+        $data = DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->first();
+        return view('application.mutasi.form-remove-mutasi', ['data' => $data]);
+    }
+    public function menu_mutasi_proses_remove_mutasi(Request $request)
+    {
+        DB::table('tbl_sub_mutasi')->where('kd_mutasi', $request->code)->delete();
+        DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->delete();
+        return redirect()->back()->withSuccess('Great! Berhasil Penghapusan Data');
     }
     public function menu_mutasi_find_data(Request $request)
     {
@@ -634,11 +830,54 @@ class AppController extends Controller
     }
     public function menu_mutasi_verifikasi_data_mutasi(Request $request)
     {
-        $check = DB::table('tbl_sub_mutasi')->where('kd_mutasi', $request->code)->first();
+        $check = DB::table('tbl_sub_mutasi')
+            ->join('tbl_mutasi', 'tbl_mutasi.kd_mutasi', '=', 'tbl_sub_mutasi.kd_mutasi')
+            ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->first();
         if ($check) {
-            DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->update([
-                'status_mutasi' => 1
+            $token = mt_rand(1000000, 9999999);
+            $number = DB::table('wa_number_cabang')->where('wa_number_code', $check->menyetujui)->first();
+            $no = 1;
+            $qrcode = base64_encode(QrCode::format('png')
+                ->size(500)
+                ->merge('/storage/app/public/logo.png')
+                ->errorCorrection('H')
+                ->eyeColor(2, 100, 100, 255, 0, 0, 0)
+                ->style('dot')
+                ->margin(2)
+                ->generate($token));
+            $barang = "";
+            $data = DB::table('tbl_sub_mutasi')
+                ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
+                ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
+            foreach ($data as $value) {
+                $list = $no++ . '. ' . $value->inventaris_data_name . "\n";
+                $barang = $barang . '' . $list;
+            }
+            $text = "Hai \n\nToken Mutasi Anda : *" . $token . "*\nList Barang :\n" . $barang .
+                "\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Mutasi..\n\nSupport By. *Transforma Digital*";
+            DB::table('message')->insert([
+                'token_code' => str::uuid(),
+                'number' => $number->wa_number_no,
+                'pesan' => $text,
+                'file' => $qrcode,
+                'status' => 0,
+                'time' => now(),
+                'created_at' => now(),
             ]);
+            DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->update([
+                'status_mutasi' => 1,
+                'token_mutasi' => $token,
+            ]);
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    public function menu_mutasi_verifikasi_code_data_mutasi(Request $request)
+    {
+        $check = DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->where('token_mutasi', $request->verifikasi_code)->first();
+        if ($check) {
+            DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->update(['status_mutasi' => 2]);
             return 1;
         } else {
             return 0;
@@ -647,7 +886,42 @@ class AppController extends Controller
     public function menu_mutasi_proses_verifikasi_data_mutasi(Request $request)
     {
         $data = DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->first();
-        return view('application.mutasi.form-proses-verifikasi-mutasi', ['data' => $data]);
+        $brg = DB::table('tbl_sub_mutasi')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_Inventaris')
+            ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
+        return view('application.mutasi.form-proses-verifikasi-mutasi', ['data' => $data, 'brg' => $brg]);
+    }
+    public function menu_mutasi_print_data_mutasi(Request $request)
+    {
+        return view('application.mutasi.form-print-data-mutasi', ['code' => $request->code]);
+    }
+    public function menu_mutasi_proses_print_data_mutasi(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+            # code...
+        }
+        $mutasi = DB::table('tbl_mutasi')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_mutasi.target_mutasi')
+            ->where('tbl_mutasi.kd_mutasi', $request->code)->first();
+        $brg = DB::table('tbl_sub_mutasi')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
+            ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.mutasi.report.report-mutasi', ['cabang' => $cabang, 'mutasi' => $mutasi, 'brg' => $brg], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        // $canvas = $pdf->getDomPDF()->getCanvas();
+        // $height = $canvas->get_height();
+        // $width = $canvas->get_width();
+        // $canvas->set_opacity(.2, "Multiply");
+        // $canvas->set_opacity(.1);
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
     }
 
     // MENU CABANG
@@ -758,17 +1032,15 @@ class AppController extends Controller
             $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
             # code...
         }
-        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif',$request->code)->first();
+        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
         $brg = DB::table('tbl_sub_verifdatainventaris')
-        ->join('inventaris_data','inventaris_data.inventaris_data_code','=','tbl_sub_verifdatainventaris.id_inventaris')
-        ->where('tbl_sub_verifdatainventaris.kode_verif',$request->code)->get();
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.menu-cabang.report.report-stockopname', ['cabang' => $cabang,'data'=>$data,'brg'=>$brg], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->where('tbl_sub_verifdatainventaris.kode_verif', $request->code)->get();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.menu-cabang.report.report-stockopname', ['cabang' => $cabang, 'data' => $data, 'brg' => $brg], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
-        $canvas = $pdf->getDomPDF()->getCanvas();
-        $height = $canvas->get_height();
-        $width = $canvas->get_width();
-        $canvas->set_opacity(.2, "Multiply");
-        $canvas->set_opacity(.1);
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
 
@@ -1005,5 +1277,19 @@ class AppController extends Controller
             'created_at' => now()
         ]);
         return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
+    }
+    public function master_no_whatsapp_update(Request $request)
+    {
+        $data = DB::table('wa_number_cabang')->where('wa_number_code', $request->code)->first();
+        return view('application.master-data.whatsapp.form-update', ['data' => $data]);
+    }
+    public function master_no_whatsapp_update_save(Request $request)
+    {
+        DB::table('wa_number_cabang')->where('wa_number_code', $request->code)->update([
+            'wa_number_name' => $request->name,
+            'wa_number_no' => $request->nomor,
+            'wa_number_akses' => $request->akses,
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Update Data');
     }
 }
