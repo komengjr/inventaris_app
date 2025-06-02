@@ -331,7 +331,7 @@
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($data->kd_pemusnahan),
+                QrCode::style('round')->format('svg')->size(70)->errorCorrection('H')->generate($data->kd_pemusnahan),
             ) !!}">
             {{-- <div>NOTICE:</div> --}}
             <div class="notice">Dokumen Ini Sah tanpa Tanda Tangan.</div>
