@@ -367,9 +367,15 @@
         </table>
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
-            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
-            ) !!}">
+            @if ($peminjaman->pj_cabang == null)
+                <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
+                    QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
+                ) !!}">
+            @else
+                <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
+                    QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->pj_cabang),
+                ) !!}">
+            @endif
             @php
                 $ttd = DB::table('wa_number_cabang')->where('wa_number_code', $peminjaman->pj_cabang)->first();
             @endphp
