@@ -392,8 +392,8 @@ class AppController extends Controller
                 $texts = $no++ . '. ' . $value->inventaris_data_name . "\n";
                 $pesan = $pesan . $texts;
             }
-            $text = "Hai \n\nToken Peminjaman Anda : *" . $token .
-                "*\n\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Transforma Digital*";
+            $text = "Hai \nAda Notifikasi Peminjaman Barang\nDengan No Tiket : ".$check->tiket_peminjaman."\nToken Peminjaman Anda : *" . $token .
+                "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Transforma Digital*";
             DB::table('message')->insert([
                 'token_code' => str::uuid(),
                 'number' => $number->wa_number_no,
