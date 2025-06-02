@@ -317,7 +317,7 @@
                 <div class="date" style="color: red; font-size: 12px;">Print date : {{ date('d-m-Y H-i-s') }}</div>
                 <span> <img style="padding-top: 1px; left: 10px;"
                         src="data:image/png;base64, {!! base64_encode(
-                            QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
+                            QrCode::style('round')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
                         ) !!}"></span><br>
                 <span style=" font-size: 14px;">{{ $peminjaman->tiket_peminjaman }}</span>
             </div>
@@ -369,11 +369,11 @@
         <div id="notices">
             @if ($peminjaman->pj_cabang == null)
                 <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                    QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
+                    QrCode::style('round')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
                 ) !!}">
             @else
                 <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                    QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->pj_cabang),
+                    QrCode::style('round')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->pj_cabang),
                 ) !!}">
             @endif
             @php
