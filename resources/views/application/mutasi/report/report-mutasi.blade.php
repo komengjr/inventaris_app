@@ -304,7 +304,7 @@
                 <div class="date" style="color: red; font-size: 12px;">Print date : {{ date('d-m-Y H-i-s') }}</div>
 
                 <span><img src="data:image/png;base64, {!! base64_encode(
-                    QrCode::style('round')->eye('circle')->format('svg')->size(100)->errorCorrection('H')->generate($mutasi->kd_mutasi),
+                    QrCode::style('round')->format('svg')->size(100)->errorCorrection('H')->generate($mutasi->kd_mutasi),
                 ) !!}"></span> <br>
                 <span>{{$mutasi->kd_mutasi}}</span>
             </div>
@@ -341,7 +341,7 @@
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($mutasi->menyetujui),
+                QrCode::style('round')->format('svg')->size(70)->errorCorrection('H')->generate($mutasi->menyetujui),
             ) !!}">
             @php
                 $ttd = DB::table('wa_number_cabang')->where('wa_number_code', $mutasi->menyetujui)->first();
