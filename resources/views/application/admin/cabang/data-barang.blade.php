@@ -8,7 +8,9 @@
             <div class="card-body">
                 <div class="row flex-between-center">
                     <div class="col-sm-auto mb-2 mb-sm-0 ">
-                        <h6 class="mb-0 text-white">Total Barang : <span id="jumlah barang">{{ $data->count() }}</span></h6>
+                        <a href="{{ route('masteradmin_cabang_export_excel_data_master_barang', ['id'=>$cabang->kd_cabang]) }}" class="btn btn-falcon-warning btn-sm" ><span class="fa fa-print"></span> Export Non Aset</a>
+                        <a href="{{ route('masteradmin_cabang_export_excel_data_aset_master_barang', ['id'=>$cabang->kd_cabang]) }}" class="btn btn-falcon-warning btn-sm" ><span class="fa fa-print"></span> Export Aset</a>
+
                     </div>
                     <div class="col-sm-auto">
                         <div class="row gx-2 align-items-center">

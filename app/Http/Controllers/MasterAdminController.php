@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DataBarangAsetV2Export;
+use App\Exports\DataBarangNonAsetExport;
+use App\Exports\DataBarangV2Export;
+use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -169,6 +173,14 @@ class MasterAdminController extends Controller
             'old_brg' => $old_brg,
             'new_brg' => $new_brg
         ]);
+    }
+    public function masteradmin_cabang_export_excel_data_master_barang($id){
+        $data = DB::table('tbl_cabang')->where('kd_cabang', $id)->first();
+        return Excel::download(new DataBarangV2Export($id), 'INVENTARIS_NON_ASET_' . $data->nama_cabang . '.xlsx');
+    }
+    public function masteradmin_cabang_export_excel_data_aset_master_barang($id){
+        $data = DB::table('tbl_cabang')->where('kd_cabang', $id)->first();
+        return Excel::download(new DataBarangAsetV2Export($id), 'INVENTARIS_ASET_' . $data->nama_cabang . '.xlsx');
     }
     // MASTER BARANG
     public function masteradmin_cabang_data_barang(Request $request)

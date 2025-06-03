@@ -234,7 +234,7 @@ class AppController extends Controller
         $data = DB::table('tbl_peminjaman')
             ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_peminjaman.kd_cabang')
             ->where('tbl_peminjaman.tujuan_cabang', Auth::user()->cabang)
-            ->where('tbl_peminjaman.kd_cabang','!=' ,Auth::user()->cabang)
+            ->where('tbl_peminjaman.kd_cabang', '!=', Auth::user()->cabang)
             ->where('status_pinjam', 2)->get();
         return view('application.peminjaman.data-order-peminjaman', ['data' => $data]);
     }
@@ -392,8 +392,8 @@ class AppController extends Controller
                 $texts = $no++ . '. ' . $value->inventaris_data_name . "\n";
                 $pesan = $pesan . $texts;
             }
-            $text = "Hai \nAda Notifikasi Peminjaman Barang\nDengan No Tiket : ".$check->tiket_peminjaman."\nToken Peminjaman Anda : *" . $token .
-                "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Transforma Digital*";
+            $text = "Hai \nAda Notifikasi Peminjaman Barang\nDengan No Tiket : " . $check->tiket_peminjaman . "\nToken Peminjaman Anda : *" . $token .
+                "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Transforma*";
             DB::table('message')->insert([
                 'token_code' => str::uuid(),
                 'number' => $number->wa_number_no,
@@ -521,8 +521,8 @@ class AppController extends Controller
                 ->style('dot')
                 ->margin(2)
                 ->generate($token));
-            $text = "Hai \n\nToken Pemusnahan Anda : *" . $token .
-                "*\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma Digital*";
+            $text = "Hai \nAda Notifikasi Pemusnahan Barang Dengan Tiket Pemusnahan :\n" . $code . "\nToken Verifikasi Pemusnahan Anda : *" . $token .
+                "*\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma*";
             DB::table('tbl_pemusnahan')->insert([
                 'kd_pemusnahan' => $code,
                 'id_inventaris' => $request->id_inventaris,

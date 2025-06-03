@@ -452,4 +452,29 @@
             });
         });
     </script>
+    {{-- Export Excel --}}
+    <script>
+        $(document).on("click", "#button-export-data-non-aset", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#button-export-data-non-aset').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_data_barang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#button-export-data-non-aset').html(data);
+            }).fail(function() {
+                $('#button-export-data-non-aset').html('eror');
+            });
+
+        });
+    </script>
 @endsection
