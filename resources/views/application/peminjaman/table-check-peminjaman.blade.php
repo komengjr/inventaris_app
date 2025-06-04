@@ -7,8 +7,9 @@
              <th>Merek / Type</th>
              <th>Tanggal Peminjaman</th>
              <th>Kondisi Peminjaman</th>
-             <th>Tanggal Pengembalian</th>
+             <th>Tanggal Laporan Pengembalian</th>
              <th>Kondisi Pengembalian</th>
+             <th>Status</th>
              <th>Action</th>
          </tr>
      </thead>
@@ -27,9 +28,20 @@
                  <td>{{ $brgs->tgl_kembali_barang }}</td>
                  <td>{{ $brgs->kondisi_kembali }}</td>
                  <td>
+                     @if ($brgs->status_sub_peminjaman == 0)
+                         <span class="badge bg-danger">Unverified</span>
+                     @elseif($brgs->status_sub_peminjaman == 1)
+                         <span class="badge bg-success">Barang Kembali</span>
+                     @elseif($brgs->status_sub_peminjaman == 2)
+                         <span class="badge bg-warning">Belum Kembali</span>
+                     @elseif($brgs->status_sub_peminjaman == 3)
+                         <span class="badge bg-danger">Barang Hilang</span>
+                     @endif
+                 </td>
+                 <td>
                      <div class="btn-group" role="group">
-                         <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2" type="button"
-                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                         <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
+                             type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
                                  class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span>Option</button>
                          <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
                              <button class="dropdown-item"id="button-proses-check-barang-peminjaman"

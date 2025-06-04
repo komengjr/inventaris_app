@@ -28,7 +28,7 @@
             <select name="pj" class="form-control choices-single-user" id="">
                 <option value="">Pilih Staff</option>
                 @foreach ($staff as $stafss)
-                    <option value="{{$stafss->nip}}">{{$stafss->nama_staff}}</option>
+                    <option value="{{$stafss->id_staff}}">{{$stafss->nama_staff}}</option>
                 @endforeach
             </select>
         </div>

@@ -92,7 +92,16 @@
                                 {{ $item->nama_cabang }}
                             </td>
                             <td>
-                                {{ $item->penanggung_jawab }}
+                                @php
+                                    $staff = DB::table('tbl_staff')
+                                        ->where('id_staff', $item->penanggung_jawab)
+                                        ->first();
+                                @endphp
+                                @if ($staff)
+                                    {{ $staff->nama_staff }}
+                                @else
+                                    {{ $item->penanggung_jawab }}
+                                @endif
                             </td>
                             <td>
                                 {{ $item->menyetujui }}

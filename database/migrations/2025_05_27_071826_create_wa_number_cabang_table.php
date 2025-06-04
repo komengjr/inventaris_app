@@ -20,6 +20,7 @@ class CreateWaNumberCabangTable extends Migration
             $table->string('wa_number_no');
             $table->string('kd_cabang');
             $table->string('wa_number_akses');
+            $table->integer('wa_number_status')->nullable();
             $table->timestamps();
         });
     }

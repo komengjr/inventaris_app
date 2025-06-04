@@ -52,6 +52,7 @@
     #company {
         float: right;
         text-align: right;
+        color: black;
     }
 
 
@@ -204,6 +205,10 @@
         border-left: 6px solid #db3311;
     }
 
+    #no_surat {
+        margin-top: -20px;
+    }
+
     #notices .notice {
         font-size: 1.2em;
     }
@@ -221,7 +226,7 @@
 </style>
 @php
     $no_doc = DB::table('master_doocument_cab')
-        ->where('master_document_code', '=', 'DOC00920')
+        ->where('master_document_code', '=', 'PJ')
         ->where('kd_cabang', Auth::user()->cabang)
         ->first();
 @endphp
@@ -241,10 +246,11 @@
             <img src="data:image/png;base64, {{ $image }}">
         </div>
         <div id="company">
+            <div id="no_surat">{{ $no }}</div>
+            <br>
             <h2 class="name">{{ $cabang->nama_cabang }}</h2>
             <div>{{ $cabang->alamat }}</div>
             <div>{{ $cabang->phone }}</div>
-            <div>{{ $no }}</div>
         </div>
         </div>
     </header>
@@ -266,11 +272,10 @@
                         <td>:</td>
                         <td>
                             @php
-                                $staff1 = DB::table('tbl_staff')->where('nip', $peminjaman->pj_pinjam)->first();
+                                $staff1 = DB::table('tbl_staff')->where('id_staff', $peminjaman->pj_pinjam)->first();
                             @endphp
                             @if ($staff1)
                                 {{ $staff1->nama_staff }}
-                            @else
                             @endif
                         </td>
                     </tr>
@@ -279,12 +284,12 @@
                         <td>:</td>
                         <td>
                             @php
-                                $staff2 = DB::table('tbl_staff')->where('nip', $peminjaman->pj_pinjam_cabang)->first();
+                                $staff2 = DB::table('tbl_staff')
+                                    ->where('id_staff', $peminjaman->pj_pinjam_cabang)
+                                    ->first();
                             @endphp
                             @if ($staff2)
                                 {{ $staff2->nama_staff }}
-                            @else
-                                {{ $staff1->nama_staff }}
                             @endif
                         </td>
                     </tr>
@@ -356,8 +361,12 @@
                         <td>
                             @if ($datas->status_sub_peminjaman == 0)
                                 <strong style="color: red;">Belum diverifikasi</strong>
-                            @else
-                                <strong style="color: rgb(2, 63, 3);">Sudah diverifikasi</strong>
+                            @elseif($datas->status_sub_peminjaman == 1)
+                                <strong style="color: rgb(8, 138, 64);">Barang Kembali</strong>
+                            @elseif($datas->status_sub_peminjaman == 2)
+                                <strong style="color: rgb(18, 19, 12);">Barang Belum Kembali</strong>
+                            @elseif($datas->status_sub_peminjaman == 3)
+                                <strong style="color: rgb(249, 2, 39);">Barang Hilang</strong>
                             @endif
                         </td>
                     </tr>
@@ -365,6 +374,59 @@
 
             </tbody>
         </table>
+        @if (!$data_hilang->isEmpty())
+            <h5 style="color: red;">Keterangan Barang Hilang</h5>
+
+            <table border="1" cellspacing="0" cellpadding="0">
+                <thead style="font-size: 11px;">
+                    <tr>
+                        <th>#</th>
+                        <th>NAMA BARANG</th>
+                        <th>NO INVENTARIS</th>
+                        <th>MERK</th>
+                        <th>TYPE</th>
+                        <th>NO LAPORAN PEMUSNAHAN</th>
+                        <th>STATUS PEMUSNAHAN</th>
+                    </tr>
+                </thead>
+                <tbody id="invoiceItems" style="font-size: 10px;">
+                    @php
+                        $no = 1;
+                        $hasil = 0;
+                    @endphp
+                    @foreach ($data_hilang as $data_hilangs)
+                        <tr>
+                            <td class="no">{{ $no++ }}</td>
+                            <td class="desc">{{ $data_hilangs->inventaris_data_name }}</td>
+                            <td class="desc">{{ $data_hilangs->inventaris_data_number }}</td>
+                            <td class="desc">{{ $data_hilangs->inventaris_data_merk }}</td>
+                            <td class="desc">{{ $data_hilangs->inventaris_data_type }}</td>
+                            <td class="desc">
+                                @php
+                                    $pemusnahan = DB::table('tbl_pemusnahan')
+                                        ->where('id_inventaris', $data_hilangs->id_inventaris)
+                                        ->first();
+                                @endphp
+                                @if ($pemusnahan)
+                                    {{ $pemusnahan->kd_pemusnahan }}
+                                @endif
+                            </td>
+                            <td class="desc">
+                                @if ($pemusnahan)
+                                    @if ($pemusnahan->status_pemusnahan == 0)
+                                        <strong style="color: red;">Belum Diverifikasi</strong>
+                                    @else
+                                        <strong style="color: green;">Sudah Diverifikasi</strong>
+                                    @endif
+                                @endif
+                            </td>
+
+                        </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+        @endif
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
             @if ($peminjaman->pj_cabang == null)

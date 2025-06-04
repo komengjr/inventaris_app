@@ -20,8 +20,7 @@
                     <hr>
                 </div>
                 <div class="card-body pt-0 mt-0">
-                    <form class="row g-3" method="post"
-                        enctype="multipart/form-data">
+                    <form class="row g-3" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-3">
                             <label class="form-label" for="inputAddress">Kode Mutasi</label>
@@ -29,18 +28,26 @@
                             <input class="form-control" type="text" id="code" value="{{ $data->kd_mutasi }}"
                                 hidden />
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label" for="inputAddress">Tujuan Cabang</label>
-                            <input class="form-control" type="text" value="{{ $data->target_mutasi }}" disabled />
-                        </div>
                         <div class="col-md-4">
+                            <label class="form-label" for="inputAddress">Tujuan Cabang</label>
+                            <input class="form-control" type="text" value="{{ $data->nama_cabang }}" disabled />
+                        </div>
+                        <div class="col-md-2">
                             <label class="form-label" for="inputAddress">Tanggal Order</label>
-                            <input class="form-control" type="text"
-                                value="{{ $data->tanggal_buat }}" disabled />
+                            <input class="form-control" type="text" value="{{ $data->tanggal_buat }}" disabled />
                         </div>
                         <div class="col-md-3">
                             <label class="form-label" for="inputAddress">Penanggung Jawab Mutasi</label>
-                            <input class="form-control" type="text" value="{{ $data->penanggung_jawab }}" disabled />
+                            @php
+                                $staff = DB::table('tbl_staff')->where('id_staff', $data->penanggung_jawab)->first();
+                            @endphp
+                            @if ($staff)
+                                <input class="form-control" type="text" value="{{ $staff->nama_staff }}"
+                                    disabled />
+                            @else
+                                <input class="form-control" type="text" value="{{ $data->penanggung_jawab }}"
+                                    disabled />
+                            @endif
                         </div>
                         <div class="col-md-12">
                             <label class="form-label" for="inputAddress">Deskripsi Peminjaman</label>
@@ -128,13 +135,14 @@
                                 @endphp
                                 @foreach ($brg as $brgs)
                                     <tr>
-                                        <td>{{$no++}}</td>
-                                        <td>{{$brgs->inventaris_data_name}}</td>
-                                        <td>{{$brgs->inventaris_data_code}}</td>
-                                        <td>{{$brgs->inventaris_data_merk}}</td>
-                                        <td>{{$brgs->inventaris_data_tgl_beli}}</td>
+                                        <td>{{ $no++ }}</td>
+                                        <td>{{ $brgs->inventaris_data_name }}</td>
+                                        <td>{{ $brgs->inventaris_data_code }}</td>
+                                        <td>{{ $brgs->inventaris_data_merk }}</td>
+                                        <td>{{ $brgs->inventaris_data_tgl_beli }}</td>
                                         <td>
-                                            <button class="btn btn-falcon-danger"><span class="fas fa-trash"></span></button>
+                                            <button class="btn btn-falcon-danger"><span
+                                                    class="fas fa-trash"></span></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -150,7 +158,7 @@
     <div id="menu-verifikasi-data-mutasi">
         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
         <button class="btn btn-primary" type="button" id="button-verifikasi-data-mutasi"
-            data-code="{{$data->kd_mutasi}}">Verifikasi</button>
+            data-code="{{ $data->kd_mutasi }}">Verifikasi</button>
     </div>
 </div>
 <script>

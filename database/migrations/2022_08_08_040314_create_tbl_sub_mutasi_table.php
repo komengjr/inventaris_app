@@ -17,7 +17,9 @@ class CreateTblSubMutasiTable extends Migration
             $table->id('id_sub_mutasi');
             $table->string('kd_mutasi')->index();
             $table->string('id_inventaris')->index();
+            $table->string('id_inventaris_new')->nullable();
             $table->string('tgl_verif_mutasi')->nullable();
+            $table->string('tgl_buat_mutasi')->nullable();
             $table->string('kd_lokasi_awal')->nullable();
             $table->string('kd_lokasi_tujuan')->nullable();
             $table->string('kd_cabang_awal')->nullable();

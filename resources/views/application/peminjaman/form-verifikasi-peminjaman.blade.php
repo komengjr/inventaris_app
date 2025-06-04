@@ -109,7 +109,7 @@
                                     <th>Merek / Type</th>
                                     <th>Tanggal Peminjaman</th>
                                     <th>Kondisi Awal</th>
-                                    <th>Tanggal Pengembalian</th>
+                                    <th>Tanggal Laporan Pengembalian</th>
                                     <th>Kondisi Balik</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -131,13 +131,13 @@
                                         <td>{{ $brgs->kondisi_kembali }}</td>
                                         <td>
                                             @if ($brgs->status_sub_peminjaman == 0)
-                                                @if ($data->kd_cabang == $data->tujuan_cabang)
-                                                    <span class="badge bg-success">Verified</span>
-                                                @else
-                                                    <span class="badge bg-danger">Unverified</span>
-                                                @endif
-                                            @else
-                                                <span class="badge bg-success">Verified</span>
+                                                <span class="badge bg-danger">Unverified</span>
+                                            @elseif($brgs->status_sub_peminjaman == 1)
+                                                <span class="badge bg-success">Barang Kembali</span>
+                                            @elseif($brgs->status_sub_peminjaman == 2)
+                                                <span class="badge bg-warning">Belum Kembali</span>
+                                            @elseif($brgs->status_sub_peminjaman == 3)
+                                                <span class="badge bg-danger">Barang Hilang</span>
                                             @endif
                                         </td>
                                         <td>

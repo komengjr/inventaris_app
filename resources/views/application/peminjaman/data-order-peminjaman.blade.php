@@ -12,6 +12,7 @@
                     <th>Kegiatan</th>
                     <th>Dari Cabang</th>
                     <th>Penanggung Jawab Alat</th>
+                    <th>Penerima Barang</th>
                     <th>Menyetujui</th>
                     <th class="text-center">Action</th>
                 </tr>
@@ -22,25 +23,53 @@
                 @endphp
                 @foreach ($data as $datas)
                     <tr>
-                        <td>{{$no++}}</td>
-                        <td>{{$datas->tiket_peminjaman}}</td>
-                        <td>{{$datas->nama_kegiatan}}</td>
-                        <td>{{$datas->nama_cabang}}</td>
-                        <td>{{$datas->pj_pinjam}}</td>
-                        <td>{{$datas->pj_cabang}}</td>
+                        <td>{{ $no++ }}</td>
+                        <td>{{ $datas->tiket_peminjaman }}</td>
+                        <td>{{ $datas->nama_kegiatan }}</td>
+                        <td>{{ $datas->nama_cabang }}</td>
                         <td>
-                            <button class="btn btn-falcon-success btn-sm" id="button-terima-barang-peminjaman" data-code="{{$datas->id_pinjam}}"><span class="fas fa-check-square"></span> Terima Barang</button>
+                            @php
+                                $staff = DB::table('tbl_staff')->where('id_staff',$datas->pj_pinjam)->first();
+                            @endphp
+                            @if ($staff)
+                                {{$staff->nama_staff}}
+                            @endif
+                        </td>
+                        <td>
+                            @php
+                                $staff = DB::table('tbl_staff')->where('id_staff',$datas->pj_pinjam_cabang)->first();
+                            @endphp
+                            @if ($staff)
+                                {{$staff->nama_staff}}
+                            @endif
+                        </td>
+                        <td>
+                            @php
+                                $user = DB::table('wa_number_cabang')->where('wa_number_code',$datas->pj_cabang)->first();
+                            @endphp
+                            @if ($user)
+                                {{$user->wa_number_name}}
+                            @endif
+                        </td>
+                        <td>
+                            @if ($datas->status_pinjam == 2)
+                                <button class="btn btn-falcon-success btn-sm" id="button-terima-barang-peminjaman"
+                                    data-code="{{ $datas->id_pinjam }}"><span class="fas fa-check-square"></span> Terima
+                                    Barang</button>
+                            @else
+                                <button class="btn btn-outline-success btn-sm" id="button-cetak-rekap-barang-peminjaman"
+                                    data-code="{{ $datas->tiket_peminjaman }}"><span class="fas fa-print"></span> Print Rekap</button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-    <div id="menu-print-rekap-mutasi"></div>
+    <div id="menu-print-rekap-peminjaman"></div>
 </div>
 <script>
     new DataTable('#data-table-mutasi', {
         responsive: true
     });
 </script>
-

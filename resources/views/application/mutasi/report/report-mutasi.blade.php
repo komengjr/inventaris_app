@@ -306,9 +306,11 @@
                 <span><img src="data:image/png;base64, {!! base64_encode(
                     QrCode::style('round')->format('svg')->size(100)->errorCorrection('H')->generate($mutasi->kd_mutasi),
                 ) !!}"></span> <br>
-                <span>{{$mutasi->kd_mutasi}}</span>
+                <span>{{ $mutasi->kd_mutasi }}</span>
             </div>
         </div>
+        <h3 style="margin-bottom: 0px;">DATA INVENTARIS {{ $asal->nama_cabang }}</h3>
+        <hr>
         <table border="1" cellspacing="0" cellpadding="0">
             <thead style="font-size: 11px;">
                 <tr>
@@ -318,6 +320,7 @@
                     <th>MERK / TYPE</th>
                     <th>HARGA PEROLEHAN</th>
                     <th>TANGGAL PEMBELIAN</th>
+                    <th>STATUS</th>
                 </tr>
 
             </thead>
@@ -334,10 +337,46 @@
                         <td>{{ $item->inventaris_data_merk }} / {{ $item->inventaris_data_type }}</td>
                         <td style="text-align: right;">@currency($item->inventaris_data_harga)</td>
                         <td>{{ $item->inventaris_data_tgl_beli }}</td>
+                        <td><strong style="color: rgb(239, 9, 9);">Telah dimutasi</strong></td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        @if (!$brg_new->isEmpty())
+            <h3 style="margin-bottom: 0px;">DATA INVENTARIS {{ $mutasi->nama_cabang }}</h3>
+            <hr>
+            <table border="1" cellspacing="0" cellpadding="0">
+                <thead style="font-size: 11px;">
+                    <tr>
+                        <th class="no">#</th>
+                        <th>NAMA BARANG</th>
+                        <th>NO INVENTARIS</th>
+                        <th>MERK / TYPE</th>
+                        <th>HARGA PEROLEHAN</th>
+                        <th>TANGGAL PEMBELIAN</th>
+                        <th>STATUS</th>
+                    </tr>
+
+                </thead>
+                <tbody id="invoiceItems" style="font-size: 10px;">
+                    @php
+                        $no = 1;
+                        $hasil = 0;
+                    @endphp
+                    @foreach ($brg_new as $item)
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $item->inventaris_data_name }}</td>
+                            <td>{{ $item->inventaris_data_number }}</td>
+                            <td>{{ $item->inventaris_data_merk }} / {{ $item->inventaris_data_type }}</td>
+                            <td style="text-align: right;">@currency($item->inventaris_data_harga)</td>
+                            <td>{{ $item->inventaris_data_tgl_beli }}</td>
+                            <td><strong style="color: rgb(9, 239, 93);">Telah dibuat</strong></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
@@ -347,9 +386,9 @@
                 $ttd = DB::table('wa_number_cabang')->where('wa_number_code', $mutasi->menyetujui)->first();
             @endphp
             @if ($ttd)
-                <div class="notice">{{$ttd->wa_number_name}}</div>
+                <div class="notice">{{ $ttd->wa_number_name }}</div>
             @else
-                <div class="notice">{{$mutasi->menyetujui}}</div>
+                <div class="notice">{{ $mutasi->menyetujui }}</div>
             @endif
         </div>
     </main>

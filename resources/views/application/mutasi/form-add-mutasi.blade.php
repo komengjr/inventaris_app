@@ -16,8 +16,12 @@
         </div>
         <div class="col-md-6">
             <label class="form-label" for="inputAddress">Penanggung Jawab Alat</label>
-             <input class="form-control form-control-lg" id="inputAddress" type="text" name="pj_alat"
-                required />
+              <select name="pj_alat" class="form-select form-select-lg" required>
+                <option value="">Pilih Staff</option>
+                @foreach ($staff as $staffs)
+                    <option value="{{$staffs->id_staff}}">{{$staffs->nama_staff}} - {{$staffs->nip}}</option>
+                @endforeach
+            </select>
         </div>
         <div class="col-md-6">
             <label class="form-label" for="inputAddress">Tanggal Order</label>

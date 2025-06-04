@@ -18,8 +18,11 @@ class CreateTblPemusnahanTable extends Migration
             $table->string('kd_pemusnahan')->unique();
             $table->string('id_inventaris');
             $table->string('kd_cabang');
+            $table->string('penggagas');
             $table->string('dasar_pengajuan');
+            $table->string('user_verifikasi');
             $table->string('verifikasi')->nullable();
+            $table->string('user_persetujuan');
             $table->string('persetujuan')->nullable();
             $table->string('eksekusi')->nullable();
             $table->string('user_1')->nullable();

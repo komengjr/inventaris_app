@@ -418,6 +418,8 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('master-barang', [AppController::class, 'master_barang'])->name('master_barang');
     Route::get('master-no-document', [AppController::class, 'master_no_document'])->name('master_no_document');
     Route::get('master-no-whatsapp', [AppController::class, 'master_no_whatsapp'])->name('master_no_whatsapp');
+    Route::get('master-location', [AppController::class, 'master_location'])->name('master_location');
+    Route::get('master-staff', [AppController::class, 'master_staff'])->name('master_staff');
 });
 Route::prefix('app')->group(function () {
     Route::get('dashboard_home', [AppController::class, 'dashboard_home'])->name('dashboard_home');
@@ -442,6 +444,7 @@ Route::prefix('app')->group(function () {
     // PEMINJAMAN
     Route::post('peminjaman/add', [AppController::class, 'peminjaman_add'])->name('peminjaman_add');
     Route::post('peminjaman/data-order', [AppController::class, 'peminjaman_data_order'])->name('peminjaman_data_order');
+    Route::post('peminjaman/data-rekap', [AppController::class, 'peminjaman_data_rekap'])->name('peminjaman_data_rekap');
     Route::post('peminjaman/terima-data-order-peminjaman', [AppController::class, 'peminjaman_terima_data_order'])->name('peminjaman_terima_data_order');
     Route::post('peminjaman/terima-data-barang-peminjaman', [AppController::class, 'peminjaman_terima_data_barang'])->name('peminjaman_terima_data_barang');
     Route::post('peminjaman/verifikasi-data-barang-peminjaman', [AppController::class, 'verifikasi_peminjaman_terima_data_barang'])->name('verifikasi_peminjaman_terima_data_barang');

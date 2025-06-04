@@ -220,7 +220,7 @@
 </style>
 @php
     $no_doc = DB::table('master_doocument_cab')
-        ->where('master_document_code', '=', 'DOC00002')
+        ->where('master_document_code', '=', 'PM')
         ->where('kd_cabang', Auth::user()->cabang)
         ->first();
 @endphp
@@ -240,10 +240,12 @@
             <img src="data:image/png;base64, {{ $image }}">
         </div>
         <div id="company">
+            <div style="margin-top: -20px;">{{ $no }}</div>
+            <br>
             <h2 class="name">{{ $cabang->nama_cabang }}</h2>
             <div>{{ $cabang->alamat }}</div>
             <div>{{ $cabang->phone }}</div>
-            <div>{{ $no }}</div>
+
         </div>
         </div>
     </header>
@@ -258,12 +260,12 @@
                     <tr>
                         <td>No Pemusnahan</td>
                         <td>:</td>
-                        <td>{{$data->kd_pemusnahan}}</td>
+                        <td>{{ $data->kd_pemusnahan }}</td>
                     </tr>
                     <tr>
                         <td>Tanggal</td>
                         <td>:</td>
-                        <td>{{date("d-m-Y", strtotime($data->tgl_pemusnahan))}}</td>
+                        <td>{{ date('d-m-Y', strtotime($data->tgl_pemusnahan)) }}</td>
                     </tr>
 
                 </table>
@@ -274,67 +276,134 @@
                 {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
             </div>
         </div>
+        <br>
+        <table style="width: 100%;" border="1">
+            <tr>
+                <td style="text-align: center;"><strong>PENGAJUAN</strong></td>
+            </tr>
+            <tr>
+                <td style="margin: 5px; padding: 10px;">
+                    <div><strong>1. Dasar Pengajuan :</strong></div>
+                    <p style="padding-left: 17px;">{{ $data->dasar_pengajuan }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="margin: 5px; padding: 10px; padding-bottom: 40px;">
+                    <div><strong>2. Identitas Barang :</strong></div>
 
-        <h3>1. Dasar Pengajuan :</h3>
-        <p style="padding-left: 17px;">{{ $data->dasar_pengajuan }}</p>
-        <h3>2. Identitas Barang</h3>
-        <table style="padding-left: 17px; width: 100%;">
-            <tr>
-                <td">Nama Barang</td>
-                    <td>:</td>
-                    <td>{{ $data->inventaris_data_name }}</td>
+                    <table style="padding-left: 17px; width: 100%;" border="0">
+                        <tr>
+                            <td>Nama Barang </td>
+                            <td>:</td>
+                            <td>{{ $data->inventaris_data_name }}</td>
+                        </tr>
+                        <tr>
+                            <td style="margin: 10px;">No. Inventaris</td>
+                            <td>:</td>
+                            <td>{{ $data->inventaris_data_code }}</td>
+                        </tr>
+                        <tr>
+                            <td style="margin: 10px;">Merk</td>
+                            <td>:</td>
+                            <td>{{ $data->inventaris_data_merk }}</td>
+                        </tr>
+                        <tr>
+                            <td style="margin: 10px;">Type/No.Seri</td>
+                            <td>:</td>
+                            <td>{{ $data->inventaris_data_type }} / {{ $data->inventaris_data_merk }}</td>
+                        </tr>
+                        <tr>
+                            <td style="margin: 10px;">Tanggal Pembelian</td>
+                            <td>:</td>
+                            <td>{{ $data->inventaris_data_tgl_beli }}</td>
+                        </tr>
+                        <tr>
+                            <td style="margin: 10px;">Harga Barang</td>
+                            <td>:</td>
+                            <td>@currency($data->inventaris_data_harga)</td>
+                        </tr>
+                    </table>
+                    <p style="float: right; text-align: right;margin-top: -20px;">
+                        <strong style="">Pengagags</strong><br>
+                        {{-- <img style="margin-top: 2%;"
+                            src="data:image/png;base64, {!! base64_encode(
+                                QrCode::style('round')->format('svg')->size(50)->errorCorrection('H')->generate($data->penggagas),
+                            ) !!}"> --}}
+                        <br>{{ $data->penggagas }}
+                    </p>
+                </td>
             </tr>
             <tr>
-                <td style="margin: 10px;">No. Inventaris</td>
-                <td>:</td>
-                <td>{{ $data->inventaris_data_code }}</td>
+                @php
+                    $user_verifikasi = DB::table('wa_number_cabang')
+                        ->where('wa_number_code', $data->user_verifikasi)
+                        ->first();
+                @endphp
+                <td style="margin: 5px; padding: 10px; padding-bottom: 40px;">
+                    <div><strong>3. Verifikasi</strong></div>
+                    <p style="padding-left: 17px;">{{ $data->verifikasi }}</p>
+                    <p style="float: right; text-align: right; margin-top: -50px;">
+                        <strong style="">Wk Mng SDM & Umum</strong><br>
+                        @if ($user_verifikasi)
+                            <img style="margin-top: 1%;"
+                                src="data:image/png;base64, {!! base64_encode(
+                                    QrCode::style('round')->format('svg')->size(50)->errorCorrection('H')->generate($user_verifikasi->wa_number_code),
+                                ) !!}"><br>{{ $user_verifikasi->wa_number_name }}
+                        @endif
+                    </p>
+                </td>
             </tr>
             <tr>
-                <td style="margin: 10px;">Merk</td>
-                <td>:</td>
-                <td>{{ $data->inventaris_data_merk }}</td>
+                <td style="text-align: center;"><strong>PERSETUJUAN</strong></td>
             </tr>
             <tr>
-                <td style="margin: 10px;">Type/No.Seri</td>
-                <td>:</td>
-                <td>{{ $data->inventaris_data_type }} / {{ $data->inventaris_data_merk }}</td>
+                @php
+                    $user_pesetujuan = DB::table('wa_number_cabang')
+                        ->where('wa_number_code', $data->user_persetujuan)
+                        ->first();
+                @endphp
+                <td style="margin: 5px; padding: 10px; padding-bottom: 40px;">
+                    <div><strong>4. Persetujuan</strong></div>
+                    <p style="padding-left: 17px;">{{ $data->persetujuan }}</p>
+                    <p style="float: right; text-align: right; margin-top: -50px;">
+                        <strong style="">Kepala Cabang</strong><br>
+                        @if ($user_pesetujuan)
+                            <img style="margin-top: 2%;"
+                                src="data:image/png;base64, {!! base64_encode(
+                                    QrCode::style('round')->format('svg')->size(50)->errorCorrection('H')->generate($user_pesetujuan->wa_number_code),
+                                ) !!}"><br>{{ $user_pesetujuan->wa_number_name }}
+                        @endif
+                    </p>
+                </td>
             </tr>
             <tr>
-                <td style="margin: 10px;">Tanggal Pembelian</td>
-                <td>:</td>
-                <td>{{ $data->inventaris_data_tgl_beli }}</td>
+                <td style="text-align: center;"><strong>EKSEKUSI</strong></td>
             </tr>
             <tr>
-                <td style="margin: 10px;">Harga Barang</td>
-                <td>:</td>
-                <td>@currency($data->inventaris_data_harga)</td>
+                @php
+                    $user_ekeskusi = DB::table('tbl_staff')->where('id_staff', $data->eksekusi)->first();
+                @endphp
+                <td style="margin: 5px; padding: 10px; padding-bottom: 10px;">
+                    <div>5. Telah dilakukan {{ $data->persetujuan }} Pada Tanggal
+                            {{ date('d-m-Y', strtotime($data->tgl_pemusnahan)) }}</div>
+                    <p style="padding-left: 17px;">-</p>
+                    <p style="float: right; text-align: right; margin-top: -50px;">
+                        <strong style="">Ekseskusi</strong><br><br>
+                        @if ($user_ekeskusi)
+                            {{ $user_ekeskusi->nama_staff }}
+                        @endif
+                    </p>
+                </td>
             </tr>
         </table>
-        <h3>3. Verifikasi</h3>
-        <p style="padding-left: 17px;">{{ $data->verifikasi }}</p>
-        <h3>4. Persetujuan</h3>
-        <p style="padding-left: 17px;">{{ $data->persetujuan }}</p>
-        <h3>5. Eksekusi</h3>
-        <p style="padding-left: 17px;">{{ $data->eksekusi }}</p>
-        <h3>6. Penanggung Jawab</h3>
-        <p style="padding-left: 17px;">
-            @php
-                $nama = DB::table('wa_number_cabang')->where('id_wa_number',$data->pj_pemusnahan)->first();
-            @endphp
-            @if ($nama)
-             {{$nama->wa_number_name}}
-            @else
-
-            @endif
-        </p>
 
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->format('svg')->size(70)->errorCorrection('H')->generate($data->kd_pemusnahan),
+                QrCode::style('round')->format('svg')->size(60)->errorCorrection('H')->generate($data->kd_pemusnahan),
             ) !!}">
             {{-- <div>NOTICE:</div> --}}
-            <div class="notice">Dokumen Ini Sah tanpa Tanda Tangan.</div>
+            <div class="notice">Dokumen Ini diterbitkan Secara Digital.</div>
         </div>
     </main>
 </body>

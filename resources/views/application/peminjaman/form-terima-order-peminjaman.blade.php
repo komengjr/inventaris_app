@@ -39,7 +39,12 @@
                  </div>
                  <div class="col-md-6">
                      <label class="form-label" for="inputAddress">Penerima</label>
-                     <input class="form-control" type="text" id="penerima" />
+                     <select name="penerima" class="form-control" id="penerima">
+                         <option value="">Pilih Penerima</option>
+                         @foreach ($staff as $stafs)
+                             <option value="{{$stafs->id_staff}}">{{$stafs->nama_staff}} - {{$stafs->nip}}</option>
+                         @endforeach
+                     </select>
                  </div>
                  <div class="col-md-6">
                      <label class="form-label" for="inputAddress">Deskripsi Cabang</label>
@@ -98,7 +103,7 @@
                                              id="button-terima-barang-satuan-peminjaman"
                                              data-code="{{ $item->id_sub_peminjaman }}">Terima</button>
                                      @else
-                                     <span class="badge bg-success">Terima</span>
+                                         <span class="badge bg-success">Terima</span>
                                      @endif
                                  </td>
                              </tr>
@@ -110,8 +115,9 @@
      </div>
  </div>
  <div id="menu-verifikasi-data-peminjaman" class="pt-3">
-     <button class="btn btn-primary btn-sm float-end mb-3" type="button" id="button-verifikasi-penerimaan-barang-pinjaman"
-         data-code="{{ $data->tiket_peminjaman }}">Verifikasi Penerimaan Pinjaman</button>
+     <button class="btn btn-primary btn-sm float-end mb-3" type="button"
+         id="button-verifikasi-penerimaan-barang-pinjaman" data-code="{{ $data->tiket_peminjaman }}">Verifikasi
+         Penerimaan Pinjaman</button>
  </div>
  <script>
      new DataTable('#data-table-pinjam', {

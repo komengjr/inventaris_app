@@ -165,6 +165,10 @@
                                         data-bs-target="#modal-peminjaman" id="button-data-order-peminjaman"><span
                                             class="far fa-bell"></span>
                                         Data Order Peminjaman</button>
+                                    <button class="dropdown-item text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modal-peminjaman" id="button-data-rekap-peminjaman"><span
+                                            class="far fa-file-alt"></span>
+                                        Data Rekap Peminjaman</button>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +205,7 @@
                                     <td>{{ $datas->nama_kegiatan }}</td>
                                     <td>
                                         @php
-                                            $staff = DB::table('tbl_staff')->where('nip', $datas->pj_pinjam)->first();
+                                            $staff = DB::table('tbl_staff')->where('id_staff', $datas->pj_pinjam)->first();
                                         @endphp
                                         @if ($staff)
                                             {{ $staff->nama_staff }}
@@ -401,6 +405,26 @@
                 $('#menu-peminjaman').html('eror');
             });
         });
+        $(document).on("click", "#button-data-rekap-peminjaman", function(e) {
+            e.preventDefault();
+            $('#menu-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_data_rekap') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-peminjaman').html(data);
+            }).fail(function() {
+                $('#menu-peminjaman').html('eror');
+            });
+        });
         $(document).on("click", "#button-terima-barang-peminjaman", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
@@ -420,6 +444,30 @@
                 $('#menu-terima-order-peminjaman').html(data);
             }).fail(function() {
                 $('#menu-terima-order-peminjaman').html('eror');
+            });
+        });
+        $(document).on("click", "#button-cetak-rekap-barang-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-print-rekap-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('print_report_data_peminjaman_show') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-print-rekap-peminjaman').html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+            }).fail(function() {
+                $('#menu-print-rekap-peminjaman').html('eror');
             });
         });
         $(document).on("click", "#button-terima-barang-satuan-peminjaman", function(e) {

@@ -238,13 +238,23 @@ class AppController extends Controller
             ->where('status_pinjam', 2)->get();
         return view('application.peminjaman.data-order-peminjaman', ['data' => $data]);
     }
+    public function peminjaman_data_rekap(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_peminjaman.kd_cabang')
+            ->where('tbl_peminjaman.tujuan_cabang', Auth::user()->cabang)
+            ->where('tbl_peminjaman.kd_cabang', '!=', Auth::user()->cabang)
+            ->where('status_pinjam', 4)->orderBy('id_pinjam', 'DESC')->get();
+        return view('application.peminjaman.data-order-peminjaman', ['data' => $data]);
+    }
     public function peminjaman_terima_data_order(Request $request)
     {
         $data = DB::table('tbl_peminjaman')->where('id_pinjam', $request->code)->first();
         $brg = DB::table('tbl_sub_peminjaman')
             ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
             ->where('tbl_sub_peminjaman.id_pinjam', $request->code)->get();
-        return view('application.peminjaman.form-terima-order-peminjaman', ['data' => $data, 'brg' => $brg]);
+        $staff = DB::table('tbl_staff')->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('application.peminjaman.form-terima-order-peminjaman', ['data' => $data, 'brg' => $brg, 'staff' => $staff]);
     }
     public function peminjaman_terima_data_barang(Request $request)
     {
@@ -302,7 +312,9 @@ class AppController extends Controller
     }
     public function peminjaman_find_data(Request $request)
     {
-        $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_name', 'like', '%' . $request->name . '%')->get();
+        $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data_name', 'like', '%' . $request->name . '%')
+            ->where('inventaris_data_status', '<', 4)->get();
         return view('application.peminjaman.hasil-pencarian-barang', ['data' => $data, 'tiket' => $request->code]);
     }
     public function peminjaman_pilih_data(Request $request)
@@ -420,7 +432,7 @@ class AppController extends Controller
         DB::table('tbl_sub_peminjaman')->where('id_sub_peminjaman', $request->id_pinjam)->update([
             'tgl_kembali_barang' => now(),
             'kondisi_kembali' => $request->catatan,
-            'status_sub_peminjaman' => 1,
+            'status_sub_peminjaman' => $request->status,
         ]);
         $brg = DB::table('tbl_sub_peminjaman')
             ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
@@ -435,6 +447,68 @@ class AppController extends Controller
             ->where('tbl_sub_peminjaman.tgl_kembali_barang', '=', null)
             ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->first();
         if (!$check) {
+            $hilang = DB::table('tbl_sub_peminjaman')
+                ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+                ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->where('status_sub_peminjaman', 3)->get();
+            foreach ($hilang as $value) {
+                $token = mt_rand(1000000, 9999999);
+                $check = DB::table('tbl_pemusnahan')->where('id_inventaris', $value->id_inventaris)->first();
+                $brg = DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->first();
+                $total = DB::table('tbl_pemusnahan')->where('kd_cabang', Auth::user()->cabang)->count();
+                $code = 'PM' . Auth::user()->cabang . date('YmdHis') . '' . str_pad($total + 1, 4, '0', STR_PAD_LEFT);
+                $kcb = DB::table('wa_number_cabang')
+                    ->where('wa_number_status', 1)
+                    ->where('kd_cabang', Auth::user()->cabang)
+                    ->where('wa_number_akses', '=', 'KCB')
+                    ->first();
+                $mgr = DB::table('wa_number_cabang')
+                    ->where('wa_number_status', 1)
+                    ->where('kd_cabang', Auth::user()->cabang)
+                    ->where('wa_number_akses', '=', 'MGR')
+                    ->first();
+                $text = "Hai \nAda Notifikasi Pemusnahan Barang Dengan Tiket Pemusnahan :\n*" . $code . "*\nDetail Barang :\n" .
+                    "\nNo Inventaris : " . $brg->inventaris_data_number .
+                    "\nNama Barang : " . $brg->inventaris_data_name .
+                    "\nMerek Barang : " . $brg->inventaris_data_merk .
+                    "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
+                    "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma*";
+                DB::table('tbl_pemusnahan')->insert([
+                    'kd_pemusnahan' => $code,
+                    'id_inventaris' => $value->id_inventaris,
+                    'kd_cabang' => Auth::user()->cabang,
+                    'dasar_pengajuan' => 'Kehilangan Pada Saat Peminjaman Barang',
+                    'user_verifikasi' => $mgr->wa_number_code,
+                    'verifikasi' => 'Kondisi Barang Hilang',
+                    'user_persetujuan' => $kcb->wa_number_code,
+                    'persetujuan' => '-',
+                    'eksekusi' => '-',
+                    'penggagas' => '-',
+                    'status_pemusnahan' => 0,
+                    'tgl_pemusnahan' => now(),
+                    'token_pemusnahan' => $token,
+                    'pj_pemusnahan' => $kcb->wa_number_code,
+                    'created_at' => now()
+                ]);
+                $qrcode = base64_encode(QrCode::format('png')
+                    ->size(500)
+                    ->merge('/storage/app/public/logo.png')
+                    ->errorCorrection('H')
+                    ->eyeColor(2, 100, 100, 255, 0, 0, 0)
+                    ->style('dot')
+                    ->margin(2)
+                    ->generate($token));
+                DB::table('message')->insert([
+                    'token_code' => $code,
+                    'number' => $kcb->wa_number_no,
+                    'pesan' => $text,
+                    'file' => $qrcode,
+                    'status' => 0,
+                    'time' => now(),
+                    'created_at' => now(),
+                ]);
+            }
+
+            // STATUS PEMINJAAMN
             DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->update([
                 'status_pinjam' => 4
             ]);
@@ -462,13 +536,25 @@ class AppController extends Controller
             ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
             ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
             ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->get();
+        $data_hilang = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)
+            ->where('tbl_sub_peminjaman.status_sub_peminjaman', 3)->get();
 
         $customPaper = array(0, 0, 50.80, 95.20);
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', ['data' => $data, 'cabang' => $cabang, 'peminjaman' => $peminjaman], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.peminjaman.report.report-peminjaman', [
+            'data' => $data,
+            'cabang' => $cabang,
+            'peminjaman' => $peminjaman,
+            'data_hilang' => $data_hilang
+        ], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         $dompdf = $pdf->getDomPDF();
         $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $font1 = $dompdf->getFontMetrics()->get_font("helvetica", "normal");
         $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        $dompdf->get_canvas()->page_text(34, 820, "Print by. " . Auth::user()->name, $font1, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
 
@@ -500,15 +586,22 @@ class AppController extends Controller
     public function menu_pemusnahan_pilih_data_barang(Request $request)
     {
         $data = DB::table('inventaris_data')->where('inventaris_data_code', $request->code)->first();
-        $wa = DB::table('wa_number_cabang')->where('kd_cabang', Auth::user()->cabang)->get();
-        return view('application.pemusnahan.form-proses-pemusnahan', ['data' => $data, 'wa' => $wa]);
+        $kcb = DB::table('wa_number_cabang')->where('kd_cabang', Auth::user()->cabang)
+            ->where('wa_number_akses', '=', 'KCB')->get();
+        $mgr = DB::table('wa_number_cabang')->where('kd_cabang', Auth::user()->cabang)
+            ->where('wa_number_akses', '=', 'MGR')->get();
+        $staff = DB::table('tbl_staff')->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('application.pemusnahan.form-proses-pemusnahan', ['data' => $data, 'kcb' => $kcb, 'mgr' => $mgr, 'staff' => $staff]);
     }
     public function menu_pemusnahan_pilih_data_barang_save(Request $request)
     {
         $token = mt_rand(1000000, 9999999);
-        $code = str::uuid();
         $check = DB::table('tbl_pemusnahan')->where('id_inventaris', $request->id_inventaris)->first();
-        $no = DB::table('wa_number_cabang')->where('id_wa_number', $request->pj)->first();
+        $brg = DB::table('inventaris_data')->where('inventaris_data_code', $request->id_inventaris)->first();
+        $total = DB::table('tbl_pemusnahan')->where('kd_cabang', Auth::user()->cabang)->count();
+        $code = 'PM' . Auth::user()->cabang . date('YmdHis') . '' . str_pad($total + 1, 4, '0', STR_PAD_LEFT);
+        ;
+        $no = DB::table('wa_number_cabang')->where('id_wa_number', $request->user_persetujuan)->first();
 
         if ($check) {
             return redirect()->back()->withError('Fail ! Data Barang Sudah tidak Ada');
@@ -521,20 +614,27 @@ class AppController extends Controller
                 ->style('dot')
                 ->margin(2)
                 ->generate($token));
-            $text = "Hai \nAda Notifikasi Pemusnahan Barang Dengan Tiket Pemusnahan :\n" . $code . "\nToken Verifikasi Pemusnahan Anda : *" . $token .
-                "*\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma*";
+            $text = "Hai \nAda Notifikasi Pemusnahan Barang Dengan Tiket Pemusnahan :\n*" . $code . "*\nDetail Barang :\n" .
+                "\nNo Inventaris : " . $brg->inventaris_data_number .
+                "\nNama Barang : " . $brg->inventaris_data_name .
+                "\nMerek Barang : " . $brg->inventaris_data_merk .
+                "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
+                "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma*";
             DB::table('tbl_pemusnahan')->insert([
                 'kd_pemusnahan' => $code,
                 'id_inventaris' => $request->id_inventaris,
                 'kd_cabang' => Auth::user()->cabang,
                 'dasar_pengajuan' => $request->dasar_pengajuan,
+                'user_verifikasi' => $request->user_verifikasi,
                 'verifikasi' => $request->verifikasi,
-                'persetujuan' => 'setuju',
+                'user_persetujuan' => $request->user_persetujuan,
+                'persetujuan' => $request->persetujuan,
                 'eksekusi' => $request->eksekusi,
+                'penggagas' => $request->penggagas,
                 'status_pemusnahan' => 0,
                 'tgl_pemusnahan' => $request->tgl_pemusnahan,
                 'token_pemusnahan' => $token,
-                'pj_pemusnahan' => $request->pj,
+                'pj_pemusnahan' => $request->user_persetujuan,
                 'created_at' => now()
             ]);
             DB::table('message')->insert([
@@ -560,6 +660,9 @@ class AppController extends Controller
             $id = 1;
             DB::table('tbl_pemusnahan')->where('id_pemusnahan', $request->tiket)->update([
                 'status_pemusnahan' => 1
+            ]);
+            DB::table('inventaris_data')->where('inventaris_data_code', $check->id_inventaris)->update([
+                'inventaris_data_status' => 5
             ]);
         } else {
             $id = 0;
@@ -683,8 +786,11 @@ class AppController extends Controller
     public function menu_mutasi_add(Request $request)
     {
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', '!=', Auth::user()->cabang)->get();
-        $wa = DB::table('wa_number_cabang')->where('kd_cabang', Auth::user()->cabang)->get();
-        return view('application.mutasi.form-add-mutasi', ['cabang' => $cabang, 'wa' => $wa]);
+        $wa = DB::table('wa_number_cabang')
+            ->where('wa_number_akses', '=', 'KCB')
+            ->where('kd_cabang', Auth::user()->cabang)->get();
+        $staff = DB::table('tbl_staff')->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('application.mutasi.form-add-mutasi', ['cabang' => $cabang, 'wa' => $wa, 'staff' => $staff]);
     }
     public function menu_mutasi_save(Request $request)
     {
@@ -760,9 +866,16 @@ class AppController extends Controller
                 ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
                 ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
             foreach ($data as $value) {
+                $code = Auth::user()->cabang . '' . date('ymdhis') . '' . mt_rand(100, 999);
                 $lokasi = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $value->kd_lokasi_tujuan)->first();
+                DB::table('tbl_sub_mutasi')->where('id_sub_mutasi', $value->id_sub_mutasi)->update([
+                    'id_inventaris_new' => $code
+                ]);
+                DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->update([
+                    'inventaris_data_status' => 4
+                ]);
                 DB::table('inventaris_data')->insert([
-                    'inventaris_data_code' => Auth::user()->cabang . '' . date('ymdhis') . '' . mt_rand(100, 999),
+                    'inventaris_data_code' => $code,
                     'inventaris_klasifikasi_code' => $value->inventaris_klasifikasi_code,
                     'inventaris_data_number' => 'not created',
                     'inventaris_data_name' => $value->inventaris_data_name,
@@ -782,6 +895,7 @@ class AppController extends Controller
                     'id_nomor_ruangan_cbaang' => $value->kd_lokasi_tujuan,
                     'created_at' => now(),
                 ]);
+
             }
             DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->update([
                 'tgl_terima' => now(),
@@ -793,7 +907,9 @@ class AppController extends Controller
     }
     public function menu_mutasi_add_barang(Request $request)
     {
-        $data = DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->first();
+        $data = DB::table('tbl_mutasi')
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_mutasi.target_mutasi')
+            ->where('tbl_mutasi.kd_mutasi', $request->code)->first();
         $brg = DB::table('tbl_sub_mutasi')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
             ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
 
@@ -911,13 +1027,16 @@ class AppController extends Controller
         $brg = DB::table('tbl_sub_mutasi')
             ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
             ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.mutasi.report.report-mutasi', ['cabang' => $cabang, 'mutasi' => $mutasi, 'brg' => $brg], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $brg_new = DB::table('tbl_sub_mutasi')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris_new')
+            ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.mutasi.report.report-mutasi', [
+            'cabang' => $cabang,
+            'mutasi' => $mutasi,
+            'brg' => $brg,
+            'brg_new' => $brg_new,
+        ], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
-        // $canvas = $pdf->getDomPDF()->getCanvas();
-        // $height = $canvas->get_height();
-        // $width = $canvas->get_width();
-        // $canvas->set_opacity(.2, "Multiply");
-        // $canvas->set_opacity(.1);
         $dompdf = $pdf->getDomPDF();
         $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
         $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
@@ -1291,5 +1410,31 @@ class AppController extends Controller
             'wa_number_akses' => $request->akses,
         ]);
         return redirect()->back()->withSuccess('Great! Berhasil Update Data');
+    }
+
+    // MASTER LOKASI
+    public function master_location($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('tbl_nomor_ruangan_cabang')
+                ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+                ->where('kd_cabang', Auth::user()->cabang)->orderBy('nomor_ruangan', 'ASC')
+                ->get();
+            return view('application.master-data.master-lokasi', ['data' => $data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+    // MASTER STAFF
+    public function master_staff($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('tbl_staff')
+                ->where('kd_cabang', Auth::user()->cabang)->orderBy('id_staff', 'DESC')
+                ->get();
+            return view('application.master-data.master-staff', ['data' => $data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
     }
 }

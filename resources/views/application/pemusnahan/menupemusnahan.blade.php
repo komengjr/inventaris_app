@@ -45,11 +45,11 @@
                 <thead class="bg-200 text-700 fs--2">
                     <tr>
                         <th>No</th>
+                        <th>Nomor Pemusnahan</th>
                         <th>Nomor Inventaris</th>
                         <th>Nama Barang</th>
-                        <th>Type</th>
-                        <th>Merek</th>
-                        <th>Penanggung Jawab</th>
+                        <th>User Verifikasi</th>
+                        <th>User Persetujuan</th>
                         <th>Eksekusi</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -62,18 +62,23 @@
                     @foreach ($data as $datas)
                         <tr>
                             <td>{{ $no++ }}</td>
+                            <td>{{ $datas->kd_pemusnahan }}</td>
                             <td>{{ $datas->inventaris_data_number }}</td>
                             <td>{{ $datas->inventaris_data_name }}</td>
-                            <td>{{ $datas->inventaris_data_type }}</td>
-                            <td>{{ $datas->inventaris_data_merk }}</td>
                             <td>
                                 @php
-                                    $nama = DB::table('wa_number_cabang')->where('id_wa_number',$datas->pj_pemusnahan)->first();
+                                    $nama = DB::table('wa_number_cabang')->where('wa_number_code',$datas->user_verifikasi)->first();
                                 @endphp
                                 @if ($nama)
                                     {{$nama->wa_number_name}}
-                                @else
-
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    $nama1 = DB::table('wa_number_cabang')->where('wa_number_code',$datas->user_persetujuan)->first();
+                                @endphp
+                                @if ($nama1)
+                                    {{$nama1->wa_number_name}}
                                 @endif
                             </td>
                             <td>{{ $datas->eksekusi }}</td>
