@@ -1375,7 +1375,6 @@ class AppController extends Controller
     }
     public function master_no_whatsapp_add(Request $request)
     {
-
         return view('application.master-data.whatsapp.form-add');
     }
     public function master_no_whatsapp_save(Request $request)
@@ -1425,6 +1424,67 @@ class AppController extends Controller
             return Redirect::to('dashboard');
         }
     }
+    public function master_location_add(Request $request)
+    {
+        $lokasi = DB::table('master_lokasi')->get();
+        return view('application.master-data.master-lokasi.form-add-ruangan', ['lokasi' => $lokasi]);
+    }
+    public function master_location_save(Request $request)
+    {
+        DB::table('tbl_nomor_ruangan_cabang')->insert([
+            'nomor_ruangan' => $request->no_ruangan,
+            'kd_lokasi' => $request->lokasi,
+            'kd_cabang' => Auth::user()->cabang,
+            'status_nomor_ruangan' => 1,
+            'created_at' => now()
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Tambah Data');
+    }
+    public function master_location_data_lokasi(Request $request)
+    {
+        $data = DB::table('master_lokasi')->get();
+        return view('application.master-data.master-lokasi.data-master-lokasi', ['data' => $data]);
+    }
+    public function master_location_data_barang(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->code)->get();
+        return view('application.master-data.master-lokasi.data-barang', ['data' => $data]);
+    }
+    public function master_location_update_no_ruangan(Request $request)
+    {
+        $data = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->code)->first();
+        return view('application.master-data.master-lokasi.form-update-no-ruangan', ['data' => $data]);
+    }
+    public function master_location_update_no_ruangan_save(Request $request)
+    {
+        DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->id_ruangan)->update([
+            'nomor_ruangan' => $request->no_ruangan
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Update Data');
+    }
+    public function master_location_update_location(Request $request)
+    {
+        $data = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', $request->code)->first();
+        $lokasi = DB::table('master_lokasi')->get();
+        return view('application.master-data.master-lokasi.form-update-lokasi', ['data' => $data, 'lokasi' => $lokasi]);
+    }
+    public function master_location_update_location_save(Request $request)
+    {
+        $brg = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id_ruangan)->get();
+        foreach ($brg as $value) {
+            DB::table('inventaris_data')->where('inventaris_data_code', $value->inventaris_data_code)->update([
+                'inventaris_data_location' => $request->lokasi,
+                'inventaris_data_number' => str_replace($value->inventaris_data_location, $request->lokasi, $value->inventaris_data_number),
+            ]);
+        }
+        DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->id_ruangan)->update([
+            'kd_lokasi' => $request->lokasi
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Update Data');
+    }
+
     // MASTER STAFF
     public function master_staff($akses)
     {
@@ -1436,5 +1496,67 @@ class AppController extends Controller
         } else {
             return Redirect::to('dashboard');
         }
+    }
+    public function master_staff_add(Request $request)
+    {
+        return view('application.master-data.master-staff.form-add-staff');
+    }
+    public function master_staff_save(Request $request)
+    {
+        DB::table('tbl_staff')->insert([
+            'nip' => $request->nip,
+            'nama_staff' => $request->nama,
+            'kd_cabang' => Auth::user()->cabang,
+            'class' => 0,
+            'status_staff' => 1,
+            'created_at' => now(),
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Tambah Data');
+    }
+    public function master_staff_edit(Request $request)
+    {
+        $data = DB::table('tbl_staff')->where('id_staff', $request->code)->first();
+        return view('application.master-data.master-staff.form-edit-staff', ['data' => $data]);
+    }
+    public function master_staff_edit_save(Request $request)
+    {
+        DB::table('tbl_staff')->where('id_staff', $request->id_staff)->update([
+            'nip' => $request->nip,
+            'nama_staff' => $request->nama,
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Perubahan Data Staff');
+    }
+
+    // MASTER DOCUMENT
+    public function master_document_update(Request $request)
+    {
+        $data = DB::table('master_doocument_cab')->where('master_document_code', $request->code)->where('kd_cabang', Auth::user()->cabang)->first();
+        // $doc = DB::table('master_doocument')->where('master_document_code',$request->code)->first();
+        if ($data) {
+            $no = $data->master_document_no;
+            $code = $data->master_document_code;
+        } else {
+            $no = "Uncreated";
+            $code = $request->code;
+        }
+        return view('application.master-data.master-document.form-update-document', ['no' => $no, 'code' => $code]);
+    }
+    public function master_document_update_save(Request $request)
+    {
+        $check = DB::table('master_doocument_cab')->where('master_document_code', $request->id_document)->where('kd_cabang', Auth::user()->cabang)->first();
+        if ($check) {
+            DB::table('master_doocument_cab')->where('master_document_code', $request->id_document)
+                ->where('kd_cabang', Auth::user()->cabang)->update([
+                        'master_document_no' => $request->no_document
+                    ]);
+        } else {
+            DB::table('master_doocument_cab')->insert([
+                'master_document_code' => $request->id_document,
+                'master_document_no' => $request->no_document,
+                'kd_cabang' => Auth::user()->cabang,
+                'created_at' => now()
+            ]);
+        }
+        return redirect()->back()->withSuccess('Great! Berhasil Perubahan Data Document');
     }
 }

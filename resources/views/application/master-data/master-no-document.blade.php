@@ -47,8 +47,8 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Document</th>
-                        <th>No Document</th>
-                        <th>Cabang</th>
+                        <th>#</th>
+                        <th>No Document Cabang</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -61,8 +61,20 @@
                             <td>{{ $no++ }}</td>
                             <td>{{ $datas->nama_document }}</td>
                             <td>{{ $datas->no_document }}</td>
-                            <td></td>
-                            <td><button class="btn btn-falcon-warning btn-sm">Detail</button></td>
+                            <td>
+                                @php
+                                    $document = DB::table('master_doocument_cab')
+                                        ->where('master_document_code', $datas->master_document_code)
+                                        ->where('kd_cabang', Auth::user()->cabang)->first();
+                                @endphp
+                                @if ($document)
+                                    {{$document->master_document_no}}
+                                @endif
+                            </td>
+                            <td class="text-center"><button class="btn btn-falcon-warning btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#modal-document-md" id="button-update-no-document"
+                                    data-code="{{ $datas->master_document_code }}"><span
+                                        class="fas fa-file-signature"></span> Update</button></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -83,6 +95,18 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-document-md" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-document-md"></div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
@@ -94,14 +118,14 @@
         });
     </script>
     <script>
-        $(document).on("click", "#button-add-data-user", function(e) {
+        $(document).on("click", "#button-update-no-document", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-user').html(
+            $('#menu-document-md').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('masteradmin_user_add') }}",
+                url: "{{ route('master_document_update') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -110,32 +134,10 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-user').html(data);
+                $('#menu-document-md').html(data);
             }).fail(function() {
-                $('#menu-user').html('eror');
+                $('#menu-document-md').html('eror');
             });
-        });
-        $(document).on("click", "#button-edit-data-user", function(e) {
-            e.preventDefault();
-            var code = $(this).data("code");
-            $('#menu-user').html(
-                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-            );
-            $.ajax({
-                url: "{{ route('masteradmin_user_edit') }}",
-                type: "POST",
-                cache: false,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "code": code
-                },
-                dataType: 'html',
-            }).done(function(data) {
-                $('#menu-user').html(data);
-            }).fail(function() {
-                $('#menu-user').html('eror');
-            });
-
         });
     </script>
 @endsection

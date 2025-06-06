@@ -526,6 +526,26 @@ Route::prefix('app')->group(function () {
     Route::post('master-no-whatsapp/save', [AppController::class, 'master_no_whatsapp_save'])->name('master_no_whatsapp_save');
     Route::post('master-no-whatsapp/update', [AppController::class, 'master_no_whatsapp_update'])->name('master_no_whatsapp_update');
     Route::post('master-no-whatsapp/update_save', [AppController::class, 'master_no_whatsapp_update_save'])->name('master_no_whatsapp_update_save');
+
+    // MASTER LOKASI
+    Route::post('master-location/add', [AppController::class, 'master_location_add'])->name('master_location_add');
+    Route::post('master-location/save', [AppController::class, 'master_location_save'])->name('master_location_save');
+    Route::post('master-location/data-lokasi', [AppController::class, 'master_location_data_lokasi'])->name('master_location_data_lokasi');
+    Route::post('master-location/data-barang', [AppController::class, 'master_location_data_barang'])->name('master_location_data_barang');
+    Route::post('master-location/update-nomor-ruangan', [AppController::class, 'master_location_update_no_ruangan'])->name('master_location_update_no_ruangan');
+    Route::post('master-location/update-nomor-ruangan/save', [AppController::class, 'master_location_update_no_ruangan_save'])->name('master_location_update_no_ruangan_save');
+    Route::post('master-location/update-location', [AppController::class, 'master_location_update_location'])->name('master_location_update_location');
+    Route::post('master-location/update-location/save', [AppController::class, 'master_location_update_location_save'])->name('master_location_update_location_save');
+
+    // MASTER STAFF
+    Route::post('master-staff/add', [AppController::class, 'master_staff_add'])->name('master_staff_add');
+    Route::post('master-staff/save', [AppController::class, 'master_staff_save'])->name('master_staff_save');
+    Route::post('master-staff/edit', [AppController::class, 'master_staff_edit'])->name('master_staff_edit');
+    Route::post('master-staff/edit-save', [AppController::class, 'master_staff_edit_save'])->name('master_staff_edit_save');
+
+     // MASTER DOCUMENT
+    Route::post('master-document/update', [AppController::class, 'master_document_update'])->name('master_document_update');
+    Route::post('master-document/update-save', [AppController::class, 'master_document_update_save'])->name('master_document_update_save');
 });
 
 

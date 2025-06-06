@@ -41,18 +41,18 @@
                                 class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span>Menu</button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
-                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-peminjaman-xl"
-                                id="button-add-peminjaman"><span class="far fa-edit"></span>
-                                Tambah Nomor Ruangan</button>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item text-warning" data-bs-toggle="modal"
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-staff-lg"
+                                id="button-add-staff"><span class="fas fa-user-lock"></span>
+                                Tambah Staff Baru</button>
+                            {{-- <div class="dropdown-divider"></div> --}}
+                            {{-- <button class="dropdown-item text-warning" data-bs-toggle="modal"
                                 data-bs-target="#modal-peminjaman" id="button-data-order-peminjaman"><span
                                     class="fab fa-stack-overflow"></span>
                                 Master Lantai</button>
                             <button class="dropdown-item text-primary" data-bs-toggle="modal"
                                 data-bs-target="#modal-peminjaman" id="button-data-rekap-peminjaman"><span
                                     class="far fa-file-alt"></span>
-                                Master Lokasi</button>
+                                Master Lokasi</button> --}}
                         </div>
                     </div>
                 </div>
@@ -91,10 +91,10 @@
                                             data-fa-transform="shrink-3"></span>Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-pemusnahan-md"
-                                            id="button-verifikasi-data-pemusnahan-cabang"
+                                            data-bs-target="#modal-staff-lg"
+                                            id="button-peruubahan-data-staff"
                                             data-code="{{ $datas->id_staff }}"><span
-                                                class="fas fa-edit"></span>
+                                                class="fas fa-user-edit"></span>
                                             Perubahan Data Staff
                                         </button>
 
@@ -110,7 +110,7 @@
     </div>
 @endsection
 @section('base.js')
-    <div class="modal fade" id="modal-user" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-staff" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="false">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content border-0">
@@ -118,7 +118,19 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-user"></div>
+                <div id="menu-staff"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-staff-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-staff-lg"></div>
             </div>
         </div>
     </div>
@@ -133,35 +145,34 @@
         });
     </script>
     <script>
-        $(document).on("click", "#button-add-data-user", function(e) {
+        $(document).on("click", "#button-add-staff", function(e) {
             e.preventDefault();
-            var code = $(this).data("code");
-            $('#menu-user').html(
+            $('#menu-staff-lg').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('masteradmin_user_add') }}",
+                url: "{{ route('master_staff_add') }}",
                 type: "POST",
                 cache: false,
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "code": code
+                    "code": 0
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-user').html(data);
+                $('#menu-staff-lg').html(data);
             }).fail(function() {
-                $('#menu-user').html('eror');
+                $('#menu-staff-lg').html('eror');
             });
         });
-        $(document).on("click", "#button-edit-data-user", function(e) {
+        $(document).on("click", "#button-peruubahan-data-staff", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-user').html(
+            $('#menu-staff-lg').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('masteradmin_user_edit') }}",
+                url: "{{ route('master_staff_edit') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -170,9 +181,9 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-user').html(data);
+                $('#menu-staff-lg').html(data);
             }).fail(function() {
-                $('#menu-user').html('eror');
+                $('#menu-staff-lg').html('eror');
             });
 
         });
