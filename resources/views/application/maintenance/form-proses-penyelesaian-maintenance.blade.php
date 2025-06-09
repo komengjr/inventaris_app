@@ -5,13 +5,14 @@
     </div>
     <div class="p-3">
         <div class="card border border-primary">
-            <form class="row g-3 p-4" action="{{ route('menu_maintenance_proses_data_maintenance_save') }}" method="post"
-                enctype="multipart/form-data">
+            <form class="row g-3 p-4" action="{{ route('menu_maintenance_proses_data_maintenance_save') }}"
+                method="post" enctype="multipart/form-data">
                 @csrf
                 <h5><span class="badge bg-primary">1. Pengajuan</span></h5>
                 <div class="col-md-3">
                     <label class="form-label" for="inputAddress">Pelapor</label>
                     <input type="text" class="form-control" name="pelapor" value="{{ $data->pelapor }}" disabled>
+                    <input type="text" class="form-control" name="code_maintenance" value="{{ $data->kd_maintenance }}" hidden>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label" for="inputAddress">Dasar Pengajuan</label>
@@ -65,7 +66,7 @@
                 <h5><span class="badge bg-primary">3. Keterangan Maintenance</span></h5>
                 <div class="col-md-4">
                     <label class="form-label" for="inputAddress">Tanggal Maintenance</label>
-                    <input type="date" class="form-control" value="{{$data->tgl_mulai}}" disabled>
+                    <input type="date" class="form-control" value="{{ $data->tgl_mulai }}" disabled>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label" for="inputAddress">Tanggal Selesai Maintenance</label>
@@ -73,14 +74,16 @@
                 </div>
                 <div class="col-md-12">
                     <label class="form-label" for="inputAddress">Deskripsi</label>
-                    <textarea name="deskripsi" class="form-control" disabled>{{$data->ket_maintenance}}</textarea>
+                    <textarea name="deskripsi" class="form-control" disabled>{{ $data->ket_maintenance }}</textarea>
                 </div>
 
                 <h5><span class="badge bg-primary">4. Upload Document</span></h5>
 
                 <div class="col-md-12">
-                    <iframe src="{{ asset($data->file_maintenance) }}" frameborder="0" id="videoPreview"
-                        style="width: 100%; height: 400px;"></iframe>
+                    @if ($data->file_maintenance != '')
+                        <iframe src="{{ asset($data->file_maintenance) }}" frameborder="0" id="videoPreview"
+                            style="width: 100%; height: 400px;"></iframe>
+                    @endif
                 </div>
 
                 <div class="col-12">
@@ -90,7 +93,8 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <button class="btn btn-primary float-end" type="submit"><span class="fas fa-save"></span> Penyelesaian Data</button>
+                    <button class="btn btn-primary float-end" type="submit"><span class="fas fa-save"></span>
+                        Penyelesaian Data</button>
                 </div>
             </form>
         </div>

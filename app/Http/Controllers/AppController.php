@@ -997,7 +997,7 @@ class AppController extends Controller
         }
         $code = 'MTC' . Auth::user()->cabang . date('Ymdhis');
         $token = mt_rand(1000000, 9999999);
-        $no = DB::table('wa_number_cabang')->where('id_wa_number', $request->mengetahui)->first();
+        $no = DB::table('wa_number_cabang')->where('wa_number_code', $request->mengetahui)->first();
         $brg = DB::table('inventaris_data')->where('inventaris_data_code', $request->id_inventaris)->first();
         $text = "Hai \nAda Notifikasi Maintenance Barang Dengan No Maintenance :\n*" . $code . "*\nDetail Barang :\n" .
             "\nNo Inventaris : " . $brg->inventaris_data_number .
@@ -1029,6 +1029,7 @@ class AppController extends Controller
             'time' => now(),
             'created_at' => now(),
         ]);
+
         return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Maintenance Barang');
     }
     public function menu_maintenance_verifikasi_data_maintenance(Request $request)
@@ -1041,6 +1042,9 @@ class AppController extends Controller
         if ($check) {
             DB::table('tbl_maintenance')->where('kd_maintenance', $request->tiket)->update([
                 'status_maintenance' => 1
+            ]);
+            DB::table('inventaris_data')->where('inventaris_data_code', '=', $check->id_inventaris)->update([
+                'inventaris_data_status' => 3
             ]);
             $id = 1;
         } else {
@@ -1055,7 +1059,15 @@ class AppController extends Controller
             ->where('tbl_maintenance.kd_maintenance', $request->code)->first();
         return view('application.maintenance.form-proses-penyelesaian-maintenance', ['data' => $data]);
     }
-    public function menu_maintenance_proses_data_maintenance_save(Request $request){
+    public function menu_maintenance_proses_data_maintenance_save(Request $request)
+    {
+        DB::table('inventaris_data')->where('inventaris_data_code', '=', $request->id_inventaris)->update([
+            'inventaris_data_status' => 0
+        ]);
+        DB::table('tbl_maintenance')->where('kd_maintenance', $request->code_maintenance)->update([
+            'tgl_akhir' => $request->tgl_selesai,
+            'status_maintenance' => 2
+        ]);
         return redirect()->back()->withSuccess('Great! Berhasil Menyelesaikan Maintenance Barang');
     }
     public function menu_maintenance_print_laporan(Request $request)
@@ -1072,8 +1084,10 @@ class AppController extends Controller
             $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
             # code...
         }
-
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.maintenance.report.report-maintenance', ['cabang' => $cabang], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $data = DB::table('tbl_maintenance')
+        ->join('inventaris_data','inventaris_data.inventaris_data_code','=','tbl_maintenance.id_inventaris')
+        ->where('tbl_maintenance.kd_maintenance',$request->code)->first();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.maintenance.report.report-maintenance', ['data'=>$data,'cabang' => $cabang], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         $dompdf = $pdf->getDomPDF();
         $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");

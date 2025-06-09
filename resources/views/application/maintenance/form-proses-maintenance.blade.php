@@ -70,7 +70,7 @@
         </div>
         <div class="col-md-8">
             <label class="form-label" for="inputAddress">file Name</label>
-            <input type="text" class="form-control" id="link" name="link">
+            <input type="text" class="form-control" id="link" name="link" style="display: none;">
         </div>
         <div class="col-md-12">
             <div class="progress  mt-3" style="height: 20px">
@@ -127,6 +127,7 @@
         $('#videoPreview').show();
         $('#videoPreview').attr('src', response.path);
         $('#link').attr('value', response.filename);
+        $('#link').show();
         $('.card-footer').show();
         $('.progress').hide();
         // $('#browseFile<?php echo $data->inventaris_data_code; ?>').hide();
