@@ -18,10 +18,13 @@ class CreateTblMaintenanceTable extends Migration
             $table->string('kd_maintenance')->unique();
             $table->string('id_inventaris')->index();
             $table->string('pelapor');
+            $table->text('dasar_pengajuan');
+            $table->text('mengetahui');
             $table->string('kd_cabang');
             $table->string('tgl_mulai');
-            $table->string('tgl_akhir');
+            $table->string('tgl_akhir')->nullable();
             $table->string('status_maintenance');
+            $table->text('token_maintenance');
             $table->string('ket_maintenance');
             $table->text('file_maintenance');
             $table->timestamps();

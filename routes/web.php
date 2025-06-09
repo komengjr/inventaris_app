@@ -352,6 +352,7 @@ Route::post('file-upload/uploadgambarbarangkso', [FileUploadController::class, '
 Route::post('file-upload/uploadgambarbarangkso/{id}', [FileUploadController::class, 'uploadgambarbarangkso1'])->name('file-upload.uploadgambarbarangkso1');
 Route::post('file-upload/uploaddatamaintenance', [FileUploadController::class, 'uploaddatamaintenancebarang'])->name('file-upload.uploaddatamaintenance');
 Route::post('file-upload/uploaddatakso', [FileUploadController::class, 'uploaddatakso'])->name('file-upload.uploaddatakso');
+Route::post('file-upload/uploaddatamaintenance', [FileUploadController::class, 'fileuploaduploaddatamaintenance'])->name('file-upload.fileuploaduploaddatamaintenance');
 Route::post('file-upload/uploadgambarinventaris', [FileUploadController::class, 'uploadgambarinventaris'])->name('file-upload.gambarinventaris');
 
 
@@ -414,6 +415,7 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('menu-mutasi', [AppController::class, 'menu_mutasi'])->name('menu_mutasi');
     Route::get('menu-pemusnahan', [AppController::class, 'menu_pemusnahan'])->name('menu_pemusnahan');
     Route::get('menu-stock-opname', [AppController::class, 'menu_stock_opname'])->name('menu_stock_opname');
+    Route::get('menu-maintenance', [AppController::class, 'menu_maintenance'])->name('menu_maintenance');
     Route::get('menu-cabang', [AppController::class, 'menu_cabang'])->name('menu_cabang');
     Route::get('master-barang', [AppController::class, 'master_barang'])->name('master_barang');
     Route::get('master-no-document', [AppController::class, 'master_no_document'])->name('master_no_document');
@@ -438,6 +440,11 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/data-depresiasi-aset', [AppController::class, 'dashboard_data_depresiasi_aset'])->name('dashboard_data_depresiasi_aset');
     Route::post('dashboard/data-kso', [AppController::class, 'dashboard_data_kso'])->name('dashboard_data_kso');
     Route::post('dashboard/data-kso/document', [AppController::class, 'dashboard_data_kso_document'])->name('dashboard_data_kso_document');
+    Route::post('dashboard/data-lokasi/detail', [AppController::class, 'dashboard_data_lokasi_detail'])->name('dashboard_data_lokasi_detail');
+    Route::get('dashboard/data-lokasi/detail-barcode/{id}', [AppController::class, 'dashboard_data_lokasi_detail_barcode'])->name('dashboard_data_lokasi_detail_barcode');
+    Route::post('dashboard/data-lokasi/update', [AppController::class, 'dashboard_update_data_inventaris'])->name('dashboard_update_data_inventaris');
+
+    Route::post('dashboard/klasifikasi/data', [AppController::class, 'dashboard_data_barang_klasifikasi'])->name('dashboard_data_barang_klasifikasi');
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');
     Route::post('dashboard/data-lokasi-print-barcode', [AppController::class, 'masteradmin_cabang_data_lokasi_print_barcode'])->name('masteradmin_cabang_data_lokasi_print_barcode');
 
@@ -494,15 +501,32 @@ Route::prefix('app')->group(function () {
     Route::post('menu-mutasi/proses-print-data-mutasi', [AppController::class, 'menu_mutasi_proses_print_data_mutasi'])->name('menu_mutasi_proses_print_data_mutasi');
 
     // MENU STOCKOPNAME
+    Route::post('menu-stock-opname/add', [AppController::class, 'menu_stock_opname_add'])->name('menu_stock_opname_add');
+    Route::post('menu-stock-opname/save', [AppController::class, 'menu_stock_opname_save'])->name('menu_stock_opname_save');
     Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
     Route::post('menu-stock-opname/proses-data', [AppController::class, 'menu_stock_opname_proses_data'])->name('menu_stock_opname_proses_data');
     Route::post('menu-stock-opname/proses-data-with-kamera', [AppController::class, 'menu_stock_opname_proses_data_with_kamera'])->name('menu_stock_opname_proses_data_with_kamera');
     Route::post('menu-stock-opname/scan-data-with-kamera', [AppController::class, 'menu_stock_opname_scan_data_with_kamera'])->name('menu_stock_opname_scan_data_with_kamera');
     Route::post('menu-stock-opname/proses-data-with-scanner', [AppController::class, 'menu_stock_opname_proses_data_with_scanner'])->name('menu_stock_opname_proses_data_with_scanner');
     Route::post('menu-stock-opname/scan-data-with-scanner', [AppController::class, 'menu_stock_opname_scan_data_with_scanner'])->name('menu_stock_opname_scan_data_with_scanner');
+    Route::post('menu-stock-opname/scan-data-with-scanner/save', [AppController::class, 'menu_stock_opname_scan_data_with_scanner_save'])->name('menu_stock_opname_scan_data_with_scanner_save');
     Route::post('menu-stock-opname/remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_remove_full_data'])->name('menu_stock_opname_remove_full_data');
     Route::post('menu-stock-opname/proses-remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_proses_remove_full_data'])->name('menu_stock_opname_proses_remove_full_data');
     Route::post('menu-stock-opname/edit-data-tanggal-stock', [AppController::class, 'menu_stock_opname_edit_data_tanggal'])->name('menu_stock_opname_edit_data_tanggal');
+    Route::post('menu-stock-opname/penyelesaian-data-tanggal-stock', [AppController::class, 'menu_stock_opname_penyelesaian_data'])->name('menu_stock_opname_penyelesaian_data');
+    Route::post('menu-stock-opname/print-data-tanggal-stock', [AppController::class, 'menu_stock_opname_print_data'])->name('menu_stock_opname_print_data');
+
+    // MENU MAINTENANCE
+    Route::post('menu-maintenance/add', [AppController::class, 'menu_maintenance_add'])->name('menu_maintenance_add');
+    Route::post('menu-maintenance/save', [AppController::class, 'menu_maintenance_save'])->name('menu_maintenance_save');
+    Route::post('menu-maintenance/find-data', [AppController::class, 'menu_maintenance_find_data'])->name('menu_maintenance_find_data');
+    Route::post('menu-maintenance/pilih-data-barang', [AppController::class, 'menu_maintenance_pilih_data_barang'])->name('menu_maintenance_pilih_data_barang');
+    Route::post('menu-maintenance/verifikasi-data-maintenance', [AppController::class, 'menu_maintenance_verifikasi_data_maintenance'])->name('menu_maintenance_verifikasi_data_maintenance');
+    Route::post('menu-maintenance/verifikasi-data-maintenance-applay', [AppController::class, 'menu_maintenance_verifikasi_data_maintenance_applay'])->name('menu_maintenance_verifikasi_data_maintenance_applay');
+    Route::post('menu-maintenance/proses-data-maintenance', [AppController::class, 'menu_maintenance_proses_data_maintenance'])->name('menu_maintenance_proses_data_maintenance');
+    Route::post('menu-maintenance/proses-data-maintenance/save', [AppController::class, 'menu_maintenance_proses_data_maintenance_save'])->name('menu_maintenance_proses_data_maintenance_save');
+    Route::post('menu-maintenance/print-laporan', [AppController::class, 'menu_maintenance_print_laporan'])->name('menu_maintenance_print_laporan');
+    Route::post('menu-maintenance/print-laporan-cetak', [AppController::class, 'menu_maintenance_print_laporan_cetak'])->name('menu_maintenance_print_laporan_cetak');
 
     // MENU BARANG
     Route::post('menu-cabang/find-cabang', [AppController::class, 'menu_cabang_find_cabang'])->name('menu_cabang_find_cabang');

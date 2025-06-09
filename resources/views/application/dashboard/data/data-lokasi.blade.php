@@ -3,7 +3,7 @@
         <h4 class="mb-1" id="staticBackdropLabel">Data Barang </h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
-    <div class="p-3">
+    <div class="p-3" id="menu-data-barang-lokasi">
         <div class="card mb-3 border border-primary ">
             <div class="card-body py-2">
                 <div class="row gx-0 flex-between-center">
@@ -11,7 +11,7 @@
                         <img class="ms-1 mx-3" src="{{ asset('img/brg.png') }}" alt="" width="50" />
                         <div>
                             <h6 class="text-primary fs--1 mb-0 mt-2">Data Barang</h6>
-                            <h4 class="text-primary fw-bold mb-1">{{ $lokasi->nama_lokasi }} <span
+                            <h4 class="text-primary fw-bold mb-1">{{ $lokasi->master_lokasi_name }} <span
                                     class="text-info fw-medium">No.{{ $lokasi->nomor_ruangan }} </span></h4>
                         </div>
                         {{-- <img class="ms-n4 d-none d-lg-block"
@@ -24,7 +24,8 @@
                                 <form class="row gx-2 float-end" action="#">
                                     <div class="col-auto"><small class="text-primary">Print by: </small></div>
                                     <div class="col-auto">
-                                        <select class="form-select form-select-sm text-primary" name="page" id="page" aria-label="Bulk actions">
+                                        <select class="form-select form-select-sm text-primary" name="page"
+                                            id="page" aria-label="Bulk actions">
                                             <option value="-">Pilih Option Print</option>
                                             @php
                                                 $cetak = $data->count();
@@ -56,7 +57,7 @@
         </div>
         <div id="menu-data-lokasi-barang">
             <table id="exampledata" class="table table-striped nowrap" style="width:100%" border="1">
-                <thead class="bg-200 text-700">
+                <thead class="bg-200 text-700 fs--2">
                     <tr>
                         <th>Gambar</th>
                         <th>Nama Barang</th>
@@ -68,11 +69,8 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody style="font-size: 13px;">
+                <tbody style="font-size: 12px;">
                     @foreach ($data as $datas)
-                        <?php
-                        $nama_lokasi = DB::table('tbl_lokasi')->select('tbl_lokasi.nama_lokasi')->where('kd_lokasi', $datas->inventaris_data_location)->get();
-                        ?>
                         <tr>
                             <td>
                                 @if ($datas->inventaris_data_file == '')
@@ -86,7 +84,7 @@
                             <td>{{ $datas->inventaris_data_name }}</td>
                             <td>{{ $datas->inventaris_data_code }}</td>
                             <td>{{ $datas->inventaris_data_number }}</td>
-                            <td>{{date("d-m-Y", strtotime($datas->inventaris_data_tgl_beli))}}</td>
+                            <td>{{ date('d-m-Y', strtotime($datas->inventaris_data_tgl_beli)) }}</td>
 
                             <td>
                                 {{ $datas->inventaris_data_merk }} / {{ $datas->inventaris_data_type }}
@@ -94,12 +92,25 @@
 
                             <td>@currency($datas->inventaris_data_harga)</td>
                             <td class="text-center">
-                                <button class="btn btn-falcon-warning btn-sm" id="editdatabarang" data-url="123"><i class="fa fa-eye">
-                                    </i> Detail & Edit</button><br><br>
-                                <button class="btn btn-falcon-info btn-sm"
-                                    onclick="window.open('../../printbarcodebyid/{{ $datas->id_inventaris_data }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i
-                                        class="fa fa-print"></i> Print barcode</button>
 
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
+                                        type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"><span class="fas fa-align-left me-1"
+                                            data-fa-transform="shrink-3"></span>Option</button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+
+                                        <button class="dropdown-item" id="button-update-data-barang-lokasi"
+                                            data-code="{{ $datas->inventaris_data_code }}">
+                                            <span class="far fa-address-card"></span> Detail & Edit
+                                        </button>
+                                        <button class="dropdown-item"
+                                            onclick="window.open('{{route('dashboard_data_lokasi_detail_barcode',['id'=>$datas->inventaris_data_code])}}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';">
+                                            <span class="fas fa-qrcode"></span> Print Barcode
+                                        </button>
+
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

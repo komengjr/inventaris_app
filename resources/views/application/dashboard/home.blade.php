@@ -319,7 +319,7 @@
                                 <div class="d-flex flex-between-center border-bottom py-1 pt-md-0 pt-xxl-3">
                                     <div class="d-flex"><img class="me-2" src="{{ asset('img/icon/icon.png') }}"
                                             width="16" height="16" alt="..." />
-                                        <h6 class="text-700 mb-0">{{ $klasifikasis->inventaris_cat_name }} </h6>
+                                        <a href="#" id="button-show-barang-klasifikasi" data-bs-toggle="modal" data-bs-target="#modal-dashboard" data-code="{{$klasifikasis->inventaris_cat_code }}"><h6 class="text-700 mb-0">{{ $klasifikasis->inventaris_cat_name }} </h6></a>
                                     </div>
                                     @php
                                         $jumlah = 0;
@@ -455,6 +455,28 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard').html(data);
+            }).fail(function() {
+                $('#menu-dashboard').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-show-barang-klasifikasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-dashboard').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_data_barang_klasifikasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
                 },
                 dataType: 'html',
             }).done(function(data) {
@@ -801,6 +823,28 @@
             });
 
         });
+        $(document).on("click", "#button-update-data-barang-lokasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-data-barang-lokasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_data_lokasi_detail') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-data-barang-lokasi').html(data);
+            }).fail(function() {
+                $('#menu-data-barang-lokasi').html('eror');
+            });
+
+        });
         $(document).on("click", "#button-simpan-data-non-aset", function(e) {
             e.preventDefault();
             var data = $("#form-add-data-non-aset").serialize();
@@ -837,6 +881,45 @@
                     location.reload();
                 }).fail(function() {
                     $('#menu-simpan-data-non-aset').html('eror');
+                });
+            }
+        });
+        $(document).on("click", "#button-simpan-update-data-inventaris", function(e) {
+            e.preventDefault();
+            var data = $("#form-update-data-inventaris").serialize();
+            var nama = document.getElementById("nama_barang").value;
+            var klasifikasi = document.getElementById("klasifikasi").value;
+            var tgl_beli = document.getElementById("tgl_beli").value;
+            var harga_perolehan = document.getElementById("dengan-rupiah").value;
+            var suplier = document.getElementById("suplier").value;
+            var lokasi = document.getElementById("lokasi").value;
+            // var merk = document.getElementById("merk").value;
+            // var type = document.getElementById("type").value;
+            // var seri = document.getElementById("seri").value;
+            $('#menu-simpan-data-inventaris').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            if (nama == "" || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || suplier == "" ||
+                lokasi == "") {
+                alert('eror');
+                $('#menu-simpan-data-inventaris').html(
+                    '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><iclass="fa fa-save"></i> Simpan Data</button>'
+                    );
+            } else {
+                $.ajax({
+                    url: "{{ route('dashboard_update_data_inventaris') }}",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                    },
+                    type: "POST",
+                    cache: false,
+                    data: data,
+                    dataType: 'html',
+                }).done(function(data) {
+                    $('#menu-simpan-data-inventaris').html(data);
+                    location.reload();
+                }).fail(function() {
+                    $('#menu-simpan-data-inventaris').html('eror');
                 });
             }
         });

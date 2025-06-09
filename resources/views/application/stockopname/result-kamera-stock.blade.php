@@ -4,20 +4,20 @@
             <div class="row">
                 <div class="col-md-3">
                     <label for="">Nama Barang</label>
-                    <input type="text" class="form-control" value="{{ $data->nama_barang }}" disabled>
+                    <input type="text" class="form-control" value="{{ $data->inventaris_data_name }}" disabled>
 
                 </div>
                 <div class="col-md-3">
                     <label for="">Nomor Inventaris</label>
-                    <input type="text" class="form-control" value="{{ $data->no_inventaris }}" disabled>
+                    <input type="text" class="form-control" value="{{ $data->inventaris_data_number }}" disabled>
                 </div>
                 <div class="col-md-3">
                     <label for="">Type</label>
-                    <input type="text" class="form-control" value="{{ $data->type }}" disabled>
+                    <input type="text" class="form-control" value="{{ $data->inventaris_data_type }}" disabled>
                 </div>
                 <div class="col-md-3">
                     <label for="">Merek</label>
-                    <input type="text" class="form-control" value="{{ $data->merk }}" disabled>
+                    <input type="text" class="form-control" value="{{ $data->inventaris_data_merk }}" disabled>
                 </div>
             </div>
             <!--End Row-->
@@ -26,7 +26,7 @@
             @php
                 $cekdata = DB::table('tbl_sub_verifdatainventaris')
                     ->where('kode_verif', $kode)
-                    ->where('id_inventaris', $data->id_inventaris)
+                    ->where('id_inventaris', $data->inventaris_data_code)
                     ->first();
             @endphp
             @if ($cekdata)
@@ -64,7 +64,7 @@
                     </div>
                     <div class="row pt-2">
                         <div class="col-md-12">
-                            <input type="text" name="id_inventaris" value="{{ $data->id_inventaris }}" hidden>
+                            <input type="text" name="id_inventaris" value="{{ $data->inventaris_data_code }}" hidden>
                             <input type="text" name="kode" value="{{ $kode }}" id="" hidden>
                             <button class="btn-success" id="button-simpan-hasil-verifikasi"><i class="fa fa-save"></i>
                                 Simpan</button>

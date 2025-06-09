@@ -218,10 +218,14 @@
         padding: 8px 0;
         text-align: center;
     }
+
+    #no_surat {
+        margin-top: -20px;
+    }
 </style>
 @php
     $no_doc = DB::table('master_doocument_cab')
-        ->where('master_document_code', '=', 'DOC00920')
+        ->where('master_document_code', '=', 'PJ')
         ->where('kd_cabang', $cabang->kd_cabang)
         ->first();
 @endphp
@@ -241,10 +245,11 @@
             <img src="data:image/png;base64, {{ $image }}">
         </div>
         <div id="company">
+            <div id="no_surat">{{ $no }}</div>
+            <br>
             <h2 class="name">{{ $cabang->nama_cabang }}</h2>
             <div>{{ $cabang->alamat }}</div>
             <div>{{ $cabang->phone }}</div>
-            <div>{{ $no }}</div>
         </div>
         </div>
     </header>
@@ -262,15 +267,28 @@
                         <td>{{ $peminjaman->nama_kegiatan }}</td>
                     </tr>
                     <tr>
-                        <td>Penanggung Jawab</td>
+                        <td>PJ Barang Cabang</td>
                         <td>:</td>
                         <td>
                             @php
-                                $staff = DB::table('tbl_staff')->where('nip', $peminjaman->pj_pinjam)->first();
+                                $staff1 = DB::table('tbl_staff')->where('id_staff', $peminjaman->pj_pinjam)->first();
                             @endphp
-                            @if ($staff)
-                                {{ $staff->nama_staff }}
-                            @else
+                            @if ($staff1)
+                                {{ $staff1->nama_staff }}
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>PJ Peminjam Barang</td>
+                        <td>:</td>
+                        <td>
+                            @php
+                                $staff2 = DB::table('tbl_staff')
+                                    ->where('id_staff', $peminjaman->pj_pinjam_cabang)
+                                    ->first();
+                            @endphp
+                            @if ($staff2)
+                                {{ $staff2->nama_staff }}
                             @endif
                         </td>
                     </tr>
@@ -300,8 +318,12 @@
             </div>
             <div id="invoice">
                 <span>Form Peminjaman Barang</span>
-                <div class="date" style="color: red; font-size: 12px;">Print By : {{ Auth::user()->name }}</div>
-                {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
+                <div class="date" style="color: red; font-size: 12px;">Print date : {{ date('d-m-Y H-i-s') }}</div>
+                <span> <img style="padding-top: 1px; left: 10px;"
+                        src="data:image/png;base64, {!! base64_encode(
+                            QrCode::style('round')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
+                        ) !!}"></span><br>
+                <span style=" font-size: 14px;">{{ $peminjaman->tiket_peminjaman }}</span>
             </div>
         </div>
         <table border="1" cellspacing="0" cellpadding="0">
@@ -338,8 +360,12 @@
                         <td>
                             @if ($datas->status_sub_peminjaman == 0)
                                 <strong style="color: red;">Belum diverifikasi</strong>
-                            @else
-                                <strong style="color: rgb(2, 63, 3);">Sudah diverifikasi</strong>
+                            @elseif($datas->status_sub_peminjaman == 1)
+                                <strong style="color: rgb(8, 138, 64);">Barang Kembali</strong>
+                            @elseif($datas->status_sub_peminjaman == 2)
+                                <strong style="color: rgb(18, 19, 12);">Barang Belum Kembali</strong>
+                            @elseif($datas->status_sub_peminjaman == 3)
+                                <strong style="color: rgb(249, 2, 39);">Barang Hilang</strong>
                             @endif
                         </td>
                     </tr>
@@ -348,11 +374,77 @@
             </tbody>
         </table>
         {{-- <div id="thanks">Thank you!</div> --}}
+        @if (!$data_hilang->isEmpty())
+            <h5 style="color: red;">Keterangan Barang Hilang</h5>
+
+            <table border="1" cellspacing="0" cellpadding="0">
+                <thead style="font-size: 11px;">
+                    <tr>
+                        <th>#</th>
+                        <th>NAMA BARANG</th>
+                        <th>NO INVENTARIS</th>
+                        <th>MERK</th>
+                        <th>TYPE</th>
+                        <th>NO LAPORAN PEMUSNAHAN</th>
+                        <th>STATUS PEMUSNAHAN</th>
+                    </tr>
+                </thead>
+                <tbody id="invoiceItems" style="font-size: 10px;">
+                    @php
+                        $no = 1;
+                        $hasil = 0;
+                    @endphp
+                    @foreach ($data_hilang as $data_hilangs)
+                        <tr>
+                            <td class="no">{{ $no++ }}</td>
+                            <td class="desc">{{ $data_hilangs->inventaris_data_name }}</td>
+                            <td class="desc">{{ $data_hilangs->inventaris_data_number }}</td>
+                            <td class="desc">{{ $data_hilangs->inventaris_data_merk }}</td>
+                            <td class="desc">{{ $data_hilangs->inventaris_data_type }}</td>
+                            <td class="desc">
+                                @php
+                                    $pemusnahan = DB::table('tbl_pemusnahan')
+                                        ->where('id_inventaris', $data_hilangs->id_inventaris)
+                                        ->first();
+                                @endphp
+                                @if ($pemusnahan)
+                                    {{ $pemusnahan->kd_pemusnahan }}
+                                @endif
+                            </td>
+                            <td class="desc">
+                                @if ($pemusnahan)
+                                    @if ($pemusnahan->status_pemusnahan == 0)
+                                        <strong style="color: red;">Belum Diverifikasi</strong>
+                                    @else
+                                        <strong style="color: green;">Sudah Diverifikasi</strong>
+                                    @endif
+                                @endif
+                            </td>
+
+                        </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+        @endif
         <div id="notices">
-            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
-            ) !!}">
-            <div class="notice">Dokumen Ini Sah tanpa Tanda Tangan.</div>
+            @if ($peminjaman->pj_cabang == null)
+                <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
+                    QrCode::style('round')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->tiket_peminjaman),
+                ) !!}">
+            @else
+                <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
+                    QrCode::style('round')->format('svg')->size(70)->errorCorrection('H')->generate($peminjaman->pj_cabang),
+                ) !!}">
+            @endif
+            @php
+                $ttd = DB::table('wa_number_cabang')->where('wa_number_code', $peminjaman->pj_cabang)->first();
+            @endphp
+            @if ($ttd)
+                <div class="notice">{{ $ttd->wa_number_name }}</div>
+            @else
+                <div class="notice">Dokumen Tidak Bisa di Ubah</div>
+            @endif
         </div>
     </main>
 </body>

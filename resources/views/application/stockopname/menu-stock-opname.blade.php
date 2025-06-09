@@ -34,10 +34,16 @@
                     <h5 class="mb-1 text-primary fw-bold">Data Stock Opname</h5>
                 </div>
                 <div class="col-auto">
-
-                    <a class="btn btn-falcon-primary btn-sm" href="#!" data-bs-toggle="modal"
-                        data-bs-target="#modal-category" id="button-add-category">
-                        <span class="far fa-plus-square fs--2 me-1"></span>Tambah Jadwal Stockopname</a>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2" type="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span>Menu Stockopname</button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg"
+                                id="button-add-stockopname"><span class="fas fa-swatchbook"></span>
+                                Tambah Jadwal Stockopname</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,9 +74,9 @@
                             <td>{{ $item->end_date_verif }}</td>
                             <td>
                                 @php
-                                    $jumlahi = DB::table('sub_tbl_inventory')
-                                        ->where('kd_cabang', Auth::user()->cabang)
-                                        ->where('status_barang', '!=', 5)
+                                    $jumlahi = DB::table('inventaris_data')
+                                        ->where('inventaris_data_cabang', Auth::user()->cabang)
+                                        ->where('inventaris_data_status', '!=', 5)
                                         ->count();
                                 @endphp
                                 {{ $jumlahi }}
@@ -127,11 +133,18 @@
                                         aria-expanded="false"><span class="fas fa-align-left me-1"
                                             data-fa-transform="shrink-3"></span>Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang"
-                                            data-code="{{ $item->kode_verif }}"><span class="fas fa-swatchbook"></span>
-                                            Proses Stock Opname</button>
+                                        @if ($item->status_verif == 0)
+                                            <button class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang"
+                                                data-code="{{ $item->kode_verif }}"><span
+                                                    class="fas fa-swatchbook"></span>
+                                                Proses Stock Opname</button>
+                                        @elseif($item->status_verif == 1)
+                                            <button class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#modal-stock" id="button-print-stock-opname-cabang"
+                                                data-code="{{ $item->kode_verif }}"><span class="fas fa-print"></span>
+                                                Print Stock Opname</button>
+                                        @endif
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#modal-stock-lg" id="button-edit-data-stock-opname"
@@ -139,7 +152,7 @@
                                             Data Tanggal</button>
                                         <button class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#modal-cabang-lg" id="button-data-lokasi-cabang"
-                                            data-code="123"><span class="fas fa-sync"></span>
+                                            data-code="{{ $item->kode_verif }}"><span class="fas fa-sync"></span>
                                             Sinkronisasi Data</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item text-danger" data-bs-toggle="modal"
@@ -204,6 +217,27 @@
         });
     </script>
     <script>
+        $(document).on("click", "#button-add-stockopname", function(e) {
+            e.preventDefault();
+            // var code = $(this).data("code");
+            $('#menu-stock-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_add') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-stock-lg').html(data);
+            }).fail(function() {
+                $('#menu-stock-lg').html('eror');
+            });
+        });
         $(document).on("click", "#button-kondisi-data-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
@@ -338,7 +372,7 @@
             var data = $("#form-verifikasi-data-inevntaris").serialize();
             e.preventDefault();
             $.ajax({
-                    url: "../../../divisi/postverifikasi/scanner/simpandata",
+                    url: "{{ route('menu_stock_opname_scan_data_with_scanner_save') }}",
                     type: "POST",
                     data: data,
                     dataType: "html",
@@ -480,6 +514,52 @@
                 $('#menu-stock-lg').html(data);
             }).fail(function() {
                 $('#menu-stock-lg').html('eror');
+            });
+        });
+        $(document).on("click", "#button-penyelesaian-stockopname", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-button-penyelesaian-stockopname').html(
+                '<div class="spinner-border spinner-border-sm" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span> </div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_penyelesaian_data') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-button-penyelesaian-stockopname').html(data);
+                location.reload();
+            }).fail(function() {
+                $('#menu-button-penyelesaian-stockopname').html('eror');
+            });
+        });
+        $(document).on("click", "#button-print-stock-opname-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-stock').html(
+                '<div class="spinner-border spinner-border-sm" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span> </div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_print_data') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-stock').html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+            }).fail(function() {
+                $('#menu-stock').html('eror');
             });
         });
         $(document).on("click", "#button-fix-data-stockopname", function(e) {

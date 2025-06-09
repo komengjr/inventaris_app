@@ -78,11 +78,10 @@
                     @endphp
                     @foreach ($no_ruangan as $no_ruangan)
                         <?php
-                        $ceklokasix = DB::table('sub_tbl_inventory')
-                            ->select('sub_tbl_inventory.*')
-                            ->where('kd_cabang', Auth::user()->cabang)
+                        $ceklokasix = DB::table('inventaris_data')
+                            ->where('inventaris_data_cabang', Auth::user()->cabang)
                             ->where('id_nomor_ruangan_cbaang', $no_ruangan->id_nomor_ruangan_cbaang)
-                            ->where('status_barang', '<', '4')
+                            ->where('inventaris_data_status', '<', '4')
                             ->count();
                         ?>
                         @if ($ceklokasix == 0)
@@ -100,10 +99,10 @@
 
                                 </td>
                                 @php
-                                    $totalbarang = DB::table('sub_tbl_inventory')
-                                        ->where('kd_cabang', auth::user()->cabang)
+                                    $totalbarang = DB::table('inventaris_data')
+                                        ->where('inventaris_data_cabang', auth::user()->cabang)
                                         ->where('id_nomor_ruangan_cbaang', $no_ruangan->id_nomor_ruangan_cbaang)
-                                        ->where('status_barang', '<', '4')
+                                        ->where('inventaris_data_status', '<', '4')
                                         ->count();
                                     $jumlah = $totalbarang + $jumlah;
                                 @endphp
@@ -113,37 +112,47 @@
                                 @php
                                     $statusbarang = DB::table('tbl_sub_verifdatainventaris')
                                         ->join(
-                                            'sub_tbl_inventory',
-                                            'sub_tbl_inventory.id_inventaris',
+                                            'inventaris_data',
+                                            'inventaris_data.inventaris_data_code',
                                             '=',
                                             'tbl_sub_verifdatainventaris.id_inventaris',
                                         )
                                         ->where('tbl_sub_verifdatainventaris.kode_verif', $cekdata->kode_verif)
-                                        ->where('id_nomor_ruangan_cbaang', $no_ruangan->id_nomor_ruangan_cbaang)
-                                        ->where('status_data_inventaris', 0)
+                                        ->where(
+                                            'inventaris_data.id_nomor_ruangan_cbaang',
+                                            $no_ruangan->id_nomor_ruangan_cbaang,
+                                        )
+                                        ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 0)
                                         ->count();
                                     $statusbarang1 = DB::table('tbl_sub_verifdatainventaris')
                                         ->join(
-                                            'sub_tbl_inventory',
-                                            'sub_tbl_inventory.id_inventaris',
+                                            'inventaris_data',
+                                            'inventaris_data.inventaris_data_code',
                                             '=',
                                             'tbl_sub_verifdatainventaris.id_inventaris',
                                         )
                                         ->where('tbl_sub_verifdatainventaris.kode_verif', $cekdata->kode_verif)
-                                        ->where('id_nomor_ruangan_cbaang', $no_ruangan->id_nomor_ruangan_cbaang)
-                                        ->where('status_data_inventaris', 1)
+                                        ->where(
+                                            'inventaris_data.id_nomor_ruangan_cbaang',
+                                            $no_ruangan->id_nomor_ruangan_cbaang,
+                                        )
+                                        ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 1)
                                         ->count();
                                     $statusbarang2 = DB::table('tbl_sub_verifdatainventaris')
                                         ->join(
-                                            'sub_tbl_inventory',
-                                            'sub_tbl_inventory.id_inventaris',
+                                            'inventaris_data',
+                                            'inventaris_data.inventaris_data_code',
                                             '=',
                                             'tbl_sub_verifdatainventaris.id_inventaris',
                                         )
                                         ->where('tbl_sub_verifdatainventaris.kode_verif', $cekdata->kode_verif)
-                                        ->where('id_nomor_ruangan_cbaang', $no_ruangan->id_nomor_ruangan_cbaang)
-                                        ->where('status_data_inventaris', 2)
+                                        ->where(
+                                            'inventaris_data.id_nomor_ruangan_cbaang',
+                                            $no_ruangan->id_nomor_ruangan_cbaang,
+                                        )
+                                        ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 2)
                                         ->count();
+
                                 @endphp
                                 <td>
                                     <table style="width: 100%;">
@@ -208,10 +217,10 @@
                                     @foreach ($data as $datas)
                                         <tr>
 
-                                            <td>{{ $datas->nama_barang }}</td>
-                                            <td>{{ $datas->no_inventaris }}</td>
-                                            <td>{{ $datas->merk }}</td>
-                                            <td>@currency($datas->harga_perolehan)</td>
+                                            <td>{{ $datas->inventaris_data_name }}</td>
+                                            <td>{{ $datas->inventaris_data_number }}</td>
+                                            <td>{{ $datas->inventaris_data_merk }}</td>
+                                            <td>@currency($datas->inventaris_data_harga)</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -274,11 +283,15 @@
                             <hr>
                             <h5 class="d-flex justify-content-between"><span>Total Data
                                     Keseluruhan</span><span>{{ $jumlah }}</span></h5>
-                            <p class="fs--1 text-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <p class="fs--1 text-danger">Pastikan Semua Data Sudah di verifikasi sesuai kondisi barang
+                                masing - masing.</p>
                             @if ($barangbaik + $barangmaintenance + $barangrusak == $jumlah)
-                                <button class="btn btn-falcon-success" id="button-penyelesaian-stockopname"
-                                    data-id="{{ $cekdata->kode_verif }}"><i class="fa fa-save"></i> Penyelesaian &
-                                    Simpan</button>
+                                <span id="menu-button-penyelesaian-stockopname">
+                                    <button class="btn btn-falcon-success" id="button-penyelesaian-stockopname"
+                                        data-code="{{ $cekdata->kode_verif }}"><i class="fa fa-save"></i> Penyelesaian
+                                        &
+                                        Simpan</button>
+                                </span>
                             @else
                                 <button class="btn btn-falcon-success" id="button-fix-data-stockopname"
                                     data-id="{{ $id }}"><i class="fa fa-check"></i> Fix Data</button>

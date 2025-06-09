@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-xl-auto px-3 py-2">
                         <h6 class="text-primary fs--1 mb-0">Menu : </h6>
-                        <h4 class="text-primary fw-bold mb-0">Pemusnahan <span class="text-info fw-medium">Cabang</span>
+                        <h4 class="text-primary fw-bold mb-0">Maintenance <span class="text-info fw-medium">Cabang</span>
                         </h4>
                     </div>
                 </div>
@@ -31,21 +31,20 @@
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h5 class="mb-1 text-primary fw-bold">Data Pemusnahan</h5>
+                    <h5 class="mb-1 text-primary fw-bold">Data Maintenance</h5>
                 </div>
                 <div class="col-auto">
                     <div class="btn-group" role="group">
-                        <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2" type="button"
+                        <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2" type="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
-                                class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span>Menu Pemusnahan</button>
+                                class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span>Option
+                            Maintenance</button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-pemusnahan"
-                                id="button-add-data-pemusnahan"><span class="fas fa-swatchbook"></span>
-                                Tambah Pemusnahan Barang</button>
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-maintenance-xl"
+                                id="button-add-data-maintenance" data-code="123"><span class="fas fa-swatchbook"></span>
+                                Tambah Data Maintenance</button>
+
                         </div>
-                        {{-- <a class="btn btn-falcon-primary btn-sm" href="#!" data-bs-toggle="modal"
-                        data-bs-target="#modal-pemusnahan" id="button-add-data-pemusnahan">
-                        <span class="far fa-file-alt fs--2 me-1"></span>Tambah Pemusnahan Barang</a> --}}
                     </div>
                 </div>
             </div>
@@ -55,12 +54,12 @@
                 <thead class="bg-200 text-700 fs--2">
                     <tr>
                         <th>No</th>
-                        <th>Nomor Pemusnahan</th>
+                        <th>No Maintenance</th>
                         <th>Nomor Inventaris</th>
                         <th>Nama Barang</th>
-                        <th>User Verifikasi</th>
-                        <th>User Persetujuan</th>
-                        <th>Eksekusi</th>
+                        <th>Pelapor</th>
+                        <th>Tgl Laporan</th>
+                        <th>Tgl Selesai Laporan</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -72,35 +71,19 @@
                     @foreach ($data as $datas)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $datas->kd_pemusnahan }}</td>
+                            <td>{{ $datas->kd_maintenance }}</td>
                             <td>{{ $datas->inventaris_data_number }}</td>
                             <td>{{ $datas->inventaris_data_name }}</td>
+                            <td>{{ $datas->pelapor }}</td>
+                            <td>{{ $datas->tgl_mulai }}</td>
+                            <td>{{ $datas->tgl_akhir }}</td>
                             <td>
-                                @php
-                                    $nama = DB::table('wa_number_cabang')
-                                        ->where('wa_number_code', $datas->user_verifikasi)
-                                        ->first();
-                                @endphp
-                                @if ($nama)
-                                    {{ $nama->wa_number_name }}
-                                @endif
-                            </td>
-                            <td>
-                                @php
-                                    $nama1 = DB::table('wa_number_cabang')
-                                        ->where('wa_number_code', $datas->user_persetujuan)
-                                        ->first();
-                                @endphp
-                                @if ($nama1)
-                                    {{ $nama1->wa_number_name }}
-                                @endif
-                            </td>
-                            <td>{{ $datas->eksekusi }}</td>
-                            <td>
-                                @if ($datas->status_pemusnahan == 0)
-                                    <span class="badge bg-warning fs--2">Belum diverifikasi</span>
-                                @elseif($datas->status_pemusnahan == 1)
-                                    <span class="badge bg-primary fs--2">Sudah diverifikasi</span>
+                                @if ($datas->status_maintenance == 0)
+                                    <span class="badge bg-danger">Belum di Verifikasi</span>
+                                @elseif ($datas->status_maintenance == 1)
+                                    <span class="badge bg-warning">Sudah di Verifikasi</span>
+                                @elseif ($datas->status_maintenance == 2)
+                                    <span class="badge bg-primary">Selesai</span>
                                 @endif
                             </td>
                             <td>
@@ -110,19 +93,25 @@
                                         aria-expanded="false"><span class="fas fa-align-left me-1"
                                             data-fa-transform="shrink-3"></span>Option</button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                                        @if ($datas->status_pemusnahan == 0)
+                                        @if ($datas->status_maintenance == 0)
                                             <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-pemusnahan-md"
-                                                id="button-verifikasi-data-pemusnahan-cabang"
-                                                data-code="{{ $datas->id_pemusnahan }}"><span
+                                                data-bs-target="#modal-maintenance-md"
+                                                id="button-verifikasi-maintenance-barang"
+                                                data-code="{{ $datas->kd_maintenance }}"><span
                                                     class="fas fa-swatchbook"></span>
-                                                Verifikasi Pemusnahan</button>
-                                        @elseif($datas->status_pemusnahan == 1)
+                                                Verifikasi Maintenance</button>
+                                        @elseif($datas->status_maintenance == 1)
                                             <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-pemusnahan-lg"
-                                                id="button-cetak-data-pemusnahan-cabang"
-                                                data-code="{{ $datas->id_pemusnahan }}"><span class="fas fa-print"></span>
-                                                Cetak Laporan Pemusnahan</button>
+                                                data-bs-target="#modal-maintenance-xl"
+                                                id="button-proses-data-maintenance-barang"
+                                                data-code="{{ $datas->kd_maintenance }}"><span class="fas fa-compress-arrows-alt"></span>
+                                                Penyelesaian Proses Maintenance</button>
+                                        @elseif($datas->status_maintenance == 2)
+                                            <button class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#modal-maintenance-lg"
+                                                id="button-cetak-data-maintenance-barang"
+                                                data-code="{{ $datas->kd_maintenance }}"><span class="fas fa-print"></span>
+                                                Cetak Laporan Maintenance</button>
                                         @endif
                                     </div>
                                 </div>
@@ -147,7 +136,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-pemusnahan-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-maintenance-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="false">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content border-0">
@@ -155,11 +144,11 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-pemusnahan-lg"></div>
+                <div id="menu-maintenance-lg"></div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-pemusnahan-md" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-maintenance-md" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="false">
         <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content border-0">
@@ -167,7 +156,19 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-pemusnahan-md"></div>
+                <div id="menu-maintenance-md"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-maintenance-xl" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-maintenance-xl"></div>
             </div>
         </div>
     </div>
@@ -182,13 +183,13 @@
         });
     </script>
     <script>
-        $(document).on("click", "#button-add-data-pemusnahan", function(e) {
+        $(document).on("click", "#button-add-data-maintenance", function(e) {
             e.preventDefault();
-            $('#menu-pemusnahan').html(
+            $('#menu-pemusnahan-xl').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('menu_pemusnahan_add') }}",
+                url: "{{ route('menu_maintenance_add') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -197,37 +198,37 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-pemusnahan').html(data);
+                $('#menu-maintenance-xl').html(data);
             }).fail(function() {
-                $('#menu-pemusnahan').html('eror');
+                $('#menu-maintenance-xl').html('eror');
             });
         });
         $(document).on("click", "#button-find-data-barang", function(e) {
             e.preventDefault();
             var data = $("#form-pencarian-data-pemusnahan").serialize();
-            $('#menu-data-table-pemusnahan').html(
+            $('#menu-data-table-maintenance').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('menu_pemusnahan_find_data_barang') }}",
+                url: "{{ route('menu_maintenance_find_data') }}",
                 type: "POST",
                 cache: false,
                 data: data,
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-data-table-pemusnahan').html(data);
+                $('#menu-data-table-maintenance').html(data);
             }).fail(function() {
-                $('#menu-data-table-pemusnahan').html('eror');
+                $('#menu-data-table-maintenance').html('eror');
             });
         });
-        $(document).on("click", "#button-pilih-data-barang-pemusnahan", function(e) {
+        $(document).on("click", "#button-pilih-data-barang-maintenance", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-data-table-pemusnahan').html(
+            $('#menu-data-table-maintenance').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('menu_pemusnahan_pilih_data_barang') }}",
+                url: "{{ route('menu_maintenance_pilih_data_barang') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -236,19 +237,19 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-data-table-pemusnahan').html(data);
+                $('#menu-data-table-maintenance').html(data);
             }).fail(function() {
-                $('#menu-data-table-pemusnahan').html('eror');
+                $('#menu-data-table-maintenance').html('eror');
             });
         });
-        $(document).on("click", "#button-verifikasi-data-pemusnahan-cabang", function(e) {
+        $(document).on("click", "#button-cetak-data-maintenance-barang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-pemusnahan-md').html(
+            $('#menu-maintenance-lg').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('menu_pemusnahan_pilih_data_barang_verifikasi') }}",
+                url: "{{ route('menu_maintenance_print_laporan') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -257,19 +258,19 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-pemusnahan-md').html(data);
+                $('#menu-maintenance-lg').html(data);
             }).fail(function() {
-                $('#menu-pemusnahan-md').html('eror');
+                $('#menu-maintenance-lg').html('eror');
             });
         });
-        $(document).on("click", "#button-cetak-data-pemusnahan-cabang", function(e) {
+        $(document).on("click", "#button-verifikasi-maintenance-barang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
-            $('#menu-pemusnahan-lg').html(
+            $('#menu-maintenance-md').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('menu_pemusnahan_pilih_data_barang_print') }}",
+                url: "{{ route('menu_maintenance_verifikasi_data_maintenance') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -278,9 +279,30 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-pemusnahan-lg').html(data);
+                $('#menu-maintenance-md').html(data);
             }).fail(function() {
-                $('#menu-pemusnahan-lg').html('eror');
+                $('#menu-maintenance-md').html('eror');
+            });
+        });
+        $(document).on("click", "#button-proses-data-maintenance-barang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-maintenance-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_maintenance_proses_data_maintenance') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-maintenance-xl').html(data);
+            }).fail(function() {
+                $('#menu-maintenance-xl').html('eror');
             });
         });
     </script>

@@ -221,7 +221,7 @@
 </style>
 @php
     $no_doc = DB::table('master_doocument_cab')
-        ->where('master_document_code', '=', 'DOC00920')
+        ->where('master_document_code', '=', 'SO')
         ->where('kd_cabang', $cabang->kd_cabang)
         ->first();
 @endphp
@@ -241,10 +241,10 @@
             <img src="data:image/png;base64, {{ $image }}">
         </div>
         <div id="company">
+            <div style="margin-top: -20px;">{{ $no }}</div><br>
             <h2 class="name">{{ $cabang->nama_cabang }}</h2>
             <div>{{ $cabang->alamat }}</div>
             <div>{{ $cabang->phone }}</div>
-            <div>{{ $no }}</div>
         </div>
         </div>
     </header>
@@ -327,7 +327,7 @@
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
                 QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($data->kode_verif),
             ) !!}">
-            <div class="notice">Dokumen Ini Sah tanpa Tanda Tangan.</div>
+            <div class="notice">Dokumen Ini terbit secara digital.</div>
         </div>
     </main>
 </body>

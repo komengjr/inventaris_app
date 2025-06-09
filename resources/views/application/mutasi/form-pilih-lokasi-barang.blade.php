@@ -21,7 +21,7 @@
             <div class="col-md-3">
                 <label class="form-label" for="inputAddress">Pilih Lokasi</label>
                 <select name="lokasi" class="form-control choices-single-lokasi" required>
-                    <option>Pilih Cabang</option>
+                    <option value="">Pilih Lokasi</option>
                     @foreach ($lokasi as $lokasis)
                         <option value="{{$lokasis->id_nomor_ruangan_cbaang}}">{{$lokasis->master_lokasi_name}}</option>
                     @endforeach

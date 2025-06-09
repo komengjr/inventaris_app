@@ -83,6 +83,17 @@ class AppController extends Controller
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
         return view('application.dashboard.form.form-add-non-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
     }
+    public function dashboard_data_barang_klasifikasi(Request $request)
+    {
+        $data = DB::table('inventaris_data')
+            ->join('inventaris_klasifikasi', 'inventaris_klasifikasi.inventaris_klasifikasi_code', '=', 'inventaris_data.inventaris_klasifikasi_code', )
+            ->join('inventaris_cat', 'inventaris_cat.inventaris_cat_code', '=', 'inventaris_klasifikasi.inventaris_cat_code', )
+            ->where('inventaris_cat.inventaris_cat_code', $request->code, )
+            ->where('inventaris_data.inventaris_data_cabang', Auth::user()->cabang)
+            ->get();
+        $klasifikasi = DB::table('inventaris_klasifikasi')->get();
+        return view('application.dashboard.data.data-barang-klasifikasi', ['data' => $data, 'klasifikasi' => $klasifikasi]);
+    }
     public function dashboard_add_data_non_aset(Request $request)
     {
         $entitas = DB::table('tbl_entitas_cabang')
@@ -123,7 +134,11 @@ class AppController extends Controller
     }
     public function dashboard_data_non_aset(Request $request)
     {
-        $data = DB::table('inventaris_data')->where('inventaris_data_jenis', 0)->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        $data = DB::table('inventaris_data')
+            ->where('inventaris_data_jenis', 0)
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data_status', '<', 4)
+            ->get();
         return view('application.dashboard.data.data-non-aset', ['data' => $data]);
     }
     public function dashboard_export_data_non_aset(Request $request)
@@ -176,7 +191,11 @@ class AppController extends Controller
     }
     public function dashboard_data_aset(Request $request)
     {
-        $data = DB::table('inventaris_data')->where('inventaris_data_jenis', 1)->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        $data = DB::table('inventaris_data')
+            ->where('inventaris_data_jenis', 1)
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data_status', '<', 4)
+            ->get();
         return view('application.dashboard.data.data-aset', ['data' => $data]);
     }
     public function dashboard_data_depresiasi_aset(Request $request)
@@ -196,10 +215,97 @@ class AppController extends Controller
     }
     public function dashboard_lokasi_data_barang(Request $request)
     {
-        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
             ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', $request->code)->first();
-        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->code)->where('inventaris_data_status', '<', 4)->get();
+        $data = DB::table('inventaris_data')
+            ->where('id_nomor_ruangan_cbaang', $request->code)
+            ->where('inventaris_data_status', '<', 4)->orderBy('id_inventaris_data', 'DESC')->get();
         return view('application.dashboard.data.data-lokasi', ['data' => $data, 'lokasi' => $lokasi, 'id' => $request->code]);
+    }
+    public function dashboard_data_lokasi_detail(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data_code', $request->code)->first();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)
+            ->get();
+        $klasifikasi = DB::table('inventaris_klasifikasi')->get();
+        $log_pindah = DB::table('log_history_inventaris')->where('id_inventaris', $request->code)->get();
+        $log_pinjam = DB::table('tbl_sub_peminjaman')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_sub_peminjaman.id_inventaris', '=', $request->code)->get();
+        return view('application.dashboard.form.form-update-detail-barang', [
+            'data' => $data,
+            'lokasi' => $lokasi,
+            'klasifikasi' => $klasifikasi,
+            'log_pindah' => $log_pindah,
+            'log_pinjam' => $log_pinjam,
+        ]);
+    }
+    public function dashboard_data_lokasi_detail_barcode($id)
+    {
+        $data = DB::table('inventaris_data')
+            ->where('inventaris_data_code', $id)
+            ->where('inventaris_data_cabang', auth::user()->cabang)
+            ->first();
+        // dd($data);
+        $customPaper = array(0, 0, 50.80, 95.20);
+        $pdf = PDF::loadview('application.dashboard.data.report.format-barcode', ['data' => $data])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
+        return $pdf->stream();
+    }
+    public function dashboard_update_data_inventaris(Request $request)
+    {
+        $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
+        $cek = DB::table('inventaris_data')->where('inventaris_data_code', $request->inventaris_code)->first();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->lokasi)->first();
+        if ($request->link == $cek->inventaris_data_file) {
+            $link = $request->link;
+        } else {
+            $link = 'public/databrg/new/' . Auth::user()->cabang . '/' . $request->link;
+        }
+        if ($cek->inventaris_klasifikasi_code == $request->klasifikasi) {
+            $data = $cek->inventaris_data_number;
+        } else {
+            $data = str_replace($cek->inventaris_klasifikasi_code, $request->klasifikasi, $cek->inventaris_data_number);
+        }
+        if ($cek->inventaris_data_location == $lokasi->kd_lokasi) {
+            $data1 = $data;
+        } else {
+            $data1 = str_replace($cek->inventaris_data_location, $lokasi->kd_lokasi, $data);
+            DB::table('inventaris_data')->where('inventaris_data_code', $request->inventaris_code)->update([
+                'id_nomor_ruangan_cbaang' => $request->lokasi
+            ]);
+            DB::table('log_history_inventaris')->insert([
+                'no_log' => 'LOG' . Auth::user()->cabang . '' . date('Ymdhis'),
+                'id_inventaris' => $request->inventaris_code,
+                'kategori_inventaris' => 0,
+                'type_history' => 'P',
+                'before_history' => $cek->inventaris_data_location,
+                'after_history' => $lokasi->kd_lokasi,
+                'created_at' => now()
+            ]);
+        }
+        DB::table('inventaris_data')->where('inventaris_data_code', $request->inventaris_code)->update([
+            'inventaris_data_name' => $request->nama_barang,
+            'inventaris_data_number' => $data1,
+            'inventaris_data_location' => $lokasi->kd_lokasi,
+            'inventaris_klasifikasi_code' => $request->klasifikasi,
+            'inventaris_data_jenis' => $request->jenis,
+            'inventaris_data_harga' => $nilai,
+            'inventaris_data_merk' => $request->merk,
+            'inventaris_data_type' => $request->type,
+            'inventaris_data_no_seri' => $request->seri,
+            'inventaris_data_suplier' => $request->suplier,
+            // 'inventaris_data_kondisi' => $request->kondisi,
+            'inventaris_data_status' => 0,
+            'inventaris_data_tgl_beli' => $request->tgl_beli,
+            // 'inventaris_data_cabang' => Auth::user()->cabang,
+            // 'inventaris_data_urut' => $total + 1,
+            'inventaris_data_file' => $link,
+            // 'id_nomor_ruangan_cbaang' => $request->lokasi,
+            'updated_at' => now(),
+        ]);
+        return 'Sukses, Tunggu Sebentar...';
     }
     public function masteradmin_cabang_data_lokasi_print_barcode(Request $request)
     {
@@ -577,9 +683,17 @@ class AppController extends Controller
     public function menu_pemusnahan_find_data_barang(Request $request)
     {
         if ($request->option == 'name') {
-            $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_name', 'like', '%' . $request->name . '%')->get();
+            $data = DB::table('inventaris_data')
+                ->where('inventaris_data_cabang', Auth::user()->cabang)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('inventaris_data_name', 'like', '%' . $request->name . '%')
+                ->get();
         } elseif ($request->option == 'no_inventaris') {
-            $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_number', 'like', '%' . $request->name . '%')->get();
+            $data = DB::table('inventaris_data')
+                ->where('inventaris_data_cabang', Auth::user()->cabang)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('inventaris_data_number', 'like', '%' . $request->name . '%')
+                ->get();
         }
         return view('application.pemusnahan.data-table-pemusnahan', ['data' => $data]);
     }
@@ -707,10 +821,29 @@ class AppController extends Controller
         }
 
     }
+    public function menu_stock_opname_add(Request $request)
+    {
+        return view('application.stockopname.form-add-stockopname');
+    }
+    public function menu_stock_opname_save(Request $request)
+    {
+        $total = DB::table('inventaris_data')->where('inventaris_data_cabang', '=', Auth::user()->cabang)->where('inventaris_data_status', '<', 4)->count();
+        DB::table('tbl_verifdatainventaris')->insert([
+            'kode_verif' => 'SO' . Auth::user()->cabang . '' . date('Ymdhis'),
+            'tgl_verif' => $request->start,
+            'end_date_verif' => $request->end,
+            'kd_cabang' => Auth::user()->cabang,
+            'tahun' => date('Y'),
+            'total_barang' => $total,
+            'status_verif' => 0,
+            'created_at' => now()
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Jadwal Stockopname');
+    }
     public function menu_stock_opname_kondisi_data(Request $request)
     {
         $data = DB::table('tbl_sub_verifdatainventaris')
-            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
             ->where('kode_verif', $request->code)->where('status_data_inventaris', $request->status)->get();
         return view('application.stockopname.data-kondisi', ['data' => $data]);
     }
@@ -728,7 +861,7 @@ class AppController extends Controller
         $cekdata = DB::table('tbl_verifdatainventaris')
             ->where('kode_verif', $request->code)
             ->first();
-        $data = DB::table('sub_tbl_inventory')->where('kd_cabang', Auth::user()->cabang)->where('status_barang', '>=', 4)->get();
+        $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_status', '>=', 4)->get();
         $tbl_cabang = DB::table('tbl_cabang')->where('kd_cabang', auth::user()->cabang)->get();
         $lokasi = DB::table('tbl_lokasi')->get();
         $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->orderBy('nomor_ruangan', 'ASC')->get();
@@ -747,9 +880,9 @@ class AppController extends Controller
     }
     public function menu_stock_opname_scan_data_with_kamera(Request $request)
     {
-        $data = DB::table('sub_tbl_inventory')
-            ->where('kd_cabang', Auth::user()->cabang)
-            ->where('no_inventaris', $request->data)->first();
+        $data = DB::table('inventaris_data')
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data_number', $request->data)->first();
         return view('application.stockopname.result-kamera-stock', ['data' => $data, 'kode' => $request->tiket]);
     }
     public function menu_stock_opname_proses_data_with_scanner(Request $request)
@@ -758,17 +891,195 @@ class AppController extends Controller
     }
     public function menu_stock_opname_scan_data_with_scanner(Request $request)
     {
-        $data = DB::table('sub_tbl_inventory')
-            ->where('kd_cabang', Auth::user()->cabang)
-            ->where('no_inventaris', $request->nama)->first();
+        $data = DB::table('inventaris_data')
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data_number', $request->nama)->first();
         return view('application.stockopname.hasil-scanner', ['data' => $data, 'kode' => $request->tiket]);
+    }
+    public function menu_stock_opname_scan_data_with_scanner_save(Request $request)
+    {
+        $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->kode)->where('id_inventaris', $request->id_inventaris)->first();
+        if ($cekdata) {
+            return "<span class='badge badge-pill bg-warning m-1'>Data Sudah DI Verifikasi</span>";
+        } else {
+            DB::table('tbl_sub_verifdatainventaris')->insert([
+                'kode_verif' => $request->kode,
+                'id_inventaris' => $request->id_inventaris,
+                'status_data_inventaris' => $request->inlineradio,
+                'keterangan_data_inventaris' => $request->keterangan,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            return "<span class='badge badge-pill bg-success m-1'>Success</span>";
+        }
     }
     public function menu_stock_opname_edit_data_tanggal(Request $request)
     {
         $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
         return view('application.stockopname.form-edit-tgl', ['data' => $data]);
     }
+    public function menu_stock_opname_penyelesaian_data(Request $request)
+    {
+        DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->update([
+            'status_verif' => 1
+        ]);
+        return $request->code;
+    }
+    public function menu_stock_opname_print_data(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+            # code...
+        }
+        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
+        $brg = DB::table('tbl_sub_verifdatainventaris')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->where('tbl_sub_verifdatainventaris.kode_verif', $request->code)->get();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.menu-cabang.report.report-stockopname', ['cabang' => $cabang, 'data' => $data, 'brg' => $brg], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
+    }
 
+    // MENU MAINTENANCE
+    public function menu_maintenance($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('tbl_maintenance')
+                ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_maintenance.id_inventaris')
+                ->where('tbl_maintenance.kd_cabang', auth::user()->cabang)
+                ->orderBy('tbl_maintenance.id_maintenance', 'desc')
+                ->get();
+            return view('application.maintenance.menu-maintenance', ['data' => $data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+
+    }
+    public function menu_maintenance_add(Request $request)
+    {
+        return view('application.maintenance.forma-add-maintenance');
+    }
+    public function menu_maintenance_find_data(Request $request)
+    {
+        if ($request->option == 'name') {
+            $data = DB::table('inventaris_data')
+                ->where('inventaris_data_cabang', Auth::user()->cabang)
+                ->where('inventaris_data_status', '<', 1)
+                ->where('inventaris_data_name', 'like', '%' . $request->name . '%')
+                ->get();
+        } elseif ($request->option == 'no_inventaris') {
+            $data = DB::table('inventaris_data')
+                ->where('inventaris_data_cabang', Auth::user()->cabang)
+                ->where('inventaris_data_status', '<', 1)
+                ->where('inventaris_data_number', 'like', '%' . $request->name . '%')
+                ->get();
+        }
+        return view('application.maintenance.table-find-data', ['data' => $data]);
+    }
+    public function menu_maintenance_pilih_data_barang(Request $request)
+    {
+        $user = DB::table('wa_number_cabang')->where('kd_cabang', Auth::user()->cabang)->where('wa_number_akses', '=', 'MGR')->get();
+        $data = DB::table('inventaris_data')->where('inventaris_data_code', $request->code)->first();
+        return view('application.maintenance.form-proses-maintenance', ['data' => $data, 'user' => $user]);
+    }
+    public function menu_maintenance_save(Request $request)
+    {
+        if ($request->link == '') {
+            $link = null;
+        } else {
+            $link = 'public/document/maintenance/' . Auth::user()->cabang . '/' . $request->link;
+        }
+        $code = 'MTC' . Auth::user()->cabang . date('Ymdhis');
+        $token = mt_rand(1000000, 9999999);
+        $no = DB::table('wa_number_cabang')->where('id_wa_number', $request->mengetahui)->first();
+        $brg = DB::table('inventaris_data')->where('inventaris_data_code', $request->id_inventaris)->first();
+        $text = "Hai \nAda Notifikasi Maintenance Barang Dengan No Maintenance :\n*" . $code . "*\nDetail Barang :\n" .
+            "\nNo Inventaris : " . $brg->inventaris_data_number .
+            "\nNama Barang : " . $brg->inventaris_data_name .
+            "\nMerek Barang : " . $brg->inventaris_data_merk .
+            "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
+            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma*";
+        DB::table('tbl_maintenance')->insert([
+            'kd_maintenance' => $code,
+            'id_inventaris' => $request->id_inventaris,
+            'pelapor' => $request->pelapor,
+            'dasar_pengajuan' => $request->dasar_pengajuan,
+            'mengetahui' => $request->mengetahui,
+            'kd_cabang' => Auth::user()->cabang,
+            'tgl_mulai' => $request->tanggal_buat,
+            'tgl_akhir' => null,
+            'status_maintenance' => 0,
+            'token_maintenance' => $token,
+            'ket_maintenance' => $request->deskripsi,
+            'file_maintenance' => $link,
+            'created_at' => now(),
+        ]);
+        DB::table('message')->insert([
+            'token_code' => $code,
+            'number' => $no->wa_number_no,
+            'pesan' => $text,
+            'file' => 'nofile',
+            'status' => 0,
+            'time' => now(),
+            'created_at' => now(),
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Maintenance Barang');
+    }
+    public function menu_maintenance_verifikasi_data_maintenance(Request $request)
+    {
+        return view('application.maintenance.form-verifikasi-maintenance', ['code' => $request->code]);
+    }
+    public function menu_maintenance_verifikasi_data_maintenance_applay(Request $request)
+    {
+        $check = DB::table('tbl_maintenance')->where('kd_maintenance', $request->tiket)->where('token_maintenance', '=', $request->code)->first();
+        if ($check) {
+            DB::table('tbl_maintenance')->where('kd_maintenance', $request->tiket)->update([
+                'status_maintenance' => 1
+            ]);
+            $id = 1;
+        } else {
+            $id = 0;
+        }
+        return view('application.maintenance.notifikasi-maintenance', ['id' => $id]);
+    }
+    public function menu_maintenance_proses_data_maintenance(Request $request)
+    {
+        $data = DB::table('tbl_maintenance')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_maintenance.id_inventaris')
+            ->where('tbl_maintenance.kd_maintenance', $request->code)->first();
+        return view('application.maintenance.form-proses-penyelesaian-maintenance', ['data' => $data]);
+    }
+    public function menu_maintenance_proses_data_maintenance_save(Request $request){
+        return redirect()->back()->withSuccess('Great! Berhasil Menyelesaikan Maintenance Barang');
+    }
+    public function menu_maintenance_print_laporan(Request $request)
+    {
+        return view('application.maintenance.form-print-laporan-maintenance', ['code' => $request->code]);
+    }
+    public function menu_maintenance_print_laporan_cetak(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+            # code...
+        }
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.maintenance.report.report-maintenance', ['cabang' => $cabang], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
+    }
 
     // MENU MUTASI
     public function menu_mutasi($akses)
@@ -1076,7 +1387,7 @@ class AppController extends Controller
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
         $data = DB::table('tbl_peminjaman')
             ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_peminjaman.tujuan_cabang')
-            ->join('tbl_staff', 'tbl_staff.nip', '=', 'tbl_peminjaman.pj_pinjam')
+            // ->join('tbl_staff', 'tbl_staff.nip', '=', 'tbl_peminjaman.pj_pinjam')
             ->where('tbl_peminjaman.kd_cabang', $request->code)->orderBy('id_pinjam', 'DESC')->get();
         return view('application.menu-cabang.data-peminjaman', ['cabang' => $cabang, 'data' => $data]);
     }
@@ -1095,15 +1406,24 @@ class AppController extends Controller
             ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
             ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
             ->where('tbl_peminjaman.tiket_peminjaman', $request->code)->get();
-
+        $data_hilang = DB::table('tbl_sub_peminjaman')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_peminjaman.id_inventaris')
+            ->join('tbl_peminjaman', 'tbl_peminjaman.id_pinjam', '=', 'tbl_sub_peminjaman.id_pinjam')
+            ->where('tbl_peminjaman.tiket_peminjaman', $request->code)
+            ->where('tbl_sub_peminjaman.status_sub_peminjaman', 3)->get();
         $customPaper = array(0, 0, 50.80, 95.20);
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.menu-cabang.report.report-peminjaman', ['data' => $data, 'cabang' => $cabang, 'peminjaman' => $peminjaman], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.menu-cabang.report.report-peminjaman', [
+            'data' => $data,
+            'cabang' => $cabang,
+            'peminjaman' => $peminjaman,
+            'data_hilang' => $data_hilang
+        ], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
-        $canvas = $pdf->getDomPDF()->getCanvas();
-        $height = $canvas->get_height();
-        $width = $canvas->get_width();
-        $canvas->set_opacity(.2, "Multiply");
-        $canvas->set_opacity(.1);
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $font1 = $dompdf->getFontMetrics()->get_font("helvetica", "normal");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        $dompdf->get_canvas()->page_text(34, 820, "Print by. " . Auth::user()->name, $font1, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
     public function menu_cabang_data_mutasi(Request $request)

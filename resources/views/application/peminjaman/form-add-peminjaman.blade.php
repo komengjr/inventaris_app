@@ -24,7 +24,7 @@
             </select>
         </div>
         <div class="col-md-6">
-            <label class="form-label" for="inputAddress">Penanggung Jawab Cabang</label>
+            <label class="form-label" for="inputAddress">Penanggung Jawab Peminjaman</label>
             <select name="pj" class="form-control choices-single-user" id="">
                 <option value="">Pilih Staff</option>
                 @foreach ($staff as $stafss)

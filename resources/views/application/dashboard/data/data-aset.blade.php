@@ -4,42 +4,7 @@
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-3">
-        <div class="card mb-3 border border-primary ">
-            <div class="card-body py-2">
-                <div class="row gx-0 flex-between-center">
-                    <div class="col-sm-auto d-flex align-items-center">
-                        <img class="ms-1 mx-3" src="{{ asset('img/brg.png') }}" alt="" width="50" />
-                        <div>
-                            <h6 class="text-primary fs--1 mb-0 mt-2">Jumlah Data : {{$data->count()}}</h6>
-                            <h4 class="text-primary fw-bold mb-1">Data Barang<span class="text-info fw-medium"> Aset</span>
-                            </h4>
-                        </div>
-                    </div>
-                    <div class="col-xl-auto px-3 py-0">
-                        <div class="row gx-2 align-items-center">
-                            <div class="col-auto">
-                                <form class="row gx-2 float-end" action="#">
-                                    <div class="col-auto"><small class="text-primary">Print by: </small></div>
-                                    <div class="col-auto">
-                                        <select class="form-select form-select-sm text-primary" name="page"
-                                            id="page" aria-label="Bulk actions">
-                                            <option value="-">Pilih Option Print</option>
 
-                                        </select>
-                                    </div>
-                                    <div class="col-auto">
-                                        <button class="btn btn-falcon-primary btn-sm float-end"
-                                            id="button-print-barcode-page" data-id="123"><span
-                                                class="fas fa-qrcode"></span> Print barcode</button>
-                                    </div>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div id="menu-data-lokasi-barang">
             <table id="exampledata" class="table table-striped nowrap" style="width:100%" border="1">
                 <thead class="bg-200 text-700">
@@ -81,7 +46,7 @@
                             <td>@currency($datas->inventaris_data_harga)</td>
                             <td>
                                 <button class="btn btn-falcon-info btn-sm"
-                                    onclick="window.open('../../printbarcodebyid/{{ $datas->inventaris_data_code }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i
+                                    onclick="window.open('{{route('dashboard_data_lokasi_detail_barcode',['id'=>$datas->inventaris_data_code])}}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';"><i
                                         class="fa fa-print"></i> Print barcode</button>
                             </td>
                         </tr>

@@ -150,10 +150,10 @@
                         </div>
                         <div class="col-auto">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-sm btn-falcon-primary dropdown-toggle" id="btnGroupVerticalDrop2"
+                                <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2"
                                     type="button" data-bs-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false"><span class="fas fa-align-left me-1"
-                                        data-fa-transform="shrink-3"></span>Menu</button>
+                                        data-fa-transform="shrink-3"></span>Menu Peminjaman</button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
                                     <button class="dropdown-item" data-bs-toggle="modal"
@@ -176,7 +176,7 @@
                 </div>
                 <div class="card-body border-top p-2">
                     <table id="example" class="table table-striped nowrap" style="width:100%">
-                        <thead class="bg-200 text-700">
+                        <thead class="bg-200 text-700 fs--2">
                             <tr>
                                 <th>No</th>
                                 <th>Kode Peminjaman</th>
@@ -187,7 +187,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="fs--2">
                             @php
                                 $no = 1;
                             @endphp
@@ -205,7 +205,7 @@
                                     <td>{{ $datas->nama_kegiatan }}</td>
                                     <td>
                                         @php
-                                            $staff = DB::table('tbl_staff')->where('id_staff', $datas->pj_pinjam)->first();
+                                            $staff = DB::table('tbl_staff')->where('id_staff','=', $datas->pj_pinjam)->first();
                                         @endphp
                                         @if ($staff)
                                             {{ $staff->nama_staff }}

@@ -22,8 +22,8 @@
                     @foreach ($data as $datas)
                         <tr>
                             <td>{{$no++}}</td>
-                            <td>{{$datas->nama_barang}}</td>
-                            <td>{{$datas->no_inventaris}}</td>
+                            <td>{{$datas->inventaris_data_name}}</td>
+                            <td>{{$datas->inventaris_data_number}}</td>
                             <td>{{$datas->keterangan_data_inventaris}}</td>
                             <td>
                                 <button class="btn btn-falcon-danger btn-sm"><span class="fa fa-trash"></span></button>
