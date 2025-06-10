@@ -40,7 +40,14 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Penanggung Jawab Peminjaman</label>
-                            <input class="form-control" type="text" value="{{ $data->pj_pinjam }}" disabled />
+                            @php
+                                $staff = DB::table('tbl_staff')->where('id_staff', $data->pj_pinjam)->first();
+                            @endphp
+                            @if ($staff)
+                                <input class="form-control" type="text" value="{{ $staff->nama_staff }}" disabled />
+                            @else
+                                <input class="form-control" type="text" value="{{ $data->pj_pinjam }}" disabled />
+                            @endif
                         </div>
                         <div class="col-md-12">
                             <label class="form-label" for="inputAddress">Deskripsi Peminjaman</label>

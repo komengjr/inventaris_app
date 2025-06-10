@@ -39,7 +39,7 @@
                                 value="{{ $data->tgl_pinjam }} Sampai {{ $data->batas_tgl_pinjam }}" disabled />
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label" for="inputAddress">Penanggung Jawab Peminjaman</label>
+                            <label class="form-label" for="inputAddress">Penanggung Jawab Peminjamans</label>
                             @php
                                 $staff = DB::table('tbl_staff')->where('id_staff', $data->pj_pinjam)->first();
                             @endphp
