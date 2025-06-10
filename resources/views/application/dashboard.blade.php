@@ -56,36 +56,35 @@
                             <div class="accordion-collapse collapse" id="collapse1" aria-labelledby="heading1"
                                 data-bs-parent="#accordionExample" style="">
                                 <div class="accordion-body">
-
-                                    <div class="list-group">
-                                        <a class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
-                                            <div
-                                                class="d-flex flex-column flex-sm-row justify-content-between mb-1 mb-md-0">
-                                                <h5 class="mb-1">Step 1</h5><small class="text-muted">Menu
-                                                    Peminjaman</small>
-                                            </div>
-                                            <p class="mb-1">Membuat atau Menambahkan data / tiket Peminjaman.</p>
-                                        </a>
-                                        <a class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
-                                            <div
-                                                class="d-flex flex-column flex-sm-row justify-content-between mb-1 mb-md-0">
-                                                <h5 class="mb-1">Step 2</h5><small class="text-muted">Menu
-                                                    Peminjaman</small>
-                                            </div>
-                                            <p class="mb-1">Pastikan Field yang diisi sudah benar dan menyesuaikan
-                                                keterangan yang ada.</p>
-                                        </a>
-                                        <a class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
-                                            <div
-                                                class="d-flex flex-column flex-sm-row justify-content-between mb-1 mb-md-0">
-                                                <h5 class="mb-1">Step 3</h5><small class="text-muted">Menu
-                                                    Peminjaman</small>
-                                            </div>
-                                            <p class="mb-1">Setelah Step 2 Sudah dilakukan dengan benar dan data tiket
-                                                penyimpanan sudah tersimpan dengan baik , setelah itu untuk melengkapi data
-                                                barang yang akan di pinjam.</p>
-                                        </a>
-                                    </div>
+                                    <h6 class="text-primary">General rules</h6>
+                                    <p class="fs-0 mb-0 fw-semi-bold">Tambah Data Peminjaman :</p>
+                                    <ol type="1">
+                                        <li>Pastikan Semua Inputan diisi dengan benar</li>
+                                        <li>Setelah No Peminjaman Sudah dibuat , pastikan melengkapi dan menambahkan data
+                                            barang yang dipinjam</li>
+                                        <li>Pastikan Juga User Mengetahui di pilih untuk memeastikan data di ketahui oleh
+                                            user tersebut</li>
+                                        <li>Setelah Sudah Melakukan mengisi data barang dan memilih user mengetahui , untuk
+                                            melakukan tombol <button class="btn btn-primary btn-sm"
+                                                disabled>Verifikasi</button></li>
+                                        <li>Kode Verifikasi akan dikirim pihak yang mengetahui, dan memastikan bahwa kode
+                                            verifikasi sudah terkirim</li>
+                                        <li>Memasukan Kode verifikasi untuk melanjutkan proses data peminjaman</li>
+                                    </ol>
+                                    <p class="fs-0 mb-0 fw-semi-bold">Terima Pinjaman Barang Dari Cabang Lain :</p>
+                                    <ol type="1">
+                                        <li>Membuka Data Order Peminjaman untuk melihat list order Tersebut</li>
+                                        <li>Menerima order dan melakukan melengkapi data Peminjaman</li>
+                                        <li>Pastikan User Yang menerima sudah di pilih dan melakukan terima pada barang
+                                            tersebut</li>
+                                    </ol>
+                                    <p class="fs-0 mb-0 fw-semi-bold">Proses Kembalinya Barang :</p>
+                                    <ol type="1">
+                                        <li>Membuka Data Order Peminjaman untuk melihat list order Tersebut</li>
+                                        <li>Menerima order dan melakukan melengkapi data Peminjaman</li>
+                                        <li>Pastikan User Yang menerima sudah di pilih dan melakukan terima pada barang
+                                            tersebut</li>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
@@ -98,39 +97,21 @@
                             <div class="accordion-collapse collapse" id="collapse2" aria-labelledby="heading2"
                                 data-bs-parent="#accordionExample" style="">
                                 <div class="accordion-body">
-
-                                    <div class="list-group">
-                                        <a
-                                            class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
-                                            <div
-                                                class="d-flex flex-column flex-sm-row justify-content-between mb-1 mb-md-0">
-                                                <h5 class="mb-1">Step 1</h5><small class="text-muted">Menu
-                                                    Peminjaman</small>
-                                            </div>
-                                            <p class="mb-1">Membuat atau Menambahkan data / tiket Peminjaman.</p>
-                                        </a>
-                                        <a
-                                            class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
-                                            <div
-                                                class="d-flex flex-column flex-sm-row justify-content-between mb-1 mb-md-0">
-                                                <h5 class="mb-1">Step 2</h5><small class="text-muted">Menu
-                                                    Peminjaman</small>
-                                            </div>
-                                            <p class="mb-1">Pastikan Field yang diisi sudah benar dan menyesuaikan
-                                                keterangan yang ada.</p>
-                                        </a>
-                                        <a
-                                            class="list-group-item list-group-item-action flex-column align-items-start p-3 p-sm-4">
-                                            <div
-                                                class="d-flex flex-column flex-sm-row justify-content-between mb-1 mb-md-0">
-                                                <h5 class="mb-1">Step 3</h5><small class="text-muted">Menu
-                                                    Peminjaman</small>
-                                            </div>
-                                            <p class="mb-1">Setelah Step 2 Sudah dilakukan dengan benar dan data tiket
-                                                penyimpanan sudah tersimpan dengan baik , setelah itu untuk melengkapi data
-                                                barang yang akan di pinjam.</p>
-                                        </a>
-                                    </div>
+                                    <h6 class="text-primary">General rules</h6>
+                                    <p class="fs-0 mb-0 fw-semi-bold">Tambah Data Mutasi :</p>
+                                    <ol type="1">
+                                        <li>Pastikan Semua Inputan diisi dengan benar</li>
+                                        <li>Setelah No Mutasi Sudah dibuat , pastikan melengkapi dan menambahkan data
+                                            barang yang dipinjam</li>
+                                        <li>Pastikan Juga User Mengetahui di pilih untuk memeastikan data di ketahui oleh
+                                            user tersebut</li>
+                                        <li>Setelah Sudah Melakukan mengisi data barang dan memilih user mengetahui , untuk
+                                            melakukan tombol <button class="btn btn-primary btn-sm"
+                                                disabled>Verifikasi</button></li>
+                                        <li>Kode Verifikasi akan dikirim pihak yang mengetahui, dan memastikan bahwa kode
+                                            verifikasi sudah terkirim</li>
+                                        <li>Memasukan Kode verifikasi untuk melanjutkan proses data peminjaman</li>
+                                    </ol>
 
                                 </div>
                             </div>
@@ -151,13 +132,28 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading4">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">Is there
-                                    a fee to use Apple Pay or Google Pay?</button>
+                                    data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                                    Menu Pemusnahan Barang ?</button>
                             </h2>
                             <div class="accordion-collapse collapse" id="collapse4" aria-labelledby="heading4"
                                 data-bs-parent="#accordionExample" style="">
-                                <div class="accordion-body">There are no additional fees for using our mobile SDKs or to
-                                    accept payments using consumer wallets like Apple Pay or Google Pay.</div>
+                                <div class="accordion-body">
+                                    <h6 class="text-primary">General rules</h6>
+                                    <p class="fs-0 mb-0 fw-semi-bold">Tambah Data Pemusnahan :</p>
+                                    <ol type="1">
+                                        <li>Pastikan Semua Inputan diisi dengan benar</li>
+                                        <li>Setelah No Mutasi Sudah dibuat , pastikan melengkapi dan menambahkan data
+                                            barang yang dipinjam</li>
+                                        <li>Pastikan Juga User Mengetahui di pilih untuk memeastikan data di ketahui oleh
+                                            user tersebut</li>
+                                        <li>Setelah Sudah Melakukan mengisi data barang dan memilih user mengetahui , untuk
+                                            melakukan tombol <button class="btn btn-primary btn-sm"
+                                                disabled>Verifikasi</button></li>
+                                        <li>Kode Verifikasi akan dikirim pihak yang mengetahui, dan memastikan bahwa kode
+                                            verifikasi sudah terkirim</li>
+                                        <li>Memasukan Kode verifikasi untuk melanjutkan proses data peminjaman</li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>

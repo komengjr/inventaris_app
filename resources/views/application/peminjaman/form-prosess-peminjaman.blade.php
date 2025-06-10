@@ -40,14 +40,22 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Penanggung Jawab Peminjaman</label>
-                            <input class="form-control" type="text" value="{{ $data->pj_pinjam }}" disabled />
+                            @php
+                                $staff = DB::table('tbl_staff')->where('id_staff', $data->pj_pinjam)->first();
+                            @endphp
+                            @if ($staff)
+                            <input class="form-control" type="text" value="{{ $staff->nama_staff }}" disabled />
+                            @else
+                                <input class="form-control" type="text" value="{{ $data->pj_pinjam }}" disabled />
+                            @endif
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" for="inputAddress">Yang Mengetahui</label>
                             <select name="mengetahui" class="form-control choices-doble-user" id="mengetahui">
                                 <option value="">Pilih User</option>
                                 @foreach ($user as $users)
-                                    <option value="{{$users->wa_number_code}}">{{$users->wa_number_name}} ( {{$users->wa_number_no}} )</option>
+                                    <option value="{{ $users->wa_number_code }}">{{ $users->wa_number_name }} (
+                                        {{ $users->wa_number_no }} )</option>
                                 @endforeach
                             </select>
                         </div>
