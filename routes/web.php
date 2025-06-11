@@ -453,6 +453,7 @@ Route::prefix('app')->group(function () {
     Route::post('peminjaman/data-order', [AppController::class, 'peminjaman_data_order'])->name('peminjaman_data_order');
     Route::post('peminjaman/data-rekap', [AppController::class, 'peminjaman_data_rekap'])->name('peminjaman_data_rekap');
     Route::post('peminjaman/terima-data-order-peminjaman', [AppController::class, 'peminjaman_terima_data_order'])->name('peminjaman_terima_data_order');
+    Route::post('peminjaman/terima-data-order-peminjaman-cabang', [AppController::class, 'peminjaman_terima_data_order_cabang'])->name('peminjaman_terima_data_order_cabang');
     Route::post('peminjaman/terima-data-barang-peminjaman', [AppController::class, 'peminjaman_terima_data_barang'])->name('peminjaman_terima_data_barang');
     Route::post('peminjaman/verifikasi-data-barang-peminjaman', [AppController::class, 'verifikasi_peminjaman_terima_data_barang'])->name('verifikasi_peminjaman_terima_data_barang');
     Route::post('peminjaman/save', [AppController::class, 'peminjaman_save'])->name('peminjaman_save');
@@ -522,7 +523,9 @@ Route::prefix('app')->group(function () {
     Route::post('menu-stock-opname/proses-remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_proses_remove_full_data'])->name('menu_stock_opname_proses_remove_full_data');
     Route::post('menu-stock-opname/edit-data-tanggal-stock', [AppController::class, 'menu_stock_opname_edit_data_tanggal'])->name('menu_stock_opname_edit_data_tanggal');
     Route::post('menu-stock-opname/penyelesaian-data-tanggal-stock', [AppController::class, 'menu_stock_opname_penyelesaian_data'])->name('menu_stock_opname_penyelesaian_data');
+    Route::post('menu-stock-opname/form-laporan-data-stockopname', [AppController::class, 'menu_stock_opname_laporan_data'])->name('menu_stock_opname_laporan_data');
     Route::post('menu-stock-opname/print-data-tanggal-stock', [AppController::class, 'menu_stock_opname_print_data'])->name('menu_stock_opname_print_data');
+    Route::post('menu-stock-opname/print-data-berita-acara-stock', [AppController::class, 'menu_stock_opname_print_berita_acara'])->name('menu_stock_opname_print_berita_acara');
 
     // MENU MAINTENANCE
     Route::post('menu-maintenance/add', [AppController::class, 'menu_maintenance_add'])->name('menu_maintenance_add');

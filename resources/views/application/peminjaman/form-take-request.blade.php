@@ -9,19 +9,42 @@
                 @csrf
                 <div class="col-md-4">
                     <label class="form-label" for="inputAddress">Tujuan Peminjaman</label>
-                    <input type="text" name="" value="{{ $data->kategori_req }}" class="form-control">
+                    <input type="text" name="" value="{{ $data->kategori_req }}" class="form-control"
+                        disabled>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label" for="inputAddress">Tanggal Request</label>
-                    <input type="text" name="" value="{{ $data->tgl_req }}" class="form-control">
+                    <input type="text" name="" value="{{ $data->tgl_req }}" class="form-control" disabled>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label" for="inputAddress">Dari Cabang</label>
-                    <input type="text" name="" value="{{ $data->tgl_req }}" class="form-control">
+                    <input type="text" name="" value="{{ $data->nama_cabang }}" class="form-control" disabled>
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="inputAddress">Keterangan</label>
-                    <textarea name="" id="" class="form-control">{{ $data->deskripsi_req }}</textarea>
+                    <textarea name="" id="" class="form-control" disabled>{{ $data->deskripsi_req }}</textarea>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="inputAddress">Penanggung Jawab Cabang</label>
+                    <select name="pj" class="form-control choices-single-user" id="penanggung_jawab">
+                        <option value="">Pilih Staff</option>
+                        @foreach ($staff as $stafss)
+                            <option value="{{ $stafss->id_staff }}">{{ $stafss->nama_staff }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="inputAddress">Mengetahui</label>
+                    <select name="pj" class="form-control choices-single-users" id="mengetahui">
+                        <option value="">Pilih User</option>
+                        @foreach ($user as $users)
+                            <option value="{{ $users->wa_number_code  }}">{{ $users->wa_number_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="inputAddress">Keterangan Peminjaman</label>
+                    <textarea name="" class="form-control" id="keterangan_peminjaman"></textarea>
                 </div>
                 {{-- <div class="col-12">
                     <div class="form-check">
@@ -64,11 +87,11 @@
                     @endphp
                     @foreach ($brg as $brgs)
                         <tr>
-                            <td>{{$no++}}</td>
-                            <td>{{$brgs->inventaris_data_name}}</td>
-                            <td>{{$brgs->inventaris_data_number}}</td>
-                            <td>{{$brgs->inventaris_data_merk}}</td>
-                            <td>{{$brgs->inventaris_data_tgl_beli}}</td>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $brgs->inventaris_data_name }}</td>
+                            <td>{{ $brgs->inventaris_data_number }}</td>
+                            <td>{{ $brgs->inventaris_data_merk }}</td>
+                            <td>{{ $brgs->inventaris_data_tgl_beli }}</td>
                             <td></td>
                         </tr>
                     @endforeach
@@ -77,21 +100,23 @@
 
             <hr>
             <div class="col-12" id="menu-verifikasi-request-peminjaman">
-                <button class="btn btn-danger float-end" id="button-reject-request-peminjaman" data-code="{{$data->tiket_req}}"><span class="fas fa-save"></span> Reject</button>
-                <button class="btn btn-primary float-end mx-2" id="button-accept-request-peminjaman" data-code="{{$data->tiket_req}}"><span class="fas fa-save"></span> Accept</button>
+                <button class="btn btn-danger float-end" id="button-reject-request-peminjaman"
+                    data-code="{{ $data->tiket_req }}"><span class="fas fa-save"></span> Reject</button>
+                @if (!$brg->isEmpty())
+                    <button class="btn btn-primary float-end mx-2" id="button-accept-request-peminjaman"
+                        data-code="{{ $data->tiket_req }}"><span class="fas fa-save"></span> Accept</button>
+                @endif
             </div>
 
         </div>
     </div>
 </div>
-{{-- <script>
-    new window.Choices(document.querySelector(".choices-single-peminjaman"));
-    new window.Choices(document.querySelector(".choices-single-cabang"));
-    new window.Choices(document.querySelector(".choices-single-user"));
-    new window.Choices(document.querySelector(".choices-doble-user"));
-</script> --}}
 <script>
-                new DataTable('#data-table-pinjam1', {
-                    responsive: true
-                });
-            </script>
+    new window.Choices(document.querySelector(".choices-single-user"));
+    new window.Choices(document.querySelector(".choices-single-users"));
+</script>
+<script>
+    new DataTable('#data-table-pinjam1', {
+        responsive: true
+    });
+</script>

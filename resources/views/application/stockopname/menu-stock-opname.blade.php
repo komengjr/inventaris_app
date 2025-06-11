@@ -154,11 +154,14 @@
                                             data-bs-target="#modal-cabang-lg" id="button-data-lokasi-cabang"
                                             data-code="{{ $item->kode_verif }}"><span class="fas fa-sync"></span>
                                             Sinkronisasi Data</button>
-                                        <div class="dropdown-divider"></div>
-                                        <button class="dropdown-item text-danger" data-bs-toggle="modal"
-                                            data-bs-target="#modal-stock-sm" id="button-remove-full-stock-opname"
-                                            data-code="{{ $item->kode_verif }}"><span class="fas fa-trash"></span>
-                                            Remove Full</button>
+                                        @if ($item->status_verif == 0)
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item text-danger" data-bs-toggle="modal"
+                                                data-bs-target="#modal-stock-sm" id="button-remove-full-stock-opname"
+                                                data-code="{{ $item->kode_verif }}"><span class="fas fa-trash"></span>
+                                                Remove Full</button>
+                                        @endif
+
                                     </div>
                                 </div>
                             </td>
@@ -545,7 +548,7 @@
                 '<div class="spinner-border spinner-border-sm" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span> </div>'
             );
             $.ajax({
-                url: "{{ route('menu_stock_opname_print_data') }}",
+                url: "{{ route('menu_stock_opname_laporan_data') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -554,10 +557,7 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-stock').html(
-                    '<iframe src="data:application/pdf;base64, ' +
-                    data +
-                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+                $('#menu-stock').html(data);
             }).fail(function() {
                 $('#menu-stock').html('eror');
             });

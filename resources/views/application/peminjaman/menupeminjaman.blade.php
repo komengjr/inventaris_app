@@ -13,6 +13,10 @@
         #button-pick-request:hover {
             background: rgb(223, 217, 25);
         }
+        #button-terima-order-barang-peminjaman:hover {
+            background: rgb(223, 217, 25);
+            cursor: pointer;
+        }
     </style>
 @endsection
 @section('content')
@@ -83,14 +87,30 @@
                                 class="far fa-check-square"></span></button>
                     </div>
                 </div> --}}
-                @if ($req->isEmpty())
+                @if ($req->isEmpty() && $order->isEmpty())
                     <div class="col-md-12">
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                            <strong>Halo {{ Auth::user()->name }} !</strong> You should check in on some of those fields
+                            below.
                             <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
                 @endif
+                @foreach ($order as $orders)
+                    <div class=" col-md-4">
+                        <div class="alert alert-success border-2 d-flex align-items-center" id="button-terima-order-barang-peminjaman"
+                            data-bs-toggle="modal" data-bs-target="#modal-peminjaman-xl"
+                            data-code="{{ $orders->id_pinjam }}" role="alert">
+                            <div class="bg-dark me-3 icon-item">
+                                <span class="fas fa-mail-bulk text-white fs-1"></span>
+                            </div>
+                            <p class="mb-0 flex-1 fs--1">Ada Kiriman Barang dengan Tiket : {{ $orders->tiket_peminjaman }}
+                                dari Cabang {{ $orders->nama_cabang }}
+                            </p>
+                            {{-- <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button> --}}
+                        </div>
+                    </div>
+                @endforeach
                 @foreach ($req as $reqs)
                     <div class=" col-md-4">
                         <div class="alert alert-primary border-2 d-flex align-items-center" id="button-pick-request"
@@ -227,10 +247,10 @@
                 </div>
             </div> --}}
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header bg-primary">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h5 class="mb-1 text-primary fw-bold">Data Table Peminjaman</h5>
+                            <h5 class="mb-0 text-white fw-bold">Data Table Peminjaman</h5>
                         </div>
                         <div class="col-auto">
 
@@ -577,6 +597,27 @@
                 $('#menu-terima-order-peminjaman').html(data);
             }).fail(function() {
                 $('#menu-terima-order-peminjaman').html('eror');
+            });
+        });
+        $(document).on("click", "#button-terima-order-barang-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-peminjaman-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_terima_data_order_cabang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-peminjaman-xl').html(data);
+            }).fail(function() {
+                $('#menu-peminjaman-xl').html('eror');
             });
         });
         $(document).on("click", "#button-cetak-rekap-barang-peminjaman", function(e) {
@@ -975,6 +1016,9 @@
         $(document).on("click", "#button-accept-request-peminjaman", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
+            var user = document.getElementById("penanggung_jawab").value;
+            var deskripsi = document.getElementById("keterangan_peminjaman").value;
+            var mengetahui = document.getElementById("mengetahui").value;
             $('#menu-verifikasi-request-peminjaman').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
@@ -985,6 +1029,9 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "code": code,
+                    "user": user,
+                    "deskripsi": deskripsi,
+                    "mengetahui": mengetahui,
                 },
                 dataType: 'html',
             }).done(function(data) {

@@ -26,7 +26,7 @@
            <select name="akses" id="" class="form-control">
                 <option value="">Pilih Akses</option>
                 <option value="dir">Direksi</option>
-                <option value="smd">SDM & Umum</option>
+                <option value="sdm">SDM & Umum</option>
            </select>
         </div>
          <div class="col-6">

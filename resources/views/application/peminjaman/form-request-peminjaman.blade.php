@@ -140,11 +140,7 @@
     new window.Choices(document.querySelector(".choices-single-peminjaman"));
     new window.Choices(document.querySelector(".choices-single-cabang"));
 </script>
-<script>
-    new DataTable('#data-table-pinjam', {
-        responsive: true
-    });
-</script>
+
 <script>
     $(document).on("click", "#button-find-data-barang", function(e) {
         e.preventDefault();
