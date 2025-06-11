@@ -322,12 +322,15 @@ class AppController extends Controller
     public function peminjaman($akses)
     {
         if ($this->url_akses($akses) == true) {
+            $req = DB::table('tbl_pemnijaman_req')
+            ->join('tbl_cabang','tbl_cabang.kd_cabang','=','tbl_pemnijaman_req.cabang_tujuan')
+            ->where('tbl_pemnijaman_req.cabang_req',Auth::user()->cabang)
+            ->where('tbl_pemnijaman_req.status_req','=',0)->orderBy('id_req','DESC')->get();
             $data = DB::table('tbl_peminjaman')->where('kd_cabang', Auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
-            return view('application.peminjaman.menupeminjaman', ['data' => $data]);
+            return view('application.peminjaman.menupeminjaman', ['data' => $data, 'req'=>$req]);
         } else {
             return Redirect::to('dashboard');
         }
-
     }
     public function peminjaman_add(Request $request)
     {
@@ -663,6 +666,91 @@ class AppController extends Controller
         $dompdf->get_canvas()->page_text(34, 820, "Print by. " . Auth::user()->name, $font1, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
+    public function peminjaman_request_peminjaman_cabang(Request $request)
+    {
+        $code = "PJ" . Auth::user()->cabang . date('Ymdhis');
+        $cabang = DB::table('tbl_cabang')->get();
+        return view('application.peminjaman.form-request-peminjaman', ['cabang' => $cabang, 'code' => $code]);
+    }
+    public function peminjaman_request_find_data_cabang_peminjaman(Request $request)
+    {
+        if ($request->option == 'name') {
+            $data = DB::table('inventaris_data')
+                ->select('tbl_cabang.nama_cabang', 'inventaris_data.*')
+                ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'inventaris_data.inventaris_data_cabang')
+                ->where('inventaris_data.inventaris_data_status', '<', 2)
+                ->where('inventaris_data.inventaris_data_name', 'like', '%' . $request->name . '%')
+                ->get();
+        } elseif ($request->option == 'no_inventaris') {
+            $data = DB::table('inventaris_data')
+                ->where('inventaris_data_status', '<', 2)
+                ->where('inventaris_data_number', 'like', '%' . $request->name . '%')
+                ->get();
+        }
+        return view('application.peminjaman.table-cari-data-barang', ['data' => $data, 'code' => $request->code]);
+    }
+    public function peminjaman_request_pilih_data_cabang_peminjaman(Request $request)
+    {
+        $check = DB::table('tbl_pemnijaman_req_brg')->where('tiket_req', $request->no)->where('id_inventaris', $request->code)->first();
+        if (!$check) {
+            DB::table('tbl_pemnijaman_req_brg')->insert([
+                'peminjaman_req_code' => Str::uuid(),
+                'tiket_req' => $request->no,
+                'id_inventaris' => $request->code,
+                'created_at' => now()
+            ]);
+        }
+        $data = DB::table('tbl_pemnijaman_req_brg')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_pemnijaman_req_brg.id_inventaris')
+            ->where('tiket_req', $request->no)->get();
+        return view('application.peminjaman.table-request-barang-pinjam', [
+            'data' => $data
+        ]);
+    }
+    public function peminjaman_request_remove_barang_cabang_peminjaman(Request $request)
+    {
+
+        DB::table('tbl_pemnijaman_req_brg')->where('peminjaman_req_code', $request->code)->delete();
+        $data = DB::table('tbl_pemnijaman_req_brg')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_pemnijaman_req_brg.id_inventaris')
+            ->where('tiket_req', $request->no)->get();
+        return view('application.peminjaman.table-request-barang-pinjam', [
+            'data' => $data
+        ]);
+    }
+    public function peminjaman_request_save_cabang_peminjaman(Request $request)
+    {
+        DB::table('tbl_pemnijaman_req')->insert([
+            'tiket_req' => $request->code_req,
+            'cabang_req' => $request->cabang,
+            'user_req' => Auth::user()->id,
+            'cabang_tujuan' => Auth::user()->cabang,
+            'tgl_req' => $request->tgl,
+            'kategori_req' => $request->tujuan,
+            'deskripsi_req' => $request->deskripsi,
+            'status_req' => 0,
+            'created_at' => now(),
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
+    }
+    public function peminjaman_request_take_request_peminjaman(Request $request){
+        $data = DB::table('tbl_pemnijaman_req')->where('tiket_req',$request->code)->first();
+        $brg = DB::table('tbl_pemnijaman_req_brg')
+        ->join('inventaris_data','inventaris_data.inventaris_data_code','=','tbl_pemnijaman_req_brg.id_inventaris')
+        ->where('tbl_pemnijaman_req_brg.tiket_req',$request->code)->get();
+        return view('application.peminjaman.form-take-request',[
+            'data'=>$data,
+            'brg'=>$brg,
+        ]);
+    }
+    public function peminjaman_request_reject_request_peminjaman(Request $request){
+        DB::table('tbl_pemnijaman_req')->where('tiket_req',$request->code)->update(['status_req'=>-1]);
+        return 123;
+    }
+    public function peminjaman_request_accept_request_peminjaman(Request $request){
+        DB::table('tbl_pemnijaman_req')->where('tiket_req',$request->code)->update(['status_req'=>1]);
+        return 123;
+    }
 
     // MENU PEMUSNAHAN
     public function menu_pemusnahan($akses)
@@ -715,7 +803,7 @@ class AppController extends Controller
         $total = DB::table('tbl_pemusnahan')->where('kd_cabang', Auth::user()->cabang)->count();
         $code = 'PM' . Auth::user()->cabang . date('YmdHis') . '' . str_pad($total + 1, 4, '0', STR_PAD_LEFT);
         ;
-        $no = DB::table('wa_number_cabang')->where('id_wa_number', $request->user_persetujuan)->first();
+        $no = DB::table('wa_number_cabang')->where('wa_number_code', $request->user_persetujuan)->first();
 
         if ($check) {
             return redirect()->back()->withError('Fail ! Data Barang Sudah tidak Ada');
@@ -725,7 +813,7 @@ class AppController extends Controller
                 ->merge('/storage/app/public/logo.png')
                 ->errorCorrection('H')
                 ->eyeColor(2, 100, 100, 255, 0, 0, 0)
-                ->style('dot')
+                ->style('round')
                 ->margin(2)
                 ->generate($token));
             $text = "Hai \nAda Notifikasi Pemusnahan Barang Dengan Tiket Pemusnahan :\n*" . $code . "*\nDetail Barang :\n" .
@@ -733,7 +821,7 @@ class AppController extends Controller
                 "\nNama Barang : " . $brg->inventaris_data_name .
                 "\nMerek Barang : " . $brg->inventaris_data_merk .
                 "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
-                "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma*";
+                "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Me*";
             DB::table('tbl_pemusnahan')->insert([
                 'kd_pemusnahan' => $code,
                 'id_inventaris' => $request->id_inventaris,
@@ -1085,9 +1173,9 @@ class AppController extends Controller
             # code...
         }
         $data = DB::table('tbl_maintenance')
-        ->join('inventaris_data','inventaris_data.inventaris_data_code','=','tbl_maintenance.id_inventaris')
-        ->where('tbl_maintenance.kd_maintenance',$request->code)->first();
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.maintenance.report.report-maintenance', ['data'=>$data,'cabang' => $cabang], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_maintenance.id_inventaris')
+            ->where('tbl_maintenance.kd_maintenance', $request->code)->first();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.maintenance.report.report-maintenance', ['data' => $data, 'cabang' => $cabang], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         $dompdf = $pdf->getDomPDF();
         $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");

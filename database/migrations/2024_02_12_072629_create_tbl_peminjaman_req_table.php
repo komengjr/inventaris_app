@@ -17,6 +17,7 @@ class CreateTblPeminjamanReqTable extends Migration
             $table->id('id_req');
             $table->string('tiket_req')->unique();
             $table->string('cabang_req');
+            $table->text('user_req');
             $table->string('cabang_tujuan');
             $table->string('tgl_req');
             $table->string('kategori_req');

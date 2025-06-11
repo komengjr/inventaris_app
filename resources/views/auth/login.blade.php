@@ -120,15 +120,15 @@
             <div class="card-footer text-center py-3">
                 <p class="text-dark mb-0">Copyright © 2022</p>
                 <div class="row mt-3">
-                    <div class="col-4 col-lg-6 col-xl-4">
+                    <div class="col-4 col-lg-6 col-xl-6">
                         <img src="{{ asset('vendor/pramita.png') }}" alt="" srcset="" width="80">
                     </div>
-                    <div class="col-4 col-lg-6 col-xl-4">
+                    <div class="col-4 col-lg-6 col-xl-6">
                         <img src="{{ asset('vendor/sima.jpeg') }}" alt="" srcset="" width="80">
                     </div>
-                    <div class="col-4 col-lg-6 col-xl-4">
+                    {{-- <div class="col-4 col-lg-6 col-xl-4">
                         <img src="{{ asset('vendor/prospek.png') }}" alt="" srcset="" width="80">
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

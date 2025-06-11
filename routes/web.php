@@ -469,6 +469,14 @@ Route::prefix('app')->group(function () {
     Route::post('peminjaman/verifikasi-data-peminjaman', [AppController::class, 'verifikasi_data_peminjaman'])->name('verifikasi_data_peminjaman');
     Route::post('peminjaman/print-report-data-peminjaman', [AppController::class, 'print_report_data_peminjaman'])->name('print_report_data_peminjaman');
     Route::post('peminjaman/print-report-data-peminjaman-show', [AppController::class, 'print_report_data_peminjaman_show'])->name('print_report_data_peminjaman_show');
+    Route::post('peminjaman/request-peminjaman-cabang', [AppController::class, 'peminjaman_request_peminjaman_cabang'])->name('peminjaman_request_peminjaman_cabang');
+    Route::post('peminjaman/request-peminjaman-cabang-find-data', [AppController::class, 'peminjaman_request_find_data_cabang_peminjaman'])->name('peminjaman_request_find_data_cabang_peminjaman');
+    Route::post('peminjaman/request-peminjaman-cabang-pilih-data', [AppController::class, 'peminjaman_request_pilih_data_cabang_peminjaman'])->name('peminjaman_request_pilih_data_cabang_peminjaman');
+    Route::post('peminjaman/request-peminjaman-cabang-remove-barang', [AppController::class, 'peminjaman_request_remove_barang_cabang_peminjaman'])->name('peminjaman_request_remove_barang_cabang_peminjaman');
+    Route::post('peminjaman/request-peminjaman-cabang-save', [AppController::class, 'peminjaman_request_save_cabang_peminjaman'])->name('peminjaman_request_save_cabang_peminjaman');
+    Route::post('peminjaman/request-peminjaman/pick', [AppController::class, 'peminjaman_request_take_request_peminjaman'])->name('peminjaman_request_take_request_peminjaman');
+    Route::post('peminjaman/request-peminjaman/reject', [AppController::class, 'peminjaman_request_reject_request_peminjaman'])->name('peminjaman_request_reject_request_peminjaman');
+    Route::post('peminjaman/request-peminjaman/accept', [AppController::class, 'peminjaman_request_accept_request_peminjaman'])->name('peminjaman_request_accept_request_peminjaman');
 
     // PEMUSNAHAN
     Route::post('menu-pemusnahan/add', [AppController::class, 'menu_pemusnahan_add'])->name('menu_pemusnahan_add');

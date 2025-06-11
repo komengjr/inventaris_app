@@ -5,6 +5,15 @@
     <link href="{{ asset('vendors/choices/choices.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('vendors/lottie/lottie.min.js') }}"></script>
     <script src="{{ asset('vendors/typed.js/typed.js') }}"></script>
+    <style>
+        #button-pick-request {
+            cursor: pointer;
+        }
+
+        #button-pick-request:hover {
+            background: rgb(223, 217, 25);
+        }
+    </style>
 @endsection
 @section('content')
     <div class="row mb-3">
@@ -12,7 +21,7 @@
             <div class="card bg-100 shadow-none border">
                 <div class="row gx-0 flex-between-center">
                     <div class="col-sm-auto d-flex align-items-center border-bottom">
-                        <img class="ms-3 mx-3" src="{{ asset('img/icon/icon.png') }}" alt="" width="50" />
+                        <img class="ms-3 mx-3" src="{{ asset('img/peminjaman.png') }}" alt="" width="60" />
                         <div>
                             <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to </h6>
                             <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management
@@ -28,6 +37,81 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5 class="mb-0">Informasi Peminjaman</h5>
+                </div>
+                <div class="col-auto">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2" type="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span>Menu
+                            Peminjaman</button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-peminjaman-xl"
+                                id="button-add-peminjaman"><span class="fas fa-folder-plus"></span>
+                                Tambah Peminjaman</button>
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-peminjaman"
+                                id="button-add-request-peminjaman"><span class="far fa-share-square"></span>
+                                Request Peminjaman Cabang</button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item text-warning" data-bs-toggle="modal"
+                                data-bs-target="#modal-peminjaman" id="button-data-order-peminjaman"><span
+                                    class="far fa-bell"></span>
+                                Data Order Peminjaman</button>
+                            <button class="dropdown-item text-primary" data-bs-toggle="modal"
+                                data-bs-target="#modal-peminjaman" id="button-data-rekap-peminjaman"><span
+                                    class="far fa-file-alt"></span>
+                                Data Rekap Peminjaman</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body bg-light border-top pb-0">
+            <div class="row">
+                {{-- <div class="col-md-4">
+                    <div class="alert alert-success border-2 d-flex align-items-center" role="alert">
+                        <div class="bg-success me-3 icon-item"><span class="fas fa-check-circle text-white fs-3"></span>
+                        </div>
+                        <p class="mb-0 flex-1">A simple success alert—check it out!</p>
+                        <button class="btn btn-primary btn-sm" type="button"><span
+                                class="far fa-check-square"></span></button>
+                    </div>
+                </div> --}}
+                @if ($req->isEmpty())
+                    <div class="col-md-12">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                @endif
+                @foreach ($req as $reqs)
+                    <div class=" col-md-4">
+                        <div class="alert alert-primary border-2 d-flex align-items-center" id="button-pick-request"
+                            data-bs-toggle="modal" data-bs-target="#modal-peminjaman-xl" data-code="{{ $reqs->tiket_req }}"
+                            role="alert">
+                            <div class="bg-dark me-3 icon-item">
+                                <span class="fas fa-mail-bulk text-white fs-1"></span>
+                            </div>
+                            <p class="mb-0 flex-1 fs--1">Ada Request dengan Tiket : {{ $reqs->tiket_req }}
+                                dari Cabang : {{ $reqs->nama_cabang }}
+                            </p>
+                            {{-- <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button> --}}
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="card-footer border-top text-end">
+            <button class="btn btn-falcon-success btn-sm" href="#!"data-bs-toggle="modal"
+                data-bs-target="#modal-peminjaman" id="button-data-rekap-peminjaman"><span class="far fa-copy"></span> Rekap
+                Peminjaman Cabang Lain</button>
         </div>
     </div>
     <div class="row mb-3 g-3">
@@ -146,31 +230,10 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h5 class="mb-1 text-primary fw-bold">Data Menu Peminjaman</h5>
+                            <h5 class="mb-1 text-primary fw-bold">Data Table Peminjaman</h5>
                         </div>
                         <div class="col-auto">
-                            <div class="btn-group" role="group">
-                                <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2"
-                                    type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false"><span class="fas fa-align-left me-1"
-                                        data-fa-transform="shrink-3"></span>Menu Peminjaman</button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 
-                                    <button class="dropdown-item" data-bs-toggle="modal"
-                                        data-bs-target="#modal-peminjaman-xl" id="button-add-peminjaman"><span
-                                            class="far fa-edit"></span>
-                                        Tambah Peminjaman</button>
-                                    <div class="dropdown-divider"></div>
-                                    <button class="dropdown-item text-warning" data-bs-toggle="modal"
-                                        data-bs-target="#modal-peminjaman" id="button-data-order-peminjaman"><span
-                                            class="far fa-bell"></span>
-                                        Data Order Peminjaman</button>
-                                    <button class="dropdown-item text-primary" data-bs-toggle="modal"
-                                        data-bs-target="#modal-peminjaman" id="button-data-rekap-peminjaman"><span
-                                            class="far fa-file-alt"></span>
-                                        Data Rekap Peminjaman</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -205,7 +268,9 @@
                                     <td>{{ $datas->nama_kegiatan }}</td>
                                     <td>
                                         @php
-                                            $staff = DB::table('tbl_staff')->where('id_staff','=', $datas->pj_pinjam)->first();
+                                            $staff = DB::table('tbl_staff')
+                                                ->where('id_staff', '=', $datas->pj_pinjam)
+                                                ->first();
                                         @endphp
                                         @if ($staff)
                                             {{ $staff->nama_staff }}
@@ -383,6 +448,74 @@
                 $('#menu-peminjaman-xl').html(data);
             }).fail(function() {
                 $('#menu-peminjaman-xl').html('eror');
+            });
+        });
+        $(document).on("click", "#button-add-request-peminjaman", function(e) {
+            e.preventDefault();
+            $('#menu-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_request_peminjaman_cabang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-peminjaman').html(data);
+            }).fail(function() {
+                $('#menu-peminjaman').html('eror');
+            });
+        });
+        $(document).on("click", "#button-pilih-data-barang-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var no = $(this).data("no");
+            $('#table-fix-req-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_request_pilih_data_cabang_peminjaman') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "no": no,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#hasil-pencarian-barang-cabang').html('');
+                $('#table-fix-req-peminjaman').html(data);
+            }).fail(function() {
+                $('#table-fix-req-peminjaman').html('eror');
+            });
+        });
+        $(document).on("click", "#button-remove-barang-req-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var no = $(this).data("no");
+            $('#table-fix-req-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_request_remove_barang_cabang_peminjaman') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "no": no,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#hasil-pencarian-barang-cabang').html('');
+                $('#table-fix-req-peminjaman').html(data);
+            }).fail(function() {
+                $('#table-fix-req-peminjaman').html('eror');
             });
         });
         $(document).on("click", "#button-data-order-peminjaman", function(e) {
@@ -793,6 +926,73 @@
                 $('#menu-peminjaman-xl').html('eror');
             });
 
+        });
+    </script>
+    <script>
+        $(document).on("click", "#button-pick-request", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-peminjaman-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_request_take_request_peminjaman') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-peminjaman-xl').html(data);
+            }).fail(function() {
+                $('#menu-peminjaman-xl').html('eror');
+            });
+        });
+        $(document).on("click", "#button-reject-request-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-verifikasi-request-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_request_reject_request_peminjaman') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-verifikasi-request-peminjaman').html(data);
+                location.reload();
+            }).fail(function() {
+                $('#menu-verifikasi-request-peminjaman').html('eror');
+            });
+        });
+        $(document).on("click", "#button-accept-request-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-verifikasi-request-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_request_accept_request_peminjaman') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-verifikasi-request-peminjaman').html(data);
+                location.reload();
+            }).fail(function() {
+                $('#menu-verifikasi-request-peminjaman').html('eror');
+            });
         });
     </script>
 @endsection
