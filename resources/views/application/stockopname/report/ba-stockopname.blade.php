@@ -289,7 +289,7 @@
             {{ date('d-m-Y', strtotime($data->end_date_verif)) }} telah
             dilaksanakan StockOpname di {{ $cabang->nama_cabang }}, yang dilakukan oleh Pelaksana Staff Bagian SDM.
             Setelah dilakukan Pengecekan dan Penelusuran,
-            <strong>Tidak Terdapat Ketidaksesuaian</strong> antara Jumlah Barang Inventaris Yang ada di Cabang denagn
+            <strong>Tidak Terdapat Ketidaksesuaian</strong> antara Jumlah Barang Inventaris Yang ada di Cabang dengan
             pengecekan fisik barang. Adapun perinciannya antara lain:
         </p>
 
