@@ -303,9 +303,9 @@
                     <th rowspan="2">SUDAH DI VERIFIKASI</th>
                 </tr>
                 <tr>
-                    <th>B</th>
-                    <th>M</th>
-                    <th>R</th>
+                    <th>BAIK</th>
+                    <th>MAINTENANCE</th>
+                    <th>RUSAK</th>
                 </tr>
             </thead>
             <tbody id="invoiceItems" style="font-size: 10px;">
