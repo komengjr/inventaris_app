@@ -11,8 +11,8 @@
                         <img class="ms-1 mx-3" src="{{ asset('img/brg.png') }}" alt="" width="50" />
                         <div>
                             <h6 class="text-primary fs--1 mb-0 mt-2">Data Barang</h6>
-                            <h4 class="text-primary fw-bold mb-1">{{$data->count()}}<span
-                                    class="text-info fw-medium"> Barang</span></h4>
+                            <h4 class="text-primary fw-bold mb-1">{{ $data->count() }}<span class="text-info fw-medium">
+                                    Barang</span></h4>
                         </div>
                     </div>
                     <div class="col-xl-auto px-3 py-0">
@@ -42,12 +42,13 @@
         </div>
         <div id="menu-data-lokasi-barang">
             <table id="exampledata" class="table table-striped nowrap" style="width:100%" border="1">
-                <thead class="bg-200 text-700">
+                <thead class="bg-200 text-700 fs--2">
                     <tr>
                         <th>Gambar</th>
                         <th>Nama Barang</th>
                         <th>Klasifikasi</th>
                         <th>Nomor Inventaris</th>
+                        <th>Lokasi Barang</th>
                         <th>Tanggal Pembelian</th>
                         <th>Merek / Type</th>
                         <th>Harga</th>
@@ -71,6 +72,16 @@
                             <td>{{ $datas->inventaris_data_name }}</td>
                             <td>{{ $datas->inventaris_klasifikasi_code }}</td>
                             <td>{{ $datas->inventaris_data_number }}</td>
+                            <td>
+                                @php
+                                    $lokasi = DB::table('master_lokasi')
+                                        ->where('master_lokasi_code', $datas->inventaris_data_location)
+                                        ->first();
+                                @endphp
+                                @if ($lokasi)
+                                    {{ $lokasi->master_lokasi_name }}
+                                @endif
+                            </td>
                             <td>{{ date('d-m-Y', strtotime($datas->inventaris_data_tgl_beli)) }}</td>
 
                             <td>

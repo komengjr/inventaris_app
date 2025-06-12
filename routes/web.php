@@ -426,6 +426,9 @@ Route::prefix('{akses}/app')->group(function () {
 Route::prefix('app')->group(function () {
     Route::get('dashboard_home', [AppController::class, 'dashboard_home'])->name('dashboard_home');
     Route::post('dashboard/add', [AppController::class, 'dashboard_add'])->name('dashboard_add');
+    Route::post('dashboard/add-aset', [AppController::class, 'dashboard_add_aset'])->name('dashboard_add_aset');
+    Route::post('dashboard/add-kso', [AppController::class, 'dashboard_add_kso'])->name('dashboard_add_kso');
+    Route::post('dashboard/add-kso-save', [AppController::class, 'dashboard_add_kso_save'])->name('dashboard_add_kso_save');
     Route::post('dashboard/add-data-non-aset', [AppController::class, 'dashboard_add_data_non_aset'])->name('dashboard_add_data_non_aset');
     Route::post('dashboard/data-non-aset', [AppController::class, 'dashboard_data_non_aset'])->name('dashboard_data_non_aset');
     Route::post('dashboard/export-data-non-aset', [AppController::class, 'dashboard_export_data_non_aset'])->name('dashboard_export_data_non_aset');

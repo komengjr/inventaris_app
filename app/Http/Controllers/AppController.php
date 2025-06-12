@@ -83,6 +83,28 @@ class AppController extends Controller
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
         return view('application.dashboard.form.form-add-non-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
     }
+    public function dashboard_add_aset()
+    {
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)
+            ->get();
+        $klasifikasi = DB::table('inventaris_klasifikasi')->get();
+        return view('application.dashboard.form.form-add-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
+    }
+    public function dashboard_add_kso()
+    {
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)
+            ->get();
+        $klasifikasi = DB::table('inventaris_klasifikasi')->get();
+        return view('application.dashboard.form.form-add-kso', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
+    }
+    public function dashboard_add_kso_save()
+    {
+        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Barang KSO');
+    }
     public function dashboard_data_barang_klasifikasi(Request $request)
     {
         $data = DB::table('inventaris_data')

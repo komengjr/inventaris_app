@@ -104,7 +104,9 @@
                                             class="fas fa-ellipsis-h fs--2"></span></button>
                                     <div class="dropdown-menu dropdown-menu-end border py-2"
                                         aria-labelledby="dropdown-new-users">
-                                        <a class="dropdown-item" href="#!">Tambah Barang Aset</a>
+                                        <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                            data-bs-target="#modal-dashboard" id="button-add-barang-aset">Tambah
+                                            Barang Aset</a>
                                         <a class="dropdown-item" href="#!" data-bs-toggle="modal"
                                             data-bs-target="#modal-dashboard" id="button-data-barang-aset">View Barang
                                             Aset</a>
@@ -150,7 +152,9 @@
                                             class="fas fa-ellipsis-h fs--2"></span></button>
                                     <div class="dropdown-menu dropdown-menu-end border py-2"
                                         aria-labelledby="dropdown-new-users">
-                                        <a class="dropdown-item" href="#!">Tambah Barang KSO</a>
+                                        <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                            data-bs-target="#modal-dashboard" id="button-add-barang-kso">Tambah Barang
+                                            KSO</a>
                                         <a class="dropdown-item" href="#!" data-bs-toggle="modal"
                                             data-bs-target="#modal-dashboard" id="button-data-barang-kso">View Data
                                             KSO</a>
@@ -315,11 +319,15 @@
                             @php
                                 $no = 0;
                             @endphp
-                            @foreach ($klasifikasi as $klasifikasis)
+                            {{-- @foreach ($klasifikasi as $klasifikasis)
                                 <div class="d-flex flex-between-center border-bottom py-1 pt-md-0 pt-xxl-3">
                                     <div class="d-flex"><img class="me-2" src="{{ asset('img/icon/icon.png') }}"
                                             width="16" height="16" alt="..." />
-                                        <a href="#" id="button-show-barang-klasifikasi" data-bs-toggle="modal" data-bs-target="#modal-dashboard" data-code="{{$klasifikasis->inventaris_cat_code }}"><h6 class="text-700 mb-0">{{ $klasifikasis->inventaris_cat_name }} </h6></a>
+                                        <a href="#" id="button-show-barang-klasifikasi" data-bs-toggle="modal"
+                                            data-bs-target="#modal-dashboard"
+                                            data-code="{{ $klasifikasis->inventaris_cat_code }}">
+                                            <h6 class="text-700 mb-0">{{ $klasifikasis->inventaris_cat_name }} </h6>
+                                        </a>
                                     </div>
                                     @php
                                         $jumlah = 0;
@@ -345,8 +353,86 @@
                                     @endphp
                                     <h6 class="text-700 mb-3">@currency($jumlah)</h6>
                                 </div>
-                            @endforeach
+                            @endforeach --}}
 
+                            <div class="table-responsive scrollbar pt-2">
+                                <table class="table table-hover table-striped border " border="1"
+                                    style="border-radius: 2%;">
+                                    <tbody>
+                                        @foreach ($klasifikasi as $klasifikasis)
+                                            <tr class="align-middle fs--2 my-0" style="cursor: pointer;"
+                                                id="button-show-barang-klasifikasi" data-bs-toggle="modal"
+                                                data-bs-target="#modal-dashboard"
+                                                data-code="{{ $klasifikasis->inventaris_cat_code }}">
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="avatar avatar-xl">
+                                                            <img class="rounded-circle"
+                                                                src="{{ asset('img/peminjaman.png') }}" alt="" />
+                                                        </div>
+                                                        <div class="ms-2">{{ $klasifikasis->inventaris_cat_name }}</div>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    @php
+                                                        $total = DB::table('inventaris_data')
+                                                            ->join(
+                                                                'inventaris_klasifikasi',
+                                                                'inventaris_klasifikasi.inventaris_klasifikasi_code',
+                                                                '=',
+                                                                'inventaris_data.inventaris_klasifikasi_code',
+                                                            )
+                                                            ->join(
+                                                                'inventaris_cat',
+                                                                'inventaris_cat.inventaris_cat_code',
+                                                                '=',
+                                                                'inventaris_klasifikasi.inventaris_cat_code',
+                                                            )
+                                                            ->where(
+                                                                'inventaris_cat.inventaris_cat_code',
+                                                                $klasifikasis->inventaris_cat_code,
+                                                            )
+                                                            ->where(
+                                                                'inventaris_data.inventaris_data_cabang',
+                                                                Auth::user()->cabang,
+                                                            )
+                                                            ->count();
+                                                    @endphp
+                                                    <span
+                                                        class="badge badge rounded-pill d-block badge-soft-success">{{$total}}</span>
+                                                </td>
+                                                @php
+                                                    $jumlah = 0;
+                                                    $jumlah = DB::table('inventaris_data')
+                                                        ->join(
+                                                            'inventaris_klasifikasi',
+                                                            'inventaris_klasifikasi.inventaris_klasifikasi_code',
+                                                            '=',
+                                                            'inventaris_data.inventaris_klasifikasi_code',
+                                                        )
+                                                        ->join(
+                                                            'inventaris_cat',
+                                                            'inventaris_cat.inventaris_cat_code',
+                                                            '=',
+                                                            'inventaris_klasifikasi.inventaris_cat_code',
+                                                        )
+                                                        ->where(
+                                                            'inventaris_cat.inventaris_cat_code',
+                                                            $klasifikasis->inventaris_cat_code,
+                                                        )
+                                                        ->where(
+                                                            'inventaris_data.inventaris_data_cabang',
+                                                            Auth::user()->cabang,
+                                                        )
+                                                        ->sum('inventaris_data.inventaris_data_harga');
+                                                @endphp
+                                                <td class="text-end">@currency($jumlah)</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -450,6 +536,48 @@
             );
             $.ajax({
                 url: "{{ route('dashboard_add') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard').html(data);
+            }).fail(function() {
+                $('#menu-dashboard').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-add-barang-aset", function(e) {
+            e.preventDefault();
+            $('#menu-dashboard').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_add_aset') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-dashboard').html(data);
+            }).fail(function() {
+                $('#menu-dashboard').html('eror');
+            });
+
+        });
+        $(document).on("click", "#button-add-barang-kso", function(e) {
+            e.preventDefault();
+            $('#menu-dashboard').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('dashboard_add_kso') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -865,7 +993,7 @@
                 alert('eror');
                 $('#menu-simpan-data-non-aset').html(
                     '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><iclass="fa fa-save"></i> Simpan Data</button>'
-                    );
+                );
             } else {
                 $.ajax({
                     url: "{{ route('dashboard_add_data_non_aset') }}",
@@ -904,7 +1032,7 @@
                 alert('eror');
                 $('#menu-simpan-data-inventaris').html(
                     '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><iclass="fa fa-save"></i> Simpan Data</button>'
-                    );
+                );
             } else {
                 $.ajax({
                     url: "{{ route('dashboard_update_data_inventaris') }}",
