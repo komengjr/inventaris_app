@@ -322,6 +322,7 @@
                             @php
                                 $total_brg = DB::table('inventaris_data')
                                     ->where('id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                                    ->where('inventaris_data.inventaris_data_status', '<', 4)
                                     ->where('inventaris_data_tgl_beli', '<', $data->end_date_verif)
                                     ->count();
                                 $total = $total + $total_brg;
