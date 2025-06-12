@@ -338,6 +338,7 @@
                                 )
                                 ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
                                 ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                                ->where('inventaris_data.inventaris_data_status', '<', 4)
                                 ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 0)
                                 ->count();
                             $statusbarang1 = DB::table('tbl_sub_verifdatainventaris')
@@ -349,6 +350,7 @@
                                 )
                                 ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
                                 ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                                ->where('inventaris_data.inventaris_data_status', '<', 4)
                                 ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 1)
                                 ->count();
                             $statusbarang2 = DB::table('tbl_sub_verifdatainventaris')
@@ -360,6 +362,7 @@
                                 )
                                 ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
                                 ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                                ->where('inventaris_data.inventaris_data_status', '<', 4)
                                 ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 2)
                                 ->count();
 
