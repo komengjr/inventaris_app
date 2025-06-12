@@ -32,7 +32,7 @@
                         <h4 class="text-primary fw-bold mb-0">
                             <img class="" src="{{ asset('vendor/pramita.png') }}" alt="" width="90" />
                             <img class="ms-1" src="{{ asset('vendor/sima.jpeg') }}" alt="" width="80" />
-                            <img class="ms-1" src="{{ asset('vendor/prospek.png') }}" alt="" width="80" />
+                            {{-- <img class="ms-1" src="{{ asset('vendor/prospek.png') }}" alt="" width="80" /> --}}
                         </h4>
                     </div>
                 </div>
