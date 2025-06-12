@@ -44,7 +44,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body py-0 py-lg-2">
-                    <div class="row">
+                    <div class="row" style="">
                         <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-2">
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
@@ -79,14 +79,14 @@
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-warning shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-shipping-fast text-info"></span></div>
-                                    <h6 class="mb-0">{{ $datanonaset }} Barang</h6>
+                                    <h5 class="mb-0" style="font-family: 'Courier New';">{{ $datanonaset }} Barang</h5>
                                 </div>
                             </div>
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-money-check-alt text-info"></span></div>
-                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2">@currency($nonaset) </p>
+                                    <p class=" lh-1 mb-1 fs-2 pe-2 " style="font-family: 'Courier New';"><strong>@currency($nonaset) </strong></p>
                                 </div>
                             </div>
                         </div>
@@ -124,14 +124,14 @@
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-warning shadow-none me-2 bg-soft-info"><span
                                             class="fs--1 fab fa-wpforms text-info"></span></div>
-                                    <h6 class="mb-0">{{ $dataaset }} Barang</h6>
+                                    <h5 class="mb-0" style="font-family: 'Courier New';">{{ $dataaset }} Barang</h5>
                                 </div>
                             </div>
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-money-check-alt text-info"></span></div>
-                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2">@currency($aset) </p>
+                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2" style="font-family: 'Courier New';"><strong>@currency($aset)</strong> </p>
                                 </div>
                             </div>
 
