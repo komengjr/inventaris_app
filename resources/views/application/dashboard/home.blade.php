@@ -315,7 +315,7 @@
                             </div>
                         </div>
                         <div class="col-md-7">
-                            <hr class="mx-ncard mb-0 d-md-none d-xxl-block" />
+                            {{-- <hr class="mx-ncard mb-0 d-md-none d-xxl-block" /> --}}
                             @php
                                 $no = 0;
                             @endphp
