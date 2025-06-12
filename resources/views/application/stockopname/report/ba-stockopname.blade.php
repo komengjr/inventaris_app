@@ -285,24 +285,115 @@
             </div>
         </div>
         <p style="text-align: justify; font-size: 17px; color: black;">
-            Pada tanggal {{ $data->tgl_verif }} Sampai {{ $data->end_date_verif }} telah dilaksanakan penghitungan
-            stock reagent dan cetakan (Stock
-            Opname) di gudang persediaan Laboratorium Klinik Pramita, yang dilakukan oleh Pelaksana Akuntansi bersama
-            Administrasi Gudang. Setelah dilakukan penghitungan dan Penelusuran, <strong>Tidak Terdapat
-                Ketidaksesuaian</strong> antara
-            Laporan Stock barang Gudang pada program Dos dengan jumlah fisik barang. Adapun perinciannya antara lain:
+            Pada tanggal {{ date('d-m-Y', strtotime($data->tgl_verif)) }} Sampai
+            {{ date('d-m-Y', strtotime($data->end_date_verif)) }} telah
+            dilaksanakan StockOpname di {{ $cabang->nama_cabang }}, yang dilakukan oleh Pelaksana Staff Bagian SDM.
+            Setelah dilakukan Pengecekan dan Penelusuran,
+            <strong>Tidak Terdapat Ketidaksesuaian</strong> antara Jumlah Barang Inventaris Yang ada di Cabang denagn
+            pengecekan fisik barang. Adapun perinciannya antara lain:
         </p>
+
+        <table border="1" cellspacing="0" cellpadding="0" style="width: 100%; margin-bottom: 15px;">
+            <thead style="font-size: 11px;">
+                <tr>
+                    <th class="no" rowspan="2">#</th>
+                    <th rowspan="2">NAMA RUANGAN</th>
+                    <th rowspan="2">TOTAL BARANG</th>
+                    <th colspan="3">STATUS KONDISI BARANG</th>
+                    <th rowspan="2">SUDAH DI VERIFIKASI</th>
+                </tr>
+                <tr>
+                    <th>B</th>
+                    <th>M</th>
+                    <th>R</th>
+                </tr>
+            </thead>
+            <tbody id="invoiceItems" style="font-size: 10px;">
+                @php
+                    $no = 1;
+                    $not_verif = 0;
+                    $total = 0;
+                @endphp
+                @foreach ($lokasi as $lokasis)
+                    <tr>
+                        <td>{{ $no++ }}</td>
+                        <td>{{ $lokasis->master_lokasi_name }}</td>
+                        <td style="text-align: right;">
+                            @php
+                                $total_brg = DB::table('inventaris_data')
+                                    ->where('id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                                    ->where('inventaris_data_tgl_beli', '<', $data->end_date_verif)
+                                    ->count();
+                                $total = $total + $total_brg;
+                            @endphp
+                            {{ $total_brg }}
+                        </td>
+                        @php
+                            $statusbarang = DB::table('tbl_sub_verifdatainventaris')
+                                ->join(
+                                    'inventaris_data',
+                                    'inventaris_data.inventaris_data_code',
+                                    '=',
+                                    'tbl_sub_verifdatainventaris.id_inventaris',
+                                )
+                                ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
+                                ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                                ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 0)
+                                ->count();
+                            $statusbarang1 = DB::table('tbl_sub_verifdatainventaris')
+                                ->join(
+                                    'inventaris_data',
+                                    'inventaris_data.inventaris_data_code',
+                                    '=',
+                                    'tbl_sub_verifdatainventaris.id_inventaris',
+                                )
+                                ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
+                                ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                                ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 1)
+                                ->count();
+                            $statusbarang2 = DB::table('tbl_sub_verifdatainventaris')
+                                ->join(
+                                    'inventaris_data',
+                                    'inventaris_data.inventaris_data_code',
+                                    '=',
+                                    'tbl_sub_verifdatainventaris.id_inventaris',
+                                )
+                                ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
+                                ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                                ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 2)
+                                ->count();
+
+                        @endphp
+                        <td style="text-align: right;">
+                            {{ $statusbarang }}
+                        </td>
+                        <td style="text-align: right;">
+                            {{ $statusbarang1 }}
+                        </td>
+                        <td style="text-align: right;">
+                            {{ $statusbarang2 }}
+                        </td>
+                        <td style="text-align: right;">
+                            {{ $statusbarang + $statusbarang1 + $statusbarang2 }}
+                        </td>
+                    </tr>
+                    @php
+                        $not_verif = $not_verif + ($total_brg - ($statusbarang + $statusbarang1 + $statusbarang2));
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
         <table style="margin: 0px; padding: 0px; color: black; font-size: 15px; border: solid 2px black;">
             <tr>
                 <td>Total Barang Yang Perlu diverifikasi</td>
                 <td>:</td>
-                <td style="text-align: right;">{{ $data->total_barang }} Barang</td>
+                <td style="text-align: right;">{{ $total}} Barang</td>
             </tr>
             <tr>
                 <td>Total Barang Yang Sudah di Verifikasi</td>
                 <td>:</td>
                 <td style="text-align: right;">
-                    {{ $data->total_barang }} Barang
+                    {{ $baik + $maintenance + $rusak }} Barang
                 </td>
             </tr>
             <tr>
@@ -330,13 +421,13 @@
                 <td>Total Barang Tidak ditemukan</td>
                 <td>:</td>
                 <td style="text-align: right;">
-                    0 Barang
+                    {{ $not_verif }} Barang
                 </td>
             </tr>
-
         </table>
+
         <p style="text-align: justify; font-size: 17px; color: black;">
-            Untuk selanjutnya, diharapkan kegiatan operasional gudang persediaan perusahaan tetap berjalan dengan baik
+            Untuk selanjutnya, diharapkan kegiatan operasional Stockopname Barang Inventaris Cabang {{$cabang->nama_cabang}} tetap berjalan dengan baik
             dan sesuai dengan system yang telah ditetapkan, serta terjalin koordinasi yang baik dengan semua pihak yang
             bersangkutan.
             Demikian, berita acara ini dibuat dan ditandatangani dengan sebenar-benarnya.
