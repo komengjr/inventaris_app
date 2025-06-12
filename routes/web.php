@@ -607,6 +607,7 @@ Route::prefix('masteradmin')->group(function () {
     Route::post('cabang/data-stock-opname-cabang', [MasterAdminController::class, 'masteradmin_cabang_data_stock_opname'])->name('masteradmin_cabang_data_stock_opname');
     Route::post('cabang/preview-data-stock-opname-cabang', [MasterAdminController::class, 'masteradmin_cabang_preview_data_stock_opname'])->name('masteradmin_cabang_preview_data_stock_opname');
     Route::post('cabang/remove-data-stock-opname-cabang', [MasterAdminController::class, 'masteradmin_cabang_remove_data_stock_opname'])->name('masteradmin_cabang_remove_data_stock_opname');
+    Route::post('cabang/sinkron-data-stock-opname-cabang', [MasterAdminController::class, 'masteradmin_cabang_sinkron_data_stock_opname'])->name('masteradmin_cabang_sinkron_data_stock_opname');
     Route::post('cabang/print-data-peminjaman-cabang', [MasterAdminController::class, 'masteradmin_cabang_print_data_peminjaman'])->name('masteradmin_cabang_print_data_peminjaman');
     Route::post('cabang/migrasi-data-cabang', [MasterAdminController::class, 'masteradmin_cabang_migrasi_data_cabang'])->name('masteradmin_cabang_migrasi_data_cabang');
     Route::post('cabang/clone-data-master-barang', [MasterAdminController::class, 'masteradmin_cabang_clone_data_master_barang'])->name('masteradmin_cabang_clone_data_master_barang');

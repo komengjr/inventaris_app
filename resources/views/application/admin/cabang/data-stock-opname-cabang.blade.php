@@ -48,13 +48,15 @@
                                             Edit Stock Opname</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" id="button-preview-data-stock-opname"
-                                            data-code="{{ $datas->kode_verif }}"><span
-                                                class="fab fa-chromecast"></span>
+                                            data-code="{{ $datas->kode_verif }}"><span class="fab fa-chromecast"></span>
                                             Preview Data Stockopname</button>
                                         <button class="dropdown-item" id="button-print-data-peminjaman"
-                                            data-code="{{ $datas->kode_verif }}"><span
-                                                class="fas fa-print"></span>
+                                            data-code="{{ $datas->kode_verif }}"><span class="fas fa-print"></span>
                                             Print Data Stockopname</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item" id="button-sinkron-data-stock-opname"
+                                            data-code="{{ $datas->kode_verif }}"><span class="fab fa-chromecast"></span>
+                                            Sinkronisasi Data Stockopname</button>
                                     </div>
                                 </div>
                             </td>

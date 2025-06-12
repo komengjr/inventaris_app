@@ -451,6 +451,27 @@
                 $('#menu-cabang').html('eror');
             });
         });
+        $(document).on("click", "#button-sinkron-data-stock-opname", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_sinkron_data_stock_opname') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                location.reload();
+            }).fail(function() {
+                $('#menu-cabang').html('eror');
+            });
+        });
     </script>
     {{-- Export Excel --}}
     <script>

@@ -174,11 +174,13 @@ class MasterAdminController extends Controller
             'new_brg' => $new_brg
         ]);
     }
-    public function masteradmin_cabang_export_excel_data_master_barang($id){
+    public function masteradmin_cabang_export_excel_data_master_barang($id)
+    {
         $data = DB::table('tbl_cabang')->where('kd_cabang', $id)->first();
         return Excel::download(new DataBarangV2Export($id), 'INVENTARIS_NON_ASET_' . $data->nama_cabang . '.xlsx');
     }
-    public function masteradmin_cabang_export_excel_data_aset_master_barang($id){
+    public function masteradmin_cabang_export_excel_data_aset_master_barang($id)
+    {
         $data = DB::table('tbl_cabang')->where('kd_cabang', $id)->first();
         return Excel::download(new DataBarangAsetV2Export($id), 'INVENTARIS_ASET_' . $data->nama_cabang . '.xlsx');
     }
@@ -255,14 +257,37 @@ class MasterAdminController extends Controller
         $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang', $request->code)->get();
         return view('application.admin.cabang.data-stock-opname-cabang', ['data' => $data]);
     }
-    public function masteradmin_cabang_preview_data_stock_opname(Request $request){
+    public function masteradmin_cabang_preview_data_stock_opname(Request $request)
+    {
         $data = DB::table('tbl_sub_verifdatainventaris')
-        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_sub_verifdatainventaris.id_inventaris')
-        ->where('tbl_sub_verifdatainventaris.kode_verif',$request->code)->get();
-        return view('application.admin.cabang.stockopname.data-stock-opname',['data'=>$data]);
+            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->where('tbl_sub_verifdatainventaris.kode_verif', $request->code)->get();
+        return view('application.admin.cabang.stockopname.data-stock-opname', ['data' => $data]);
     }
-    public function masteradmin_cabang_remove_data_stock_opname(Request $request){
-        DB::table('tbl_sub_verifdatainventaris')->where('id_sub_verifdatainventaris',$request->code)->delete();
+    public function masteradmin_cabang_remove_data_stock_opname(Request $request)
+    {
+        DB::table('tbl_sub_verifdatainventaris')->where('id_sub_verifdatainventaris', $request->code)->delete();
+    }
+    public function masteradmin_cabang_sinkron_data_stock_opname(Request $request)
+    {
+        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
+        $databrg = DB::table('inventaris_data')
+            ->join('tbl_nomor_ruangan_cabang', 'tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', '=', 'inventaris_data.id_nomor_ruangan_cbaang')
+            ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $data->end_date_verif)
+            ->where('inventaris_data.inventaris_data_status', '<', 4)->get();
+        foreach ($databrg as $value) {
+            $check = DB::table('tbl_sub_verifdatainventaris')->where('id_inventaris', $value->inventaris_data_code)->where('kode_verif', $data->kode_verif)->first();
+            if (!$check) {
+                DB::table('tbl_sub_verifdatainventaris')->insert([
+                    'kode_verif' => $data->kode_verif,
+                    'id_inventaris' => $value->inventaris_data_code,
+                    'status_data_inventaris' => 0,
+                    'keterangan_data_inventaris' => 'BAIK',
+                    'created_at' => now(),
+                ]);
+            }
+        }
+        return 1;
     }
     public function masteradmin_menu()
     {
@@ -304,7 +329,7 @@ class MasterAdminController extends Controller
     {
         if (Auth::user()->akses == 'admin') {
             $menu = DB::table('z_menu')->get();
-            return view('application.admin.masterakses',['menu'=>$menu]);
+            return view('application.admin.masterakses', ['menu' => $menu]);
         } else {
             return view('application.error.404');
         }
