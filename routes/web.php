@@ -620,6 +620,7 @@ Route::prefix('masteradmin')->group(function () {
     Route::get('cabang/export-excel-data-master-barang/{id}', [MasterAdminController::class, 'masteradmin_cabang_export_excel_data_master_barang'])->name('masteradmin_cabang_export_excel_data_master_barang');
     Route::get('cabang/export-excel-data-aset-master-barang/{id}', [MasterAdminController::class, 'masteradmin_cabang_export_excel_data_aset_master_barang'])->name('masteradmin_cabang_export_excel_data_aset_master_barang');
     Route::get('messages', [MasterAdminController::class, 'masteradmin_messages'])->name('masteradmin_messages');
+    Route::post('messages/replay', [MasterAdminController::class, 'masteradmin_messages_replay'])->name('masteradmin_messages_replay');
     Route::get('menu', [MasterAdminController::class, 'masteradmin_menu'])->name('masteradmin_menu');
     Route::post('menu-add', [MasterAdminController::class, 'masteradmin_menu_add'])->name('masteradmin_menu_add');
     Route::post('menu-save', [MasterAdminController::class, 'masteradmin_menu_save'])->name('masteradmin_menu_save');

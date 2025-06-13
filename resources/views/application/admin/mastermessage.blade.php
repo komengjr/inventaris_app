@@ -78,13 +78,12 @@
                                                     data-fa-transform="shrink-3"></span></button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
                                                 <button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-master" id="button-master-staff"
-                                                    data-code="123"><i class="fas fa-download"></i></span> Edit
-                                                    Menu</button>
-                                                <button class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-master" id="button-replay-pesan"
+                                                    data-code="{{ $datas->token_code }}"><i class="fas fa-download"></i></span> Replay Pesan</button>
+                                                {{-- <button class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#modal-master" id="button-master-staff"
                                                     data-code="123"><i class="fas fa-trash"></i>
-                                                    Hapus Menu</button>
+                                                    Hapus Menu</button> --}}
                                             </div>
                                         </div>
                                     </td>
@@ -180,36 +179,15 @@
         });
     </script>
     <script>
-        $(document).on("click", "#button-add-menu", function(e) {
-            e.preventDefault();
-            // var code = $(this).data("code");
-            $('#menu-menu').html(
-                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-            );
-            $.ajax({
-                url: "{{ route('masteradmin_menu_add') }}",
-                type: "POST",
-                cache: false,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "code": 0
-                },
-                dataType: 'html',
-            }).done(function(data) {
-                $('#menu-menu').html(data);
-            }).fail(function() {
-                $('#menu-menu').html('eror');
-            });
 
-        });
-        $(document).on("click", "#button-master-staff", function(e) {
+        $(document).on("click", "#button-replay-pesan", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-master').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
-                url: "{{ route('masteradmin_cabang') }}",
+                url: "{{ route('masteradmin_messages_replay') }}",
                 type: "POST",
                 cache: false,
                 data: {
@@ -218,7 +196,7 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-master').html(data);
+                location.reload();
             }).fail(function() {
                 $('#menu-master').html('eror');
             });

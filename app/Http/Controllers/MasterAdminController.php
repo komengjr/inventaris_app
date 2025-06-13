@@ -310,6 +310,15 @@ class MasterAdminController extends Controller
             return view('application.error.404');
         }
     }
+    public function masteradmin_messages_replay(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            DB::table('message')->where('token_code',$request->code)->update(['status'=>0]);
+            return 0;
+        } else {
+            return view('application.error.404');
+        }
+    }
     public function masteradmin_menu()
     {
         if (Auth::user()->akses == 'admin') {
