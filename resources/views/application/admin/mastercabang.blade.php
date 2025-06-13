@@ -51,7 +51,8 @@
                         <th>Entitas Cabang</th>
                         <th>Kota</th>
                         <th>No Handphone</th>
-                        <th>Jumlah Barang</th>
+                        <th>Barang Lama</th>
+                        <th>Barang Baru</th>
                         <th>Notifikasi</th>
                         <th>Action</th>
                     </tr>
@@ -76,6 +77,14 @@
                                         ->count();
                                 @endphp
                                 {{ $total }}
+                            </td>
+                            <td>
+                                @php
+                                    $totals = DB::table('inventaris_data')
+                                        ->where('inventaris_data_cabang', $datas->kd_cabang)
+                                        ->count();
+                                @endphp
+                                {{ $totals }}
                             </td>
                             <td>
                                 @php
