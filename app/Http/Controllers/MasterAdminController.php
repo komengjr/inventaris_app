@@ -301,6 +301,15 @@ class MasterAdminController extends Controller
         }
         return 1;
     }
+    public function masteradmin_messages()
+    {
+        if (Auth::user()->akses == 'admin') {
+            $data = DB::table('message')->orderBy('id','DESC')->get();
+            return view('application.admin.mastermessage', ['data' => $data]);
+        } else {
+            return view('application.error.404');
+        }
+    }
     public function masteradmin_menu()
     {
         if (Auth::user()->akses == 'admin') {
