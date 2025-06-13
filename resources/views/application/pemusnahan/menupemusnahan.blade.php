@@ -42,6 +42,11 @@
                             <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-pemusnahan"
                                 id="button-add-data-pemusnahan"><span class="fas fa-swatchbook"></span>
                                 Tambah Pemusnahan Barang</button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item text-warning" data-bs-toggle="modal"
+                                data-bs-target="#modal-pemusnahan-xl" id="button-check-data-barang-musnah-cabang"><span
+                                    class="fas fa-receipt"></span>
+                                Pengecekan Data Pemusnahan</button>
                         </div>
                         {{-- <a class="btn btn-falcon-primary btn-sm" href="#!" data-bs-toggle="modal"
                         data-bs-target="#modal-pemusnahan" id="button-add-data-pemusnahan">
@@ -97,35 +102,54 @@
                             </td>
                             <td>{{ $datas->eksekusi }}</td>
                             <td>
-                                @if ($datas->status_pemusnahan == 0)
+                                @if ($datas->status_pemusnahan == -1)
+                                    <span class="badge bg-danger fs--2">Verifikasi di Tolak</span>
+                                @elseif($datas->status_pemusnahan == 0)
                                     <span class="badge bg-warning fs--2">Belum diverifikasi</span>
                                 @elseif($datas->status_pemusnahan == 1)
                                     <span class="badge bg-primary fs--2">Sudah diverifikasi</span>
                                 @endif
                             </td>
                             <td>
-                                <div class="btn-group" role="group">
-                                    <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
-                                        type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false"><span class="fas fa-align-left me-1"
-                                            data-fa-transform="shrink-3"></span>Option</button>
-                                    <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                                        @if ($datas->status_pemusnahan == 0)
-                                            <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-pemusnahan-md"
-                                                id="button-verifikasi-data-pemusnahan-cabang"
-                                                data-code="{{ $datas->id_pemusnahan }}"><span
-                                                    class="fas fa-swatchbook"></span>
-                                                Verifikasi Pemusnahan</button>
-                                        @elseif($datas->status_pemusnahan == 1)
-                                            <button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#modal-pemusnahan-lg"
-                                                id="button-cetak-data-pemusnahan-cabang"
-                                                data-code="{{ $datas->id_pemusnahan }}"><span class="fas fa-print"></span>
-                                                Cetak Laporan Pemusnahan</button>
-                                        @endif
+                                @if ($datas->status_pemusnahan == -1)
+                                @else
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
+                                            type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false"><span class="fas fa-align-left me-1"
+                                                data-fa-transform="shrink-3"></span>Option</button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+                                            @if ($datas->status_pemusnahan == 0)
+                                                <button class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-pemusnahan-md"
+                                                    id="button-verifikasi-data-pemusnahan-cabang"
+                                                    data-code="{{ $datas->id_pemusnahan }}"><span
+                                                        class="fas fa-swatchbook"></span>
+                                                    Verifikasi Pemusnahan</button>
+                                            @elseif($datas->status_pemusnahan == 1)
+                                                <button class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-pemusnahan-lg"
+                                                    id="button-cetak-data-pemusnahan-cabang"
+                                                    data-code="{{ $datas->id_pemusnahan }}"><span
+                                                        class="fas fa-print"></span>
+                                                    Cetak Laporan Pemusnahan</button>
+                                                <button class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-pemusnahan-md"
+                                                    id="button-sinkronisasi-data-pemusnahan"
+                                                    data-code="{{ $datas->id_inventaris }}"><span
+                                                        class="fas fa-sync-alt"></span>
+                                                    Sinkronisasi Data</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button class="dropdown-item text-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-pemusnahan-lg"
+                                                    id="button-cetak-data-pemusnahan-cabang"
+                                                    data-code="{{ $datas->id_pemusnahan }}"><span
+                                                        class="fas fa-redo"></span>
+                                                    Pengembalian Barang Pemusnahan</button>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -144,6 +168,18 @@
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="menu-pemusnahan"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-pemusnahan-xl" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-pemusnahan-xl"></div>
             </div>
         </div>
     </div>
@@ -281,6 +317,49 @@
                 $('#menu-pemusnahan-lg').html(data);
             }).fail(function() {
                 $('#menu-pemusnahan-lg').html('eror');
+            });
+        });
+        $(document).on("click", "#button-check-data-barang-musnah-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-pemusnahan-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_pemusnahan_check_data_pemusnahan') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-pemusnahan-xl').html(data);
+            }).fail(function() {
+                $('#menu-pemusnahan-xl').html('eror');
+            });
+        });
+        $(document).on("click", "#button-sinkronisasi-data-pemusnahan", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-pemusnahan-md').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_pemusnahan_pilih_data_barang_sinkronisasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-pemusnahan-md').html(data);
+                location.reload();
+            }).fail(function() {
+                $('#menu-pemusnahan-md').html('eror');
             });
         });
     </script>

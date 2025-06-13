@@ -44,7 +44,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body py-0 py-lg-2">
-                    <div class="row" style="">
+                    <div class="row">
                         <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-2">
                             <div class="d-flex flex-between-center mb-1">
                                 <div class="d-flex align-items-center">
@@ -319,7 +319,7 @@
                             @php
                                 $no = 0;
                             @endphp
-                            {{-- @foreach ($klasifikasi as $klasifikasis)
+                            @foreach ($klasifikasi as $klasifikasis)
                                 <div class="d-flex flex-between-center border-bottom py-1 pt-md-0 pt-xxl-3">
                                     <div class="d-flex"><img class="me-2" src="{{ asset('img/icon/icon.png') }}"
                                             width="16" height="16" alt="..." />
@@ -353,9 +353,9 @@
                                     @endphp
                                     <h6 class="text-700 mb-3">@currency($jumlah)</h6>
                                 </div>
-                            @endforeach --}}
+                            @endforeach
 
-                            <div class="table-responsive scrollbar pt-2">
+                            {{-- <div class="table-responsive scrollbar pt-2">
                                 <table class="table table-hover table-striped border " border="1"
                                     style="border-radius: 2%;">
                                     <tbody>
@@ -432,7 +432,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

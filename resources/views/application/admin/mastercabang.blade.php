@@ -405,6 +405,27 @@
                 $('#table-master-barang').html('eror');
             });
         });
+        $(document).on("click", "#button-reset-clone-data-master-barang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#button-reset-clone-data-master-barang').html(
+                '<div class="spinner-border" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_reset_clone_data_master_barang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#table-master-barang').html(data);
+            }).fail(function() {
+                $('#table-master-barang').html('eror');
+            });
+        });
         $(document).on("click", "#button-print-data-peminjaman", function(e) {
             e.preventDefault();
             var code = $(this).data("code");

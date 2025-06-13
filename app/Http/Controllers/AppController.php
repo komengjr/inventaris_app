@@ -864,6 +864,13 @@ class AppController extends Controller
     {
         return view('application.pemusnahan.form-add');
     }
+    public function menu_pemusnahan_check_data_pemusnahan(Request $request)
+    {
+        $data = DB::table('inventaris_data')
+        ->where('inventaris_data_cabang',Auth::user()->cabang)
+        ->where('inventaris_data_status',5)->get();
+        return view('application.pemusnahan.table-check-barang-musnah',['data'=>$data]);
+    }
     public function menu_pemusnahan_find_data_barang(Request $request)
     {
         if ($request->option == 'name') {
@@ -992,6 +999,11 @@ class AppController extends Controller
         $canvas->set_opacity(.1);
         return base64_encode($pdf->stream());
     }
+    public function menu_pemusnahan_pilih_data_barang_sinkronisasi(Request $request){
+        DB::table('inventaris_data')->where('inventaris_data_code',$request->code)->update(['inventaris_data_status'=>5]);
+        return "<h3><span class='badge bg-primary m-3'>Berhasil Sinkronisasi</span></h3>";
+    }
+
     // STOK OPNAME
     public function menu_stock_opname($akses)
     {

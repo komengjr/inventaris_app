@@ -174,6 +174,17 @@ class MasterAdminController extends Controller
             'new_brg' => $new_brg
         ]);
     }
+    public function masteradmin_cabang_reset_clone_data_master_barang(Request $request)
+    {
+        DB::table('inventaris_data')->where('inventaris_data_cabang', $request->code)->delete();
+        $old_brg = DB::table('sub_tbl_inventory')->where('kd_cabang', $request->code)->count();
+        $new_brg = DB::table('inventaris_data')->where('inventaris_data_cabang', $request->code)->count();
+        return view('application.admin.cabang.migrasi.master-barang', [
+            'old_brg' => $old_brg,
+            'new_brg' => $new_brg
+        ]);
+
+    }
     public function masteradmin_cabang_export_excel_data_master_barang($id)
     {
         $data = DB::table('tbl_cabang')->where('kd_cabang', $id)->first();

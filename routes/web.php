@@ -484,6 +484,7 @@ Route::prefix('app')->group(function () {
 
     // PEMUSNAHAN
     Route::post('menu-pemusnahan/add', [AppController::class, 'menu_pemusnahan_add'])->name('menu_pemusnahan_add');
+    Route::post('menu-pemusnahan/check-barang-musnah', [AppController::class, 'menu_pemusnahan_check_data_pemusnahan'])->name('menu_pemusnahan_check_data_pemusnahan');
     Route::post('menu-pemusnahan/find-data-barang', [AppController::class, 'menu_pemusnahan_find_data_barang'])->name('menu_pemusnahan_find_data_barang');
     Route::post('menu-pemusnahan/pilih-data-barang', [AppController::class, 'menu_pemusnahan_pilih_data_barang'])->name('menu_pemusnahan_pilih_data_barang');
     Route::post('menu-pemusnahan/pilih-data-barang/save', [AppController::class, 'menu_pemusnahan_pilih_data_barang_save'])->name('menu_pemusnahan_pilih_data_barang_save');
@@ -491,6 +492,7 @@ Route::prefix('app')->group(function () {
     Route::post('menu-pemusnahan/pilih-data-barang/verifikasi_code', [AppController::class, 'menu_pemusnahan_pilih_data_barang_verifikasi_code'])->name('menu_pemusnahan_pilih_data_barang_verifikasi_code');
     Route::post('menu-pemusnahan/pilih-data-barang/print', [AppController::class, 'menu_pemusnahan_pilih_data_barang_print'])->name('menu_pemusnahan_pilih_data_barang_print');
     Route::post('menu-pemusnahan/pilih-data-barang/print-report', [AppController::class, 'menu_pemusnahan_pilih_data_barang_print_report'])->name('menu_pemusnahan_pilih_data_barang_print_report');
+    Route::post('menu-pemusnahan/pilih-data-barang/sinkronisasi', [AppController::class, 'menu_pemusnahan_pilih_data_barang_sinkronisasi'])->name('menu_pemusnahan_pilih_data_barang_sinkronisasi');
 
     // MENU MUTASI
     Route::post('menu-mutasi/add', [AppController::class, 'menu_mutasi_add'])->name('menu_mutasi_add');
@@ -614,6 +616,7 @@ Route::prefix('masteradmin')->group(function () {
     Route::post('cabang/print-data-peminjaman-cabang', [MasterAdminController::class, 'masteradmin_cabang_print_data_peminjaman'])->name('masteradmin_cabang_print_data_peminjaman');
     Route::post('cabang/migrasi-data-cabang', [MasterAdminController::class, 'masteradmin_cabang_migrasi_data_cabang'])->name('masteradmin_cabang_migrasi_data_cabang');
     Route::post('cabang/clone-data-master-barang', [MasterAdminController::class, 'masteradmin_cabang_clone_data_master_barang'])->name('masteradmin_cabang_clone_data_master_barang');
+    Route::post('cabang/reset-clone-data-master-barang', [MasterAdminController::class, 'masteradmin_cabang_reset_clone_data_master_barang'])->name('masteradmin_cabang_reset_clone_data_master_barang');
     Route::get('cabang/export-excel-data-master-barang/{id}', [MasterAdminController::class, 'masteradmin_cabang_export_excel_data_master_barang'])->name('masteradmin_cabang_export_excel_data_master_barang');
     Route::get('cabang/export-excel-data-aset-master-barang/{id}', [MasterAdminController::class, 'masteradmin_cabang_export_excel_data_aset_master_barang'])->name('masteradmin_cabang_export_excel_data_aset_master_barang');
     Route::get('menu', [MasterAdminController::class, 'masteradmin_menu'])->name('masteradmin_menu');
