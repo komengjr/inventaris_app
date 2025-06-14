@@ -867,9 +867,9 @@ class AppController extends Controller
     public function menu_pemusnahan_check_data_pemusnahan(Request $request)
     {
         $data = DB::table('inventaris_data')
-        ->where('inventaris_data_cabang',Auth::user()->cabang)
-        ->where('inventaris_data_status',5)->get();
-        return view('application.pemusnahan.table-check-barang-musnah',['data'=>$data]);
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data_status', 5)->get();
+        return view('application.pemusnahan.table-check-barang-musnah', ['data' => $data]);
     }
     public function menu_pemusnahan_find_data_barang(Request $request)
     {
@@ -999,29 +999,63 @@ class AppController extends Controller
         $canvas->set_opacity(.1);
         return base64_encode($pdf->stream());
     }
-    public function menu_pemusnahan_pilih_data_barang_sinkronisasi(Request $request){
-        DB::table('inventaris_data')->where('inventaris_data_code',$request->code)->update(['inventaris_data_status'=>5]);
+    public function menu_pemusnahan_pilih_data_barang_sinkronisasi(Request $request)
+    {
+        DB::table('inventaris_data')->where('inventaris_data_code', $request->code)->update(['inventaris_data_status' => 5]);
         return "<h3><span class='badge bg-primary m-3'>Berhasil Sinkronisasi</span></h3>";
     }
-    public function menu_pemusnahan_pilih_data_barang_pengembalian(Request $request){
+    public function menu_pemusnahan_pilih_data_barang_pengembalian(Request $request)
+    {
         $data = DB::table('tbl_pemusnahan')
-        ->join('inventaris_data','inventaris_data.inventaris_data_code','=','tbl_pemusnahan.id_inventaris')
-        ->where('tbl_pemusnahan.kd_pemusnahan',$request->code)
-        ->first();
-        return view('application.pemusnahan.form-pengembailan-pemusnahan',['data'=>$data]);
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_pemusnahan.id_inventaris')
+            ->where('tbl_pemusnahan.kd_pemusnahan', $request->code)
+            ->first();
+        return view('application.pemusnahan.form-pengembailan-pemusnahan', ['data' => $data]);
     }
-    public function menu_pemusnahan_pilih_data_barang_pengembalian_save(Request $request){
-        DB::table('tbl_pemusnahan')->where('kd_pemusnahan',$request->code_pemusnahan)->update([
-            'ket_batal'=> $request->alasan,
-            'status_pemusnahan'=> 2,
+    public function menu_pemusnahan_pilih_data_barang_pengembalian_save(Request $request)
+    {
+        DB::table('tbl_pemusnahan')->where('kd_pemusnahan', $request->code_pemusnahan)->update([
+            'ket_batal' => $request->alasan,
+            'status_pemusnahan' => 2,
         ]);
         return redirect()->back()->withSuccess('Great! Berhasil Membatalkan Data Pemusnahan');
     }
-    public function menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan(Request $request){
-        return view('application.pemusnahan.form-verifikasi-pembatalan',['code'=>$request->code]);
+    public function menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan(Request $request)
+    {
+        return view('application.pemusnahan.form-verifikasi-pembatalan', ['code' => $request->code]);
     }
-    public function menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan_code(Request $request){
+    public function menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan_code(Request $request)
+    {
         return 123;
+    }
+    public function master_location_print_data_ruangan(Request $request)
+    {
+        return view('application.master-data.master-lokasi.form-print-lokasi', ['code' => $request->code]);
+    }
+    public function master_location_print_data_ruangan_cetak(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+        }
+        $ruangan = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('id_nomor_ruangan_cbaang', $request->code)->first();
+        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->code)->get();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.master-data.master-lokasi.report.report-data-lokasi', [
+            'cabang' => $cabang,
+            'data' => $data,
+            'ruangan' => $ruangan
+        ], compact('image'))->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(400, 570, "{PAGE_NUM} / {PAGE_COUNT} - $ruangan->master_lokasi_name ( $ruangan->nomor_ruangan )", $font, 10, array(0, 0, 0));
+        $dompdf->get_canvas()->page_text(33, 570, "$cabang->nama_cabang", $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
     }
 
     // STOK OPNAME

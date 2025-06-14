@@ -115,6 +115,13 @@
                                                 class="fas fa-synagogue"></span>
                                             Migrasi Lokasi Ruangan
                                         </button>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#modal-master-lokasi-xl" id="button-cetak-data-nomor-ruangan"
+                                            data-code="{{ $datas->id_nomor_ruangan_cbaang }}"><span
+                                                class="fas fa-print"></span>
+                                            Cetak Form Ruangan
+                                        </button>
                                     </div>
                                 </div>
                             </td>
@@ -147,6 +154,18 @@
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="menu-master-lokasi-lg"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-master-lokasi-xl" data-bs-keyboard="false" data-bs-backdrop="static"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-master-lokasi-xl"></div>
             </div>
         </div>
     </div>
@@ -278,6 +297,26 @@
                 $('#menu-master-lokasi-md').html('eror');
             });
         });
-
+        $(document).on("click", "#button-cetak-data-nomor-ruangan", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-master-lokasi-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('master_location_print_data_ruangan') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-master-lokasi-xl').html(data);
+            }).fail(function() {
+                $('#menu-master-lokasi-xl').html('eror');
+            });
+        });
     </script>
 @endsection

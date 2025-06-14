@@ -11,7 +11,8 @@
                         <tr>
                             <th class="sort" data-sort="name">Data</th>
                             <th class="sort" data-sort="email">Status Cloning</th>
-                            <th class="text-center" data-sort="age">Action</th>
+                            <th class="text-center" data-sort="age">Mode Cloning</th>
+                            <th class="text-center" data-sort="age">Mode Reset</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -22,15 +23,21 @@
                                 <p class="text-success mb-0">{{ $new_brg }} Data</p>
                             </td>
                             <td class="text-center fs-1">
-                                <button class="btn btn-sm btn-primary fs--1" type="button"
+                                <button class="btn btn-sm btn-primary fs--1 m-1" type="button"
                                     id="button-clone-data-master-barang" data-code="{{ $cabang->kd_cabang }}"
-                                    data-list-pagination="next"><i class="fas fa-clone"></i> Clone</button>
+                                    data-list-pagination="next"><i class="fas fa-clone"></i> A->B</button>
+                                <button class="btn btn-sm btn-primary fs--1 m-1" type="button"
+                                    id="button-clone-data-master-barang" data-code="{{ $cabang->kd_cabang }}"
+                                    data-list-pagination="next"><i class="fas fa-clone"></i> B->A</button>
+
+                            </td>
+                            <td>
                                 <button class="btn btn-sm btn-danger fs--1" type="button"
                                     id="button-reset-clone-data-master-barang" data-code="{{ $cabang->kd_cabang }}"
-                                    data-list-pagination="next"><i class="fas fa-redo"></i> Reset</button>
+                                    data-list-pagination="next"><i class="fas fa-trash"></i> B</button>
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td class="name">Master Stock Opname</td>
                             <td class="email">
                                 <p class="text-danger mb-0">0 Data</p>
@@ -41,7 +48,7 @@
                                     data-list-pagination="next"><i class="fas fa-clone"></i> Clone</button>
 
                             </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>

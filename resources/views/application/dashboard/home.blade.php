@@ -86,7 +86,8 @@
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-money-check-alt text-info"></span></div>
-                                    <p class=" lh-1 mb-1 fs-2 pe-2 " style="font-family: 'Courier New';"><strong>@currency($nonaset) </strong></p>
+                                    <p class=" lh-1 mb-1 fs-2 pe-2 " style="font-family: 'Courier New';">
+                                        <strong>@currency($nonaset) </strong></p>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +132,8 @@
                                 <div class="d-flex align-items-center">
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-money-check-alt text-info"></span></div>
-                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2" style="font-family: 'Courier New';"><strong>@currency($aset)</strong> </p>
+                                    <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2" style="font-family: 'Courier New';">
+                                        <strong>@currency($aset)</strong> </p>
                                 </div>
                             </div>
 
@@ -294,11 +296,11 @@
                             type="button" id="dropdown-most-leads" data-bs-toggle="dropdown" data-boundary="viewport"
                             aria-haspopup="true" aria-expanded="false"><span
                                 class="fas fa-ellipsis-h fs--2"></span></button>
-                        <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-most-leads"><a
-                                class="dropdown-item" href="#!">View</a><a class="dropdown-item"
+                        <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-most-leads">
+                            {{-- <a class="dropdown-item" href="#!">View</a><a class="dropdown-item"
                                 href="#!">Export</a>
                             <div class="dropdown-divider"></div><a class="dropdown-item text-danger"
-                                href="#!">Remove</a>
+                                href="#!">Remove</a> --}}
                         </div>
                     </div>
                 </div>
@@ -319,7 +321,7 @@
                             @php
                                 $no = 0;
                             @endphp
-                            @foreach ($klasifikasi as $klasifikasis)
+                            {{-- @foreach ($klasifikasi as $klasifikasis)
                                 <div class="d-flex flex-between-center border-bottom py-1 pt-md-0 pt-xxl-3">
                                     <div class="d-flex"><img class="me-2" src="{{ asset('img/icon/icon.png') }}"
                                             width="16" height="16" alt="..." />
@@ -353,9 +355,9 @@
                                     @endphp
                                     <h6 class="text-700 mb-3">@currency($jumlah)</h6>
                                 </div>
-                            @endforeach
+                            @endforeach --}}
 
-                            {{-- <div class="table-responsive scrollbar pt-2">
+                            <div class="table-responsive scrollbar pt-2">
                                 <table class="table table-hover table-striped border " border="1"
                                     style="border-radius: 2%;">
                                     <tbody>
@@ -400,7 +402,7 @@
                                                             ->count();
                                                     @endphp
                                                     <span
-                                                        class="badge badge rounded-pill d-block badge-soft-success">{{$total}}</span>
+                                                        class="badge badge rounded-pill d-block badge-soft-success">{{ $total }}</span>
                                                 </td>
                                                 @php
                                                     $jumlah = 0;
@@ -432,7 +434,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
