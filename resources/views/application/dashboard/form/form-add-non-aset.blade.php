@@ -37,9 +37,7 @@
                         <select class="form-control choices-single-jenis" name="klasifikasi" id="klasifikasi" required>
                             <option value="">Pilih Jenis Inventaris</option>
                             @foreach ($klasifikasi as $klasifikasis)
-                                <option value="{{ $klasifikasis->inventaris_klasifikasi_code }}">
-                                    {{ $klasifikasis->inventaris_klasifikasi_code }} -
-                                    {{ $klasifikasis->inventaris_klasifikasi_name }}</option>
+                                <option value="{{ $klasifikasis->inventaris_klasifikasi_code }}">{{ $klasifikasis->inventaris_klasifikasi_code }}-{{ $klasifikasis->inventaris_klasifikasi_name }}</option>
                             @endforeach
                         </select>
 
