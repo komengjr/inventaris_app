@@ -494,6 +494,9 @@ Route::prefix('app')->group(function () {
     Route::post('menu-pemusnahan/pilih-data-barang/print-report', [AppController::class, 'menu_pemusnahan_pilih_data_barang_print_report'])->name('menu_pemusnahan_pilih_data_barang_print_report');
     Route::post('menu-pemusnahan/pilih-data-barang/sinkronisasi', [AppController::class, 'menu_pemusnahan_pilih_data_barang_sinkronisasi'])->name('menu_pemusnahan_pilih_data_barang_sinkronisasi');
     Route::post('menu-pemusnahan/pilih-data-barang/pengembalian', [AppController::class, 'menu_pemusnahan_pilih_data_barang_pengembalian'])->name('menu_pemusnahan_pilih_data_barang_pengembalian');
+    Route::post('menu-pemusnahan/pilih-data-barang/pengembalian-save', [AppController::class, 'menu_pemusnahan_pilih_data_barang_pengembalian_save'])->name('menu_pemusnahan_pilih_data_barang_pengembalian_save');
+    Route::post('menu-pemusnahan/pilih-data-barang/verfikasi_pembatalan', [AppController::class, 'menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan'])->name('menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan');
+    Route::post('menu-pemusnahan/pilih-data-barang/verfikasi_pembatalan_code', [AppController::class, 'menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan_code'])->name('menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan_code');
 
     // MENU MUTASI
     Route::post('menu-mutasi/add', [AppController::class, 'menu_mutasi_add'])->name('menu_mutasi_add');

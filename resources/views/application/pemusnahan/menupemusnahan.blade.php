@@ -108,6 +108,8 @@
                                     <span class="badge bg-warning fs--2">Belum diverifikasi</span>
                                 @elseif($datas->status_pemusnahan == 1)
                                     <span class="badge bg-primary fs--2">Sudah diverifikasi</span>
+                                @elseif($datas->status_pemusnahan == 2)
+                                    <span class="badge bg-danger fs--2">Verifikasi Pembatalan</span>
                                 @endif
                             </td>
                             <td>
@@ -146,6 +148,13 @@
                                                     data-code="{{ $datas->kd_pemusnahan }}"><span
                                                         class="fas fa-redo"></span>
                                                     Pengembalian Barang Pemusnahan</button>
+                                            @elseif($datas->status_pemusnahan == 2)
+                                                <button class="dropdown-item text-warning" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-pemusnahan-md"
+                                                    id="button-verifikasi-pembatalan-pemusnahan-cabang"
+                                                    data-code="{{ $datas->kd_pemusnahan }}"><span
+                                                        class="fas fa-swatchbook"></span>
+                                                    Verifikasi Pembatalan</button>
                                             @endif
                                         </div>
                                     </div>
@@ -381,6 +390,27 @@
                 $('#menu-pemusnahan-xl').html(data);
             }).fail(function() {
                 $('#menu-pemusnahan-xl').html('eror');
+            });
+        });
+        $(document).on("click", "#button-verifikasi-pembatalan-pemusnahan-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-pemusnahan-md').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-pemusnahan-md').html(data);
+            }).fail(function() {
+                $('#menu-pemusnahan-md').html('eror');
             });
         });
     </script>

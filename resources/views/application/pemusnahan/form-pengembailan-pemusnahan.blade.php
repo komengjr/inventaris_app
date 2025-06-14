@@ -5,13 +5,14 @@
     </div>
     <div class="p-3">
         <div class="card border border-primary">
-            <form class="row g-3 p-4" action="{{ route('menu_pemusnahan_pilih_data_barang_save') }}" method="post"
+            <form class="row g-3 p-4" action="{{ route('menu_pemusnahan_pilih_data_barang_pengembalian_save') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 <h5><span class="badge bg-primary">1. Pengajuan</span></h5>
                 <div class="col-md-4">
                     <label class="form-label" for="inputAddress">Penggagas</label>
                     <input type="text" class="form-control" name="penggagas" value="{{ $data->penggagas }}" disabled>
+                    <input type="text" class="form-control" name="code_pemusnahan" value="{{ $data->kd_pemusnahan }}" hidden>
                 </div>
                 <div class="col-md-8">
                     <label class="form-label" for="inputAddress">Dasar Pengajuan</label>

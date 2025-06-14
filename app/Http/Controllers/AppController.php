@@ -1010,6 +1010,19 @@ class AppController extends Controller
         ->first();
         return view('application.pemusnahan.form-pengembailan-pemusnahan',['data'=>$data]);
     }
+    public function menu_pemusnahan_pilih_data_barang_pengembalian_save(Request $request){
+        DB::table('tbl_pemusnahan')->where('kd_pemusnahan',$request->code_pemusnahan)->update([
+            'ket_batal'=> $request->alasan,
+            'status_pemusnahan'=> 2,
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Membatalkan Data Pemusnahan');
+    }
+    public function menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan(Request $request){
+        return view('application.pemusnahan.form-verifikasi-pembatalan',['code'=>$request->code]);
+    }
+    public function menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan_code(Request $request){
+        return 123;
+    }
 
     // STOK OPNAME
     public function menu_stock_opname($akses)
