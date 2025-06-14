@@ -41,15 +41,11 @@
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
                                         class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span></button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                                    <button class="dropdown-item" data-bs-toggle="modal"
-                                        data-bs-target="#modal-pemusnahan" id="button-add-data-pemusnahan"><span
+                                    <button class="dropdown-item" ><span
                                             class="fas fa-swatchbook"></span>
                                         Sinkronisasi Data</button>
                                     <div class="dropdown-divider"></div>
-                                    <button class="dropdown-item text-warning" data-bs-toggle="modal"
-                                        data-bs-target="#modal-pemusnahan-xl"
-                                        id="button-check-data-barang-musnah-cabang"><span class="fas fa-receipt"></span>
-                                        Pengecekan Data Pemusnahan</button>
+
                                 </div>
                             </div>
                         </td>

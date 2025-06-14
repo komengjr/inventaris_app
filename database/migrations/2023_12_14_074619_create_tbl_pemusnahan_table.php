@@ -27,7 +27,7 @@ class CreateTblPemusnahanTable extends Migration
             $table->string('eksekusi')->nullable();
             $table->string('user_1')->nullable();
             $table->string('user_2')->nullable();
-            $table->string('user_3')->nullable();
+            $table->text('ket_batal')->nullable();
             $table->string('status_pemusnahan')->nullable();
             $table->string('tgl_pemusnahan')->nullable();
             $table->timestamps();

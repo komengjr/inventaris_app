@@ -493,6 +493,7 @@ Route::prefix('app')->group(function () {
     Route::post('menu-pemusnahan/pilih-data-barang/print', [AppController::class, 'menu_pemusnahan_pilih_data_barang_print'])->name('menu_pemusnahan_pilih_data_barang_print');
     Route::post('menu-pemusnahan/pilih-data-barang/print-report', [AppController::class, 'menu_pemusnahan_pilih_data_barang_print_report'])->name('menu_pemusnahan_pilih_data_barang_print_report');
     Route::post('menu-pemusnahan/pilih-data-barang/sinkronisasi', [AppController::class, 'menu_pemusnahan_pilih_data_barang_sinkronisasi'])->name('menu_pemusnahan_pilih_data_barang_sinkronisasi');
+    Route::post('menu-pemusnahan/pilih-data-barang/pengembalian', [AppController::class, 'menu_pemusnahan_pilih_data_barang_pengembalian'])->name('menu_pemusnahan_pilih_data_barang_pengembalian');
 
     // MENU MUTASI
     Route::post('menu-mutasi/add', [AppController::class, 'menu_mutasi_add'])->name('menu_mutasi_add');

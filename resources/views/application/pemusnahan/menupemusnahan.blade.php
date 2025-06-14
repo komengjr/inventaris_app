@@ -141,9 +141,9 @@
                                                     Sinkronisasi Data</button>
                                                 <div class="dropdown-divider"></div>
                                                 <button class="dropdown-item text-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-pemusnahan-lg"
-                                                    id="button-cetak-data-pemusnahan-cabang"
-                                                    data-code="{{ $datas->id_pemusnahan }}"><span
+                                                    data-bs-target="#modal-pemusnahan-xl"
+                                                    id="button-pengembalian-data-pemusnahan-cabang"
+                                                    data-code="{{ $datas->kd_pemusnahan }}"><span
                                                         class="fas fa-redo"></span>
                                                     Pengembalian Barang Pemusnahan</button>
                                             @endif
@@ -360,6 +360,27 @@
                 location.reload();
             }).fail(function() {
                 $('#menu-pemusnahan-md').html('eror');
+            });
+        });
+        $(document).on("click", "#button-pengembalian-data-pemusnahan-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-pemusnahan-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_pemusnahan_pilih_data_barang_pengembalian') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-pemusnahan-xl').html(data);
+            }).fail(function() {
+                $('#menu-pemusnahan-xl').html('eror');
             });
         });
     </script>

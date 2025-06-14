@@ -1003,6 +1003,13 @@ class AppController extends Controller
         DB::table('inventaris_data')->where('inventaris_data_code',$request->code)->update(['inventaris_data_status'=>5]);
         return "<h3><span class='badge bg-primary m-3'>Berhasil Sinkronisasi</span></h3>";
     }
+    public function menu_pemusnahan_pilih_data_barang_pengembalian(Request $request){
+        $data = DB::table('tbl_pemusnahan')
+        ->join('inventaris_data','inventaris_data.inventaris_data_code','=','tbl_pemusnahan.id_inventaris')
+        ->where('tbl_pemusnahan.kd_pemusnahan',$request->code)
+        ->first();
+        return view('application.pemusnahan.form-pengembailan-pemusnahan',['data'=>$data]);
+    }
 
     // STOK OPNAME
     public function menu_stock_opname($akses)
