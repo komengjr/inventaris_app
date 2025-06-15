@@ -131,7 +131,7 @@
         <div class="card-footer border-top text-end">
             <button class="btn btn-falcon-info btn-sm" href="#!"data-bs-toggle="modal"
                 data-bs-target="#modal-peminjaman" id="button-data-rekap-peminjaman"><span class="fas fa-credit-card"></span> Rekap
-                Peminjaman Cabang Lain</button>
+                Peminjaman Cabang</button>
         </div>
     </div>
     <div class="row mb-3 g-3">
