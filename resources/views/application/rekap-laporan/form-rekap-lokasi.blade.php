@@ -18,7 +18,9 @@
                 Data</button>
         </div>
     </div>
-    <div class="p-3" id="menu-print-data-ruangan"></div>
+    <div class="p-4 pt-0">
+        <span id="menu-print-data-ruangan"></span>
+    </div>
 </div>
 <script>
     new window.Choices(document.querySelector(".choices-single-cabang"));
