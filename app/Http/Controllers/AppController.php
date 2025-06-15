@@ -6,6 +6,7 @@ use App\Exports\DataBarangAsetExport;
 use App\Exports\DataBarangNonAset;
 use App\Exports\DataBarangNonAsetExport;
 use Faker\Provider\Uuid;
+use Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -1785,6 +1786,22 @@ class AppController extends Controller
         return base64_encode($pdf->stream());
     }
 
+    // REKAP LAPORAN
+    public function menu_laporan($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('inventaris_data')->limit(20)->get();
+            return view('application.rekap-laporan.menulaporan', ['data' => $data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+    public function laporan_cetak_rekap_ruangan(Request $request){
+        $data = DB::table('tbl_nomor_ruangan_cabang')->join('master_lokasi','master_lokasi.master_lokasi_code','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+        ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->get();
+        return view('application.rekap-laporan.form-rekap-lokasi',['data'=>$data]);
+    }
+
     // MASTER BARANG
     public function master_barang($akses)
     {
@@ -1985,6 +2002,38 @@ class AppController extends Controller
             return Redirect::to('dashboard');
         }
     }
+    public function master_document_update(Request $request)
+    {
+        $data = DB::table('master_doocument_cab')->where('master_document_code', $request->code)->where('kd_cabang', Auth::user()->cabang)->first();
+        // $doc = DB::table('master_doocument')->where('master_document_code',$request->code)->first();
+        if ($data) {
+            $no = $data->master_document_no;
+            $code = $data->master_document_code;
+        } else {
+            $no = "Uncreated";
+            $code = $request->code;
+        }
+        return view('application.master-data.master-document.form-update-document', ['no' => $no, 'code' => $code]);
+    }
+    public function master_document_update_save(Request $request)
+    {
+        $check = DB::table('master_doocument_cab')->where('master_document_code', $request->id_document)->where('kd_cabang', Auth::user()->cabang)->first();
+        if ($check) {
+            DB::table('master_doocument_cab')->where('master_document_code', $request->id_document)
+                ->where('kd_cabang', Auth::user()->cabang)->update([
+                        'master_document_no' => $request->no_document
+                    ]);
+        } else {
+            DB::table('master_doocument_cab')->insert([
+                'master_document_code' => $request->id_document,
+                'master_document_no' => $request->no_document,
+                'kd_cabang' => Auth::user()->cabang,
+                'created_at' => now()
+            ]);
+        }
+        return redirect()->back()->withSuccess('Great! Berhasil Perubahan Data Document');
+    }
+
     // MASTER NO WHATSAPP
     public function master_no_whatsapp($akses)
     {
@@ -2149,36 +2198,45 @@ class AppController extends Controller
         return redirect()->back()->withSuccess('Great! Berhasil Perubahan Data Staff');
     }
 
-    // MASTER DOCUMENT
-    public function master_document_update(Request $request)
+    // MASTER USER CABANG
+    public function master_user_cabang($akses)
     {
-        $data = DB::table('master_doocument_cab')->where('master_document_code', $request->code)->where('kd_cabang', Auth::user()->cabang)->first();
-        // $doc = DB::table('master_doocument')->where('master_document_code',$request->code)->first();
-        if ($data) {
-            $no = $data->master_document_no;
-            $code = $data->master_document_code;
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('users')
+                ->where('cabang', Auth::user()->cabang)
+                ->where('akses', 'staff')
+                ->orderBy('id', 'DESC')
+                ->get();
+            return view('application.master-data.master-user-cabang', ['data' => $data]);
         } else {
-            $no = "Uncreated";
-            $code = $request->code;
+            return Redirect::to('dashboard');
         }
-        return view('application.master-data.master-document.form-update-document', ['no' => $no, 'code' => $code]);
     }
-    public function master_document_update_save(Request $request)
+    public function master_user_cabang_add(Request $request)
     {
-        $check = DB::table('master_doocument_cab')->where('master_document_code', $request->id_document)->where('kd_cabang', Auth::user()->cabang)->first();
-        if ($check) {
-            DB::table('master_doocument_cab')->where('master_document_code', $request->id_document)
-                ->where('kd_cabang', Auth::user()->cabang)->update([
-                        'master_document_no' => $request->no_document
-                    ]);
-        } else {
-            DB::table('master_doocument_cab')->insert([
-                'master_document_code' => $request->id_document,
-                'master_document_no' => $request->no_document,
-                'kd_cabang' => Auth::user()->cabang,
-                'created_at' => now()
-            ]);
-        }
-        return redirect()->back()->withSuccess('Great! Berhasil Perubahan Data Document');
+        $data = DB::table('tbl_staff')->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('application.master-data.master-user-cabang.form-add', ['data' => $data]);
+    }
+    public function master_user_cabang_save(Request $request)
+    {
+        $staff = DB::table('tbl_staff')->where('id_staff', $request->user_id)->first();
+        DB::table('users')->insert([
+            'name' => $staff->nama_staff,
+            'email' => $staff->nip,
+            'email_' => $request->email,
+            'password' => Hash::make($request['password']),
+            'akses' => 'staff',
+            'cabang' => Auth::user()->cabang,
+            'created_at' => now(),
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Tambah Data');
+    }
+    public function master_user_cabang_reset_password(Request $request)
+    {
+        return view('application.master-data.master-user-cabang.form-reset-password');
+    }
+    public function master_user_cabang_reset_password_save(Request $request)
+    {
+        return redirect()->back()->withSuccess('Great! Berhasil Tambah Data');
     }
 }

@@ -417,11 +417,13 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('menu-stock-opname', [AppController::class, 'menu_stock_opname'])->name('menu_stock_opname');
     Route::get('menu-maintenance', [AppController::class, 'menu_maintenance'])->name('menu_maintenance');
     Route::get('menu-cabang', [AppController::class, 'menu_cabang'])->name('menu_cabang');
+    Route::get('laporan', [AppController::class, 'menu_laporan'])->name('menu_laporan');
     Route::get('master-barang', [AppController::class, 'master_barang'])->name('master_barang');
     Route::get('master-no-document', [AppController::class, 'master_no_document'])->name('master_no_document');
     Route::get('master-no-whatsapp', [AppController::class, 'master_no_whatsapp'])->name('master_no_whatsapp');
     Route::get('master-location', [AppController::class, 'master_location'])->name('master_location');
     Route::get('master-staff', [AppController::class, 'master_staff'])->name('master_staff');
+    Route::get('master-user-cabang', [AppController::class, 'master_user_cabang'])->name('master_user_cabang');
 });
 Route::prefix('app')->group(function () {
     Route::get('dashboard_home', [AppController::class, 'dashboard_home'])->name('dashboard_home');
@@ -558,6 +560,9 @@ Route::prefix('app')->group(function () {
     Route::post('menu-cabang/data-stockopname', [AppController::class, 'menu_cabang_data_stockopname'])->name('menu_cabang_data_stockopname');
     Route::post('menu-cabang/data-stockopname/print', [AppController::class, 'menu_cabang_data_stockopname_print'])->name('menu_cabang_data_stockopname_print');
 
+    // MENU BARANG
+    Route::post('laporan/cetak-rekap-ruangan', [AppController::class, 'laporan_cetak_rekap_ruangan'])->name('laporan_cetak_rekap_ruangan');
+
     // MASTER BARANG
     Route::get('master-barang-data', [AppController::class, 'master_barang_data'])->name('master_barang_data');
     Route::post('master-barang-data/edit', [AppController::class, 'master_barang_data_edit'])->name('master_barang_data_edit');
@@ -592,6 +597,12 @@ Route::prefix('app')->group(function () {
      // MASTER DOCUMENT
     Route::post('master-document/update', [AppController::class, 'master_document_update'])->name('master_document_update');
     Route::post('master-document/update-save', [AppController::class, 'master_document_update_save'])->name('master_document_update_save');
+
+    // MASTER USER CABANG
+    Route::post('master-user-cabang/add', [AppController::class, 'master_user_cabang_add'])->name('master_user_cabang_add');
+    Route::post('master-user-cabang/save', [AppController::class, 'master_user_cabang_save'])->name('master_user_cabang_save');
+    Route::post('master-user-cabang/reset-password', [AppController::class, 'master_user_cabang_reset_password'])->name('master_user_cabang_reset_password');
+    Route::post('master-user-cabang/reset-password/save', [AppController::class, 'master_user_cabang_reset_password_save'])->name('master_user_cabang_reset_password_save');
 });
 
 

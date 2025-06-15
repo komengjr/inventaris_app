@@ -18,6 +18,8 @@ class CreateTblStaffTable extends Migration
             $table->string('nip')->unique();
             $table->string('nama_staff');
             $table->string('kd_cabang');
+            $table->string('class');
+            $table->string('userid')->nullable();
             $table->string('status_staff');
             $table->timestamps();
         });
