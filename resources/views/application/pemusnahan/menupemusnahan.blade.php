@@ -10,7 +10,7 @@
             <div class="card bg-100 shadow-none border">
                 <div class="row gx-0 flex-between-center">
                     <div class="col-sm-auto d-flex align-items-center border-bottom">
-                        <img class="ms-3 mx-3" src="{{ asset('img/icon/icon.png') }}" alt="" width="50" />
+                        <img class="ms-3 mx-3" src="{{ asset('img/recycle.png') }}" alt="" width="50" />
                         <div>
                             <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to </h6>
                             <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management

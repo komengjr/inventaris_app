@@ -31,10 +31,9 @@
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h5 class="mb-1 text-primary fw-bold">Data Mutasi</h5>
+                    <h5 class="mb-0">Informasi Peminjaman</h5>
                 </div>
                 <div class="col-auto">
-
                     <div class="btn-group" role="group">
                         <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2" type="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
@@ -44,10 +43,7 @@
                             <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-mutasi-lg"
                                 id="button-add-data-mutasi-cabang" data-code="123"><span class="fas fa-swatchbook"></span>
                                 Tambah Mutasi Barang</button>
-                            {{-- <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-pemusnahan-md"
-                                id="button-verifikasi-data-pemusnahan-cabang" data-code="123"><span
-                                    class="fas fa-truck-moving"></span>
-                                Permintaan Mutasi Barang</button> --}}
+
                             <div class="dropdown-divider"></div>
                             <button class="dropdown-item text-warning" data-bs-toggle="modal" data-bs-target="#modal-mutasi"
                                 id="button-show-order-mutasi-cabang" data-code="123"><span class="fas fa-mail-bulk"></span>
@@ -58,6 +54,33 @@
 
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body bg-light border-top pb-0">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Halo {{ Auth::user()->name }} !</strong> You should check in on some of those fields
+                        below.
+                        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card-footer border-top text-end">
+            <button class="btn btn-falcon-info btn-sm" href="#!"data-bs-toggle="modal" data-bs-target="#modal-mutasi"
+                id="button-rekap-order-mutasi-cabang"><span class="fas fa-credit-card"></span> Rekap
+                Mutasi Cabang</button>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header bg-primary">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5 class="mb-0 text-white fw-bold">Data Mutasi</h5>
                 </div>
             </div>
         </div>
@@ -125,7 +148,8 @@
                                         @if ($item->status_mutasi == 0)
                                             <button class="dropdown-item text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#modal-mutasi" id="button-input-data-barang-mutasi"
-                                                data-code="{{ $item->kd_mutasi }}"><span class="fas fa-swatchbook"></span>
+                                                data-code="{{ $item->kd_mutasi }}"><span
+                                                    class="fas fa-swatchbook"></span>
                                                 Input Data Barang</button>
                                             <button class="dropdown-item text-danger" data-bs-toggle="modal"
                                                 data-bs-target="#modal-mutasi-lg" id="button-remove-data-mutasi"
@@ -135,7 +159,8 @@
                                             <button class="dropdown-item text-warning" data-bs-toggle="modal"
                                                 data-bs-target="#modal-mutasi-xl"
                                                 id="button-proses-verifikasi-data-mutasi-cabang"
-                                                data-code="{{ $item->kd_mutasi }}"><span class="fas fa-swatchbook"></span>
+                                                data-code="{{ $item->kd_mutasi }}"><span
+                                                    class="fas fa-swatchbook"></span>
                                                 Verifikasi Mutasi Barang</button>
                                         @elseif($item->status_mutasi == 2)
                                             {{-- <button class="dropdown-item" data-bs-toggle="modal"

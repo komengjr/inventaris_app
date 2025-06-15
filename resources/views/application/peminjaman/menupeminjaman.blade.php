@@ -250,10 +250,7 @@
                 <div class="card-header bg-primary">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h5 class="mb-0 text-white fw-bold">Data Table Peminjaman</h5>
-                        </div>
-                        <div class="col-auto">
-
+                            <h5 class="mb-0 text-white fw-bold">Data Peminjaman</h5>
                         </div>
                     </div>
                 </div>
