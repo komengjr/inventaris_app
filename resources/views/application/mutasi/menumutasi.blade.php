@@ -31,7 +31,7 @@
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h5 class="mb-0">Informasi Peminjaman</h5>
+                    <h5 class="mb-0">Informasi Mutasi</h5>
                 </div>
                 <div class="col-auto">
                     <div class="btn-group" role="group">
