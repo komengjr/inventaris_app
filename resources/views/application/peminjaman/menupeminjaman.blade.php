@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-xl-auto px-3 py-2">
                         <h6 class="text-primary fs--1 mb-0">Menu : </h6>
-                        <h4 class="text-primary fw-bold mb-0">Peminjaman Barang <span
+                        <h4 class="text-primary fw-bold mb-0">Peminjaman <span
                                 class="text-info fw-medium">Cabang</span>
                         </h4>
                     </div>

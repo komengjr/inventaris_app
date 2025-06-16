@@ -43,7 +43,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->akses == 'dir' || Auth::user()->akses == 'admin') {
+            if (Auth::user()->akses == 'dir' || Auth::user()->akses == 'admin' || Auth::user()->akses == 'staff') {
                 return redirect()->route('dashboard_home')->withSuccess('Kamu Berhasil Masuk di Account  ' . Auth::user()->name);
             } else {
                 return redirect()->intended('home')->withSuccess('Kamu Berhasil Masuk di Account  ' . Auth::user()->name);

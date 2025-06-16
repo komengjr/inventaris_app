@@ -411,6 +411,7 @@ Route::prefix('dashboard')->group(function () {
 
 Route::prefix('{akses}/app')->group(function () {
     Route::get('dashboard', [AppController::class, 'dashboard'])->name('dashboard');
+    Route::get('aplikasi', [AppController::class, 'aplikasi_app'])->name('aplikasi_app');
     Route::get('peminjaman', [AppController::class, 'peminjaman'])->name('peminjaman');
     Route::get('menu-mutasi', [AppController::class, 'menu_mutasi'])->name('menu_mutasi');
     Route::get('menu-pemusnahan', [AppController::class, 'menu_pemusnahan'])->name('menu_pemusnahan');
@@ -452,6 +453,11 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/klasifikasi/data', [AppController::class, 'dashboard_data_barang_klasifikasi'])->name('dashboard_data_barang_klasifikasi');
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');
     Route::post('dashboard/data-lokasi-print-barcode', [AppController::class, 'masteradmin_cabang_data_lokasi_print_barcode'])->name('masteradmin_cabang_data_lokasi_print_barcode');
+
+    // APLIKASI
+    Route::post('aplikasi/peminjaman-barang', [AppController::class, 'aplikasi_app_peminjaman_barang'])->name('aplikasi_app_peminjaman_barang');
+    Route::post('aplikasi/peminjaman-barang/save', [AppController::class, 'aplikasi_app_peminjaman_barang_save'])->name('aplikasi_app_peminjaman_barang_save');
+    Route::post('aplikasi/maintenance-log', [AppController::class, 'aplikasi_app_maintenance_log'])->name('aplikasi_app_maintenance_log');
 
     // PEMINJAMAN
     Route::post('peminjaman/add', [AppController::class, 'peminjaman_add'])->name('peminjaman_add');

@@ -341,6 +341,54 @@ class AppController extends Controller
         $pdf->output();
         return base64_encode($pdf->stream());
     }
+
+    // APLIKASI
+    public function aplikasi_app($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            return view('application.aplikasi.menuaplikasi');
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+    public function aplikasi_app_peminjaman_barang(Request $request)
+    {
+        $user = DB::table('tbl_staff')->where('nip', Auth::user()->email)->first();
+        if ($user) {
+            $id = $user->id_staff;
+        } else {
+            $id = str::uuid();
+        }
+
+        $data = DB::table('tbl_peminjaman')->where('pj_pinjam', $id)->where('kd_cabang', Auth::user()->cabang)->get();
+        return view('application.aplikasi.peminjaman.form-peminjaman-barang', ['data' => $data]);
+    }
+    public function aplikasi_app_peminjaman_barang_save(Request $request)
+    {
+        $user = DB::table('tbl_staff')->where('nip', Auth::user()->email)->first();
+        if ($user) {
+            DB::table('tbl_peminjaman')->insert([
+                'tiket_peminjaman' => 'PJ-SDM-' . Auth::user()->cabang . '-' . date('Ymdhis'),
+                'nama_kegiatan' => $request->tujuan,
+                'tujuan_cabang' => Auth::user()->cabang,
+                'tgl_pinjam' => $request->tgl_pinjam,
+                'batas_tgl_pinjam' => $request->batas_pinjam,
+                'pj_pinjam' => $user->id_staff,
+                'status_pinjam' => 0,
+                'kd_cabang' => Auth::user()->cabang,
+                'deskripsi' => $request->deskripsi,
+                'created_at' => now(),
+            ]);
+            return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
+        } else {
+            return redirect()->back()->withError('Gagal! User Tidak di Temukan');
+        }
+    }
+    public function aplikasi_app_maintenance_log(Request $request)
+    {
+        return view('application.aplikasi.maintenance.form-maintenance');
+    }
+
     // PEMINJAMAN
     public function peminjaman($akses)
     {
@@ -1045,7 +1093,10 @@ class AppController extends Controller
         $ruangan = DB::table('tbl_nomor_ruangan_cabang')
             ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
             ->where('id_nomor_ruangan_cbaang', $request->code)->first();
-        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->code)->get();
+        $data = DB::table('inventaris_data')
+        ->where('id_nomor_ruangan_cbaang', $request->code)
+        ->where('inventaris_data_status','<',4)
+        ->get();
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.master-data.master-lokasi.report.report-data-lokasi', [
             'cabang' => $cabang,
             'data' => $data,
@@ -1796,10 +1847,11 @@ class AppController extends Controller
             return Redirect::to('dashboard');
         }
     }
-    public function laporan_cetak_rekap_ruangan(Request $request){
-        $data = DB::table('tbl_nomor_ruangan_cabang')->join('master_lokasi','master_lokasi.master_lokasi_code','=','tbl_nomor_ruangan_cabang.kd_lokasi')
-        ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->get();
-        return view('application.rekap-laporan.form-rekap-lokasi',['data'=>$data]);
+    public function laporan_cetak_rekap_ruangan(Request $request)
+    {
+        $data = DB::table('tbl_nomor_ruangan_cabang')->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+        return view('application.rekap-laporan.form-rekap-lokasi', ['data' => $data]);
     }
 
     // MASTER BARANG
