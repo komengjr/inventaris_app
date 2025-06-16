@@ -332,47 +332,48 @@
             </tbody>
         </table>
         <br> <br>
-        <table
-            style="font-size: 8px; margin: 0px;  width: 100%; font-size: 11px; font-family: Calibri (Body);"
-            border="1">
-            <tr>
-                <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
-                <td colspan="1" class="text-right" style="text-align: right; width: 30%;">
-                    <strong>{{ $cabang->nama_cabang }} , ......................................</strong>
-                </td>
-            </tr>
-            <tr>
-                <td>1.</td>
-                <td>2.</td>
-                <td>Mengetahui </td>
-            </tr>
-            <tr>
-                <td>3.</td>
-                <td>4.</td>
-                <td rowspan="4"></td>
-            </tr>
-            <tr>
-                <td>5.</td>
-                <td>6.</td>
-            </tr>
-            <tr>
-                <td>7.</td>
-                <td>8.</td>
-            </tr>
-            <tr>
-                <td>9.</td>
-                <td>10.</td>
-            </tr>
-            <tr>
-                <td>11.</td>
-                <td>12.</td>
-                <td style="text-align: center;">Manager SDM & Umum</td>
-            </tr>
+        <div class="footer" style="padding-bottom: 25%;">
+            <table style="font-size: 8px; margin: 0px;  width: 100%; font-size: 11px; font-family: Calibri (Body);"
+                border="1">
+                <tr>
+                    <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
+                    <td colspan="1" class="text-right" style="text-align: right; width: 30%;">
+                        <strong>{{ $cabang->nama_cabang }} , ......................................</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1.</td>
+                    <td>2.</td>
+                    <td>Mengetahui </td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>4.</td>
+                    <td rowspan="4"></td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td>6.</td>
+                </tr>
+                <tr>
+                    <td>7.</td>
+                    <td>8.</td>
+                </tr>
+                <tr>
+                    <td>9.</td>
+                    <td>10.</td>
+                </tr>
+                <tr>
+                    <td>11.</td>
+                    <td>12.</td>
+                    <td style="text-align: center;">Manager SDM & Umum</td>
+                </tr>
 
-        </table>
+            </table>
+        </div>
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
-            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(QrCode::style('round')->format('svg')->size(60)->errorCorrection('H')->generate(123)) !!}">
+            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(QrCode::style('round')->format('svg')->size(60)->errorCorrection('H')->generate($ruangan->id_nomor_ruangan_cbaang.'-'.$ruangan->nomor_ruangan)) !!}">
             {{-- <div>NOTICE:</div> --}}
             <div class="notice">Dokumen Ini diterbitkan Secara Digital.</div>
         </div>

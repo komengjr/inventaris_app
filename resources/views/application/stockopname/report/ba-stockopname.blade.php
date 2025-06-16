@@ -322,7 +322,7 @@
                             @php
                                 $total_brg = DB::table('inventaris_data')
                                     ->where('id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
-                                    ->where('inventaris_data.inventaris_data_status', '<', 4)
+                                    ->where('inventaris_data_status', '<', 4)
                                     ->where('inventaris_data_tgl_beli', '<', $data->end_date_verif)
                                     ->count();
                                 $total = $total + $total_brg;
@@ -341,6 +341,7 @@
                                 ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
                                 ->where('inventaris_data.inventaris_data_status', '<', 4)
                                 ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 0)
+                                ->where('inventaris_data.inventaris_data_tgl_beli', '<', $data->end_date_verif)
                                 ->count();
                             $statusbarang1 = DB::table('tbl_sub_verifdatainventaris')
                                 ->join(
@@ -353,6 +354,7 @@
                                 ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
                                 ->where('inventaris_data.inventaris_data_status', '<', 4)
                                 ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 1)
+                                ->where('inventaris_data.inventaris_data_tgl_beli', '<', $data->end_date_verif)
                                 ->count();
                             $statusbarang2 = DB::table('tbl_sub_verifdatainventaris')
                                 ->join(
@@ -365,6 +367,7 @@
                                 ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
                                 ->where('inventaris_data.inventaris_data_status', '<', 4)
                                 ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 2)
+                                ->where('inventaris_data.inventaris_data_tgl_beli', '<', $data->end_date_verif)
                                 ->count();
 
                         @endphp

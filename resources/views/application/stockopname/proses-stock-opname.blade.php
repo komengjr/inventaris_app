@@ -76,11 +76,11 @@
                         $no = 1;
                         $jumlah = 0;
                     @endphp
-                    @foreach ($no_ruangan as $no_ruangan)
+                    @foreach ($no_ruangan as $no_ruangans)
                         <?php
                         $ceklokasix = DB::table('inventaris_data')
                             ->where('inventaris_data_cabang', Auth::user()->cabang)
-                            ->where('id_nomor_ruangan_cbaang', $no_ruangan->id_nomor_ruangan_cbaang)
+                            ->where('id_nomor_ruangan_cbaang', $no_ruangans->id_nomor_ruangan_cbaang)
                             ->where('inventaris_data_status', '<', '4')
                             ->count();
                         ?>
@@ -88,11 +88,11 @@
                         @else
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td class="fs--2">{{ $no_ruangan->nomor_ruangan }}
+                                <td class="fs--2">{{ $no_ruangans->nomor_ruangan }}
                                     @php
                                         $nama_lokasi = DB::table('tbl_lokasi')
                                             ->select('nama_lokasi')
-                                            ->where('kd_lokasi', $no_ruangan->kd_lokasi)
+                                            ->where('kd_lokasi', $no_ruangans->kd_lokasi)
                                             ->first();
                                     @endphp
                                     {{ $nama_lokasi->nama_lokasi }}
@@ -101,7 +101,8 @@
                                 @php
                                     $totalbarang = DB::table('inventaris_data')
                                         ->where('inventaris_data_cabang', auth::user()->cabang)
-                                        ->where('id_nomor_ruangan_cbaang', $no_ruangan->id_nomor_ruangan_cbaang)
+                                        ->where('id_nomor_ruangan_cbaang', $no_ruangans->id_nomor_ruangan_cbaang)
+                                        ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $cekdata->end_date_verif)
                                         ->where('inventaris_data_status', '<', '4')
                                         ->count();
                                     $jumlah = $totalbarang + $jumlah;
@@ -120,8 +121,10 @@
                                         ->where('tbl_sub_verifdatainventaris.kode_verif', $cekdata->kode_verif)
                                         ->where(
                                             'inventaris_data.id_nomor_ruangan_cbaang',
-                                            $no_ruangan->id_nomor_ruangan_cbaang,
+                                            $no_ruangans->id_nomor_ruangan_cbaang,
                                         )
+                                        ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $cekdata->end_date_verif)
+                                        ->where('inventaris_data.inventaris_data_status', '<', '4')
                                         ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 0)
                                         ->count();
                                     $statusbarang1 = DB::table('tbl_sub_verifdatainventaris')
@@ -134,8 +137,10 @@
                                         ->where('tbl_sub_verifdatainventaris.kode_verif', $cekdata->kode_verif)
                                         ->where(
                                             'inventaris_data.id_nomor_ruangan_cbaang',
-                                            $no_ruangan->id_nomor_ruangan_cbaang,
+                                            $no_ruangans->id_nomor_ruangan_cbaang,
                                         )
+                                        ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $cekdata->end_date_verif)
+                                        ->where('inventaris_data.inventaris_data_status', '<', '4')
                                         ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 1)
                                         ->count();
                                     $statusbarang2 = DB::table('tbl_sub_verifdatainventaris')
@@ -148,8 +153,10 @@
                                         ->where('tbl_sub_verifdatainventaris.kode_verif', $cekdata->kode_verif)
                                         ->where(
                                             'inventaris_data.id_nomor_ruangan_cbaang',
-                                            $no_ruangan->id_nomor_ruangan_cbaang,
+                                            $no_ruangans->id_nomor_ruangan_cbaang,
                                         )
+                                        ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $cekdata->end_date_verif)
+                                        ->where('inventaris_data.inventaris_data_status', '<', '4')
                                         ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 2)
                                         ->count();
 
@@ -180,7 +187,7 @@
                                     @if ($totalbarang == $statusbarang + $statusbarang1 + $statusbarang2)
                                         <button class="btn btn-falcon-success btn-sm"
                                             id="button-print-stockopname-ruangan" data-id="{{ $id }}"
-                                            data-lokasi="{{ $no_ruangan->id_nomor_ruangan_cbaang }}"><i
+                                            data-lokasi="{{ $no_ruangans->id_nomor_ruangan_cbaang }}"><i
                                                 class="fa fa-print"></i> Verified + Cetak</button>
                                     @else
                                         <button class="btn btn-falcon-danger btn-sm" disabled>Unverified</button>

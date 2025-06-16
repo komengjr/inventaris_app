@@ -484,6 +484,7 @@
                                 @php
                                     $total = DB::table('inventaris_data')
                                         ->where('id_nomor_ruangan_cbaang', $ruangans->id_nomor_ruangan_cbaang)
+                                        ->where('inventaris_data_status', '<', '4')
                                         ->count();
                                 @endphp
                                 <p class="fs--2 mb-0">Total Barang : {{ $total }}</p>
