@@ -18,6 +18,7 @@ class MasterAdminController extends Controller
     {
         $this->middleware('auth');
     }
+    // USER
     public function masteradmin_user()
     {
         if (Auth::user()->akses == 'admin') {
@@ -44,6 +45,16 @@ class MasterAdminController extends Controller
             'created_at' => now(),
         ]);
         return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data User Cabang');
+    }
+    // MASTER_LOKASI
+    public function masteradmin_lokasi()
+    {
+        if (Auth::user()->akses == 'admin') {
+            $data = DB::table('users')->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'users.cabang')->get();
+            return view('application.admin.masteruser', ['data' => $data]);
+        } else {
+            return view('application.error.404');
+        }
     }
     public function masteradmin_klasifikasi()
     {
@@ -304,7 +315,7 @@ class MasterAdminController extends Controller
     public function masteradmin_messages()
     {
         if (Auth::user()->akses == 'admin') {
-            $data = DB::table('message')->orderBy('id','DESC')->get();
+            $data = DB::table('message')->orderBy('id', 'DESC')->get();
             return view('application.admin.mastermessage', ['data' => $data]);
         } else {
             return view('application.error.404');
@@ -313,7 +324,7 @@ class MasterAdminController extends Controller
     public function masteradmin_messages_replay(Request $request)
     {
         if (Auth::user()->akses == 'admin') {
-            DB::table('message')->where('token_code',$request->code)->update(['status'=>0]);
+            DB::table('message')->where('token_code', $request->code)->update(['status' => 0]);
             return 0;
         } else {
             return view('application.error.404');

@@ -334,6 +334,7 @@ class AppController extends Controller
     {
         $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
             ->where('inventaris_data_cabang', auth::user()->cabang)
+            ->where('inventaris_data_status', '<',4)
             ->get();
         // dd($data);
         $customPaper = array(0, 0, 50.80, 98.00);

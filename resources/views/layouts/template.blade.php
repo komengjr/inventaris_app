@@ -195,6 +195,13 @@
                                                 class="nav-link-text ps-1">Master User</span>
                                         </div>
                                     </a>
+                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_lokasi') }}"
+                                        role="button" aria-expanded="false">
+                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                    class="fas fa-search-location"></span></span><span
+                                                class="nav-link-text ps-1">Master Lokasi</span>
+                                        </div>
+                                    </a>
                                     <!-- parent pages--><a class="nav-link"
                                         href="{{ route('masteradmin_category') }}" role="button"
                                         aria-expanded="false">
