@@ -530,6 +530,7 @@ Route::prefix('app')->group(function () {
     Route::post('menu-stock-opname/add', [AppController::class, 'menu_stock_opname_add'])->name('menu_stock_opname_add');
     Route::post('menu-stock-opname/save', [AppController::class, 'menu_stock_opname_save'])->name('menu_stock_opname_save');
     Route::post('menu-stock-opname/kondisi-data', [AppController::class, 'menu_stock_opname_kondisi_data'])->name('menu_stock_opname_kondisi_data');
+    Route::post('menu-stock-opname/kondisi-data-unvalid', [AppController::class, 'menu_stock_opname_kondisi_data_unvalid'])->name('menu_stock_opname_kondisi_data_unvalid');
     Route::post('menu-stock-opname/proses-data', [AppController::class, 'menu_stock_opname_proses_data'])->name('menu_stock_opname_proses_data');
     Route::post('menu-stock-opname/proses-data-with-kamera', [AppController::class, 'menu_stock_opname_proses_data_with_kamera'])->name('menu_stock_opname_proses_data_with_kamera');
     Route::post('menu-stock-opname/scan-data-with-kamera', [AppController::class, 'menu_stock_opname_scan_data_with_kamera'])->name('menu_stock_opname_scan_data_with_kamera');

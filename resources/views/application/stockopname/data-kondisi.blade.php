@@ -1,6 +1,6 @@
 <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-        <h4 class="mb-1" id="staticBackdropLabel">Detail Data Stock Opname </h4>
+        <h4 class="mb-1" id="staticBackdropLabel">Detail Kondisi Data Stock Opname </h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-3" id="form-data-barang">

@@ -1150,6 +1150,16 @@ class AppController extends Controller
             ->where('kode_verif', $request->code)->where('status_data_inventaris', $request->status)->get();
         return view('application.stockopname.data-kondisi', ['data' => $data]);
     }
+    public function menu_stock_opname_kondisi_data_unvalid(Request $request)
+    {
+        $verif = DB::table('tbl_verifdatainventaris')->where('kode_verif',$request->code)->first();
+        $data = DB::table('inventaris_data')
+            ->where('inventaris_data_status', '<',4)
+            ->where('inventaris_data_tgl_beli','<' ,$verif->end_date_verif)
+            ->where('inventaris_data_cabang',Auth::user()->cabang)
+            ->get();
+        return view('application.stockopname.data-kondisi-unvalid', ['data' => $data,'code'=>$request->code]);
+    }
     public function menu_stock_opname_remove_full_data(Request $request)
     {
         return view('application.stockopname.remove-data-full-stock', ['id' => $request->code]);

@@ -111,8 +111,8 @@
                                                 class="fas fa-trash-alt"></span> Rusak</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang-lg" id="button-migrasi-data-cabang"
-                                            data-code="123"><span class="fas fa-code-branch"></span>
+                                            data-bs-target="#modal-stock" id="button-kondisi-unvalid-data-cabang"
+                                            data-code="{{ $item->kode_verif }}"><span class="fas fa-code-branch"></span>
                                             Unvalid</button>
 
 
@@ -262,6 +262,27 @@
                 $('#menu-stock-lg').html(data);
             }).fail(function() {
                 $('#menu-stock-lg').html('eror');
+            });
+        });
+        $(document).on("click", "#button-kondisi-unvalid-data-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-stock').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_kondisi_data_unvalid') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-stock').html(data);
+            }).fail(function() {
+                $('#menu-stock').html('eror');
             });
         });
         $(document).on("click", "#button-remove-full-stock-opname", function(e) {
