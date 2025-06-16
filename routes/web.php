@@ -618,6 +618,9 @@ Route::prefix('masteradmin')->group(function () {
     Route::post('user/edit', [MasterAdminController::class, 'masteradmin_user_edit'])->name('masteradmin_user_edit');
     Route::post('user/save', [MasterAdminController::class, 'masteradmin_user_save'])->name('masteradmin_user_save');
     Route::get('lokasi', [MasterAdminController::class, 'masteradmin_lokasi'])->name('masteradmin_lokasi');
+    Route::post('lokasi/clone-data', [MasterAdminController::class, 'masteradmin_lokasi_clone_data'])->name('masteradmin_lokasi_clone_data');
+    Route::post('lokasi/add-data-v2', [MasterAdminController::class, 'masteradmin_lokasi_add_data_v2'])->name('masteradmin_lokasi_add_data_v2');
+    Route::post('lokasi/add-data-v2/save', [MasterAdminController::class, 'masteradmin_lokasi_add_data_v2_save'])->name('masteradmin_lokasi_add_data_v2_save');
     Route::get('category', [MasterAdminController::class, 'masteradmin_category'])->name('masteradmin_category');
     Route::get('klasifikasi', [MasterAdminController::class, 'masteradmin_klasifikasi'])->name('masteradmin_klasifikasi');
     Route::post('klasifikasi/clone-data', [MasterAdminController::class, 'masteradmin_klasifikasi_clone_data'])->name('masteradmin_klasifikasi_clone_data');

@@ -50,12 +50,62 @@ class MasterAdminController extends Controller
     public function masteradmin_lokasi()
     {
         if (Auth::user()->akses == 'admin') {
-            $data = DB::table('users')->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'users.cabang')->get();
-            return view('application.admin.masteruser', ['data' => $data]);
+            $datav2 = DB::table('tbl_lokasi')->get();
+            $datav3 = DB::table('master_lokasi')->get();
+            return view('application.admin.masterlokasi', ['datav2' => $datav2, 'datav3' => $datav3]);
         } else {
             return view('application.error.404');
         }
     }
+    public function masteradmin_lokasi_clone_data()
+    {
+        if (Auth::user()->akses == 'admin') {
+            $data = DB::table('tbl_lokasi')->get();
+            foreach ($data as $value) {
+                $check = DB::table('master_lokasi')->where('master_lokasi_code', $value->kd_lokasi)->first();
+                if (!$check) {
+                    DB::table('master_lokasi')->insert([
+                        'master_lokasi_code' => $value->kd_lokasi,
+                        'master_lokasi_name' => $value->nama_lokasi,
+                        'created_at' => now(),
+                    ]);
+                }
+            }
+            $data_v3 = DB::table('master_lokasi')->get();
+            return view('application.admin.lokasi.clone-v3', ['data_v3' => $data_v3]);
+        } else {
+            return view('application.error.404');
+        }
+    }
+    public function masteradmin_lokasi_add_data_v2()
+    {
+        if (Auth::user()->akses == 'admin') {
+            return view('application.admin.lokasi.form-add-lokasi');
+        } else {
+            return view('application.error.404');
+        }
+    }
+    public function masteradmin_lokasi_add_data_v2_save(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            $check = DB::table('tbl_lokasi')->where('kd_Lokasi', $request->kd_lokasi)->first();
+            if (!$check) {
+                DB::table('tbl_lokasi')->insert([
+                    'kd_lokasi'=>$request->kd_lokasi,
+                    'nama_lokasi'=>$request->nama_lokasi,
+                    'created_at'=>now(),
+                ]);
+                return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data Lokasi Ver. 2');
+            } else {
+                return redirect()->back()->withError('Gagal! Kode Lokasi Ver. 2 Sudah ada');
+            }
+
+        } else {
+            return view('application.error.404');
+        }
+    }
+
+    // MASTER_KLASIFIKASI
     public function masteradmin_klasifikasi()
     {
         if (Auth::user()->akses == 'admin') {
