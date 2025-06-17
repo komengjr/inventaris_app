@@ -26,7 +26,7 @@
                                     <div class="col-auto">
                                         <select class="form-select form-select-sm text-primary" name="page"
                                             id="page" aria-label="Bulk actions">
-                                            <option value="-">Pilih Option Print</option>
+                                            <option value="-">Pilih Option Prints</option>
                                             @php
                                                 $cetak = $data->count();
                                             @endphp

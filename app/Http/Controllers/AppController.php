@@ -332,10 +332,73 @@ class AppController extends Controller
     }
     public function masteradmin_cabang_data_lokasi_print_barcode(Request $request)
     {
-        $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
-            ->where('inventaris_data_cabang', auth::user()->cabang)
-            ->where('inventaris_data_status', '<',4)
-            ->get();
+        if ($request->page == 'all') {
+            $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_cabang', auth::user()->cabang)
+                ->get();
+        } elseif ($request->page == 1) {
+            $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_cabang', auth::user()->cabang)
+                ->offset(0)->limit(50)
+                ->get();
+        } elseif ($request->page == 2) {
+            $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_cabang', auth::user()->cabang)
+                ->offset(50)->limit(50)
+                ->get();
+        } elseif ($request->page == 3) {
+            $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_cabang', auth::user()->cabang)
+                ->offset(100)->limit(50)
+                ->get();
+        } elseif ($request->page == 4) {
+            $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_cabang', auth::user()->cabang)
+                ->offset(150)->limit(50)
+                ->get();
+        } elseif ($request->page == 5) {
+            $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_cabang', auth::user()->cabang)
+                ->offset(200)->limit(50)
+                ->get();
+        } elseif ($request->page == 6) {
+            $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_cabang', auth::user()->cabang)
+                ->offset(250)->limit(50)
+                ->get();
+        } elseif ($request->page == 7) {
+            $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_cabang', auth::user()->cabang)
+                ->offset(300)->limit(50)
+                ->get();
+        } elseif ($request->page == 8) {
+            $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_status', '<', 4)
+                ->where('id_nomor_ruangan_cbaang', $request->id)
+                ->where('inventaris_data_cabang', auth::user()->cabang)
+                ->offset(350)->limit(50)
+                ->get();
+        }
+        // $data = DB::table('inventaris_data')->where('id_nomor_ruangan_cbaang', $request->id)
+        //     ->where('inventaris_data_status', '<', 4)
+        //     ->where('inventaris_data_cabang', auth::user()->cabang)
+        //     ->get();
         // dd($data);
         $customPaper = array(0, 0, 50.80, 98.00);
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.report.barcode-lokasi', ['data' => $data])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
@@ -362,10 +425,11 @@ class AppController extends Controller
         }
 
         $data = DB::table('tbl_peminjaman')->where('pj_pinjam', $id)
-        ->where('kd_cabang', Auth::user()->cabang)->orderBy('id_pinjam','DESC')->get();
+            ->where('kd_cabang', Auth::user()->cabang)->orderBy('id_pinjam', 'DESC')->get();
         return view('application.aplikasi.peminjaman.form-peminjaman-barang', ['data' => $data]);
     }
-    public function aplikasi_app_peminjaman_barang_add(Request $request){
+    public function aplikasi_app_peminjaman_barang_add(Request $request)
+    {
         return view('application.aplikasi.peminjaman.form-add');
     }
     public function aplikasi_app_peminjaman_barang_save(Request $request)
@@ -1099,9 +1163,9 @@ class AppController extends Controller
             ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
             ->where('id_nomor_ruangan_cbaang', $request->code)->first();
         $data = DB::table('inventaris_data')
-        ->where('id_nomor_ruangan_cbaang', $request->code)
-        ->where('inventaris_data_status','<',4)
-        ->get();
+            ->where('id_nomor_ruangan_cbaang', $request->code)
+            ->where('inventaris_data_status', '<', 4)
+            ->get();
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.master-data.master-lokasi.report.report-data-lokasi', [
             'cabang' => $cabang,
             'data' => $data,
@@ -1156,13 +1220,13 @@ class AppController extends Controller
     }
     public function menu_stock_opname_kondisi_data_unvalid(Request $request)
     {
-        $verif = DB::table('tbl_verifdatainventaris')->where('kode_verif',$request->code)->first();
+        $verif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
         $data = DB::table('inventaris_data')
-            ->where('inventaris_data_status', '<',4)
-            ->where('inventaris_data_tgl_beli','<' ,$verif->end_date_verif)
-            ->where('inventaris_data_cabang',Auth::user()->cabang)
+            ->where('inventaris_data_status', '<', 4)
+            ->where('inventaris_data_tgl_beli', '<', $verif->end_date_verif)
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
             ->get();
-        return view('application.stockopname.data-kondisi-unvalid', ['data' => $data,'code'=>$request->code]);
+        return view('application.stockopname.data-kondisi-unvalid', ['data' => $data, 'code' => $request->code]);
     }
     public function menu_stock_opname_remove_full_data(Request $request)
     {

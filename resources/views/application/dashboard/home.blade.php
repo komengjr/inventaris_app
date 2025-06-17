@@ -775,6 +775,9 @@
             e.preventDefault();
             var id = $(this).data("id");
             var page = document.getElementById("page").value;
+            console.log(id);
+            console.log(page);
+
             if (page == "-") {
                 alert('eror');
             } else {
@@ -798,6 +801,7 @@
                             data +
                             '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
                         );
+
                     })
                     .fail(function() {
                         alert('sasdads');

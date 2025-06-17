@@ -93,7 +93,7 @@
                                             <button class="dropdown-item text-warning" id="button-report-data-peminjaman-barang"
                                                 data-code="{{ $datas->tiket_peminjaman }}"><span
                                                     class="fas fa-file-signature"></span>
-                                                Proses</button>
+                                                Proses Peminjaman</button>
                                         @elseif ($datas->status_pinjam == 4)
                                             <button class="dropdown-item text-success" id="button-report-data-peminjaman-barang"
                                                 data-code="{{ $datas->tiket_peminjaman }}"><span
