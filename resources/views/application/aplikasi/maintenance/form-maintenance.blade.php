@@ -18,10 +18,10 @@
         </div>
 
         <div class="modal-footer">
-            <div id="menu-simpan-data-non-aset">
+            {{-- <div id="menu-simpan-data-non-aset">
                 <button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><i
                         class="fa fa-save"></i> Simpan Data</button>
-            </div>
+            </div> --}}
         </div>
     </form>
 </div>
