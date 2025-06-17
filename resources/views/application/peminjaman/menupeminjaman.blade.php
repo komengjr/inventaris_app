@@ -835,7 +835,6 @@
             }).fail(function() {
                 $('#menu-table-pilih-peminjaman').html('eror');
             });
-
         });
         $(document).on("click", "#button-verifikasi-data-peminjaman", function(e) {
             e.preventDefault();

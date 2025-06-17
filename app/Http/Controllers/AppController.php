@@ -361,8 +361,12 @@ class AppController extends Controller
             $id = str::uuid();
         }
 
-        $data = DB::table('tbl_peminjaman')->where('pj_pinjam', $id)->where('kd_cabang', Auth::user()->cabang)->get();
+        $data = DB::table('tbl_peminjaman')->where('pj_pinjam', $id)
+        ->where('kd_cabang', Auth::user()->cabang)->orderBy('id_pinjam','DESC')->get();
         return view('application.aplikasi.peminjaman.form-peminjaman-barang', ['data' => $data]);
+    }
+    public function aplikasi_app_peminjaman_barang_add(Request $request){
+        return view('application.aplikasi.peminjaman.form-add');
     }
     public function aplikasi_app_peminjaman_barang_save(Request $request)
     {

@@ -3,6 +3,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
     <link href="{{ asset('vendors/choices/choices.min.css') }}" rel="stylesheet" />
+    <style>
+
+    </style>
 @endsection
 @section('content')
     <div class="row mb-3">
@@ -33,10 +36,11 @@
 
         </div>
         <div class="card-body pb-0">
-            <div class="row text-center" id="hasil-pencarian-cabang">
-                <div class="col-6 col-md-4 col-lg-3 col-xxl-2 mb-4" data-bs-toggle="modal" data-bs-target="#modal-aplikasi-xl" id="button-peminjaman-barang">
-                    <div class="bg-white dark__bg-1100 p-3"><a href="#"><img
-                                class="img-thumbnail img-fluid rounded-circle mb-3 shadow-sm"
+            <div class="row text-center" id="hasil-pencarian-cabang" style="cursor: pointer;">
+                <div class="col-6 col-md-4 col-lg-3 col-xxl-2 mb-4" data-bs-toggle="modal" data-bs-target="#modal-aplikasi"
+                    id="button-peminjaman-barang">
+                    <div class="bg-white dark__bg-1100 p-3"><a href="#">
+                            <img class="img-thumbnail img-fluid rounded-circle mb-3 shadow-sm"
                                 src="{{ asset('img/peminjaman.png') }}" alt="" width="100"></a>
                         <h6 class="mb-1"><a href="#">Peminjaman Barang</a>
                         </h6>
@@ -52,8 +56,9 @@
                         <p class="fs--2 mb-1"><a class="text-700" href="#!">Technext limited</a></p>
                     </div>
                 </div>
-                <div class="col-6 col-md-4 col-lg-3 col-xxl-2 mb-4" data-bs-toggle="modal" data-bs-target="#modal-aplikasi-xl" id="button-log-maintenance">
-                    <div class="bg-white dark__bg-1100 p-3 h-100"><a href="#" >
+                <div class="col-6 col-md-4 col-lg-3 col-xxl-2 mb-4" data-bs-toggle="modal"
+                    data-bs-target="#modal-aplikasi-xl" id="button-log-maintenance">
+                    <div class="bg-white dark__bg-1100 p-3 h-100"><a href="#">
                             <img class="img-thumbnail img-fluid rounded-circle mb-3 shadow-sm"
                                 src="{{ asset('img/maintenance.png') }}" alt="" width="100"></a>
                         <h6 class="mb-1"><a href="#">Maintenance Log</a>
@@ -114,7 +119,7 @@
     <script>
         $(document).on("click", "#button-peminjaman-barang", function(e) {
             e.preventDefault();
-            $('#menu-aplikasi-xl').html(
+            $('#menu-aplikasi').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
             $.ajax({
@@ -127,10 +132,52 @@
                 },
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-aplikasi-xl').html(data);
+                $('#menu-aplikasi').html(data);
             }).fail(function() {
-                $('#menu-aplikasi-xl').html('eror');
+                $('#menu-aplikasi').html('eror');
             });
+        });
+        $(document).on("click", "#button-tambah-data-peminjaman", function(e) {
+            e.preventDefault();
+            $('#menu-form-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('aplikasi_app_peminjaman_barang_add') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 0,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-form-peminjaman').html(data);
+            }).fail(function() {
+                $('#menu-form-peminjaman').html('eror');
+            });
+        });
+        $(document).on("click", "#button-proses-peminjaman-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-aplikasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_proses') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-aplikasi').html(data);
+            }).fail(function() {
+                $('#menu-aplikasi').html('eror');
+            });
+
         });
         $(document).on("click", "#button-log-maintenance", function(e) {
             e.preventDefault();
@@ -151,6 +198,156 @@
             }).fail(function() {
                 $('#menu-aplikasi-xl').html('eror');
             });
+        });
+        $(document).on("click", "#button-pilih-barang-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var id = $(this).data("id");
+            $('#menu-table-pilih-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_pilih_data') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "id": id,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#hasil-pencarian-barang').html("");
+                $('#menu-table-pilih-peminjaman').html(data);
+            }).fail(function() {
+                $('#menu-table-pilih-peminjaman').html('eror');
+            });
+        });
+        $(document).on("click", "#button-batal-data-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var id = $(this).data("id");
+            $('#menu-table-pilih-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_batal_pilih_data') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "id": id,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-table-pilih-peminjaman').html(data);
+            }).fail(function() {
+                $('#menu-table-pilih-peminjaman').html('eror');
+            });
+        });
+        $(document).on("click", "#button-verifikasi-data-peminjaman", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var mengetahui = document.getElementById("mengetahui").value;
+            if (mengetahui == '') {
+                alert('Mohon di Pilih Yang mengetahui')
+            } else {
+                $('#menu-verifikasi-data-peminjaman').html(
+                    '<div class="spinner-border" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+                );
+                $.ajax({
+                    url: "{{ route('verifikasi_data_peminjaman') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "code": code,
+                        "mengetahui": mengetahui,
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    if (data == 1) {
+                        location.reload();
+                    } else {
+                        alert('Data Barang Peminjaman Masih Kosong');
+                        location.reload();
+                    }
+                }).fail(function() {
+                    $('#menu-verifikasi-data-peminjaman').html('eror');
+                });
+            }
+        });
+        $(document).on("click", "#button-verifikasi-peminjaman-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-aplikasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_data_verifikasi') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-aplikasi').html(data);
+            }).fail(function() {
+                $('#menu-aplikasi').html('eror');
+            });
+        });
+        $(document).on("click", "#button-proses-verifikasi-data-user", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var token = document.getElementById("token").value;
+            $('#menu-verifikasi-data-peminjaman').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('peminjaman_data_verifikasi_user') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "token": token,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                if (data == 0) {
+                    alert('kode verifikasi Salah')
+                    location.reload();
+                } else {
+                    location.reload();
+                }
+            }).fail(function() {
+                $('#menu-verifikasi-data-peminjaman').html('eror');
+            });
+        });
+        $(document).on("click", "#button-report-data-peminjaman-barang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-aplikasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('print_report_data_peminjaman') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-aplikasi').html(data);
+            }).fail(function() {
+                $('#menu-aplikasi').html('eror');
+            });
+
         });
     </script>
     {{-- REPORT --}}

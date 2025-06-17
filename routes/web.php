@@ -456,6 +456,7 @@ Route::prefix('app')->group(function () {
 
     // APLIKASI
     Route::post('aplikasi/peminjaman-barang', [AppController::class, 'aplikasi_app_peminjaman_barang'])->name('aplikasi_app_peminjaman_barang');
+    Route::post('aplikasi/peminjaman-barang/add', [AppController::class, 'aplikasi_app_peminjaman_barang_add'])->name('aplikasi_app_peminjaman_barang_add');
     Route::post('aplikasi/peminjaman-barang/save', [AppController::class, 'aplikasi_app_peminjaman_barang_save'])->name('aplikasi_app_peminjaman_barang_save');
     Route::post('aplikasi/maintenance-log', [AppController::class, 'aplikasi_app_maintenance_log'])->name('aplikasi_app_maintenance_log');
 
