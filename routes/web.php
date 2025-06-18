@@ -543,6 +543,7 @@ Route::prefix('app')->group(function () {
     Route::post('menu-stock-opname/edit-data-tanggal-stock', [AppController::class, 'menu_stock_opname_edit_data_tanggal'])->name('menu_stock_opname_edit_data_tanggal');
     Route::post('menu-stock-opname/penyelesaian-data-tanggal-stock', [AppController::class, 'menu_stock_opname_penyelesaian_data'])->name('menu_stock_opname_penyelesaian_data');
     Route::post('menu-stock-opname/form-laporan-data-stockopname', [AppController::class, 'menu_stock_opname_laporan_data'])->name('menu_stock_opname_laporan_data');
+    Route::post('menu-stock-opname/print-data-ruangan-stock', [AppController::class, 'menu_stock_opname_print_data_ruangan'])->name('menu_stock_opname_print_data_ruangan');
     Route::post('menu-stock-opname/print-data-tanggal-stock', [AppController::class, 'menu_stock_opname_print_data'])->name('menu_stock_opname_print_data');
     Route::post('menu-stock-opname/print-data-berita-acara-stock', [AppController::class, 'menu_stock_opname_print_berita_acara'])->name('menu_stock_opname_print_berita_acara');
 

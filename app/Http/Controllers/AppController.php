@@ -1309,6 +1309,36 @@ class AppController extends Controller
     {
         return view('application.stockopname.form-laporan-stockopname', ['code' => $request->code]);
     }
+    public function menu_stock_opname_print_data_ruangan(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+            # code...
+        }
+        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
+        $brg = DB::table('tbl_sub_verifdatainventaris')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->where('tbl_sub_verifdatainventaris.kode_verif', $request->code)
+            ->where('inventaris_data.id_nomor_ruangan_cbaang', $request->lokasi)
+            ->get();
+        $ruangan = DB::table('tbl_nomor_ruangan_cabang')->join('master_lokasi', 'master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', $request->lokasi)->first();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.stockopname.report.report-stockopname-ruangan', [
+            'cabang' => $cabang,
+            'data' => $data,
+            'brg' => $brg,
+            'ruangan' => $ruangan
+        ], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
+    }
     public function menu_stock_opname_print_data(Request $request)
     {
         $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')

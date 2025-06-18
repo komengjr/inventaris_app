@@ -494,31 +494,33 @@
         //         $('#table-master-barang').html('eror');
         //     });
         // });
-        // $(document).on("click", "#button-print-data-peminjaman", function(e) {
-        //     e.preventDefault();
-        //     var code = $(this).data("code");
-        //     $('#table-data-peminjaman').html(
-        //         '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-        //     );
-        //     $.ajax({
-        //         url: "{{ route('masteradmin_cabang_print_data_peminjaman') }}",
-        //         type: "POST",
-        //         cache: false,
-        //         data: {
-        //             "_token": "{{ csrf_token() }}",
-        //             "code": code
-        //         },
-        //         dataType: 'html',
-        //     }).done(function(data) {
-        //         $('#table-data-peminjaman').html(
-        //             '<iframe src="data:application/pdf;base64, ' +
-        //             data +
-        //             '" style="width:100%; height:533px;" frameborder="0"></iframe>');
-        //     }).fail(function() {
-        //         $('#table-data-peminjaman').html('eror');
-        //     });
+        $(document).on("click", "#button-print-stockopname-ruangan", function(e) {
+            e.preventDefault();
+            var lokasi = $(this).data("lokasi");
+            var code = $(this).data("code");
+            $('#view-report-stokopname-ruangan').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_print_data_ruangan') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "lokasi": lokasi
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#view-report-stokopname-ruangan').html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+            }).fail(function() {
+                $('#view-report-stokopname-ruangan').html('eror');
+            });
 
-        // });
+        });
         $(document).on("click", "#button-edit-data-stock-opname", function(e) {
             e.preventDefault();
             var code = $(this).data("code");

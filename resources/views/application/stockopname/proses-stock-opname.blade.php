@@ -186,7 +186,7 @@
                                 <td>
                                     @if ($totalbarang == $statusbarang + $statusbarang1 + $statusbarang2)
                                         <button class="btn btn-falcon-success btn-sm"
-                                            id="button-print-stockopname-ruangan" data-id="{{ $id }}"
+                                            id="button-print-stockopname-ruangan" data-code="{{ $id }}"
                                             data-lokasi="{{ $no_ruangans->id_nomor_ruangan_cbaang }}"><i
                                                 class="fa fa-print"></i> Verified + Cetak</button>
                                     @else
