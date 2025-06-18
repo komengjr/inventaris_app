@@ -352,7 +352,7 @@ class MasterAdminController extends Controller
         $databrg = DB::table('inventaris_data')
             ->join('tbl_nomor_ruangan_cabang', 'tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang', '=', 'inventaris_data.id_nomor_ruangan_cbaang')
             ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $data->end_date_verif)
-            ->where('inventaris_data.inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data.inventaris_data_cabang', $data->kd_cabang)
             ->where('inventaris_data.inventaris_data_status', '<', 4)->get();
         foreach ($databrg as $value) {
             $check = DB::table('tbl_sub_verifdatainventaris')->where('id_inventaris', $value->inventaris_data_code)->where('kode_verif', $data->kode_verif)->first();
