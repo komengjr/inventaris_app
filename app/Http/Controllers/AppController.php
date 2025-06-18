@@ -2083,7 +2083,7 @@ class AppController extends Controller
             'inventaris_data_tgl_beli' => $request->tgl_beli,
             'id_nomor_ruangan_cbaang' => $request->lokasi,
         ]);
-        return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data Pemusnahan');
+        return redirect()->back()->withSuccess('Great! Berhasil Mengubah Data Barang');
     }
     public function master_barang_data_cetak_barcode(Request $request)
     {
