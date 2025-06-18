@@ -203,6 +203,12 @@ class MasterAdminController extends Controller
             } else {
                 $tgl = $value->tgl_beli;
             }
+            if ($value->kd_jenis == "") {
+                $kd_jenis = 0;
+            } else {
+                $kd_jenis = $value->kd_jenis;
+            }
+
             $newdate = date('Y-m-d', strtotime($tgl));
             if (!$check) {
                 DB::table('inventaris_data')->insert([
@@ -211,7 +217,7 @@ class MasterAdminController extends Controller
                     'inventaris_data_number' => $value->no_inventaris,
                     'inventaris_data_name' => $value->nama_barang,
                     'inventaris_data_location' => $value->kd_lokasi,
-                    'inventaris_data_jenis' => $value->kd_jenis,
+                    'inventaris_data_jenis' => $kd_jenis,
                     'inventaris_data_harga' => $value->harga_perolehan,
                     'inventaris_data_merk' => $value->merk,
                     'inventaris_data_type' => $value->type,
