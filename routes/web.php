@@ -541,6 +541,8 @@ Route::prefix('app')->group(function () {
     Route::post('menu-stock-opname/remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_remove_full_data'])->name('menu_stock_opname_remove_full_data');
     Route::post('menu-stock-opname/proses-remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_proses_remove_full_data'])->name('menu_stock_opname_proses_remove_full_data');
     Route::post('menu-stock-opname/edit-data-tanggal-stock', [AppController::class, 'menu_stock_opname_edit_data_tanggal'])->name('menu_stock_opname_edit_data_tanggal');
+    Route::post('menu-stock-opname/edit-data-tanggal-stock/save', [AppController::class, 'menu_stock_opname_edit_data_tanggal_save'])->name('menu_stock_opname_edit_data_tanggal_save');
+    Route::post('menu-stock-opname/sinkronisasi-data-stockopnem-cabang', [AppController::class, 'menu_stock_opname_sinkronisasi_data_stock'])->name('menu_stock_opname_sinkronisasi_data_stock');
     Route::post('menu-stock-opname/penyelesaian-data-tanggal-stock', [AppController::class, 'menu_stock_opname_penyelesaian_data'])->name('menu_stock_opname_penyelesaian_data');
     Route::post('menu-stock-opname/form-laporan-data-stockopname', [AppController::class, 'menu_stock_opname_laporan_data'])->name('menu_stock_opname_laporan_data');
     Route::post('menu-stock-opname/print-data-ruangan-stock', [AppController::class, 'menu_stock_opname_print_data_ruangan'])->name('menu_stock_opname_print_data_ruangan');

@@ -73,13 +73,7 @@
                             <td>{{ $item->tgl_verif }}</td>
                             <td>{{ $item->end_date_verif }}</td>
                             <td>
-                                @php
-                                    $jumlahi = DB::table('inventaris_data')
-                                        ->where('inventaris_data_cabang', Auth::user()->cabang)
-                                        ->where('inventaris_data_status', '!=', 5)
-                                        ->count();
-                                @endphp
-                                {{ $jumlahi }}
+                               {{ $item->total_barang }}
                             </td>
                             <td>
                                 @php
@@ -151,7 +145,7 @@
                                             data-code="{{ $item->kode_verif }}"><span class="far fa-edit"></span> Edit
                                             Data Tanggal</button>
                                         <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-cabang-lg" id="button-data-lokasi-cabang"
+                                            data-bs-target="#modal-stock-lg" id="button-data-sinkronisasi-stock-cabang"
                                             data-code="{{ $item->kode_verif }}"><span class="fas fa-sync"></span>
                                             Sinkronisasi Data</button>
                                         @if ($item->status_verif == 0)
@@ -538,6 +532,27 @@
                 dataType: 'html',
             }).done(function(data) {
                 $('#menu-stock-lg').html(data);
+            }).fail(function() {
+                $('#menu-stock-lg').html('eror');
+            });
+        });
+        $(document).on("click", "#button-data-sinkronisasi-stock-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-stock-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_sinkronisasi_data_stock') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                location.reload();
             }).fail(function() {
                 $('#menu-stock-lg').html('eror');
             });

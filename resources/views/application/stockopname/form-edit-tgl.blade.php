@@ -3,11 +3,12 @@
         <h4 class="mb-1" id="staticBackdropLabel">Update Data Tanggal</h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
-    <form class="row g-3 p-4" action="{{ route('masteradmin_menu_save') }}" method="post" enctype="multipart/form-data">
+    <form class="row g-3 p-4" action="{{ route('menu_stock_opname_edit_data_tanggal_save') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="col-6">
             <label class="form-label" for="inputAddress">Tanggal Mulai Stockopname</label>
-            <input class="form-control" id="inputAddress" type="date" name="start" value="{{$data->tgl_verif}}"
+            <input class="form-control" id="inputAddress" type="date" name="start" value="{{$data->tgl_verif}}"required />
+            <input class="form-control" id="inputAddress" type="text" name="code" value="{{$data->kode_verif}}" hidden
                 required />
         </div>
         <div class="col-6">

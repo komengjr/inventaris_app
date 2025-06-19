@@ -1298,6 +1298,24 @@ class AppController extends Controller
         $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
         return view('application.stockopname.form-edit-tgl', ['data' => $data]);
     }
+    public function menu_stock_opname_edit_data_tanggal_save(Request $request)
+    {
+        DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->update([
+            'tgl_verif' => $request->start,
+            'end_date_verif' => $request->end,
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil update Tanggal');
+    }
+    public function menu_stock_opname_sinkronisasi_data_stock(Request $request)
+    {
+        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
+        $total = DB::table('inventaris_data')
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data_status', '<', 4)
+            ->where('inventaris_data_tgl_beli', '<=', $data->end_date_verif)->count();
+        DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->update(['total_barang'=>$total]);
+        return 1;
+    }
     public function menu_stock_opname_penyelesaian_data(Request $request)
     {
         DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->update([
