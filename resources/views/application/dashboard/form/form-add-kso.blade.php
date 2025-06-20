@@ -8,7 +8,8 @@
         <h4 class="mb-1" id="staticBackdropLabel">Form Penambahan Barang KSO</h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
-    <form method="POST" action="{{ route('dashboard_add_kso_save') }}" enctype="multipart/form-data" id="form-add-data-non-aset">
+    <form method="POST" action="{{ route('dashboard_add_kso_save') }}" enctype="multipart/form-data"
+        id="form-add-data-non-aset">
         @csrf
         <div class="body" id="showdatabarang">
             <div class="card-body">
@@ -35,7 +36,7 @@
                             required>
 
                         <label for="inputEmail4" class="form-label">Klasifikasi Inventaris</label>
-                        <select class="form-select choices-single-jenis" name="klasifikasi" id="klasifikasi" required>
+                        <select class="form-select choices-single-jenis" name="kd_inventaris" id="kd_inventaris" required>
                             <option value="">Pilih Jenis Inventaris</option>
                             @foreach ($klasifikasi as $klasifikasis)
                                 <option value="{{ $klasifikasis->inventaris_klasifikasi_code }}">
@@ -44,27 +45,23 @@
                             @endforeach
                         </select>
 
-                        <label for="inputPassword4" class="form-label">Kategori</label>
-                        <select class="form-control form-control-lg kategori_barang" name="jenis" required>
-                            <option value="1">Barang Aset</option>
-                        </select>
-
-                        <label for="inputEmail4" class="form-label">Tanggal Pembelian</label>
-                        <input type="date" name="tgl_beli" class="form-control form-control-lg" id="tgl_beli"
+                        <label for="inputPassword4" class="form-label">No Mou Dokumen</label>
+                        <input type="tex" name="no_mou" class="form-control form-control-lg" id="no_mou"
                             required>
 
-                        <label for="inputPassword4" class="form-label">Harga Perolehan</label>
-                        <input type="text" name="harga_perolehan" class="form-control form-control-lg"
-                            id="dengan-rupiah" required>
+                        <label for="inputEmail4" class="form-label">Tanggal KSO</label>
+                        <input type="date" name="tgl_kso" class="form-control form-control-lg" id="tgl_kso"
+                            required>
+
                         <input id="link" type="text" name="link" class="form-control" hidden>
                     </div>
                     <div class="col-md-4">
-                        <label for="inputPassword4" class="form-label">Supplier</label>
-                        <input type="text" name="suplier" class="form-control form-control-lg" id="suplier"
-                            required>
+                        <label for="inputPassword4" class="form-label">Merek</label>
+                        <input type="text" name="merk" class="form-control form-control-lg" id="merk">
+
 
                         <label for="inputEmail4" class="form-label">Lokasi</label>
-                        <select class="form-select choices-single-lokasi" name="lokasi" id="lokasi" required>
+                        <select class="form-select choices-single-lokasi" name="no_ruangan" id="no_ruangan" required>
                             <option value="">Pilih Ruangan</option>
                             @foreach ($lokasi as $lokasis)
                                 <option value="{{ $lokasis->id_nomor_ruangan_cbaang }}">{{ $lokasis->nomor_ruangan }} -
@@ -73,11 +70,8 @@
                             @endforeach
                         </select>
 
-                        <label for="inputPassword4" class="form-label">Merek</label>
-                        <input type="text" name="merk" class="form-control form-control-lg" id="merk">
-
-                        <label for="inputPassword4" class="form-label">Type Barang</label>
-                        <input type="text" name="type" class="form-control form-control-lg" id="type">
+                        <label for="inputEmail4" class="form-label">No KSO Alat</label>
+                        <input type="text" name="no_kso" class="form-control form-control-lg" id="inputPassword4">
 
                         <label for="inputPassword4" class="form-label">Nomor Serial</label>
                         <input type="text" name="seri" class="form-control form-control-lg" id="seri">
@@ -90,8 +84,8 @@
 
         <div class="modal-footer">
             <div id="menu-simpan-data-non-aset">
-                <button type="submit" class="btn btn-outline-success"><i
-                        class="fa fa-save"></i> Simpan Data</button>
+                <button type="submit" class="btn btn-outline-success"><i class="fa fa-save"></i> Simpan
+                    Data</button>
             </div>
         </div>
     </form>
@@ -104,7 +98,7 @@
 <script type="text/javascript">
     var browseFile = $('#browseFile');
     var resumable = new Resumable({
-        target: '{{ route('file-upload.uploadgambarbarang') }}',
+        target: '{{ route('file-upload.uploadgambarbarangkso') }}',
         query: {
             _token: '{{ csrf_token() }}'
         }, // CSRF token
