@@ -225,6 +225,13 @@
                                                 class="nav-link-text ps-1">Master Cabang</span>
                                         </div>
                                     </a>
+                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_depresiasi') }}"
+                                        role="button" aria-expanded="false">
+                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                    class="far fa-newspaper"></span></span><span
+                                                class="nav-link-text ps-1">Master Depresiasi Aset</span>
+                                        </div>
+                                    </a>
                                     <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_messages') }}"
                                         role="button" aria-expanded="false">
                                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
@@ -403,7 +410,7 @@
                             </p>
                         </div>
                         <div class="col-12 col-sm-auto text-center">
-                            <p class="mb-0 text-600">v3.4.0</p>
+                            <img src="{{ asset('img/logo.png') }}" alt="" width="80">
                         </div>
                     </div>
                 </footer>

@@ -91,9 +91,9 @@ class MasterAdminController extends Controller
             $check = DB::table('tbl_lokasi')->where('kd_Lokasi', $request->kd_lokasi)->first();
             if (!$check) {
                 DB::table('tbl_lokasi')->insert([
-                    'kd_lokasi'=>$request->kd_lokasi,
-                    'nama_lokasi'=>$request->nama_lokasi,
-                    'created_at'=>now(),
+                    'kd_lokasi' => $request->kd_lokasi,
+                    'nama_lokasi' => $request->nama_lokasi,
+                    'created_at' => now(),
                 ]);
                 return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data Lokasi Ver. 2');
             } else {
@@ -435,6 +435,48 @@ class MasterAdminController extends Controller
     {
         if (Auth::user()->akses == 'admin') {
             return view('application.admin.mastersetting');
+        } else {
+            return view('application.error.404');
+        }
+    }
+
+    // MASTER DEPRESIASI
+    public function masteradmin_depresiasi(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            $data = DB::table('master_depresiasi')->get();
+            return view('application.admin.masterdepresiasi',['data'=>$data]);
+        } else {
+            return view('application.error.404');
+        }
+    }
+    public function masteradmin_depresiasi_add(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            return view('application.admin.depresiasi.form-add');
+        } else {
+            return view('application.error.404');
+        }
+    }
+    public function masteradmin_depresiasi_save(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            DB::table('master_depresiasi')->insert([
+                'master_depresiasi_code'=>str::uuid(),
+                'master_depresiasi_periode'=>$request->periode,
+                'master_depresiasi_status'=>1,
+                'master_depresiasi_tanggal'=>$request->tanggal,
+                'created_at'=>now(),
+            ]);
+            return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
+        } else {
+            return view('application.error.404');
+        }
+    }
+    public function masteradmin_depresiasi_add_detail(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            return view('application.admin.depresiasi.form-add-detail');
         } else {
             return view('application.error.404');
         }

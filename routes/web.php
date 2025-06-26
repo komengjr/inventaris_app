@@ -658,4 +658,8 @@ Route::prefix('masteradmin')->group(function () {
     Route::post('menu-save', [MasterAdminController::class, 'masteradmin_menu_save'])->name('masteradmin_menu_save');
     Route::get('access', [MasterAdminController::class, 'masteradmin_access'])->name('masteradmin_access');
     Route::get('setting', [MasterAdminController::class, 'master_setting'])->name('master_setting');
+    Route::get('depresiasi', [MasterAdminController::class, 'masteradmin_depresiasi'])->name('masteradmin_depresiasi');
+    Route::post('depresiasi/add', [MasterAdminController::class, 'masteradmin_depresiasi_add'])->name('masteradmin_depresiasi_add');
+    Route::post('depresiasi/save', [MasterAdminController::class, 'masteradmin_depresiasi_save'])->name('masteradmin_depresiasi_save');
+    Route::post('depresiasi/add-detail', [MasterAdminController::class, 'masteradmin_depresiasi_add_detail'])->name('masteradmin_depresiasi_add_detail');
 });
