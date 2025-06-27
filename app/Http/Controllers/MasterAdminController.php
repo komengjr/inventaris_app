@@ -445,7 +445,7 @@ class MasterAdminController extends Controller
     {
         if (Auth::user()->akses == 'admin') {
             $data = DB::table('master_depresiasi')->get();
-            return view('application.admin.masterdepresiasi',['data'=>$data]);
+            return view('application.admin.masterdepresiasi', ['data' => $data]);
         } else {
             return view('application.error.404');
         }
@@ -462,11 +462,11 @@ class MasterAdminController extends Controller
     {
         if (Auth::user()->akses == 'admin') {
             DB::table('master_depresiasi')->insert([
-                'master_depresiasi_code'=>str::uuid(),
-                'master_depresiasi_periode'=>$request->periode,
-                'master_depresiasi_status'=>1,
-                'master_depresiasi_tanggal'=>$request->tanggal,
-                'created_at'=>now(),
+                'master_depresiasi_code' => str::uuid(),
+                'master_depresiasi_periode' => $request->periode,
+                'master_depresiasi_status' => 1,
+                'master_depresiasi_tanggal' => $request->tanggal,
+                'created_at' => now(),
             ]);
             return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
         } else {
@@ -476,7 +476,27 @@ class MasterAdminController extends Controller
     public function masteradmin_depresiasi_add_detail(Request $request)
     {
         if (Auth::user()->akses == 'admin') {
-            return view('application.admin.depresiasi.form-add-detail');
+            return view('application.admin.depresiasi.form-add-detail', ['code' => $request->code]);
+        } else {
+            return view('application.error.404');
+        }
+    }
+    public function masteradmin_depresiasi_save_detail(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            DB::table('master_depresiasi_sub')->insert([
+                'depresiasi_sub_code' => str::uuid(),
+                'master_depresiasi_code' => $request->code,
+                'depresiasi_sub_name' => $request->nama,
+                'depresiasi_sub_harga' => $request->harga,
+                'depresiasi_sub_masa' => $request->masa,
+                'depresiasi_sub_hitung' => $request->masa * 12,
+                'depresiasi_sub_start' => $request->start,
+                'depresiasi_sub_end' => $request->end,
+                'depresiasi_sub_status' => 1,
+                'created_at' => now()
+            ]);
+            return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
         } else {
             return view('application.error.404');
         }

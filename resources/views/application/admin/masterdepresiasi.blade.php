@@ -52,7 +52,7 @@
                                 <th>No</th>
                                 <th>Kode Depresiasi</th>
                                 <th>Periode Depresiasi</th>
-                                <th>Tanggal Depresiasi</th>
+                                <th>Data Depresiasi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -65,7 +65,14 @@
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $datas->master_depresiasi_code }}</td>
                                     <td>{{ $datas->master_depresiasi_periode }}</td>
-                                    <td>{{ $datas->master_depresiasi_tanggal }}</td>
+                                    <td>
+                                        @php
+                                            $depresiasi = DB::table('master_depresiasi_sub')->where('master_depresiasi_code',$datas->master_depresiasi_code)->get();
+                                        @endphp
+                                        @foreach ($depresiasi as $dapresiasis)
+                                            <li>{{$dapresiasis->depresiasi_sub_name}} ( @currency($dapresiasis->depresiasi_sub_start) - @currency($dapresiasis->depresiasi_sub_end) )</li>
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <button class="btn btn-sm btn-primary dropdown-toggle"

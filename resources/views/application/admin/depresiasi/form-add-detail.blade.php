@@ -3,19 +3,35 @@
         <h4 class="mb-1" id="staticBackdropLabel">Add Detail Depresiasi</h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
-    <form class="row g-3 p-4" action="{{ route('masteradmin_depresiasi_save') }}" method="post"
+    <form class="row g-3 p-4" action="{{ route('masteradmin_depresiasi_save_detail') }}" method="post"
         enctype="multipart/form-data">
         @csrf
 
         <div class="col-md-6">
-            <label class="form-label" for="inputAddress">Periode</label>
-            <input class="form-control" id="inputAddress" type="text" name="periode" placeholder="01.20.xx"
+            <label class="form-label" for="inputAddress">Nama Depresiasi</label>
+            <input class="form-control" id="inputAddress" type="text" name="nama" placeholder="Renovasi Bangun Milik"
                 required />
+                <input type="text"  name="code" value="{{$code}}" id="" hidden>
         </div>
         <div class="col-md-6">
-            <label class="form-label" for="inputAddress">Tanggal</label>
-            <input class="form-control" id="inputAddress" type="date" name="tanggal"
-                placeholder="Alumunium Baja" required />
+            <label class="form-label" for="inputAddress">Depresiasi Harga</label>
+            <input class="form-control" id="inputAddress" type="text" name="harga" placeholder="@currency(12000000000)"
+                required />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="inputAddress">Depresiasi Masa</label>
+            <input class="form-control" id="inputAddress" type="text" name="masa" placeholder="2"
+                required />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="inputAddress">Rentang Depresiasi Awal</label>
+            <input class="form-control" id="inputAddress" type="text" name="start" placeholder="@currency(0)"
+                required />
+        </div>
+         <div class="col-md-4">
+            <label class="form-label" for="inputAddress">Rentang Depresiasi Akhir</label>
+            <input class="form-control" id="inputAddress" type="text" name="end" placeholder="@currency(12000000000)"
+                required />
         </div>
         <div class="col-12">
             <div class="form-check">
