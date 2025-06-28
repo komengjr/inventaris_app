@@ -89,7 +89,7 @@
                                     <td>{{ $datas->inventaris_data_merk }} <br>{{ $datas->inventaris_data_type }}</td>
 
                                     <td>{{ $datas->inventaris_data_tgl_beli }}</td>
-                                    <td>{{ $datas->inventaris_data_harga }}</td>
+                                    <td class="text-end">@currency($datas->inventaris_data_harga)</td>
                                     <td></td>
                                     <td>
                                         <div class="btn-group" role="group">
