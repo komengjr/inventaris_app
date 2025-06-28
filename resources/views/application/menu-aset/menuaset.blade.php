@@ -101,6 +101,10 @@
                                                     data-bs-target="#modal-aset-xl" id="button-setup-data-aset" data-code="{{$datas->inventaris_data_code}}"><span
                                                         class="fas fa-photo-video"></span>
                                                     Setup Depresiasi</button>
+                                                <button class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-aset-xl" id="button-setup-data-aset" data-code="{{$datas->inventaris_data_code}}"><span
+                                                        class="fas fa-poll-h"></span>
+                                                    Perhitungan Depresiasi Aset</button>
 
                                             </div>
                                         </div>

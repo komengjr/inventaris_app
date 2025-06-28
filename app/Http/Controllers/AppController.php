@@ -2070,7 +2070,7 @@ class AppController extends Controller
         $pengurangan = $fixharga / $setup->depresiasi_sub_hitung;
         $persen = ($pengurangan / $fixharga) * 100;
         for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
-            $data[$i] = date('d - M - Y', strtotime('+' . $i . ' month', strtotime('2020-01-02')));
+            $data[$i] = date('d - M - Y', strtotime('+' . $i . ' month', strtotime($inventaris->inventaris_data_tgl_beli)));
         }
         for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
             $hargaperolehan[$i] = $fixharga;
