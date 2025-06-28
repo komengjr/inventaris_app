@@ -418,6 +418,7 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('menu-stock-opname', [AppController::class, 'menu_stock_opname'])->name('menu_stock_opname');
     Route::get('menu-maintenance', [AppController::class, 'menu_maintenance'])->name('menu_maintenance');
     Route::get('menu-cabang', [AppController::class, 'menu_cabang'])->name('menu_cabang');
+    Route::get('menu-aset', [AppController::class, 'menu_aset'])->name('menu_aset');
     Route::get('laporan', [AppController::class, 'menu_laporan'])->name('menu_laporan');
     Route::get('master-barang', [AppController::class, 'master_barang'])->name('master_barang');
     Route::get('master-no-document', [AppController::class, 'master_no_document'])->name('master_no_document');
@@ -539,6 +540,7 @@ Route::prefix('app')->group(function () {
     Route::post('menu-stock-opname/scan-data-with-scanner', [AppController::class, 'menu_stock_opname_scan_data_with_scanner'])->name('menu_stock_opname_scan_data_with_scanner');
     Route::post('menu-stock-opname/proses-data-with-checklist', [AppController::class, 'menu_stock_opname_proses_data_with_checklist'])->name('menu_stock_opname_proses_data_with_checklist');
     Route::post('menu-stock-opname/proses-data-with-checklist/lokasi', [AppController::class, 'menu_stock_opname_proses_data_with_checklist_lokasi'])->name('menu_stock_opname_proses_data_with_checklist_lokasi');
+    Route::post('menu-stock-opname/proses-data-with-checklist/lokasi-save', [AppController::class, 'menu_stock_opname_proses_data_with_checklist_lokasi_save'])->name('menu_stock_opname_proses_data_with_checklist_lokasi_save');
     Route::post('menu-stock-opname/scan-data-with-scanner/save', [AppController::class, 'menu_stock_opname_scan_data_with_scanner_save'])->name('menu_stock_opname_scan_data_with_scanner_save');
     Route::post('menu-stock-opname/remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_remove_full_data'])->name('menu_stock_opname_remove_full_data');
     Route::post('menu-stock-opname/proses-remove-full-data-stock-opname', [AppController::class, 'menu_stock_opname_proses_remove_full_data'])->name('menu_stock_opname_proses_remove_full_data');

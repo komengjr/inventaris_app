@@ -65,6 +65,7 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "code": code,
+                    "tiket": "{{$code}}"
                 },
                 dataType: 'html',
             }).done(function(data) {

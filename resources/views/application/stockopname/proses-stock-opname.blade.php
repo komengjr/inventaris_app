@@ -55,7 +55,7 @@
                                 <span class="d-none d-md-inline-block">Scanner</span></button>
                             <button class="btn btn-falcon-success" role="button" id="button-stock-opname-manual"
                                 data-code="{{ $id }}"><span class="fas fa-check-square"></span>
-                                <span class="d-none d-md-inline-block">Manual</span></button>
+                                <span class="d-none d-md-inline-block">Checklist</span></button>
                         </div>
                     </div>
                 </div>

@@ -1342,13 +1342,34 @@ class AppController extends Controller
             ->orderBy('tbl_nomor_ruangan_cabang.nomor_ruangan', 'ASC')->get();
         return view('application.stockopname.manual-checklist-stokopname', ['code' => $request->code, 'data' => $data]);
     }
-    public function menu_stock_opname_proses_data_with_checklist_lokasi(Request $request){
+    public function menu_stock_opname_proses_data_with_checklist_lokasi(Request $request)
+    {
+        $tiket = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->tiket)->first();
         $data = DB::table('inventaris_data')
-        ->where('id_nomor_ruangan_cbaang',$request->code)
-        ->where('inventaris_data_cabang',Auth::user()->cabang)
-        ->where('inventaris_data_status','<',4)
-        ->get();
-        return view('application.stockopname.form-checklist-stockopname',['data'=>$data]);
+            ->where('id_nomor_ruangan_cbaang', $request->code)
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data_status', '<', 4)
+            ->where('inventaris_data_tgl_beli', '<', $tiket->end_date_verif)
+            ->get();
+        return view('application.stockopname.form-checklist-stockopname', ['data' => $data, 'tiket' => $request->tiket, 'code' => $request->code]);
+    }
+    public function menu_stock_opname_proses_data_with_checklist_lokasi_save(Request $request)
+    {
+        $tiket = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->tiket)->first();
+        DB::table('tbl_sub_verifdatainventaris')->insert([
+            'kode_verif' => $request->tiket,
+            'id_inventaris' => $request->id,
+            'status_data_inventaris' => $request->answer,
+            'keterangan_data_inventaris' => $request->desk,
+            'created_at' => now()
+        ]);
+        $data = DB::table('inventaris_data')
+            ->where('id_nomor_ruangan_cbaang', $request->code)
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inventaris_data_status', '<', 4)
+            ->where('inventaris_data_tgl_beli', '<', $tiket->end_date_verif)
+            ->get();
+        return view('application.stockopname.form-checklist-stockopname', ['data' => $data, 'tiket' => $request->tiket, 'code' => $request->code]);
     }
     public function menu_stock_opname_edit_data_tanggal(Request $request)
     {
@@ -2019,6 +2040,17 @@ class AppController extends Controller
         $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
         $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
+    }
+
+    // MENU ASET
+    public function menu_aset($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('inventaris_data')->where('inventaris_data_cabang',Auth::user()->cabang)->where('inventaris_data_jenis',1)->get();
+            return view('application.menu-aset.menuaset',['data'=>$data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
     }
 
     // REKAP LAPORAN
