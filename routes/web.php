@@ -566,7 +566,7 @@ Route::prefix('app')->group(function () {
     Route::post('menu-maintenance/print-laporan', [AppController::class, 'menu_maintenance_print_laporan'])->name('menu_maintenance_print_laporan');
     Route::post('menu-maintenance/print-laporan-cetak', [AppController::class, 'menu_maintenance_print_laporan_cetak'])->name('menu_maintenance_print_laporan_cetak');
 
-    // MENU BARANG
+    // MENU CABANG
     Route::post('menu-cabang/find-cabang', [AppController::class, 'menu_cabang_find_cabang'])->name('menu_cabang_find_cabang');
     Route::post('menu-cabang/data-barang', [AppController::class, 'menu_cabang_data_barang'])->name('menu_cabang_data_barang');
     Route::post('menu-cabang/data-peminjaman', [AppController::class, 'menu_cabang_data_peminjaman'])->name('menu_cabang_data_peminjaman');
@@ -575,6 +575,10 @@ Route::prefix('app')->group(function () {
     Route::post('menu-cabang/data-mutasi/print', [AppController::class, 'menu_cabang_data_mutasi_print'])->name('menu_cabang_data_mutasi_print');
     Route::post('menu-cabang/data-stockopname', [AppController::class, 'menu_cabang_data_stockopname'])->name('menu_cabang_data_stockopname');
     Route::post('menu-cabang/data-stockopname/print', [AppController::class, 'menu_cabang_data_stockopname_print'])->name('menu_cabang_data_stockopname_print');
+
+    // MENU ASET
+    Route::post('menu-aset/setup', [AppController::class, 'menu_aset_setup'])->name('menu_aset_setup');
+    Route::post('menu-aset/setup-pilih-depresiasi', [AppController::class, 'menu_aset_setup_pilih_depresiasi'])->name('menu_aset_setup_pilih_depresiasi');
 
     // MENU BARANG
     Route::post('laporan/cetak-rekap-ruangan', [AppController::class, 'laporan_cetak_rekap_ruangan'])->name('laporan_cetak_rekap_ruangan');

@@ -2046,11 +2046,45 @@ class AppController extends Controller
     public function menu_aset($akses)
     {
         if ($this->url_akses($akses) == true) {
-            $data = DB::table('inventaris_data')->where('inventaris_data_cabang',Auth::user()->cabang)->where('inventaris_data_jenis',1)->get();
-            return view('application.menu-aset.menuaset',['data'=>$data]);
+            $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_jenis', 1)->get();
+            return view('application.menu-aset.menuaset', ['data' => $data]);
         } else {
             return Redirect::to('dashboard');
         }
+    }
+    public function menu_aset_setup(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data_code', $request->code)->first();
+        $depresiasi = DB::table('master_depresiasi_sub')->get();
+        return view('application.menu-aset.form-setup-aset', ['data' => $data, 'depresiasi' => $depresiasi]);
+    }
+    public function menu_aset_setup_pilih_depresiasi(Request $request)
+    {
+        $setup = DB::table('master_depresiasi_sub')->where('depresiasi_sub_code',$request->code)->first();
+        $inventaris = DB::table('inventaris_data')->where('inventaris_data_code',$request->id)->first();
+        $fixharga = $inventaris->inventaris_data_harga;
+
+        // $datadepresiasi = DB::table('tbl_depresiasi')
+
+        //     ->where('kd_depresiasi', $id)->first();
+        $pengurangan = $fixharga / $setup->depresiasi_sub_hitung;
+        $persen = ($pengurangan / $fixharga) * 100;
+        for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
+            $data[$i] = date('d - M - Y', strtotime('+' . $i . ' month', strtotime('2020-01-02')));
+        }
+        for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
+            $hargaperolehan[$i] = $fixharga;
+            $fixharga = $fixharga - $pengurangan;
+        }
+
+        return view('application.menu-aset.form-hitung-depresiasi', [
+            'data' => $data,
+            'hargaperolehan' => $hargaperolehan,
+            'harga' => $fixharga,
+            'persen' => $persen,
+            'pengurangan' => $pengurangan,
+            'hitung' => $setup->depresiasi_sub_hitung
+        ]);
     }
 
     // REKAP LAPORAN

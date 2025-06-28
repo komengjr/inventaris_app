@@ -56,7 +56,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="list">
                             @php
                                 $no = 1;
                             @endphp
@@ -70,7 +70,7 @@
                                             $depresiasi = DB::table('master_depresiasi_sub')->where('master_depresiasi_code',$datas->master_depresiasi_code)->get();
                                         @endphp
                                         @foreach ($depresiasi as $dapresiasis)
-                                            <li>{{$dapresiasis->depresiasi_sub_name}} ( @currency($dapresiasis->depresiasi_sub_start) - @currency($dapresiasis->depresiasi_sub_end) )</li>
+                                            <li>{{$dapresiasis->depresiasi_sub_name}} <br> ( @currency($dapresiasis->depresiasi_sub_start) - @currency($dapresiasis->depresiasi_sub_end) )</li>
                                         @endforeach
                                     </td>
                                     <td>

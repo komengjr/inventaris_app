@@ -70,7 +70,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody class="fs--2">
+                        <tbody class="fs--2 list">
 
                             @foreach ($data as $datas)
                                 <tr>
@@ -99,7 +99,7 @@
                                                     data-fa-transform="shrink-3"></span>Option</button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
                                                 <button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-peminjaman-xl" id="button-add-peminjaman"><span
+                                                    data-bs-target="#modal-aset-xl" id="button-setup-data-aset" data-code="{{$datas->inventaris_data_code}}"><span
                                                         class="fas fa-folder-plus"></span>
                                                     Setup Depresiasi</button>
 
@@ -150,7 +150,7 @@
     </div>
 @endsection
 @section('base.js')
-    <div class="modal fade" id="modal-peminjaman" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-aset" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 95%;">
             <div class="modal-content border-0">
@@ -158,11 +158,11 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-peminjaman"></div>
+                <div id="menu-aset"></div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-peminjaman-xl" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="modal-aset-xl" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content border-0">
@@ -170,7 +170,7 @@
                     <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="menu-peminjaman-xl"></div>
+                <div id="menu-aset-xl"></div>
             </div>
         </div>
     </div>
@@ -187,6 +187,29 @@
     <script>
         new DataTable('#example', {
             responsive: true
+        });
+    </script>
+    <script>
+        $(document).on("click", "#button-setup-data-aset", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-aset-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_aset_setup') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-aset-xl').html(data);
+            }).fail(function() {
+                $('#menu-aset-xl').html('eror');
+            });
         });
     </script>
 @endsection
