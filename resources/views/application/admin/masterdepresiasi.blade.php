@@ -70,7 +70,7 @@
                                             $depresiasi = DB::table('master_depresiasi_sub')->where('master_depresiasi_code',$datas->master_depresiasi_code)->get();
                                         @endphp
                                         @foreach ($depresiasi as $dapresiasis)
-                                            <li>{{$dapresiasis->depresiasi_sub_name}} <br> ( @currency($dapresiasis->depresiasi_sub_start) - @currency($dapresiasis->depresiasi_sub_end) )</li>
+                                            <li><strong class="text-danger">{{$dapresiasis->depresiasi_sub_name}}</strong> <br> ( @currency($dapresiasis->depresiasi_sub_start) - @currency($dapresiasis->depresiasi_sub_end) )</li>
                                         @endforeach
                                     </td>
                                     <td>
