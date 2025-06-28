@@ -23,20 +23,20 @@
 @section('content')
     <div class="row mb-3">
         <div class="col">
-            <div class="card bg-100 shadow-none border">
+            <div class="card bg-100 shadow-none border border-youtube">
                 <div class="row gx-0 flex-between-center">
                     <div class="col-sm-auto d-flex align-items-center border-bottom">
                         <img class="ms-3 mx-3" src="{{ asset('img/aset.png') }}" alt="" width="60" />
                         <div>
-                            <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to </h6>
-                            <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management
+                            <h6 class="text-youtube fs--1 mb-0 mt-2">Welcome to </h6>
+                            <h4 class="text-youtube fw-bold mb-1">Inventaris <span class="text-youtube fw-medium">Management
                                     System</span></h4>
                         </div><img class="ms-n4 d-none d-lg-block"
                             src="{{ asset('asset/img/illustrations/crm-line-chart.png') }}" alt="" width="150" />
                     </div>
                     <div class="col-xl-auto px-3 py-2">
-                        <h6 class="text-primary fs--1 mb-0">Menu : </h6>
-                        <h4 class="text-primary fw-bold mb-0">Data Aset <span class="text-info fw-medium">Cabang</span>
+                        <h6 class="text-youtube fs--1 mb-0">Menu : </h6>
+                        <h4 class="text-youtube fw-bold mb-0">Data Aset <span class="text-youtube fw-medium">Cabang</span>
                         </h4>
                     </div>
                 </div>
@@ -46,9 +46,8 @@
 
     <div class="row mb-3 g-3">
         <div class="col-xl-12">
-
             <div class="card mb-3">
-                <div class="card-header bg-primary">
+                <div class="card-header bg-youtube">
                     <div class="row align-items-center">
                         <div class="col">
                             <h5 class="mb-0 text-white fw-bold">Data Aset Cabang</h5>
@@ -93,14 +92,14 @@
                                     <td></td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2"
+                                            <button class="btn btn-sm btn-falcon-danger" id="btnGroupVerticalDrop2"
                                                 type="button" data-bs-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false"><span class="fas fa-align-left me-1"
                                                     data-fa-transform="shrink-3"></span>Option</button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
                                                 <button class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#modal-aset-xl" id="button-setup-data-aset" data-code="{{$datas->inventaris_data_code}}"><span
-                                                        class="fas fa-folder-plus"></span>
+                                                        class="fas fa-photo-video"></span>
                                                     Setup Depresiasi</button>
 
                                             </div>
