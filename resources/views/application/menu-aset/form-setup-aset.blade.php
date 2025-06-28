@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-md-4">
                     <label for="">Harga Pembelian</label>
-                    <input type="text" class="form-control form-control-lg"value="{{ $data->inventaris_data_harga }}"
+                    <input type="text" class="form-control form-control-lg"value="@currency($data->inventaris_data_harga)"
                         disabled>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     <select class="form-select choices-single-depresiasi" name="pilih_depresiasi" id="pilih_depresiasi">
                         <option value="">Pilih Depresiasi</option>
                         @foreach ($depresiasi as $item)
-                            <option value="{{ $item->depresiasi_sub_code }}">{{ $item->depresiasi_sub_name }} ( {{ $item->depresiasi_sub_start }} Sampai {{ $item->depresiasi_sub_end }} ) Masa : {{ $item->depresiasi_sub_masa }} Tahun</option>
+                            <option value="{{ $item->depresiasi_sub_code }}">{{ $item->depresiasi_sub_name }} ( @currency($item->depresiasi_sub_start) Sampai @currency($item->depresiasi_sub_end) ) Masa : {{ $item->depresiasi_sub_masa }} Tahun</option>
                         @endforeach
                     </select>
                 </div>
