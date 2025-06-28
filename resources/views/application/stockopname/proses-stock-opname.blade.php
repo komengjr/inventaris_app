@@ -29,8 +29,8 @@
                                         width="90" />
                                     <img class="ms-1" src="{{ asset('vendor/sima.jpeg') }}" alt=""
                                         width="80" />
-                                    <img class="ms-1" src="{{ asset('vendor/prospek.png') }}" alt=""
-                                        width="80" />
+                                    {{-- <img class="ms-1" src="{{ asset('vendor/prospek.png') }}" alt=""
+                                        width="80" /> --}}
                                 </h4>
                             </div>
                         </div>
@@ -42,16 +42,20 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-md d-none d-lg-block">
-                            <h4 class="text-white fw-bold mb-1">Proses <span class="text-white fw-medium">Stock
-                                    Opname Barang Inventaris</span></h4>
+                            <h4 class="text-white fw-bold mb-1"><span class="badge bg-primary">Proses <span
+                                        class="fw-medium">Stock
+                                        Opname Barang Inventaris</span></span> </h4>
                         </div>
                         <div class="col-sm-auto d-flex align-items-center" style="justify-content: center;">
                             <button class="btn btn-falcon-warning me-2" role="button" id="button-stock-opname-kamera"
                                 data-code="{{ $id }}"><span class="fas fa-camera-retro"></span>
-                                Kamera</button>
-                            <button class="btn btn-falcon-primary" role="button" id="button-stock-opname-scanner"
+                                <span class="d-none d-md-inline-block">Kamera</span></button>
+                            <button class="btn btn-falcon-primary me-2" role="button" id="button-stock-opname-scanner"
                                 data-code="{{ $id }}"><span class="fas fa-barcode"></span>
-                                Scanner</button>
+                                <span class="d-none d-md-inline-block">Scanner</span></button>
+                            <button class="btn btn-falcon-success" role="button" id="button-stock-opname-manual"
+                                data-code="{{ $id }}"><span class="fas fa-check-square"></span>
+                                <span class="d-none d-md-inline-block">Manual</span></button>
                         </div>
                     </div>
                 </div>
@@ -102,7 +106,11 @@
                                     $totalbarang = DB::table('inventaris_data')
                                         ->where('inventaris_data_cabang', auth::user()->cabang)
                                         ->where('id_nomor_ruangan_cbaang', $no_ruangans->id_nomor_ruangan_cbaang)
-                                        ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $cekdata->end_date_verif)
+                                        ->where(
+                                            'inventaris_data.inventaris_data_tgl_beli',
+                                            '<=',
+                                            $cekdata->end_date_verif,
+                                        )
                                         ->where('inventaris_data_status', '<', '4')
                                         ->count();
                                     $jumlah = $totalbarang + $jumlah;
@@ -123,7 +131,11 @@
                                             'inventaris_data.id_nomor_ruangan_cbaang',
                                             $no_ruangans->id_nomor_ruangan_cbaang,
                                         )
-                                        ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $cekdata->end_date_verif)
+                                        ->where(
+                                            'inventaris_data.inventaris_data_tgl_beli',
+                                            '<=',
+                                            $cekdata->end_date_verif,
+                                        )
                                         ->where('inventaris_data.inventaris_data_status', '<', '4')
                                         ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 0)
                                         ->count();
@@ -139,7 +151,11 @@
                                             'inventaris_data.id_nomor_ruangan_cbaang',
                                             $no_ruangans->id_nomor_ruangan_cbaang,
                                         )
-                                        ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $cekdata->end_date_verif)
+                                        ->where(
+                                            'inventaris_data.inventaris_data_tgl_beli',
+                                            '<=',
+                                            $cekdata->end_date_verif,
+                                        )
                                         ->where('inventaris_data.inventaris_data_status', '<', '4')
                                         ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 1)
                                         ->count();
@@ -155,7 +171,11 @@
                                             'inventaris_data.id_nomor_ruangan_cbaang',
                                             $no_ruangans->id_nomor_ruangan_cbaang,
                                         )
-                                        ->where('inventaris_data.inventaris_data_tgl_beli', '<=', $cekdata->end_date_verif)
+                                        ->where(
+                                            'inventaris_data.inventaris_data_tgl_beli',
+                                            '<=',
+                                            $cekdata->end_date_verif,
+                                        )
                                         ->where('inventaris_data.inventaris_data_status', '<', '4')
                                         ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 2)
                                         ->count();
@@ -295,7 +315,8 @@
                             @if ($barangbaik + $barangmaintenance + $barangrusak == $jumlah)
                                 <span id="menu-button-penyelesaian-stockopname">
                                     <button class="btn btn-falcon-success" id="button-penyelesaian-stockopname"
-                                        data-code="{{ $cekdata->kode_verif }}"><i class="fa fa-save"></i> Penyelesaian
+                                        data-code="{{ $cekdata->kode_verif }}"><i class="fa fa-save"></i>
+                                        Penyelesaian
                                         &
                                         Simpan</button>
                                 </span>

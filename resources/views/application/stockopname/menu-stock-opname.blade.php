@@ -630,4 +630,27 @@
             });
         });
     </script>
+    <script>
+        $(document).on("click", "#button-stock-opname-manual", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#form-data-stock').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_stock_opname_proses_data_with_checklist') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#form-data-stock').html(data);
+            }).fail(function() {
+                $('#form-data-stock').html('eror');
+            });
+        });
+    </script>
 @endsection

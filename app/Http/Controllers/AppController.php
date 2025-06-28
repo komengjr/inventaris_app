@@ -1334,6 +1334,22 @@ class AppController extends Controller
             return "<span class='badge badge-pill bg-success m-1'>Success</span>";
         }
     }
+    public function menu_stock_opname_proses_data_with_checklist(Request $request)
+    {
+        $data = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)
+            ->orderBy('tbl_nomor_ruangan_cabang.nomor_ruangan', 'ASC')->get();
+        return view('application.stockopname.manual-checklist-stokopname', ['code' => $request->code, 'data' => $data]);
+    }
+    public function menu_stock_opname_proses_data_with_checklist_lokasi(Request $request){
+        $data = DB::table('inventaris_data')
+        ->where('id_nomor_ruangan_cbaang',$request->code)
+        ->where('inventaris_data_cabang',Auth::user()->cabang)
+        ->where('inventaris_data_status','<',4)
+        ->get();
+        return view('application.stockopname.form-checklist-stockopname',['data'=>$data]);
+    }
     public function menu_stock_opname_edit_data_tanggal(Request $request)
     {
         $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
