@@ -17,12 +17,12 @@
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/dashboard.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/dashboard.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/dashboard.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/dashboard.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/header.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/header.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/header.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/header.png') }}">
     <link rel="manifest" href="{{ asset('asset/img/favicons/manifest.json') }}">
-    <meta name="msapplication-TileImage" content="{{ asset('img/dashboard.png') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('img/header.png') }}">
     <meta name="theme-color" content="#ffffff">
     <script src="{{ asset('asset/js/config.js') }}"></script>
     <script src="{{ asset('vendors/overlayscrollbars/OverlayScrollbars.min.js') }}"></script>
@@ -94,8 +94,8 @@
 
                     </div><a class="navbar-brand" href="#">
                         <div class="d-flex align-items-center py-3"><img class="me-2"
-                                src="{{ asset('asset/img/icons/spot-illustrations/falcon.png') }}" alt=""
-                                width="25" /><span class="font-sans-serif fs-2">Inventaris</span>
+                                src="{{ asset('img/header.png') }}" alt=""
+                                width="35" /><span class="font-sans-serif fs-2">Inventaris</span>
                         </div>
                     </a>
                 </div>
@@ -278,7 +278,7 @@
                                 class="toggle-line"></span></span></button>
                     <a class="navbar-brand me-1 me-sm-3" href="#">
                         <div class="d-flex align-items-center"><img class="me-2"
-                                src="{{ asset('asset/img/icons/spot-illustrations/falcon.png') }}" alt=""
+                                src="{{ asset('img/header.png') }}" alt=""
                                 width="40" /><span class="font-sans-serif">Inventaris</span>
                         </div>
                     </a>
