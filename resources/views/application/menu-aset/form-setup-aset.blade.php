@@ -4,7 +4,7 @@
         <p class="fs--2 mb-0 text-white">Support by <a class="link-200 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-3">
-        <div class="card p-3 mb-3">
+        <div class="card p-3 mb-3 border border-youtube">
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="">Nama Inventaris</label>
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="card p-3 mb-3">
+        <div class="card p-3 mb-3 border border-youtube">
             <div class="row">
                 <div class="col-12">
                     <label for="">Pilih Setup Depresiasi</label>
@@ -64,7 +64,7 @@
 
             </div>
         </div>
-        <div class="card p-3" id="hasil-pencarian">
+        <div class="card p-3 border border-youtube" id="hasil-pencarian">
 
         </div>
     </div>

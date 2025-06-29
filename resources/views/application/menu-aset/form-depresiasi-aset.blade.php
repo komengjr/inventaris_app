@@ -4,7 +4,7 @@
         <p class="fs--2 mb-0 text-white">Support by <a class="link-200 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-3">
-        <div class="card p-3 mb-3">
+        <div class="card p-3 mb-3 border border-danger">
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="">Nama Inventaris</label>
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <div class="card p-3" id="hasil-pencarian">
+        <div class="card p-3 border border-youtube" id="hasil-pencarian">
             <table id="data-aset-d" class="table table-striped nowrap" style="width:100%">
                 <thead class="bg-200 text-700">
                     <tr>
@@ -65,8 +65,17 @@
                 <tbody>
                     @php
                         $no = 1;
+                        $check = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code',$datas->inventaris_data_code)
+                        ->where('penyusutan_log_harga','=',1)->first();
+                        if ($check) {
+                            $hitung = $penyusutan->count();
+                        } else {
+                            $hitung = $penyusutan->count() + 1;
+                        }
+
                     @endphp
-                    @for ($i = 0; $i < $penyusutan->count() + 1; $i++)
+                    @for ($i = 0; $i < $hitung; $i++)
+
                         <tr>
                             <td>{{ $no++ }}</td>
 

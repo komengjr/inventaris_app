@@ -1744,6 +1744,41 @@ class AppController extends Controller
                 DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->update([
                     'inventaris_data_status' => 4
                 ]);
+                $brg = DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->first();
+                if ($brg->inventaris_data_jenis == 1) {
+                    $setup = DB::table('master_depresiasi_aset')->where('inventaris_data_code', $value->id_inventaris)->first();
+                    if ($setup) {
+                        DB::table('master_depresiasi_aset')->insert([
+                            'depresiasi_aset_code' => str::uuid(),
+                            'inventaris_data_code' => $code,
+                            'depresiasi_sub_code' => $setup->depresiasi_sub_code,
+                            'created_at'=>now()
+                        ]);
+                        $depresiasi = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code', $value->id_inventaris)->get();
+                        for ($i = 0; $i < $depresiasi->count(); $i++) {
+                            DB::table('depresiasi_penyusutan_log')->insert([
+                                'penyusutan_log_code' => str::uuid(),
+                                'penyusutan_aset_code' => $depresiasi[$i]->penyusutan_aset_code,
+                                'penyusutan_log_nilai' => $depresiasi[$i]->penyusutan_log_nilai,
+                                'penyusutan_log_harga' => $depresiasi[$i]->penyusutan_log_harga,
+                                'penyusutan_log_persen' => $depresiasi[$i]->penyusutan_log_persen,
+                                'penyusutan_log_date' => $depresiasi[$i]->penyusutan_log_date,
+                                'inventaris_data_code' => $code,
+                                'created_at' => now()
+                            ]);
+                        }
+                        DB::table('depresiasi_penyusutan_log')->insert([
+                            'penyusutan_log_code' => str::uuid(),
+                            'penyusutan_aset_code' => $depresiasi[0]->penyusutan_aset_code,
+                            'penyusutan_log_nilai' => $depresiasi[0]->penyusutan_log_nilai,
+                            'penyusutan_log_harga' => 1,
+                            'penyusutan_log_persen' => $depresiasi[0]->penyusutan_log_persen,
+                            'penyusutan_log_date' => $depresiasi[0]->penyusutan_log_date,
+                            'inventaris_data_code' => $value->id_inventaris,
+                            'created_at' => now()
+                        ]);
+                    }
+                }
                 DB::table('inventaris_data')->insert([
                     'inventaris_data_code' => $code,
                     'inventaris_klasifikasi_code' => $value->inventaris_klasifikasi_code,
@@ -1812,7 +1847,15 @@ class AppController extends Controller
         ]);
         $brg = DB::table('tbl_sub_mutasi')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
             ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
-        return view('application.mutasi.table-check-mutasi', ['brg' => $brg]);
+        return view('application.mutasi.table-check-mutasi', ['brg' => $brg,'mutasi'=>$request->code]);
+    }
+    public function menu_mutasi_remove_data_barang(Request $request)
+    {
+        // $data = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
+        DB::table('tbl_sub_mutasi')->where('kd_mutasi',$request->id)->where('id_inventaris',$request->code)->delete();
+        $brg = DB::table('tbl_sub_mutasi')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
+            ->where('tbl_sub_mutasi.kd_mutasi', $request->id)->get();
+        return view('application.mutasi.table-check-mutasi', ['brg' => $brg,'mutasi'=>$request->id]);
     }
     public function menu_mutasi_verifikasi_data_mutasi(Request $request)
     {
@@ -2164,10 +2207,10 @@ class AppController extends Controller
                     'created_at' => now()
                 ]);
             }
-            return view('application.menu-aset.form-generate', ['code' => str::uuid(),'text'=>1]);
+            return view('application.menu-aset.form-generate', ['code' => str::uuid(), 'text' => 1]);
 
         } else {
-            return view('application.menu-aset.form-generate', ['code' => str::uuid(),'text'=>0]);
+            return view('application.menu-aset.form-generate', ['code' => str::uuid(), 'text' => 0]);
         }
 
     }

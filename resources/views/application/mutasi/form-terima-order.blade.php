@@ -39,9 +39,9 @@
                         <label class="form-label" for="inputAddress">Deskripsi Peminjaman</label>
                         <textarea name="" class="form-control" id="" disabled>{{ $data->ket }}</textarea>
                     </div>
-                     <div class="col-md-6">
+                    <div class="col-md-6">
                         <label class="form-label" for="inputAddress">Penerima</label>
-                        <input class="form-control" type="text" name="penerima" id="penerima"/>
+                        <input class="form-control" type="text" name="penerima" id="penerima" />
                     </div>
                 </form>
             </div>
@@ -92,7 +92,24 @@
                                     <td>{{ $brgs->inventaris_data_code }}</td>
                                     <td>{{ $brgs->inventaris_data_merk }}</td>
                                     <td>{{ $brgs->inventaris_data_tgl_beli }}</td>
-                                    <td class="text-end">@currency($brgs->inventaris_data_harga)</td>
+                                    <td class="text-end">
+                                        @if ($brgs->inventaris_data_jenis == 0)
+                                            @currency($brgs->inventaris_data_harga)
+                                        @else
+                                            @php
+                                                $harga = DB::table('depresiasi_penyusutan_log')
+                                                    ->where('inventaris_data_code', $brgs->inventaris_data_code)
+                                                    ->orderBy('id_penyusutan_log', 'DESC')
+                                                    ->first();
+                                            @endphp
+                                            @if ($harga)
+                                                @currency($harga->penyusutan_log_harga)
+                                            @else
+                                                @currency($brgs->inventaris_data_harga)
+                                            @endif
+                                        @endif
+
+                                    </td>
                                     <td>{{ $brgs->inventaris_data_location }}</td>
                                     <td>
                                         @if ($brgs->kd_lokasi_tujuan == null)

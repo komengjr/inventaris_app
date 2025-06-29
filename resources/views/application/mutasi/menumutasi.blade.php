@@ -267,6 +267,29 @@
                 $('#menu-mutasi-lg').html('eror');
             });
         });
+        $(document).on("click", "#button-remove-barang-mutasi", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var id = $(this).data("id");
+            $('#menu-table-pilih-mutasi').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_mutasi_remove_data_barang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "id": id,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-table-pilih-mutasi').html(data);
+            }).fail(function() {
+                $('#menu-table-pilih-mutasi').html('eror');
+            });
+        });
         $(document).on("click", "#button-show-order-mutasi-cabang", function(e) {
             e.preventDefault();
             // var code = $(this).data("code");

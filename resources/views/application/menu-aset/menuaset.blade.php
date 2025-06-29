@@ -65,6 +65,7 @@
                                 <th>Spesifikasi</th>
                                 <th>Tanggal Pembelian</th>
                                 <th>Harga Awal</th>
+                                <th>Status Barang</th>
                                 <th>Status Depresiasi</th>
                                 <th>Penyusutan Ke</th>
                                 <th>Action</th>
@@ -91,6 +92,15 @@
                                     <td>{{ $datas->inventaris_data_tgl_beli }}</td>
                                     <td class="text-end">@currency($datas->inventaris_data_harga)</td>
                                     <td>
+                                        @if ($datas->inventaris_data_status == 0)
+                                            <span class="badge bg-primary">Baiks</span>
+                                        @elseif ($datas->inventaris_data_status == 4)
+                                            <span class="badge bg-warning">Mutasi</span>
+                                        @elseif ($datas->inventaris_data_status == 5)
+                                            <span class="badge bg-danger">musnah</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         @php
                                             $cek = DB::table('master_depresiasi_aset')
                                                 ->join(
@@ -107,14 +117,16 @@
                                         @endphp
                                         @if ($cek)
                                             <strong class="text-danger">{{ $cek->depresiasi_sub_name }}</strong> <br>
-                                            @currency($cek->depresiasi_sub_start) -  @currency($cek->depresiasi_sub_end)
+                                            @currency($cek->depresiasi_sub_start) - @currency($cek->depresiasi_sub_end)
                                         @endif
                                     </td>
                                     <td>
                                         @php
-                                            $penyusutan = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code',$datas->inventaris_data_code)->count();
+                                            $penyusutan = DB::table('depresiasi_penyusutan_log')
+                                                ->where('inventaris_data_code', $datas->inventaris_data_code)
+                                                ->count();
                                         @endphp
-                                        {{$penyusutan}}
+                                        {{ $penyusutan }}
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
@@ -126,7 +138,8 @@
                                                 @if ($cek)
                                                     <button class="dropdown-item" data-bs-toggle="modal"
                                                         data-bs-target="#modal-aset-xl" id="button-depresiasi-data-aset"
-                                                        data-id="{{ $datas->inventaris_data_code }}" data-code="{{ $cek->depresiasi_sub_code }}"><span
+                                                        data-id="{{ $datas->inventaris_data_code }}"
+                                                        data-code="{{ $cek->depresiasi_sub_code }}"><span
                                                             class="fas fa-poll-h"></span>
                                                         Perhitungan Depresiasi Aset</button>
                                                 @else

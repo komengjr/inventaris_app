@@ -42,8 +42,7 @@
                                 $staff = DB::table('tbl_staff')->where('id_staff', $data->penanggung_jawab)->first();
                             @endphp
                             @if ($staff)
-                                <input class="form-control" type="text" value="{{ $staff->nama_staff }}"
-                                    disabled />
+                                <input class="form-control" type="text" value="{{ $staff->nama_staff }}" disabled />
                             @else
                                 <input class="form-control" type="text" value="{{ $data->penanggung_jawab }}"
                                     disabled />
@@ -141,7 +140,10 @@
                                         <td>{{ $brgs->inventaris_data_merk }}</td>
                                         <td>{{ $brgs->inventaris_data_tgl_beli }}</td>
                                         <td>
-                                            <button class="btn btn-falcon-danger"><span
+                                            <button class="btn btn-falcon-danger btn-sm"
+                                                id="button-remove-barang-mutasi"
+                                                data-code="{{ $brgs->inventaris_data_code }}"
+                                                data-id="{{ $data->kd_mutasi }}"><span
                                                     class="fas fa-trash"></span></button>
                                         </td>
                                     </tr>

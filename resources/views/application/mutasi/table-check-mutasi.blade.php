@@ -21,7 +21,9 @@
                  <td>{{ $brgs->inventaris_data_merk }}</td>
                  <td>{{ $brgs->inventaris_data_tgl_beli }}</td>
                  <td>
-                     <button class="btn btn-falcon-primary"><span class="fas fa-trash"></span></button>
+                     <button class="btn btn-falcon-danger btn-sm" id="button-remove-barang-mutasi"
+                         data-code="{{ $brgs->inventaris_data_code }}" data-id="{{ $mutasi }}"><span
+                             class="fas fa-trash"></span></button>
                  </td>
              </tr>
          @endforeach

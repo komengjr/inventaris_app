@@ -218,6 +218,7 @@
         padding: 8px 0;
         text-align: center;
     }
+
     #no_surat {
         margin-top: -20px;
     }
@@ -276,7 +277,12 @@
                         <td>PJ Asal Cabang</td>
                         <td>:</td>
                         <td>
-                            {{ $mutasi->penanggung_jawab }}
+                            @php
+                                $nama = DB::table('tbl_staff')->where('id_staff',$mutasi->penanggung_jawab)->first();
+                            @endphp
+                            @if ($nama)
+                                {{$nama->nama_staff}}
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -338,7 +344,23 @@
                         <td>{{ $item->inventaris_data_name }}</td>
                         <td>{{ $item->inventaris_data_number }}</td>
                         <td>{{ $item->inventaris_data_merk }} / {{ $item->inventaris_data_type }}</td>
-                        <td style="text-align: right;">@currency($item->inventaris_data_harga)</td>
+                        <td style="text-align: right;">
+                            @if ($item->inventaris_data_jenis == 0)
+                                @currency($item->inventaris_data_harga)
+                            @else
+                                @php
+                                    $cek = DB::table('depresiasi_penyusutan_log')
+                                        ->orderBy('id_penyusutan_log', 'DESC')
+                                        ->where('inventaris_data_code', $item->inventaris_data_code)
+                                        ->first();
+                                @endphp
+                                @if ($cek)
+                                    @currency($cek->penyusutan_log_harga)
+                                @else
+                                    @currency($item->inventaris_data_harga)
+                                @endif
+                            @endif
+                        </td>
                         <td>{{ $item->inventaris_data_tgl_beli }}</td>
                         <td><strong style="color: rgb(239, 9, 9);">Telah dimutasi</strong></td>
                     </tr>
@@ -372,7 +394,23 @@
                             <td>{{ $item->inventaris_data_name }}</td>
                             <td>{{ $item->inventaris_data_number }}</td>
                             <td>{{ $item->inventaris_data_merk }} / {{ $item->inventaris_data_type }}</td>
-                            <td style="text-align: right;">@currency($item->inventaris_data_harga)</td>
+                            <td style="text-align: right;">
+                                @if ($item->inventaris_data_jenis == 0)
+                                    @currency($item->inventaris_data_harga)
+                                @else
+                                    @php
+                                        $cek = DB::table('depresiasi_penyusutan_log')
+                                            ->orderBy('id_penyusutan_log', 'DESC')
+                                            ->where('inventaris_data_code', $item->inventaris_data_code)
+                                            ->first();
+                                    @endphp
+                                    @if ($cek)
+                                        @currency($cek->penyusutan_log_harga)
+                                    @else
+                                        @currency($item->inventaris_data_harga)
+                                    @endif
+                                @endif
+                            </td>
                             <td>{{ $item->inventaris_data_tgl_beli }}</td>
                             <td><strong style="color: rgb(9, 239, 93);">Telah dibuat</strong></td>
                         </tr>

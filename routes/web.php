@@ -521,6 +521,7 @@ Route::prefix('app')->group(function () {
     Route::post('menu-mutasi/remove-mutasi', [AppController::class, 'menu_mutasi_remove_mutasi'])->name('menu_mutasi_remove_mutasi');
     Route::post('menu-mutasi/proses-remove-mutasi', [AppController::class, 'menu_mutasi_proses_remove_mutasi'])->name('menu_mutasi_proses_remove_mutasi');
     Route::post('menu-mutasi/find-data', [AppController::class, 'menu_mutasi_find_data'])->name('menu_mutasi_find_data');
+    Route::post('menu-mutasi/remove-data-barang', [AppController::class, 'menu_mutasi_remove_data_barang'])->name('menu_mutasi_remove_data_barang');
     Route::post('menu-mutasi/chose-data', [AppController::class, 'menu_mutasi_pilih_data'])->name('menu_mutasi_pilih_data');
     Route::post('menu-mutasi/verifikasi-data-mutasi', [AppController::class, 'menu_mutasi_verifikasi_data_mutasi'])->name('menu_mutasi_verifikasi_data_mutasi');
     Route::post('menu-mutasi/verifikasi-code-data-mutasi', [AppController::class, 'menu_mutasi_verifikasi_code_data_mutasi'])->name('menu_mutasi_verifikasi_code_data_mutasi');
