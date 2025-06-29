@@ -77,8 +77,11 @@
                                     <img src="{{ asset('no_pict.png') }}" alt="lightbox" class="img-thumbnail"
                                         id="videoPreview" width="70" height="70">
                                 @else
-                                    <img src="{{ asset($datas->inventaris_data_file) }}" alt=""
-                                        width="80" />
+                                    <div class="avatar avatar-4xl">
+                                        <img class="rounded-soft" src="{{ asset($datas->inventaris_data_file) }}" alt="" />
+                                    </div>
+                                    {{-- <img src="{{ asset($datas->inventaris_data_file) }}" alt=""
+                                        width="80" /> --}}
                                 @endif
                             </td>
                             <td>{{ $datas->inventaris_data_name }}</td>
@@ -105,7 +108,7 @@
                                             <span class="far fa-address-card"></span> Detail & Edit
                                         </button>
                                         <button class="dropdown-item"
-                                            onclick="window.open('{{route('dashboard_data_lokasi_detail_barcode',['id'=>$datas->inventaris_data_code])}}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';">
+                                            onclick="window.open('{{ route('dashboard_data_lokasi_detail_barcode', ['id' => $datas->inventaris_data_code]) }}', 'formpopup', 'width=400,height=400,resizeable,scrollbars'); this.target = 'formpopup';">
                                             <span class="fas fa-qrcode"></span> Print Barcode
                                         </button>
 
