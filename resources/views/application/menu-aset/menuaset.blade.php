@@ -65,7 +65,7 @@
                                 <th>Spesifikasi</th>
                                 <th>Tanggal Pembelian</th>
                                 <th>Harga Awal</th>
-                                <th>Status Barang</th>
+                                <th>Status</th>
                                 <th>Status Depresiasi</th>
                                 <th>Penyusutan Ke</th>
                                 <th>Action</th>
@@ -93,7 +93,7 @@
                                     <td class="text-end">@currency($datas->inventaris_data_harga)</td>
                                     <td>
                                         @if ($datas->inventaris_data_status == 0)
-                                            <span class="badge bg-primary">Baiks</span>
+                                            <span class="badge bg-primary">Baik</span>
                                         @elseif ($datas->inventaris_data_status == 4)
                                             <span class="badge bg-warning">Mutasi</span>
                                         @elseif ($datas->inventaris_data_status == 5)
