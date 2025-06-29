@@ -2131,40 +2131,45 @@ class AppController extends Controller
     }
     public function menu_aset_data_depresiasi_aset_generate(Request $request)
     {
-        $check = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code', $request->id)->first();
-        if ($check) {
-            $total = DB::table('depresiasi_penyusutan_log')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->count();
-            DB::table('depresiasi_penyusutan_log')->insert([
-                'penyusutan_log_code' => str::uuid(),
-                'penyusutan_aset_code' => $check->penyusutan_aset_code,
-                'inventaris_data_code' => $request->id,
-                'penyusutan_log_nilai' => $request->nilai,
-                'penyusutan_log_persen' => $request->persen,
-                'penyusutan_log_harga' => $request->harga,
-                'penyusutan_log_date' => date('Y-m-d',strtotime($request->date)),
-            ]);
-            DB::table('depresiasi_penyusutan_aset')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->update([
-                'penyusutan_aset_ke' => $total + 1,
-            ]);
+        if (date('Y-m-d', strtotime($request->date)) < now()) {
+            $check = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code', $request->id)->first();
+            if ($check) {
+                $total = DB::table('depresiasi_penyusutan_log')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->count();
+                DB::table('depresiasi_penyusutan_log')->insert([
+                    'penyusutan_log_code' => str::uuid(),
+                    'penyusutan_aset_code' => $check->penyusutan_aset_code,
+                    'inventaris_data_code' => $request->id,
+                    'penyusutan_log_nilai' => $request->nilai,
+                    'penyusutan_log_persen' => $request->persen,
+                    'penyusutan_log_harga' => $request->harga,
+                    'penyusutan_log_date' => date('Y-m-d', strtotime($request->date)),
+                ]);
+                DB::table('depresiasi_penyusutan_aset')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->update([
+                    'penyusutan_aset_ke' => $total + 1,
+                ]);
+            } else {
+                $code = str::uuid();
+                DB::table('depresiasi_penyusutan_log')->insert([
+                    'penyusutan_log_code' => str::uuid(),
+                    'penyusutan_aset_code' => $code,
+                    'inventaris_data_code' => $request->id,
+                    'penyusutan_log_nilai' => $request->nilai,
+                    'penyusutan_log_persen' => $request->persen,
+                    'penyusutan_log_harga' => $request->harga,
+                    'penyusutan_log_date' => date('Y-m-d', strtotime($request->date)),
+                ]);
+                DB::table('depresiasi_penyusutan_aset')->insert([
+                    'penyusutan_aset_code' => $code,
+                    'penyusutan_aset_ke' => 1,
+                    'created_at' => now()
+                ]);
+            }
+            return view('application.menu-aset.form-generate', ['code' => str::uuid(),'text'=>1]);
+
         } else {
-            $code = str::uuid();
-            DB::table('depresiasi_penyusutan_log')->insert([
-                'penyusutan_log_code' => str::uuid(),
-                'penyusutan_aset_code' => $code,
-                'inventaris_data_code' => $request->id,
-                'penyusutan_log_nilai' => $request->nilai,
-                'penyusutan_log_persen' => $request->persen,
-                'penyusutan_log_harga' => $request->harga,
-                'penyusutan_log_date' => date('Y-m-d',strtotime($request->date)),
-            ]);
-            DB::table('depresiasi_penyusutan_aset')->insert([
-                'penyusutan_aset_code' => $code,
-                'penyusutan_aset_ke' => 1,
-                'created_at' => now()
-            ]);
+            return view('application.menu-aset.form-generate', ['code' => str::uuid(),'text'=>0]);
         }
 
-        return view('application.menu-aset.form-generate', ['code' => str::uuid()]);
     }
 
     // REKAP LAPORAN
