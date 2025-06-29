@@ -579,6 +579,9 @@ Route::prefix('app')->group(function () {
     // MENU ASET
     Route::post('menu-aset/setup', [AppController::class, 'menu_aset_setup'])->name('menu_aset_setup');
     Route::post('menu-aset/setup-pilih-depresiasi', [AppController::class, 'menu_aset_setup_pilih_depresiasi'])->name('menu_aset_setup_pilih_depresiasi');
+    Route::post('menu-aset/setup-pilih-depresiasi/save', [AppController::class, 'menu_aset_setup_pilih_depresiasi_save'])->name('menu_aset_setup_pilih_depresiasi_save');
+    Route::post('menu-aset/data-depresiasi-aset', [AppController::class, 'menu_aset_data_depresiasi_aset'])->name('menu_aset_data_depresiasi_aset');
+    Route::post('menu-aset/data-depresiasi-aset-generate', [AppController::class, 'menu_aset_data_depresiasi_aset_generate'])->name('menu_aset_data_depresiasi_aset_generate');
 
     // MENU BARANG
     Route::post('laporan/cetak-rekap-ruangan', [AppController::class, 'laporan_cetak_rekap_ruangan'])->name('laporan_cetak_rekap_ruangan');

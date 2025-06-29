@@ -2060,8 +2060,8 @@ class AppController extends Controller
     }
     public function menu_aset_setup_pilih_depresiasi(Request $request)
     {
-        $setup = DB::table('master_depresiasi_sub')->where('depresiasi_sub_code',$request->code)->first();
-        $inventaris = DB::table('inventaris_data')->where('inventaris_data_code',$request->id)->first();
+        $setup = DB::table('master_depresiasi_sub')->where('depresiasi_sub_code', $request->code)->first();
+        $inventaris = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
         $fixharga = $inventaris->inventaris_data_harga;
 
         // $datadepresiasi = DB::table('tbl_depresiasi')
@@ -2080,11 +2080,91 @@ class AppController extends Controller
         return view('application.menu-aset.form-hitung-depresiasi', [
             'data' => $data,
             'hargaperolehan' => $hargaperolehan,
-            'harga' => $fixharga,
+            'code' => $request->code,
+            'id' => $request->id,
             'persen' => $persen,
             'pengurangan' => $pengurangan,
-            'hitung' => $setup->depresiasi_sub_hitung
+            'hitung' => $setup->depresiasi_sub_hitung,
+
         ]);
+    }
+    public function menu_aset_setup_pilih_depresiasi_save(Request $request)
+    {
+        DB::table('master_depresiasi_aset')->insert([
+            'depresiasi_aset_code' => str::uuid(),
+            'inventaris_data_code' => $request->id,
+            'depresiasi_sub_code' => $request->code,
+            'created_at' => now()
+        ]);
+        return 123;
+    }
+    public function menu_aset_data_depresiasi_aset(Request $request)
+    {
+        $datas = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
+        $setup = DB::table('master_depresiasi_sub')->where('depresiasi_sub_code', $request->code)->first();
+        $inventaris = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
+        $fixharga = $inventaris->inventaris_data_harga;
+        $penyusutan = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code', $request->id)->get();
+        // $datadepresiasi = DB::table('tbl_depresiasi')
+
+        //     ->where('kd_depresiasi', $id)->first();
+        $pengurangan = $fixharga / $setup->depresiasi_sub_hitung;
+        $persen = ($pengurangan / $fixharga) * 100;
+        for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
+            $data[$i] = date('d - M - Y', strtotime('+' . $i . ' month', strtotime($inventaris->inventaris_data_tgl_beli)));
+        }
+        for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
+            $hargaperolehan[$i] = $fixharga;
+            $fixharga = $fixharga - $pengurangan;
+        }
+        return view('application.menu-aset.form-depresiasi-aset', [
+            'datas' => $datas,
+            'data' => $data,
+            'hargaperolehan' => $hargaperolehan,
+            'code' => $request->code,
+            'id' => $request->id,
+            'persen' => $persen,
+            'pengurangan' => $pengurangan,
+            'hitung' => $setup->depresiasi_sub_hitung,
+            'penyusutan' => $penyusutan
+        ]);
+    }
+    public function menu_aset_data_depresiasi_aset_generate(Request $request)
+    {
+        $check = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code', $request->id)->first();
+        if ($check) {
+            $total = DB::table('depresiasi_penyusutan_log')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->count();
+            DB::table('depresiasi_penyusutan_log')->insert([
+                'penyusutan_log_code' => str::uuid(),
+                'penyusutan_aset_code' => $check->penyusutan_aset_code,
+                'inventaris_data_code' => $request->id,
+                'penyusutan_log_nilai' => $request->nilai,
+                'penyusutan_log_persen' => $request->persen,
+                'penyusutan_log_harga' => $request->harga,
+                'penyusutan_log_date' => date('Y-m-d',strtotime($request->date)),
+            ]);
+            DB::table('depresiasi_penyusutan_aset')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->update([
+                'penyusutan_aset_ke' => $total + 1,
+            ]);
+        } else {
+            $code = str::uuid();
+            DB::table('depresiasi_penyusutan_log')->insert([
+                'penyusutan_log_code' => str::uuid(),
+                'penyusutan_aset_code' => $code,
+                'inventaris_data_code' => $request->id,
+                'penyusutan_log_nilai' => $request->nilai,
+                'penyusutan_log_persen' => $request->persen,
+                'penyusutan_log_harga' => $request->harga,
+                'penyusutan_log_date' => date('Y-m-d',strtotime($request->date)),
+            ]);
+            DB::table('depresiasi_penyusutan_aset')->insert([
+                'penyusutan_aset_code' => $code,
+                'penyusutan_aset_ke' => 1,
+                'created_at' => now()
+            ]);
+        }
+
+        return view('application.menu-aset.form-generate', ['code' => str::uuid()]);
     }
 
     // REKAP LAPORAN

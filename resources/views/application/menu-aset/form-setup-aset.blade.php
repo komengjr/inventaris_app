@@ -1,7 +1,7 @@
 <div class="modal-body p-0">
     <div class="bg-youtube rounded-top-lg py-3 ps-4 pe-6">
         <h4 class="mb-1 text-white" id="staticBackdropLabel">Setup Data Aset</h4>
-        <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
+        <p class="fs--2 mb-0 text-white">Support by <a class="link-200 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-3">
         <div class="card p-3 mb-3">

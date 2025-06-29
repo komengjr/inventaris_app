@@ -64,8 +64,9 @@
                                 <th>No Inventaris</th>
                                 <th>Spesifikasi</th>
                                 <th>Tanggal Pembelian</th>
-                                <th>Harga Pembelian</th>
+                                <th>Harga Awal</th>
                                 <th>Status Depresiasi</th>
+                                <th>Penyusutan Ke</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -89,7 +90,32 @@
 
                                     <td>{{ $datas->inventaris_data_tgl_beli }}</td>
                                     <td class="text-end">@currency($datas->inventaris_data_harga)</td>
-                                    <td></td>
+                                    <td>
+                                        @php
+                                            $cek = DB::table('master_depresiasi_aset')
+                                                ->join(
+                                                    'master_depresiasi_sub',
+                                                    'master_depresiasi_sub.depresiasi_sub_code',
+                                                    '=',
+                                                    'master_depresiasi_aset.depresiasi_sub_code',
+                                                )
+                                                ->where(
+                                                    'master_depresiasi_aset.inventaris_data_code',
+                                                    $datas->inventaris_data_code,
+                                                )
+                                                ->first();
+                                        @endphp
+                                        @if ($cek)
+                                            <strong class="text-danger">{{ $cek->depresiasi_sub_name }}</strong> <br>
+                                            @currency($cek->depresiasi_sub_start) -  @currency($cek->depresiasi_sub_end)
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @php
+                                            $penyusutan = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code',$datas->inventaris_data_code)->count();
+                                        @endphp
+                                        {{$penyusutan}}
+                                    </td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <button class="btn btn-sm btn-falcon-danger" id="btnGroupVerticalDrop2"
@@ -97,14 +123,20 @@
                                                 aria-expanded="false"><span class="fas fa-align-left me-1"
                                                     data-fa-transform="shrink-3"></span>Option</button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                                                <button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-aset-xl" id="button-setup-data-aset" data-code="{{$datas->inventaris_data_code}}"><span
-                                                        class="fas fa-photo-video"></span>
-                                                    Setup Depresiasi</button>
-                                                <button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-aset-xl" id="button-setup-data-aset" data-code="{{$datas->inventaris_data_code}}"><span
-                                                        class="fas fa-poll-h"></span>
-                                                    Perhitungan Depresiasi Aset</button>
+                                                @if ($cek)
+                                                    <button class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-aset-xl" id="button-depresiasi-data-aset"
+                                                        data-id="{{ $datas->inventaris_data_code }}" data-code="{{ $cek->depresiasi_sub_code }}"><span
+                                                            class="fas fa-poll-h"></span>
+                                                        Perhitungan Depresiasi Aset</button>
+                                                @else
+                                                    <button class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-aset-xl" id="button-setup-data-aset"
+                                                        data-code="{{ $datas->inventaris_data_code }}"><span
+                                                            class="fas fa-photo-video"></span>
+                                                        Setup Depresiasi</button>
+                                                @endif
+
 
                                             </div>
                                         </div>
@@ -177,6 +209,18 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-aset-md" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="menu-aset-md"></div>
+            </div>
+        </div>
+    </div>
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> --}}
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
@@ -206,6 +250,83 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "code": code,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-aset-xl').html(data);
+            }).fail(function() {
+                $('#menu-aset-xl').html('eror');
+            });
+        });
+        $(document).on("click", "#button-depresiasi-data-aset", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var id = $(this).data("id");
+            $('#menu-aset-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_aset_data_depresiasi_aset') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "id": id,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-aset-xl').html(data);
+            }).fail(function() {
+                $('#menu-aset-xl').html('eror');
+            });
+        });
+        $(document).on("click", "#button-fix-data-aset", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var id = $(this).data("id");
+            $('#menu-aset-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_aset_setup_pilih_depresiasi_save') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "id": id,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                location.reload();
+            }).fail(function() {
+                $('#menu-aset-xl').html('eror');
+            });
+        });
+        $(document).on("click", "#button-generate-fix-aset", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            var id = $(this).data("id");
+            var nilai = $(this).data("nilai");
+            var persen = $(this).data("persen");
+            var harga = $(this).data("harga");
+            var date = $(this).data("date");
+            $('#menu-aset-xl').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('menu_aset_data_depresiasi_aset_generate') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                    "id": id,
+                    "nilai": nilai,
+                    "persen": persen,
+                    "harga": harga,
+                    "date": date,
                 },
                 dataType: 'html',
             }).done(function(data) {
