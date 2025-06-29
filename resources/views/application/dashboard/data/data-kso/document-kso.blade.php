@@ -9,7 +9,7 @@
                          </h5>
                      </div>
                      <div class="col-sm-auto">
-                         <div class="btn-group" role="group">
+                         {{-- <div class="btn-group" role="group">
                              <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
                                  type="button" data-bs-toggle="dropdown" aria-haspopup="true"
                                  aria-expanded="false"><span class="fas fa-align-left me-1"
@@ -20,7 +20,7 @@
                                          class="far fa-edit"></span>
                                      Tambah Klasifikasi</button>
                              </div>
-                         </div>
+                         </div> --}}
                      </div>
                  </div>
                  <hr>
@@ -60,7 +60,7 @@
                          </h5>
                      </div>
                      <div class="col-sm-auto">
-                         <div class="btn-group" role="group">
+                         {{-- <div class="btn-group" role="group">
                              <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
                                  type="button" data-bs-toggle="dropdown" aria-haspopup="true"
                                  aria-expanded="false"><span class="fas fa-align-left me-1"
@@ -69,7 +69,7 @@
                                  <button class="dropdown-item" id="#"><span class="far fa-folder-open"></span>
                                      Clone Data</button>
                              </div>
-                         </div>
+                         </div> --}}
                      </div>
                  </div>
                  <hr>
