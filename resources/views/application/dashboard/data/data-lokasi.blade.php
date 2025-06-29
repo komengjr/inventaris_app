@@ -74,11 +74,13 @@
                         <tr>
                             <td>
                                 @if ($datas->inventaris_data_file == '')
-                                    <img src="{{ asset('no_pict.png') }}" alt="lightbox" class="img-thumbnail"
-                                        id="videoPreview" width="70" height="70">
+                                    <div class="avatar avatar-4xl">
+                                        <img class="rounded-soft" src="{{ asset('no_pict.png') }}" alt="" />
+                                    </div>
                                 @else
                                     <div class="avatar avatar-4xl">
-                                        <img class="rounded-soft" src="{{ asset($datas->inventaris_data_file) }}" alt="" />
+                                        <img class="rounded-soft" src="{{ asset($datas->inventaris_data_file) }}"
+                                            alt="" />
                                     </div>
                                     {{-- <img src="{{ asset($datas->inventaris_data_file) }}" alt=""
                                         width="80" /> --}}
