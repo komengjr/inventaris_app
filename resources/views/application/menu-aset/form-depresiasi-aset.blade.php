@@ -65,55 +65,79 @@
                 <tbody>
                     @php
                         $no = 1;
-                        $check = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code',$datas->inventaris_data_code)
-                        ->where('penyusutan_log_harga','=',1)->first();
+                        $check = DB::table('depresiasi_penyusutan_log')
+                            ->where('inventaris_data_code', $datas->inventaris_data_code)
+                            ->where('penyusutan_log_harga', '=', 1)
+                            ->first();
                         if ($check) {
-                            $hitung = $penyusutan->count();
+                            $hitungs = $penyusutan->count();
                         } else {
-                            $hitung = $penyusutan->count() + 1;
+                            $hitungs = $penyusutan->count() + 1;
                         }
 
                     @endphp
-                    @for ($i = 0; $i < $hitung; $i++)
+                    @for ($i = 0; $i < $hitungs; $i++)
+                        @if ($i == $hitung)
+                            <tr>
+                                <td>{{ $no++ }}</td>
 
-                        <tr>
-                            <td>{{ $no++ }}</td>
-
-                            <td>{{ $data[$i] }}</td>
-                            <td class="text-center">
-                                @if ($penyusutan->count() == $i)
-                                   {{ substr($persen, 0, 4) }} %
-                                @else
-                                    <strong class="text-primary">{{ substr($penyusutan[$i]->penyusutan_log_persen, 0, 4) }} %</strong>
-                                @endif
-                            </td>
-                            <td class="text-end">
-                                @if ($penyusutan->count() == $i)
+                                <td>{{ $data[$i-1] }}</td>
+                                <td class="text-center">
+                                    {{ substr($persen, 0, 4) }} %
+                                </td>
+                                <td class="text-end">
                                     @currency($pengurangan)
-                                @else
-                                    <strong class="text-primary">@currency($penyusutan[$i]->penyusutan_log_nilai)</strong>
-                                @endif
-                            </td>
-                            <td class="text-end">
-                                @if ($penyusutan->count() == $i)
-                                    @currency($hargaperolehan[$i])
-                                @else
-                                    <strong class="text-primary">@currency($penyusutan[$i]->penyusutan_log_harga)</strong>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if ($penyusutan->count() == $i)
-                                    <button class="btn btn-primary btn-sm" id="button-generate-fix-aset"
-                                        data-id="{{ $datas->inventaris_data_code }}" data-code="{{ $code }}"
-                                        data-nilai="{{ $pengurangan }}" data-persen="{{ substr($persen, 0, 4) }}"
-                                        data-harga="{{ $hargaperolehan[$i] }}" data-date="{{ $data[$i] }}"><span
-                                            class="far fa-credit-card"></span>
-                                        Generate</button>
-                                @else
-                                    <span class="badge bg-primary">Generated</span>
-                                @endif
-                            </td>
-                        </tr>
+                                </td>
+                                <td class="text-end">
+                                    <strong class="text-primary">@currency(1)</strong>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-primary">Done</span>
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td>{{ $no++ }}</td>
+
+                                <td>{{ $data[$i] }}</td>
+                                <td class="text-center">
+                                    @if ($penyusutan->count() == $i)
+                                        {{ substr($persen, 0, 4) }} %
+                                    @else
+                                        <strong
+                                            class="text-primary">{{ substr($penyusutan[$i]->penyusutan_log_persen, 0, 4) }}
+                                            %</strong>
+                                    @endif
+                                </td>
+                                <td class="text-end">
+                                    @if ($penyusutan->count() == $i)
+                                        @currency($pengurangan)
+                                    @else
+                                        <strong class="text-primary">@currency($penyusutan[$i]->penyusutan_log_nilai)</strong>
+                                    @endif
+                                </td>
+                                <td class="text-end">
+                                    @if ($penyusutan->count() == $i)
+                                        @currency($hargaperolehan[$i])
+                                    @else
+                                        <strong class="text-primary">@currency($penyusutan[$i]->penyusutan_log_harga)</strong>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if ($penyusutan->count() == $i)
+                                        <button class="btn btn-primary btn-sm" id="button-generate-fix-aset"
+                                            data-id="{{ $datas->inventaris_data_code }}"
+                                            data-code="{{ $code }}" data-nilai="{{ $pengurangan }}"
+                                            data-persen="{{ substr($persen, 0, 4) }}"
+                                            data-harga="{{ $hargaperolehan[$i] }}"
+                                            data-date="{{ $data[$i] }}"><span class="far fa-credit-card"></span>
+                                            Generate</button>
+                                    @else
+                                        <span class="badge bg-primary">Generated</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
                     @endfor
                 </tbody>
             </table>
