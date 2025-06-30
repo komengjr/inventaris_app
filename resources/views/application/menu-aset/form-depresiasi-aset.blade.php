@@ -157,7 +157,7 @@
                             <td class="text-center"><span class="badge bg-primary">Generated</span></td>
                         </tr>
                     @endforeach
-                    @if ($depresiasi->penyusutan_log_harga != 1)
+                    @if ($depresiasi->penyusutan_log_harga > 1)
                         @php
                             $hasil = $depresiasi->penyusutan_log_harga - $depresiasi->penyusutan_log_nilai;
                         @endphp
@@ -168,7 +168,7 @@
                             <td>{{ $depresiasi->penyusutan_log_persen }} %</td>
                             <td>@currency($depresiasi->penyusutan_log_nilai)</td>
                             <td>
-                                @if ($hasil <= 0)
+                                @if ($hasil <= 1)
                                     @currency(1)
                                 @else
                                     @currency($hasil)
