@@ -74,11 +74,11 @@
                         <tr>
                             <td>
                                 @if ($datas->inventaris_data_file == '')
-                                    <div class="avatar avatar-4xl-xxl avatar-3xl-xl avatar-2xl-sm">
+                                    <div class="avatar avatar-3xl">
                                         <img class="rounded-soft" src="{{ asset('no_pict.png') }}" alt="" />
                                     </div>
                                 @else
-                                    <div class="avatar avatar-4xl-xxl avatar-3xl-xl avatar-2xl-sm">
+                                    <div class="avatar avatar-3xl">
                                         <img class="rounded-soft" src="{{ asset($datas->inventaris_data_file) }}"
                                             alt="" />
                                     </div>
