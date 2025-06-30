@@ -28,7 +28,8 @@
 <div class="row pt-4">
     <div class="col-12">
         <button class="btn btn-falcon-danger float-end" id="button-fix-data-aset" data-code="{{ $code }}"
-            data-id="{{ $id }}"><span class="fas fa-save"></span> Simpan</button>
+            data-persen="{{ $persen }}" data-nilai="{{ $pengurangan }}" data-id="{{ $id }}"><span
+                class="fas fa-save"></span> Simpan</button>
     </div>
 </div>
 <script>

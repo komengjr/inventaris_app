@@ -1752,7 +1752,7 @@ class AppController extends Controller
                             'depresiasi_aset_code' => str::uuid(),
                             'inventaris_data_code' => $code,
                             'depresiasi_sub_code' => $setup->depresiasi_sub_code,
-                            'created_at'=>now()
+                            'created_at' => now()
                         ]);
                         $depresiasi = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code', $value->id_inventaris)->get();
                         for ($i = 0; $i < $depresiasi->count(); $i++) {
@@ -1847,15 +1847,15 @@ class AppController extends Controller
         ]);
         $brg = DB::table('tbl_sub_mutasi')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
             ->where('tbl_sub_mutasi.kd_mutasi', $request->code)->get();
-        return view('application.mutasi.table-check-mutasi', ['brg' => $brg,'mutasi'=>$request->code]);
+        return view('application.mutasi.table-check-mutasi', ['brg' => $brg, 'mutasi' => $request->code]);
     }
     public function menu_mutasi_remove_data_barang(Request $request)
     {
         // $data = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
-        DB::table('tbl_sub_mutasi')->where('kd_mutasi',$request->id)->where('id_inventaris',$request->code)->delete();
+        DB::table('tbl_sub_mutasi')->where('kd_mutasi', $request->id)->where('id_inventaris', $request->code)->delete();
         $brg = DB::table('tbl_sub_mutasi')->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_mutasi.id_inventaris')
             ->where('tbl_sub_mutasi.kd_mutasi', $request->id)->get();
-        return view('application.mutasi.table-check-mutasi', ['brg' => $brg,'mutasi'=>$request->id]);
+        return view('application.mutasi.table-check-mutasi', ['brg' => $brg, 'mutasi' => $request->id]);
     }
     public function menu_mutasi_verifikasi_data_mutasi(Request $request)
     {
@@ -2133,43 +2133,62 @@ class AppController extends Controller
     }
     public function menu_aset_setup_pilih_depresiasi_save(Request $request)
     {
+        $data = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
+        $code = str::uuid();
         DB::table('master_depresiasi_aset')->insert([
             'depresiasi_aset_code' => str::uuid(),
             'inventaris_data_code' => $request->id,
             'depresiasi_sub_code' => $request->code,
             'created_at' => now()
         ]);
+        DB::table('depresiasi_penyusutan_aset')->insert([
+            'penyusutan_aset_code' => $code,
+            'penyusutan_aset_ke' => 0,
+            'penyusutan_aset_nilai' => $request->nilai,
+            'penyusutan_aset_persen' => $request->persen,
+            'created_at' => now()
+        ]);
+        DB::table('depresiasi_penyusutan_log')->insert([
+            'penyusutan_log_code' => str::uuid(),
+            'penyusutan_aset_code' => $code,
+            'inventaris_data_code' => $request->id,
+            'penyusutan_log_nilai' => $request->nilai,
+            'penyusutan_log_persen' => $request->persen,
+            'penyusutan_log_harga' => $data->inventaris_data_harga,
+            'penyusutan_log_date' => $data->inventaris_data_tgl_beli,
+        ]);
         return 123;
     }
     public function menu_aset_data_depresiasi_aset(Request $request)
     {
         $datas = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
-        $setup = DB::table('master_depresiasi_sub')->where('depresiasi_sub_code', $request->code)->first();
-        $inventaris = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
-        $fixharga = $inventaris->inventaris_data_harga;
+        // $setup = DB::table('master_depresiasi_sub')->where('depresiasi_sub_code', $request->code)->first();
+        // $inventaris = DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->first();
+        // $fixharga = $inventaris->inventaris_data_harga;
         $penyusutan = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code', $request->id)->get();
         // $datadepresiasi = DB::table('tbl_depresiasi')
-
+        $depresiasi = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code', $request->id)->orderBy('id_penyusutan_log', 'DESC')->first();
         //     ->where('kd_depresiasi', $id)->first();
-        $pengurangan = $fixharga / $setup->depresiasi_sub_hitung;
-        $persen = ($pengurangan / $fixharga) * 100;
-        for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
-            $data[$i] = date('d - M - Y', strtotime('+' . $i . ' month', strtotime($inventaris->inventaris_data_tgl_beli)));
-        }
-        for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
-            $hargaperolehan[$i] = $fixharga;
-            $fixharga = $fixharga - $pengurangan;
-        }
+        // $pengurangan = $fixharga / $setup->depresiasi_sub_hitung;
+        // $persen = ($pengurangan / $fixharga) * 100;
+        // for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
+        //     $data[$i] = date('d - M - Y', strtotime('+' . $i . ' month', strtotime($inventaris->inventaris_data_tgl_beli)));
+        // }
+        // for ($i = 0; $i < $setup->depresiasi_sub_hitung; $i++) {
+        //     $hargaperolehan[$i] = $fixharga;
+        //     $fixharga = $fixharga - $pengurangan;
+        // }
         return view('application.menu-aset.form-depresiasi-aset', [
             'datas' => $datas,
-            'data' => $data,
-            'hargaperolehan' => $hargaperolehan,
+            // 'data' => $data,
+            // 'hargaperolehan' => $hargaperolehan,
             'code' => $request->code,
             'id' => $request->id,
-            'persen' => $persen,
-            'pengurangan' => $pengurangan,
-            'hitung' => $setup->depresiasi_sub_hitung,
-            'penyusutan' => $penyusutan
+            // 'persen' => $persen,
+            // 'pengurangan' => $pengurangan,
+            // 'hitung' => $setup->depresiasi_sub_hitung,
+            'penyusutan' => $penyusutan,
+            'depresiasi' => $depresiasi,
         ]);
     }
     public function menu_aset_data_depresiasi_aset_generate(Request $request)
@@ -2177,6 +2196,11 @@ class AppController extends Controller
         if (date('Y-m-d', strtotime($request->date)) < now()) {
             $check = DB::table('depresiasi_penyusutan_log')->where('inventaris_data_code', $request->id)->first();
             if ($check) {
+                if ($request->harga <= 0) {
+                    $harga = 1;
+                }else{
+                    $harga = $request->harga;
+                }
                 $total = DB::table('depresiasi_penyusutan_log')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->count();
                 DB::table('depresiasi_penyusutan_log')->insert([
                     'penyusutan_log_code' => str::uuid(),
@@ -2184,12 +2208,13 @@ class AppController extends Controller
                     'inventaris_data_code' => $request->id,
                     'penyusutan_log_nilai' => $request->nilai,
                     'penyusutan_log_persen' => $request->persen,
-                    'penyusutan_log_harga' => $request->harga,
+                    'penyusutan_log_harga' => $harga,
                     'penyusutan_log_date' => date('Y-m-d', strtotime($request->date)),
                 ]);
                 DB::table('depresiasi_penyusutan_aset')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->update([
                     'penyusutan_aset_ke' => $total + 1,
                 ]);
+                DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->update(['inventaris_data_harga'=>$harga]);
             } else {
                 $code = str::uuid();
                 DB::table('depresiasi_penyusutan_log')->insert([

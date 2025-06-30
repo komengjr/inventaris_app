@@ -301,6 +301,8 @@
             e.preventDefault();
             var code = $(this).data("code");
             var id = $(this).data("id");
+            var nilai = $(this).data("nilai");
+            var persen = $(this).data("persen");
             $('#menu-aset-xl').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
@@ -312,6 +314,8 @@
                     "_token": "{{ csrf_token() }}",
                     "code": code,
                     "id": id,
+                    "nilai": nilai,
+                    "persen": persen,
                 },
                 dataType: 'html',
             }).done(function(data) {

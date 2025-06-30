@@ -405,7 +405,7 @@
                                             ->first();
                                     @endphp
                                     @if ($cek)
-                                        @currency($cek->penyusutan_log_harga)
+                                        @currency($cek->penyusutan_log_harga-$cek->penyusutan_log_nilai)
                                     @else
                                         @currency($item->inventaris_data_harga)
                                     @endif

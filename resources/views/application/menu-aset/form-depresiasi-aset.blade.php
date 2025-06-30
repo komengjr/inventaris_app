@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-md-4">
                     <label for="">Harga Pembelian</label>
-                    <input type="text" class="form-control form-control-lg"value="@currency($datas->inventaris_data_harga)" disabled>
+                    <input type="text" class="form-control form-control-lg" value="@currency($datas->inventaris_data_harga)" disabled>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php
+                    {{-- @php
                         $no = 1;
                         $check = DB::table('depresiasi_penyusutan_log')
                             ->where('inventaris_data_code', $datas->inventaris_data_code)
@@ -80,7 +80,7 @@
                         @if ($i == $hitung)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $data[$i-1] }}</td>
+                                <td>{{ $data[$i - 1] }}</td>
                                 <td class="text-center">
                                     {{ substr($persen, 0, 4) }} %
                                 </td>
@@ -98,7 +98,13 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
 
-                                <td>{{ $data[$i] }}</td>
+                                <td>
+                                    @if ($penyusutan->count() == $i)
+                                        {{ $data[$i] }}
+                                    @else
+                                        <strong class="text-primary">{{$penyusutan[$i]->penyusutan_log_date}}</strong>
+                                    @endif
+                                </td>
                                 <td class="text-center">
                                     @if ($penyusutan->count() == $i)
                                         {{ substr($persen, 0, 4) }} %
@@ -137,7 +143,50 @@
                                 </td>
                             </tr>
                         @endif
-                    @endfor
+                    @endfor --}}
+                    @php
+                        $no = 1;
+                    @endphp
+                    @foreach ($penyusutan as $penyusurans)
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ date('d - M - Y', strtotime($penyusurans->penyusutan_log_date)) }}</td>
+                            <td>{{ $penyusurans->penyusutan_log_persen }} %</td>
+                            <td>@currency($penyusurans->penyusutan_log_nilai)</td>
+                            <td>@currency($penyusurans->penyusutan_log_harga)</td>
+                            <td class="text-center"><span class="badge bg-primary">Generated</span></td>
+                        </tr>
+                    @endforeach
+                    @if ($depresiasi->penyusutan_log_harga != 1)
+                        @php
+                            $hasil = $depresiasi->penyusutan_log_harga - $depresiasi->penyusutan_log_nilai;
+                        @endphp
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ date('d - M - Y', strtotime('+' . 1 . ' month', strtotime($depresiasi->penyusutan_log_date))) }}
+                            </td>
+                            <td>{{ $depresiasi->penyusutan_log_persen }} %</td>
+                            <td>@currency($depresiasi->penyusutan_log_nilai)</td>
+                            <td>
+                                @if ($hasil <= 0)
+                                    @currency(1)
+                                @else
+                                    @currency($hasil)
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-primary btn-sm" id="button-generate-fix-aset"
+                                    data-id="{{ $depresiasi->inventaris_data_code }}"
+                                    data-code="{{ $depresiasi->penyusutan_aset_code }}"
+                                    data-nilai="{{ $depresiasi->penyusutan_log_nilai }}"
+                                    data-persen="{{ $depresiasi->penyusutan_log_persen }}"
+                                    data-harga="{{ $hasil }}"
+                                    data-date="{{ date('d - M - Y', strtotime('+' . 1 . ' month', strtotime($depresiasi->penyusutan_log_date))) }}">
+                                    <span class="far fa-credit-card"></span>
+                                    Generate</button>
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 
