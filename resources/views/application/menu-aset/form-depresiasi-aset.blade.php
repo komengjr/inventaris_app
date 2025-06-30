@@ -80,7 +80,6 @@
                         @if ($i == $hitung)
                             <tr>
                                 <td>{{ $no++ }}</td>
-
                                 <td>{{ $data[$i-1] }}</td>
                                 <td class="text-center">
                                     {{ substr($persen, 0, 4) }} %
