@@ -126,27 +126,55 @@
         $(document).on("click", "#button-cetak-ruangan-cabang-preview", function(e) {
             e.preventDefault();
             var code = document.getElementById("lokasi_id").value;
-            $('#menu-print-data-ruangan').html(
-                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-            );
-            $.ajax({
-                url: "{{ route('master_location_print_data_ruangan_cetak') }}",
-                type: "POST",
-                cache: false,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "code": code
-                },
-                dataType: 'html',
-            }).done(function(data) {
+            if (code == "") {
+                alert('mohon dipilih terlebih dahulu');
+            } else {
                 $('#menu-print-data-ruangan').html(
-                    '<iframe src="data:application/pdf;base64, ' +
-                    data +
-                    '" style="width:100%; height:533px;" frameborder="0"></iframe>');
-            }).fail(function() {
-                $('#menu-print-data-ruangan').html('eror');
-            });
-
+                    '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+                );
+                $.ajax({
+                    url: "{{ route('master_location_print_data_ruangan_cetak') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "code": code
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    $('#menu-print-data-ruangan').html(
+                        '<iframe src="data:application/pdf;base64, ' +
+                        data +
+                        '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+                }).fail(function() {
+                    $('#menu-print-data-ruangan').html('eror');
+                });
+            }
+        });
+        $(document).on("click", "#button-export-excel-ruangan-cabang", function(e) {
+            e.preventDefault();
+            var code = document.getElementById("lokasi_id").value;
+            if (code == "") {
+                alert('mohon dipilih terlebih dahulu');
+            } else {
+                $('#menu-print-data-ruangan').html(
+                    '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+                );
+                $.ajax({
+                    url: "{{ route('master_location_print_data_ruangan_export') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "code": code
+                    },
+                    dataType: 'html',
+                }).done(function(data) {
+                    $('#menu-print-data-ruangan').html(data);
+                }).fail(function() {
+                    $('#menu-print-data-ruangan').html('eror');
+                });
+            }
         });
     </script>
 @endsection

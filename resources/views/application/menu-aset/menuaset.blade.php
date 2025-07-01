@@ -64,7 +64,7 @@
                                 <th>No Inventaris</th>
                                 <th>Spesifikasi</th>
                                 <th>Tanggal Pembelian</th>
-                                <th>Harga Awal</th>
+                                <th>Harga Perolehan</th>
                                 <th>Status</th>
                                 <th>Status Depresiasi</th>
                                 <th>Penyusutan Ke</th>

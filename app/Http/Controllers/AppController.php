@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\DataBarangAsetExport;
 use App\Exports\DataBarangNonAset;
+use App\Exports\DaraBarangLokasiExport;
 use App\Exports\DataBarangNonAsetExport;
 use Faker\Provider\Uuid;
 use Hash;
@@ -1218,6 +1219,12 @@ class AppController extends Controller
         $dompdf->get_canvas()->page_text(400, 570, "{PAGE_NUM} / {PAGE_COUNT} - $ruangan->master_lokasi_name ( $ruangan->nomor_ruangan )", $font, 10, array(0, 0, 0));
         $dompdf->get_canvas()->page_text(33, 570, "$cabang->nama_cabang", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
+    }
+    public function master_location_print_data_ruangan_export(Request $request){
+        return view('application.rekap-laporan.form-download-excel',['code'=>$request->code]);
+    }
+    public function master_location_print_data_ruangan_export_proses($id){
+        return Excel::download(new DaraBarangLokasiExport($id), 'INVENTARIS_' . str::uuid() . '.xlsx');
     }
 
     // STOK OPNAME
