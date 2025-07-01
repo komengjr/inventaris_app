@@ -1742,6 +1742,7 @@ class AppController extends Controller
                     'id_inventaris_new' => $code
                 ]);
                 DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->update([
+                    'inventaris_data_harga' => 1,
                     'inventaris_data_status' => 4
                 ]);
                 $brg = DB::table('inventaris_data')->where('inventaris_data_code', $value->id_inventaris)->first();

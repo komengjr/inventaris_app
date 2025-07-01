@@ -87,7 +87,8 @@
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-money-check-alt text-info"></span></div>
                                     <p class=" lh-1 mb-1 fs-2 pe-2 " style="font-family: 'Courier New';">
-                                        <strong>@currency($nonaset) </strong></p>
+                                        <strong>@currency($nonaset) </strong>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +134,8 @@
                                     <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
                                             class="fs--2 fas fa-money-check-alt text-info"></span></div>
                                     <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2" style="font-family: 'Courier New';">
-                                        <strong>@currency($aset)</strong> </p>
+                                        <strong>@currency($aset)</strong>
+                                    </p>
                                 </div>
                             </div>
 
@@ -1026,7 +1028,7 @@
             var klasifikasi = document.getElementById("klasifikasi").value;
             var tgl_beli = document.getElementById("tgl_beli").value;
             var harga_perolehan = document.getElementById("dengan-rupiah").value;
-            var suplier = document.getElementById("suplier").value;
+            // var suplier = document.getElementById("suplier").value;
             var lokasi = document.getElementById("lokasi").value;
             // var merk = document.getElementById("merk").value;
             // var type = document.getElementById("type").value;
@@ -1034,8 +1036,7 @@
             $('#menu-simpan-data-inventaris').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
-            if (nama == "" || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || suplier == "" ||
-                lokasi == "") {
+            if (nama == "" || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || lokasi == "") {
                 alert('eror');
                 $('#menu-simpan-data-inventaris').html(
                     '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><iclass="fa fa-save"></i> Simpan Data</button>'
