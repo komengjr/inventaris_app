@@ -1777,6 +1777,9 @@ class AppController extends Controller
                             'inventaris_data_code' => $value->id_inventaris,
                             'created_at' => now()
                         ]);
+                        $harga = $depresiasi[$depresiasi->count()-1]->penyusutan_log_harga;
+                    }else{
+                        $harga = $value->inventaris_data_harga;
                     }
                 }
                 DB::table('inventaris_data')->insert([
@@ -1786,7 +1789,7 @@ class AppController extends Controller
                     'inventaris_data_name' => $value->inventaris_data_name,
                     'inventaris_data_location' => $lokasi->kd_lokasi,
                     'inventaris_data_jenis' => $value->inventaris_data_jenis,
-                    'inventaris_data_harga' => $value->inventaris_data_harga,
+                    'inventaris_data_harga' => $harga,
                     'inventaris_data_merk' => $value->inventaris_data_merk,
                     'inventaris_data_type' => $value->inventaris_data_type,
                     'inventaris_data_no_seri' => $value->inventaris_data_no_seri,

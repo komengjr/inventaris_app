@@ -89,7 +89,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $datas->inventaris_data_name }}</td>
-                                    <td>{{ $datas->inventaris_data_number }}</td>
+                                    <td>{{ $datas->inventaris_data_number }} <br>{{ $datas->inventaris_data_code }}</td>
                                     <td>{{ $datas->inventaris_data_merk }} <br>{{ $datas->inventaris_data_type }}</td>
 
                                     <td>{{ $datas->inventaris_data_tgl_beli }}</td>
