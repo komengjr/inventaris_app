@@ -120,7 +120,8 @@
                                         @endphp
                                         @if ($cek)
                                             <strong class="text-danger">{{ $cek->depresiasi_sub_name }}</strong> <br>
-                                            @currency($cek->depresiasi_sub_start) - @currency($cek->depresiasi_sub_end)
+                                            @currency($cek->depresiasi_sub_start) - @currency($cek->depresiasi_sub_end) <br>
+                                            <strong class="text-primary">{{ $cek->depresiasi_sub_masa }} Th</strong> ( {{ $cek->depresiasi_sub_hitung }} Bulan )
                                         @endif
                                     </td>
                                     <td>
