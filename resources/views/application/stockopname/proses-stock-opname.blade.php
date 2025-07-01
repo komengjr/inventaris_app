@@ -286,7 +286,7 @@
                                 </span>
                             </div>
                             <div class="d-flex justify-content-between fs--1 mb-1">
-                                <h6 class="mb-0 text-success">Keadaan Maintenance</h6>
+                                <h6 class="mb-0 text-danger">Keadaan Rusak</h6>
                                 <span>
                                     @php
                                         $barangrusak = DB::table('tbl_sub_verifdatainventaris')
