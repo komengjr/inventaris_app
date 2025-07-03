@@ -66,7 +66,7 @@
         <h5><span class="badge bg-primary">4. Upload Document</span></h5>
         <div class="col-md-4">
             <label class="form-label" for="inputAddress">Pilih Berkas</label>
-            <input type="file" id="browseFile<?php echo $data->inventaris_data_code; ?>" class="form-control" />
+            <input type="file" id="browseFile<?php echo $data->id_inventaris_data; ?>" class="form-control" />
         </div>
         <div class="col-md-8">
             <label class="form-label" for="inputAddress">file Name</label>
@@ -97,8 +97,8 @@
 </div>
 
 <script type="text/javascript">
-    var browseFile<?php echo $data->inventaris_data_code; ?> = $('#browseFile<?php echo $data->inventaris_data_code; ?>');
-    var resumable<?php echo $data->inventaris_data_code; ?> = new Resumable({
+    var browseFile<?php echo $data->inventaris_data_code; ?> = $('#browseFile<?php echo $data->id_inventaris_data; ?>');
+    var resumable<?php echo $data->id_inventaris_data; ?> = new Resumable({
         target: '{{ route('file-upload.fileuploaduploaddatamaintenance') }}',
         query: {
             _token: '{{ csrf_token() }}'
@@ -111,18 +111,18 @@
         throttleProgressCallbacks: 1,
     });
 
-    resumable<?php echo $data->inventaris_data_code; ?>.assignBrowse(browseFile<?php echo $data->inventaris_data_code; ?>);
+    resumable<?php echo $data->id_inventaris_data; ?>.assignBrowse(browseFile<?php echo $data->id_inventaris_data; ?>);
 
-    resumable<?php echo $data->inventaris_data_code; ?>.on('fileAdded', function(file) { // trigger when file picked
+    resumable<?php echo $data->id_inventaris_data; ?>.on('fileAdded', function(file) { // trigger when file picked
         showProgress();
-        resumable<?php echo $data->inventaris_data_code; ?>.upload() // to actually start uploading.
+        resumable<?php echo $data->id_inventaris_data; ?>.upload() // to actually start uploading.
     });
 
-    resumable<?php echo $data->inventaris_data_code; ?>.on('fileProgress', function(file) { // trigger when file progress update
+    resumable<?php echo $data->id_inventaris_data; ?>.on('fileProgress', function(file) { // trigger when file progress update
         updateProgress(Math.floor(file.progress() * 100));
     });
 
-    resumable<?php echo $data->inventaris_data_code; ?>.on('fileSuccess', function(file, response) { // trigger when file upload complete
+    resumable<?php echo $data->id_inventaris_data; ?>.on('fileSuccess', function(file, response) { // trigger when file upload complete
         response = JSON.parse(response)
         $('#videoPreview').show();
         $('#videoPreview').attr('src', response.path);
@@ -133,26 +133,26 @@
         // $('#browseFile<?php echo $data->inventaris_data_code; ?>').hide();
     });
 
-    resumable<?php echo $data->inventaris_data_code; ?>.on('fileError', function(file, response) { // trigger when there is any error
+    resumable<?php echo $data->id_inventaris_data; ?>.on('fileError', function(file, response) { // trigger when there is any error
         alert('file uploading error.');
     });
 
 
-    var progress<?php echo $data->inventaris_data_code; ?> = $('.progress<?php echo $data->inventaris_data_code; ?>');
+    var progress<?php echo $data->id_inventaris_data; ?> = $('.progress<?php echo $data->inventaris_data_code; ?>');
 
     function showProgress() {
-        progress<?php echo $data->inventaris_data_code; ?>.find('.loading').css('width', '0%');
-        progress<?php echo $data->inventaris_data_code; ?>.find('.loading').html('0%');
-        progress<?php echo $data->inventaris_data_code; ?>.find('.loading').removeClass('bg-info');
-        progress<?php echo $data->inventaris_data_code; ?>.show();
+        progress<?php echo $data->id_inventaris_data; ?>.find('.loading').css('width', '0%');
+        progress<?php echo $data->id_inventaris_data; ?>.find('.loading').html('0%');
+        progress<?php echo $data->id_inventaris_data; ?>.find('.loading').removeClass('bg-info');
+        progress<?php echo $data->id_inventaris_data; ?>.show();
     };
 
     function updateProgress(value) {
-        progress<?php echo $data->inventaris_data_code; ?>.find('.loading').css('width', ` ${value}%`);
-        progress<?php echo $data->inventaris_data_code; ?>.find('.loading').html(`${value}%`);
+        progress<?php echo $data->id_inventaris_data; ?>.find('.loading').css('width', ` ${value}%`);
+        progress<?php echo $data->id_inventaris_data; ?>.find('.loading').html(`${value}%`);
     };
 
     function hideProgress() {
-        progress<?php echo $data->inventaris_data_code; ?>.hide();
+        progress<?php echo $data->id_inventaris_data; ?>.hide();
     };
 </script>
