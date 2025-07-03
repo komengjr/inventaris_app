@@ -97,7 +97,7 @@
 </div>
 
 <script type="text/javascript">
-    var browseFile<?php echo $data->inventaris_data_code; ?> = $('#browseFile<?php echo $data->id_inventaris_data; ?>');
+    var browseFile<?php echo $data->id_inventaris_data; ?> = $('#browseFile<?php echo $data->id_inventaris_data; ?>');
     var resumable<?php echo $data->id_inventaris_data; ?> = new Resumable({
         target: '{{ route('file-upload.fileuploaduploaddatamaintenance') }}',
         query: {
