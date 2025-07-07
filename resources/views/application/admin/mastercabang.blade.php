@@ -330,6 +330,27 @@
                 $('#menu-cabang').html('eror');
             });
         });
+        $(document).on("click", "#button-sinkronisasi-peminjaman-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#button-sinkronisasi-peminjaman-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_data_peminjaman_sinkronisas') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#button-sinkronisasi-peminjaman-cabang').html(data);
+            }).fail(function() {
+                $('#button-sinkronisasi-peminjaman-cabang').html('eror');
+            });
+        });
         $(document).on("click", "#button-data-stock-opname-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");

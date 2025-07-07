@@ -306,6 +306,18 @@ class MasterAdminController extends Controller
         $data = DB::table('tbl_peminjaman')->where('kd_cabang', $request->code)->get();
         return view('application.admin.cabang.data-peminjaman-cabang', ['data' => $data, 'cabang' => $cabang]);
     }
+    public function masteradmin_cabang_data_peminjaman_sinkronisas(Request $request){
+        $data = DB::table('tbl_peminjaman')->where('kd_cabang',$request->code)->get();
+        foreach ($data as $value) {
+            $staff = DB::table('tbl_staff')->where('kd_cabang',$request->code)->where('nip',$value->pj_pinjam)->first();
+            if ($staff) {
+                DB::table('tbl_peminjaman')->where('tiket_peminjaman',$value->tiket_peminjaman)->update([
+                    'pj_pinjam'=>$staff->id_staff
+                ]);
+            }
+        }
+        return '<span class="fas fa-check-circle"></span>';
+    }
     public function masteradmin_cabang_preview_data_peminjaman(Request $request)
     {
         $data = DB::table('tbl_peminjaman')->where('tiket_peminjaman', $request->code)->first();
