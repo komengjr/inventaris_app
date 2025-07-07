@@ -6,14 +6,14 @@
     <div class="p-3">
         <div class="card p-3 mb-3 border border-danger">
             <div class="row g-3">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="">Nama Inventaris</label>
                     <input type="text" class="form-control form-control-lg"
                         value="{{ $datas->inventaris_data_name }}" disabled>
                     <input type="text" name="id_inventaris" id="id_inventaris"
                         value="{{ $datas->inventaris_data_code }}" hidden>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="">Nomor Inventaris</label>
                     <input type="text" class="form-control form-control-lg"
                         value="{{ $datas->inventaris_data_number }}" disabled>
@@ -42,6 +42,10 @@
                     <label for="">Tanggal Pembelian</label>
                     <input type="text" class="form-control form-control-lg"
                         value="{{ $datas->inventaris_data_tgl_beli }}" disabled>
+                </div>
+                <div class="col-md-4">
+                    <label for="">Nilai Perolehan</label>
+                    <input type="text" class="form-control form-control-lg" value="@currency($penyusutan[0]->penyusutan_log_harga)" disabled>
                 </div>
                 <div class="col-md-4">
                     <label for="">Nilai Buku</label>
