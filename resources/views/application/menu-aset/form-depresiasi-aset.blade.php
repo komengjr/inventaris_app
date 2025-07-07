@@ -44,7 +44,7 @@
                         value="{{ $datas->inventaris_data_tgl_beli }}" disabled>
                 </div>
                 <div class="col-md-4">
-                    <label for="">Harga Pembelian</label>
+                    <label for="">Nilai Buku</label>
                     <input type="text" class="form-control form-control-lg" value="@currency($datas->inventaris_data_harga)" disabled>
                 </div>
             </div>
