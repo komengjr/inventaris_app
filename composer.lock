@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ea92cf3c4d22a525cefca05b00ef599",
+    "content-hash": "a1490aeeb94c8210845ad66d5b3617d1",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6962,6 +6962,53 @@
             "time": "2024-08-30T16:01:46+00:00"
         },
         {
+            "name": "tianrosandhy/laravel-fonnte",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tianrosandhy/laravel-fonnte.git",
+                "reference": "4214c0bc044dac27421c5d5b1c1f3c94bc1b9d38"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tianrosandhy/laravel-fonnte/zipball/4214c0bc044dac27421c5d5b1c1f3c94bc1b9d38",
+                "reference": "4214c0bc044dac27421c5d5b1c1f3c94bc1b9d38",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2|>8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Fonnte": "TianRosandhy\\LaravelFonnte\\Facades\\Fonnte"
+                    },
+                    "providers": [
+                        "TianRosandhy\\LaravelFonnte\\Providers\\FonnteServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TianRosandhy\\LaravelFonnte\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "TianRosandhy",
+                    "email": "tianrosandhy@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/tianrosandhy/laravel-fonnte/issues",
+                "source": "https://github.com/tianrosandhy/laravel-fonnte/tree/main"
+            },
+            "time": "2023-07-21T12:58:09+00:00"
+        },
+        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "v2.2.7",
             "source": {
@@ -9140,12 +9187,14 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "tianrosandhy/laravel-fonnte": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2.5"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

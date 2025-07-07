@@ -79,7 +79,7 @@
                                             <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
                                                 <button class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#modal-master" id="button-replay-pesan"
-                                                    data-code="{{ $datas->token_code }}"><i class="fas fa-download"></i></span> Replay Pesan</button>
+                                                    data-code="{{ $datas->token_code }}" data-id="{{ $datas->id }}"><i class="fas fa-download"></i></span> Replay Pesan</button>
                                                 {{-- <button class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#modal-master" id="button-master-staff"
                                                     data-code="123"><i class="fas fa-trash"></i>
@@ -183,6 +183,7 @@
         $(document).on("click", "#button-replay-pesan", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
+            var id = $(this).data("id");
             $('#menu-master').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
             );
@@ -192,7 +193,8 @@
                 cache: false,
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "code": code
+                    "code": code,
+                    "id": id,
                 },
                 dataType: 'html',
             }).done(function(data) {

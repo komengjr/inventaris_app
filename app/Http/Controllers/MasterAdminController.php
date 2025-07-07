@@ -306,13 +306,14 @@ class MasterAdminController extends Controller
         $data = DB::table('tbl_peminjaman')->where('kd_cabang', $request->code)->get();
         return view('application.admin.cabang.data-peminjaman-cabang', ['data' => $data, 'cabang' => $cabang]);
     }
-    public function masteradmin_cabang_data_peminjaman_sinkronisas(Request $request){
-        $data = DB::table('tbl_peminjaman')->where('kd_cabang',$request->code)->get();
+    public function masteradmin_cabang_data_peminjaman_sinkronisas(Request $request)
+    {
+        $data = DB::table('tbl_peminjaman')->where('kd_cabang', $request->code)->get();
         foreach ($data as $value) {
-            $staff = DB::table('tbl_staff')->where('kd_cabang',$request->code)->where('nip',$value->pj_pinjam)->first();
+            $staff = DB::table('tbl_staff')->where('kd_cabang', $request->code)->where('nip', $value->pj_pinjam)->first();
             if ($staff) {
-                DB::table('tbl_peminjaman')->where('tiket_peminjaman',$value->tiket_peminjaman)->update([
-                    'pj_pinjam'=>$staff->id_staff
+                DB::table('tbl_peminjaman')->where('tiket_peminjaman', $value->tiket_peminjaman)->update([
+                    'pj_pinjam' => $staff->id_staff
                 ]);
             }
         }
@@ -392,6 +393,27 @@ class MasterAdminController extends Controller
     public function masteradmin_messages_replay(Request $request)
     {
         if (Auth::user()->akses == 'admin') {
+            $data = DB::table('message')->where('id', $request->id)->first();
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $data->number,
+                    'message' => $data->pesan,
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: ' . 'BKFshex2Z7ntm6wNKNTg'
+                ),
+            ));
+
+            $response = curl_exec($curl);
             DB::table('message')->where('token_code', $request->code)->update(['status' => 0]);
             return 0;
         } else {
