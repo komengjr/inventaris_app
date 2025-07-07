@@ -31,7 +31,7 @@ class ApiController extends Controller
             ));
             DB::table('message')->where('id', $data->id)->update(['status'=>1]);
             $response = curl_exec($curl);
-            return response()->json($data);
+            return response()->json($data->pesan);
         }
     }
 }
