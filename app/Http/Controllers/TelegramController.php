@@ -21,7 +21,6 @@ class TelegramController extends Controller
         ->join('tbl_cabang','tbl_cabang.kd_cabang','=','t_no_telegram.kd_cabang')
         ->where('t_no_telegram.kd_cabang',Auth::user()->cabang)->first();
         if ($data) {
-
             Telegram::sendMessage([
                 'chat_id' => $data->chat_id,
                 'parse_mode' => 'HTML',

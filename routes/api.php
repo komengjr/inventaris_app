@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\InventarisController;
@@ -22,3 +23,9 @@ Route::get('datainventaris/{id}/{kode}', 'api\InventarisController@index');
 Route::get('datanoinventaris/{id}/{nama}', 'api\InventarisController@datainventaris');
 Route::get('datanidinventaris/{id}', 'api\InventarisController@dataidinventaris');
 Route::get('datanoinventaris/{id}/{by}/{nama}', 'api\InventarisController@caridatabyinventaris');
+
+
+Route::prefix('gateway')->group(function () {
+    Route::get('whatsapp', [ApiController::class, 'gateway_whatsapp'])->name('gateway_whatsapp');
+    // Route::post('setup-notification', [DashboardController::class, 'dashboard_setup_notification'])->name('dashboard_setup_notification');
+});
