@@ -7,9 +7,10 @@
         <div class="card border">
             <div class="card-body d-flex justify-content-between">
                 <div>
-                    <a class="btn btn-falcon-default btn-sm" href="#" id="button-sinkronisasi-peminjaman-cabang" data-code="{{$cabang->kd_cabang}}" data-bs-toggle="tooltip"
-                        data-bs-placement="top" title="" data-bs-original-title="Back to inbox"
-                        aria-label="Back to inbox"><span class="fas fa-sync-alt"></span></a>
+                    <a class="btn btn-falcon-default btn-sm" href="#" id="button-sinkronisasi-peminjaman-cabang"
+                        data-code="{{ $cabang->kd_cabang }}" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="" data-bs-original-title="Back to inbox" aria-label="Back to inbox"><span
+                            class="fas fa-sync-alt"></span></a>
                     <span class="mx-1 mx-sm-2 text-300">|</span>
                     <button class="btn btn-falcon-default btn-sm" type="button" data-bs-toggle="tooltip"
                         data-bs-placement="top" title="" data-bs-original-title="Archive"
@@ -66,10 +67,12 @@
                             <td>{{ $datas->batas_tgl_pinjam }}</td>
                             <td>
                                 @php
-                                    $staff = DB::table('tbl_staff')->where('id_staff',$datas->pj_pinjam)->first();
+                                    $staff = DB::table('tbl_staff')->where('id_staff', $datas->pj_pinjam)->first();
                                 @endphp
                                 @if ($staff)
-                                    {{$staff->nama_staff}}
+                                    {{ $staff->nama_staff }}
+                                @else
+                                    {{ $datas->pj_pinjam }}
                                 @endif
                             </td>
                             <td>{{ $datas->tgl_selesai }}</td>
