@@ -65,7 +65,7 @@
                 </div>
                 <hr>
             </div>
-            <span id="menu-setup-lokasi-barang-mutasi"></span>
+
             <div class="card-body pt-0" id="menu-data-v3">
                 <div class="tab-content" id="menu-table-pilih-mutasi">
                     <table id="data-table-pinjam" class="table table-striped nowrap" style="width:100%">
@@ -145,6 +145,7 @@
                     </table>
                 </div>
             </div>
+            <span id="menu-setup-lokasi-barang-mutasi"></span>
         </div>
     </div>
 </div>

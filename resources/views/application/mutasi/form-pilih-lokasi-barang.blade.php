@@ -1,5 +1,5 @@
-<div class="card-body py-0">
-    <div class="card-body border border-info" id="menu-data-v3">
+<div class="card-body py-0 ">
+    <div class="card-body border border-info mb-3" id="menu-data-v3">
         <form class="row gx-4" id="form-pilih-lokasi-barang" method="post" enctype="multipart/form-data">
             @csrf
 
