@@ -24,6 +24,7 @@ use App\Exports\DataInventarisExport;
 use App\Exports\DataInventarisExportRuangan;
 use App\sub_tbl_inventory;
 use App\DataInventaris;
+
 class AppController extends Controller
 {
     public function __construct()
@@ -74,7 +75,6 @@ class AppController extends Controller
         } else {
             return Redirect::to('dashboard');
         }
-
     }
     public function dashboard_add()
     {
@@ -151,9 +151,9 @@ class AppController extends Controller
     public function dashboard_data_barang_klasifikasi(Request $request)
     {
         $data = DB::table('inventaris_data')
-            ->join('inventaris_klasifikasi', 'inventaris_klasifikasi.inventaris_klasifikasi_code', '=', 'inventaris_data.inventaris_klasifikasi_code', )
-            ->join('inventaris_cat', 'inventaris_cat.inventaris_cat_code', '=', 'inventaris_klasifikasi.inventaris_cat_code', )
-            ->where('inventaris_cat.inventaris_cat_code', $request->code, )
+            ->join('inventaris_klasifikasi', 'inventaris_klasifikasi.inventaris_klasifikasi_code', '=', 'inventaris_data.inventaris_klasifikasi_code',)
+            ->join('inventaris_cat', 'inventaris_cat.inventaris_cat_code', '=', 'inventaris_klasifikasi.inventaris_cat_code',)
+            ->where('inventaris_cat.inventaris_cat_code', $request->code,)
             ->where('inventaris_data.inventaris_data_cabang', Auth::user()->cabang)
             ->get();
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
@@ -1064,8 +1064,7 @@ class AppController extends Controller
         $check = DB::table('tbl_pemusnahan')->where('id_inventaris', $request->id_inventaris)->first();
         $brg = DB::table('inventaris_data')->where('inventaris_data_code', $request->id_inventaris)->first();
         $total = DB::table('tbl_pemusnahan')->where('kd_cabang', Auth::user()->cabang)->count();
-        $code = 'PM' . Auth::user()->cabang . date('YmdHis') . '' . str_pad($total + 1, 4, '0', STR_PAD_LEFT);
-        ;
+        $code = 'PM' . Auth::user()->cabang . date('YmdHis') . '' . str_pad($total + 1, 4, '0', STR_PAD_LEFT);;
         $no = DB::table('wa_number_cabang')->where('wa_number_code', $request->user_persetujuan)->first();
 
         if ($check) {
@@ -1220,10 +1219,12 @@ class AppController extends Controller
         $dompdf->get_canvas()->page_text(33, 570, "$cabang->nama_cabang", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
-    public function master_location_print_data_ruangan_export(Request $request){
-        return view('application.rekap-laporan.form-download-excel',['code'=>$request->code]);
+    public function master_location_print_data_ruangan_export(Request $request)
+    {
+        return view('application.rekap-laporan.form-download-excel', ['code' => $request->code]);
     }
-    public function master_location_print_data_ruangan_export_proses($id){
+    public function master_location_print_data_ruangan_export_proses($id)
+    {
         return Excel::download(new DaraBarangLokasiExport($id), 'INVENTARIS_' . str::uuid() . '.xlsx');
     }
 
@@ -1238,7 +1239,6 @@ class AppController extends Controller
         } else {
             return Redirect::to('dashboard');
         }
-
     }
     public function menu_stock_opname_add(Request $request)
     {
@@ -1511,7 +1511,6 @@ class AppController extends Controller
         } else {
             return Redirect::to('dashboard');
         }
-
     }
     public function menu_maintenance_add(Request $request)
     {
@@ -1785,8 +1784,8 @@ class AppController extends Controller
                             'inventaris_data_code' => $value->id_inventaris,
                             'created_at' => now()
                         ]);
-                        $harga = $depresiasi[$depresiasi->count()-1]->penyusutan_log_harga;
-                    }else{
+                        $harga = $depresiasi[$depresiasi->count() - 1]->penyusutan_log_harga;
+                    } else {
                         $harga = $value->inventaris_data_harga;
                     }
                 }
@@ -1811,7 +1810,6 @@ class AppController extends Controller
                     'id_nomor_ruangan_cbaang' => $value->kd_lokasi_tujuan,
                     'created_at' => now(),
                 ]);
-
             }
             DB::table('tbl_mutasi')->where('kd_mutasi', $request->code)->update([
                 'tgl_terima' => now(),
@@ -2209,7 +2207,7 @@ class AppController extends Controller
             if ($check) {
                 if ($request->harga <= 0) {
                     $harga = 1;
-                }else{
+                } else {
                     $harga = $request->harga;
                 }
                 $total = DB::table('depresiasi_penyusutan_log')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->count();
@@ -2225,7 +2223,7 @@ class AppController extends Controller
                 DB::table('depresiasi_penyusutan_aset')->where('penyusutan_aset_code', $check->penyusutan_aset_code)->update([
                     'penyusutan_aset_ke' => $total + 1,
                 ]);
-                DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->update(['inventaris_data_harga'=>$harga]);
+                DB::table('inventaris_data')->where('inventaris_data_code', $request->id)->update(['inventaris_data_harga' => $harga]);
             } else {
                 $code = str::uuid();
                 DB::table('depresiasi_penyusutan_log')->insert([
@@ -2244,11 +2242,9 @@ class AppController extends Controller
                 ]);
             }
             return view('application.menu-aset.form-generate', ['code' => str::uuid(), 'text' => 1]);
-
         } else {
             return view('application.menu-aset.form-generate', ['code' => str::uuid(), 'text' => 0]);
         }
-
     }
 
     // REKAP LAPORAN
@@ -2346,8 +2342,7 @@ class AppController extends Controller
                     $button = "";
                 } else {
                     $status_barang = '<span class="badge bg-success " style="font-size: 11px;">Baik</span>';
-                }
-                ;
+                };
             } else {
                 $dataruangan = '<span class="badge bg-danger" style="font-size: 9px;">Tidak di temukan</span>';
                 if ($record->inventaris_data_status == 5) {
@@ -2358,7 +2353,6 @@ class AppController extends Controller
                     $button = "";
                 } else {
                     $status_barang = '<span class="badge bg-success " style="font-size: 11px;">Baik</span>';
-
                 }
             }
             $data_arr[] = array(
@@ -2385,7 +2379,6 @@ class AppController extends Controller
 
         echo json_encode($response);
         exit;
-
     }
     public function master_barang_data_edit(Request $request)
     {
@@ -2487,8 +2480,8 @@ class AppController extends Controller
         if ($check) {
             DB::table('master_doocument_cab')->where('master_document_code', $request->id_document)
                 ->where('kd_cabang', Auth::user()->cabang)->update([
-                        'master_document_no' => $request->no_document
-                    ]);
+                    'master_document_no' => $request->no_document
+                ]);
         } else {
             DB::table('master_doocument_cab')->insert([
                 'master_document_code' => $request->id_document,
@@ -2699,10 +2692,16 @@ class AppController extends Controller
     }
     public function master_user_cabang_reset_password(Request $request)
     {
-        return view('application.master-data.master-user-cabang.form-reset-password');
+        return view('application.master-data.master-user-cabang.form-reset-password', ['code' => $request->code]);
     }
     public function master_user_cabang_reset_password_save(Request $request)
     {
-        return redirect()->back()->withSuccess('Great! Berhasil Tambah Data');
+        DB::table('users')
+            ->where('email', $request->code)
+            ->where('cabang', Auth::user()->cabang)
+            ->update([
+                'password' => Hash::make($request['password'])
+            ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Update Password Data');
     }
 }

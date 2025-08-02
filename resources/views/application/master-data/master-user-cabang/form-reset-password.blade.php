@@ -9,6 +9,7 @@
         <div class="col-md-12">
             <label class="form-label" for="inputAddress">Password</label>
             <input class="form-control form-control-lg" id="inputAddress" type="password" name="password" placeholder="Isikan Password" required />
+            <input type="text" name="code" value="{{ $code }}" hidden>
         </div>
         <div class="col-md-12">
             <label class="form-label" for="inputAddress">Alasan Reset Password</label>
