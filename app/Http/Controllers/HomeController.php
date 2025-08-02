@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use DB;
 // use File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 // use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Agent\Facades\Agent;
@@ -35,64 +36,63 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (auth::user()->akses == 'admin') {
-            $datacabang = DB::table('tbl_cabang')->get();
-            $seluruhbarang = DB::table('sub_tbl_inventory')->count();
-            $totalhargainventaris = DB::table('sub_tbl_inventory')->where('kd_jenis',0)->sum('harga_perolehan');
-            $totalhargaaset = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->sum('harga_perolehan');
-            $totalbrgkso = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->count();
-            return view('home',['datacabang'=>$datacabang, 'seluruhbarang'=>$seluruhbarang,'totalhargainventaris'=>$totalhargainventaris,'totalhargaaset'=>$totalhargaaset,'totalbrgkso'=>$totalbrgkso]);
-        } else {
+        return Redirect('app/dashboard_home');
+        // if (auth::user()->akses == 'admin') {
+        //     $datacabang = DB::table('tbl_cabang')->get();
+        //     $seluruhbarang = DB::table('sub_tbl_inventory')->count();
+        //     $totalhargainventaris = DB::table('sub_tbl_inventory')->where('kd_jenis',0)->sum('harga_perolehan');
+        //     $totalhargaaset = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->sum('harga_perolehan');
+        //     $totalbrgkso = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->count();
+        //     return view('home',['datacabang'=>$datacabang, 'seluruhbarang'=>$seluruhbarang,'totalhargainventaris'=>$totalhargainventaris,'totalhargaaset'=>$totalhargaaset,'totalbrgkso'=>$totalbrgkso]);
+        // } else {
 
-            $jumlah = 0;
-            $totaljumlahaset = 0;
-            $totaljumlahinventaris = 0;
-            $totalbrgkso = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->count();
-            $totaldocument = DB::table('sub_tbl_inventory_kso')->join('document_kso','document_kso.id_inventaris','=','sub_tbl_inventory_kso.id_inventaris')->where('sub_tbl_inventory_kso.kd_cabang',Auth::user()->cabang)->count();
-            $totalharga = DB::table('sub_tbl_inventory')
-            ->select('sub_tbl_inventory.*')
-            ->where('kd_cabang', auth::user()->cabang)
-            ->where('kd_jenis',1)
-            ->where('status_barang','<',4)
-            ->get();
-            foreach ($totalharga as $totalharga) {
-                $totaljumlahaset = $totalharga->harga_perolehan + $totaljumlahaset;
-            }
-            $totalhargainventaris = DB::table('sub_tbl_inventory')
-            ->select('sub_tbl_inventory.*')
-            ->where('kd_cabang', auth::user()->cabang)
-            ->where('kd_jenis',0)
-            ->get();
-            foreach ($totalhargainventaris as $totalhargainventaris) {
-                $totaljumlahinventaris = $totalhargainventaris->harga_perolehan + $totaljumlahinventaris;
-            }
+        //     $jumlah = 0;
+        //     $totaljumlahaset = 0;
+        //     $totaljumlahinventaris = 0;
+        //     $totalbrgkso = DB::table('sub_tbl_inventory_kso')->where('kd_cabang',Auth::user()->cabang)->count();
+        //     $totaldocument = DB::table('sub_tbl_inventory_kso')->join('document_kso','document_kso.id_inventaris','=','sub_tbl_inventory_kso.id_inventaris')->where('sub_tbl_inventory_kso.kd_cabang',Auth::user()->cabang)->count();
+        //     $totalharga = DB::table('sub_tbl_inventory')
+        //     ->select('sub_tbl_inventory.*')
+        //     ->where('kd_cabang', auth::user()->cabang)
+        //     ->where('kd_jenis',1)
+        //     ->where('status_barang','<',4)
+        //     ->get();
+        //     foreach ($totalharga as $totalharga) {
+        //         $totaljumlahaset = $totalharga->harga_perolehan + $totaljumlahaset;
+        //     }
+        //     $totalhargainventaris = DB::table('sub_tbl_inventory')
+        //     ->select('sub_tbl_inventory.*')
+        //     ->where('kd_cabang', auth::user()->cabang)
+        //     ->where('kd_jenis',0)
+        //     ->get();
+        //     foreach ($totalhargainventaris as $totalhargainventaris) {
+        //         $totaljumlahinventaris = $totalhargainventaris->harga_perolehan + $totaljumlahinventaris;
+        //     }
 
-            $datakategori = DB::table('no_urut_barang')
-            ->select('no_urut_barang.*')
-            ->get();
+        //     $datakategori = DB::table('no_urut_barang')
+        //     ->select('no_urut_barang.*')
+        //     ->get();
 
-            if ($jumlah == 0) {
-                $jumlah = 1 ;
-            }
+        //     if ($jumlah == 0) {
+        //         $jumlah = 1 ;
+        //     }
 
-            $ruangan = DB::table('tbl_nomor_ruangan_cabang')
-            ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
-            ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->orderBy('tbl_nomor_ruangan_cabang.nomor_ruangan')->get();
-            // dd($ruangan);
-            $datainventariscabang = DB::table('sub_tbl_inventory')->where('kd_jenis',0)->where('kd_cabang',auth::user()->cabang)->count();
-            if ($datainventariscabang == 0) {
-                $datainventariscabang = 0;
-            }
-            $dataasetcabang = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('status_barang','<',4)->where('kd_cabang',auth::user()->cabang)->count();
+        //     $ruangan = DB::table('tbl_nomor_ruangan_cabang')
+        //     ->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
+        //     ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->orderBy('tbl_nomor_ruangan_cabang.nomor_ruangan')->get();
+        //     // dd($ruangan);
+        //     $datainventariscabang = DB::table('sub_tbl_inventory')->where('kd_jenis',0)->where('kd_cabang',auth::user()->cabang)->count();
+        //     if ($datainventariscabang == 0) {
+        //         $datainventariscabang = 0;
+        //     }
+        //     $dataasetcabang = DB::table('sub_tbl_inventory')->where('kd_jenis',1)->where('status_barang','<',4)->where('kd_cabang',auth::user()->cabang)->count();
 
-            return view('home',[
-                'datakategori'=>$datakategori,'ruangan'=>$ruangan,
-                'totalinventaris'=>$datainventariscabang,'totaljumlahaset'=>$totaljumlahaset,
-                'dataasetcabang'=>$dataasetcabang, 'totaljumlahinventaris'=>$totaljumlahinventaris,'totalbrgkso'=>$totalbrgkso,'totaldocument'=> $totaldocument
-            ]);
-        }
-
-
+        //     return view('home',[
+        //         'datakategori'=>$datakategori,'ruangan'=>$ruangan,
+        //         'totalinventaris'=>$datainventariscabang,'totaljumlahaset'=>$totaljumlahaset,
+        //         'dataasetcabang'=>$dataasetcabang, 'totaljumlahinventaris'=>$totaljumlahinventaris,'totalbrgkso'=>$totalbrgkso,'totaldocument'=> $totaldocument
+        //     ]);
+        // }
     }
     public function lihatdatabarang($id)
     {
