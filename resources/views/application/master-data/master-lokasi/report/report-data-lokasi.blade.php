@@ -333,7 +333,7 @@
         </table>
         <br> <br>
         <div class="footer" style="padding-bottom: 20%;">
-            <table style="font-size: 8px; margin: 0px;  width: 100%; font-size: 11px; font-family: Calibri (Body);"
+            <table style="font-size: 8px; margin: 0px;  width: 100%; font-family: Calibri (Body);"
                 border="1">
                 <tr>
                     <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
