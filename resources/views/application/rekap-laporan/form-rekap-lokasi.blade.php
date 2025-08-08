@@ -10,8 +10,7 @@
                 <select name="lokasi_id" id="lokasi_id" class="form-control choices-single-cabang" required>
                     <option value="">Pilih</option>
                     @foreach ($data as $datas)
-                        <option value="{{ $datas->id_nomor_ruangan_cbaang }}">
-                            {{ $datas->nomor_ruangan }}-{{ $datas->master_lokasi_name }}</option>
+                        <option value="{{ $datas->id_nomor_ruangan_cbaang }}">{{ $datas->nomor_ruangan }}-{{ $datas->master_lokasi_name }}</option>
                     @endforeach
                 </select>
             </div>

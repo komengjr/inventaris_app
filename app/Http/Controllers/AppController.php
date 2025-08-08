@@ -17,7 +17,7 @@ use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
-use DB;
+use Illuminate\Support\Facades\DB;
 use PDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Exports\DataInventarisExport;

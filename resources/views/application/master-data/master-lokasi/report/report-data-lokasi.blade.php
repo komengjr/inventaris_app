@@ -273,7 +273,7 @@
         </div>
         <br>
         <table border="1" cellspacing="0" cellpadding="0">
-            <thead style="font-size: 11px;">
+            <thead style="font-size: 10px;">
                 <tr>
                     <th class="no" style="width: 2%;" rowspan="2">No</th>
                     <th style="width: 4%;" rowspan="2">Th Beli</th>
@@ -301,7 +301,7 @@
                 </tr>
 
             </thead>
-            <tbody id="invoiceItems" style="font-size: 10px;">
+            <tbody id="invoiceItems" style="font-size: 8px;">
                 @php
                     $no = 1;
                     $hasil = 0;
@@ -332,7 +332,7 @@
             </tbody>
         </table>
         <br> <br>
-        <div class="footer" style="padding-bottom: 25%;">
+        <div class="footer" style="padding-bottom: 20%;">
             <table style="font-size: 8px; margin: 0px;  width: 100%; font-size: 11px; font-family: Calibri (Body);"
                 border="1">
                 <tr>
