@@ -608,7 +608,7 @@ Route::prefix('app')->group(function () {
     Route::post('master-location/update-nomor-ruangan', [AppController::class, 'master_location_update_no_ruangan'])->name('master_location_update_no_ruangan');
     Route::post('master-location/update-nomor-ruangan/save', [AppController::class, 'master_location_update_no_ruangan_save'])->name('master_location_update_no_ruangan_save');
     Route::post('master-location/update-location', [AppController::class, 'master_location_update_location'])->name('master_location_update_location');
-    Route::post('master-location/update-location/save', [AppController::class, 'master_location_print_data_ruangan'])->name('master_location_update_location_save');
+    Route::post('master-location/update-location/save', [AppController::class, 'master_location_update_location_save'])->name('master_location_update_location_save');
     Route::post('master-location/print-data-ruangan', [AppController::class, 'master_location_print_data_ruangan'])->name('master_location_print_data_ruangan');
     Route::post('master-location/print-data-ruangan/print', [AppController::class, 'master_location_print_data_ruangan_cetak'])->name('master_location_print_data_ruangan_cetak');
     Route::post('master-location/print-data-ruangan/export', [AppController::class, 'master_location_print_data_ruangan_export'])->name('master_location_print_data_ruangan_export');
