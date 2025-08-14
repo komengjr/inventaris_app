@@ -1788,6 +1788,8 @@ class AppController extends Controller
                     } else {
                         $harga = $value->inventaris_data_harga;
                     }
+                } else {
+                    $harga = $brg->inventaris_data_harga;
                 }
                 DB::table('inventaris_data')->insert([
                     'inventaris_data_code' => $code,
