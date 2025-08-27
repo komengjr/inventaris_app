@@ -67,16 +67,11 @@ class InventarisController extends Controller
     }
     public function authenticate(Request $request)
     {
-
         $email = $request->username;
         $password = $request->password;
-
         $credentials = $request->only($email, $password);
-
         if (Auth::attempt($credentials)) {
-
-            return '<script>window.location.href = "' . route('dashboard_home') . '";</script>';
-
+            return 'Berhasil Login';
         }
         return '<div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
                                             <strong>Error!</strong> Username Dan Password Ada Kesalahan.
