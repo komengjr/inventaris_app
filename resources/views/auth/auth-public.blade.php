@@ -166,7 +166,7 @@
                 dataType: 'html',
             }).done(function (data) {
                 if (data == 1) {
-                    window.location.href = "http://127.0.0.1:8000/app/dashboard_home";
+                    window.location.href = "{{ route('/') }}";
                 } else {
                     location.reload();
                 }
