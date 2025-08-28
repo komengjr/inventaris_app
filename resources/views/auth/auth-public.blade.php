@@ -166,7 +166,7 @@
                 dataType: 'html',
             }).done(function (data) {
                 if (data == 1) {
-                    window.location.href = "{{ route('/') }}";
+                    window.location.href = "{{ url('/') }}";
                 } else {
                     location.reload();
                 }
