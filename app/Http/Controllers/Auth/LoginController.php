@@ -54,4 +54,14 @@ class LoginController extends Controller
             return redirect()->back()->withError('Username dan Password Salah');
         }
     }
+    public function authenticate_v2(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

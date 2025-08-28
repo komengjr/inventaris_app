@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="SB-Mid-client-TzBZ-AB8Hng2jGB_"></script>
+
 
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -69,7 +68,7 @@
     <!--    Main Content-->
     <!-- ===============================================-->
     <main class="main" id="top">
-        <div class="container" data-layout="container">
+        <div class="container" data-layout="container" >
             <script>
                 var isFluid = JSON.parse(localStorage.getItem('isFluid'));
                 if (isFluid) {

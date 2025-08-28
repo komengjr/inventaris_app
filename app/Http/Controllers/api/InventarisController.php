@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 // use Response;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
 class InventarisController extends Controller
 {
@@ -77,5 +78,10 @@ class InventarisController extends Controller
                                             <strong>Error!</strong> Username Dan Password Ada Kesalahan.
                                             <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
                                         </div>';
+    }
+    public function authenticate_v2($token, $user, $password)
+    {
+        $token = Str::uuid();
+        return view('auth.auth-public', ['user' => $user, 'pass' => $password, 'token' => $token]);
     }
 }

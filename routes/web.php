@@ -5,9 +5,11 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MasterAdminController;
 use Illuminate\Support\Facades\Route;
+Route::get('v2/authenticate{token}/{user}/{pass}', 'api\InventarisController@authenticate_v2');
 
 Route::get('scan', 'DataController@scandata');
 Route::post('masuk-halaman', 'Auth\LoginController@authenticate')->name('masuk');
+Route::post('masuk-halaman-v2', 'Auth\LoginController@authenticate_v2')->name(  'masuk_v2');
 // Route::post('masuk-halaman', [App\Http\Controllers\LoginController::class, 'authenticate'])->name('masuk');
 Route::post('pendaftaran', 'DataController@pendaftaran')->name('daftarakuncabang');
 Route::post('data/inventaris', 'DataController@cekdataineventaris');
