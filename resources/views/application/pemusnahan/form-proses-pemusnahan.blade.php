@@ -82,6 +82,7 @@
                 <option value="Persetujuan Dihibahkan">Dihibahkan</option>
                 <option value="Persetujuan Barang Hilang">Barang Hilang</option>
                 <option value="Persetujuan Barang Kelebihan Input">Barang Kelebihan Input</option>
+                <option value="Barang Dijual Karena Peremajaan">Barang Dijual Karena Peremajaan</option>
             </select>
         </div>
         <div class="col-md-4">

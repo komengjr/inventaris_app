@@ -43,6 +43,13 @@
                             <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-peminjaman"
                                 id="button-proses-sinkronisasi-data-cabang" data-code="123"><span
                                     class="fas fa-sync-alt"></span> Sinkronisasi Data Barang</button>
+
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-peminjaman"
+                                id="button-proses-export-data-cabang" data-code="aset"><span
+                                    class="fas fa-file-export"></span> Export Data Barang Aset</button>
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-peminjaman"
+                                id="button-proses-export-data-cabang" data-code="aset"><span
+                                    class="fas fa-file-export"></span> Export Data Barang Non Aset</button>
                         </div>
                     </div>
                 </div>
@@ -170,6 +177,30 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "code": 0,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                setInterval(() => {
+                    location.reload();
+                }, 3000);
+                // $('#menu-master-barang-cabang').html('adsa');
+            }).fail(function() {
+                $('#menu-master-barang-cabang').html('eror');
+            });
+        });
+        $(document).on("click", "#button-proses-export-data-cabang", function(e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-master-barang-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('master_barang_export_data_cabang') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
                 },
                 dataType: 'html',
             }).done(function(data) {
