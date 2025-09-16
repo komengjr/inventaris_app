@@ -393,7 +393,8 @@
             <tr>
                 <td>Total Barang Yang Perlu diverifikasi</td>
                 <td>:</td>
-                <td style="text-align: right;">{{ $total}} Barang</td>
+                <td style="text-align: right;">{{ $baik + $maintenance + $rusak }} Barang</td>
+                <!-- <td style="text-align: right;">{{ $total}} Barang</td> -->
             </tr>
             <tr>
                 <td>Total Barang Yang Sudah di Verifikasi</td>
@@ -427,7 +428,7 @@
                 <td>Total Barang Tidak ditemukan</td>
                 <td>:</td>
                 <td style="text-align: right;">
-                    {{ $not_verif }} Barang
+                    0 Barang
                 </td>
             </tr>
         </table>
