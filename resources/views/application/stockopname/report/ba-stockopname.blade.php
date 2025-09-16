@@ -315,6 +315,46 @@
                     $total = 0;
                 @endphp
                 @foreach ($lokasi as $lokasis)
+                    @php
+                        $statusbarang = DB::table('tbl_sub_verifdatainventaris')
+                            ->join(
+                                'inventaris_data',
+                                'inventaris_data.inventaris_data_code',
+                                '=',
+                                'tbl_sub_verifdatainventaris.id_inventaris',
+                            )
+                            ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
+                            ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                            ->where('inventaris_data.inventaris_data_status', '<', 4)
+                            ->where('tbl_sub_verifdatainventaris.status_data_inventaris', '=', 0)
+                            ->where('inventaris_data.inventaris_data_tgl_beli', '<', $data->end_date_verif)
+                            ->count();
+                        $statusbarang1 = DB::table('tbl_sub_verifdatainventaris')
+                            ->join(
+                                'inventaris_data',
+                                'inventaris_data.inventaris_data_code',
+                                '=',
+                                'tbl_sub_verifdatainventaris.id_inventaris',
+                            )
+                            ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
+                            ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                            ->where('inventaris_data.inventaris_data_status', '<', 4)
+                            ->where('tbl_sub_verifdatainventaris.status_data_inventaris', '=', 1)
+                            ->where('inventaris_data.inventaris_data_tgl_beli', '<', $data->end_date_verif)
+                            ->count();
+                        $statusbarang2 = DB::table('tbl_sub_verifdatainventaris')
+                            ->join(
+                                'inventaris_data',
+                                'inventaris_data.inventaris_data_code',
+                                '=',
+                                'tbl_sub_verifdatainventaris.id_inventaris',
+                            )
+                            ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
+                            ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
+                            ->where('tbl_sub_verifdatainventaris.status_data_inventaris', '=', 2)
+                            ->where('inventaris_data.inventaris_data_tgl_beli', '<', $data->end_date_verif)
+                            ->count();
+                    @endphp
                     <tr>
                         <td>{{ $no++ }}</td>
                         <td>{{ $lokasis->master_lokasi_name }}</td>
@@ -327,49 +367,9 @@
                                     ->count();
                                 $total = $total + $total_brg;
                             @endphp
-                            {{ $total_brg }}
+                            {{ $statusbarang + $statusbarang1 + $statusbarang2 }}
                         </td>
-                        @php
-                            $statusbarang = DB::table('tbl_sub_verifdatainventaris')
-                                ->join(
-                                    'inventaris_data',
-                                    'inventaris_data.inventaris_data_code',
-                                    '=',
-                                    'tbl_sub_verifdatainventaris.id_inventaris',
-                                )
-                                ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
-                                ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
-                                ->where('inventaris_data.inventaris_data_status', '<', 4)
-                                ->where('tbl_sub_verifdatainventaris.status_data_inventaris','=', 0)
-                                ->where('inventaris_data.inventaris_data_tgl_beli', '<', $data->end_date_verif)
-                                ->count();
-                            $statusbarang1 = DB::table('tbl_sub_verifdatainventaris')
-                                ->join(
-                                    'inventaris_data',
-                                    'inventaris_data.inventaris_data_code',
-                                    '=',
-                                    'tbl_sub_verifdatainventaris.id_inventaris',
-                                )
-                                ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
-                                ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
-                                ->where('inventaris_data.inventaris_data_status', '<', 4)
-                                ->where('tbl_sub_verifdatainventaris.status_data_inventaris','=', 1)
-                                ->where('inventaris_data.inventaris_data_tgl_beli', '<', $data->end_date_verif)
-                                ->count();
-                            $statusbarang2 = DB::table('tbl_sub_verifdatainventaris')
-                                ->join(
-                                    'inventaris_data',
-                                    'inventaris_data.inventaris_data_code',
-                                    '=',
-                                    'tbl_sub_verifdatainventaris.id_inventaris',
-                                )
-                                ->where('tbl_sub_verifdatainventaris.kode_verif', $data->kode_verif)
-                                ->where('inventaris_data.id_nomor_ruangan_cbaang', $lokasis->id_nomor_ruangan_cbaang)
-                                ->where('tbl_sub_verifdatainventaris.status_data_inventaris','=', 2)
-                                ->where('inventaris_data.inventaris_data_tgl_beli', '<', $data->end_date_verif)
-                                ->count();
 
-                        @endphp
                         <td style="text-align: right;">
                             {{ $statusbarang }}
                         </td>
@@ -434,7 +434,8 @@
         </table>
 
         <p style="text-align: justify; font-size: 17px; color: black;">
-            Untuk selanjutnya, diharapkan kegiatan operasional Stockopname Barang Inventaris Cabang {{$cabang->nama_cabang}} tetap berjalan dengan baik
+            Untuk selanjutnya, diharapkan kegiatan operasional Stockopname Barang Inventaris Cabang
+            {{$cabang->nama_cabang}} tetap berjalan dengan baik
             dan sesuai dengan system yang telah ditetapkan, serta terjalin koordinasi yang baik dengan semua pihak yang
             bersangkutan.
             Demikian, berita acara ini dibuat dan ditandatangani dengan sebenar-benarnya.
@@ -443,8 +444,8 @@
         {{-- <div id="thanks">Thank you!</div> --}}
         <div id="notices">
             <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-                QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($data->kode_verif),
-            ) !!}">
+    QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($data->kode_verif),
+) !!}">
             <div class="notice">Dokumen Ini terbit secara digital.</div>
         </div>
     </main>
