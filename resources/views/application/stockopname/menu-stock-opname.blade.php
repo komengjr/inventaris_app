@@ -73,14 +73,19 @@
                             <td>{{ $item->tgl_verif }}</td>
                             <td>{{ $item->end_date_verif }}</td>
                             <td>
-                               {{ $item->total_barang }}
-                            </td>
-                            <td>
-                                @php
+                                 @php
                                     $jumlah = DB::table('tbl_sub_verifdatainventaris')
                                         ->where('kode_verif', $item->kode_verif)
                                         ->count();
                                 @endphp
+                                @if ($item->status_verif == 0)
+                                    {{ $item->total_barang }}
+                                @else
+                                    {{ $jumlah }}
+                                @endif
+
+                            </td>
+                            <td>
                                 {{ $jumlah }}
                             </td>
                             <td>
