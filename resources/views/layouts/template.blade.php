@@ -16,12 +16,12 @@
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/header.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/header.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/header.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/header.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/pram.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/pram.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/pram.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/pram.png') }}">
     <link rel="manifest" href="{{ asset('asset/img/favicons/manifest.json') }}">
-    <meta name="msapplication-TileImage" content="{{ asset('img/header.png') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('img/pram.png') }}">
     <meta name="theme-color" content="#ffffff">
     <script src="{{ asset('asset/js/config.js') }}"></script>
     <script src="{{ asset('vendors/overlayscrollbars/OverlayScrollbars.min.js') }}"></script>
@@ -277,8 +277,8 @@
                                 class="toggle-line"></span></span></button>
                     <a class="navbar-brand me-1 me-sm-3" href="#">
                         <div class="d-flex align-items-center"><img class="me-2"
-                                src="{{ asset('img/header.png') }}" alt=""
-                                width="40" /><span class="font-sans-serif">Inventaris</span>
+                                src="{{ asset('img/pram.png') }}" alt=""
+                                width="80" /><span class="font-sans-serif text-danger">Inventaris</span>
                         </div>
                     </a>
                     <ul class="navbar-nav align-items-center d-none d-lg-block">
