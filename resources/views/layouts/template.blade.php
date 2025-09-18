@@ -93,8 +93,8 @@
 
                     </div><a class="navbar-brand" href="#">
                         <div class="d-flex align-items-center py-3"><img class="me-2"
-                                src="{{ asset('img/header.png') }}" alt=""
-                                width="35" /><span class="font-sans-serif fs-2">Inventaris</span>
+                                src="{{ asset('img/pram.png') }}" alt=""
+                                width="55" /><span class="font-sans-serif fs--1 text-danger">Inventaris</span>
                         </div>
                     </a>
                 </div>
@@ -409,7 +409,7 @@
                             </p>
                         </div>
                         <div class="col-12 col-sm-auto text-center">
-                            <img src="{{ asset('img/logo.png') }}" alt="" width="80">
+                            <img src="{{ asset('img/pram.png') }}" alt="" width="80">
                         </div>
                     </div>
                 </footer>
