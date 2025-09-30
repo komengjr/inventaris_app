@@ -56,8 +56,8 @@
                         <script>
                             $(document).on("click", "#buttonverifcheckliststok{{ $datas->id_inventaris_data }}", function(e) {
                                 e.preventDefault();
-                                var answer = document.getElementById("answer{{ $datas->id_inventaris_data }}").value;
-                                var desk = document.getElementById("desk{{ $datas->id_inventaris_data }}").value;
+                                const answer = document.getElementById("answer{{ $datas->id_inventaris_data }}").value;
+                                const desk = document.getElementById("desk{{ $datas->id_inventaris_data }}").value;
                                 $('#hasil-pencarian').html(
                                     '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
                                 );
