@@ -9,15 +9,15 @@
     <meta name="author" content="" /> --}}
     <title> Inventaris APP - Halaman Login</title>
     <!--favicon-->
-    <link rel="icon" href="{{ asset('vendor/logo.png', []) }}" type="image/x-icon">
-    <link href="{{ asset('assets/css/bootstrap.min.css', []) }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/animate.css', []) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/icons.css', []) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/app-style.css', []) }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css', []) }}" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="{{ asset('vendor/logo.png') }}" type="image/x-icon">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/app-style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         body {
-            background-image: url('vendor/bg.jpg');
+            background-image: url('vendor/bg1.png');
             height: 100%;
             /* width: 100%; */
             /* Center and scale the image nicely */
@@ -25,12 +25,10 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
-
         /* For width 400px and larger: */
         @media only screen and (max-width: 550px) {
             body {
-                background-image: url('vendor/bg.png');
-
+                background-image: url('vendor/bg1.jpeg');
             }
         }
     </style>
@@ -52,10 +50,8 @@
     </style>
 </head>
 
-<body style="">
-
+<body>
     <!-- start loader -->
-
     <!-- end loader -->
     <div class="clearfix"></div>
     <!-- Start wrapper-->
@@ -64,11 +60,11 @@
 
         {{-- <div class="pb-5"></div>
         <div class="pb-5"></div> --}}
-        <div class="card card-authentication1 mx-auto pt-2">
-            <div class="card-body Larger shadow">
+        <div class="card card-authentication1 mx-auto pt-2 ">
+            <div class="card-body Larger shadow ">
                 <div class="card-content p-0">
                     <div class="text-center m-0 p-0">
-                        <img src="{{ asset('vendor/new-anim.gif', []) }}" width="350"
+                        <img src="{{ asset('vendor/new-anim.gif') }}" width="350"
                             style="width: 100%; height: auto;">
                     </div>
                     <div class="card-title text-uppercase text-center py-2" style="font-size: 10px;">Login Aplikasi
@@ -112,8 +108,6 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-info btn-block">masuk</button>
-
-
                     </form>
                 </div>
             </div>

@@ -32,7 +32,7 @@
                                     <form class="row g-3">
                                         <div class="col-md-4">
                                             <label class="form-label" for="inputState">Status</label>
-                                            <select class="form-select" id="answer-{{ $datas->id_inventaris_data }}"
+                                            <select class="form-select" id="answer{{ $datas->id_inventaris_data }}"
                                                 name="answer-{{ $datas->id_inventaris_data }}">
                                                 <option value="">Choose...</option>
                                                 <option value="0">BAIK</option>
@@ -42,22 +42,22 @@
                                         </div>
                                         <div class="col-md-8">
                                             <label class="form-label" for="inputZip">Deskripsi</label>
-                                            <textarea name="desk-{{ $datas->id_inventaris_data }}" class="form-control" id="desk-{{ $datas->id_inventaris_data }}"></textarea>
+                                            <textarea name="desk{{ $datas->id_inventaris_data }}" class="form-control" id="desk{{ $datas->id_inventaris_data }}"></textarea>
                                         </div>
 
                                         <div class="col-12">
                                             <button class="btn btn-primary btn-sm float-end" type="button"
-                                                id="button-verif-checklist-stok-{{ $datas->id_inventaris_data }}">Verif</button>
+                                                id="buttonverifcheckliststok{{ $datas->id_inventaris_data }}">Verif</button>
                                         </div>
                                     </form>
                                 </div>
                             </td>
                         </tr>
                         <script>
-                            $(document).on("click", "#button-verif-checklist-stok-{{ $datas->id_inventaris_data }}", function(e) {
+                            $(document).on("click", "#buttonverifcheckliststok{{ $datas->id_inventaris_data }}", function(e) {
                                 e.preventDefault();
-                                var answer = document.getElementById("answer-{{ $datas->id_inventaris_data }}").value;
-                                var desk = document.getElementById("desk-{{ $datas->id_inventaris_data }}").value;
+                                var answer = document.getElementById("answer{{ $datas->id_inventaris_data }}").value;
+                                var desk = document.getElementById("desk{{ $datas->id_inventaris_data }}").value;
                                 $('#hasil-pencarian').html(
                                     '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
                                 );
