@@ -2,13 +2,13 @@
 
 
     <div id="table-data-peminjaman">
-        <table id="exampledata-list" class="table table-striped nowrap" style="width:100%">
+        <table id="exampledata-list" class="table table-striped" style="width:100%">
             <thead class="bg-200 text-700">
                 <tr>
                     <th>No</th>
-                    <th>Nama Barang</th>
+                    <th>Detail Barang</th>
                     <th>Nomor Inventaris</th>
-                    <th>Verifikasi Kondsi</th>
+
                 </tr>
             </thead>
             <tbody style="font-size: 13px;">
@@ -23,12 +23,11 @@
                             ->first();
                     @endphp
                     @if (!$cek)
+
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $datas->inventaris_data_name }}</td>
-                            <td>{{ $datas->inventaris_data_number }}</td>
-                            <td class="m-2">
-                                <div class="card p-3">
+                            <td>{{ $datas->inventaris_data_name }} ( {{ $datas->inventaris_data_number }} )<br>
+                                <div class="card p-3 mt-3">
                                     <form class="row g-3">
                                         <div class="col-md-4">
                                             <label class="form-label" for="inputState">Status</label>
@@ -53,33 +52,47 @@
                                     </form>
                                 </div>
                             </td>
+                            <td></td>
+
                         </tr>
                         <script>
                             $(document).on("click", "#buttonverifcheckliststok{{ $datas->id_inventaris_data }}", function (e) {
                                 e.preventDefault();
-                                const answer<?php        echo $datas->id_inventaris_data ?> = document.getElementById("answer{{ $datas->id_inventaris_data }}").value;
-                                const desk<?php        echo $datas->id_inventaris_data ?> = document.getElementById("desk{{ $datas->id_inventaris_data }}").value;
-                                $('#hasil-pencarian').html(
-                                    '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-                                );
-                                $.ajax({
-                                    url: "{{ route('menu_stock_opname_proses_data_with_checklist_lokasi_save') }}",
-                                    type: "POST",
-                                    cache: false,
-                                    data: {
-                                        "_token": "{{ csrf_token() }}",
-                                        "code": "{{ $code }}",
-                                        "tiket": "{{ $tiket }}",
-                                        "id": "{{ $datas->inventaris_data_code }}",
-                                        'answer': answer<?php        echo $datas->id_inventaris_data ?>,
-                                        'desk': desk<?php        echo $datas->id_inventaris_data ?>,
-                                    },
-                                    dataType: 'html',
-                                }).done(function (data) {
-                                    $('#hasil-pencarian').html(data);
-                                }).fail(function () {
-                                    $('#hasil-pencarian').html('eror');
-                                });
+                                const answer = document.getElementById("answer{{ $datas->id_inventaris_data }}").value;
+                                const desk = document.getElementById("desk{{ $datas->id_inventaris_data }}").value;
+
+                                console.log(desk);
+                                console.log(answer);
+                                if (desk == "" || answer == "") {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Oops...",
+                                        text: "Something went wrong!",
+                                        footer: '<a href="#">Why do I have this issue?</a>'
+                                    });
+                                } else {
+                                    $('#hasil-pencarian').html(
+                                        '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+                                    );
+                                    $.ajax({
+                                        url: "{{ route('menu_stock_opname_proses_data_with_checklist_lokasi_save') }}",
+                                        type: "POST",
+                                        cache: false,
+                                        data: {
+                                            "_token": "{{ csrf_token() }}",
+                                            "code": "{{ $code }}",
+                                            "tiket": "{{ $tiket }}",
+                                            "id": "{{ $datas->inventaris_data_code }}",
+                                            'answer': answer,
+                                            'desk': desk,
+                                        },
+                                        dataType: 'html',
+                                    }).done(function (data) {
+                                        $('#hasil-pencarian').html(data);
+                                    }).fail(function () {
+                                        $('#hasil-pencarian').html('eror');
+                                    });
+                                }
                             });
                         </script>
                     @endif
