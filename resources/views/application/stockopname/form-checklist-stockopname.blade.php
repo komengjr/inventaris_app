@@ -42,7 +42,8 @@
                                         </div>
                                         <div class="col-md-8">
                                             <label class="form-label" for="inputZip">Deskripsi</label>
-                                            <textarea name="desk{{ $datas->id_inventaris_data }}" class="form-control" id="desk{{ $datas->id_inventaris_data }}"></textarea>
+                                            <textarea name="desk{{ $datas->id_inventaris_data }}" class="form-control"
+                                                id="desk{{ $datas->id_inventaris_data }}"></textarea>
                                         </div>
 
                                         <div class="col-12">
@@ -54,10 +55,10 @@
                             </td>
                         </tr>
                         <script>
-                            $(document).on("click", "#buttonverifcheckliststok{{ $datas->id_inventaris_data }}", function(e) {
+                            $(document).on("click", "#buttonverifcheckliststok{{ $datas->id_inventaris_data }}", function (e) {
                                 e.preventDefault();
-                                const answer = document.getElementById("answer{{ $datas->id_inventaris_data }}").value;
-                                const desk = document.getElementById("desk{{ $datas->id_inventaris_data }}").value;
+                                const answer<?php        echo $datas->id_inventaris_data ?> = document.getElementById("answer{{ $datas->id_inventaris_data }}").value;
+                                const desk<?php        echo $datas->id_inventaris_data ?> = document.getElementById("desk{{ $datas->id_inventaris_data }}").value;
                                 $('#hasil-pencarian').html(
                                     '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
                                 );
@@ -70,13 +71,13 @@
                                         "code": "{{ $code }}",
                                         "tiket": "{{ $tiket }}",
                                         "id": "{{ $datas->inventaris_data_code }}",
-                                        'answer': answer,
-                                        'desk': desk,
+                                        'answer': answer<?php        echo $datas->id_inventaris_data ?>,
+                                        'desk': desk<?php        echo $datas->id_inventaris_data ?>,
                                     },
                                     dataType: 'html',
-                                }).done(function(data) {
+                                }).done(function (data) {
                                     $('#hasil-pencarian').html(data);
-                                }).fail(function() {
+                                }).fail(function () {
                                     $('#hasil-pencarian').html('eror');
                                 });
                             });
