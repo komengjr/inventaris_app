@@ -9,7 +9,8 @@
                 <div class="containera p-0" id="QR-Code">
                     <div class="col-12 text-center">
                         <label for="" class="text-center">Masukan Kode Verifikasi</label>
-                        <input type="text" class="form-control form-control-lg text-center" name="code_name" id="code_name" onkeydown="caridatabatal(this)" required>
+                        <input type="text" class="form-control form-control-lg text-center" name="code_name"
+                            id="code_name" onkeydown="caridatabatal(this)" required>
                         <input type="text" name="" id="tiket" value="{{$code}}" hidden>
                     </div>
                 </div>
@@ -32,10 +33,13 @@
                     "tiket": tiket,
                 },
                 dataType: 'html',
-            }).done(function(data) {
-                $('#menu-verifikasi-data-pemusnahan').html(data);
-                location.reload();
-            }).fail(function() {
+            }).done(function (data) {
+                if (data == 0) {
+                    alert('gagal Verifikasi');
+                } else {
+                    location.reload();
+                }
+            }).fail(function () {
                 $('#menu-verifikasi-data-pemusnahan').html(
                     '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
                 );

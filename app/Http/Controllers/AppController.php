@@ -1174,8 +1174,28 @@ class AppController extends Controller
     }
     public function menu_pemusnahan_pilih_data_barang_pengembalian_save(Request $request)
     {
+        $token = mt_rand(1000000, 9999999);
+        $check = DB::table('tbl_pemusnahan')->where('id_inventaris', $request->id_inventaris)->first();
+        $brg = DB::table('inventaris_data')->where('inventaris_data_code', $request->id_inventaris)->first();
+        $no = DB::table('wa_number_cabang')->where('wa_number_code', $check->user_persetujuan)->first();
+        $text = "Hai \nAda Notifikasi Pembatalan Pemusnahan Barang Dengan Tiket Pemusnahan :\n*" . $check->kd_pemusnahan . "*\nDetail Barang :\n" .
+            "\nNo Inventaris : " . $brg->inventaris_data_number .
+            "\nNama Barang : " . $brg->inventaris_data_name .
+            "\nMerek Barang : " . $brg->inventaris_data_merk .
+            "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
+            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Me*";
+        DB::table('message')->insert([
+            'token_code' => str::uuid(),
+            'number' => $no->wa_number_no,
+            'pesan' => $text,
+            'file' => 'nofile',
+            'status' => 0,
+            'time' => now(),
+            'created_at' => now(),
+        ]);
         DB::table('tbl_pemusnahan')->where('kd_pemusnahan', $request->code_pemusnahan)->update([
             'ket_batal' => $request->alasan,
+            'token_pemusnahan' => $token,
             'status_pemusnahan' => 2,
         ]);
         return redirect()->back()->withSuccess('Great! Berhasil Membatalkan Data Pemusnahan');
@@ -1186,7 +1206,18 @@ class AppController extends Controller
     }
     public function menu_pemusnahan_pilih_data_barang_verifikasi_pembatalan_code(Request $request)
     {
-        return 123;
+        $check = DB::table('tbl_pemusnahan')->where('kd_pemusnahan', $request->tiket)->where('token_pemusnahan', $request->code)->first();
+        if ($check) {
+            DB::table('tbl_pemusnahan')->where('kd_pemusnahan', $request->tiket)->update([
+                'status_pemusnahan' => 3
+            ]);
+            DB::table('inventaris_data')->where('inventaris_data_code', $check->id_inventaris)->update([
+                'inventaris_data_status' => 1
+            ]);
+            return 'berhasil';
+        } else {
+            return 0;
+        }
     }
     public function master_location_print_data_ruangan(Request $request)
     {

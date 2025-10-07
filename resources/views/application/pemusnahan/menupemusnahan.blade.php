@@ -49,8 +49,8 @@
                                 Pengecekan Data Pemusnahan</button>
                         </div>
                         {{-- <a class="btn btn-falcon-primary btn-sm" href="#!" data-bs-toggle="modal"
-                        data-bs-target="#modal-pemusnahan" id="button-add-data-pemusnahan">
-                        <span class="far fa-file-alt fs--2 me-1"></span>Tambah Pemusnahan Barang</a> --}}
+                            data-bs-target="#modal-pemusnahan" id="button-add-data-pemusnahan">
+                            <span class="far fa-file-alt fs--2 me-1"></span>Tambah Pemusnahan Barang</a> --}}
                     </div>
                 </div>
             </div>
@@ -110,6 +110,8 @@
                                     <span class="badge bg-primary fs--2">Sudah diverifikasi</span>
                                 @elseif($datas->status_pemusnahan == 2)
                                     <span class="badge bg-danger fs--2">Verifikasi Pembatalan</span>
+                                @elseif($datas->status_pemusnahan == 3)
+                                    <span class="badge bg-primary fs--2">Pembatalan Berhasil</span>
                                 @endif
                             </td>
                             <td>
@@ -117,43 +119,34 @@
                                 @else
                                     <div class="btn-group" role="group">
                                         <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
-                                            type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false"><span class="fas fa-align-left me-1"
-                                                data-fa-transform="shrink-3"></span>Option</button>
+                                            type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                                class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span>Option</button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
                                             @if ($datas->status_pemusnahan == 0)
                                                 <button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-pemusnahan-md"
-                                                    id="button-verifikasi-data-pemusnahan-cabang"
-                                                    data-code="{{ $datas->id_pemusnahan }}"><span
-                                                        class="fas fa-swatchbook"></span>
+                                                    data-bs-target="#modal-pemusnahan-md" id="button-verifikasi-data-pemusnahan-cabang"
+                                                    data-code="{{ $datas->id_pemusnahan }}"><span class="fas fa-swatchbook"></span>
                                                     Verifikasi Pemusnahan</button>
                                             @elseif($datas->status_pemusnahan == 1)
                                                 <button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-pemusnahan-lg"
-                                                    id="button-cetak-data-pemusnahan-cabang"
-                                                    data-code="{{ $datas->id_pemusnahan }}"><span
-                                                        class="fas fa-print"></span>
+                                                    data-bs-target="#modal-pemusnahan-lg" id="button-cetak-data-pemusnahan-cabang"
+                                                    data-code="{{ $datas->id_pemusnahan }}"><span class="fas fa-print"></span>
                                                     Cetak Laporan Pemusnahan</button>
                                                 <button class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-pemusnahan-md"
-                                                    id="button-sinkronisasi-data-pemusnahan"
-                                                    data-code="{{ $datas->id_inventaris }}"><span
-                                                        class="fas fa-sync-alt"></span>
+                                                    data-bs-target="#modal-pemusnahan-md" id="button-sinkronisasi-data-pemusnahan"
+                                                    data-code="{{ $datas->id_inventaris }}"><span class="fas fa-sync-alt"></span>
                                                     Sinkronisasi Data</button>
                                                 <div class="dropdown-divider"></div>
                                                 <button class="dropdown-item text-danger" data-bs-toggle="modal"
                                                     data-bs-target="#modal-pemusnahan-xl"
                                                     id="button-pengembalian-data-pemusnahan-cabang"
-                                                    data-code="{{ $datas->kd_pemusnahan }}"><span
-                                                        class="fas fa-redo"></span>
+                                                    data-code="{{ $datas->kd_pemusnahan }}"><span class="fas fa-redo"></span>
                                                     Pengembalian Barang Pemusnahan</button>
                                             @elseif($datas->status_pemusnahan == 2)
                                                 <button class="dropdown-item text-warning" data-bs-toggle="modal"
                                                     data-bs-target="#modal-pemusnahan-md"
                                                     id="button-verifikasi-pembatalan-pemusnahan-cabang"
-                                                    data-code="{{ $datas->kd_pemusnahan }}"><span
-                                                        class="fas fa-swatchbook"></span>
+                                                    data-code="{{ $datas->kd_pemusnahan }}"><span class="fas fa-swatchbook"></span>
                                                     Verifikasi Pembatalan</button>
                                             @endif
                                         </div>
@@ -227,7 +220,7 @@
         });
     </script>
     <script>
-        $(document).on("click", "#button-add-data-pemusnahan", function(e) {
+        $(document).on("click", "#button-add-data-pemusnahan", function (e) {
             e.preventDefault();
             $('#menu-pemusnahan').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
@@ -241,13 +234,13 @@
                     "code": 0,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-pemusnahan').html(data);
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-pemusnahan').html('eror');
             });
         });
-        $(document).on("click", "#button-find-data-barang", function(e) {
+        $(document).on("click", "#button-find-data-barang", function (e) {
             e.preventDefault();
             var data = $("#form-pencarian-data-pemusnahan").serialize();
             $('#menu-data-table-pemusnahan').html(
@@ -259,13 +252,13 @@
                 cache: false,
                 data: data,
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-data-table-pemusnahan').html(data);
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-data-table-pemusnahan').html('eror');
             });
         });
-        $(document).on("click", "#button-pilih-data-barang-pemusnahan", function(e) {
+        $(document).on("click", "#button-pilih-data-barang-pemusnahan", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-data-table-pemusnahan').html(
@@ -280,13 +273,13 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-data-table-pemusnahan').html(data);
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-data-table-pemusnahan').html('eror');
             });
         });
-        $(document).on("click", "#button-verifikasi-data-pemusnahan-cabang", function(e) {
+        $(document).on("click", "#button-verifikasi-data-pemusnahan-cabang", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-pemusnahan-md').html(
@@ -301,13 +294,13 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-pemusnahan-md').html(data);
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-pemusnahan-md').html('eror');
             });
         });
-        $(document).on("click", "#button-cetak-data-pemusnahan-cabang", function(e) {
+        $(document).on("click", "#button-cetak-data-pemusnahan-cabang", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-pemusnahan-lg').html(
@@ -322,13 +315,13 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-pemusnahan-lg').html(data);
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-pemusnahan-lg').html('eror');
             });
         });
-        $(document).on("click", "#button-check-data-barang-musnah-cabang", function(e) {
+        $(document).on("click", "#button-check-data-barang-musnah-cabang", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-pemusnahan-xl').html(
@@ -343,13 +336,13 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-pemusnahan-xl').html(data);
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-pemusnahan-xl').html('eror');
             });
         });
-        $(document).on("click", "#button-sinkronisasi-data-pemusnahan", function(e) {
+        $(document).on("click", "#button-sinkronisasi-data-pemusnahan", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-pemusnahan-md').html(
@@ -364,14 +357,14 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-pemusnahan-md').html(data);
                 location.reload();
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-pemusnahan-md').html('eror');
             });
         });
-        $(document).on("click", "#button-pengembalian-data-pemusnahan-cabang", function(e) {
+        $(document).on("click", "#button-pengembalian-data-pemusnahan-cabang", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-pemusnahan-xl').html(
@@ -386,13 +379,13 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-pemusnahan-xl').html(data);
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-pemusnahan-xl').html('eror');
             });
         });
-        $(document).on("click", "#button-verifikasi-pembatalan-pemusnahan-cabang", function(e) {
+        $(document).on("click", "#button-verifikasi-pembatalan-pemusnahan-cabang", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-pemusnahan-md').html(
@@ -407,9 +400,9 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-pemusnahan-md').html(data);
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-pemusnahan-md').html('eror');
             });
         });
