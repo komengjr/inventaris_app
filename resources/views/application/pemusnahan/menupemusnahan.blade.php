@@ -126,28 +126,33 @@
                                                 <button class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#modal-pemusnahan-md" id="button-verifikasi-data-pemusnahan-cabang"
                                                     data-code="{{ $datas->id_pemusnahan }}"><span class="fas fa-swatchbook"></span>
-                                                    Verifikasi Pemusnahan</button>
+                                                    Verifikasi Pemusnahan
+                                                </button>
                                             @elseif($datas->status_pemusnahan == 1)
                                                 <button class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#modal-pemusnahan-lg" id="button-cetak-data-pemusnahan-cabang"
                                                     data-code="{{ $datas->id_pemusnahan }}"><span class="fas fa-print"></span>
-                                                    Cetak Laporan Pemusnahan</button>
+                                                    Cetak Laporan Pemusnahan
+                                                </button>
                                                 <button class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#modal-pemusnahan-md" id="button-sinkronisasi-data-pemusnahan"
                                                     data-code="{{ $datas->id_inventaris }}"><span class="fas fa-sync-alt"></span>
-                                                    Sinkronisasi Data</button>
+                                                    Sinkronisasi Data
+                                                </button>
                                                 <div class="dropdown-divider"></div>
                                                 <button class="dropdown-item text-danger" data-bs-toggle="modal"
                                                     data-bs-target="#modal-pemusnahan-xl"
                                                     id="button-pengembalian-data-pemusnahan-cabang"
                                                     data-code="{{ $datas->kd_pemusnahan }}"><span class="fas fa-redo"></span>
-                                                    Pengembalian Barang Pemusnahan</button>
+                                                    Pengembalian Barang Pemusnahan
+                                                </button>
                                             @elseif($datas->status_pemusnahan == 2)
                                                 <button class="dropdown-item text-warning" data-bs-toggle="modal"
                                                     data-bs-target="#modal-pemusnahan-md"
                                                     id="button-verifikasi-pembatalan-pemusnahan-cabang"
                                                     data-code="{{ $datas->kd_pemusnahan }}"><span class="fas fa-swatchbook"></span>
-                                                    Verifikasi Pembatalan</button>
+                                                    Verifikasi Pembatalan
+                                                </button>
                                             @endif
                                         </div>
                                     </div>

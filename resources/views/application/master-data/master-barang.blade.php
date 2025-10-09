@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="card-body border-top p-3" id="menu-master-barang-cabang">
-            <table id="example" class="table table-striped nowrap" style="width:100%">
+            <table id="example" class="table table-striped" style="width:100%">
                 <thead class="bg-200 text-700 fs--2">
                     <tr>
                         <th>No</th>
@@ -73,42 +73,7 @@
                     </tr>
                 </thead>
                 <tbody class="fs--2 child"></tbody>
-                {{-- <tbody class="fs--2">
-                    @php
-                        $no = 1;
-                    @endphp
-                    @foreach ($data as $datas)
-                        <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $datas->inventaris_data_name }}</td>
-                            <td>{{ $datas->inventaris_data_number }}</td>
-                            <td>{{ $datas->inventaris_klasifikasi_code }}</td>
-                            <td>{{ $datas->id_nomor_ruangan_cbaang }}</td>
-                            <td>{{ $datas->inventaris_data_merk }}</td>
-                            <td>{{ $datas->inventaris_data_tgl_beli }}</td>
-                            <td>{{ $datas->inventaris_data_harga }}</td>
-                            <td>{{ $datas->inventaris_data_status }}</td>
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
-                                        type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false"><span class="fas fa-align-left me-1"
-                                            data-fa-transform="shrink-3"></span></button>
-                                    <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-peminjaman" id="button-proses-peminjaman-cabang"
-                                            data-code="{{ $datas->inventaris_data_code }}"><span
-                                                class="far fa-edit"></span> Perubahan Data Barang</button>
-                                        <button class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#modal-peminjaman" id="button-proses-peminjaman-cabang"
-                                            data-code="{{ $datas->inventaris_data_code }}"><span
-                                                class="fas fa-qrcode"></span> Cetak Barcode</button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody> --}}
+
             </table>
         </div>
     </div>
