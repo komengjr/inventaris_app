@@ -707,7 +707,7 @@ class AppController extends Controller
                 $pesan = $pesan . $texts;
             }
             $text = "Hai \nAda Notifikasi Peminjaman Barang\nDengan No Tiket : " . $check->tiket_peminjaman . "\nToken Peminjaman Anda : *" . $token .
-                "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Transforma*";
+                "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Inventaris Managemen System*";
             DB::table('message')->insert([
                 'token_code' => str::uuid(),
                 'number' => $number->wa_number_no,
@@ -773,7 +773,7 @@ class AppController extends Controller
                     "\nNama Barang : " . $brg->inventaris_data_name .
                     "\nMerek Barang : " . $brg->inventaris_data_merk .
                     "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
-                    "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma*";
+                    "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Inventaris Managemen System*";
                 DB::table('tbl_pemusnahan')->insert([
                     'kd_pemusnahan' => $code,
                     'id_inventaris' => $value->id_inventaris,
@@ -995,7 +995,7 @@ class AppController extends Controller
             ]);
         }
         $text = "Hai \nAda Notifikasi Peminjaman Barang\nDengan No Tiket : " . $data->tiket_req . "\nToken Peminjaman Anda : *" . $token .
-            "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Transforma*";
+            "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Inventaris Managemen System*";
         DB::table('message')->insert([
             'token_code' => str::uuid(),
             'number' => $number->wa_number_no,
@@ -1084,7 +1084,7 @@ class AppController extends Controller
                 "\nNama Barang : " . $brg->inventaris_data_name .
                 "\nMerek Barang : " . $brg->inventaris_data_merk .
                 "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
-                "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Me*";
+                "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Inventaris Managemen System*";
             DB::table('tbl_pemusnahan')->insert([
                 'kd_pemusnahan' => $code,
                 'id_inventaris' => $request->id_inventaris,
@@ -1183,7 +1183,7 @@ class AppController extends Controller
             "\nNama Barang : " . $brg->inventaris_data_name .
             "\nMerek Barang : " . $brg->inventaris_data_merk .
             "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
-            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Me*";
+            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Inventaris Managemen System*";
         DB::table('message')->insert([
             'token_code' => str::uuid(),
             'number' => $no->wa_number_no,
@@ -1587,7 +1587,7 @@ class AppController extends Controller
             "\nNama Barang : " . $brg->inventaris_data_name .
             "\nMerek Barang : " . $brg->inventaris_data_merk .
             "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
-            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Transforma*";
+            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Inventaris Managemen System*";
         DB::table('tbl_maintenance')->insert([
             'kd_maintenance' => $code,
             'id_inventaris' => $request->id_inventaris,
@@ -1926,7 +1926,7 @@ class AppController extends Controller
                 $barang = $barang . '' . $list;
             }
             $text = "Hai \n\nToken Mutasi Anda : *" . $token . "*\nList Barang :\n" . $barang .
-                "\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Mutasi..\n\nSupport By. *Transforma Digital*";
+                "\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Mutasi..\n\nSupport By. *Inventaris Managemen System*";
             DB::table('message')->insert([
                 'token_code' => str::uuid(),
                 'number' => $number->wa_number_no,
