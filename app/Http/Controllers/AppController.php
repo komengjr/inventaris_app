@@ -24,6 +24,7 @@ use App\Exports\DataInventarisExport;
 use App\Exports\DataInventarisExportRuangan;
 use App\sub_tbl_inventory;
 use App\DataInventaris;
+use Illuminate\Support\Facades\Hash as FacadesHash;
 
 class AppController extends Controller
 {
@@ -707,7 +708,7 @@ class AppController extends Controller
                 $pesan = $pesan . $texts;
             }
             $text = "Hai \nAda Notifikasi Peminjaman Barang\nDengan No Tiket : " . $check->tiket_peminjaman . "\nToken Peminjaman Anda : *" . $token .
-                "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Inventaris Managemen System*";
+                "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nˢᵘᵖᵖᵒʳᵗ ᴮʸ. ᴵⁿᵛᵉⁿᵗᵃʳⁱˢ ᴹᵃⁿᵃᵍᵉᵐᵉⁿ ˢʸˢᵗᵉᵐ";
             DB::table('message')->insert([
                 'token_code' => str::uuid(),
                 'number' => $number->wa_number_no,
@@ -773,7 +774,7 @@ class AppController extends Controller
                     "\nNama Barang : " . $brg->inventaris_data_name .
                     "\nMerek Barang : " . $brg->inventaris_data_merk .
                     "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
-                    "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Inventaris Managemen System*";
+                    "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nˢᵘᵖᵖᵒʳᵗ ᴮʸ. ᴵⁿᵛᵉⁿᵗᵃʳⁱˢ ᴹᵃⁿᵃᵍᵉᵐᵉⁿ ˢʸˢᵗᵉᵐ";
                 DB::table('tbl_pemusnahan')->insert([
                     'kd_pemusnahan' => $code,
                     'id_inventaris' => $value->id_inventaris,
@@ -995,7 +996,7 @@ class AppController extends Controller
             ]);
         }
         $text = "Hai \nAda Notifikasi Peminjaman Barang\nDengan No Tiket : " . $data->tiket_req . "\nToken Peminjaman Anda : *" . $token .
-            "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nSupport By. *Inventaris Managemen System*";
+            "*\n\nList Barang Yang dipinjam :\n" . $pesan . "\nPastikan Token disimpan Untuk Verifikasi Data Peminjaman.\n\nˢᵘᵖᵖᵒʳᵗ ᴮʸ. ᴵⁿᵛᵉⁿᵗᵃʳⁱˢ ᴹᵃⁿᵃᵍᵉᵐᵉⁿ ˢʸˢᵗᵉᵐ";
         DB::table('message')->insert([
             'token_code' => str::uuid(),
             'number' => $number->wa_number_no,
@@ -1084,7 +1085,7 @@ class AppController extends Controller
                 "\nNama Barang : " . $brg->inventaris_data_name .
                 "\nMerek Barang : " . $brg->inventaris_data_merk .
                 "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
-                "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Inventaris Managemen System*";
+                "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nˢᵘᵖᵖᵒʳᵗ ᴮʸ. ᴵⁿᵛᵉⁿᵗᵃʳⁱˢ ᴹᵃⁿᵃᵍᵉᵐᵉⁿ ˢʸˢᵗᵉᵐ";
             DB::table('tbl_pemusnahan')->insert([
                 'kd_pemusnahan' => $code,
                 'id_inventaris' => $request->id_inventaris,
@@ -1183,7 +1184,7 @@ class AppController extends Controller
             "\nNama Barang : " . $brg->inventaris_data_name .
             "\nMerek Barang : " . $brg->inventaris_data_merk .
             "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
-            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Inventaris Managemen System*";
+            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nˢᵘᵖᵖᵒʳᵗ ᴮʸ. ᴵⁿᵛᵉⁿᵗᵃʳⁱˢ ᴹᵃⁿᵃᵍᵉᵐᵉⁿ ˢʸˢᵗᵉᵐ";
         DB::table('message')->insert([
             'token_code' => str::uuid(),
             'number' => $no->wa_number_no,
@@ -1587,7 +1588,7 @@ class AppController extends Controller
             "\nNama Barang : " . $brg->inventaris_data_name .
             "\nMerek Barang : " . $brg->inventaris_data_merk .
             "\n\nToken Verifikasi Pemusnahan Anda : *" . $token .
-            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nSupport By. *Inventaris Managemen System*";
+            "*\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Musnahkan..\n\nˢᵘᵖᵖᵒʳᵗ ᴮʸ. ᴵⁿᵛᵉⁿᵗᵃʳⁱˢ ᴹᵃⁿᵃᵍᵉᵐᵉⁿ ˢʸˢᵗᵉᵐ";
         DB::table('tbl_maintenance')->insert([
             'kd_maintenance' => $code,
             'id_inventaris' => $request->id_inventaris,
@@ -1926,7 +1927,7 @@ class AppController extends Controller
                 $barang = $barang . '' . $list;
             }
             $text = "Hai \n\nToken Mutasi Anda : *" . $token . "*\nList Barang :\n" . $barang .
-                "\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Mutasi..\n\nSupport By. *Inventaris Managemen System*";
+                "\n\nPastikan Token disimpan Untuk Verifikasi Data yang Ingin di Mutasi..\n\nˢᵘᵖᵖᵒʳᵗ ᴮʸ. ᴵⁿᵛᵉⁿᵗᵃʳⁱˢ ᴹᵃⁿᵃᵍᵉᵐᵉⁿ ˢʸˢᵗᵉᵐ";
             DB::table('message')->insert([
                 'token_code' => str::uuid(),
                 'number' => $number->wa_number_no,
@@ -2729,7 +2730,7 @@ class AppController extends Controller
             'name' => $staff->nama_staff,
             'email' => $staff->nip,
             'email_' => $request->email,
-            'password' => Hash::make($request['password']),
+            'password' => FacadesHash::make($request['password']),
             'akses' => 'staff',
             'cabang' => Auth::user()->cabang,
             'created_at' => now(),
@@ -2746,7 +2747,7 @@ class AppController extends Controller
             ->where('email', $request->code)
             ->where('cabang', Auth::user()->cabang)
             ->update([
-                'password' => Hash::make($request['password'])
+                'password' => FacadesHash::make($request['password'])
             ]);
         return redirect()->back()->withSuccess('Great! Berhasil Update Password Data');
     }

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session as FacadesSession;
 use Illuminate\Support\Str;
 use Session;
-use DB;
+
 class DataController extends Controller
 {
     public function scandata()
@@ -212,7 +214,7 @@ class DataController extends Controller
     {
         $cekuser = DB::table('tbl_daftar_user')->where('username', $request->input('username'))->first();
         if ($cekuser) {
-            Session::flash('Gagal','Pendaftaran Gagal');
+            FacadesSession::flash('Gagal','Pendaftaran Gagal');
             return redirect()->back();
         } else {
             DB::table('tbl_daftar_user')->insert([
@@ -220,7 +222,7 @@ class DataController extends Controller
                 'password'=> $request->input('password'),
                 'nama_cabang'=> $request->input('cabang'),
             ]);
-            Session::flash('sukses','Pendaftaran Berhasil');
+            FacadesSession::flash('sukses','Pendaftaran Berhasil');
             return redirect()->back();
         }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Faker\Provider\Uuid;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,7 @@ use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
-use DB;
+
 use PDF;
 
 class DashboardController extends Controller
