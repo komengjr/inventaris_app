@@ -1,176 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    {{-- <meta name="description" content="" />
-    <meta name="author" content="" /> --}}
-    <title> Inventaris APP - Halaman Login</title>
-    <!--favicon-->
-    <link rel="icon" href="{{ asset('vendor/logo.png') }}" type="image/x-icon">
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/app-style.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login | Penilaian Supplier</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/header.png') }}">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         body {
-            background-image: url('vendor/bg1.png');
-            height: 100%;
-            /* width: 100%; */
-            /* Center and scale the image nicely */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e8f1fc, #ffffff);
+            overflow: hidden;
+            position: relative;
         }
-        /* For width 400px and larger: */
-        @media only screen and (max-width: 550px) {
-            body {
-                background-image: url('vendor/bg1.jpeg');
+
+        /* === Animated Background === */
+        .background-animation {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .bg-shape:nth-child(1) {
+            width: 180px;
+            height: 180px;
+            background: #a0d3ff;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .bg-shape:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            background: #f5cba7;
+            bottom: 5%;
+            right: 8%;
+            animation-delay: 3s;
+        }
+
+        .bg-shape:nth-child(3) {
+            width: 220px;
+            height: 220px;
+            background: #c8e6c9;
+            top: 40%;
+            left: 70%;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.05);
             }
         }
-    </style>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            /* background: url(1.gif) 0px 0px; */
-            /* background: linear-gradient(30deg,#4c5153,transparent,#229ccb); */
-            height: 100%;
 
-            /* Center and scale the image nicely */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+        /* === Background Illustration === */
+        .background-illustration {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: url('https://pustaka.bca.co.id/Promo/A2C31A68-BC10-4CBD-AB51-85474A36CC50/Detail/ImageListing/20250723_PRAMITA-LAB-SBY-thumb.jpeg') center/cover no-repeat;
+            opacity: 0.15;
+            filter: blur(1px);
+        }
+
+        /* === Login Card === */
+        .login-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            padding: 1.5rem 1.5rem;
+            margin: 1rem;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-card h2 {
+            font-weight: 600;
+            color: #316bb3;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-card p {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .form-control {
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+            border-color: #d0d9e2;
+        }
+
+        .form-control:focus {
+            border-color: #90caf9;
+            box-shadow: 0 0 0 0.25rem rgba(144, 202, 249, 0.25);
+        }
+
+        .btn-primary {
+            background-color: #5a9bd5;
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.03);
+            background-color: #4689c4;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .footer-text a {
+            color: #316bb3;
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 2rem 1.5rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- start loader -->
-    <!-- end loader -->
-    <div class="clearfix"></div>
-    <!-- Start wrapper-->
-    <div id="wrapper" style="font-family: 'Russo One', sans-serif;" class="p-3">
-
-
-        {{-- <div class="pb-5"></div>
-        <div class="pb-5"></div> --}}
-        <div class="card card-authentication1 mx-auto pt-2 ">
-            <div class="card-body Larger shadow ">
-                <div class="card-content p-0">
-                    <div class="text-center m-0 p-0">
-                        <img src="{{ asset('vendor/new-anim.gif') }}" width="350"
-                            style="width: 100%; height: auto;">
-                    </div>
-                    <div class="card-title text-uppercase text-center py-2" style="font-size: 10px;">Login Aplikasi
-                    </div>
-                    <form method="POST" action="{{ route('masuk') }}">
-                        @csrf
-                        <div class="form-group">
-                            <label for="exampleInputUsername" class="sr-only">Username</label>
-                            <div class="position-relative has-icon-right">
-                                <!-- <input type="text" id="exampleInputUsername" class="form-control input-shadow" placeholder="Enter Username"> -->
-                                <input id="email" type="text"
-                                    class="form-control @error('email') is-invalid @enderror input-shadow"
-                                    name="email"placeholder="Enter Username" value="{{ old('email') }}" required
-                                    autocomplete="email" autofocus>
-                                <div class="form-control-position">
-                                    <i class="icon-user"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword" class="sr-only">Password</label>
-                            <div class="position-relative has-icon-right">
-                                {{-- <input type="password" id="exampleInputPassword" class="form-control input-shadow" placeholder="Enter Password"> --}}
-                                <input id="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror input-shadow"
-                                    name="password" placeholder="Enter Password" required
-                                    autocomplete="current-password">
-                                <div class="form-control-position">
-                                    <i class="icon-lock"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-6">
-                                <div class="icheck-material-info">
-                                    <input type="checkbox" id="user-checkbox" checked="" />
-                                    <label for="user-checkbox">Remember me</label>
-                                </div>
-                            </div>
-                            <div class="form-group col-6 text-right">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-info btn-block">masuk</button>
-                    </form>
-                </div>
-            </div>
-            <div class="card-footer text-center py-3">
-                <p class="text-dark mb-0">Copyright © 2022</p>
-                <div class="row mt-3">
-                    <div class="col-4 col-lg-6 col-xl-6">
-                        <img src="{{ asset('vendor/pramita.png') }}" alt="" srcset="" width="80">
-                    </div>
-                    <div class="col-4 col-lg-6 col-xl-6">
-                        <img src="{{ asset('vendor/sima.jpeg') }}" alt="" srcset="" width="80">
-                    </div>
-                    {{-- <div class="col-4 col-lg-6 col-xl-4">
-                        <img src="{{ asset('vendor/prospek.png') }}" alt="" srcset="" width="80">
-                    </div> --}}
-
-                </div>
-            </div>
-        </div>
-
+    <!-- Animated background shapes -->
+    <div class="background-animation">
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
     </div>
-    <!--wrapper-->
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('assets/js/jquery.min.js', []) }}"></script>
-    {{-- <script src="{{ asset('assets/js/popper.min.js', []) }}"></script> --}}
-    <script src="{{ asset('assets/js/bootstrap.min.js', []) }}"></script>
-    <script src="{{ asset('assets/js/horizontal-menu.js', []) }}"></script>
-    <script src="{{ asset('assets/js/app-script.js', []) }}"></script>
-    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js', []) }}"></script>
-    @if ($message = Session::get('success'))
-        <script>
-            $(document).ready(function() {
-                Lobibox.notify('success', {
-                    pauseDelayOnHover: true,
-                    icon: 'fa fa-info-circle',
-                    continueDelayOnInactiveTab: false,
-                    position: 'center top',
-                    showClass: 'bounceIn',
-                    hideClass: 'bounceOut',
-                    sound: false,
-                    width: 400,
-                    msg: '{{ $message }}'
-                });
+    <!-- Illustration background -->
+    <div class="background-illustration"></div>
+
+    <!-- Login Card -->
+    <div class="login-card">
+        <div class="text-center mb-2">
+            <img src="{{ asset('vendor/new-anim.gif') }}" alt="" width="400" style="width: 100%; height: auto;">
+            <!-- <h4>Inventaris Managemen System</h4> -->
+            <p style="margin-top: 10px; margin-bottom: 0;">Login Aplikasi</p>
+        </div>
+        <span id="notifikasi-login" class="pb-0 mt-0"></span>
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="username" class="form-label fw-semibold">Username</label>
+                <input type="text" id="username" class="form-control" placeholder="Masukkan username Anda" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label fw-semibold">Kata Sandi</label>
+                <input type="password" id="password" class="form-control" placeholder="Masukkan kata sandi" required>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label for="rememberMe" class="form-check-label">Ingat saya</label>
+                </div>
+                <!-- <a href="#" class="text-decoration-none text-primary">Lupa Password?</a> -->
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" id="button-login-system">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Masuk Sekarang
+            </button>
+        </form>
+
+        <div class="footer-text">
+            <strong>Copyright © 2022</strong>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const btn = form.querySelector('button');
+
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Memeriksa...';
+            btn.disabled = true;
+            $.ajax({
+                url: "{{ route('verifikasi_Login') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "email": email,
+                    "password": password
+                },
+                dataType: 'html',
+            }).done(function (data) {
+                $('#notifikasi-login').html(data);
+                btn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>Masuk Sekarang';
+                btn.disabled = false;
+            }).fail(function () {
+                console.log('error');
             });
-        </script>
-    @elseif($message = Session::get('error'))
-        <script>
-            $(document).ready(function() {
-                Lobibox.notify('error', {
-                    pauseDelayOnHover: true,
-                    icon: 'fa fa-info-circle',
-                    continueDelayOnInactiveTab: false,
-                    position: 'center top',
-                    showClass: 'bounceIn',
-                    hideClass: 'bounceOut',
-                    sound: false,
-                    width: 400,
-                    msg: '{{ $message }}'
-                });
-            });
-        </script>
-    @endif
+        });
+    </script>
 </body>
 
 </html>
