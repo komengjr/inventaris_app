@@ -50,6 +50,11 @@
                             <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-peminjaman"
                                 id="button-proses-export-data-cabang" data-code="aset"><span
                                     class="fas fa-file-export"></span> Export Data Barang Non Aset</button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item text-danger" data-bs-toggle="modal"
+                                data-bs-target="#modal-master-lokasi-lg" id="button-barang-not-found"><span
+                                    class="far fa-file-alt"></span>
+                                Barang Yang tidak ditemukan</button>
                         </div>
                     </div>
                 </div>
@@ -109,7 +114,7 @@
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
     <script src="{{ asset('vendors/choices/choices.min.js') }}"></script>
     <script>
-        $(document).on("click", "#button-edit-master-cabang", function(e) {
+        $(document).on("click", "#button-edit-master-cabang", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-master-barang').html(
@@ -124,13 +129,13 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-master-barang').html(data);
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-master-barang').html('eror');
             });
         });
-        $(document).on("click", "#button-proses-sinkronisasi-data-cabang", function(e) {
+        $(document).on("click", "#button-proses-sinkronisasi-data-cabang", function (e) {
             e.preventDefault();
             $('#menu-master-barang-cabang').html(
                 '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
@@ -144,16 +149,16 @@
                     "code": 0,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 setInterval(() => {
                     location.reload();
                 }, 3000);
                 // $('#menu-master-barang-cabang').html('adsa');
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-master-barang-cabang').html('eror');
             });
         });
-        $(document).on("click", "#button-proses-export-data-cabang", function(e) {
+        $(document).on("click", "#button-proses-export-data-cabang", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-master-barang-cabang').html(
@@ -168,16 +173,16 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 setInterval(() => {
                     location.reload();
                 }, 3000);
                 // $('#menu-master-barang-cabang').html('adsa');
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-master-barang-cabang').html('eror');
             });
         });
-        $(document).on("click", "#button-cetak-barcode-master-cabang", function(e) {
+        $(document).on("click", "#button-cetak-barcode-master-cabang", function (e) {
             e.preventDefault();
             var code = $(this).data("code");
             $('#menu-master-barang-lg').html(
@@ -192,69 +197,131 @@
                     "code": code,
                 },
                 dataType: 'html',
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#menu-master-barang-lg').html(
                     '<iframe src="data:application/pdf;base64, ' +
                     data +
                     '" style="width:100%; height:533px;" frameborder="0"></iframe>');
-            }).fail(function() {
+            }).fail(function () {
                 $('#menu-master-barang-lg').html('eror');
             });
         });
     </script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             var table = $('#example').DataTable({
                 responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('master_barang_data') }}",
                 columns: [{
-                        data: 'id',
-                        "width": "4%"
-                    },
-                    {
-                        data: 'nama_barang'
-                    },
-                    {
-                        data: 'no_inventaris',
-                        className: 'child'
-                    },
+                    data: 'id',
+                    "width": "4%"
+                },
+                {
+                    data: 'nama_barang'
+                },
+                {
+                    data: 'no_inventaris',
+                    className: 'child'
+                },
 
-                    {
-                        data: 'kd_inventaris',
-                        className: 'child'
-                    },
-                    {
-                        data: 'kd_lokasi',
-                        className: 'child'
-                    },
-                    {
-                        data: 'dataruangan',
-                        className: 'child'
-                    },
-                    {
-                        data: 'merk',
-                        className: 'child'
-                    },
-                    {
-                        data: 'tglbeli',
-                    },
-                    {
-                        data: 'harga_perolehan',
-                        className: 'text-end'
-                    },
-                    {
-                        data: 'status_barang',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'btn',
-                        className: 'text-center',
-                        "width": "1%"
-                    }
+                {
+                    data: 'kd_inventaris',
+                    className: 'child'
+                },
+                {
+                    data: 'kd_lokasi',
+                    className: 'child'
+                },
+                {
+                    data: 'dataruangan',
+                    className: 'child'
+                },
+                {
+                    data: 'merk',
+                    className: 'child'
+                },
+                {
+                    data: 'tglbeli',
+                },
+                {
+                    data: 'harga_perolehan',
+                    className: 'text-end'
+                },
+                {
+                    data: 'status_barang',
+                    className: 'text-center'
+                },
+                {
+                    data: 'btn',
+                    className: 'text-center',
+                    "width": "1%"
+                }
                 ]
 
+            });
+        });
+    </script>
+    <script>
+        $(document).on("click", "#button-barang-not-found", function (e) {
+            e.preventDefault();
+            $('#menu-master-barang-cabang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('master_barang_data_not_found') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 123
+                },
+                dataType: 'html',
+            }).done(function (data) {
+                $('#menu-master-barang-cabang').html(data);
+            }).fail(function () {
+                $('#menu-master-barang-cabang').html('eror');
+            });
+        });
+        $(document).on("click", "#button-edit-not-found", function (e) {
+            e.preventDefault();
+            var code = $(this).data("code");
+            $('#menu-master-barang').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('master_barang_data_edit_not_found') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": code,
+                },
+                dataType: 'html',
+            }).done(function (data) {
+                $('#menu-master-barang').html(data);
+            }).fail(function () {
+                $('#menu-master-barang').html('eror');
+            });
+        });
+        $(document).on("click", "#button-save-not-found", function (e) {
+            e.preventDefault();
+            var data = $("#form-edit-not-found").serialize();
+            $('#loading-button-edit').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('master_barang_data_save_not_found') }}",
+                type: "POST",
+                cache: false,
+                data: data,
+                dataType: 'html',
+            }).done(function (data) {
+                $('#modal-master-barang').modal('hide');
+                $('#menu-master-barang-cabang').html(data);
+            }).fail(function () {
+                $('#menu-master-barang-cabang').html('eror');
             });
         });
     </script>

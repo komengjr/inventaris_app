@@ -2498,6 +2498,53 @@ class AppController extends Controller
         }
 
     }
+    public function master_barang_data_not_found(Request $request)
+    {
+        $data = DB::table('inventaris_data')->whereNotExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('tbl_nomor_ruangan_cabang')
+                ->whereRaw('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang = inventaris_data.id_nomor_ruangan_cbaang');
+        })->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        return view('application.master-data.master-barang.data-barang-not-found', ['data' => $data]);
+    }
+    public function master_barang_data_edit_not_found(Request $request)
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data.inventaris_data_code', $request->code)->first();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+        $klasifikasi = DB::table('inventaris_klasifikasi')->get();
+        return view('application.master-data.master-barang.form-edit-not-found', ['data' => $data, 'lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
+    }
+    public function master_barang_data_save_not_found(Request $request)
+    {
+        if ($request->lokasi == "") {
+            $loc = $request->location;
+        } else {
+            $x = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->lokasi)->first();
+            $loc = $x->kd_lokasi;
+        }
+
+        DB::table('inventaris_data')->where('inventaris_data_code', $request->code)->update([
+            'inventaris_data_name' => $request->nama_barang,
+            'inventaris_data_number' => $request->no_inventaris,
+            'inventaris_data_location' => $loc,
+            'inventaris_data_jenis' => $request->jenis,
+            'inventaris_data_harga' => $request->harga,
+            'inventaris_data_merk' => $request->merk,
+            'inventaris_data_type' => $request->type,
+            'inventaris_data_no_seri' => $request->no_seri,
+            'inventaris_data_suplier' => $request->suplier,
+            'inventaris_data_tgl_beli' => $request->tgl_beli,
+            'id_nomor_ruangan_cbaang' => $request->lokasi,
+        ]);
+        $data = DB::table('inventaris_data')->whereNotExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('tbl_nomor_ruangan_cabang')
+                ->whereRaw('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang = inventaris_data.id_nomor_ruangan_cbaang');
+        })->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        return view('application.master-data.master-barang.data-barang-not-found', ['data' => $data]);
+    }
     // MASTER NO DOCUMENT
     public function master_no_document($akses)
     {

@@ -597,6 +597,9 @@ Route::prefix('app')->group(function () {
     Route::post('master-barang-data/cetak-barcode', [AppController::class, 'master_barang_data_cetak_barcode'])->name('master_barang_data_cetak_barcode');
     Route::post('master-barang-data/sinkronisasi-data-barang-cabang', [AppController::class, 'master_barang_sinkronisasi_data_cabang'])->name('master_barang_sinkronisasi_data_cabang');
     Route::post('master-barang-data/export-data-barang-cabang', [AppController::class, 'master_barang_export_data_cabang'])->name('master_barang_export_data_cabang');
+    Route::post('master-barang-data/master-data-not-found', [AppController::class, 'master_barang_data_not_found'])->name('master_barang_data_not_found');
+    Route::post('master-barang-data/edit-not-found', [AppController::class, 'master_barang_data_edit_not_found'])->name('master_barang_data_edit_not_found');
+    Route::post('master-barang-data/save-not-found', [AppController::class, 'master_barang_data_save_not_found'])->name('master_barang_data_save_not_found');
 
     // WHATSAPP
     Route::post('master-no-whatsapp/add', [AppController::class, 'master_no_whatsapp_add'])->name('master_no_whatsapp_add');
