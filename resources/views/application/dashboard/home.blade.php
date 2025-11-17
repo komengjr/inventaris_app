@@ -452,7 +452,7 @@
         <div class="row align-items-center">
             <div class="col">
                 <div class="input-group"><span class="input-group-text" id="basic-addon1"><span class="fa fa-search"></span></span>
-                    <input class="form-control" type="text" placeholder="Cari Nama Ruangan" aria-label="Username" id="cariruangan" aria-describedby="basic-addon1" onkeydown="search(this)" />
+                    <input class="form-control" type="text" placeholder="Cari Nama Ruangan" aria-label="Username" id="cariruangan" aria-describedby="basic-addon1" />
                 </div>
             </div>
             <div class="col">
