@@ -453,6 +453,7 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/data-lokasi/detail', [AppController::class, 'dashboard_data_lokasi_detail'])->name('dashboard_data_lokasi_detail');
     Route::get('dashboard/data-lokasi/detail-barcode/{id}', [AppController::class, 'dashboard_data_lokasi_detail_barcode'])->name('dashboard_data_lokasi_detail_barcode');
     Route::post('dashboard/data-lokasi/update', [AppController::class, 'dashboard_update_data_inventaris'])->name('dashboard_update_data_inventaris');
+    Route::post('dashboard/cari-lokasi/search', [AppController::class, 'dashboard_update_data_inventaris_pencarian'])->name('dashboard_update_data_inventaris_pencarian');
 
     Route::post('dashboard/klasifikasi/data', [AppController::class, 'dashboard_data_barang_klasifikasi'])->name('dashboard_data_barang_klasifikasi');
     Route::post('dashboard/view-lokasi-data-barang', [AppController::class, 'dashboard_lokasi_data_barang'])->name('dashboard_lokasi_data_barang');

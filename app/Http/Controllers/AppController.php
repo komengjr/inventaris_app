@@ -152,9 +152,9 @@ class AppController extends Controller
     public function dashboard_data_barang_klasifikasi(Request $request)
     {
         $data = DB::table('inventaris_data')
-            ->join('inventaris_klasifikasi', 'inventaris_klasifikasi.inventaris_klasifikasi_code', '=', 'inventaris_data.inventaris_klasifikasi_code', )
-            ->join('inventaris_cat', 'inventaris_cat.inventaris_cat_code', '=', 'inventaris_klasifikasi.inventaris_cat_code', )
-            ->where('inventaris_cat.inventaris_cat_code', $request->code, )
+            ->join('inventaris_klasifikasi', 'inventaris_klasifikasi.inventaris_klasifikasi_code', '=', 'inventaris_data.inventaris_klasifikasi_code',)
+            ->join('inventaris_cat', 'inventaris_cat.inventaris_cat_code', '=', 'inventaris_klasifikasi.inventaris_cat_code',)
+            ->where('inventaris_cat.inventaris_cat_code', $request->code,)
             ->where('inventaris_data.inventaris_data_cabang', Auth::user()->cabang)
             ->get();
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
@@ -447,6 +447,14 @@ class AppController extends Controller
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.dashboard.report.barcode-lokasi', ['data' => $data])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         return base64_encode($pdf->stream());
+    }
+    public function dashboard_update_data_inventaris_pencarian(Request $request)
+    {
+        $ruangan = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'tbl_nomor_ruangan_cabang.kd_lokasi', '=', 'master_lokasi.master_lokasi_code')
+            ->where('master_lokasi.master_lokasi_name', 'LIKE', '%' . $request->code . '%')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+        return view('application.dashboard.data.data-pencarian-ruangan', compact('ruangan'));
     }
 
     // APLIKASI
@@ -1065,8 +1073,7 @@ class AppController extends Controller
         $check = DB::table('tbl_pemusnahan')->where('id_inventaris', $request->id_inventaris)->first();
         $brg = DB::table('inventaris_data')->where('inventaris_data_code', $request->id_inventaris)->first();
         $total = DB::table('tbl_pemusnahan')->where('kd_cabang', Auth::user()->cabang)->count();
-        $code = 'PM' . Auth::user()->cabang . date('YmdHis') . '' . str_pad($total + 1, 4, '0', STR_PAD_LEFT);
-        ;
+        $code = 'PM' . Auth::user()->cabang . date('YmdHis') . '' . str_pad($total + 1, 4, '0', STR_PAD_LEFT);;
         $no = DB::table('wa_number_cabang')->where('wa_number_code', $request->user_persetujuan)->first();
 
         if ($check) {
@@ -2377,8 +2384,7 @@ class AppController extends Controller
                     $button = "";
                 } else {
                     $status_barang = '<span class="badge bg-success " style="font-size: 11px;">Baik</span>';
-                }
-                ;
+                };
             } else {
                 $dataruangan = '<span class="badge bg-danger" style="font-size: 9px;">Tidak di temukan</span>';
                 if ($record->inventaris_data_status == 5) {
@@ -2496,7 +2502,6 @@ class AppController extends Controller
             $data = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
             return Excel::download(new DataBarangNonAsetExport(Auth::user()->cabang), 'inventaris_non_aset' . $data->nama_cabang . '.xlsx');
         }
-
     }
     public function master_barang_data_not_found(Request $request)
     {
@@ -2574,8 +2579,8 @@ class AppController extends Controller
         if ($check) {
             DB::table('master_doocument_cab')->where('master_document_code', $request->id_document)
                 ->where('kd_cabang', Auth::user()->cabang)->update([
-                        'master_document_no' => $request->no_document
-                    ]);
+                    'master_document_no' => $request->no_document
+                ]);
         } else {
             DB::table('master_doocument_cab')->insert([
                 'master_document_code' => $request->id_document,
