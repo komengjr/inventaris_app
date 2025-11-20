@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\TryCatch;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,6 +26,7 @@ use App\Exports\DataInventarisExportRuangan;
 use App\sub_tbl_inventory;
 use App\DataInventaris;
 use Illuminate\Support\Facades\Hash as FacadesHash;
+
 
 class AppController extends Controller
 {
@@ -162,41 +164,44 @@ class AppController extends Controller
     }
     public function dashboard_add_data_non_aset(Request $request)
     {
-        $entitas = DB::table('tbl_entitas_cabang')
-            ->join('tbl_cabang', 'tbl_cabang.kd_entitas_cabang', '=', 'tbl_entitas_cabang.kd_entitas_cabang')
-            ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
-            ->where('tbl_setting_cabang.kd_cabang', Auth::user()->cabang)->first();
-        $total = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
-        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->lokasi)->first();
-        $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
-        if ($request->link == null) {
-            $link = null;
-        } else {
-            $link = 'public/databrg/new/' . Auth::user()->cabang . '/' . $request->link;
+        try {
+            $entitas = DB::table('tbl_entitas_cabang')
+                ->join('tbl_cabang', 'tbl_cabang.kd_entitas_cabang', '=', 'tbl_entitas_cabang.kd_entitas_cabang')
+                ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
+                ->where('tbl_setting_cabang.kd_cabang', Auth::user()->cabang)->first();
+            $total = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
+            $lokasi = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->lokasi)->first();
+            $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
+            if ($request->link == null) {
+                $link = null;
+            } else {
+                $link = 'public/databrg/new/' . Auth::user()->cabang . '/' . $request->link;
+            }
+            DB::table('inventaris_data')->insert([
+                'inventaris_data_code' => Auth::user()->cabang . '' . date('Ymdhis'),
+                'inventaris_klasifikasi_code' => $request->klasifikasi,
+                'inventaris_data_number' => ($total + 1) . '/' . $request->klasifikasi . '/' . $lokasi->kd_lokasi . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . date('Y', strtotime($request->tgl_beli)),
+                'inventaris_data_name' => $request->nama_barang,
+                'inventaris_data_location' => $lokasi->kd_lokasi,
+                'inventaris_data_jenis' => $request->jenis,
+                'inventaris_data_harga' => $nilai,
+                'inventaris_data_merk' => $request->merk,
+                'inventaris_data_type' => $request->type,
+                'inventaris_data_no_seri' => $request->seri,
+                'inventaris_data_suplier' => $request->suplier,
+                'inventaris_data_kondisi' => $request->kondisi,
+                'inventaris_data_status' => 0,
+                'inventaris_data_tgl_beli' => $request->tgl_beli,
+                'inventaris_data_cabang' => Auth::user()->cabang,
+                'inventaris_data_urut' => $total + 1,
+                'inventaris_data_file' => $link,
+                'id_nomor_ruangan_cbaang' => $request->lokasi,
+                'created_at' => now(),
+            ]);
+            return 'Mohon Menunggu..';
+        } catch (\Throwable $th) {
+            return 1;
         }
-        DB::table('inventaris_data')->insert([
-            'inventaris_data_code' => Auth::user()->cabang . '' . date('Ymdhis'),
-            'inventaris_klasifikasi_code' => $request->klasifikasi,
-            'inventaris_data_number' => ($total + 1) . '/' . $request->klasifikasi . '/' . $lokasi->kd_lokasi . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . date('Y', strtotime($request->tgl_beli)),
-            'inventaris_data_name' => $request->nama_barang,
-            'inventaris_data_location' => $lokasi->kd_lokasi,
-            'inventaris_data_jenis' => $request->jenis,
-            'inventaris_data_harga' => $nilai,
-            'inventaris_data_merk' => $request->merk,
-            'inventaris_data_type' => $request->type,
-            'inventaris_data_no_seri' => $request->seri,
-            'inventaris_data_suplier' => $request->suplier,
-            'inventaris_data_kondisi' => $request->kondisi,
-            'inventaris_data_status' => 0,
-            'inventaris_data_tgl_beli' => $request->tgl_beli,
-            'inventaris_data_cabang' => Auth::user()->cabang,
-            'inventaris_data_urut' => $total + 1,
-            'inventaris_data_file' => $link,
-            'id_nomor_ruangan_cbaang' => $request->lokasi,
-            'created_at' => now(),
-        ]);
-        return '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><i
-                        class="fa fa-save"></i> Simpan Data</button>';
     }
     public function dashboard_data_non_aset(Request $request)
     {

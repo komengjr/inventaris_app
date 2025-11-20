@@ -992,9 +992,6 @@
         var harga_perolehan = document.getElementById("dengan-rupiah").value;
         var suplier = document.getElementById("suplier").value;
         var lokasi = document.getElementById("lokasi").value;
-        // var merk = document.getElementById("merk").value;
-        // var type = document.getElementById("type").value;
-        // var seri = document.getElementById("seri").value;
         $('#menu-simpan-data-non-aset').html(
             '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
         );
@@ -1015,8 +1012,12 @@
                 data: data,
                 dataType: 'html',
             }).done(function(data) {
-                $('#menu-simpan-data-non-aset').html(data);
-                location.reload();
+                if (data == 0) {
+                    $('#menu-simpan-data-non-aset').html('<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><i class="fa fa-save"></i> Simpan Data</button>');
+                } else {
+                    $('#menu-simpan-data-non-aset').html(data);
+                    location.reload();
+                }
             }).fail(function() {
                 $('#menu-simpan-data-non-aset').html('eror');
             });
