@@ -18,41 +18,41 @@
             <div class="col-md-8">
                 <label class="form-label" for="inputAddress">Nama Cabang</label>
                 <input class="form-control" id="inputAddress" type="text"
-                    name="nama" value="" required />
+                    name="nama" placeholder="Ex. Pramita Adityawarman" required />
             </div>
             <div class="col-md-3">
                 <label class="form-label" for="inputAddress">Kode Cabang</label>
                 <input class="form-control" id="inputAddress" type="text"
-                    name="kode" value="" required />
+                    name="kode" placeholder="Ex. LA" required />
             </div>
             <div class="col-md-3">
-                <label class="form-label" for="inputAddress">Nomor Cabang</label>
+                <label class="form-label" for="inputAddress">No Dokumen Cabang</label>
                 <input class="form-control" id="inputAddress" type="text"
-                    name="nomor" value="" required />
+                    name="nomor" placeholder="Ex. 00" required />
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="inputAddress">Kota</label>
-                <input class="form-control" id="inputAddress" type="text" name="kota" value=""
+                <input class="form-control" id="inputAddress" type="text" name="kota" placeholder="Ex. Surabaya"
                     required />
             </div>
             <div class="col-6">
                 <label class="form-label" for="inputAddress">Telepon</label>
-                <input class="form-control" id="inputAddress" type="text" name="telepon" value=""
+                <input class="form-control" id="inputAddress" type="text" name="telepon" placeholder="Ex. 1231xxxxx"
                     required />
             </div>
             <div class="col-6">
                 <label class="form-label" for="inputAddress">Email</label>
-                <input class="form-control" id="inputAddress" type="text" name="email" value=""
+                <input class="form-control" id="inputAddress" type="text" name="email" placeholder="Ex. Example@pramita.co.id"
                     required />
             </div>
             <div class="col-6">
                 <label class="form-label" for="inputAddress">Latitude</label>
-                <input class="form-control" id="inputAddress" type="text" name="latitude" value=""
+                <input class="form-control" id="inputAddress" type="text" name="latitude" placeholder="-0.23123"
                     required />
             </div>
             <div class="col-6">
                 <label class="form-label" for="inputAddress">Longtitude</label>
-                <input class="form-control" id="inputAddress" type="text" name="longtitude" value=""
+                <input class="form-control" id="inputAddress" type="text" name="longtitude" placeholder="111.23123"
                     required />
             </div>
             <div class="col-12">
