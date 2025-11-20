@@ -10,8 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use DB;
+use Illuminate\Support\Facades\DB;
 use PDF;
+
 class MasterAdminController extends Controller
 {
     public function __construct()
@@ -99,7 +100,6 @@ class MasterAdminController extends Controller
             } else {
                 return redirect()->back()->withError('Gagal! Kode Lokasi Ver. 2 Sudah ada');
             }
-
         } else {
             return view('application.error.404');
         }
@@ -154,7 +154,6 @@ class MasterAdminController extends Controller
             ]);
             return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data klasifikasi Ver. 2');
         }
-
     }
     public function masteradmin_category()
     {
@@ -174,6 +173,45 @@ class MasterAdminController extends Controller
             return view('application.error.404');
         }
     }
+    public function masteradmin_cabang_add(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            $entitas = DB::table('tbl_entitas_cabang')->get();
+            return view('application.admin.cabang.form-add-cabang', compact('entitas'));
+        } else {
+            return view('application.error.404');
+        }
+    }
+    public function masteradmin_cabang_save(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            try {
+                DB::table('tbl_setting_cabang')->insert([
+                    'kd_cabang' => $request->kode,
+                    'no_cabang' => $request->nomor,
+                    'created_at' => now()
+                ]);
+                DB::table('tbl_cabang')->insert([
+                    'kd_cabang' => $request->kode,
+                    'kd_entitas_cabang' => $request->entitas,
+                    'nama_cabang' => $request->nama,
+                    'latitude' => $request->latitude,
+                    'longtitude' => $request->longtitude,
+                    'city' => $request->kota,
+                    'alamat' => $request->alamat,
+                    'phone' => $request->telepon,
+                    'status_cabang' => 1,
+                    'created_at' => now(),
+                ]);
+                return redirect()->back()->withSuccess('Great! Berhasil Menambahkan Data');
+            } catch (\Throwable $th) {
+                return redirect()->back()->withSuccess('Failed! Gagal Menambahkan Data');
+            }
+        } else {
+            return view('application.error.404');
+        }
+    }
+
     public function masteradmin_cabang_edit(Request $request)
     {
         $data = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
@@ -250,7 +288,6 @@ class MasterAdminController extends Controller
             'old_brg' => $old_brg,
             'new_brg' => $new_brg
         ]);
-
     }
     public function masteradmin_cabang_export_excel_data_master_barang($id)
     {

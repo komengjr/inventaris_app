@@ -35,7 +35,7 @@
                 <div class="col-auto">
 
                     <a class="btn btn-falcon-primary btn-sm" href="#!" data-bs-toggle="modal"
-                        data-bs-target="#modal-category" id="button-add-category">
+                        data-bs-target="#modal-cabang-lg" id="button-add-cabang">
                         <span class="far fa-plus-square fs--2 me-1"></span>Tambah Cabang Baru</a>
                 </div>
             </div>
@@ -132,8 +132,6 @@
                                             data-bs-target="#modal-cabang-lg" id="button-migrasi-data-cabang"
                                             data-code="{{ $datas->kd_cabang }}"><span class="fas fa-code-branch"></span>
                                             Migrasi Data Cabang</button>
-
-
                                     </div>
                                 </div>
                             </td>
@@ -180,6 +178,26 @@
         });
     </script>
     <script>
+        $(document).on("click", "#button-add-cabang", function(e) {
+            e.preventDefault();
+            $('#menu-cabang-lg').html(
+                '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+            );
+            $.ajax({
+                url: "{{ route('masteradmin_cabang_add') }}",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "code": 123
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-cabang-lg').html(data);
+            }).fail(function() {
+                $('#menu-cabang-lg').html('eror');
+            });
+        });
         $(document).on("click", "#button-edit-data-cabang", function(e) {
             e.preventDefault();
             var code = $(this).data("code");
@@ -200,7 +218,6 @@
             }).fail(function() {
                 $('#menu-cabang-lg').html('eror');
             });
-
         });
         $(document).on("click", "#button-data-barang-cabang", function(e) {
             e.preventDefault();
