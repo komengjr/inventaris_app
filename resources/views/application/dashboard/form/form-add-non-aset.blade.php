@@ -4,7 +4,7 @@
     }
 </style>
 <div class="modal-body p-0">
-    <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+    <div class="bg-300 rounded-top-lg py-3 ps-4 pe-6">
         <h4 class="mb-1" id="staticBackdropLabel">Form Penambahan Barang Non Asets</h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
@@ -30,10 +30,10 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label for="inputPassword4" class="form-label">Nama Barang</label>
+                        <label for="inputPassword4" class="form-label">Nama Barang <small class="text-danger">Wajib diisi</small></label>
                         <input type="text" name="nama_barang" class="form-control form-control-lg" id="nama_barang" required>
 
-                        <label for="inputEmail4" class="form-label">Klasifikasi Inventaris</label>
+                        <label for="inputEmail4" class="form-label">Klasifikasi Inventaris <small class="text-danger">Wajib diisi</small></label>
                         <select class="form-control choices-single-jenis" name="klasifikasi" id="klasifikasi" required>
                             <option value="">Pilih Jenis Inventaris</option>
                             @foreach ($klasifikasi as $klasifikasis)
@@ -41,24 +41,24 @@
                             @endforeach
                         </select>
 
-                        <label for="inputPassword4" class="form-label">Kategori</label>
+                        <label for="inputPassword4" class="form-label">Kategori <small class="text-danger">Wajib diisi</small></label>
                         <select class="form-control form-control-lg kategori_barang" name="jenis" required>
                             <option value="0">Inventaris</option>
                         </select>
 
-                        <label for="inputEmail4" class="form-label">Tanggal Pembelian</label>
+                        <label for="inputEmail4" class="form-label">Tanggal Pembelian <small class="text-danger">Wajib diisi</small></label>
                         <input type="date" name="tgl_beli" class="form-control form-control-lg" id="tgl_beli" required>
 
-                        <label for="inputPassword4" class="form-label">Harga Perolehan</label>
+                        <label for="inputPassword4" class="form-label">Harga Perolehan <small class="text-danger">Wajib diisi</small></label>
                         <input type="text" name="harga_perolehan" class="form-control form-control-lg"
                             id="dengan-rupiah" required>
                         <input id="link" type="text" name="link" class="form-control" hidden>
                     </div>
                     <div class="col-md-4">
-                        <label for="inputPassword4" class="form-label">Supplier</label>
+                        <label for="inputPassword4" class="form-label">Supplier <small class="text-danger">Wajib diisi</small></label>
                         <input type="text" name="suplier" class="form-control form-control-lg" id="suplier" required>
 
-                        <label for="inputEmail4" class="form-label">Lokasi</label>
+                        <label for="inputEmail4" class="form-label">Lokasi <small class="text-danger">Wajib diisi</small></label>
                         <select class="form-control choices-single-lokasi" name="lokasi" id="lokasi" required>
                             <option value="">Pilih Ruangan</option>
                             @foreach ($lokasi as $lokasis)

@@ -532,7 +532,7 @@
 <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
 <script src="{{ asset('vendors/echarts/echarts.min.js') }}"></script>
 <script src="{{ asset('vendors/choices/choices.min.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).on("click", "#button-add-barang-non-aset", function(e) {
         e.preventDefault();
@@ -997,7 +997,12 @@
         );
         if (nama == "" || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || suplier == "" ||
             lokasi == "") {
-            alert('eror');
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Ada Yang masih Kosong!",
+                footer: '<a href="#">Kekosongan Hati Ini sungguh Membuat Kesepian ?</a>'
+            });
             $('#menu-simpan-data-non-aset').html(
                 '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><iclass="fa fa-save"></i> Simpan Data</button>'
             );
