@@ -58,6 +58,9 @@
             userLinkRTL.setAttribute('disabled', true);
         }
     </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4154628728879232"
+        crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-4154628728879232">
 </head>
 
 
@@ -67,7 +70,7 @@
     <!--    Main Content-->
     <!-- ===============================================-->
     <main class="main" id="top">
-        <div class="container" data-layout="container" >
+        <div class="container" data-layout="container">
             <script>
                 var isFluid = JSON.parse(localStorage.getItem('isFluid'));
                 if (isFluid) {
@@ -121,145 +124,145 @@
                                 </ul>
                             </li>
                             @php
-                                $menu = DB::table('z_menu_user')
-                                    ->join('z_menu_sub', 'z_menu_sub.menu_sub_code', '=', 'z_menu_user.menu_sub_code')
-                                    ->join('z_menu', 'z_menu.menu_code', '=', 'z_menu_sub.menu_code')
-                                    ->where('z_menu_user.access_code', Auth::user()->akses)
-                                    // ->orderBy('z_menu.id_menu', 'ASC')
-                                    ->get()
-                                    ->unique('menu_code');
+                            $menu = DB::table('z_menu_user')
+                            ->join('z_menu_sub', 'z_menu_sub.menu_sub_code', '=', 'z_menu_user.menu_sub_code')
+                            ->join('z_menu', 'z_menu.menu_code', '=', 'z_menu_sub.menu_code')
+                            ->where('z_menu_user.access_code', Auth::user()->akses)
+                            // ->orderBy('z_menu.id_menu', 'ASC')
+                            ->get()
+                            ->unique('menu_code');
                             @endphp
                             @foreach ($menu as $menus)
-                                <li class="nav-item">
-                                    <!-- label-->
-                                    <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                                        <div class="col-auto navbar-vertical-label">{{ $menus->menu_name }}
-                                        </div>
-                                        <div class="col ps-0">
-                                            <hr class="mb-0 navbar-vertical-divider" />
-                                        </div>
+                            <li class="nav-item">
+                                <!-- label-->
+                                <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
+                                    <div class="col-auto navbar-vertical-label">{{ $menus->menu_name }}
                                     </div>
-                                    @php
-                                        $sub_menu = DB::table('z_menu_user')
-                                            ->join(
-                                                'z_menu_sub',
-                                                'z_menu_sub.menu_sub_code',
-                                                '=',
-                                                'z_menu_user.menu_sub_code',
-                                            )
-                                            ->where('z_menu_user.access_code', Auth::user()->akses)
-                                            ->where('z_menu_sub.menu_code', $menus->menu_code)
-                                            ->orderBy('z_menu_sub.id_menu_sub', 'ASC')
-                                            ->get();
-                                    @endphp
-                                    @foreach ($sub_menu as $sub_menus)
-                                        <a class="nav-link"
-                                            href="{{ url($sub_menus->menu_sub_code . '/' . $sub_menus->menu_sub_link) }}"
-                                            role="button" aria-expanded="false">
-                                            <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                        class="{{ $sub_menus->menu_sub_icon }}"></span></span><span
-                                                    class="nav-link-text ps-1">{{ $sub_menus->menu_sub_name }}</span>
-                                            </div>
-                                        </a>
-                                    @endforeach
-                                    <!-- parent pages-->
+                                    <div class="col ps-0">
+                                        <hr class="mb-0 navbar-vertical-divider" />
+                                    </div>
+                                </div>
+                                @php
+                                $sub_menu = DB::table('z_menu_user')
+                                ->join(
+                                'z_menu_sub',
+                                'z_menu_sub.menu_sub_code',
+                                '=',
+                                'z_menu_user.menu_sub_code',
+                                )
+                                ->where('z_menu_user.access_code', Auth::user()->akses)
+                                ->where('z_menu_sub.menu_code', $menus->menu_code)
+                                ->orderBy('z_menu_sub.id_menu_sub', 'ASC')
+                                ->get();
+                                @endphp
+                                @foreach ($sub_menu as $sub_menus)
+                                <a class="nav-link"
+                                    href="{{ url($sub_menus->menu_sub_code . '/' . $sub_menus->menu_sub_link) }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="{{ $sub_menus->menu_sub_icon }}"></span></span><span
+                                            class="nav-link-text ps-1">{{ $sub_menus->menu_sub_name }}</span>
+                                    </div>
+                                </a>
+                                @endforeach
+                                <!-- parent pages-->
 
 
-                                </li>
+                            </li>
                             @endforeach
 
                             @if (Auth::user()->akses == 'admin')
-                                <li class="nav-item">
-                                    <!-- label-->
-                                    <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                                        <div class="col-auto navbar-vertical-label">Master Admin Data
-                                        </div>
-                                        <div class="col ps-0">
-                                            <hr class="mb-0 navbar-vertical-divider" />
-                                        </div>
+                            <li class="nav-item">
+                                <!-- label-->
+                                <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
+                                    <div class="col-auto navbar-vertical-label">Master Admin Data
                                     </div>
-                                    <!-- parent pages-->
-                                    {{-- <a class="nav-link" href="{{ route('master_bahan') }}"
-                                        role="button" aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="fas fa-balance-scale-right"></span></span><span
-                                                class="nav-link-text ps-1">Master Bahan</span>
-                                        </div>
-                                    </a> --}}
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_user') }}"
-                                        role="button" aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="far fa-user"></span></span><span
-                                                class="nav-link-text ps-1">Master User</span>
-                                        </div>
-                                    </a>
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_lokasi') }}"
-                                        role="button" aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="fas fa-search-location"></span></span><span
-                                                class="nav-link-text ps-1">Master Lokasi</span>
-                                        </div>
-                                    </a>
-                                    <!-- parent pages--><a class="nav-link"
-                                        href="{{ route('masteradmin_category') }}" role="button"
-                                        aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="far fa-calendar-check"></span></span><span
-                                                class="nav-link-text ps-1">Master Category</span>
-                                        </div>
-                                    </a>
-                                    <!-- parent pages--><a class="nav-link"
-                                        href="{{ route('masteradmin_klasifikasi') }}" role="button"
-                                        aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="far fa-chart-bar"></span></span><span
-                                                class="nav-link-text ps-1">Master Klasifikasi</span>
-                                        </div>
-                                    </a>
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_cabang') }}"
-                                        role="button" aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="fas fa-building"></span></span><span
-                                                class="nav-link-text ps-1">Master Cabang</span>
-                                        </div>
-                                    </a>
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_depresiasi') }}"
-                                        role="button" aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="far fa-newspaper"></span></span><span
-                                                class="nav-link-text ps-1">Master Depresiasi Aset</span>
-                                        </div>
-                                    </a>
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_messages') }}"
-                                        role="button" aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="fas fa-mail-bulk"></span></span><span
-                                                class="nav-link-text ps-1">Master Messages</span>
-                                        </div>
-                                    </a>
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_menu') }}"
-                                        role="button" aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="far fa-newspaper"></span></span><span
-                                                class="nav-link-text ps-1">Master Menu</span>
-                                        </div>
-                                    </a>
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_access') }}"
-                                        role="button" aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="fas fa-shield-alt"></span></span><span
-                                                class="nav-link-text ps-1">Master Access Menu</span>
-                                        </div>
-                                    </a>
-                                    <!-- parent pages--><a class="nav-link" href="{{ route('master_setting') }}"
-                                        role="button" aria-expanded="false">
-                                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                                    class="fas fa-cog"></span></span><span
-                                                class="nav-link-text ps-1">Setting</span>
-                                        </div>
-                                    </a>
+                                    <div class="col ps-0">
+                                        <hr class="mb-0 navbar-vertical-divider" />
+                                    </div>
+                                </div>
+                                <!-- parent pages-->
+                                {{-- <a class="nav-link" href="{{ route('master_bahan') }}"
+                                role="button" aria-expanded="false">
+                                <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                            class="fas fa-balance-scale-right"></span></span><span
+                                        class="nav-link-text ps-1">Master Bahan</span>
+                                </div>
+                                </a> --}}
+                                <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_user') }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="far fa-user"></span></span><span
+                                            class="nav-link-text ps-1">Master User</span>
+                                    </div>
+                                </a>
+                                <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_lokasi') }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="fas fa-search-location"></span></span><span
+                                            class="nav-link-text ps-1">Master Lokasi</span>
+                                    </div>
+                                </a>
+                                <!-- parent pages--><a class="nav-link"
+                                    href="{{ route('masteradmin_category') }}" role="button"
+                                    aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="far fa-calendar-check"></span></span><span
+                                            class="nav-link-text ps-1">Master Category</span>
+                                    </div>
+                                </a>
+                                <!-- parent pages--><a class="nav-link"
+                                    href="{{ route('masteradmin_klasifikasi') }}" role="button"
+                                    aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="far fa-chart-bar"></span></span><span
+                                            class="nav-link-text ps-1">Master Klasifikasi</span>
+                                    </div>
+                                </a>
+                                <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_cabang') }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="fas fa-building"></span></span><span
+                                            class="nav-link-text ps-1">Master Cabang</span>
+                                    </div>
+                                </a>
+                                <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_depresiasi') }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="far fa-newspaper"></span></span><span
+                                            class="nav-link-text ps-1">Master Depresiasi Aset</span>
+                                    </div>
+                                </a>
+                                <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_messages') }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="fas fa-mail-bulk"></span></span><span
+                                            class="nav-link-text ps-1">Master Messages</span>
+                                    </div>
+                                </a>
+                                <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_menu') }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="far fa-newspaper"></span></span><span
+                                            class="nav-link-text ps-1">Master Menu</span>
+                                    </div>
+                                </a>
+                                <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_access') }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="fas fa-shield-alt"></span></span><span
+                                            class="nav-link-text ps-1">Master Access Menu</span>
+                                    </div>
+                                </a>
+                                <!-- parent pages--><a class="nav-link" href="{{ route('master_setting') }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="fas fa-cog"></span></span><span
+                                            class="nav-link-text ps-1">Setting</span>
+                                    </div>
+                                </a>
 
-                                </li>
+                            </li>
                             @endif
                         </ul>
 
@@ -658,31 +661,30 @@
 
 
     @if (session('success'))
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 99999">
-            <div class="toast show" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true"
-                data-options='{"autoShow":true,"showOnce":true,"cookieExpireTime":3}' data-autohide="false">
-                <div class="toast-header bg-primary text-white"><strong class="me-auto">Notice</strong><small>1 sec
-                        ago</small>
-                    <button class="btn-close btn-close-white" type="button" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-                <div class="toast-body">{{ session('success') }}</div>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 99999">
+        <div class="toast show" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true"
+            data-options='{"autoShow":true,"showOnce":true,"cookieExpireTime":3}' data-autohide="false">
+            <div class="toast-header bg-primary text-white"><strong class="me-auto">Notice</strong><small>1 sec
+                    ago</small>
+                <button class="btn-close btn-close-white" type="button" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
             </div>
+            <div class="toast-body">{{ session('success') }}</div>
         </div>
+    </div>
     @elseif (session('error'))
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 99999">
-            <div class="toast show" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true"
-                data-options='{"autoShow":true,"showOnce":true,"cookieExpireTime":720}' data-autohide="false">
-                <div class="toast-header bg-danger text-white"><strong class="me-auto">Notice</strong><small>1 sec
-                        ago</small>
-                    <button class="btn-close btn-close-white" type="button" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-                <div class="toast-body">{{ session('error') }}</div>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 99999">
+        <div class="toast show" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true"
+            data-options='{"autoShow":true,"showOnce":true,"cookieExpireTime":720}' data-autohide="false">
+            <div class="toast-header bg-danger text-white"><strong class="me-auto">Notice</strong><small>1 sec
+                    ago</small>
+                <button class="btn-close btn-close-white" type="button" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
             </div>
+            <div class="toast-body">{{ session('error') }}</div>
         </div>
+    </div>
     @endif
-
 
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 99999">
         <div class="toast fade" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true"
@@ -705,20 +707,20 @@
             );
             $.ajax({
                 url: "{{ route('dashboard_notif') }}",
-                type: "POST",
-                cache: false,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "code": 0
-                },
-                dataType: 'html',
-            }).done(function(data) {
-                $('#show-notification').html(data);
-            }).fail(function() {
-                $('#show-notification').html('eror');
-            });
+    type: "POST",
+    cache: false,
+    data: {
+    "_token": "{{ csrf_token() }}",
+    "code": 0
+    },
+    dataType: 'html',
+    }).done(function(data) {
+    $('#show-notification').html(data);
+    }).fail(function() {
+    $('#show-notification').html('eror');
+    });
 
-        });
+    });
     </script> --}}
 
     <script>
