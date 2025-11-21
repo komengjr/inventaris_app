@@ -19,7 +19,6 @@ class LogInventarisImport implements ToModel, WithHeadingRow
     {
         $data = DB::table('tbl_setting_cabang')->where('kd_cabang',auth::user()->cabang)->first();
         return new sub_tbl_inventory_log([
-
             'kd_inventaris'     => $row['kd_inventaris'],
             'kd_lokasi'     => $row['kd_lokasi'],
             'kd_jenis'     => $row['kd_jenis'],

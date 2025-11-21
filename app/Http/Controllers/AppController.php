@@ -25,6 +25,7 @@ use App\Exports\DataInventarisExport;
 use App\Exports\DataInventarisExportRuangan;
 use App\sub_tbl_inventory;
 use App\DataInventaris;
+use App\Imports\InventarisDataImport;
 use Illuminate\Support\Facades\Hash as FacadesHash;
 
 
@@ -2554,6 +2555,71 @@ class AppController extends Controller
                 ->whereRaw('tbl_nomor_ruangan_cabang.id_nomor_ruangan_cbaang = inventaris_data.id_nomor_ruangan_cbaang');
         })->where('inventaris_data_cabang', Auth::user()->cabang)->get();
         return view('application.master-data.master-barang.data-barang-not-found', ['data' => $data]);
+    }
+    public function master_barang_upload_excel_master_barang(Request $request)
+    {
+        $data = DB::table('inventaris_data_log')->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        return view('application.master-data.master-barang.form-upload-excel', compact('data'));
+    }
+    public function master_barang_upload_excel_master_barang_save(Request $request)
+    {
+        if (!$request->hasFile('file')) {
+            return response()->json(['error' => 'File tidak ditemukan'], 400);
+        }
+        try {
+            Excel::import(new InventarisDataImport, $request->file('file'));
+            $data = DB::table('inventaris_data_log')->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+            return view('application.master-data.master-barang.data-log-upload-barang', compact('data'));
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function master_barang_upload_excel_master_barang_edit(Request $request)
+    {
+        $data = DB::table('inventaris_data_log')->where('inventaris_data_log.inventaris_data_code', $request->code)->first();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+            ->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+        $klasifikasi = DB::table('inventaris_klasifikasi')->get();
+        return view('application.master-data.master-barang.form-edit-data-log', compact('lokasi', 'klasifikasi', 'data'));
+    }
+    public function master_barang_upload_excel_master_barang_update_save(Request $request)
+    {
+        if ($request->lokasi == "") {
+            $loc = $request->location;
+        } else {
+            $x = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->lokasi)->first();
+            $loc = $x->kd_lokasi;
+        }
+
+        DB::table('inventaris_data_log')->where('inventaris_data_code', $request->code)->update([
+            'inventaris_data_name' => $request->nama_barang,
+            'inventaris_data_number' => $request->no_inventaris,
+            'inventaris_data_location' => $loc,
+            'inventaris_klasifikasi_code' => $request->klasifikasi,
+            'inventaris_data_jenis' => $request->jenis,
+            'inventaris_data_harga' => $request->harga,
+            'inventaris_data_merk' => $request->merk,
+            'inventaris_data_type' => $request->type,
+            'inventaris_data_no_seri' => $request->no_seri,
+            'inventaris_data_suplier' => $request->suplier,
+            'inventaris_data_tgl_beli' => $request->tgl_beli,
+            'id_nomor_ruangan_cbaang' => $request->lokasi,
+        ]);
+        $data = DB::table('inventaris_data_log')->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        return view('application.master-data.master-barang.data-log-upload-barang', compact('data'));
+    }
+    public function master_barang_upload_excel_master_barang_remove(Request $request)
+    {
+        DB::table('inventaris_data_log')->where('inventaris_data_code', $request->code)->delete();
+        $data = DB::table('inventaris_data_log')->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        return view('application.master-data.master-barang.data-log-upload-barang', compact('data'));
+    }
+    public function master_barang_upload_excel_master_barang_fix_save(Request $request){
+        return 123;
     }
     // MASTER NO DOCUMENT
     public function master_no_document($akses)

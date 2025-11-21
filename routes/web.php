@@ -601,6 +601,12 @@ Route::prefix('app')->group(function () {
     Route::post('master-barang-data/master-data-not-found', [AppController::class, 'master_barang_data_not_found'])->name('master_barang_data_not_found');
     Route::post('master-barang-data/edit-not-found', [AppController::class, 'master_barang_data_edit_not_found'])->name('master_barang_data_edit_not_found');
     Route::post('master-barang-data/save-not-found', [AppController::class, 'master_barang_data_save_not_found'])->name('master_barang_data_save_not_found');
+    Route::post('master-barang-data/upload-excel-master-barang', [AppController::class, 'master_barang_upload_excel_master_barang'])->name('master_barang_upload_excel_master_barang');
+    Route::post('master-barang-data/upload-excel-master-barang-save', [AppController::class, 'master_barang_upload_excel_master_barang_save'])->name('master_barang_upload_excel_master_barang_save');
+    Route::post('master-barang-data/upload-excel-master-barang-edit', [AppController::class, 'master_barang_upload_excel_master_barang_edit'])->name('master_barang_upload_excel_master_barang_edit');
+    Route::post('master-barang-data/upload-excel-master-barang-update-save', [AppController::class, 'master_barang_upload_excel_master_barang_update_save'])->name('master_barang_upload_excel_master_barang_update_save');
+    Route::post('master-barang-data/upload-excel-master-barang-remove', [AppController::class, 'master_barang_upload_excel_master_barang_remove'])->name('master_barang_upload_excel_master_barang_remove');
+    Route::post('master-barang-data/upload-excel-master-barang-fix-save', [AppController::class, 'master_barang_upload_excel_master_barang_fix_save'])->name('master_barang_upload_excel_master_barang_fix_save');
 
     // WHATSAPP
     Route::post('master-no-whatsapp/add', [AppController::class, 'master_no_whatsapp_add'])->name('master_no_whatsapp_add');

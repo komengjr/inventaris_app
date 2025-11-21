@@ -69,6 +69,5 @@
                 <button class="btn btn-primary" type="submit"><span class="fas fa-save"></span> Save</button>
             </div>
         </form>
-
     </div>
 </div>
