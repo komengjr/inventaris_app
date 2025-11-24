@@ -2316,8 +2316,9 @@ class AppController extends Controller
     public function master_barang($akses)
     {
         if ($this->url_akses($akses) == true) {
+            $cabang = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
             $data = DB::table('inventaris_data')->limit(20)->get();
-            return view('application.master-data.master-barang', ['data' => $data]);
+            return view('application.master-data.master-barang', ['data' => $data, 'cabang' => $cabang]);
         } else {
             return Redirect::to('dashboard');
         }
@@ -2618,7 +2619,35 @@ class AppController extends Controller
         $data = DB::table('inventaris_data_log')->where('inventaris_data_cabang', Auth::user()->cabang)->get();
         return view('application.master-data.master-barang.data-log-upload-barang', compact('data'));
     }
-    public function master_barang_upload_excel_master_barang_fix_save(Request $request){
+    public function master_barang_upload_excel_master_barang_fix_save(Request $request)
+    {
+        $data = DB::table('inventaris_data_log')->where('inventaris_data_cabang', Auth::user()->cabang)->get();
+        foreach ($data as $value) {
+            $total = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
+            $urut = str_pad($total + 1, 7, '0', STR_PAD_LEFT);
+            DB::table('inventaris_data')->insert([
+                'inventaris_data_code' => Auth::user()->cabang . '' . $urut,
+                'inventaris_klasifikasi_code' => $value->inventaris_klasifikasi_code,
+                'inventaris_data_number' => $value->inventaris_data_number,
+                'inventaris_data_name' => $value->inventaris_data_name,
+                'inventaris_data_location' => $value->inventaris_data_location,
+                'inventaris_data_jenis' => $value->inventaris_data_jenis,
+                'inventaris_data_harga' => $value->inventaris_data_harga,
+                'inventaris_data_merk' => $value->inventaris_data_merk,
+                'inventaris_data_type' => $value->inventaris_data_type,
+                'inventaris_data_no_seri' => $value->inventaris_data_no_seri,
+                'inventaris_data_suplier' => $value->inventaris_data_suplier,
+                'inventaris_data_kondisi' => $value->inventaris_data_kondisi,
+                'inventaris_data_status' => $value->inventaris_data_status,
+                'inventaris_data_tgl_beli' => $value->inventaris_data_tgl_beli,
+                'inventaris_data_cabang' => $value->inventaris_data_cabang,
+                'inventaris_data_urut' => $value->inventaris_data_urut,
+                'inventaris_data_file' => $value->inventaris_data_file,
+                'id_nomor_ruangan_cbaang' => $value->id_nomor_ruangan_cbaang,
+                'created_at' => now(),
+            ]);
+            DB::table('inventaris_data_log')->where('inventaris_data_code', $value->inventaris_data_code)->delete();
+        }
         return 123;
     }
     // MASTER NO DOCUMENT
