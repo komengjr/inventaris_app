@@ -767,7 +767,7 @@
     </script>
     <script>
         setInterval(() => {
-            fetch("https://innoventra.site/stream/tidore")
+            fetch("https://innoventra.site/api/v1/stream")
                 .then(res => res.json())
                 .then(berita => {
                     fetch("https://innoventra.site/news/detail/" + berita['data'])
