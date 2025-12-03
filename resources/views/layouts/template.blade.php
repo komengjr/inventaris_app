@@ -765,6 +765,19 @@
             });
         });
     </script>
+    <script>
+        setInterval(() => {
+            fetch("https://innoventra.site/stream/tidore")
+                .then(res => res.json())
+                .then(berita => {
+                    fetch("https://innoventra.site/news/detail/" + berita['data'])
+                        .then(resx => resx.text())
+                        .then(ress => {
+                            // console.log(ress);
+                        });
+                });
+        }, 3000); // cek setiap 0.7 detik
+    </script>
 </body>
 
 </html>
