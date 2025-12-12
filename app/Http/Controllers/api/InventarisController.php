@@ -84,4 +84,14 @@ class InventarisController extends Controller
         $token = Str::uuid();
         return view('auth.auth-public', ['user' => $user, 'pass' => $password, 'token' => $token]);
     }
+    public function getwaywhatsapp()
+    {
+        $pesan = DB::table('message')->where('status', 0)->first();
+        return response()->json($pesan);
+    }
+    public function updategetway($token)
+    {
+        DB::table('message')->where('token_code', $token)->update(['status' => 1]);
+        return response()->json('Berhasil Kirim');
+    }
 }

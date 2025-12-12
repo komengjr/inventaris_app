@@ -25,6 +25,8 @@ Route::get('datanidinventaris/{id}', 'api\InventarisController@dataidinventaris'
 Route::get('datanoinventaris/{id}/{by}/{nama}', 'api\InventarisController@caridatabyinventaris');
 Route::post('v1/authenticate/', 'api\InventarisController@authenticate');
 Route::get('v2/authenticate/{user}/{pass}', 'api\InventarisController@authenticate_v2');
+Route::get('v2/getway/whatsapp/status', 'api\InventarisController@getwaywhatsapp');
+Route::get('v2/getway/whatsapp/update/{token}', 'api\InventarisController@updategetway');
 
 
 Route::prefix('gateway')->group(function () {
