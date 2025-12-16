@@ -1526,6 +1526,7 @@ class AppController extends Controller
         $baik = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->code)->where('status_data_inventaris', 0)->count();
         $maintenance = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->code)->where('status_data_inventaris', 1)->count();
         $rusak = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->code)->where('status_data_inventaris', 2)->count();
+        $unvalid = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->code)->where('status_data_inventaris', 3)->count();
         $lokasi = DB::table('tbl_nomor_ruangan_cabang')->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
             ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.stockopname.report.ba-stockopname', [
@@ -1535,6 +1536,7 @@ class AppController extends Controller
             'baik' => $baik,
             'maintenance' => $maintenance,
             'rusak' => $rusak,
+            'unvalid' => $unvalid,
             'lokasi' => $lokasi,
         ], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
