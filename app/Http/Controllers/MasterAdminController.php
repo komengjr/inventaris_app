@@ -217,15 +217,17 @@ class MasterAdminController extends Controller
         $data = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
         return view('application.admin.cabang.form-edit-cabang', ['data' => $data]);
     }
-    public function masteradmin_cabang_edit_save(Request $request){
+    public function masteradmin_cabang_edit_save(Request $request)
+    {
         DB::table('tbl_cabang')->where('kd_cabang', $request->kd_cabang)->update([
-            'nama_cabang'=>$request->nama,
-            'latitude'=>$request->latitude,
-            'longtitude'=>$request->longtitude,
-            'city'=>$request->kota,
-            'alamat'=>$request->alamat,
-            'phone'=>$request->phone,
-            'created_at'=>now(),
+            'nama_cabang' => $request->nama,
+            'latitude' => $request->latitude,
+            'longtitude' => $request->longtitude,
+            'city' => $request->kota,
+            'alamat' => $request->alamat,
+            'phone' => $request->phone,
+            'link_gambar' => $request->link,
+            'created_at' => now(),
         ]);
         return redirect()->back()->withSuccess('Great! Berhasil Update Data');
     }
@@ -588,7 +590,7 @@ class MasterAdminController extends Controller
     {
         if (Auth::user()->akses == 'admin') {
             $cabang = DB::table('tbl_cabang')->get();
-           return view('application.admin.mastermaps',compact('cabang'));
+            return view('application.admin.mastermaps', compact('cabang'));
         } else {
             return view('application.error.404');
         }

@@ -32,6 +32,11 @@
                 <input class="form-control" id="inputAddress" type="text" name="phone" value="{{ $data->phone }}"
                     required />
             </div>
+            <div class="col-6">
+                <label class="form-label" for="inputAddress">Link Gambar</label>
+                <input class="form-control" id="inputAddress" type="text" name="link" value="{{ $data->link_gambar }}"
+                    required />
+            </div>
             <div class="col-12">
                 <label class="form-label" for="inputAddress">Alamat</label>
                 <textarea name="alamat" class="form-control" >{{ $data->alamat }}</textarea>
