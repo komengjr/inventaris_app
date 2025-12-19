@@ -42,6 +42,7 @@
     <div class="card-body bg-light">
         <div id="map" style="height:500px"></div>
     </div>
+
 </div>
 @endsection
 @section('base.js')
@@ -127,7 +128,7 @@
                 var popupContent = '\n        <h6 class="mb-1">'
                     .concat(name, '</h6>\n        <p class="m-0 text-500">')
                     .concat(street, ", ")
-                    .concat(location, "</p>\n      ");
+                    .concat(location, "</p>\n     <img src='https://d1ojs48v3n42tp.cloudfront.net/provider_location_banner/515130_1-9-2020_11-53-58.png' width='300'> ");
                 var popup = L.popup({
                     minWidth: 180,
                 }).setContent(popupContent);
