@@ -10,7 +10,7 @@
                 <label class="form-label" for="inputAddress">Nama Cabang</label>
                 <input class="form-control" id="inputAddress" type="text"
                     name="nama"value="{{ $data->nama_cabang }}" required />
-                    <input type="text" name="kd_cabang" value="{{ $data->kd_cabang }}" id="">
+                    <input type="text" name="kd_cabang" value="{{ $data->kd_cabang }}" hidden>
             </div>
             <div class="col-6">
                 <label class="form-label" for="inputAddress">Kota</label>
