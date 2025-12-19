@@ -696,4 +696,5 @@ Route::prefix('masteradmin')->group(function () {
     Route::post('depresiasi/save', [MasterAdminController::class, 'masteradmin_depresiasi_save'])->name('masteradmin_depresiasi_save');
     Route::post('depresiasi/add-detail', [MasterAdminController::class, 'masteradmin_depresiasi_add_detail'])->name('masteradmin_depresiasi_add_detail');
     Route::post('depresiasi/save-detail', [MasterAdminController::class, 'masteradmin_depresiasi_save_detail'])->name('masteradmin_depresiasi_save_detail');
+    Route::get('maps', [MasterAdminController::class, 'masteradmin_maps'])->name('masteradmin_maps');
 });

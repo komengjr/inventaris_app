@@ -584,4 +584,13 @@ class MasterAdminController extends Controller
             return view('application.error.404');
         }
     }
+    public function masteradmin_maps(Request $request)
+    {
+        if (Auth::user()->akses == 'admin') {
+            $cabang = DB::table('tbl_cabang')->get();
+           return view('application.admin.mastermaps',compact('cabang'));
+        } else {
+            return view('application.error.404');
+        }
+    }
 }

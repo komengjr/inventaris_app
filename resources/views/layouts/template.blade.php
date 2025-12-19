@@ -261,6 +261,13 @@
                                             class="nav-link-text ps-1">Setting</span>
                                     </div>
                                 </a>
+                                <!-- parent pages--><a class="nav-link" href="{{ route('masteradmin_maps') }}"
+                                    role="button" aria-expanded="false">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                                class="fas fa-cog"></span></span><span
+                                            class="nav-link-text ps-1">Master MAPS</span>
+                                    </div>
+                                </a>
 
                             </li>
                             @endif
