@@ -217,6 +217,18 @@ class MasterAdminController extends Controller
         $data = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
         return view('application.admin.cabang.form-edit-cabang', ['data' => $data]);
     }
+    public function masteradmin_cabang_edit_save(Request $request){
+        DB::table('tbl_cabang')->where('kd_cabang', $request->kd_cabang)->update([
+            'nama_cabang'=>$request->nama,
+            'latitude'=>$request->latitude,
+            'longtitude'=>$request->longtitude,
+            'city'=>$request->kota,
+            'alamat'=>$request->alamat,
+            'phone'=>$request->phone,
+            'created_at'=>now(),
+        ]);
+        return redirect()->back()->withSuccess('Great! Berhasil Update Data');
+    }
     public function masteradmin_cabang_migrasi_data_cabang(Request $request)
     {
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();

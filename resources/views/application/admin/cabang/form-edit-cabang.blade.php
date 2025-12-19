@@ -4,12 +4,13 @@
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
     <div class="p-4">
-        <form class="row g-3" action="{{ route('masteradmin_menu_save') }}" method="post" enctype="multipart/form-data">
+        <form class="row g-3" action="{{ route('masteradmin_cabang_edit_save') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="col-6">
                 <label class="form-label" for="inputAddress">Nama Cabang</label>
                 <input class="form-control" id="inputAddress" type="text"
                     name="nama"value="{{ $data->nama_cabang }}" required />
+                    <input type="text" name="kd_cabang" value="{{ $data->kd_cabang }}" id="">
             </div>
             <div class="col-6">
                 <label class="form-label" for="inputAddress">Kota</label>
@@ -24,6 +25,11 @@
             <div class="col-6">
                 <label class="form-label" for="inputAddress">Longtitude</label>
                 <input class="form-control" id="inputAddress" type="text" name="longtitude" value="{{ $data->longtitude }}"
+                    required />
+            </div>
+            <div class="col-6">
+                <label class="form-label" for="inputAddress">Phone</label>
+                <input class="form-control" id="inputAddress" type="text" name="phone" value="{{ $data->phone }}"
                     required />
             </div>
             <div class="col-12">

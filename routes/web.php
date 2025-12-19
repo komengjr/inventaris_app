@@ -662,8 +662,9 @@ Route::prefix('masteradmin')->group(function () {
     Route::post('klasifikasi/add-data-v2/save', [MasterAdminController::class, 'masteradmin_klasifikasi_add_data_v2_save'])->name('masteradmin_klasifikasi_add_data_v2_save');
     Route::get('cabang', [MasterAdminController::class, 'masteradmin_cabang'])->name('masteradmin_cabang');
     Route::post('cabang/add', [MasterAdminController::class, 'masteradmin_cabang_add'])->name('masteradmin_cabang_add');
-    Route::post('cabang/edit', [MasterAdminController::class, 'masteradmin_cabang_edit'])->name('masteradmin_cabang_edit');
     Route::post('cabang/save', [MasterAdminController::class, 'masteradmin_cabang_save'])->name('masteradmin_cabang_save');
+    Route::post('cabang/edit', [MasterAdminController::class, 'masteradmin_cabang_edit'])->name('masteradmin_cabang_edit');
+    Route::post('cabang/edit-save', [MasterAdminController::class, 'masteradmin_cabang_edit_save'])->name('masteradmin_cabang_edit_save');
     Route::post('cabang/data-barang', [MasterAdminController::class, 'masteradmin_cabang_data_barang'])->name('masteradmin_cabang_data_barang');
     Route::post('cabang/option-data-barang', [MasterAdminController::class, 'masteradmin_cabang_option_data_barang'])->name('masteradmin_cabang_option_data_barang');
     Route::post('cabang/update-data-barang', [MasterAdminController::class, 'masteradmin_cabang_update_data_barang'])->name('masteradmin_cabang_update_data_barang');

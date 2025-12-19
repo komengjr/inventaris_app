@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="card-body border-top p-3">
-            <table id="example" class="table table-striped nowrap" style="width:100%">
+            <table id="example" class="table table-striped" style="width:100%">
                 <thead class="bg-200 text-700 fs--2">
                     <tr>
                         <th>No</th>
@@ -68,7 +68,7 @@
                             <td>{{ $datas->kd_cabang }}</td>
                             <td>{{ $datas->no_cabang }}</td>
                             <td>{{ $datas->nama_entitas_cabang }}</td>
-                            <td>{{ $datas->city }}</td>
+                            <td>{{ $datas->city }} <br>lat : {{ $datas->latitude }}<br>Long : {{ $datas->longtitude }}</td>
                             <td>{{ $datas->phone }}</td>
                             <td>
                                 @php
