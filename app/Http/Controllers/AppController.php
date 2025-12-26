@@ -1253,10 +1253,12 @@ class AppController extends Controller
             ->where('id_nomor_ruangan_cbaang', $request->code)
             ->where('inventaris_data_status', '<', 4)
             ->get();
+        $timestamp = strtotime($request->tgl_cetak);
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.master-data.master-lokasi.report.report-data-lokasi', [
             'cabang' => $cabang,
             'data' => $data,
-            'ruangan' => $ruangan
+            'ruangan' => $ruangan,
+            'tgl_cetak' => $timestamp
         ], compact('image'))->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();
         $dompdf = $pdf->getDomPDF();

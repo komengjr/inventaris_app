@@ -219,19 +219,19 @@
     }
 </style>
 @php
-    $no_doc = DB::table('master_doocument_cab')
-        ->where('master_document_code', '=', 'RPTLKS')
-        ->where('kd_cabang', Auth::user()->cabang)
-        ->first();
+$no_doc = DB::table('master_doocument_cab')
+->where('master_document_code', '=', 'RPTLKS')
+->where('kd_cabang', Auth::user()->cabang)
+->first();
 @endphp
 @if ($no_doc)
-    @php
-        $no = $no_doc->master_document_no;
-    @endphp
+@php
+$no = $no_doc->master_document_no;
+@endphp
 @else
-    @php
-        $no = 'Nomor Dokumen Belum Di isi';
-    @endphp
+@php
+$no = 'Nomor Dokumen Belum Di isi';
+@endphp
 @endif
 
 <body>
@@ -268,8 +268,9 @@
             <div id="invoice">
                 <span><strong>DAFTAR BARANG INVENTARIS FISIK AKTIVA TETAP</strong></span>
                 <div class="date" style="color: red; font-size: 12px;">Print By : {{ Auth::user()->name }}</div>
-                {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
-            </div>
+                {{-- <div class="date">{{ date('d-m-Y') }}
+            </div> --}}
+        </div>
         </div>
         <br>
         <table border="1" cellspacing="0" cellpadding="0">
@@ -303,30 +304,30 @@
             </thead>
             <tbody id="invoiceItems" style="font-size: 8px;">
                 @php
-                    $no = 1;
-                    $hasil = 0;
+                $no = 1;
+                $hasil = 0;
                 @endphp
                 @foreach ($data as $datas)
-                    <tr>
-                        <td>{{ $no++ }}</td>
-                        <td class="desc">{{ date('Y', strtotime($datas->inventaris_data_tgl_beli)) }}</td>
-                        <td class="desc">{{ $datas->inventaris_data_number }}</td>
-                        <td class="desc">{{ $datas->inventaris_data_name }}</td>
-                        <td class="desc">{{ $datas->inventaris_data_merk }}</td>
-                        <td class="desc">{{ $datas->inventaris_data_type }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tr>
+                    <td>{{ $no++ }}</td>
+                    <td class="desc">{{ date('Y', strtotime($datas->inventaris_data_tgl_beli)) }}</td>
+                    <td class="desc">{{ $datas->inventaris_data_number }}</td>
+                    <td class="desc">{{ $datas->inventaris_data_name }}</td>
+                    <td class="desc">{{ $datas->inventaris_data_merk }}</td>
+                    <td class="desc">{{ $datas->inventaris_data_type }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
                 @endforeach
 
             </tbody>
@@ -338,7 +339,7 @@
                 <tr>
                     <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
                     <td colspan="1" class="text-right" style="text-align: right; width: 30%;">
-                        <strong>{{ $cabang->nama_cabang }} , ......................................</strong>
+                        <strong>{{ $cabang->nama_cabang }} , {{ date("d-m-Y", $tgl_cetak) }}</strong>
                     </td>
                 </tr>
                 <tr>
