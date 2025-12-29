@@ -449,10 +449,42 @@ $no = 'Nomor Dokumen Belum Di isi';
 
         </p>
         {{-- <div id="thanks">Thank you!</div> --}}
+        <div class="footer">
+            <table
+                style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
+                border="1">
+                <tr>
+
+                    <td colspan="3" class="text-right"><strong>{{$cabang->nama_cabang}} , {{ date('d - m - Y ') }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Kepala Cabang</td>
+                    <td>Manager SDM & Umum</td>
+                    <td>Pelaksana</td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="padding-top: 10px; padding-bottom: 10px; width: 33%;">
+                        <br><br><br><br><br>
+
+
+                    </td>
+                    <td class="text-center" style="width: 33%;">
+                        <br><br><br><br><br>
+
+
+                    </td>
+                    <td class="text-center" style="width: 33%;">
+                        <br><br><br><br><br>
+
+                    </td>
+                </tr>
+
+            </table>
+        </div>
         <div id="notices">
-            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
-    QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($data->kode_verif),
-) !!}">
+            <!-- <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
+    QrCode::style('round')->eye('circle')->format('svg')->size(20)->errorCorrection('H')->generate($data->kode_verif),
+) !!}"> -->
             <div class="notice">Dokumen Ini terbit secara digital.</div>
         </div>
     </main>

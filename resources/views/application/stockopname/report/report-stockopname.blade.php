@@ -220,19 +220,19 @@
     }
 </style>
 @php
-    $no_doc = DB::table('master_doocument_cab')
-        ->where('master_document_code', '=', 'SO')
-        ->where('kd_cabang', $cabang->kd_cabang)
-        ->first();
+$no_doc = DB::table('master_doocument_cab')
+->where('master_document_code', '=', 'SO')
+->where('kd_cabang', $cabang->kd_cabang)
+->first();
 @endphp
 @if ($no_doc)
-    @php
-        $no = $no_doc->master_document_no;
-    @endphp
+@php
+$no = $no_doc->master_document_no;
+@endphp
 @else
-    @php
-        $no = 'Nomor Dokumen Belum Di isi';
-    @endphp
+@php
+$no = 'Nomor Dokumen Belum Di isi';
+@endphp
 @endif
 
 <body>
@@ -281,8 +281,9 @@
             <div id="invoice">
                 <span>Form Stockopname Barang Inventaris</span>
                 <div class="date" style="color: red; font-size: 12px;">Print By : {{ Auth::user()->name }}</div>
-                {{-- <div class="date">{{ date('d-m-Y') }}</div> --}}
-            </div>
+                {{-- <div class="date">{{ date('d-m-Y') }}
+            </div> --}}
+        </div>
         </div>
         <table border="1" cellspacing="0" cellpadding="0" style="width: 100%;">
             <thead style="font-size: 11px;">
@@ -298,35 +299,69 @@
             </thead>
             <tbody id="invoiceItems" style="font-size: 10px;">
                 @php
-                    $no = 1;
-                    $hasil = 0;
+                $no = 1;
+                $hasil = 0;
                 @endphp
                 @foreach ($brg as $brgs)
-                    <tr>
-                        <td>{{ $no++ }}</td>
-                        <td>{{ $brgs->inventaris_data_number }}</td>
-                        <td>{{ $brgs->inventaris_data_name }}</td>
-                        <td>{{ $brgs->inventaris_data_merk }}</td>
-                        <td style="text-align: right;">@currency($brgs->inventaris_data_harga)</td>
-                        <td>{{ $brgs->inventaris_data_tgl_beli }}</td>
-                        <td>
-                            @if ($brgs->status_data_inventaris == 0)
-                                BAIK
-                            @elseif($brgs->status_data_inventaris == 1)
-                                MAINTENANCE
-                            @elseif($brgs->status_data_inventaris == 2)
-                                RUSAK
-                            @endif
-                        </td>
-                    </tr>
+                <tr>
+                    <td>{{ $no++ }}</td>
+                    <td>{{ $brgs->inventaris_data_number }}</td>
+                    <td>{{ $brgs->inventaris_data_name }}</td>
+                    <td>{{ $brgs->inventaris_data_merk }}</td>
+                    <td style="text-align: right;">@currency($brgs->inventaris_data_harga)</td>
+                    <td>{{ $brgs->inventaris_data_tgl_beli }}</td>
+                    <td>
+                        @if ($brgs->status_data_inventaris == 0)
+                        BAIK
+                        @elseif($brgs->status_data_inventaris == 1)
+                        MAINTENANCE
+                        @elseif($brgs->status_data_inventaris == 2)
+                        RUSAK
+                        @endif
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
         {{-- <div id="thanks">Thank you!</div> --}}
+        <br><br><br>
+
+        <div class="footer">
+            <table
+                style="font-size: 8px; margin: 0px; padding: 0px; width: 100%; font-size: 11px; font-family: Calibri (Body);"
+                border="1">
+                <tr>
+
+                    <td colspan="3" class="text-right"><strong>{{$cabang->nama_cabang}} , {{ date('d - m - Y ') }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Kepala Cabang</td>
+                    <td>Manager SDM & Umum</td>
+                    <td>Pelaksana</td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="padding-top: 10px; padding-bottom: 10px; width: 33%;">
+                        <br><br><br><br><br>
+
+
+                    </td>
+                    <td class="text-center" style="width: 33%;">
+                        <br><br><br><br><br>
+
+
+                    </td>
+                    <td class="text-center" style="width: 33%;">
+                        <br><br><br><br><br>
+
+                    </td>
+                </tr>
+
+            </table>
+        </div>
         <div id="notices">
-            <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
+            <!-- <img style="padding-top: 1px; left: 10px;" src="data:image/png;base64, {!! base64_encode(
                 QrCode::style('round')->eye('circle')->format('svg')->size(70)->errorCorrection('H')->generate($data->kode_verif),
-            ) !!}">
+            ) !!}"> -->
             <div class="notice">Dokumen Ini terbit secara digital.</div>
         </div>
     </main>
