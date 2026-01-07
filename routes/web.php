@@ -557,6 +557,7 @@ Route::prefix('app')->group(function () {
     Route::post('menu-stock-opname/print-data-ruangan-stock', [AppController::class, 'menu_stock_opname_print_data_ruangan'])->name('menu_stock_opname_print_data_ruangan');
     Route::post('menu-stock-opname/print-data-tanggal-stock', [AppController::class, 'menu_stock_opname_print_data'])->name('menu_stock_opname_print_data');
     Route::post('menu-stock-opname/print-data-berita-acara-stock', [AppController::class, 'menu_stock_opname_print_berita_acara'])->name('menu_stock_opname_print_berita_acara');
+    Route::post('menu-stock-opname/print-data-berita-acara-stock_2', [AppController::class, 'menu_stock_opname_print_berita_acara_2'])->name('menu_stock_opname_print_berita_acara_2');
 
 
     // MENU MAINTENANCE

@@ -1547,6 +1547,42 @@ class AppController extends Controller
         $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
         return base64_encode($pdf->stream());
     }
+    public function menu_stock_opname_print_berita_acara_2(Request $request)
+    {
+        $cabang = DB::table('tbl_cabang')->join('tbl_entitas_cabang', 'tbl_entitas_cabang.kd_entitas_cabang', '=', 'tbl_cabang.kd_entitas_cabang')
+            ->where('tbl_cabang.kd_cabang', Auth::user()->cabang)->first();
+        if ($cabang->kd_entitas_cabang == 'PTP') {
+            $image = base64_encode(file_get_contents(public_path('vendor/pramita.png')));
+        } elseif ($cabang->kd_entitas_cabang == 'SIMA') {
+            $image = base64_encode(file_get_contents(public_path('vendor/sima.jpeg')));
+            # code...
+        }
+        $data = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->code)->first();
+        $brg = DB::table('tbl_sub_verifdatainventaris')
+            ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
+            ->where('tbl_sub_verifdatainventaris.kode_verif', $request->code)->get();
+        $baik = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->code)->where('status_data_inventaris', 0)->count();
+        $maintenance = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->code)->where('status_data_inventaris', 1)->count();
+        $rusak = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->code)->where('status_data_inventaris', 2)->count();
+        $unvalid = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif', $request->code)->where('status_data_inventaris', 3)->count();
+        $lokasi = DB::table('tbl_nomor_ruangan_cabang')->join('master_lokasi', 'master_lokasi.master_lokasi_code', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('application.stockopname.report.ba-stockopname-2', [
+            'cabang' => $cabang,
+            'data' => $data,
+            'brg' => $brg,
+            'baik' => $baik,
+            'maintenance' => $maintenance,
+            'rusak' => $rusak,
+            'unvalid' => $unvalid,
+            'lokasi' => $lokasi,
+        ], compact('image'))->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Helvetica']);
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $font = $dompdf->getFontMetrics()->get_font("helvetica", "bold");
+        $dompdf->get_canvas()->page_text(300, 820, "{PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0, 0, 0));
+        return base64_encode($pdf->stream());
+    }
 
     // MENU MAINTENANCE
     public function menu_maintenance($akses)

@@ -12,11 +12,10 @@
                         <div class="col-sm-auto mb-sm-0 mb-2">
                             <h5 class="mb-0" data-anchor="data-anchor">
                                 <span class="badge bg-primary">Laporan Berita Acara Stockopname</span>
-
                             </h5>
                         </div>
                         <div class="col-auto">
-
+                            <button class="btn btn-primary btn-sm" id="button-stockopname-ba-template" data-code="{{ $code }}">Template 2</button>
                         </div>
                     </div>
                     <hr>

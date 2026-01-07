@@ -663,5 +663,29 @@
             $('#form-data-stock').html('eror');
         });
     });
+    $(document).on("click", "#button-stockopname-ba-template", function(e) {
+        e.preventDefault();
+        var code = $(this).data("code");
+        $('#laporan-berita-acara').html(
+            '<div class="spinner-border spinner-border-sm" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span> </div>'
+        );
+        $.ajax({
+            url: "{{ route('menu_stock_opname_print_berita_acara_2') }}",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "code": code
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#laporan-berita-acara').html(
+                '<iframe src="data:application/pdf;base64, ' +
+                data +
+                '" style="width:100%; height:533px;" frameborder="0"></iframe>');
+        }).fail(function() {
+            $('#laporan-berita-acara').html('eror');
+        });
+    });
 </script>
 @endsection
