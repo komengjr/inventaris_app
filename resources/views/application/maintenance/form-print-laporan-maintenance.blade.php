@@ -7,7 +7,11 @@
 
     </div>
     <div class="p-4">
-        <iframe src="{{ asset($link->file_maintenance) }}" frameborder="0" style="width: 100%; height: 450px;"></iframe>
+        @if ($link->file_maintenance == "")
+            <span class="badge bg-danger">Tidak ada File</span>
+        @else
+            <iframe src="{{ asset($link->file_maintenance) }}" frameborder="0" style="width: 100%; height: 450px;"></iframe>
+        @endif
     </div>
 </div>
 <script>
