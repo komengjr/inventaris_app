@@ -1709,7 +1709,8 @@ class AppController extends Controller
     }
     public function menu_maintenance_print_laporan(Request $request)
     {
-        return view('application.maintenance.form-print-laporan-maintenance', ['code' => $request->code]);
+        $link = DB::table('tbl_maintenance')->select('tbl_maintenance.file_maintenance')->where('kd_maintenance', $request->code)->first();
+        return view('application.maintenance.form-print-laporan-maintenance', ['code' => $request->code, 'link' => $link]);
     }
     public function menu_maintenance_print_laporan_cetak(Request $request)
     {

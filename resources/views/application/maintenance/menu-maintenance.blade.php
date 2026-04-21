@@ -50,13 +50,14 @@
             </div>
         </div>
         <div class="card-body border-top p-3">
-            <table id="example" class="table table-striped nowrap" style="width:100%">
+            <table id="example" class="table table-striped" style="width:100%">
                 <thead class="bg-200 text-700 fs--2">
                     <tr>
                         <th>No</th>
                         <th>No Maintenance</th>
                         <th>Nomor Inventaris</th>
                         <th>Nama Barang</th>
+                        <th>Merk / Type</th>
                         <th>Pelapor</th>
                         <th>Tgl Laporan</th>
                         <th>Tgl Selesai Laporan</th>
@@ -74,6 +75,7 @@
                             <td>{{ $datas->kd_maintenance }}</td>
                             <td>{{ $datas->inventaris_data_number }}</td>
                             <td>{{ $datas->inventaris_data_name }}</td>
+                            <td>{{ $datas->inventaris_data_merk }} / {{ $datas->inventaris_data_type }}</td>
                             <td>{{ $datas->pelapor }}</td>
                             <td>{{ $datas->tgl_mulai }}</td>
                             <td>{{ $datas->tgl_akhir }}</td>

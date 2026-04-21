@@ -3,10 +3,12 @@
         <h4 class="mb-1" id="staticBackdropLabel">Report Maintenance Barang</h4>
         <p class="fs--2 mb-0">Support by <a class="link-600 fw-semi-bold" href="#!">Transforma</a></p>
     </div>
-    <div id="menu-print-data-maintenance">
+    <div id="menu-print-data-maintenance" class="p-4">
 
     </div>
-
+    <div class="p-4">
+        <iframe src="{{ asset($link->file_maintenance) }}" frameborder="0" style="width: 100%; height: 450px;"></iframe>
+    </div>
 </div>
 <script>
     $('#menu-print-data-maintenance').html(
