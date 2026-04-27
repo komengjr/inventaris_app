@@ -37,6 +37,7 @@
                                                 <option value="0">BAIK</option>
                                                 <option value="1">MAINTENANCE</option>
                                                 <option value="2">RUSAK</option>
+                                                <option value="3">HILANG</option>
                                             </select>
                                         </div>
                                         <div class="col-md-8">

@@ -54,6 +54,12 @@
                                 <label for="inline-radio-danger">Rusak</label>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="icheck-material-info icheck-inline">
+                                <input type="radio" id="inline-radio-info" name="inlineradio" value="3">
+                                <label for="inline-radio-info">Hilang</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="demo-heading">Keterangan</div>
                     <div class="row">

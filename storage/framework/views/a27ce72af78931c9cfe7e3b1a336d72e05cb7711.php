@@ -1,0 +1,1039 @@
+
+<?php $__env->startSection('base.css'); ?>
+<style>
+    #button-view-data-lokasi {
+        cursor: pointer;
+    }
+
+    #button-view-data-lokasi:hover {
+        background: blanchedalmond;
+    }
+</style>
+<link href="<?php echo e(asset('vendors/choices/choices.min.css')); ?>" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<div class="row mb-3">
+    <div class="col">
+        <div class="card bg-100 shadow-none border border-primary">
+            <div class="row gx-0 flex-between-center">
+                <div class="col-sm-auto d-flex align-items-center border-bottom">
+                    <img class="ms-3 mx-3 m-2" src="<?php echo e(asset('img/home.png')); ?>" alt="" width="50" />
+                    <div>
+                        <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to <?php echo e($cabang->nama_cabang); ?></h6>
+                        <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management
+                                System</span></h4>
+                    </div><img class="ms-n4 d-none d-lg-block"
+                        src="<?php echo e(asset('asset/img/illustrations/crm-line-chart.png')); ?>" alt="" width="150" />
+                </div>
+                <div class="col-xl-auto px-3 py-2">
+                    <h6 class="text-primary fs--1 mb-1">Support By : </h6>
+                    <h4 class="text-primary fw-bold mb-0">
+                        <img class="" src="<?php echo e(asset('vendor/pramita.png')); ?>" alt="" width="90" />
+                        <img class="ms-1" src="<?php echo e(asset('vendor/sima.jpeg')); ?>" alt="" width="80" />
+                        
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3 g-3">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body py-0 py-lg-2">
+                <div class="row">
+                    <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-2">
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                
+                                <h6 class="mb-0"><span class="badge bg-primary">Total Non Aset Cabang</span></h6>
+                            </div>
+
+                            <div class="dropdown font-sans-serif btn-reveal-trigger">
+                                <button
+                                    class="btn btn-falcon-primary text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal"
+                                    type="button" id="dropdown-new-users" data-bs-toggle="dropdown"
+                                    data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span
+                                        class="fas fa-ellipsis-h fs--2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end border py-2"
+                                    aria-labelledby="dropdown-new-users">
+                                    <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                        data-bs-target="#modal-dashboard" id="button-add-barang-non-aset">Tambah Barang
+                                        Non Aset</a>
+                                    <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                        data-bs-target="#modal-dashboard" id="button-data-barang-non-aset">View Barang
+                                        Non Aset</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-primary" href="#!" data-bs-toggle="modal"
+                                        data-bs-target="#modal-dashboard-lg" id="button-export-data-non-aset"><span
+                                            class="fas fa-file-export"></span>
+                                        Export Data Non Aset</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-item icon-item-sm bg-soft-warning shadow-none me-2 bg-soft-info"><span
+                                        class="fs--2 fas fa-shipping-fast text-info"></span></div>
+                                <h5 class="mb-0" style="font-family: 'Courier New';"><?php echo e($datanonaset); ?> Barang</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
+                                        class="fs--2 fas fa-money-check-alt text-info"></span></div>
+                                <p class=" lh-1 mb-1 fs-2 pe-2 " style="font-family: 'Courier New';">
+                                    <strong>Rp. <?php echo number_format($nonaset,0,',','.'); ?> </strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 border-lg-end border-bottom border-lg-0 py-3 py-lg-2">
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <h6 class="mb-0"><span class="badge bg-primary">Total Aset Cabang</span></h6>
+                            </div>
+
+                            <div class="dropdown font-sans-serif btn-reveal-trigger">
+                                <button
+                                    class="btn btn-falcon-primary text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal"
+                                    type="button" id="dropdown-new-users" data-bs-toggle="dropdown"
+                                    data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span
+                                        class="fas fa-ellipsis-h fs--2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end border py-2"
+                                    aria-labelledby="dropdown-new-users">
+                                    <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                        data-bs-target="#modal-dashboard" id="button-add-barang-aset">Tambah
+                                        Barang Aset</a>
+                                    <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                        data-bs-target="#modal-dashboard" id="button-data-barang-aset">View Barang
+                                        Aset</a>
+                                    <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                        data-bs-target="#modal-dashboard" id="button-data-doc-depresiasi">Data
+                                        Depresiasi</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item text-primary"
+                                        data-bs-toggle="modal" data-bs-target="#modal-dashboard-lg" href="#!"
+                                        id="button-export-data-aset"><span class="fas fa-file-export"></span> Export
+                                        Data Aset</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-item icon-item-sm bg-soft-warning shadow-none me-2 bg-soft-info"><span
+                                        class="fs--1 fab fa-wpforms text-info"></span></div>
+                                <h5 class="mb-0" style="font-family: 'Courier New';"><?php echo e($dataaset); ?> Barang</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
+                                        class="fs--2 fas fa-money-check-alt text-info"></span></div>
+                                <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2" style="font-family: 'Courier New';">
+                                    <strong>Rp. <?php echo number_format($aset,0,',','.'); ?></strong>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 border-lg-0 py-3 py-lg-2">
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                
+                                <h6 class="mb-0"><span class="badge bg-primary">Total Data KSO</span></h6>
+                            </div>
+
+                            <div class="dropdown font-sans-serif btn-reveal-trigger">
+                                <button
+                                    class="btn btn-falcon-primary text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal"
+                                    type="button" id="dropdown-new-users" data-bs-toggle="dropdown"
+                                    data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span
+                                        class="fas fa-ellipsis-h fs--2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end border py-2"
+                                    aria-labelledby="dropdown-new-users">
+                                    <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                        data-bs-target="#modal-dashboard" id="button-add-barang-kso">Tambah Barang
+                                        KSO</a>
+                                    <a class="dropdown-item" href="#!" data-bs-toggle="modal"
+                                        data-bs-target="#modal-dashboard" id="button-data-barang-kso">View Data
+                                        KSO</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item text-primary"
+                                        href="#!"><span class="fas fa-file-export"></span> Export Data KSO</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-item icon-item-sm bg-soft-warning shadow-none me-2 bg-soft-info"><span
+                                        class="fs--2 far fa-folder text-info"></span></div>
+                                <h6 class="mb-0"><?php echo e($datakso); ?> Barang</h6>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-item icon-item-sm bg-soft-primary shadow-none me-2 bg-soft-info"><span
+                                        class="fs--2 fas fa-book text-info"></span></div>
+                                <p class="font-sans-serif lh-1 mb-1 fs-2 pe-2"><?php echo e($documentkso); ?> Dokumen</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-header d-flex flex-between-center py-2 border-bottom">
+                <h6 class="mb-0">Klasifikasi Data Inventaris</h6>
+                <div class="dropdown font-sans-serif btn-reveal-trigger">
+                    <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal"
+                        type="button" id="dropdown-most-leads" data-bs-toggle="dropdown" data-boundary="viewport"
+                        aria-haspopup="true" aria-expanded="false"><span
+                            class="fas fa-ellipsis-h fs--2"></span></button>
+                    <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-most-leads">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="row align-items-center">
+                    <div class="col-md-5 ">
+                        <div class="position-relative">
+                            <div class="echart-most-leads my-2" data-echart-responsive="true"></div>
+                            <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                <p class="fs--1 mb-0 text-400 font-sans-serif fw-medium">Total</p>
+                                <p class="fs-3 mb-0 font-sans-serif fw-medium mt-n2">
+                                    <?php echo e($datanonaset + $dataaset); ?>
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        
+                        <?php
+                        $no = 0;
+                        ?>
+                        
+
+                <div class="table-responsive scrollbar pt-2">
+                    <table class="table table-hover table-striped border " border="1"
+                        style="border-radius: 2%;">
+                        <tbody>
+                            <?php $__currentLoopData = $klasifikasi; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $klasifikasis): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr class="align-middle fs--2 my-0" style="cursor: pointer;"
+                                id="button-show-barang-klasifikasi" data-bs-toggle="modal"
+                                data-bs-target="#modal-dashboard"
+                                data-code="<?php echo e($klasifikasis->inventaris_cat_code); ?>">
+                                <td class="text-nowrap">
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-xl">
+                                            <img class="rounded-circle"
+                                                src="<?php echo e(asset('img/peminjaman.png')); ?>" alt="" />
+                                        </div>
+                                        <div class="ms-2"><?php echo e($klasifikasis->inventaris_cat_name); ?></div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <?php
+                                    $total = DB::table('inventaris_data')
+                                    ->join(
+                                    'inventaris_klasifikasi',
+                                    'inventaris_klasifikasi.inventaris_klasifikasi_code',
+                                    '=',
+                                    'inventaris_data.inventaris_klasifikasi_code',
+                                    )
+                                    ->join(
+                                    'inventaris_cat',
+                                    'inventaris_cat.inventaris_cat_code',
+                                    '=',
+                                    'inventaris_klasifikasi.inventaris_cat_code',
+                                    )
+                                    ->where(
+                                    'inventaris_cat.inventaris_cat_code',
+                                    $klasifikasis->inventaris_cat_code,
+                                    )
+                                    ->where(
+                                    'inventaris_data.inventaris_data_cabang',
+                                    Auth::user()->cabang,
+                                    )
+                                    ->count();
+                                    ?>
+                                    <span
+                                        class="badge badge rounded-pill d-block badge-soft-success"><?php echo e($total); ?></span>
+                                </td>
+                                <?php
+                                $jumlah = 0;
+                                $jumlah = DB::table('inventaris_data')
+                                ->join(
+                                'inventaris_klasifikasi',
+                                'inventaris_klasifikasi.inventaris_klasifikasi_code',
+                                '=',
+                                'inventaris_data.inventaris_klasifikasi_code',
+                                )
+                                ->join(
+                                'inventaris_cat',
+                                'inventaris_cat.inventaris_cat_code',
+                                '=',
+                                'inventaris_klasifikasi.inventaris_cat_code',
+                                )
+                                ->where(
+                                'inventaris_cat.inventaris_cat_code',
+                                $klasifikasis->inventaris_cat_code,
+                                )
+                                ->where(
+                                'inventaris_data.inventaris_data_cabang',
+                                Auth::user()->cabang,
+                                )
+                                ->sum('inventaris_data.inventaris_data_harga');
+                                ?>
+                                <td class="text-end">Rp. <?php echo number_format($jumlah,0,',','.'); ?></td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+</div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-light">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="input-group"><span class="input-group-text" id="basic-addon1"><span class="fa fa-search"></span></span>
+                    <input class="form-control" type="text" placeholder="Cari Nama Ruangan" aria-label="Username" id="cariruangan" aria-describedby="basic-addon1" />
+                </div>
+            </div>
+            <div class="col">
+                <form>
+                    <div class="row g-0">
+                        <div class="col d-md-block">
+                            <select class="form-select ms-2" aria-label=".form-select-sm example">
+                                <option selected="selected">Semua Lantai</option>
+                                <option>Lantai 1</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-body bg-light px-1 py-0">
+        <div class="row g-0 text-center fs--1" id="menu-pencarian-ruangan">
+            <?php $__currentLoopData = $ruangan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ruangans): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <div class="col-6 col-md-3 col-lg-2 mb-1">
+                <div class="card-body border h-100 " id="button-view-data-lokasi"
+                    data-code="<?php echo e($ruangans->id_nomor_ruangan_cbaang); ?>" data-bs-toggle="modal"
+                    data-bs-target="#modal-dashboard">
+
+                    <div class="bg-white dark__bg-1100 border p-3 h-100 border-primary"><a href="#"><img
+                                class="img-thumbnail img-fluid rounded-circle mb-3 shadow-sm"
+                                src="<?php echo e(asset('ruangan.png')); ?>" alt="" width="100" /></a>
+                        <h6 class="mb-1"><a href="#"><?php echo e($ruangans->master_lokasi_name); ?></a>
+                        </h6>
+                        <p class="fs--2 mb-0">Nomor Ruangan : <span
+                                class="badge bg-primary m-1"><?php echo e($ruangans->nomor_ruangan); ?></span></p>
+                        <?php
+                        $total = DB::table('inventaris_data')
+                        ->where('id_nomor_ruangan_cbaang', $ruangans->id_nomor_ruangan_cbaang)
+                        ->where('inventaris_data_status', '<', '4' )
+                            ->count();
+                            ?>
+                            <p class="fs--2 mb-0">Total Barang : <?php echo e($total); ?></p>
+
+                    </div>
+
+                </div>
+            </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('base.js'); ?>
+<div class="modal fade" id="modal-dashboard" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 95%;">
+        <div class="modal-content border-0">
+            <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="menu-dashboard"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-dashboard-lg" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content border-0">
+            <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+                <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="menu-dashboard-lg"></div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
+<script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
+<script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
+<script src="<?php echo e(asset('vendors/echarts/echarts.min.js')); ?>"></script>
+<script src="<?php echo e(asset('vendors/choices/choices.min.js')); ?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).on("click", "#button-add-barang-non-aset", function(e) {
+        e.preventDefault();
+        // var code = $(this).data("code");
+        $('#menu-dashboard').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_add')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": 0
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard').html(data);
+        }).fail(function() {
+            $('#menu-dashboard').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-add-barang-aset", function(e) {
+        e.preventDefault();
+        $('#menu-dashboard').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_add_aset')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": 0
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard').html(data);
+        }).fail(function() {
+            $('#menu-dashboard').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-add-barang-kso", function(e) {
+        e.preventDefault();
+        $('#menu-dashboard').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_add_kso')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": 0
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard').html(data);
+        }).fail(function() {
+            $('#menu-dashboard').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-show-barang-klasifikasi", function(e) {
+        e.preventDefault();
+        var code = $(this).data("code");
+        $('#menu-dashboard').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_data_barang_klasifikasi')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": code
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard').html(data);
+        }).fail(function() {
+            $('#menu-dashboard').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-data-barang-non-aset", function(e) {
+        e.preventDefault();
+        // var code = $(this).data("code");
+        $('#menu-dashboard').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_data_non_aset')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": 0
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard').html(data);
+        }).fail(function() {
+            $('#menu-dashboard').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-export-data-non-aset", function(e) {
+        e.preventDefault();
+        // var code = $(this).data("code");
+        $('#menu-dashboard-lg').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_export_data_non_aset')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": 0
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard-lg').html(data);
+        }).fail(function() {
+            $('#menu-dashboard-lg').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-export-data-aset", function(e) {
+        e.preventDefault();
+        // var code = $(this).data("code");
+        $('#menu-dashboard-lg').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_export_data_aset')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": 0
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard-lg').html(data);
+        }).fail(function() {
+            $('#menu-dashboard-lg').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-data-barang-aset", function(e) {
+        e.preventDefault();
+        // var code = $(this).data("code");
+        $('#menu-dashboard').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_data_aset')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": 0
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard').html(data);
+        }).fail(function() {
+            $('#menu-dashboard').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-data-barang-kso", function(e) {
+        e.preventDefault();
+        // var code = $(this).data("code");
+        $('#menu-dashboard').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_data_kso')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": 0
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard').html(data);
+        }).fail(function() {
+            $('#menu-dashboard').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-data-doc-depresiasi", function(e) {
+        e.preventDefault();
+        // var code = $(this).data("code");
+        $('#menu-dashboard').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_data_depresiasi_aset')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": 0
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard').html(data);
+        }).fail(function() {
+            $('#menu-dashboard').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-view-data-lokasi", function(e) {
+        e.preventDefault();
+        var code = $(this).data("code");
+        $('#menu-dashboard').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_lokasi_data_barang')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": code
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-dashboard').html(data);
+        }).fail(function() {
+            $('#menu-dashboard').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-print-barcode-page", function(e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var page = document.getElementById("page").value;
+        console.log(id);
+        console.log(page);
+
+        if (page == "-") {
+            alert('eror');
+        } else {
+            $("#menu-data-lokasi-barang").html(
+                '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+            );
+            $.ajax({
+                    url: "<?php echo e(route('masteradmin_cabang_data_lokasi_print_barcode')); ?>",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "<?php echo e(csrf_token()); ?>",
+                        "id": id,
+                        "page": page,
+                    },
+                    dataType: 'html',
+                })
+                .done(function(data) {
+                    $("#menu-data-lokasi-barang").html(
+                        '<iframe src="data:application/pdf;base64, ' +
+                        data +
+                        '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                    );
+
+                })
+                .fail(function() {
+                    alert('sasdads');
+                });
+        }
+    });
+    $(document).on("click", "#button-metode-export-data", function(e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var option = document.getElementById("option").value;
+        $("#menu-data-export-barang-non-aset").html(
+            '<div style="text-align: center; padding:2%;"><div class="spinner-border" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+        );
+        if (option == "-") {
+            alert('eror');
+        } else if (option == "data") {
+            $.ajax({
+                url: "<?php echo e(route('dashboard_export_data_non_aset_data')); ?>",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "<?php echo e(csrf_token()); ?>",
+                    "id": id,
+                    "option": option,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $("#menu-data-export-barang-non-aset").html(data);
+            }).fail(function() {
+                alert('sasdads');
+            });
+        } else if (option == "excel") {
+            $.ajax({
+                url: "<?php echo e(route('dashboard_export_data_non_aset_excel')); ?>",
+                type: "GET",
+                cache: false,
+                data: {
+                    "_token": "<?php echo e(csrf_token()); ?>",
+                    "id": id,
+                    "option": option,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                window.location.replace("<?php echo e(route('dashboard_export_data_non_aset_excel')); ?>");
+                $("#menu-data-export-barang-non-aset").html('done');
+            }).fail(function() {
+                alert('error');
+            });
+        } else {
+            $.ajax({
+                url: "<?php echo e(route('dashboard_export_data_non_aset_pdf')); ?>",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "<?php echo e(csrf_token()); ?>",
+                    "id": id,
+                    "option": option,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $("#menu-data-export-barang-non-aset").html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                );
+            }).fail(function() {
+                alert('error');
+            });
+        }
+    });
+    $(document).on("click", "#button-metode-export-data-aset", function(e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var option = document.getElementById("option").value;
+        $("#menu-data-export-barang-non-aset").html(
+            '<div style="text-align: center; padding:2%;"><div class="spinner-border spinner-sm" role="status" > <span class="sr-only">Loading...</span> </div></div>'
+        );
+        if (option == "-") {
+            alert('eror');
+        } else if (option == "data") {
+            $.ajax({
+                url: "<?php echo e(route('dashboard_export_data_aset_data')); ?>",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "<?php echo e(csrf_token()); ?>",
+                    "id": id,
+                    "option": option,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $("#menu-data-export-barang-non-aset").html(data);
+            }).fail(function() {
+                alert('sasdads');
+            });
+        } else if (option == "excel") {
+            $.ajax({
+                url: "<?php echo e(route('dashboard_export_data_aset_excel')); ?>",
+                type: "GET",
+                cache: false,
+                data: {
+                    "_token": "<?php echo e(csrf_token()); ?>",
+                    "id": id,
+                    "option": option,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                window.location.replace("<?php echo e(route('dashboard_export_data_aset_excel')); ?>");
+                $("#menu-data-export-barang-non-aset").html('done');
+            }).fail(function() {
+                alert('error');
+            });
+        } else {
+            $.ajax({
+                url: "<?php echo e(route('dashboard_export_data_aset_pdf')); ?>",
+                type: "POST",
+                cache: false,
+                data: {
+                    "_token": "<?php echo e(csrf_token()); ?>",
+                    "id": id,
+                    "option": option,
+                },
+                dataType: 'html',
+            }).done(function(data) {
+                $("#menu-data-export-barang-non-aset").html(
+                    '<iframe src="data:application/pdf;base64, ' +
+                    data +
+                    '" style="width:100%;; height:500px;" frameborder="0"></iframe>'
+                );
+            }).fail(function() {
+                alert('error');
+            });
+        }
+    });
+    $(document).on("click", "#button-document-data-kso", function(e) {
+        e.preventDefault();
+        var code = $(this).data("code");
+        $('#menu-data-barang-kso').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_data_kso_document')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": code
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-data-barang-kso').html(data);
+        }).fail(function() {
+            $('#menu-data-barang-kso').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-update-data-barang-lokasi", function(e) {
+        e.preventDefault();
+        var code = $(this).data("code");
+        $('#menu-data-barang-lokasi').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        $.ajax({
+            url: "<?php echo e(route('dashboard_data_lokasi_detail')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": code
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $('#menu-data-barang-lokasi').html(data);
+        }).fail(function() {
+            $('#menu-data-barang-lokasi').html('eror');
+        });
+
+    });
+    $(document).on("click", "#button-simpan-data-non-aset", function(e) {
+        e.preventDefault();
+        var data = $("#form-add-data-non-aset").serialize();
+        var nama = document.getElementById("nama_barang").value;
+        var klasifikasi = document.getElementById("klasifikasi").value;
+        var tgl_beli = document.getElementById("tgl_beli").value;
+        var harga_perolehan = document.getElementById("dengan-rupiah").value;
+        var suplier = document.getElementById("suplier").value;
+        var lokasi = document.getElementById("lokasi").value;
+        $('#menu-simpan-data-non-aset').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        if (nama == "" || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || suplier == "" ||
+            lokasi == "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Ada Yang masih Kosong!",
+                footer: '<a href="#">Kekosongan Hati Ini sungguh Membuat Kesepian ?</a>'
+            });
+            $('#menu-simpan-data-non-aset').html(
+                '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><iclass="fa fa-save"></i> Simpan Data</button>'
+            );
+        } else {
+            $.ajax({
+                url: "<?php echo e(route('dashboard_add_data_non_aset')); ?>",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                },
+                type: "POST",
+                cache: false,
+                data: data,
+                dataType: 'html',
+            }).done(function(data) {
+                if (data == 0) {
+                    $('#menu-simpan-data-non-aset').html('<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><i class="fa fa-save"></i> Simpan Data</button>');
+                } else {
+                    $('#menu-simpan-data-non-aset').html(data);
+                    location.reload();
+                }
+            }).fail(function() {
+                $('#menu-simpan-data-non-aset').html('eror');
+            });
+        }
+    });
+    $(document).on("click", "#button-simpan-update-data-inventaris", function(e) {
+        e.preventDefault();
+        var data = $("#form-update-data-inventaris").serialize();
+        var nama = document.getElementById("nama_barang").value;
+        var klasifikasi = document.getElementById("klasifikasi").value;
+        var tgl_beli = document.getElementById("tgl_beli").value;
+        var harga_perolehan = document.getElementById("dengan-rupiah").value;
+        // var suplier = document.getElementById("suplier").value;
+        var lokasi = document.getElementById("lokasi").value;
+        // var merk = document.getElementById("merk").value;
+        // var type = document.getElementById("type").value;
+        // var seri = document.getElementById("seri").value;
+        $('#menu-simpan-data-inventaris').html(
+            '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
+        );
+        if (nama == "" || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || lokasi == "") {
+            alert('eror');
+            $('#menu-simpan-data-inventaris').html(
+                '<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><iclass="fa fa-save"></i> Simpan Data</button>'
+            );
+        } else {
+            $.ajax({
+                url: "<?php echo e(route('dashboard_update_data_inventaris')); ?>",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content"),
+                },
+                type: "POST",
+                cache: false,
+                data: data,
+                dataType: 'html',
+            }).done(function(data) {
+                $('#menu-simpan-data-inventaris').html(data);
+                location.reload();
+            }).fail(function() {
+                $('#menu-simpan-data-inventaris').html('eror');
+            });
+        }
+    });
+</script>
+<script>
+    const searchInput = document.getElementById('cariruangan');
+    searchInput.addEventListener('input', function() {
+        const code = this.value.toLowerCase().trim();
+        $.ajax({
+            url: "<?php echo e(route('dashboard_update_data_inventaris_pencarian')); ?>",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                "code": code
+            },
+            dataType: 'html',
+        }).done(function(data) {
+            $("#menu-pencarian-ruangan").html(data);
+        }).fail(function() {
+            $("#menu-pencarian-ruangan").html(
+                '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+            );
+        });
+    });
+</script>
+<script>
+    var mostLeadsInit = function mostLeadsInit() {
+        var ECHART_MOST_LEADS = ".echart-most-leads";
+        var $echartMostLeads = document.querySelector(ECHART_MOST_LEADS);
+        if ($echartMostLeads) {
+            var userOptions = utils.getData($echartMostLeads, "options");
+            var chart = window.echarts.init($echartMostLeads);
+            var getDefaultOptions = function getDefaultOptions() {
+                return {
+                    color: [
+                        utils.getColors().primary,
+                        utils.getColors().info,
+                        utils.getColors().warning,
+                        utils.getColors().info, //
+                        utils.getGrays()[300],
+                    ],
+                    tooltip: {
+                        trigger: "item",
+                        padding: [7, 10],
+                        backgroundColor: utils.getGrays()["100"],
+                        borderColor: utils.getGrays()["300"],
+                        textStyle: {
+                            color: utils.getColors().dark,
+                        },
+                        borderWidth: 1,
+                        transitionDuration: 0,
+                        formatter: function formatter(params) {
+                            return "<strong>"
+                                .concat(params.data.name, ":</strong> ")
+                                .concat(params.percent, " %");
+                        },
+                    },
+                    position: function position(pos, params, dom, rect, size) {
+                        return getPosition(pos, params, dom, rect, size);
+                    },
+                    legend: {
+                        show: false,
+                    },
+                    series: [{
+                        type: "pie",
+                        radius: ["100%", "67%"],
+                        avoidLabelOverlap: false,
+                        hoverAnimation: false,
+                        itemStyle: {
+                            borderWidth: 2,
+                            borderColor: utils.getColor("card-bg"),
+                        },
+                        label: {
+                            normal: {
+                                show: false,
+                                position: "center",
+                                textStyle: {
+                                    fontSize: "20",
+                                    fontWeight: "500",
+                                    color: utils.getGrays()["700"],
+                                },
+                            },
+                            emphasis: {
+                                show: false,
+                            },
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false,
+                            },
+                        },
+                        data: [
+                            <?php $__currentLoopData = $klasifikasi; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $klasifikasis): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                            $data = DB::table('inventaris_data')->join('inventaris_klasifikasi', 'inventaris_klasifikasi.inventaris_klasifikasi_code', '=', 'inventaris_data.inventaris_klasifikasi_code')->where('inventaris_klasifikasi.inventaris_cat_code', $klasifikasis->inventaris_cat_code)->count();
+                            ?> {
+                                value: "<?php echo e($data); ?>",
+                                name: "<?php echo e($klasifikasis->inventaris_cat_name); ?>",
+                            },
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        ],
+                    }, ],
+                };
+            };
+            echartSetOption(chart, userOptions, getDefaultOptions);
+        }
+    };
+    docReady(mostLeadsInit);
+</script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laravel\inventaris_app\resources\views/application/dashboard/home.blade.php ENDPATH**/ ?>
