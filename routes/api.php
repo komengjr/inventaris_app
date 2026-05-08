@@ -28,6 +28,7 @@ Route::get('v2/authenticate/{user}/{pass}', 'api\InventarisController@authentica
 Route::get('v2/getway/whatsapp/status', 'api\InventarisController@getwaywhatsapp');
 Route::get('v2/getway/whatsapp/update/{token}', 'api\InventarisController@updategetway');
 
+Route::get('v2/datainventaris/{kode}', 'api\InventarisController@v2_data');
 
 Route::prefix('gateway')->group(function () {
     Route::get('whatsapp', [ApiController::class, 'gateway_whatsapp'])->name('gateway_whatsapp');

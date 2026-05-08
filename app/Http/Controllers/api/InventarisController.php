@@ -94,4 +94,16 @@ class InventarisController extends Controller
         DB::table('message')->where('token_code', $token)->update(['status' => 1]);
         return response()->json('Berhasil Kirim');
     }
+    public function v2_data($kode)
+    {
+        try {
+            $data = DB::table('inventaris_data')->where('inventaris_data_cabang', $kode)->get();
+            return response()->json($data);
+        } catch (QueryException $e) {
+            $error = [
+                'error' => $e->getMessage()
+            ];
+            return response()->json($error, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
