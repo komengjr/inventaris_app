@@ -106,4 +106,16 @@ class InventarisController extends Controller
             return response()->json($error, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    public function v2_data_id($kode)
+    {
+        try {
+            $data = DB::table('inventaris_data')->where('inventaris_data_code', $kode)->first();
+            return response()->json($data);
+        } catch (QueryException $e) {
+            $error = [
+                'error' => $e->getMessage()
+            ];
+            return response()->json($error, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
