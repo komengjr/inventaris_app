@@ -179,6 +179,26 @@
                                         ->where('inventaris_data.inventaris_data_status', '<', '4')
                                         ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 2)
                                         ->count();
+                                    $statusbarang3 = DB::table('tbl_sub_verifdatainventaris')
+                                        ->join(
+                                            'inventaris_data',
+                                            'inventaris_data.inventaris_data_code',
+                                            '=',
+                                            'tbl_sub_verifdatainventaris.id_inventaris',
+                                        )
+                                        ->where('tbl_sub_verifdatainventaris.kode_verif', $cekdata->kode_verif)
+                                        ->where(
+                                            'inventaris_data.id_nomor_ruangan_cbaang',
+                                            $no_ruangans->id_nomor_ruangan_cbaang,
+                                        )
+                                        ->where(
+                                            'inventaris_data.inventaris_data_tgl_beli',
+                                            '<=',
+                                            $cekdata->end_date_verif,
+                                        )
+                                        ->where('inventaris_data.inventaris_data_status', '<', '4')
+                                        ->where('tbl_sub_verifdatainventaris.status_data_inventaris', 3)
+                                        ->count();
 
                                 @endphp
                                 <td>
@@ -198,13 +218,18 @@
 
                                             <td class="text-end">{{ $statusbarang2 }}</td>
                                         </tr>
+                                        <tr>
+                                            <td>Hilang</td>
+
+                                            <td class="text-end">{{ $statusbarang3 }}</td>
+                                        </tr>
                                     </table>
                                 </td>
                                 <td class="text-center">
-                                    {{ $statusbarang + $statusbarang1 + $statusbarang2 }}
+                                    {{ $statusbarang + $statusbarang1 + $statusbarang2 + $statusbarang3 }}
                                 </td>
                                 <td>
-                                    @if ($totalbarang == $statusbarang + $statusbarang1 + $statusbarang2)
+                                    @if ($totalbarang == $statusbarang + $statusbarang1 + $statusbarang2 + $statusbarang3)
                                         <button class="btn btn-falcon-success btn-sm"
                                             id="button-print-stockopname-ruangan" data-code="{{ $id }}"
                                             data-lokasi="{{ $no_ruangans->id_nomor_ruangan_cbaang }}"><i
@@ -297,6 +322,18 @@
                                     <h5>{{ $barangrusak }}</h5>
                                 </span>
                             </div>
+                            <div class="d-flex justify-content-between fs--1 mb-1">
+                                <h6 class="mb-0 text-danger">Keadaan Hilang</h6>
+                                <span>
+                                    @php
+                                        $baranghilang = DB::table('tbl_sub_verifdatainventaris')
+                                            ->where('kode_verif', $cekdata->kode_verif)
+                                            ->where('status_data_inventaris', 3)
+                                            ->count();
+                                    @endphp
+                                    <h5>{{ $baranghilang }}</h5>
+                                </span>
+                            </div>
 
 
                             <div class="d-flex justify-content-between fs--1 mb-1 text-success">
@@ -304,7 +341,7 @@
                                 <span>
                                     <h5 style="cursor: pointer; color: rgb(255, 0, 0);" id="btn-show-data-belum-verif"
                                         data-id="{{ $cekdata->kode_verif }}">
-                                        {{ $jumlah - $barangbaik - $barangmaintenance - $barangrusak }}</h5>
+                                        {{ $jumlah - $barangbaik - $barangmaintenance - $barangrusak - $baranghilang }}</h5>
                                 </span>
                             </div>
                             <hr>
@@ -312,7 +349,7 @@
                                     Keseluruhan</span><span>{{ $jumlah }}</span></h5>
                             <p class="fs--1 text-danger">Pastikan Semua Data Sudah di verifikasi sesuai kondisi barang
                                 masing - masing.</p>
-                            @if ($barangbaik + $barangmaintenance + $barangrusak == $jumlah)
+                            @if ($barangbaik + $barangmaintenance + $barangrusak + $baranghilang == $jumlah)
                                 <span id="menu-button-penyelesaian-stockopname">
                                     <button class="btn btn-falcon-success" id="button-penyelesaian-stockopname"
                                         data-code="{{ $cekdata->kode_verif }}"><i class="fa fa-save"></i>
