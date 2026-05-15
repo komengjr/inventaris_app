@@ -1772,7 +1772,7 @@ class DivisiController extends Controller
     {
         $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->id)->get();
         foreach ($cekdata as $value) {
-            $fix = DB::table('sub_tbl_inventory')->where('id_inventaris',$value->id_inventaris)->where('status_barang','>=',4)->first();
+            $fix = DB::table('inventaris_data')->where('inventaris_data_code',$value->id_inventaris)->where('inventaris_data_status','>=',4)->first();
             if ($fix) {
                 DB::table('tbl_sub_verifdatainventaris')->where('id_sub_verifdatainventaris',$value->id_sub_verifdatainventaris)->delete();
             }
