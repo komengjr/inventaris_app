@@ -97,7 +97,11 @@ class InventarisController extends Controller
     public function v2_data($kode)
     {
         try {
-            $data = DB::table('inventaris_data')->where('inventaris_data_cabang', $kode)->limit(10)->get();
+            $data = DB::table('inventaris_data')
+            ->join('inventaris_klasifikasi','inventaris_klasifikasi.inventaris_klasifikasi_code','=','inventaris_data.inventaris_klasifikasi_code')
+            ->join('inventaris_cat','inventaris_cat.inventaris_cat_code','=','inventaris_klasifikasi.inventaris_cat_code')
+            ->where('inventaris_klasifikasi.inventaris_cat_code','=','05')
+            ->where('inventaris_data_cabang', $kode)->get();
             return response()->json($data);
         } catch (QueryException $e) {
             $error = [
