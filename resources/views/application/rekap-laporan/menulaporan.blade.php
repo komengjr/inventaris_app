@@ -128,6 +128,7 @@
         e.preventDefault();
         var code = document.getElementById("lokasi_id").value;
         var tgl_cetak = document.getElementById("tgl_cetak").value;
+        var pj = document.getElementById("pj_lokasi").value;
         if (code == "" || tgl_cetak == "") {
             Swal.fire({
                 icon: "error",
@@ -146,6 +147,7 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "tgl_cetak": tgl_cetak,
+                    "pj": pj,
                     "code": code
                 },
                 dataType: 'html',
@@ -162,6 +164,7 @@
     $(document).on("click", "#button-export-excel-ruangan-cabang", function(e) {
         e.preventDefault();
         var code = document.getElementById("lokasi_id").value;
+        var pj = document.getElementById("pj_lokasi").value;
         if (code == "") {
             alert('mohon dipilih terlebih dahulu');
         } else {

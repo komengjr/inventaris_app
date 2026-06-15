@@ -1258,6 +1258,7 @@ class AppController extends Controller
             'cabang' => $cabang,
             'data' => $data,
             'ruangan' => $ruangan,
+            'pj' => $request->pj,
             'tgl_cetak' => $timestamp
         ], compact('image'))->setPaper('A4', 'landscape')->setOptions(['defaultFont' => 'Helvetica']);
         $pdf->output();

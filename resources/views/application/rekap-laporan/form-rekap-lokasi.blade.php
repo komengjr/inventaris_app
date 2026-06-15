@@ -6,7 +6,7 @@
     <div class="  p-4">
         <div class=" card p-3 border border-primary">
             <div class="row g-3">
-                <div class="col-md-8">
+                <div class="col-md-5">
                     <label class="form-label" for="inputAddress">Pilih Ruangan</label>
                     <select name="lokasi_id" id="lokasi_id" class="form-control choices-single-cabang" required>
                         <option value="">Pilih</option>
@@ -15,7 +15,11 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
+                    <label class="form-label" for="inputAddress">Nama Penanggung Jawab</label>
+                    <input type="text" class="form-control" name="pj_lokasi" id="pj_lokasi">
+                </div>
+                <div class="col-md-2">
                     <label for="">Tanggal Cetak</label>
                     <input type="date" name="tgl_cetak" id="tgl_cetak" class="form-control form-control-lg">
                 </div>

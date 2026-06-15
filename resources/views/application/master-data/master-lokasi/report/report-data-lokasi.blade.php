@@ -337,7 +337,7 @@ $no = 'Nomor Dokumen Belum Di isi';
             <table style="font-size: 8px; margin: 0px;  width: 100%; font-family: Calibri (Body);"
                 border="1">
                 <tr>
-                    <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN</td>
+                    <td colspan="2" style="text-align: center; width: 70%;">PENANGGUNG JAWAB RUANGAN : {{ $pj }}</td>
                     <td colspan="1" class="text-right" style="text-align: right; width: 30%;">
                         <strong>{{ $cabang->nama_cabang }} , {{ date("d-m-Y", $tgl_cetak) }}</strong>
                     </td>
