@@ -2945,4 +2945,72 @@ class AppController extends Controller
             ]);
         return redirect()->back()->withSuccess('Great! Berhasil Update Password Data');
     }
+    // MASTER BARANG IT
+    public function master_data_it($akses)
+    {
+        if ($this->url_akses($akses) == true) {
+            $data = DB::table('inventaris_data_it')
+                ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'inventaris_data_it.inventaris_data_code')
+                ->where('inventaris_data_it_cabang', Auth::user()->cabang)->get();
+            return view('application.master-data.master-data-it', ['data' => $data]);
+        } else {
+            return Redirect::to('dashboard');
+        }
+    }
+    public function master_data_it_add(Request $request)
+    {
+        return view('application.master-data.master-barang-it.form-add-barang-it');
+    }
+    public function master_data_it_remove(Request $request)
+    {
+        try {
+            DB::table('inventaris_data_it')->where('inventaris_data_it_code', $request->code)->delete();
+            return 1;
+        } catch (\Throwable $e) {
+            return 0;
+        }
+    }
+    // 1. Mengambil data untuk tabel kiri (Hanya barang yang BELUM dipindahkan ke IT)
+    public function master_data_it_get_data()
+    {
+        $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->whereNotIn('inventaris_data_code', function ($query) {
+                $query->select('inventaris_data_code')->from('inventaris_data_it');
+            })
+            ->get();
+        return response()->json($data);
+    }
+
+    // 2. Menyimpan data JSON dari tabel kanan ke tabel 'inventaris_data_it'
+    public function master_data_it_simpan_barang(Request $request)
+    {
+        $items = $request->json()->all(); // Menangkap data array JSON
+
+        if (empty($items)) {
+            return response()->json(['success' => false, 'message' => 'Tidak ada data yang dikirim.'], 400);
+        }
+
+        DB::beginTransaction();
+        try {
+            foreach ($items as $item) {
+                // Generate code unik untuk inventaris_data_it (contoh: IT-XXXXX)
+                $itCode = 'IT-' . strtoupper(uniqid());
+
+                DB::table('inventaris_data_it')->insert([
+                    'inventaris_data_it_code'   => $itCode,
+                    'inventaris_data_code'      => $item['inventaris_data_code'],
+                    'inventaris_data_it_cabang' => Auth::user()->cabang ?? 'Pusat', // sesuaikan default-nya
+                    'inventaris_data_it_status' => 'Aktif', // sesuaikan default-nya
+                    'created_at'                => now(),
+                    'updated_at'                => now(),
+                ]);
+            }
+
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Data berhasil disimpan ke database!']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Gagal menyimpan: ' . $e->getMessage()], 500);
+        }
+    }
 }

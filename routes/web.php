@@ -429,6 +429,7 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('master-location', [AppController::class, 'master_location'])->name('master_location');
     Route::get('master-staff', [AppController::class, 'master_staff'])->name('master_staff');
     Route::get('master-user-cabang', [AppController::class, 'master_user_cabang'])->name('master_user_cabang');
+    Route::get('master-data-it', [AppController::class, 'master_data_it'])->name('master_data_it');
 });
 Route::prefix('app')->group(function () {
     Route::get('dashboard_home', [AppController::class, 'dashboard_home'])->name('dashboard_home');
@@ -644,6 +645,12 @@ Route::prefix('app')->group(function () {
     Route::post('master-user-cabang/save', [AppController::class, 'master_user_cabang_save'])->name('master_user_cabang_save');
     Route::post('master-user-cabang/reset-password', [AppController::class, 'master_user_cabang_reset_password'])->name('master_user_cabang_reset_password');
     Route::post('master-user-cabang/reset-password/save', [AppController::class, 'master_user_cabang_reset_password_save'])->name('master_user_cabang_reset_password_save');
+
+    // MASTER BARANG IT
+    Route::post('master-data-it', [AppController::class, 'master_data_it_add'])->name('master_data_it_add');
+    Route::post('master-data-it/remove', [AppController::class, 'master_data_it_remove'])->name('master_data_it_remove');
+    Route::get('master-data-it/get-data', [AppController::class, 'master_data_it_get_data'])->name('master_data_it_get_data');
+    Route::post('master-data-it/save-data', [AppController::class, 'master_data_it_simpan_barang'])->name('master_data_it_simpan_barang');
 });
 
 
