@@ -98,10 +98,10 @@ class InventarisController extends Controller
     {
         try {
             $data = DB::table('inventaris_data')
+            ->join('inventaris_data_it','inventaris_data_it.inventaris_data_code','=','inventaris_data.inventaris_data_code')
             ->join('inventaris_klasifikasi','inventaris_klasifikasi.inventaris_klasifikasi_code','=','inventaris_data.inventaris_klasifikasi_code')
             ->join('inventaris_cat','inventaris_cat.inventaris_cat_code','=','inventaris_klasifikasi.inventaris_cat_code')
-            ->where('inventaris_klasifikasi.inventaris_cat_code','=','05')
-            ->where('inventaris_data_cabang', $kode)->get();
+            ->where('inventaris_data.inventaris_data_cabang', $kode)->get();
             return response()->json($data);
         } catch (QueryException $e) {
             $error = [
