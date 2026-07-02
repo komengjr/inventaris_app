@@ -2951,7 +2951,7 @@ class AppController extends Controller
         if ($this->url_akses($akses) == true) {
             $data = DB::table('inventaris_data_it')
                 ->join('inventaris_data', 'inventaris_data.inventaris_data_code', '=', 'inventaris_data_it.inventaris_data_code')
-                ->where('inventaris_data_it_cabang', Auth::user()->cabang)->get();
+                ->where('inventaris_data_cabang', Auth::user()->cabang)->get();
             return view('application.master-data.master-data-it', ['data' => $data]);
         } else {
             return Redirect::to('dashboard');
@@ -2994,16 +2994,29 @@ class AppController extends Controller
         try {
             foreach ($items as $item) {
                 // Generate code unik untuk inventaris_data_it (contoh: IT-XXXXX)
+                $cabang = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
                 $itCode = 'IT-' . strtoupper(uniqid());
-
-                DB::table('inventaris_data_it')->insert([
-                    'inventaris_data_it_code'   => $itCode,
-                    'inventaris_data_code'      => $item['inventaris_data_code'],
-                    'inventaris_data_it_cabang' => Auth::user()->cabang ?? 'Pusat', // sesuaikan default-nya
-                    'inventaris_data_it_status' => 'Aktif', // sesuaikan default-nya
-                    'created_at'                => now(),
-                    'updated_at'                => now(),
-                ]);
+                if ($cabang->kd_entitas_cabang == 'SIMA') {
+                    $kode = DB::table('tbl_cabang_sima')->where('kd_cabang', Auth::user()->cabang)->first();
+                    DB::table('inventaris_data_it')->insert([
+                        'inventaris_data_it_code'   => $itCode,
+                        'inventaris_data_code'      => $item['inventaris_data_code'],
+                        'inventaris_data_it_cabang' => $kode->tbl_cabang_sima_code, // sesuaikan default-nya
+                        'inventaris_data_it_status' => 'Aktif', // sesuaikan default-nya
+                        'created_at'                => now(),
+                        'updated_at'                => now(),
+                    ]);
+                } else {
+                    DB::table('inventaris_data_it')->insert([
+                        'inventaris_data_it_code'   => $itCode,
+                        'inventaris_data_code'      => $item['inventaris_data_code'],
+                        'inventaris_data_it_cabang' => Auth::user()->cabang ?? 'Pusat', // sesuaikan default-nya
+                        'inventaris_data_it_status' => 'Aktif', // sesuaikan default-nya
+                        'created_at'                => now(),
+                        'updated_at'                => now(),
+                    ]);
+                    # code...
+                }
             }
 
             DB::commit();
