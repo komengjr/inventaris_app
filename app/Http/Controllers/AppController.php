@@ -52,30 +52,82 @@ class AppController extends Controller
     public function dashboard($akses)
     {
         if ($this->url_akses($akses) == true) {
-            $klasifikasi = DB::table('inventaris_cat')->get();
-            $cabang = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
-            $nonaset = DB::table('inventaris_data')->where('inventaris_data_jenis', 0)->where('inventaris_data_cabang', Auth::user()->cabang)->sum('inventaris_data_harga');
-            $aset = DB::table('inventaris_data')->where('inventaris_data_jenis', 1)->where('inventaris_data_cabang', Auth::user()->cabang)->sum('inventaris_data_harga');
-            $datanonaset = DB::table('inventaris_data')->where('inventaris_data_jenis', 0)->where('inventaris_data_cabang', Auth::user()->cabang)->count();
-            $dataaset = DB::table('inventaris_data')->where('inventaris_data_jenis', 1)->where('inventaris_data_cabang', Auth::user()->cabang)->count();
-            $ruangan = DB::table('tbl_nomor_ruangan_cabang')
-                ->join('master_lokasi', 'tbl_nomor_ruangan_cabang.kd_lokasi', '=', 'master_lokasi.master_lokasi_code')
-                ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
-            $datakso = DB::table('sub_tbl_inventory_kso')->where('kd_cabang', Auth::user()->cabang)->count();
-            $documentkso = DB::table('document_kso')
-                ->join('sub_tbl_inventory_kso', 'sub_tbl_inventory_kso.id_inventaris', '=', 'document_kso.id_inventaris')
-                ->where('sub_tbl_inventory_kso.kd_cabang', Auth::user()->cabang)->count();
-            return view('application.dashboard.home', [
-                'klasifikasi' => $klasifikasi,
-                'cabang' => $cabang,
-                'nonaset' => $nonaset,
-                'aset' => $aset,
-                'datanonaset' => $datanonaset,
-                'dataaset' => $dataaset,
-                'ruangan' => $ruangan,
-                'datakso' => $datakso,
-                'documentkso' => $documentkso,
-            ]);
+            $userCabang = Auth::user()->cabang;
+
+            // 1. Ambil data informasi Cabang dari tbl_cabang
+            $cabang = DB::table('tbl_cabang')
+                ->where('kd_cabang', $userCabang)
+                ->first();
+
+            // 2. Ambil total data Ringkasan Non-Aset, Aset, dan KSO
+            $datanonaset = DB::table('inventaris_data')
+                ->where('inventaris_data_cabang', $userCabang)
+                ->where('inventaris_data_jenis', '0')
+                ->count();
+
+            $nonaset = DB::table('inventaris_data')
+                ->where('inventaris_data_cabang', $userCabang)
+                ->where('inventaris_data_jenis', '0')
+                ->sum('inventaris_data_harga');
+
+            $dataaset = DB::table('inventaris_data')
+                ->where('inventaris_data_cabang', $userCabang)
+                ->where('inventaris_data_jenis', '1')
+                ->count();
+
+            $aset = DB::table('inventaris_data')
+                ->where('inventaris_data_cabang', $userCabang)
+                ->where('inventaris_data_jenis', '1')
+                ->sum('inventaris_data_harga');
+
+            // Total barang KSO berdasarkan cabang
+            $datakso = DB::table('sub_tbl_inventory_kso')
+                ->where('kd_cabang', $userCabang)
+                ->count();
+
+            // Total dokumen KSO berdasarkan cabang (Join ke sub_tbl_inventory_kso)
+            $documentkso = DB::table('document_kso as dk')
+                ->join('sub_tbl_inventory_kso as kso', 'dk.id_inventaris', '=', 'kso.id_inventaris')
+                ->where('kso.kd_cabang', $userCabang)
+                ->count();
+
+            // 3. Query Klasifikasi
+            $klasifikasi = DB::table('inventaris_cat as ic')
+                ->leftJoin('inventaris_klasifikasi as ik', 'ik.inventaris_cat_code', '=', 'ic.inventaris_cat_code')
+                ->leftJoin('inventaris_data as id', function ($join) use ($userCabang) {
+                    $join->on('id.inventaris_klasifikasi_code', '=', 'ik.inventaris_klasifikasi_code')
+                        ->where('id.inventaris_data_cabang', '=', $userCabang);
+                })
+                ->select('ic.inventaris_cat_code', 'ic.inventaris_cat_name')
+                ->selectRaw('COUNT(id.inventaris_klasifikasi_code) as total_barang')
+                ->selectRaw('COALESCE(SUM(id.inventaris_data_harga), 0) as total_harga')
+                ->groupBy('ic.inventaris_cat_code', 'ic.inventaris_cat_name')
+                ->get();
+
+            // 4. Query Lokasi / Ruangan
+            $ruangan = DB::table('tbl_nomor_ruangan_cabang as rc')
+                ->join('master_lokasi as ml', 'rc.kd_lokasi', '=', 'ml.master_lokasi_code')
+                ->leftJoin('inventaris_data as id', function ($join) {
+                    $join->on('id.id_nomor_ruangan_cbaang', '=', 'rc.id_nomor_ruangan_cbaang')
+                        ->where('id.inventaris_data_status', '<', 4);
+                })
+                ->where('rc.kd_cabang', $userCabang)
+                ->select('rc.id_nomor_ruangan_cbaang', 'rc.nomor_ruangan', 'ml.master_lokasi_name')
+                ->selectRaw('COUNT(id.id_nomor_ruangan_cbaang) as total_barang')
+                ->groupBy('rc.id_nomor_ruangan_cbaang', 'rc.nomor_ruangan', 'ml.master_lokasi_name')
+                ->get();
+
+            return view('application.dashboard.home', compact(
+                'cabang',
+                'datanonaset',
+                'nonaset',
+                'dataaset',
+                'aset',
+                'datakso',
+                'documentkso',
+                'klasifikasi',
+                'ruangan'
+            ));
         } else {
             return Redirect::to('dashboard');
         }
