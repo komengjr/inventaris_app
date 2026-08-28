@@ -2434,12 +2434,17 @@ class AppController extends Controller
         $searchValue = $search_arr['value']; // Search value
 
         // Total records
-        $totalRecords = DataInventaris::select('count(*) as allcount')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
-        $totalRecordswithFilter = DataInventaris::select('count(*) as allcount')->where('inventaris_data_name', 'like', '%' . $searchValue . '%')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
+        $totalRecords = DataInventaris::select('count(*) as allcount')
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->count();
+
+        $totalRecordswithFilter = DataInventaris::select('count(*) as allcount')
+            ->where('inventaris_data_name', 'like', '%' . $searchValue . '%')
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->count();
 
         // Fetch records
         $records = DataInventaris::orderBy('id_inventaris_data', $columnSortOrder)
-            // ->join('tbl_pemeriksaan','tbl_pemeriksaan.kd_pemeriksaan','=','tbl_perusahaan_paket_log.kd_pemeriksaan')
             ->where('inventaris_data.inventaris_data_name', 'like', '%' . $searchValue . '%')
             ->where('inventaris_data_cabang', Auth::user()->cabang)
             ->select('inventaris_data.*')
@@ -2448,7 +2453,7 @@ class AppController extends Controller
             ->get();
 
         $data_arr = array();
-        // $no = 1;
+
         foreach ($records as $record) {
             $id = $record->inventaris_data_urut;
             $nama_barang = $record->inventaris_data_name;
@@ -2458,23 +2463,31 @@ class AppController extends Controller
             $kd_inventaris = $record->inventaris_klasifikasi_code;
             $merk = $record->inventaris_data_merk . ' <br> ' . $record->inventaris_data_type . ' <br> ' . $record->inventaris_data_no_seri;
             $tglbeli = date('d-m-Y', strtotime($record->inventaris_data_tgl_beli));
+
             $button = "<div class='btn-group' role='group'>
-                                    <button class='btn btn-sm btn-primary dropdown-toggle' id='btnGroupVerticalDrop2'
-                                        type='button' data-bs-toggle='dropdown' aria-haspopup='true'
-                                        aria-expanded='false'><span class='fas fa-align-left'
-                                            data-fa-transform='shrink-3'></span></button>
-                                    <div class='dropdown-menu' aria-labelledby='btnGroupVerticalDrop2'>
-                                        <button class='dropdown-item' data-bs-toggle='modal'
-                                            data-bs-target='#modal-master-barang' id='button-edit-master-cabang'
-                                            data-code='$record->inventaris_data_code'><span class='far fa-edit'></span>
-                                            Edit Data Master</button>
-                                        <button class='dropdown-item' data-bs-toggle='modal'
-                                            data-bs-target='#modal-master-barang-lg' id='button-cetak-barcode-master-cabang'
-                                            data-code='$record->inventaris_data_code'><span class='fas fa-qrcode'></span>
-                                            Print Barcode</button>
-                                    </div>
-                                </div>";
-            $ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $record->id_nomor_ruangan_cbaang)->first();
+                        <button class='btn btn-sm btn-primary dropdown-toggle' id='btnGroupVerticalDrop2'
+                            type='button' data-bs-toggle='dropdown' aria-haspopup='true'
+                            aria-expanded='false'><span class='fas fa-align-left'
+                                data-fa-transform='shrink-3'></span></button>
+                        <div class='dropdown-menu' aria-labelledby='btnGroupVerticalDrop2'>
+                            <button class='dropdown-item' data-bs-toggle='modal'
+                                data-bs-target='#modal-master-barang' id='button-edit-master-cabang'
+                                data-code='$record->inventaris_data_code'><span class='far fa-edit'></span>
+                                Edit Data Master</button>
+                            <button class='dropdown-item' data-bs-toggle='modal'
+                                data-bs-target='#modal-master-barang-lg' id='button-cetak-barcode-master-cabang'
+                                data-code='$record->inventaris_data_code'><span class='fas fa-qrcode'></span>
+                                Print Barcode</button>
+                            <button class='dropdown-item text-primary' id='button-cetak-zebra-master-cabang'
+                                data-code='$record->inventaris_data_code'><span class='fas fa-print'></span>
+                                Print Zebra</button>
+                        </div>
+                    </div>";
+
+            $ruangan = DB::table('tbl_nomor_ruangan_cabang')
+                ->where('id_nomor_ruangan_cbaang', $record->id_nomor_ruangan_cbaang)
+                ->first();
+
             if ($ruangan) {
                 $dataruangan = $ruangan->nomor_ruangan;
                 if ($record->inventaris_data_status == 5) {
@@ -2485,7 +2498,7 @@ class AppController extends Controller
                     $button = "";
                 } else {
                     $status_barang = '<span class="badge bg-success " style="font-size: 11px;">Baik</span>';
-                };
+                }
             } else {
                 $dataruangan = '<span class="badge bg-danger" style="font-size: 9px;">Tidak di temukan</span>';
                 if ($record->inventaris_data_status == 5) {
@@ -2498,6 +2511,7 @@ class AppController extends Controller
                     $status_barang = '<span class="badge bg-success " style="font-size: 11px;">Baik</span>';
                 }
             }
+
             $data_arr[] = array(
                 "id" => $id,
                 "nama_barang" => $nama_barang,
@@ -2522,6 +2536,88 @@ class AppController extends Controller
 
         echo json_encode($response);
         exit;
+    }
+    public function master_barang_get_zpl(Request $request)
+    {
+        $code = $request->input('code');
+
+        $item = DataInventaris::where('inventaris_data_code', $code)
+            ->where('inventaris_data_cabang', Auth::user()->cabang)
+            ->first();
+
+        if (!$item) {
+            return response()->json(['status' => 'error', 'message' => 'Data tidak ditemukan'], 404);
+        }
+
+        $nama_barang   = strtoupper(substr($item->inventaris_data_name, 0, 15));
+        $no_inventaris = $item->inventaris_data_number;
+        $merk_type     = strtoupper(substr($item->inventaris_data_merk . ' / ' . $item->inventaris_data_no_seri, 0, 15));
+        $cabang_user   = strtoupper(Auth::user()->cabang_name ?? 'PRAMITA PONTIANAK');
+
+        $ruangan = DB::table('tbl_nomor_ruangan_cabang')
+            ->where('id_nomor_ruangan_cbaang', $item->id_nomor_ruangan_cbaang)
+            ->first();
+        $nama_ruangan = strtoupper($ruangan ? substr($ruangan->nomor_ruangan, 0, 6) : 'R.EMG');
+
+        // Kanvas 50mm x 30mm (400 x 240 dots)
+        $zpl  = "^XA\n";
+        $zpl .= "^PW400\n";
+        $zpl .= "^LL240\n";
+
+        // -------------------------------------------------------------
+        // 1. QR CODE (Dinaikkan 4 mm -> Y:2)
+        // Dengan magnifikasi 8, lebar fisik QR ~208 dots (X:6 sampai X:214)
+        // -------------------------------------------------------------
+        $zpl .= "^FO6,2^BQN,2,8^FDLA," . $no_inventaris . "^FS\n";
+
+        // -------------------------------------------------------------
+        // 2. BINGKAI OUTER KANAN (Jarak 1 mm dari QR Code -> X: 222)
+        // Ujung kanan QR di ~214 dots + gap 8 dots (1mm) = X: 222
+        // -------------------------------------------------------------
+        $zpl .= "^FO222,32^GB168,200,2^FS\n";
+
+        // -------------------------------------------------------------
+        // 3. BARIS 1: NAMA BARANG
+        // -------------------------------------------------------------
+        $zpl .= "^FO227,38^GB158,32,1,B,2^FS\n";
+        $zpl .= "^FO230,46^A0N,15,15^FD" . $nama_barang . "^FS\n";
+
+        // -------------------------------------------------------------
+        // 4. BARIS 2: LOKASI : RUANGAN
+        // -------------------------------------------------------------
+        $zpl .= "^FO227,75^GB48,30,1,B,2^FS\n";
+        $zpl .= "^FO229,83^A0N,13,13^FDLokasi^FS\n";
+
+        $zpl .= "^FO277,75^GB12,30,1,B,2^FS\n";
+        $zpl .= "^FO280,83^A0N,13,13^FD:^FS\n";
+
+        $zpl .= "^FO291,75^GB94,30,1,B,2^FS\n";
+        $zpl .= "^FO294,83^A0N,13,13^FD" . $nama_ruangan . "^FS\n";
+
+        // -------------------------------------------------------------
+        // 5. BARIS 3: NO INVENTARIS
+        // -------------------------------------------------------------
+        $zpl .= "^FO227,110^GB158,32,1,B,2^FS\n";
+        $zpl .= "^FO230,118^A0N,12,12^FB150,1,0,L^FD" . $no_inventaris . "^FS\n";
+
+        // -------------------------------------------------------------
+        // 6. BARIS 4: MERK / NO SERI
+        // -------------------------------------------------------------
+        $zpl .= "^FO227,147^GB158,32,1,B,2^FS\n";
+        $zpl .= "^FO230,155^A0N,13,13^FB150,1,0,L^FD" . $merk_type . "^FS\n";
+
+        // -------------------------------------------------------------
+        // 7. BARIS 5: NAMA CABANG
+        // -------------------------------------------------------------
+        $zpl .= "^FO227,184^GB158,32,1,B,2^FS\n";
+        $zpl .= "^FO230,192^A0N,13,13^FB150,1,0,L^FD" . $cabang_user . "^FS\n";
+
+        $zpl .= "^XZ";
+
+        return response()->json([
+            'status' => 'success',
+            'zpl'    => $zpl
+        ]);
     }
     public function master_barang_data_edit(Request $request)
     {

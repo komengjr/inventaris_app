@@ -513,4 +513,95 @@
 
     });
 </script>
+<!-- Print zebra -->
+<script>
+    $(document).on("click", "#button-cetak-zebra-master-cabang", function(e) {
+        e.preventDefault();
+
+        var btn = $(this);
+        var code = btn.data("code");
+
+        // Tampilkan Alert Loading
+        Swal.fire({
+            title: 'Memproses Cetak...',
+            text: 'Mengambil data dari server cloud...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        // STEP 1: Ambil data ZPL dari Server Cloud Laravel
+        $.ajax({
+            url: "{{ route('master_barang_get_zpl') }}",
+            type: "POST",
+            cache: false,
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "code": code
+            },
+            dataType: 'json'
+        }).done(function(response) {
+            if (response.status === 'success' && response.zpl) {
+
+                // Update status alert
+                Swal.update({
+                    text: 'Mengirim perintah ke printer Zebra lokal...'
+                });
+
+                // STEP 2: Tembakkan kode ZPL ke Print Agent Lokal (localhost:8080)
+                $.ajax({
+                    url: "http://localhost:8080/print",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        zpl: response.zpl,
+                        printer_name: "Zebra_USB" // Sesuaikan nama printer share/instalasi lokal
+                    }),
+                    dataType: 'json'
+                }).done(function(localResponse) {
+                    if (localResponse.status) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil Dicetak!',
+                            text: localResponse.message || 'Label inventaris berhasil dikirim ke printer.',
+                            timer: 2000,
+                            showConfirmButton: false,
+                            timerProgressBar: true
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal Cetak',
+                            text: localResponse.message || 'Print agent lokal gagal mencetak ke printer.'
+                        });
+                    }
+                }).fail(function() {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Agent Tidak Terhubung',
+                        text: 'Gagal terhubung ke Print Agent Lokal! Pastikan service agent cetak sudah berjalan di PC lokal.'
+                    });
+                });
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal Ambil Data',
+                    text: response.message || 'Terjadi kesalahan saat memproses kode ZPL.'
+                });
+            }
+        }).fail(function(xhr) {
+            let errorMessage = 'Gagal menyambungkan ke server cloud!';
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                errorMessage = xhr.responseJSON.message;
+            }
+            Swal.fire({
+                icon: 'error',
+                title: 'Koneksi Server Gagal',
+                text: errorMessage
+            });
+        });
+    });
+</script>
 @endsection

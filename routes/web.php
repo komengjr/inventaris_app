@@ -1,16 +1,18 @@
 <?php
+
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MasterAdminController;
 use Illuminate\Support\Facades\Route;
+
 Route::get('v2/authenticate{token}/{user}/{pass}', 'api\InventarisController@authenticate_v2');
 
 Route::get('scan', 'DataController@scandata');
 // Route::post('masuk-halaman', 'Auth\LoginController@authenticate')->name('masuk');
 Route::post('verifikasi-Login', 'Auth\LoginController@verifikasi_Login')->name('verifikasi_Login');
-Route::post('masuk-halaman-v2', 'Auth\LoginController@authenticate_v2')->name(  'masuk_v2');
+Route::post('masuk-halaman-v2', 'Auth\LoginController@authenticate_v2')->name('masuk_v2');
 // Route::post('masuk-halaman', [App\Http\Controllers\LoginController::class, 'authenticate'])->name('masuk');
 Route::post('pendaftaran', 'DataController@pendaftaran')->name('daftarakuncabang');
 Route::post('data/inventaris', 'DataController@cekdataineventaris');
@@ -403,13 +405,11 @@ Route::prefix('log_sdm')->group(function () {
 
 Route::prefix('telegram')->group(function () {
     Route::get('notification', 'TelegramController@notificationtelegram')->name('notificationtelegram');
-
 });
 
 Route::prefix('dashboard')->group(function () {
     Route::post('setup-profil', [DashboardController::class, 'dashboard_setup_profile'])->name('dashboard_setup_profile');
     Route::post('setup-notification', [DashboardController::class, 'dashboard_setup_notification'])->name('dashboard_setup_notification');
-
 });
 
 Route::prefix('{akses}/app')->group(function () {
@@ -430,6 +430,14 @@ Route::prefix('{akses}/app')->group(function () {
     Route::get('master-staff', [AppController::class, 'master_staff'])->name('master_staff');
     Route::get('master-user-cabang', [AppController::class, 'master_user_cabang'])->name('master_user_cabang');
     Route::get('master-data-it', [AppController::class, 'master_data_it'])->name('master_data_it');
+});
+
+use App\Http\Controllers\LaporanInventarisController;
+
+Route::middleware(['auth'])->group(function () {
+    // ROUTE BARU: Direct Download All Data (GET Method)
+    Route::get('/laporan/export-excel-all', [LaporanInventarisController::class, 'exportExcelAll'])->name('laporan.export_excel_all');
+    Route::get('/laporan/export-pdf-all', [LaporanInventarisController::class, 'exportPdfAll'])->name('laporan.export_pdf_all');
 });
 Route::prefix('app')->group(function () {
     Route::get('dashboard_home', [AppController::class, 'dashboard_home'])->name('dashboard_home');
@@ -594,6 +602,7 @@ Route::prefix('app')->group(function () {
     Route::post('laporan/cetak-rekap-ruangan', [AppController::class, 'laporan_cetak_rekap_ruangan'])->name('laporan_cetak_rekap_ruangan');
 
     // MASTER BARANG
+    Route::post('master-barang/get-zpl', [AppController::class, 'master_barang_get_zpl'])->name('master_barang_get_zpl');
     Route::get('master-barang-data', [AppController::class, 'master_barang_data'])->name('master_barang_data');
     Route::post('master-barang-data/edit', [AppController::class, 'master_barang_data_edit'])->name('master_barang_data_edit');
     Route::post('master-barang-data/save', [AppController::class, 'master_barang_data_save'])->name('master_barang_data_save');
@@ -636,7 +645,7 @@ Route::prefix('app')->group(function () {
     Route::post('master-staff/edit', [AppController::class, 'master_staff_edit'])->name('master_staff_edit');
     Route::post('master-staff/edit-save', [AppController::class, 'master_staff_edit_save'])->name('master_staff_edit_save');
 
-     // MASTER DOCUMENT
+    // MASTER DOCUMENT
     Route::post('master-document/update', [AppController::class, 'master_document_update'])->name('master_document_update');
     Route::post('master-document/update-save', [AppController::class, 'master_document_update_save'])->name('master_document_update_save');
 
