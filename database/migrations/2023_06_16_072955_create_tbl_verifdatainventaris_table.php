@@ -17,6 +17,9 @@ class CreateTblVerifdatainventarisTable extends Migration
             $table->id('id_verifdatainventaris');
             $table->string('kode_verif')->unique();
             $table->string('tgl_verif');
+            $table->string('end_date_verif');
+            $table->string('total_barang');
+            $table->string('total_verif');
             $table->string('tahun');
             $table->string('kd_cabang');
             $table->string('status_verif');

@@ -1,92 +1,238 @@
-<link href=" {{ asset('qr_login/option2/css/style.css') }}" rel="stylesheet">
-<div class="modal-body bg-light">
-    <div class="containera p-0" id="QR-Code">
-        <input type="text" name="tiket" id="tiket" value="{{ $tiket }}" hidden>
-        <div class="col-md-4" id="kamera">
-            <div class="well" style="position: relative;display: inline-block;">
-                <div class="card bg-dark">
-                    <canvas id="webcodecam-canvas" style="width: 100%; height: 500px;"></canvas>
+<link href="{{ asset('qr_login/option2/css/style.css') }}" rel="stylesheet">
+
+<div class="p-2 p-md-3 bg-light">
+    <!-- Card Scanner Kamera -->
+    <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-3">
+        <!-- Header View -->
+        <div class="card-header bg-white p-3 d-flex align-items-center justify-content-between border-bottom">
+            <div class="d-flex align-items-center">
+                <div class="icon-camera-wrapper me-2">
+                    <i class="fas fa-camera text-primary fs-0"></i>
                 </div>
-                <div class="scanner-laser laser-rightBottom" style="opacity: 0.5;"></div>
-                <div class="scanner-laser laser-rightTop" style="opacity: 0.5;"></div>
-                <div class="scanner-laser laser-leftBottom" style="opacity: 0.5;"></div>
-                <div class="scanner-laser laser-leftTop" style="opacity: 0.5;"></div>
+                <div>
+                    <h6 class="fw-bold mb-0 text-dark">Scan via Kamera HP</h6>
+                    <span class="fs--2 text-muted">Arahkan kamera ke Barcode / QR Code inventaris</span>
+                </div>
             </div>
-            <div class="well" style="display: none;">
-                <label id="zoom-value" width="100">Zoom: 2</label>
-                <input id="zoom" onchange="Page.changeZoom();" type="range" min="10" max="30"
-                    value="20">
-                <label id="brightness-value" width="100">Brightness: 0</label>
-                <input id="brightness" onchange="Page.changeBrightness();" type="range" min="0" max="128"
-                    value="0">
-                <label id="contrast-value" width="100">Contrast: 0</label>
-                <input id="contrast" onchange="Page.changeContrast();" type="range" min="-128" max="128"
-                    value="0">
-                <label id="threshold-value" width="100">Threshold: 0</label>
-                <input id="threshold" onchange="Page.changeThreshold();" type="range" min="0" max="512"
-                    value="0">
-                <label id="sharpness-value" width="100">Sharpness: off</label>
+            <span class="badge bg-soft-primary text-primary font-monospace fs--2 px-2.5 py-1 rounded-pill">
+                <i class="fas fa-ticket-alt me-1"></i>{{ $tiket }}
+            </span>
+        </div>
+
+        <div class="card-body p-2 p-md-3 bg-dark">
+            <input type="hidden" name="tiket" id="tiket" value="{{ $tiket }}">
+
+            <!-- Container Kamera & Viewfinder -->
+            <div class="position-relative mx-auto overflow-hidden rounded-3 shadow-inner camera-container" id="QR-Code">
+                <!-- Canvas Video Scanner -->
+                <canvas id="webcodecam-canvas" class="w-100 h-100 d-block object-fit-cover"></canvas>
+
+                <!-- Frame Target & Animated Scan Line -->
+                <div class="scan-overlay">
+                    <div class="scan-frame">
+                        <div class="corner top-left"></div>
+                        <div class="corner top-right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="corner bottom-right"></div>
+                        <div class="scan-laser"></div>
+                    </div>
+                </div>
+
+                <!-- Laser Elements (Preserved for WebCodeCamJS compatibility) -->
+                <div class="scanner-laser laser-rightBottom" style="display:none;"></div>
+                <div class="scanner-laser laser-rightTop" style="display:none;"></div>
+                <div class="scanner-laser laser-leftBottom" style="display:none;"></div>
+                <div class="scanner-laser laser-leftTop" style="display:none;"></div>
+            </div>
+
+            <!-- Kontrol Kamera Toolbar -->
+            <div class="row g-2 align-items-center mt-2">
+                <!-- Select Switch Camera -->
+                <div class="col-8 col-sm-6">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-secondary border-secondary text-white">
+                            <i class="fas fa-video"></i>
+                        </span>
+                        <select class="form-select form-select-sm bg-secondary text-white border-secondary fw-bold" id="camera-select"></select>
+                    </div>
+                </div>
+
+                <!-- Action Control Buttons -->
+                <div class="col-4 col-sm-6 d-flex justify-content-end gap-1">
+                    <button title="Play" class="btn btn-success btn-sm px-2.5" id="play" type="button">
+                        <i class="fas fa-play me-1"></i><span class="d-none d-sm-inline">Start</span>
+                    </button>
+                    <button title="Pause" class="btn btn-warning btn-sm px-2.5 text-white" id="pause" type="button">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button title="Stop" class="btn btn-danger btn-sm px-2.5" id="stop" type="button">
+                        <i class="fas fa-stop"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hidden Controls & Results Placeholder (Preserved for compatibility) -->
+            <div style="display: none;">
+                <input id="zoom" onchange="Page.changeZoom();" type="range" min="10" max="30" value="20">
+                <input id="brightness" onchange="Page.changeBrightness();" type="range" min="0" max="128" value="0">
+                <input id="contrast" onchange="Page.changeContrast();" type="range" min="-128" max="128" value="0">
+                <input id="threshold" onchange="Page.changeThreshold();" type="range" min="0" max="512" value="0">
                 <input id="sharpness" onchange="Page.changeSharpness();" type="checkbox">
-                <label id="grayscale-value" width="100">grayscale: off</label>
                 <input id="grayscale" onchange="Page.changeGrayscale();" type="checkbox">
-                <br>
-                <label id="flipVertical-value" width="100">Flip Vertical: off</label>
                 <input id="flipVertical" onchange="Page.changeVertical();" type="checkbox">
-                <label id="flipHorizontal-value" width="100">Flip Horizontal: off</label>
                 <input id="flipHorizontal" onchange="Page.changeHorizontal();" type="checkbox">
-            </div>
-        </div>
-        <div class="col-md-8">
-            <select class="form-control pb-2" id="camera-select"></select>
-            <div class="form-group " style="padding-top: 20px; display: none;">
-                <button title="Decode Image" class="btn btn-default btn-sm" id="decode-img" type="button"
-                    data-toggle="tooltip"><span class="glyphicon glyphicon-upload"></span></button>
-                <button title="Image shoot" class="btn btn-info btn-sm disabled" id="grab-img" type="button"
-                    data-toggle="tooltip"><span class="glyphicon glyphicon-picture"></span></button>
-                <button title="Play" class="btn btn-success btn-sm" id="play" type="button"
-                    data-toggle="tooltip"><span class="glyphicon glyphicon-play"></span></button>
-                <button title="Pause" class="btn btn-warning btn-sm" id="pause" type="button"
-                    data-toggle="tooltip"><span class="glyphicon glyphicon-pause"></span></button>
-                <button title="Stop streams" class="btn btn-danger btn-sm" id="stop" type="button"
-                    data-toggle="tooltip"><span class="glyphicon glyphicon-stop"></span></button>
+                <button id="decode-img" type="button"></button>
+                <button id="grab-img" type="button"></button>
+                <span id="zoom-value">Zoom: 2</span>
+                <span id="brightness-value">Brightness: 0</span>
+                <span id="contrast-value">Contrast: 0</span>
+                <span id="threshold-value">Threshold: 0</span>
+                <span id="sharpness-value">Sharpness: off</span>
+                <span id="grayscale-value">grayscale: off</span>
+                <span id="flipVertical-value">Flip Vertical: off</span>
+                <span id="flipHorizontal-value">Flip Horizontal: off</span>
             </div>
 
-            <div class="thumbnail pt-2" id="result">
-                <div class="well">
-                    <img id="scanned-img" src="" style="width: 100%; height: auto;">
-                </div>
-                <div class="caption pt-2">
-                    {{-- <button class="btn-warning">
-                        <div class="spinner-border" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </button> --}}
-                    <p id="scanned-QR" style="display: none;"></p>
-                </div>
+            <div class="d-none" id="result">
+                <img id="scanned-img" src="" style="width: 100%; height: auto;">
+                <p id="scanned-QR"></p>
             </div>
-
-        </div>
-        <div class="col-lg-12" id="hasil-pencarian">
-
-        </div>
-
-        <div class="col-md-12">
-            @if ($message = Session::get('sukses'))
-                <div class="alert alert-danger alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
-                </div>
-            @endif
         </div>
     </div>
+
+    <!-- Alert Messaging Session -->
+    @if ($message = Session::get('sukses'))
+    <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-3" role="alert">
+        <i class="fas fa-check-circle me-1"></i> <strong>{{ $message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
+    <!-- Target Hasil Ajax Scanner -->
+    <div class="col-12" id="hasil-pencarian"></div>
 </div>
-<script type="text/javascript" src='{{ asset('qr_login/option2/js/filereader.js') }}'></script>
+
+<style>
+    .bg-soft-primary {
+        background-color: #e0edff;
+    }
+
+    .icon-camera-wrapper {
+        width: 36px;
+        height: 36px;
+        background: #e0edff;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Fixed Camera Area for Mobile Responsiveness */
+    .camera-container {
+        width: 100%;
+        max-width: 500px;
+        height: 360px;
+        background-color: #000;
+    }
+
+    /* Viewfinder Overlay Style */
+    .scan-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
+
+    .scan-frame {
+        width: 230px;
+        height: 230px;
+        position: relative;
+        box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.45);
+        border-radius: 12px;
+    }
+
+    .corner {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 4px solid #0d6efd;
+    }
+
+    .top-left {
+        top: -2px;
+        left: -2px;
+        border-right: none;
+        border-bottom: none;
+        border-top-left-radius: 10px;
+    }
+
+    .top-right {
+        top: -2px;
+        right: -2px;
+        border-left: none;
+        border-bottom: none;
+        border-top-right-radius: 10px;
+    }
+
+    .bottom-left {
+        bottom: -2px;
+        left: -2px;
+        border-right: none;
+        border-top: none;
+        border-bottom-left-radius: 10px;
+    }
+
+    .bottom-right {
+        bottom: -2px;
+        right: -2px;
+        border-left: none;
+        border-top: none;
+        border-bottom-right-radius: 10px;
+    }
+
+    /* Laser Line Animation */
+    .scan-laser {
+        width: 100%;
+        height: 2px;
+        background: #0d6efd;
+        box-shadow: 0 0 15px 2px #0d6efd;
+        position: absolute;
+        animation: scanAnimation 2s infinite ease-in-out;
+    }
+
+    @keyframes scanAnimation {
+        0% {
+            top: 5%;
+        }
+
+        50% {
+            top: 95%;
+        }
+
+        100% {
+            top: 5%;
+        }
+    }
+</style>
+
+<!-- Scripts -->
+<script type="text/javascript" src="{{ asset('qr_login/option2/js/filereader.js') }}"></script>
 <script type="text/javascript" src="{{ asset('qr_login/option2/js/qrcodelib.js') }}"></script>
 <script type="text/javascript" src="{{ asset('qr_login/option2/js/webcodecamjs.js') }}"></script>
 
 <script>
     function CallAjaxLoginQr(code) {
         var tiket = document.getElementById("tiket").value;
+
+        $('#hasil-pencarian').html(
+            '<div class="card border-0 shadow-sm p-4 text-center my-3"><div class="spinner-border text-primary mx-auto mb-2" role="status"></div><span class="text-muted fs--1 fw-bold">Mencari Data Inventaris...</span></div>'
+        );
+
         $.ajax({
                 url: "{{ route('menu_stock_opname_scan_data_with_kamera') }}",
                 type: "POST",
@@ -98,16 +244,14 @@
                 },
                 dataType: 'html',
             })
-
             .done(function(data) {
                 $('#hasil-pencarian').html(data);
             })
             .fail(function() {
                 $('#hasil-pencarian').html(
-                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
+                    '<div class="alert alert-danger text-center shadow-sm my-3"><i class="fas fa-exclamation-triangle me-1"></i> Terjadi kesalahan sistem. Silakan coba scan ulang.</div>'
                 );
             });
-
     }
 
     (function(undefined) {
@@ -146,88 +290,70 @@
             flipVerticalValue = Q("#flipVertical-value"),
             flipHorizontal = Q("#flipHorizontal"),
             flipHorizontalValue = Q("#flipHorizontal-value");
+
         var args = {
             autoBrightnessValue: 100,
             resultFunction: function(res) {
-                [].forEach.call(scannerLaser, function(el) {
-                    fadeOut(el, 0.5);
-                    setTimeout(function() {
-                        fadeIn(el, 0.5);
-                    }, 300);
-                });
-                scannedImg.src = res.imgData;
+                if (scannedImg) scannedImg.src = res.imgData;
                 CallAjaxLoginQr(res.code);
-                scannedQR[txt] = res.format + ": " + res.code;
+                if (scannedQR) scannedQR[txt] = res.format + ": " + res.code;
             },
             getDevicesError: function(error) {
-                var p, message = "Error detected with the following parameters:\n";
-                for (p in error) {
-                    message += p + ": " + error[p] + "\n";
-                }
-                alert(message);
+                alert("Gagal membaca daftar kamera: " + JSON.stringify(error));
             },
             getUserMediaError: function(error) {
-                var p, message = "Error detected with the following parameters:\n";
-                for (p in error) {
-                    message += p + ": " + error[p] + "\n";
-                }
-                alert(message);
+                alert("Izin kamera ditolak atau tidak didukung: " + JSON.stringify(error));
             },
             cameraError: function(error) {
-                var p, message = "Error detected with the following parameters:\n";
                 if (error.name == "NotSupportedError") {
-                    var ans = confirm(
-                        "Your browser does not support getUserMedia via HTTP!\n(see: https:goo.gl/Y0ZkNV).\n You want to see github demo page in a new window?"
-                    );
-                    if (ans) {
-                        window.open("http://rolandalla.com");
-                    }
+                    alert("Kamera memerlukan akses HTTPS!");
                 } else {
-                    for (p in error) {
-                        message += p + ": " + error[p] + "\n";
-                    }
-                    alert(message);
+                    alert("Error Kamera: " + JSON.stringify(error));
                 }
             },
             cameraSuccess: function() {
-                grabImg.classList.remove("disabled");
+                if (grabImg) grabImg.classList.remove("disabled");
             }
         };
+
         var decoder = new WebCodeCamJS("#webcodecam-canvas").buildSelectMenu("#camera-select", "environment|back")
             .init(args);
-        decodeLocal.addEventListener("click", function() {
-            Page.decodeLocalImage();
-        }, false);
+
+        if (decodeLocal) {
+            decodeLocal.addEventListener("click", function() {
+                Page.decodeLocalImage();
+            }, false);
+        }
+
         play.addEventListener("click", function() {
-            if (!decoder.isInitialized()) {
-                scannedQR[txt] = "Scanning ...";
-            } else {
-                scannedQR[txt] = "Scanning ...";
+            if (decoder.isInitialized()) {
                 decoder.play();
             }
         }, false);
-        grabImg.addEventListener("click", function() {
-            if (!decoder.isInitialized()) {
-                return;
-            }
-            var src = decoder.getLastImageSrc();
-            scannedImg.setAttribute("src", src);
-        }, false);
+
+        if (grabImg) {
+            grabImg.addEventListener("click", function() {
+                if (!decoder.isInitialized()) return;
+                var src = decoder.getLastImageSrc();
+                scannedImg.setAttribute("src", src);
+            }, false);
+        }
+
         pause.addEventListener("click", function(event) {
-            scannedQR[txt] = "Paused";
-            decoder.pause();
+            if (decoder.isInitialized()) decoder.pause();
         }, false);
+
         stop.addEventListener("click", function(event) {
-            grabImg.classList.add("disabled");
-            scannedQR[txt] = "Stopped";
-            decoder.stop();
+            if (grabImg) grabImg.classList.add("disabled");
+            if (decoder.isInitialized()) decoder.stop();
         }, false);
+
         Page.changeZoom = function(a) {
             if (decoder.isInitialized()) {
                 var value = typeof a !== "undefined" ? parseFloat(a.toPrecision(2)) : zoom.value / 10;
-                zoomValue[txt] = zoomValue[txt].split(":")[0] + ": " + value.toString();
+                if (zoomValue) zoomValue[txt] = zoomValue[txt].split(":")[0] + ": " + value.toString();
                 decoder.options.zoom = value;
-                if (typeof a != "undefined") {
+                if (typeof a != "undefined" && zoom) {
                     zoom.value = a * 10;
                 }
             }
@@ -235,78 +361,52 @@
         Page.changeContrast = function() {
             if (decoder.isInitialized()) {
                 var value = contrast.value;
-                contrastValue[txt] = contrastValue[txt].split(":")[0] + ": " + value.toString();
+                if (contrastValue) contrastValue[txt] = contrastValue[txt].split(":")[0] + ": " + value.toString();
                 decoder.options.contrast = parseFloat(value);
             }
         };
         Page.changeBrightness = function() {
             if (decoder.isInitialized()) {
                 var value = brightness.value;
-                brightnessValue[txt] = brightnessValue[txt].split(":")[0] + ": " + value.toString();
+                if (brightnessValue) brightnessValue[txt] = brightnessValue[txt].split(":")[0] + ": " + value.toString();
                 decoder.options.brightness = parseFloat(value);
             }
         };
         Page.changeThreshold = function() {
             if (decoder.isInitialized()) {
                 var value = threshold.value;
-                thresholdValue[txt] = thresholdValue[txt].split(":")[0] + ": " + value.toString();
+                if (thresholdValue) thresholdValue[txt] = thresholdValue[txt].split(":")[0] + ": " + value.toString();
                 decoder.options.threshold = parseFloat(value);
             }
         };
         Page.changeSharpness = function() {
             if (decoder.isInitialized()) {
                 var value = sharpness.checked;
-                if (value) {
-                    sharpnessValue[txt] = sharpnessValue[txt].split(":")[0] + ": on";
-                    decoder.options.sharpness = [0, -1, 0, -1, 5, -1, 0, -1, 0];
-                } else {
-                    sharpnessValue[txt] = sharpnessValue[txt].split(":")[0] + ": off";
-                    decoder.options.sharpness = [];
-                }
+                decoder.options.sharpness = value ? [0, -1, 0, -1, 5, -1, 0, -1, 0] : [];
             }
         };
         Page.changeVertical = function() {
             if (decoder.isInitialized()) {
-                var value = flipVertical.checked;
-                if (value) {
-                    flipVerticalValue[txt] = flipVerticalValue[txt].split(":")[0] + ": on";
-                    decoder.options.flipVertical = value;
-                } else {
-                    flipVerticalValue[txt] = flipVerticalValue[txt].split(":")[0] + ": off";
-                    decoder.options.flipVertical = value;
-                }
+                decoder.options.flipVertical = flipVertical.checked;
             }
         };
         Page.changeHorizontal = function() {
             if (decoder.isInitialized()) {
-                var value = flipHorizontal.checked;
-                if (value) {
-                    flipHorizontalValue[txt] = flipHorizontalValue[txt].split(":")[0] + ": on";
-                    decoder.options.flipHorizontal = value;
-                } else {
-                    flipHorizontalValue[txt] = flipHorizontalValue[txt].split(":")[0] + ": off";
-                    decoder.options.flipHorizontal = value;
-                }
+                decoder.options.flipHorizontal = flipHorizontal.checked;
             }
         };
         Page.changeGrayscale = function() {
             if (decoder.isInitialized()) {
-                var value = grayscale.checked;
-                if (value) {
-                    grayscaleValue[txt] = grayscaleValue[txt].split(":")[0] + ": on";
-                    decoder.options.grayScale = true;
-                } else {
-                    grayscaleValue[txt] = grayscaleValue[txt].split(":")[0] + ": off";
-                    decoder.options.grayScale = false;
-                }
+                decoder.options.grayScale = grayscale.checked;
             }
         };
         Page.decodeLocalImage = function() {
-            if (decoder.isInitialized()) {
+            if (decoder.isInitialized() && imageUrl) {
                 decoder.decodeLocalImage(imageUrl.value);
+                imageUrl.value = null;
             }
-            imageUrl.value = null;
         };
+
         var getZomm = setInterval(function() {
             var a;
             try {
@@ -320,32 +420,6 @@
             }
         }, 500);
 
-        function fadeOut(el, v) {
-            el.style.opacity = 1;
-            (function fade() {
-                if ((el.style.opacity -= 0.1) < v) {
-                    el.style.display = "none";
-                    el.classList.add("is-hidden");
-                } else {
-                    requestAnimationFrame(fade);
-                }
-            })();
-        }
-
-        function fadeIn(el, v, display) {
-            if (el.classList.contains("is-hidden")) {
-                el.classList.remove("is-hidden");
-            }
-            el.style.opacity = 0;
-            el.style.display = display || "block";
-            (function fade() {
-                var val = parseFloat(el.style.opacity);
-                if (!((val += 0.1) > v)) {
-                    el.style.opacity = val;
-                    requestAnimationFrame(fade);
-                }
-            })();
-        }
         document.querySelector("#camera-select").addEventListener("change", function() {
             if (decoder.isInitialized()) {
                 decoder.stop().play();
@@ -353,10 +427,10 @@
         });
     }).call(window.Page = window.Page || {});
 
-    //Trigger Click
-    $("document").ready(function() {
+    // Auto Trigger Click Start Kamera
+    $(document).ready(function() {
         setTimeout(function() {
             $("#play").trigger('click');
-        }, 10);
+        }, 100);
     });
 </script>

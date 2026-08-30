@@ -3,175 +3,297 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
 <link href="{{ asset('vendors/choices/choices.min.css') }}" rel="stylesheet" />
+
+<style>
+    /* Styling Gradasi Modern */
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #2c7be5 0%, #1a5bb8 100%);
+    }
+
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #00d27a 0%, #00a760 100%);
+    }
+
+    .bg-gradient-warning {
+        background: linear-gradient(135deg, #f5803e 0%, #d96320 100%);
+    }
+
+    .bg-gradient-danger {
+        background: linear-gradient(135deg, #e63757 0%, #b81d39 100%);
+    }
+
+    /* Mobile Card Styles */
+    .stock-card-mobile {
+        border: none;
+        border-radius: 12px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stock-card-mobile:active {
+        transform: scale(0.98);
+    }
+
+    .badge-soft-primary {
+        background-color: #e0edff;
+        color: #2c7be5;
+    }
+
+    .badge-soft-success {
+        background-color: #ccf6e4;
+        color: #008a4f;
+    }
+
+    .badge-soft-danger {
+        background-color: #fde8e8;
+        color: #e63757;
+    }
+</style>
+<style>
+    /* Fix Dropdown Terpotong / Berada di Belakang Card Mobile */
+    .stock-card-mobile {
+        position: relative;
+        z-index: 1;
+        overflow: visible !important;
+        /* Memastikan dropdown tidak terpotong card */
+    }
+
+    /* Memastikan card yang dropdown-nya sedang terbuka naik ke tumpukan paling depan */
+    .stock-card-mobile:focus-within,
+    .stock-card-mobile:hover {
+        z-index: 10;
+    }
+
+    .stock-card-mobile .dropdown-menu {
+        z-index: 1050 !important;
+        /* Memastikan dropdown tampil paling depan */
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+</style>
 @endsection
+
 @section('content')
+<!-- Header Banner -->
 <div class="row mb-3">
     <div class="col">
-        <div class="card bg-100 shadow-none border">
-            <div class="row gx-0 flex-between-center">
-                <div class="col-sm-auto d-flex align-items-center border-bottom">
-                    <img class="ms-3 mx-3" src="{{ asset('img/stock.png') }}" alt="" width="50" />
-                    <div>
-                        <h6 class="text-primary fs--1 mb-0 mt-2">Welcome to </h6>
-                        <h4 class="text-primary fw-bold mb-1">Inventaris <span class="text-info fw-medium">Management
-                                System</span></h4>
-                    </div><img class="ms-n4 d-none d-lg-block"
-                        src="{{ asset('asset/img/illustrations/crm-line-chart.png') }}" alt="" width="150" />
-                </div>
-                <div class="col-xl-auto px-3 py-2">
-                    <h6 class="text-primary fs--1 mb-0">Menu : </h6>
-                    <h4 class="text-primary fw-bold mb-0">Stock Opname <span class="text-info fw-medium">Cabang</span>
-                    </h4>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="card mb-3">
-    <div class="card-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <h5 class="mb-1 text-primary fw-bold">Data Stock Opname</h5>
-            </div>
-            <div class="col-auto">
-                <div class="btn-group" role="group">
-                    <button class="btn btn-sm btn-falcon-primary" id="btnGroupVerticalDrop2" type="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
-                            class="fas fa-align-left me-1" data-fa-transform="shrink-3"></span>Menu Stockopname</button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg"
-                            id="button-add-stockopname"><span class="fas fa-swatchbook"></span>
-                            Tambah Jadwal Stockopname</button>
+        <div class="card bg-gradient-primary text-white shadow-sm border-0 rounded-3 overflow-hidden">
+            <div class="card-body p-3 p-md-4">
+                <div class="row align-items-center">
+                    <div class="col-auto d-flex align-items-center">
+                        <img class="me-3 bg-white p-2 rounded-circle shadow-sm" src="{{ asset('img/stock.png') }}" alt="" width="55" />
+                        <div>
+                            <span class="badge bg-white text-primary fw-bold mb-1 fs--2">SISTEM INVENTARIS</span>
+                            <h4 class="text-white fw-bold mb-0">Stock Opname Cabang</h4>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card-body border-top p-3">
-        <table id="example" class="table table-striped nowrap" style="width:100%">
-            <thead class="bg-200 text-700 fs--2">
-                <tr>
-                    <th>No</th>
-                    <th>Kode Verifikasi</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Tanggal Selesai</th>
-                    <th>Jumlah Inventaris</th>
-                    <th>Jumlah Terverifikasi</th>
-                    <th>Kondisi Barang</th>
-                    <th>Status Verifikasi</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody class="fs--2">
-                @php
-                $no = 1;
-                @endphp
-                @foreach ($data as $item)
-                <tr>
-                    <td>{{ $no++ }}</td>
-                    <td>{{ $item->kode_verif }}</td>
-                    <td>{{ $item->tgl_verif }}</td>
-                    <td>{{ $item->end_date_verif }}</td>
-                    <td>
-                        @php
-                        $jumlah = DB::table('tbl_sub_verifdatainventaris')
-                        ->where('kode_verif', $item->kode_verif)
-                        ->count();
-                        $unvalid =DB::table('tbl_sub_verifdatainventaris')
-                        ->where('kode_verif', $item->kode_verif)
-                        ->where('status_data_inventaris',3)
-                        ->count();
-                        @endphp
+</div>
+
+<div class="card mb-3 border-0 shadow-sm rounded-3">
+    <div class="card-header bg-light border-bottom py-3">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-6">
+                <h5 class="mb-0 text-primary fw-bold fs-0 fs-md-1">
+                    <i class="fas fa-boxes me-2"></i>Data Stock Opname
+                </h5>
+            </div>
+            <div class="col-6 text-end">
+                <button class="btn btn-sm btn-primary shadow-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-add-stockopname">
+                    <i class="fas fa-plus-circle me-1"></i> <span class="d-none d-sm-inline">Tambah</span> Jadwal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-3">
+
+        <!-- ================= DISPLAY MOBILE (CARD VIEW) ================= -->
+        <div class="d-block d-md-none">
+            @foreach ($data as $item)
+            @php
+            $total_inv = ($item->status_verif == 0) ? $item->total_barang : $item->total_sub;
+            $terverif = $item->total_sub - $item->total_unvalid;
+            $persen = $total_inv > 0 ? round(($terverif / $total_inv) * 100) : 0;
+            @endphp
+
+            <div class="card stock-card-mobile shadow-sm mb-3 border-start border-4 {{ $item->status_verif == 0 ? 'border-danger' : 'border-success' }}">
+                <div class="card-body p-3">
+                    <!-- Top Info -->
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge badge-soft-primary fs--2 fw-bold">
+                            <i class="fas fa-barcode me-1"></i>{{ $item->kode_verif }}
+                        </span>
                         @if ($item->status_verif == 0)
-                        {{ $item->total_barang }}
+                        <span class="badge bg-gradient-danger rounded-pill"><i class="fas fa-clock me-1"></i>Belum Selesai</span>
                         @else
-                        {{ $jumlah }}
+                        <span class="badge bg-gradient-success rounded-pill"><i class="fas fa-check-circle me-1"></i>Selesai</span>
                         @endif
+                    </div>
 
-                    </td>
-                    <td>
-                        {{ $jumlah - $unvalid }}
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-sm btn-warning dropdown-toggle" id="btnGroupVerticalDrop2"
-                                type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false"><span class="fas fa-align-left me-1"
-                                    data-fa-transform="shrink-3"></span>Kondisi</button>
-                            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+                    <!-- Date Info -->
+                    <div class="text-muted fs--2 mb-3">
+                        <i class="far fa-calendar-alt text-primary me-1"></i> {{ $item->tgl_verif }}
+                        <i class="fas fa-arrow-right mx-1 text-400"></i>
+                        <i class="far fa-calendar-check text-success me-1"></i> {{ $item->end_date_verif }}
+                    </div>
 
-                                <button class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang"
-                                    data-code="{{ $item->kode_verif }}" data-status="0"><span
-                                        class="fas fa-check-square"></span> Baik</button>
-                                <button class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang"
-                                    data-code="{{ $item->kode_verif }}" data-status="1"><span
-                                        class="fas fa-exclamation-triangle"></span> Maintenance</button>
-                                <button class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang"
-                                    data-code="{{ $item->kode_verif }}" data-status="2"><span
-                                        class="fas fa-trash-alt"></span> Rusak</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modal-stock" id="button-kondisi-unvalid-data-cabang"
-                                    data-code="{{ $item->kode_verif }}"><span class="fas fa-code-branch"></span>
-                                    Unvalid</button>
-
-
+                    <!-- Stats Grid -->
+                    <div class="row g-2 text-center mb-3">
+                        <div class="col-6">
+                            <div class="bg-light p-2 rounded-2 border">
+                                <div class="text-400 fs--2 fw-semi-bold">Total Barang</div>
+                                <div class="fw-bold fs-0 text-900">{{ $total_inv }}</div>
                             </div>
                         </div>
-                    </td>
-                    <td>
-                        @if ($item->status_verif == 0)
-                        <span class="badge bg-danger m-1">Belum Selesai</span>
-                        @else
-                        <span class="badge bg-success m-1">Selesai</span>
-                        @endif
-                    </td>
-                    <td class="text-center ">
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-sm btn-primary dropdown-toggle" id="btnGroupVerticalDrop2"
-                                type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false"><span class="fas fa-align-left me-1"
-                                    data-fa-transform="shrink-3"></span>Option</button>
-                            <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-                                @if ($item->status_verif == 0)
-                                <button class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang"
-                                    data-code="{{ $item->kode_verif }}"><span
-                                        class="fas fa-swatchbook"></span>
-                                    Proses Stock Opname</button>
-                                @elseif($item->status_verif == 1)
-                                <button class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modal-stock" id="button-print-stock-opname-cabang"
-                                    data-code="{{ $item->kode_verif }}"><span class="fas fa-print"></span>
-                                    Print Stock Opname</button>
-                                @endif
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modal-stock-lg" id="button-edit-data-stock-opname"
-                                    data-code="{{ $item->kode_verif }}"><span class="far fa-edit"></span> Edit
-                                    Data Tanggal</button>
-                                <button class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#modal-stock-lg" id="button-data-sinkronisasi-stock-cabang"
-                                    data-code="{{ $item->kode_verif }}"><span class="fas fa-sync"></span>
-                                    Sinkronisasi Data</button>
-                                @if ($item->status_verif == 0)
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item text-danger" data-bs-toggle="modal"
-                                    data-bs-target="#modal-stock-sm" id="button-remove-full-stock-opname"
-                                    data-code="{{ $item->kode_verif }}"><span class="fas fa-trash"></span>
-                                    Remove Full</button>
-                                @endif
-
+                        <div class="col-6">
+                            <div class="bg-light p-2 rounded-2 border">
+                                <div class="text-400 fs--2 fw-semi-bold">Terverifikasi</div>
+                                <div class="fw-bold fs-0 text-success">{{ $terverif }}</div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                    </div>
+
+                    <!-- Action Group -->
+                    <!-- Action Group -->
+                    <div class="d-flex gap-2 position-relative">
+                        <!-- Dropdown Kondisi -->
+                        <div class="dropdown flex-fill position-relative">
+                            <button class="btn btn-sm btn-outline-warning w-100 dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                                <i class="fas fa-clipboard-list me-1"></i> Kondisi
+                            </button>
+                            <div class="dropdown-menu shadow-lg border-0 stop-dropdown-propagation" style="z-index: 1060; min-width: 180px;">
+                                <a href="javascript:void(0)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang" data-code="{{ $item->kode_verif }}" data-status="0">
+                                    <i class="fas fa-check-square text-success me-2"></i>Baik
+                                </a>
+                                <a href="javascript:void(0)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang" data-code="{{ $item->kode_verif }}" data-status="1">
+                                    <i class="fas fa-exclamation-triangle text-warning me-2"></i>Maintenance
+                                </a>
+                                <a href="javascript:void(0)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang" data-code="{{ $item->kode_verif }}" data-status="2">
+                                    <i class="fas fa-trash-alt text-danger me-2"></i>Rusak
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock" id="button-kondisi-unvalid-data-cabang" data-code="{{ $item->kode_verif }}">
+                                    <i class="fas fa-times-circle text-secondary me-2"></i>Unvalid
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Action -->
+                        <div class="dropdown flex-fill position-relative">
+                            <button class="btn btn-sm btn-primary w-100 dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                                <i class="fas fa-cog me-1"></i> Aksi
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end shadow-lg border-0 stop-dropdown-propagation" style="z-index: 1060; min-width: 200px;">
+                                @if ($item->status_verif == 0)
+                                <a href="javascript:void(0)" class="dropdown-item fw-bold text-primary" data-bs-toggle="modal" data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang" data-code="{{ $item->kode_verif }}">
+                                    <i class="fas fa-play me-2"></i>Proses Stock Opname
+                                </a>
+                                @else
+                                <a href="javascript:void(0)" class="dropdown-item text-success" data-bs-toggle="modal" data-bs-target="#modal-stock" id="button-print-stock-opname-cabang" data-code="{{ $item->kode_verif }}">
+                                    <i class="fas fa-print me-2"></i>Print Laporan
+                                </a>
+                                @endif
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-edit-data-stock-opname" data-code="{{ $item->kode_verif }}">
+                                    <i class="far fa-edit me-2"></i>Edit Tanggal
+                                </a>
+                                <a href="javascript:void(0)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-data-sinkronisasi-stock-cabang" data-code="{{ $item->kode_verif }}">
+                                    <i class="fas fa-sync me-2"></i>Sinkronisasi
+                                </a>
+                                @if ($item->status_verif == 0)
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0)" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#modal-stock-sm" id="button-remove-full-stock-opname" data-code="{{ $item->kode_verif }}">
+                                    <i class="fas fa-trash me-2"></i>Hapus Data
+                                </a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        <!-- ================= DISPLAY DESKTOP (TABLE VIEW) ================= -->
+        <div class="d-none d-md-block table-responsive">
+            <table id="example" class="table table-hover align-middle nowrap w-100">
+                <thead class="bg-200 text-800 fs--1">
+                    <tr>
+                        <th class="text-center">No</th>
+                        <th>Kode Verifikasi</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Selesai</th>
+                        <th class="text-center">Total Barang</th>
+                        <th class="text-center">Terverifikasi</th>
+                        <th class="text-center">Kondisi</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="fs--1">
+                    @php $no = 1; @endphp
+                    @foreach ($data as $item)
+                    @php
+                    $total_inv = ($item->status_verif == 0) ? $item->total_barang : $item->total_sub;
+                    $terverif = $item->total_sub - $item->total_unvalid;
+                    @endphp
+                    <tr>
+                        <td class="text-center fw-bold">{{ $no++ }}</td>
+                        <td><span class="badge badge-soft-primary px-2 py-1 fs--1">{{ $item->kode_verif }}</span></td>
+                        <td>{{ $item->tgl_verif }}</td>
+                        <td>{{ $item->end_date_verif }}</td>
+                        <td class="text-center fw-bold">{{ $total_inv }}</td>
+                        <td class="text-center fw-bold text-success">{{ $terverif }}</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-warning dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    Kondisi
+                                </button>
+                                <div class="dropdown-menu shadow">
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang" data-code="{{ $item->kode_verif }}" data-status="0"><i class="fas fa-check-square text-success me-2"></i>Baik</button>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang" data-code="{{ $item->kode_verif }}" data-status="1"><i class="fas fa-exclamation-triangle text-warning me-2"></i>Maintenance</button>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-kondisi-data-cabang" data-code="{{ $item->kode_verif }}" data-status="2"><i class="fas fa-trash-alt text-danger me-2"></i>Rusak</button>
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock" id="button-kondisi-unvalid-data-cabang" data-code="{{ $item->kode_verif }}"><i class="fas fa-times-circle text-secondary me-2"></i>Unvalid</button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            @if ($item->status_verif == 0)
+                            <span class="badge bg-gradient-danger">Belum Selesai</span>
+                            @else
+                            <span class="badge bg-gradient-success">Selesai</span>
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    Option
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end shadow">
+                                    @if ($item->status_verif == 0)
+                                    <button class="dropdown-item fw-bold text-primary" data-bs-toggle="modal" data-bs-target="#modal-stock" id="button-proses-stock-opname-cabang" data-code="{{ $item->kode_verif }}"><i class="fas fa-play me-2"></i>Proses Stock Opname</button>
+                                    @else
+                                    <button class="dropdown-item text-success" data-bs-toggle="modal" data-bs-target="#modal-stock" id="button-print-stock-opname-cabang" data-code="{{ $item->kode_verif }}"><i class="fas fa-print me-2"></i>Print Stock Opname</button>
+                                    @endif
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-edit-data-stock-opname" data-code="{{ $item->kode_verif }}"><i class="far fa-edit me-2"></i>Edit Data Tanggal</button>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-stock-lg" id="button-data-sinkronisasi-stock-cabang" data-code="{{ $item->kode_verif }}"><i class="fas fa-sync me-2"></i>Sinkronisasi Data</button>
+                                    @if ($item->status_verif == 0)
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#modal-stock-sm" id="button-remove-full-stock-opname" data-code="{{ $item->kode_verif }}"><i class="fas fa-trash me-2"></i>Remove Full</button>
+                                    @endif
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
 @endsection
@@ -397,108 +519,8 @@
             $('#form-data-stock').html('eror');
         });
     });
-    $(document).on("click", "#button-simpan-hasil-verifikasi", function(e) {
-        var data = $("#form-verifikasi-data-inevntaris").serialize();
-        e.preventDefault();
-        $.ajax({
-                url: "{{ route('menu_stock_opname_scan_data_with_scanner_save') }}",
-                type: "POST",
-                data: data,
-                dataType: "html",
-            })
-            .done(function(data) {
-                $("#hasil-pencarian").html(data);
-            })
-            .fail(function() {
-                $("#hasil-pencarian").html(
-                    '<i class="fa fa-info-sign"></i> Something went wrong, Please try again...'
-                );
-            });
-    });
-    // $(document).on("click", "#button-data-stock-opname-cabang", function(e) {
-    //     e.preventDefault();
-    //     var code = $(this).data("code");
-    //     $('#menu-cabang').html(
-    //         '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-    //     );
-    //     $.ajax({
-    //         url: "{{ route('masteradmin_cabang_data_stock_opname') }}",
-    //         type: "POST",
-    //         cache: false,
-    //         data: {
-    //             "_token": "{{ csrf_token() }}",
-    //             "code": code
-    //         },
-    //         dataType: 'html',
-    //     }).done(function(data) {
-    //         $('#menu-cabang').html(data);
-    //     }).fail(function() {
-    //         $('#menu-cabang').html('eror');
-    //     });
-    // });
-    // $(document).on("click", "#button-preview-data-stock-opname", function(e) {
-    //     e.preventDefault();
-    //     var code = $(this).data("code");
-    //     $('#menu-cabang').html(
-    //         '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-    //     );
-    //     $.ajax({
-    //         url: "{{ route('masteradmin_cabang_preview_data_stock_opname') }}",
-    //         type: "POST",
-    //         cache: false,
-    //         data: {
-    //             "_token": "{{ csrf_token() }}",
-    //             "code": code
-    //         },
-    //         dataType: 'html',
-    //     }).done(function(data) {
-    //         $('#menu-cabang').html(data);
-    //     }).fail(function() {
-    //         $('#menu-cabang').html('eror');
-    //     });
-    // });
-    // $(document).on("click", "#button-migrasi-data-cabang", function(e) {
-    //     e.preventDefault();
-    //     var code = $(this).data("code");
-    //     $('#menu-cabang-lg').html(
-    //         '<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-    //     );
-    //     $.ajax({
-    //         url: "{{ route('masteradmin_cabang_migrasi_data_cabang') }}",
-    //         type: "POST",
-    //         cache: false,
-    //         data: {
-    //             "_token": "{{ csrf_token() }}",
-    //             "code": code
-    //         },
-    //         dataType: 'html',
-    //     }).done(function(data) {
-    //         $('#menu-cabang-lg').html(data);
-    //     }).fail(function() {
-    //         $('#menu-cabang-lg').html('eror');
-    //     });
-    // });
-    // $(document).on("click", "#button-clone-data-master-barang", function(e) {
-    //     e.preventDefault();
-    //     var code = $(this).data("code");
-    //     $('#button-clone-data-master-barang').html(
-    //         '<div class="spinner-border" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>'
-    //     );
-    //     $.ajax({
-    //         url: "{{ route('masteradmin_cabang_clone_data_master_barang') }}",
-    //         type: "POST",
-    //         cache: false,
-    //         data: {
-    //             "_token": "{{ csrf_token() }}",
-    //             "code": code
-    //         },
-    //         dataType: 'html',
-    //     }).done(function(data) {
-    //         $('#table-master-barang').html(data);
-    //     }).fail(function() {
-    //         $('#table-master-barang').html('eror');
-    //     });
-    // });
+
+
     $(document).on("click", "#button-print-stockopname-ruangan", function(e) {
         e.preventDefault();
         var lokasi = $(this).data("lokasi");
@@ -688,4 +710,5 @@
         });
     });
 </script>
+
 @endsection

@@ -218,39 +218,64 @@ class AppController extends Controller
     public function dashboard_add_data_non_aset(Request $request)
     {
         try {
+            // 1. Ambil data pendukung
             $entitas = DB::table('tbl_entitas_cabang')
                 ->join('tbl_cabang', 'tbl_cabang.kd_entitas_cabang', '=', 'tbl_entitas_cabang.kd_entitas_cabang')
                 ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
-                ->where('tbl_setting_cabang.kd_cabang', Auth::user()->cabang)->first();
-            $total = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
+                ->where('tbl_setting_cabang.kd_cabang', Auth::user()->cabang)
+                ->first();
+
+            // Hitung total data saat ini sebagai base nomor urut
+            $totalAwal = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->count();
             $lokasi = DB::table('tbl_nomor_ruangan_cabang')->where('id_nomor_ruangan_cbaang', $request->lokasi)->first();
             $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
+
+            // Format Link File
             if ($request->link == null) {
                 $link = null;
             } else {
                 $link = 'public/databrg/new/' . Auth::user()->cabang . '/' . $request->link;
             }
-            DB::table('inventaris_data')->insert([
-                'inventaris_data_code' => Auth::user()->cabang . '' . date('Ymdhis'),
-                'inventaris_klasifikasi_code' => $request->klasifikasi,
-                'inventaris_data_number' => ($total + 1) . '/' . $request->klasifikasi . '/' . $lokasi->kd_lokasi . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . date('Y', strtotime($request->tgl_beli)),
-                'inventaris_data_name' => $request->nama_barang,
-                'inventaris_data_location' => $lokasi->kd_lokasi,
-                'inventaris_data_jenis' => $request->jenis,
-                'inventaris_data_harga' => $nilai,
-                'inventaris_data_merk' => $request->merk,
-                'inventaris_data_type' => $request->type,
-                'inventaris_data_no_seri' => $request->seri,
-                'inventaris_data_suplier' => $request->suplier,
-                'inventaris_data_kondisi' => $request->kondisi,
-                'inventaris_data_status' => 0,
-                'inventaris_data_tgl_beli' => $request->tgl_beli,
-                'inventaris_data_cabang' => Auth::user()->cabang,
-                'inventaris_data_urut' => $total + 1,
-                'inventaris_data_file' => $link,
-                'id_nomor_ruangan_cbaang' => $request->lokasi,
-                'created_at' => now(),
-            ]);
+
+            // Ambil inputan qty jumlah barang (default ke 1 jika kosong)
+            $qty = $request->jumlah_barang ? (int)$request->jumlah_barang : 1;
+
+            // 2. Looping perulangan data barang
+            for ($i = 0; $i < $qty; $i++) {
+                // Nomor urut dinamis
+                $nomorUrut = $totalAwal + 1 + $i;
+
+                // Generate Kode Unik Inventaris (ditambahkan mikrodetik & index perulangan agar terhindar dari duplikat)
+                $kodeInventaris = Auth::user()->cabang . date('YmdHis') . sprintf('%03d', $i + 1);
+
+                // Format Nomor Barang
+                $nomorBarang = $nomorUrut . '/' . $request->klasifikasi . '/' . $lokasi->kd_lokasi . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . date('Y', strtotime($request->tgl_beli));
+
+                // Insert Per Data
+                DB::table('inventaris_data')->insert([
+                    'inventaris_data_code'        => $kodeInventaris,
+                    'inventaris_klasifikasi_code' => $request->klasifikasi,
+                    'inventaris_data_number'       => $nomorBarang,
+                    'inventaris_data_name'         => $request->nama_barang,
+                    'inventaris_data_location'     => $lokasi->kd_lokasi,
+                    'inventaris_data_jenis'        => $request->jenis,
+                    'inventaris_data_harga'        => $nilai,
+                    'inventaris_data_merk'         => $request->merk,
+                    'inventaris_data_type'         => $request->type,
+                    'inventaris_data_no_seri'      => $request->seri,
+                    'inventaris_data_suplier'      => $request->suplier,
+                    'inventaris_data_kondisi'      => $request->kondisi,
+                    'inventaris_data_status'       => 0,
+                    'inventaris_data_tgl_beli'     => $request->tgl_beli,
+                    'inventaris_data_cabang'       => Auth::user()->cabang,
+                    'inventaris_data_urut'         => $nomorUrut,
+                    'inventaris_data_file'         => $link,
+                    'id_nomor_ruangan_cbaang'      => $request->lokasi,
+                    'created_at'                   => now(),
+                    'updated_at'                   => now(),
+                ]);
+            }
+
             return 'Mohon Menunggu..';
         } catch (\Throwable $th) {
             return 1;
@@ -1333,10 +1358,26 @@ class AppController extends Controller
     public function menu_stock_opname($akses)
     {
         if ($this->url_akses($akses) == true) {
-            $data = DB::table('tbl_verifdatainventaris')->where('kd_cabang', auth::user()->cabang)
-                ->orderBy('id_verifdatainventaris', 'desc')
+            $cabang = Auth::user()->cabang;
+
+            $data = DB::table('tbl_verifdatainventaris as v')
+                ->select('v.*')
+                ->selectSub(function ($q) {
+                    $q->from('tbl_sub_verifdatainventaris')
+                        ->whereColumn('kode_verif', 'v.kode_verif')
+                        ->selectRaw('count(*)');
+                }, 'total_sub')
+                ->selectSub(function ($q) {
+                    $q->from('tbl_sub_verifdatainventaris')
+                        ->whereColumn('kode_verif', 'v.kode_verif')
+                        ->where('status_data_inventaris', 3)
+                        ->selectRaw('count(*)');
+                }, 'total_unvalid')
+                ->where('v.kd_cabang', $cabang)
+                ->orderBy('v.id_verifdatainventaris', 'desc')
                 ->get();
-            return view('application.stockopname.menu-stock-opname', ['data' => $data]);
+
+            return view('application.stockopname.menu-stock-opname', compact('data'));
         } else {
             return Redirect::to('dashboard');
         }
@@ -1388,20 +1429,89 @@ class AppController extends Controller
     }
     public function menu_stock_opname_proses_data(Request $request)
     {
+        $kodeVerif = $request->code;
+        $cabangUser = Auth::user()->cabang;
+
         $cekdata = DB::table('tbl_verifdatainventaris')
-            ->where('kode_verif', $request->code)
+            ->where('kode_verif', $kodeVerif)
             ->first();
-        $data = DB::table('inventaris_data')->where('inventaris_data_cabang', Auth::user()->cabang)->where('inventaris_data_status', '>=', 4)->get();
-        $tbl_cabang = DB::table('tbl_cabang')->where('kd_cabang', auth::user()->cabang)->get();
-        $lokasi = DB::table('tbl_lokasi')->get();
-        $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_cabang', Auth::user()->cabang)->orderBy('nomor_ruangan', 'ASC')->get();
+
+        $data = DB::table('inventaris_data')
+            ->where('inventaris_data_cabang', $cabangUser)
+            ->where('inventaris_data_status', '>=', 4)
+            ->get();
+
+        $tbl_cabang = DB::table('tbl_cabang')
+            ->where('kd_cabang', $cabangUser)
+            ->first();
+
+        // Mengambil data ruangan beserta statistik barang & status verifikasinya sekaligus (Agregasi Query)
+        $no_ruangan = DB::table('tbl_nomor_ruangan_cabang as nr')
+            ->join('tbl_lokasi as l', 'l.kd_lokasi', '=', 'nr.kd_lokasi')
+            ->where('nr.kd_cabang', $cabangUser)
+            ->select(
+                'nr.id_nomor_ruangan_cbaang',
+                'nr.nomor_ruangan',
+                'l.nama_lokasi',
+                // Total barang aktif di ruangan sebelum/sama dengan end_date_verif
+                DB::raw("(SELECT COUNT(*) FROM inventaris_data inv
+                      WHERE inv.id_nomor_ruangan_cbaang = nr.id_nomor_ruangan_cbaang
+                      AND inv.inventaris_data_cabang = '{$cabangUser}'
+                      AND inv.inventaris_data_tgl_beli <= '{$cekdata->end_date_verif}'
+                      AND inv.inventaris_data_status < 4) as total_barang"),
+                // Status Baik (0)
+                DB::raw("(SELECT COUNT(*) FROM tbl_sub_verifdatainventaris sub
+                      JOIN inventaris_data inv ON inv.inventaris_data_code = sub.id_inventaris
+                      WHERE sub.kode_verif = '{$kodeVerif}'
+                      AND inv.id_nomor_ruangan_cbaang = nr.id_nomor_ruangan_cbaang
+                      AND inv.inventaris_data_tgl_beli <= '{$cekdata->end_date_verif}'
+                      AND inv.inventaris_data_status < 4
+                      AND sub.status_data_inventaris = 0) as count_baik"),
+                // Status Maintenance (1)
+                DB::raw("(SELECT COUNT(*) FROM tbl_sub_verifdatainventaris sub
+                      JOIN inventaris_data inv ON inv.inventaris_data_code = sub.id_inventaris
+                      WHERE sub.kode_verif = '{$kodeVerif}'
+                      AND inv.id_nomor_ruangan_cbaang = nr.id_nomor_ruangan_cbaang
+                      AND inv.inventaris_data_tgl_beli <= '{$cekdata->end_date_verif}'
+                      AND inv.inventaris_data_status < 4
+                      AND sub.status_data_inventaris = 1) as count_maintenance"),
+                // Status Rusak (2)
+                DB::raw("(SELECT COUNT(*) FROM tbl_sub_verifdatainventaris sub
+                      JOIN inventaris_data inv ON inv.inventaris_data_code = sub.id_inventaris
+                      WHERE sub.kode_verif = '{$kodeVerif}'
+                      AND inv.id_nomor_ruangan_cbaang = nr.id_nomor_ruangan_cbaang
+                      AND inv.inventaris_data_tgl_beli <= '{$cekdata->end_date_verif}'
+                      AND inv.inventaris_data_status < 4
+                      AND sub.status_data_inventaris = 2) as count_rusak"),
+                // Status Hilang (3)
+                DB::raw("(SELECT COUNT(*) FROM tbl_sub_verifdatainventaris sub
+                      JOIN inventaris_data inv ON inv.inventaris_data_code = sub.id_inventaris
+                      WHERE sub.kode_verif = '{$kodeVerif}'
+                      AND inv.id_nomor_ruangan_cbaang = nr.id_nomor_ruangan_cbaang
+                      AND inv.inventaris_data_tgl_beli <= '{$cekdata->end_date_verif}'
+                      AND inv.inventaris_data_status < 4
+                      AND sub.status_data_inventaris = 3) as count_hilang")
+            )
+            ->orderBy('nr.nomor_ruangan', 'ASC')
+            ->get();
+
+        // Hitung ringkasan total keseluruhan
+        $summary = DB::table('tbl_sub_verifdatainventaris')
+            ->where('kode_verif', $kodeVerif)
+            ->selectRaw("
+            SUM(CASE WHEN status_data_inventaris = 0 THEN 1 ELSE 0 END) as total_baik,
+            SUM(CASE WHEN status_data_inventaris = 1 THEN 1 ELSE 0 END) as total_maintenance,
+            SUM(CASE WHEN status_data_inventaris = 2 THEN 1 ELSE 0 END) as total_rusak,
+            SUM(CASE WHEN status_data_inventaris = 3 THEN 1 ELSE 0 END) as total_hilang
+        ")->first();
+
         return view('application.stockopname.proses-stock-opname', [
             'cekdata' => $cekdata,
             'cabang' => $tbl_cabang,
-            'lokasi' => $lokasi,
             'no_ruangan' => $no_ruangan,
             'data' => $data,
-            'id' => $request->code,
+            'id' => $kodeVerif,
+            'summary' => $summary,
         ]);
     }
     public function menu_stock_opname_proses_data_with_kamera(Request $request)
@@ -1421,10 +1531,30 @@ class AppController extends Controller
     }
     public function menu_stock_opname_scan_data_with_scanner(Request $request)
     {
-        $data = DB::table('inventaris_data')
-            ->where('inventaris_data_cabang', Auth::user()->cabang)
-            ->where('inventaris_data_number', $request->nama)->first();
-        return view('application.stockopname.hasil-scanner', ['data' => $data, 'kode' => $request->tiket]);
+        $kodeTiket = $request->tiket;
+        $nomorInventaris = $request->nama;
+
+        // Ambil data inventaris sekaligus cek apakah sudah diverifikasi pada tiket ini
+        $data = DB::table('inventaris_data as inv')
+            ->leftJoin('tbl_sub_verifdatainventaris as sub', function ($join) use ($kodeTiket) {
+                $join->on('sub.id_inventaris', '=', 'inv.inventaris_data_code')
+                    ->where('sub.kode_verif', '=', $kodeTiket);
+            })
+            ->where('inv.inventaris_data_cabang', Auth::user()->cabang)
+            ->where('inv.inventaris_data_number', $nomorInventaris)
+            ->select(
+                'inv.*',
+                'sub.id_sub_verifdatainventaris as is_verified',
+                'sub.status_data_inventaris as verif_status',
+                'sub.keterangan_data_inventaris as verif_keterangan',
+                'sub.created_at as verif_date'
+            )
+            ->first();
+
+        return view('application.stockopname.hasil-scanner', [
+            'data' => $data,
+            'kode' => $kodeTiket
+        ]);
     }
     public function menu_stock_opname_scan_data_with_scanner_save(Request $request)
     {
@@ -1452,32 +1582,98 @@ class AppController extends Controller
     }
     public function menu_stock_opname_proses_data_with_checklist_lokasi(Request $request)
     {
-        $tiket = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->tiket)->first();
-        $data = DB::table('inventaris_data')
-            ->where('id_nomor_ruangan_cbaang', $request->code)
-            ->where('inventaris_data_cabang', Auth::user()->cabang)
-            ->where('inventaris_data_status', '<', 4)
-            ->where('inventaris_data_tgl_beli', '<', $tiket->end_date_verif)
+        $tiketKode = $request->tiket;
+        $ruanganId = $request->code;
+        $cabangUser = Auth::user()->cabang;
+
+        $tiket = DB::table('tbl_verifdatainventaris')
+            ->where('kode_verif', $tiketKode)
+            ->first();
+
+        // Query dioptimasi dengan LEFT JOIN untuk mengecek barang yang belum diverifikasi (N+1 Problem Solved)
+        $data = DB::table('inventaris_data as inv')
+            ->leftJoin('tbl_sub_verifdatainventaris as sub', function ($join) use ($tiketKode) {
+                $join->on('sub.id_inventaris', '=', 'inv.inventaris_data_code')
+                    ->where('sub.kode_verif', '=', $tiketKode);
+            })
+            ->where('inv.id_nomor_ruangan_cbaang', $ruanganId)
+            ->where('inv.inventaris_data_cabang', $cabangUser)
+            ->where('inv.inventaris_data_status', '<', 4)
+            ->where('inv.inventaris_data_tgl_beli', '<=', $tiket->end_date_verif)
+            ->whereNull('sub.id_sub_verifdatainventaris') // Ambil HANYA yang belum diverifikasi
+            ->select('inv.*')
             ->get();
-        return view('application.stockopname.form-checklist-stockopname', ['data' => $data, 'tiket' => $request->tiket, 'code' => $request->code]);
+
+        return view('application.stockopname.form-checklist-stockopname', [
+            'data' => $data,
+            'tiket' => $tiketKode,
+            'code' => $ruanganId
+        ]);
     }
     public function menu_stock_opname_proses_data_with_checklist_lokasi_save(Request $request)
     {
-        $tiket = DB::table('tbl_verifdatainventaris')->where('kode_verif', $request->tiket)->first();
-        DB::table('tbl_sub_verifdatainventaris')->insert([
-            'kode_verif' => $request->tiket,
-            'id_inventaris' => $request->id,
-            'status_data_inventaris' => $request->answer,
-            'keterangan_data_inventaris' => $request->desk,
-            'created_at' => now()
+        // Validasi data masukan dari request
+        $request->validate([
+            'tiket'  => 'required',
+            'id'     => 'required',
+            'answer' => 'required',
+            'desk'   => 'required',
+            'code'   => 'required',
         ]);
-        $data = DB::table('inventaris_data')
-            ->where('id_nomor_ruangan_cbaang', $request->code)
-            ->where('inventaris_data_cabang', Auth::user()->cabang)
-            ->where('inventaris_data_status', '<', 4)
-            ->where('inventaris_data_tgl_beli', '<', $tiket->end_date_verif)
+
+        $tiketKode  = $request->tiket;
+        $ruanganId  = $request->code;
+        $inventarisId = $request->id;
+        $cabangUser = Auth::user()->cabang;
+
+        // Ambil data tiket verifikasi
+        $tiket = DB::table('tbl_verifdatainventaris')
+            ->where('kode_verif', $tiketKode)
+            ->first();
+
+        if (!$tiket) {
+            return response()->json(['status' => 'error', 'message' => 'Tiket verifikasi tidak ditemukan.'], 404);
+        }
+
+        // Jalankan transaksi database untuk mencegah korupsi data
+        DB::transaction(function () use ($tiketKode, $inventarisId, $request) {
+            // Cek apakah data barang sudah pernah diverifikasi pada tiket ini (Prevent Duplicate)
+            $isExists = DB::table('tbl_sub_verifdatainventaris')
+                ->where('kode_verif', $tiketKode)
+                ->where('id_inventaris', $inventarisId)
+                ->exists();
+
+            if (!$isExists) {
+                DB::table('tbl_sub_verifdatainventaris')->insert([
+                    'kode_verif'                 => $tiketKode,
+                    'id_inventaris'              => $inventarisId,
+                    'status_data_inventaris'     => $request->answer,
+                    'keterangan_data_inventaris' => $request->desk,
+                    'created_at'                 => now(),
+                    'updated_at'                 => now()
+                ]);
+            }
+        });
+
+        // Ambil sisa data barang di ruangan yang BELUM diverifikasi (N+1 Query Optimized)
+        $data = DB::table('inventaris_data as inv')
+            ->leftJoin('tbl_sub_verifdatainventaris as sub', function ($join) use ($tiketKode) {
+                $join->on('sub.id_inventaris', '=', 'inv.inventaris_data_code')
+                    ->where('sub.kode_verif', '=', $tiketKode);
+            })
+            ->where('inv.id_nomor_ruangan_cbaang', $ruanganId)
+            ->where('inv.inventaris_data_cabang', $cabangUser)
+            ->where('inv.inventaris_data_status', '<', 4)
+            ->where('inv.inventaris_data_tgl_beli', '<=', $tiket->end_date_verif)
+            ->whereNull('sub.id_sub_verifdatainventaris') // Filter HANYA yang belum ter-insert
+            ->select('inv.*')
             ->get();
-        return view('application.stockopname.form-checklist-stockopname', ['data' => $data, 'tiket' => $request->tiket, 'code' => $request->code]);
+
+        return view('application.stockopname.form-checklist-stockopname', [
+            'data'  => $data,
+            'tiket' => $tiketKode,
+            'code'  => $ruanganId
+        ]);
     }
     public function menu_stock_opname_edit_data_tanggal(Request $request)
     {
@@ -1790,11 +1986,29 @@ class AppController extends Controller
     public function menu_mutasi($akses)
     {
         if ($this->url_akses($akses) == true) {
+            $cabang = DB::table('tbl_cabang')
+                ->where('kd_cabang', Auth::user()->cabang)
+                ->first();
+
             $data = DB::table('tbl_mutasi')
                 ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_mutasi.target_mutasi')
-                ->where('tbl_mutasi.kd_cabang', auth::user()->cabang)->orderBy('tbl_mutasi.id_mutasi', 'DESC')->get();
-            $cabang = DB::table('tbl_cabang')->where('kd_cabang', Auth::user()->cabang)->first();
-            return view('application.mutasi.menumutasi', ['cabang' => $cabang, 'data' => $data]);
+                ->leftJoin('tbl_staff', 'tbl_staff.id_staff', '=', 'tbl_mutasi.penanggung_jawab')
+                // Left Join ke tabel wa_number_cabang berdasarkan kode menyetujui
+                ->leftJoin('wa_number_cabang', 'wa_number_cabang.wa_number_code', '=', 'tbl_mutasi.menyetujui')
+                ->where('tbl_mutasi.kd_cabang', Auth::user()->cabang)
+                ->select(
+                    'tbl_mutasi.*',
+                    'tbl_cabang.nama_cabang as nama_cabang_tujuan',
+                    'tbl_staff.nama_staff as nama_penanggung_jawab',
+                    'wa_number_cabang.wa_number_name as nama_menyetujui' // Ambil nama menyetujui
+                )
+                ->orderBy('tbl_mutasi.id_mutasi', 'DESC')
+                ->get();
+
+            return view('application.mutasi.menumutasi', [
+                'cabang' => $cabang,
+                'data'   => $data
+            ]);
         } else {
             return Redirect::to('dashboard');
         }

@@ -673,6 +673,7 @@
         e.preventDefault();
         var data = $("#form-add-data-non-aset").serialize();
         var nama = document.getElementById("nama_barang").value;
+        var jumlah = document.getElementById("jumlah_barang").value; // Validasi tambahan jumlah
         var klasifikasi = document.getElementById("klasifikasi").value;
         var tgl_beli = document.getElementById("tgl_beli").value;
         var harga_perolehan = document.getElementById("dengan-rupiah").value;
@@ -681,11 +682,11 @@
 
         $('#menu-simpan-data-non-aset').html('<div class="spinner-border my-3" style="display: block; margin-left: auto; margin-right: auto;" role="status"><span class="visually-hidden">Loading...</span></div>');
 
-        if (nama == "" || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || suplier == "" || lokasi == "") {
+        if (nama == "" || jumlah == "" || jumlah < 1 || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || suplier == "" || lokasi == "") {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Ada Yang masih Kosong!",
+                text: "Ada yang masih kosong atau jumlah barang kurang dari 1!",
                 footer: '<a href="#">Kekosongan Hati Ini sungguh Membuat Kesepian ?</a>'
             });
             $('#menu-simpan-data-non-aset').html('<button type="submit" class="btn btn-outline-success" id="button-simpan-data-non-aset"><i class="fa fa-save"></i> Simpan Data</button>');

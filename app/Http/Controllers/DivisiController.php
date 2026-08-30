@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Imports\LogInventarisImport;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Jenssegers\Agent\Facades\Agent;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -40,7 +41,6 @@ class DivisiController extends Controller
             } else {
                 $gambar = $cekdata->gambar;
             }
-
         }
         if ($cekdata->kd_lokasi != $request->input('kd_lokasi') || $cekdata->kd_inventaris != $request->input('kd_inventaris')) {
             $no_ruangan = DB::table('tbl_nomor_ruangan_cabang')->where('kd_lokasi', $request->input('kd_lokasi'))->where('kd_cabang', Auth::user()->cabang)->first();
@@ -148,7 +148,7 @@ class DivisiController extends Controller
     public function verifdatastokopnameruangan(Request $request)
     {
         $id = $request->kode;
-        $enddate = DB::table('tbl_verifdatainventaris')->where('kode_verif',$id)->first();
+        $enddate = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->first();
         $databrg = DB::table('tbl_sub_verifdatainventaris')
             ->select('sub_tbl_inventory.no_inventaris', 'sub_tbl_inventory.nama_barang', 'sub_tbl_inventory.merk', 'sub_tbl_inventory.type', 'sub_tbl_inventory.no_seri', 'tbl_sub_verifdatainventaris.status_data_inventaris')
             ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
@@ -161,8 +161,8 @@ class DivisiController extends Controller
                     ->from('tbl_sub_verifdatainventaris')
                     ->where('kode_verif', $id)
                     ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
-            })->where('id_nomor_ruangan_cbaang',$request->lokasi)
-            ->where('tgl_beli','>',$enddate->end_date_verif)
+            })->where('id_nomor_ruangan_cbaang', $request->lokasi)
+            ->where('tgl_beli', '>', $enddate->end_date_verif)
             ->where('kd_cabang', Auth::user()->cabang)->get();
 
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
@@ -206,14 +206,16 @@ class DivisiController extends Controller
         // return $pdf->stream();
         // return Pdf::loadview('divisi.report.laporanstokopname', ['databrg' => $databrg, 'dataverif' => $dataverif,  'ttd' => $ttd])->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
     }
-    public function cetakreportruangstockopname($id){
-        $ruangan = DB::table('tbl_nomor_ruangan_cabang')->join('tbl_lokasi','tbl_lokasi.kd_lokasi','=','tbl_nomor_ruangan_cabang.kd_lokasi')
-        ->where('tbl_nomor_ruangan_cabang.kd_cabang',Auth::user()->cabang)->get();
-        return view('divisi.stockopname.option-stock-ruangan',['ruangan'=>$ruangan,'id'=>$id]);
+    public function cetakreportruangstockopname($id)
+    {
+        $ruangan = DB::table('tbl_nomor_ruangan_cabang')->join('tbl_lokasi', 'tbl_lokasi.kd_lokasi', '=', 'tbl_nomor_ruangan_cabang.kd_lokasi')
+            ->where('tbl_nomor_ruangan_cabang.kd_cabang', Auth::user()->cabang)->get();
+        return view('divisi.stockopname.option-stock-ruangan', ['ruangan' => $ruangan, 'id' => $id]);
     }
-    public function cetakreportruangstockopnameprint($id,$code){
+    public function cetakreportruangstockopnameprint($id, $code)
+    {
 
-        $enddate = DB::table('tbl_verifdatainventaris')->where('kode_verif',$code)->first();
+        $enddate = DB::table('tbl_verifdatainventaris')->where('kode_verif', $code)->first();
         $databrg = DB::table('tbl_sub_verifdatainventaris')
             ->select('sub_tbl_inventory.no_inventaris', 'sub_tbl_inventory.nama_barang', 'sub_tbl_inventory.merk', 'sub_tbl_inventory.type', 'sub_tbl_inventory.no_seri', 'tbl_sub_verifdatainventaris.status_data_inventaris')
             ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_sub_verifdatainventaris.id_inventaris')
@@ -226,8 +228,8 @@ class DivisiController extends Controller
                     ->from('tbl_sub_verifdatainventaris')
                     ->where('kode_verif', $id)
                     ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
-            })->where('id_nomor_ruangan_cbaang',$id)
-            ->where('tgl_beli','>',$enddate->end_date_verif)
+            })->where('id_nomor_ruangan_cbaang', $id)
+            ->where('tgl_beli', '>', $enddate->end_date_verif)
             ->where('kd_cabang', Auth::user()->cabang)->get();
 
         $ttd = DB::table('tbl_ttd')->where('kd_cabang', auth::user()->cabang)->get();
@@ -426,20 +428,12 @@ class DivisiController extends Controller
                     $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam', $ids)->get();
                     return view('divisi.menulengkapi.tablepeminjaman', ['notif' => $notif, 'databarang' => $databarang]);
                 }
-
-
-
-
             } else {
                 $notif = 2;
                 $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam', $ids)->get();
                 return view('divisi.menulengkapi.tablepeminjaman', ['notif' => $notif, 'databarang' => $databarang]);
             }
-
-
         }
-
-
     }
     public function refreshtablepeminjaman($id)
     {
@@ -525,7 +519,6 @@ class DivisiController extends Controller
         } else {
             $cekbarang1 = DB::table('tbl_sub_peminjaman')->where('id_inventaris', $ids)->where('status_sub_peminjaman', 0)->first();
             if ($cekbarang1) {
-
             } else {
                 DB::table('tbl_sub_peminjaman')->insert(
                     [
@@ -545,7 +538,6 @@ class DivisiController extends Controller
             ->where('kd_cabang', auth::user()->cabang)
             ->where('nama_barang', 'like', '%' . $datax . '%')->get();
         return view('divisi.peminjaman.tablecaridata', ['id' => $id, 'data' => $data, 'datax' => $datax]);
-
     }
     public function caridatabarang($id)
     {
@@ -575,8 +567,6 @@ class DivisiController extends Controller
                 $notif = 2;
                 $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam', $ids)->get();
                 return view('divisi.menulengkapi.tablepeminjaman', ['notif' => $notif, 'databarang' => $databarang]);
-
-
             } else {
                 DB::table('tbl_sub_peminjaman')
                     ->where('id_inventaris', $id)
@@ -590,11 +580,7 @@ class DivisiController extends Controller
                 $databarang = DB::table('tbl_sub_peminjaman')->where('id_pinjam', $ids)->get();
                 return view('divisi.menulengkapi.tablepeminjaman', ['notif' => $notif, 'databarang' => $databarang]);
             }
-
-
         }
-
-
     }
     // Maintenance
     public function tambahdatamaintenance()
@@ -646,10 +632,11 @@ class DivisiController extends Controller
         $data = DB::table('sub_tbl_inventory')->where('id_inventaris', $id)->first();
         return view('divisi.pemusnahan.formpemusnahan', ['data' => $data]);
     }
-    public function reportpemusnahan(Request $request) {
+    public function reportpemusnahan(Request $request)
+    {
         $data = DB::table('tbl_pemusnahan')
-        ->join('sub_tbl_inventory','sub_tbl_inventory.id_inventaris','=','tbl_pemusnahan.id_inventaris')
-        ->where('tbl_pemusnahan.kd_pemusnahan', $request->id)->first();
+            ->join('sub_tbl_inventory', 'sub_tbl_inventory.id_inventaris', '=', 'tbl_pemusnahan.id_inventaris')
+            ->where('tbl_pemusnahan.kd_pemusnahan', $request->id)->first();
         // $dataverif = DB::table('tbl_verifdatainventaris')->where('kode_verif', $id)->get();
         $pdf = PDF::loadview('divisi.report.report-pemusnahan', ['data' => $data])->setPaper('A4', 'potrait')->setOptions(['defaultFont' => 'Calibri']);
         $pdf->output();
@@ -765,7 +752,7 @@ class DivisiController extends Controller
                     ->from('tbl_sub_verifdatainventaris')
                     ->where('kode_verif', $id)
                     ->whereRaw('tbl_sub_verifdatainventaris.id_inventaris = sub_tbl_inventory.id_inventaris');
-            })->where('kd_cabang', Auth::user()->cabang)->where('status_barang','<','4')
+            })->where('kd_cabang', Auth::user()->cabang)->where('status_barang', '<', '4')
             // ->where('tgl_beli','<=',$dataverif->end_date_verif." 23:59:59")
             ->get();
         return view('divisi.stockopname.status-barang-verifikasi', ['databarang' => $databarang, 'id' => $id]);
@@ -802,7 +789,6 @@ class DivisiController extends Controller
             ]);
             return "<span class='badge badge-pill bg-success m-1'>Success</span>";
         }
-
     }
     public function verifikasilengkapiupdatebaranglokasi($id, $tiket, $id_inventaris, $ket)
     {
@@ -829,8 +815,6 @@ class DivisiController extends Controller
                     'keterangan_data_inventaris' => $ket,
                 ]);
         }
-
-
     }
 
     public function masterbarang()
@@ -864,8 +848,6 @@ class DivisiController extends Controller
             Session::flash('gagal', 'Nomor Cabang Belum di Isi');
             return redirect()->back();
         }
-
-
     }
     public function masterbarangeditloginventaris($id)
     {
@@ -1026,7 +1008,6 @@ class DivisiController extends Controller
                 ]
             );
         } else {
-
         }
         Session::flash('sukses', 'Berhasil Setup System');
         return redirect()->back();
@@ -1065,7 +1046,6 @@ class DivisiController extends Controller
                 ]);
             return redirect()->back();
         }
-
     }
 
     public function tabledataaset()
@@ -1195,13 +1175,13 @@ class DivisiController extends Controller
     public function mutasidatainventaris()
     {
         $data = DB::table('tbl_mutasi')->where('kd_cabang', auth::user()->cabang)->orderBy('id_mutasi', 'DESC')->get();
-        $order = DB::table('tbl_mutasi')->where('target_mutasi',Auth::user()->cabang)->where('status_mutasi',0)->count();
-        $rekap = DB::table('tbl_mutasi')->where('target_mutasi',Auth::user()->cabang)->where('status_mutasi',1)->count();
-        $asal = DB::table('tbl_mutasi')->where('asal_mutasi',Auth::user()->cabang)->count();
-        $target = DB::table('tbl_mutasi')->where('target_mutasi',Auth::user()->cabang)->count();
+        $order = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->where('status_mutasi', 0)->count();
+        $rekap = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->where('status_mutasi', 1)->count();
+        $asal = DB::table('tbl_mutasi')->where('asal_mutasi', Auth::user()->cabang)->count();
+        $target = DB::table('tbl_mutasi')->where('target_mutasi', Auth::user()->cabang)->count();
         $jumlah =  $asal + $target;
         $datakategori = DB::table('no_urut_barang')->get();
-        return view('divisi.menumutasi', ['datakategori' => $datakategori, 'data' => $data,'order'=>$order,'rekap'=>$rekap,'jumlah'=>$jumlah]);
+        return view('divisi.menumutasi', ['datakategori' => $datakategori, 'data' => $data, 'order' => $order, 'rekap' => $rekap, 'jumlah' => $jumlah]);
     }
     public function ordertiketmutasi()
     {
@@ -1218,8 +1198,8 @@ class DivisiController extends Controller
     {
         $cabang = DB::table('tbl_cabang')->get();
         $dataorder = DB::table('tbl_mutasi')
-        ->join('tbl_cabang','tbl_cabang.kd_cabang','=','tbl_mutasi.kd_cabang')
-        ->get();
+            ->join('tbl_cabang', 'tbl_cabang.kd_cabang', '=', 'tbl_mutasi.kd_cabang')
+            ->get();
 
         return view('divisi.mutasi.rekap-mutasi', ['cabang' => $cabang, 'data' => $dataorder]);
     }
@@ -1466,7 +1446,6 @@ class DivisiController extends Controller
                     'file' => 'public/aset/maintenance/' . auth::user()->cabang . '/' . $request->input('id_inventaris') . '/' . $request->input('link'),
                     'ket_maintenance' => $request->input('deskripsi'),
                 ]);
-
         }
         Session::flash('sukses', 'Berhasil update data Maintenance');
         return redirect()->back();
@@ -1547,13 +1526,15 @@ class DivisiController extends Controller
         Session::flash('sukses', 'Berhasil Membuat Staff : ' . $request->nama);
         return redirect()->back();
     }
-    public function posteditdatastaff(Request $request){
-        $data = DB::table('tbl_staff')->where('id_staff',$request->code)->first();
-        return view('divisi.menustaff.form-edit',['data'=>$data]);
+    public function posteditdatastaff(Request $request)
+    {
+        $data = DB::table('tbl_staff')->where('id_staff', $request->code)->first();
+        return view('divisi.menustaff.form-edit', ['data' => $data]);
     }
-    public function save_edit_staff(Request $request){
-        DB::table('tbl_staff')->where('id_staff',$request->code)->update([
-            'nama_staff'=>$request->nama
+    public function save_edit_staff(Request $request)
+    {
+        DB::table('tbl_staff')->where('id_staff', $request->code)->update([
+            'nama_staff' => $request->nama
         ]);
         Session::flash('sukses', 'Berhasil Update Staff');
         return redirect()->back();
@@ -1770,17 +1751,77 @@ class DivisiController extends Controller
     }
     public function postverifikasialldatasimpanfixdata(Request $request)
     {
-        $cekdata = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->id)->get();
+        // 1. Ambil data master verifikasi untuk mendapatkan tanggal batas akhir (end_date_verif)
+        $masterVerif = DB::table('tbl_verifdatainventaris')
+            ->where('kode_verif', $request->id)
+            ->first();
+
+        if (!$masterVerif) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data verifikasi tidak ditemukan.'
+            ], 404);
+        }
+
+        // Convert tanggal akhir periode stock opname ke Carbon
+        $endDateVerif = Carbon::parse($masterVerif->end_date_verif);
+
+        // 2. Ambil semua data sub verifikasi berdasarkan kode_verif
+        $cekdata = DB::table('tbl_sub_verifdatainventaris')
+            ->where('kode_verif', $request->id)
+            ->get();
+
+        // Array tracking untuk eliminasi data duplikat (hanya menyimpan id_inventaris pertama)
+        $processed_ids = [];
+
         foreach ($cekdata as $value) {
-            $fix = DB::table('inventaris_data')->where('inventaris_data_code',$value->id_inventaris)->where('inventaris_data_status','>=',4)->first();
-            if ($fix) {
-                DB::table('tbl_sub_verifdatainventaris')->where('id_sub_verifdatainventaris',$value->id_sub_verifdatainventaris)->delete();
+            // Ambil data inventaris terkait berdasarkan inventaris_data_code
+            $dataInventaris = DB::table('inventaris_data')
+                ->where('inventaris_data_code', $value->id_inventaris)
+                ->first();
+
+            // --- LOGIKA 1: Hapus jika status inventaris di atas 3 (>= 4) ---
+            if ($dataInventaris && $dataInventaris->inventaris_data_status >= 4) {
+                DB::table('tbl_sub_verifdatainventaris')
+                    ->where('id_sub_verifdatainventaris', $value->id_sub_verifdatainventaris)
+                    ->delete();
+                continue; // Lanjut ke iterasi berikutnya
             }
-            $fix1 = DB::table('tbl_sub_verifdatainventaris')->where('kode_verif',$request->id)->where('id_inventaris',$value->id_inventaris)->count();
-            if ($fix1 > 1) {
-                DB::table('tbl_sub_verifdatainventaris')->where('id_sub_verifdatainventaris',$value->id_sub_verifdatainventaris)->delete();
+
+            // --- LOGIKA 2: Hapus jika tanggal beli barang (inventaris_data_tgl_beli) melewati end_date_verif ---
+            if ($dataInventaris && $dataInventaris->inventaris_data_tgl_beli) {
+                $tglBeli = Carbon::parse($dataInventaris->inventaris_data_tgl_beli);
+
+                // Jika tanggal beli lebih besar (setelah) tanggal batas verifikasi
+                if ($tglBeli->gt($endDateVerif)) {
+                    DB::table('tbl_sub_verifdatainventaris')
+                        ->where('id_sub_verifdatainventaris', $value->id_sub_verifdatainventaris)
+                        ->delete();
+                    continue; // Lanjut ke iterasi berikutnya
+                }
+            }
+
+            // --- LOGIKA 3: Hapus jika terdapat duplikat barang ---
+            if (in_array($value->id_inventaris, $processed_ids)) {
+                // Jika id_inventaris ini sudah diproses sebelumnya -> Hapus duplikatnya
+                DB::table('tbl_sub_verifdatainventaris')
+                    ->where('id_sub_verifdatainventaris', $value->id_sub_verifdatainventaris)
+                    ->delete();
+            } else {
+                // Simpan ID pertama yang valid ke array tracking
+                $processed_ids[] = $value->id_inventaris;
             }
         }
+
+        // Recount total_verif pada tabel master setelah pembersihan data selesai
+        $totalVerifAktual = DB::table('tbl_sub_verifdatainventaris')
+            ->where('kode_verif', $request->id)
+            ->count();
+
+        DB::table('tbl_verifdatainventaris')
+            ->where('kode_verif', $request->id)
+            ->update(['total_verif' => $totalVerifAktual]);
+
         return 123;
     }
 }
