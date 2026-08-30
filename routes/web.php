@@ -445,6 +445,7 @@ Route::prefix('app')->group(function () {
     Route::post('dashboard/add-aset', [AppController::class, 'dashboard_add_aset'])->name('dashboard_add_aset');
     Route::post('dashboard/add-kso', [AppController::class, 'dashboard_add_kso'])->name('dashboard_add_kso');
     Route::post('dashboard/add-kso-save', [AppController::class, 'dashboard_add_kso_save'])->name('dashboard_add_kso_save');
+    Route::post('dashboard/add-data-aset', [AppController::class, 'dashboard_add_data_aset'])->name('dashboard_add_data_aset');
     Route::post('dashboard/add-data-non-aset', [AppController::class, 'dashboard_add_data_non_aset'])->name('dashboard_add_data_non_aset');
     Route::post('dashboard/data-non-aset', [AppController::class, 'dashboard_data_non_aset'])->name('dashboard_data_non_aset');
     Route::post('dashboard/export-data-non-aset', [AppController::class, 'dashboard_export_data_non_aset'])->name('dashboard_export_data_non_aset');
@@ -714,4 +715,18 @@ Route::prefix('masteradmin')->group(function () {
     Route::post('depresiasi/add-detail', [MasterAdminController::class, 'masteradmin_depresiasi_add_detail'])->name('masteradmin_depresiasi_add_detail');
     Route::post('depresiasi/save-detail', [MasterAdminController::class, 'masteradmin_depresiasi_save_detail'])->name('masteradmin_depresiasi_save_detail');
     Route::get('maps', [MasterAdminController::class, 'masteradmin_maps'])->name('masteradmin_maps');
+});
+
+use App\Http\Controllers\InventoryKsoController;
+
+Route::middleware(['auth'])->group(function () {
+    // Route Tampilan & Simpan Barang KSO
+    // Route::post('/inventory-kso/store', [InventoryKsoController::class, 'dashboard_add_kso_save'])->name('dashboard_add_kso_save');
+
+    // Route CRUD Dokumen KSO (document_kso)
+    Route::prefix('document-kso')->name('doc_kso.')->group(function () {
+        Route::post('/store', [InventoryKsoController::class, 'storeDocument'])->name('store');
+        Route::post('/update', [InventoryKsoController::class, 'updateDocument'])->name('update');
+        Route::post('/destroy', [InventoryKsoController::class, 'destroyDocument'])->name('destroy');
+    });
 });

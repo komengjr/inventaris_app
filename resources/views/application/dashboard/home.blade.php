@@ -712,6 +712,67 @@
             });
         }
     });
+    $(document).on("click", "#button-simpan-data-aset", function(e) {
+        e.preventDefault();
+
+        // Serialize data dari Form Aset
+        var data = $("#form-add-data-aset").serialize();
+
+        // Ambil nilai input untuk validasi (Tanpa jumlah_barang)
+        var nama = document.getElementById("nama_barang").value;
+        var klasifikasi = document.getElementById("klasifikasi").value;
+        var tgl_beli = document.getElementById("tgl_beli").value;
+        var harga_perolehan = document.getElementById("dengan-rupiah").value;
+        var suplier = document.getElementById("suplier").value;
+        var lokasi = document.getElementById("lokasi").value;
+
+        // Tampilkan Spinner Loading
+        $('#menu-simpan-data-aset').html('<div class="spinner-border text-primary my-2" role="status"><span class="visually-hidden">Loading...</span></div>');
+
+        // Validasi input mandatory
+        if (nama == "" || klasifikasi == "" || tgl_beli == "" || harga_perolehan == "" || suplier == "" || lokasi == "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Mohon lengkapi semua kolom yang wajib diisi!",
+                footer: '<a href="#">Ada data penting yang terlewatkan?</a>'
+            });
+
+            // Kembalikan tombol simpan jika validasi gagal
+            $('#menu-simpan-data-aset').html('<button type="submit" class="btn btn-primary px-4" id="button-simpan-data-aset"><i class="fas fa-save me-1"></i> Simpan Data Aset</button>');
+        } else {
+            // Kirim data via AJAX
+            $.ajax({
+                url: "{{ route('dashboard_add_data_aset') }}", // Sesuaikan dengan nama route controller aset Anda
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf"]').attr("content")
+                },
+                type: "POST",
+                cache: false,
+                data: data,
+                dataType: 'html',
+            }).done(function(response) {
+                if (response == 0) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal Simpan",
+                        text: "Terjadi kesalahan saat menyimpan data aset!"
+                    });
+                    $('#menu-simpan-data-aset').html('<button type="submit" class="btn btn-primary px-4" id="button-simpan-data-aset"><i class="fas fa-save me-1"></i> Simpan Data Aset</button>');
+                } else {
+                    $('#menu-simpan-data-aset').html(response);
+                    location.reload();
+                }
+            }).fail(function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Server Error",
+                    text: "Gagal terhubung ke server!"
+                });
+                $('#menu-simpan-data-aset').html('<button type="submit" class="btn btn-primary px-4" id="button-simpan-data-aset"><i class="fas fa-save me-1"></i> Simpan Data Aset</button>');
+            });
+        }
+    });
 
     $(document).on("click", "#button-simpan-update-data-inventaris", function(e) {
         e.preventDefault();

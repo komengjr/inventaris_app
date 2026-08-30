@@ -150,6 +150,72 @@ class AppController extends Controller
         $klasifikasi = DB::table('inventaris_klasifikasi')->get();
         return view('application.dashboard.form.form-add-aset', ['lokasi' => $lokasi, 'klasifikasi' => $klasifikasi]);
     }
+    public function dashboard_add_data_aset(Request $request)
+    {
+        try {
+            // 1. Ambil data pendukung
+            $entitas = DB::table('tbl_entitas_cabang')
+                ->join('tbl_cabang', 'tbl_cabang.kd_entitas_cabang', '=', 'tbl_entitas_cabang.kd_entitas_cabang')
+                ->join('tbl_setting_cabang', 'tbl_setting_cabang.kd_cabang', '=', 'tbl_cabang.kd_cabang')
+                ->where('tbl_setting_cabang.kd_cabang', Auth::user()->cabang)
+                ->first();
+
+            // Hitung total data saat ini untuk nomor urut
+            $totalAwal = DB::table('inventaris_data')
+                ->where('inventaris_data_cabang', Auth::user()->cabang)
+                ->count();
+
+            $lokasi = DB::table('tbl_nomor_ruangan_cabang')
+                ->where('id_nomor_ruangan_cbaang', $request->lokasi)
+                ->first();
+
+            // Cleaning format Rupiah
+            $nilai = preg_replace("/[^0-9]/", "", $request->harga_perolehan);
+
+            // Format Link File
+            if (empty($request->link)) {
+                $link = null;
+            } else {
+                $link = 'public/databrg/new/' . Auth::user()->cabang . '/' . $request->link;
+            }
+
+            // Nomor urut & kode barang tunggal
+            $nomorUrut = $totalAwal + 1;
+            $kodeInventaris = Auth::user()->cabang . date('YmdHis');
+
+            // Format Nomor Barang Aset
+            $nomorBarang = $nomorUrut . '/' . $request->klasifikasi . '/' . $lokasi->kd_lokasi . '/' . $entitas->simbol_entitas . '.' . $entitas->no_cabang . '/' . date('Y', strtotime($request->tgl_beli));
+
+            // Insert Single Data Aset
+            DB::table('inventaris_data')->insert([
+                'inventaris_data_code'        => $kodeInventaris,
+                'inventaris_klasifikasi_code' => $request->klasifikasi,
+                'inventaris_data_number'      => $nomorBarang,
+                'inventaris_data_name'        => $request->nama_barang,
+                'inventaris_data_location'    => $lokasi->kd_lokasi,
+                'inventaris_data_jenis'       => $request->jenis, // Nilai: 1 (Barang Aset)
+                'inventaris_data_harga'       => $nilai,
+                'inventaris_data_merk'        => $request->merk,
+                'inventaris_data_type'        => $request->type,
+                'inventaris_data_no_seri'     => $request->seri,
+                'inventaris_data_suplier'     => $request->suplier,
+                'inventaris_data_kondisi'     => $request->kondisi ?? 'Baik',
+                'inventaris_data_status'      => 0,
+                'inventaris_data_tgl_beli'    => $request->tgl_beli,
+                'inventaris_data_cabang'      => Auth::user()->cabang,
+                'inventaris_data_urut'        => $nomorUrut,
+                'inventaris_data_file'        => $link,
+                'id_nomor_ruangan_cbaang'     => $request->lokasi,
+                'created_at'                  => now(),
+                'updated_at'                  => now(),
+            ]);
+
+            return 'Mohon Menunggu..';
+        } catch (\Throwable $th) {
+            // Return 0 agar terbaca sebagai error pada pengecekan AJAX (if response == 0)
+            return 0;
+        }
+    }
     public function dashboard_add_kso()
     {
         $lokasi = DB::table('tbl_nomor_ruangan_cabang')
@@ -360,7 +426,7 @@ class AppController extends Controller
     public function dashboard_data_kso_document(Request $request)
     {
         $data = DB::table('document_kso')->where('id_inventaris', $request->code)->get();
-        return view('application.dashboard.data.data-kso.document-kso', ['data' => $data]);
+        return view('application.dashboard.data.data-kso.document-kso', ['data' => $data, 'code' => $request->code]);
     }
     public function dashboard_lokasi_data_barang(Request $request)
     {
