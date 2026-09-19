@@ -445,7 +445,12 @@ class MasterAdminController extends Controller
         if (Auth::user()->akses != 'admin') {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
-        $data = DB::table('message')->orderBy('id', 'DESC')->get();
+
+        $data = DB::table('message')
+            ->select('id', 'token_code', 'number', 'pesan', 'status', 'time') // Kolom yang diminta + id (dibutuhkan untuk tombol replay)
+            ->orderBy('id', 'DESC')
+            ->get();
+
         return response()->json(['data' => $data]);
     }
     public function masteradmin_messages_replay(Request $request)
