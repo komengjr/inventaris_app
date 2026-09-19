@@ -435,11 +435,18 @@ class MasterAdminController extends Controller
     public function masteradmin_messages()
     {
         if (Auth::user()->akses == 'admin') {
-            $data = DB::table('message')->orderBy('id', 'DESC')->get();
-            return view('application.admin.mastermessage', ['data' => $data]);
+            return view('application.admin.mastermessage');
         } else {
             return view('application.error.404');
         }
+    }
+    public function masteradmin_messages_json()
+    {
+        if (Auth::user()->akses != 'admin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        $data = DB::table('message')->orderBy('id', 'DESC')->get();
+        return response()->json(['data' => $data]);
     }
     public function masteradmin_messages_replay(Request $request)
     {
