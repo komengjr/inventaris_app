@@ -320,6 +320,29 @@ class MasterAdminController extends Controller
         $cabang = DB::table('tbl_cabang')->where('kd_cabang', $request->code)->first();
         return view('application.admin.cabang.data-barang', ['data' => $data, 'cabang' => $cabang]);
     }
+    public function masteradmin_cabang_delete_multiple_barang(Request $request)
+    {
+        $ids = $request->ids;
+        $kd_cabang = $request->code;
+        $version = $request->version ?? 'v02';
+
+        if (!empty($ids)) {
+            if ($version == 'v03') {
+                DB::table('inventaris_data')->whereIn('inventaris_data_code', $ids)->delete();
+            } else {
+                DB::table('sub_tbl_inventory')->whereIn('id_inventaris', $ids)->delete();
+            }
+        }
+
+        // Render ulang sesuai versi yang sedang aktif
+        if ($version == 'v03') {
+            $data = DB::table('inventaris_data')->where('inventaris_data_cabang', $kd_cabang)->get();
+            return view('application.admin.cabang.barang.data-version-03', ['data' => $data]);
+        } else {
+            $data = DB::table('sub_tbl_inventory')->where('kd_cabang', $kd_cabang)->get();
+            return view('application.admin.cabang.barang.data-version-02', ['data' => $data]);
+        }
+    }
     public function masteradmin_cabang_option_data_barang(Request $request)
     {
         if ($request->id == 'v02') {

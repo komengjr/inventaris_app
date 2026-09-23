@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
     /*
@@ -64,7 +65,6 @@ class LoginController extends Controller
     }
     public function verifikasi_Login(Request $request)
     {
-
         $request->validate([
             'email' => 'required',
             'password' => 'required',
@@ -73,28 +73,26 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $name = htmlspecialchars($user->name);
 
-            if (Auth::user()->akses == 'dir' || Auth::user()->akses == 'admin' || Auth::user()->akses == 'staff' || Auth::user()->akses == 'sdm') {
-                return '<div class="alert alert-success alert-dismissible fade show my-2" role="alert">
-                                            <strong>Greate!</strong> Selamat Datang ' . Auth::user()->name . '.
-                                            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            <script>window.location.href = "' . route('dashboard_home') . '";</script>
-                                        </div>';
+            if (in_array($user->akses, ['dir', 'admin', 'staff', 'sdm'])) {
+                $redirectUrl = route('dashboard_home');
             } else {
-                return '<div class="alert alert-success alert-dismissible fade show my-2" role="alert">
-                                            <strong>Greate!</strong> Selamat Datang ' . Auth::user()->name . '.
-                                            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            <script>window.location.href = "' . route('home') . '";</script>
-                                        </div>';
-                // return redirect()->intended('home')->withSuccess('Kamu Berhasil Masuk di Account  ' . Auth::user()->name);
-                # code...
+                $redirectUrl = route('home');
             }
 
-
+            // Return JSON agar mudah ditangani oleh JavaScript AJAX dengan aman
+            return response()->json([
+                'status' => 'success',
+                'message' => "Selamat Datang, {$name}. Mengalihkan...",
+                'redirect' => $redirectUrl
+            ]);
         }
-        return '<div class="alert alert-danger alert-dismissible fade show my-2" role="alert">
-                                            <strong>Error!</strong> Username Dan Password Ada Kesalahan.
-                                            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </div>';
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Username atau kata sandi yang Anda masukkan salah.'
+        ], 401);
     }
 }

@@ -4,80 +4,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login | Inventaris Managemen System</title>
+    <title>Login | Sistem Antrian & Manajemen</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/header.png') }}">
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Google Font: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             height: 100vh;
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #e8f1fc, #ffffff);
             overflow: hidden;
             position: relative;
-        }
-
-        /* === Animated Background === */
-        .background-animation {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .bg-shape {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.4;
-            animation: float 12s ease-in-out infinite;
-        }
-
-        .bg-shape:nth-child(1) {
-            width: 180px;
-            height: 180px;
-            background: #a0d3ff;
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
-        }
-
-        .bg-shape:nth-child(2) {
-            width: 250px;
-            height: 250px;
-            background: #f5cba7;
-            bottom: 5%;
-            right: 8%;
-            animation-delay: 3s;
-        }
-
-        .bg-shape:nth-child(3) {
-            width: 220px;
-            height: 220px;
-            background: #c8e6c9;
-            top: 40%;
-            left: 70%;
-            animation-delay: 5s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0) scale(1);
-            }
-
-            50% {
-                transform: translateY(-20px) scale(1.05);
-            }
+            background-color: #0f172a;
         }
 
         /* === Background Illustration === */
@@ -86,29 +34,39 @@
             inset: 0;
             z-index: 1;
             background: url('https://pustaka.bca.co.id/Promo/A2C31A68-BC10-4CBD-AB51-85474A36CC50/Detail/ImageListing/20250723_PRAMITA-LAB-SBY-thumb.jpeg') center/cover no-repeat;
-            opacity: 0.15;
-            filter: blur(1px);
+            filter: blur(4px);
+            transform: scale(1.05);
         }
 
-        /* === Login Card === */
+        /* === Dark Gradient Overlay === */
+        .background-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 58, 138, 0.75));
+        }
+
+        /* === Login Card Glassmorphism === */
         .login-card {
             position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            max-width: 450px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+            max-width: 440px;
             width: 100%;
-            padding: 1.5rem 1.5rem;
+            padding: 2rem;
             margin: 1rem;
-            animation: fadeInUp 1s ease forwards;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
 
             100% {
@@ -117,105 +75,144 @@
             }
         }
 
-        .login-card h2 {
-            font-weight: 600;
-            color: #316bb3;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-card p {
-            text-align: center;
-            font-size: 0.95rem;
-            color: #555;
-            margin-bottom: 2rem;
+        .login-card h4 {
+            font-weight: 700;
+            color: #0f172a;
         }
 
         .form-control {
             border-radius: 0.75rem;
-            padding: 0.75rem;
-            border-color: #d0d9e2;
+            padding: 0.75rem 1rem;
+            border-color: #cbd5e1;
+            background-color: #f8fafc;
+            font-size: 0.95rem;
         }
 
         .form-control:focus {
-            border-color: #90caf9;
-            box-shadow: 0 0 0 0.25rem rgba(144, 202, 249, 0.25);
+            background-color: #ffffff;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+        }
+
+        .input-group-text {
+            background-color: #f8fafc;
+            border-color: #cbd5e1;
+            border-radius: 0.75rem 0 0 0.75rem;
+            color: #64748b;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 0.75rem 0.75rem 0;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: #0ea5e9;
+            background-color: #ffffff;
+            color: #0ea5e9;
         }
 
         .btn-primary {
-            background-color: #5a9bd5;
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             border: none;
             border-radius: 0.75rem;
             padding: 0.75rem;
             font-weight: 600;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
 
         .btn-primary:hover {
-            transform: scale(1.03);
-            background-color: #4689c4;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.4);
+            background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
         }
 
         .footer-text {
             text-align: center;
             margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: #666;
+            font-size: 0.85rem;
+            color: #64748b;
         }
 
-        .footer-text a {
-            color: #316bb3;
-            text-decoration: none;
+        /* === Fullscreen Dark Loading & Status Overlay === */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #ffffff;
+            padding: 1.5rem;
+            text-align: center;
         }
 
-        .footer-text a:hover {
-            text-decoration: underline;
+        .loading-spinner {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-width: 0.35rem;
+            color: #0ea5e9;
         }
 
         @media (max-width: 576px) {
             .login-card {
-                padding: 2rem 1.5rem;
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Animated background shapes -->
-    <div class="background-animation">
-        <div class="bg-shape"></div>
-        <div class="bg-shape"></div>
-        <div class="bg-shape"></div>
-    </div>
-
-    <!-- Illustration background -->
+    <!-- Background Image -->
     <div class="background-illustration"></div>
+
+    <!-- Dark Gradient Overlay -->
+    <div class="background-overlay"></div>
+
+    <!-- Fullscreen Dark Loading & Status Overlay -->
+    <div id="loading-overlay">
+        <div id="overlay-content" class="d-flex flex-column align-items-center">
+            <div class="spinner-border loading-spinner mb-3" role="status"></div>
+            <h5 class="fw-semibold mb-1" id="loading-title">Sedang Memproses Login...</h5>
+            <p class="text-light opacity-75 small mb-0" id="loading-desc">Mohon tunggu sebentar, sistem sedang memverifikasi kredensial Anda.</p>
+        </div>
+    </div>
 
     <!-- Login Card -->
     <div class="login-card">
-        <div class="text-center mb-2">
-            <img src="{{ asset('vendor/new-anim.gif') }}" alt="" width="400" style="width: 100%; height: auto;">
-            <!-- <h4>Inventaris Managemen System</h4> -->
-            <p style="margin-top: 10px; margin-bottom: 0;">Login Aplikasi</p>
+        <div class="text-center mb-4">
+            <img src="{{ asset('vendor/new-anim.gif') }}" alt="Logo" class="img-fluid mb-2" style="max-height: 80px; width: auto;">
+            <h4 class="mb-1">Selamat Datang</h4>
+            <p class="text-muted small">Silakan masuk menggunakan akun Anda</p>
         </div>
-        <span id="notifikasi-login" class="pb-0 mt-0"></span>
+
         <form id="loginForm">
             <div class="mb-3">
-                <label for="username" class="form-label fw-semibold">Username</label>
-                <input type="text" id="username" class="form-control" placeholder="Masukkan username Anda" required>
+                <label for="username" class="form-label fw-semibold small text-secondary">Username / Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" id="username" class="form-control" placeholder="Masukkan username Anda" required>
+                </div>
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label fw-semibold">Kata Sandi</label>
-                <input type="password" id="password" class="form-control" placeholder="Masukkan kata sandi" required>
+                <label for="password" class="form-label fw-semibold small text-secondary">Kata Sandi</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" id="password" class="form-control" placeholder="Masukkan kata sandi" required>
+                </div>
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="rememberMe">
-                    <label for="rememberMe" class="form-check-label">Ingat saya</label>
+                    <label for="rememberMe" class="form-check-label small text-muted">Ingat saya</label>
                 </div>
-                <!-- <a href="#" class="text-decoration-none text-primary">Lupa Password?</a> -->
             </div>
 
             <button type="submit" class="btn btn-primary w-100" id="button-login-system">
@@ -224,7 +221,7 @@
         </form>
 
         <div class="footer-text">
-            <strong>Copyright © 2022</strong>
+            <span>Copyright &copy; 2026 PT Innoventra Solusi Digital</span>
         </div>
     </div>
 
@@ -237,31 +234,63 @@
 
     <script>
         const form = document.getElementById('loginForm');
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
-            const btn = form.querySelector('button');
+            const btn = document.getElementById('button-login-system');
 
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Memeriksa...';
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const overlayContent = document.getElementById('overlay-content');
+
+            // Reset tampilan overlay ke mode loading awal
+            overlayContent.innerHTML = `
+                <div class="spinner-border loading-spinner mb-3" role="status"></div>
+                <h5 class="fw-semibold mb-1">Sedang Memproses Login...</h5>
+                <p class="text-light opacity-75 small mb-0">Mohon tunggu sebentar, sistem sedang memverifikasi kredensial Anda.</p>
+            `;
+            loadingOverlay.style.display = 'flex';
             btn.disabled = true;
+
             $.ajax({
-                url: "{{ route('verifikasi_Login') }}",
-                type: "POST",
-                cache: false,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "email": email,
-                    "password": password
-                },
-                dataType: 'html',
-            }).done(function (data) {
-                $('#notifikasi-login').html(data);
-                btn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>Masuk Sekarang';
-                btn.disabled = false;
-            }).fail(function () {
-                console.log('error');
-            });
+                    url: "{{ route('verifikasi_Login') }}",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "email": email,
+                        "password": password
+                    },
+                    dataType: 'json',
+                })
+                .done(function(response) {
+                    if (response.status === 'success') {
+                        // Tampilkan pesan sukses di area gelap, lalu pindah halaman
+                        overlayContent.innerHTML = `
+                        <i class="bi bi-check-circle-fill text-success fs-1 mb-3"></i>
+                        <h5 class="fw-bold mb-1 text-white">Login Berhasil!</h5>
+                        <p class="text-light opacity-75 small mb-0">${response.message}</p>
+                    `;
+                        setTimeout(function() {
+                            window.location.href = response.redirect;
+                        }, 1000);
+                    }
+                })
+                .fail(function(xhr) {
+                    btn.disabled = false;
+                    let errorMsg = 'Username atau kata sandi yang Anda masukkan salah.';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+
+                    // Tampilkan pesan error berupa teks di area gelap beserta tombol tutup
+                    overlayContent.innerHTML = `
+                    <i class="bi bi-x-circle-fill text-danger fs-1 mb-3"></i>
+                    <h5 class="fw-bold mb-1 text-white">Login Gagal</h5>
+                    <p class="text-light opacity-75 small mb-3">${errorMsg}</p>
+                    <button class="btn btn-outline-light btn-sm px-4 rounded-pill fw-semibold" onclick="document.getElementById('loading-overlay').style.display='none'">Coba Lagi</button>
+                `;
+                });
         });
     </script>
 </body>
