@@ -221,7 +221,7 @@
         </form>
 
         <div class="footer-text">
-            <span>Copyright &copy; 2026 PT Innoventra Solusi Digital</span>
+            <span>Copyright &copy; 2022</span>
         </div>
     </div>
 
